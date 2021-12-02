@@ -1,0 +1,14 @@
+Frame zb_dok2_3;	FRM_FindFrame (zb_dok2_3,"zb_dok2_3");
+
+
+
+
+
+Whenever je(_PlayerInRange(10))
+{
+
+
+SendSignal (zb_dok2_3,1);
+
+
+}

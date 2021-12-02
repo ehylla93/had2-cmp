@@ -1,0 +1,74 @@
+//n_mg_E01 - behind stack of wood
+
+Block
+{
+integer aievent;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame sgv6;		FRM_FindFrame(sgv6, "n_sgv6");
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(False);
+HUMAN_SetOptimized(1);
+}
+
+HUMAN_Suspend(True);
+goto TheEnd;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(45);
+	HUMAN_SETHEARRANGE(55);
+	aievent =_GetAlarmType(); 
+	PrintfNumber("mg_E01: ", aievent);
+	HUMAN_SETAIMODE_Defensive();
+	DisableSignals(true);
+	}
+if(((aievent==2) or (aievent==256)) and (_LoadGameValue(6)==0))
+{
+SendSignal(sgv6, 1);
+}
+HUMAN_SetAnim("", 100, 100, False);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(35);
+  HUMAN_SETHEARRANGE(40);
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("nastup_1");
+  HUMAN_SETMODE_Crouch();  
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SetAlarm(False);
+  goto TheEnd;
+}
+
+OnDeath() {
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever PIR (_PlayerInRange(105))
+{
+HUMAN_Suspend(False);
+HUMAN_ACTIVITY_Turk();
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Label TheEnd:

@@ -1,0 +1,33 @@
+// BU1_door27
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame bu1_27;
+	FRM_FindFrame(bu1_27, "BU1_27");
+Frame me;
+	FRM_GetMyFrame(me);
+Frame sound;
+	FRM_FindFrame(sound, "S_dorcon_11");
+Integer state;
+	state=0;	// 2 - opening, 3 - closing
+
+FRM_SetOn(sound, false);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnUse()
+{
+	SendSignal(bu1_27, 1);
+	state=_ACTOR_GetState(me);
+
+	If(state==2)
+	{
+		FRM_SetOn(sound, true);
+	}
+	If(state==3)
+	{
+		FRM_SetOn(sound, false);
+	}
+}
+// -------------------------------------------------------------------------------------------------------------

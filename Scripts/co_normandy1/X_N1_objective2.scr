@@ -1,0 +1,44 @@
+// objective2 - at the generator room
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame obj;		FRM_FindFrame(obj, "objectives");
+Frame obj1;		FRM_FindFrame(obj1, "m_n1_switch_");
+Frame sound1;	FRM_FindFrame(sound1, "l_ngen_2");
+Frame sound2;	FRM_FindFrame(sound2, "l_vent_2");
+Frame sound3;	FRM_FindFrame(sound3, "l_tety_2");
+Integer switch;	switch=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnUse()
+{
+	If(switch==0)
+	{
+		switch=1;
+		SendSignal(obj, 3);
+		SendSignal(obj1, 1);
+		FRM_SetOn(sound1, true);
+		FRM_SetOn(sound2, true);
+		FRM_SetOn(sound3, true);
+		PlayMusic(36);
+		GoTo end;
+	}
+	If(switch==1)
+	{
+		switch=1;
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(16993211);
+		Delay(4000);
+		SUBTITLES_SetOn(0);
+		GoTo end;
+	}
+}
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SetOn(sound1, false);
+FRM_SetOn(sound2, false);
+FRM_SetOn(sound3, false);
+
+Label end:

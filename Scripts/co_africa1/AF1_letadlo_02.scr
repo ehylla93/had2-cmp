@@ -1,0 +1,25 @@
+// AF1_letadlo_02 - aircraft on the airport
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME letcnt;		FRM_FindFrame(letcnt, "dummy_letcnt");
+  FRAME expl;			FRM_FindFrame(expl, "w_explosive_17");
+  FRAME hadice;		FRM_FindFrame(hadice, "m_af1_hadice_");
+  FRAME cisterna;		FRM_FindFrame(cisterna, "m_nadrz");
+  SaveGameValue(32, 0);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  block
+  {
+    MakeExplosion(this, 1500000, 8000);
+    SaveGameValue(32, 1);
+    FRM_SetOn(hadice, false);
+    FRM_SetOn(expl, false);
+    SetActorState(cisterna, 0);
+  }
+  SendSignal(letcnt, 1);
+}

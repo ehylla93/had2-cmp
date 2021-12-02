@@ -1,0 +1,87 @@
+Block
+ {
+    Frame OBJ; 		FRM_FindFrame(OBJ, "objectives");
+    Frame ostrelovani;		FRM_FindFrame(ostrelovani, "dummy_odpocet");
+    Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+    Frame hakl;			FRM_FindFrame(hakl, "hakl");
+    Frame Sound;		FRM_FindFrame(Sound, "S_tank");
+    Frame EndKiller;		FRM_FindFrame(EndKiller, "Dummy_End_Killer");
+    Frame CamerasEnd;	FRM_FindFrame(CamerasEnd, "Dummy_CamerasEnd");
+
+    Frame W2_1;		Frm_FindFrame(W2_1, "Wave2_1");
+    Frame W2_2;		Frm_FindFrame(W2_2, "Wave2_2");
+    Frame W2_3;		Frm_FindFrame(W2_3, "Wave2_3");
+    //*//Frame W2_4;		Frm_FindFrame(W2_4, "Wave2_4");
+    //*//Frame W2_5;		Frm_FindFrame(W2_5, "Wave2_5");
+
+    Frame Amik_1;		FRM_FindFrame(Amik_1, "Amik_1");
+    Frame Amik_2;		FRM_FindFrame(Amik_2, "Amik_2");
+    Frame Amik_3;		FRM_FindFrame(Amik_3, "Amik_3");
+    Frame Amik_4;		FRM_FindFrame(Amik_4, "Amik_4");
+    Frame Amik_tank_MG;	FRM_FindFrame(Amik_tank_MG, "Amik_tank_MG");
+
+
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+Onsignal(1)			// aktivace z OBJ4
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_sherman", true, 0);
+  DElay(500);	
+}
+				
+OnAlarm()  
+  {
+      Printf("!!!!!!!!!!!!!!!!!! OKAMZITE HLASIT ----- PRUSER s tank driverem");
+//      Printf("!!!!!!!!!!!!!!!!!! OKAMZITE HLASIT ----- Pokud STRILI US tank tak je to OK");
+  }
+OnAlarmDone()  {}
+
+  FRM_SetOn(Sound, True);
+  HUMAN_Drive("AmiiTank_1", 15); 
+  HUMAN_Drive("AmiiTank_2", 15); 
+  HUMAN_Drive("AmiiTank_3", 15); 
+  HUMAN_Drive("AmiiTank_4", 15); 
+  HUMAN_Drive("AmiiTank_5", 13); 
+  HUMAN_Drive("AmiiTank_6", 13); 
+Block		// aktivace Amiku 1-4
+  {
+     SendSignal(Amik_1, 1);
+     SendSignal(Amik_2, 1);
+     SendSignal(Amik_3, 1);
+     SendSignal(Amik_4, 1);
+  }
+Block		// aktivace osadky haklu
+  {
+     SendSignal(W2_1, 1);
+     SendSignal(W2_2, 1);
+     SendSignal(W2_3, 1);
+     //*//SendSignal(W2_4, 1);
+     //*//SendSignal(W2_5, 1);
+  }
+  HUMAN_Drive("AmiiTank_7", 18); 
+
+  SendSignal(CamerasEnd, 1);
+  SendSignal(ostrelovani, 10); 	// vypnuti bombardovani
+
+  HUMAN_Drive("AmiTank_End", 25);
+  SendSignal(EndKiller, 1);
+  SendSignal(Amik_tank_MG, 2);	// strilej
+  FRM_SetOn(Sound, False);
+
+				///////////////////////////////////////////// Doplnit - vse ok (OBJ + jeste v posilaci enemyes)
+
+
+Label TheEnd:
+
+//////////////////////////////////// - VYHODIT, ladící
+// Delay(10100);
+// SendSignal(MYfrm, 1);
+//////////////////////////////

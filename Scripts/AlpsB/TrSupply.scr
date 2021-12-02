@@ -1,0 +1,140 @@
+// Supply na Hrad Nakladakem (2) + Tank (1)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame R1;		FRM_FindFrame(R1,"S_Tr01");  // **Ridici Nakladaku**
+Frame R2;		FRM_FindFrame(R2,"S_Tr11");
+
+Frame R3;		FRM_FindFrame(R3,"T1_G01");  // **Ridic Panzeru**
+Frame R4;		FRM_FindFrame(R4,"T1_G02");
+Frame R5;		FRM_FindFrame(R5,"T1_G03");
+Frame Obj3;		FRM_FindFrame(Obj3,"obj3");
+
+Integer jedem;
+
+Integer tank;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+// ***** NAKLADAKY JEDOU , TANK ZA NIMA *****
+
+Whenever ACTIVE (_SignalReceived(1))
+{
+jedem = _RandomInt(17);
+tank = _RandomInt(8);
+If(jedem == 0){ SendSignal(Obj3, 2);Delay(20000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 1){ SendSignal(Obj3, 2);Delay(80000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 2){ SendSignal(Obj3, 2);Delay(120000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 3){ SendSignal(Obj3, 2);Delay(180000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 4){ SendSignal(Obj3, 2);Delay(250000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 5){ SendSignal(Obj3, 2);Delay(300000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 6){ SendSignal(Obj3, 2);Delay(350000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 7){ SendSignal(Obj3, 2);Delay(450000);SendSignal(R1, 1);SendSignal(R2, 1);
+If(tank == 0){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(180000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(120000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(80000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+// ***** VUBEC NAKLADAK NEPOJEDE *****
+
+If(jedem == 8)
+{
+If(tank == 0){Delay(550000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 1){Delay(500000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 2){Delay(450000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 3){Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 4){Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 5){Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 6){Delay(150000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(tank == 7){Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+}
+
+If(jedem == 9){ SendSignal(Obj3, 3);Delay(20000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(jedem == 10){ SendSignal(Obj3, 3);Delay(100000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(jedem == 11){ SendSignal(Obj3, 3);Delay(150000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(jedem == 12){ SendSignal(Obj3, 3);Delay(200000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(jedem == 13){ SendSignal(Obj3, 3);Delay(250000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(jedem == 14){ SendSignal(Obj3, 3);Delay(300000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(jedem == 15){ SendSignal(Obj3, 3);Delay(350000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(jedem == 16){ SendSignal(Obj3, 3);Delay(400000);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+goto END;
+}
+
+
+Label END:

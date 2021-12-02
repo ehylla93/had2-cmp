@@ -1,0 +1,85 @@
+// 02_G110 - Reinforcement
+// ----------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1, "A1_Mg42_01");
+Frame Cp2;		FRM_FindFrame(Cp2, "A2_Mg42_01");
+Frame Cp3;		FRM_FindFrame(Cp3, "A1_Kubel");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer Reinf;
+
+FRM_SwitchFaceTexture(me,"e_f030");
+
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(70);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+FRM_MorphSpeech(me, 90001076, 10, 50);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+Reinf = _RandomInt(3);
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_WeaponUp(1);
+
+If(Reinf == 0)
+{
+HUMAN_MoveToFrame(Cp1, 8);
+}
+
+If(Reinf == 1)
+{
+HUMAN_MoveToFrame(Cp2, 8);
+}
+
+If(Reinf == 2)
+{
+HUMAN_MoveToFrame(Cp3, 8);
+}
+
+SetAlarmType(1023, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

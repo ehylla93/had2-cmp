@@ -1,0 +1,110 @@
+//au cas  ou  l alarme est donner
+// ----------------------------------
+
+Block
+{
+
+Frame GE_1;		FRM_FindFrame(GE_1,"GE_1");
+Frame GE_2;		FRM_FindFrame(GE_2,"GE_2");
+Frame GE_3;		FRM_FindFrame(GE_3,"GE_3");
+Frame GE_4;		FRM_FindFrame(GE_4,"GE_4");
+Frame GE_5;		FRM_FindFrame(GE_5,"GE_5");
+Frame GE_6;		FRM_FindFrame(GE_6,"GE_6");
+Frame GE_7;		FRM_FindFrame(GE_7,"GE_7");
+Frame GE_8;		FRM_FindFrame(GE_8,"GE_8");
+Frame GE_9;		FRM_FindFrame(GE_9,"GE_9");
+Frame GE_10;		FRM_FindFrame(GE_10,"GE_10");
+Frame GE_11;		FRM_FindFrame(GE_11,"GE_11");
+Frame GE_12;		FRM_FindFrame(GE_12,"GE_12");
+Frame GE_13;		FRM_FindFrame(GE_13,"GE_13");
+
+Frame R01;		FRM_FindFrame(R01, "Dzone7");
+Frame R02;		FRM_FindFrame(R02, "Dzone8");
+Frame R03;		FRM_FindFrame(R03, "R4_E05");
+Frame R04;		FRM_FindFrame(R04, "R4_E05");
+Frame R05;		FRM_FindFrame(R05, "R4_E05");
+Frame R06;		FRM_FindFrame(R06, "R4_E06");
+Frame R07;		FRM_FindFrame(R07, "R4_E07");
+Frame R08;		FRM_FindFrame(R08, "R4_E08");
+Frame R09;		FRM_FindFrame(R09, "R4_E09");
+Frame R10;		FRM_FindFrame(R10, "R4_E10");
+Frame R11;		FRM_FindFrame(R11, "R4_E11");
+Frame R12;		FRM_FindFrame(R12, "R4_E12");
+Frame R13;		FRM_FindFrame(R13, "R4_S01");
+Frame R14;		FRM_FindFrame(R14, "R4_S02");
+Frame T1;		FRM_FindFrame(T1, "Tank_01");
+Frame T2;		FRM_FindFrame(T2, "Tank_02");
+Frame T3;		FRM_FindFrame(T3, "Tank_03");
+SetWhenever(Dead, 1);
+Frame komin195;	FRM_FindFrame(komin195,"komin195");
+Frame komin197;	FRM_FindFrame(komin197,"komin196");
+Frame komin158;	FRM_FindFrame(komin158,"komin158");
+}
+
+Whenever Dead (((((((((((((((((_Actor_GetState(R01) == 0) And (_Actor_GetState(R02) == 0)) And (_Actor_GetState(R03) == 0)) And (_Actor_GetState(R04) == 0)) And (_Actor_GetState(R05) == 0)) And (_Actor_GetState(R06) == 0)) And (_Actor_GetState(R07) == 0)) And (_Actor_GetState(R08) == 0)) And (_Actor_GetState(R09) == 0)) And (_Actor_GetState(R10) == 0)) And (_Actor_GetState(R11) == 0)) And (_Actor_GetState(R12) == 0)) And (_Actor_GetState(R13) == 0)) And (_Actor_GetState(R14) == 0)) And (_Actor_GetState(T1) == 0)) And (_Actor_GetState(T2) == 0)) And (_Actor_GetState(T3) == 0))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(11992211);		//  OBJECTIVE FAILED: ALARM RAISED.
+SetObjectiveStatus(1, 2);
+SetObjectiveStatus(2, 2);
+SetObjectiveStatus(3, 2);
+SetObjectiveStatus(4, 2);
+SetObjectiveStatus(5, 2);
+SetObjectiveStatus(6, 2);
+SetObjectiveStatus(7, 2);
+SetObjectiveStatus(8, 2);
+SetObjectiveStatus(9, 2);
+Delay(1500);
+
+EndScript();
+}
+
+
+OnSignal(3)
+{
+SetWhenever(Dead, 0);
+FRM_CreateParticle(040, komin195);  
+FRM_CreateParticle(040, komin197);
+FRM_CreateParticle(040, komin158);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(02990450);  // OPTIONAL OBJECTIVE COMPLETED: REMAINED UNDETECTED.
+Delay(5000);
+SUBTITLES_SetOn(0);
+//^alarm
+}
+
+OnDeath(){
+SendSignal(GE_1, 1);
+Delay(3500);
+SendSignal(GE_2, 1);
+Delay(500);
+SendSignal(GE_3, 1);
+Delay(3500);
+SendSignal(GE_4, 1);
+Delay(500);
+SendSignal(GE_5, 1);
+Delay(3500);
+SendSignal(GE_6, 1);
+Delay(500);
+SendSignal(GE_7, 1);
+Delay(3500);
+SendSignal(GE_8, 1);
+Delay(500);
+SendSignal(GE_9, 1);
+Delay(3500);
+SendSignal(GE_10, 1);
+Delay(500);
+SendSignal(GE_11, 1);
+Delay(3500);
+SendSignal(GE_12, 1);
+Delay(500);
+SendSignal(GE_13, 1);
+Delay(3500);
+DisableSignals(1);
+//^OnDeath
+EndScript();
+}
+
+

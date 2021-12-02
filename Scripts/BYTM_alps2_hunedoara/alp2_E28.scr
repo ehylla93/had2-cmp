@@ -1,0 +1,67 @@
+// alp2_E28 - archive room - ALARMER
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1,1);		//Close Shooting
+SetAlarmType(2,1);		//Enemy Shots
+SetAlarmType(4,1);		//Hear Steps
+SetAlarmType(8,1);		//Action Sounds
+SetAlarmType(16,1);		//Explosions
+SetAlarmType(32,1);		//Sighted
+SetAlarmType(64,1);		//Is Injured
+SetAlarmType(128,0);	//From Script
+SetAlarmType(256,1);	//Friendly Shots
+SetAlarmType(512,1);	//Sight Corpse
+
+Frame me;		FRM_GetMyFrame(me);
+Frame alarm;	FRM_FindFrame(alarm, "alarm_switch");
+
+Integer AIEvent;
+
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+}
+
+HUMAN_Suspend(1);
+
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+	AIEvent = _GetAlarmType();
+	If((AIEvent == 1) OR (AIEvent == 2) OR (AIEvent == 256))
+	{
+	SendSignal(alarm, 1);
+	}
+HUMAN_SetAnim("", 1000, 1000, 1);
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_WeaponOnArm(1);
+goto END;
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

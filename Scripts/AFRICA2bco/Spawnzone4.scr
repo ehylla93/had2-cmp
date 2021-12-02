@@ -1,0 +1,32 @@
+// AF2_zone5enable - nova zona, 30 metrov
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame af2_50;
+	FRM_FindFrame(af2_50, "AF2_24");
+Frame af2_51;
+	FRM_FindFrame(af2_51, "AF2_25");
+Frame af2_52;
+	FRM_FindFrame(af2_52, "AF2_26");
+	Frame af2_117;
+	FRM_FindFrame(af2_117, "AF2_117");
+Frame af2_118;
+	FRM_FindFrame(af2_118, "AF2_118");
+Frame af2_119;
+	FRM_FindFrame(af2_119, "AF2_119");
+Frame texty;
+	FRM_FindFrame(texty, "AF2_texty");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever enable(_PlayerInRange(30) AND (_ACTOR_GetState(af2_50)==0) AND (_ACTOR_GetState(af2_51)==0) AND (_ACTOR_GetState(af2_52)==0) 
+AND (_ACTOR_GetState(af2_117)==0) AND (_ACTOR_GetState(af2_118)==0) AND (_ACTOR_GetState(af2_119)==0)){
+	MP_EnableSpawnZone("zone5", 1);
+	SendSignal(texty, 7);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose

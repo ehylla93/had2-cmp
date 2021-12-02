@@ -1,0 +1,5 @@
+OnUse()
+{
+CheckpointJoin("bd1","bd2");
+CheckpointJoin("bd3","bd4");
+}

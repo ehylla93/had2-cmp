@@ -1,0 +1,68 @@
+// Speech 
+// -------------------------------------------
+
+Block
+{
+
+// **** POSILY ****
+
+Frame P01;	FRM_FindFrame(P01,"BR_G14");
+Frame P02;	FRM_FindFrame(P02,"BR_G15");
+Frame P03;	FRM_FindFrame(P03,"BR_G16");
+Frame P04;	FRM_FindFrame(P04,"BR_G07");
+Frame P05;	FRM_FindFrame(P05,"BR_G08");
+Frame P06;	FRM_FindFrame(P06,"BR_G09");
+Frame P07;	FRM_FindFrame(P07,"BR_G10");
+
+// **** BRITI V BANCE ****
+
+Frame B01;	FRM_FindFrame(B01,"SSgt. Gregory Dean");
+Frame B02;	FRM_FindFrame(B02,"Sgt. Kevin Turner");
+Frame B03;	FRM_FindFrame(B03,"Sgt. Larry Smith");
+Frame B04;	FRM_FindFrame(B04,"Sgt. Siegfried Hirsch");
+Frame B05;	FRM_FindFrame(B05,"Pte. Andrew Harris");
+Frame B06;	FRM_FindFrame(B06,"Pte. Roger Jenkins");
+Frame B07;	FRM_FindFrame(B07,"Cpl. David Foreman");
+Frame B08;	FRM_FindFrame(B08,"Cpl. Frederick Mallory");
+Frame B09;	FRM_FindFrame(B09,"Cpl. George Burton");
+Frame B10;	FRM_FindFrame(B10,"Cpl. Herbert Bennett");
+
+}
+
+// -------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+Delay(3000);
+FRM_MorphSpeechDelayed(B04, 90000456, 5, 30);
+Delay(1000);
+FRM_MorphSpeechDelayed(B05, 90000710, 5, 30);
+Delay(300);
+FRM_MorphSpeechDelayed(B04, 90000766, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(B02, 90000516, 5, 30);
+Delay(20000);
+FRM_MorphSpeechDelayed(B08, 90000395, 5, 30);
+Delay(15000);
+FRM_MorphSpeechDelayed(B06, 90000418, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(B06, 90000420, 5, 30);
+Delay(55000);
+FRM_MorphSpeechDelayed(B10, 13992601, 5, 30);
+Delay(5000);
+FRM_MorphSpeechDelayed(B10, 13992602, 5, 30);
+goto END;
+}
+
+Whenever Incoming_Tank (_SignalReceived(2))
+{
+FRM_MorphSpeechDelayed(B04, 90000029, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(B10, 90000778, 5, 30);
+Delay(500);
+FRM_MorphSpeechDelayed(B04, 01990290, 5, 30);
+goto END;
+}
+
+
+Label END:

@@ -1,0 +1,9 @@
+
+Block {
+Frame ci02;		Frm_FindFrame (ci02,"ci_02");
+}
+
+Whenever ted(_PlayerInRange(5))
+{
+SendSignal (ci02,8);
+}

@@ -1,0 +1,73 @@
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "dummy_it6_see");
+
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+// posila to dummy_budicek_vlna1
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     SetAlarmType(1023, False);	
+     SetAlarmType(69, true);		// 1+ 4 + 64 = 69
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+   }
+Goto TheEnd;
+
+// poslal to sem aktivator druhe vlny
+Onsignal(2)
+{
+  HUMAN_Move("It6_1");
+  SetAlarmType(1023, True);	
+  Delay(25000);
+  HUMAN_AttackMove("It6_2");
+  HUMAN_AttackMove("It6_end");
+}  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("it6_end");
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" IT 6: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

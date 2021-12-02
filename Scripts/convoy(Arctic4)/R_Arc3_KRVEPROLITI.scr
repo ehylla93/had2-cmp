@@ -1,0 +1,9 @@
+frame OBJ;	FRM_FindFrame(OBJ, "dummy_objectives");
+frame OBJ_K;	FRM_FindFrame(OBJ_K, "dummy_objectives_carnage");
+
+  ScriptAssign(OBJ, "R_Arc3_Objectives"); 
+
+if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) ) 
+{
+  ScriptAssign(OBJ_K, "R_Arc3_OBJ_KRVAK"); 
+}

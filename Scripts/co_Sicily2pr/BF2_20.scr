@@ -1,0 +1,51 @@
+// OpelFlak01, driver
+
+Block
+{
+frame MyTank;	FRM_FindFrame(MyTank, "OpelFlak01");
+frame BF2_21;	FRM_FindFrame(BF2_21, "BF2_21");
+frame BF2_23;	FRM_FindFrame(BF2_23, "BF2_23");
+
+
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+FRM_SetOn(Mytank, False);
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator druhe vlny
+Onsignal(1)		
+{
+  Delay(1500);
+  FRM_SetOn(Mytank, true);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("OpelFlak01", true, 0);	
+} 
+
+// aktivni cast - jede
+Delay(2500);
+HUMAN_Drive("Panzer1_1", 35);
+//HUMAN_Drive("Panzer2_1", 15);
+HUMAN_Drive("", 0);
+//Delay(500);
+Delay(1000);
+SendSignal(BF2_21, 2);
+HUMAN_BoardVehicle("OpelFlak01", false, 0);
+Delay(1000);		
+SendSignal(BF2_23, 3);
+SetAlarmType(1023, true);
+HUMAN_SETAIMODE_Defensive();
+
+OnAlarm()  
+  {
+    Printf("HLASIT - nemelo by nikdy nastat - ridic Panzera1 presel do alarmu");      
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+} 
+
+label TheEnd:

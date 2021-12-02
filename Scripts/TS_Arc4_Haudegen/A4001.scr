@@ -1,0 +1,64 @@
+Block
+{
+//Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame turn; 		FRM_FindFrame(turn, "Offic1"); 
+
+}
+// -----------------------------
+
+OnDeath(){
+ 
+ printf("A4001 dead");  
+
+EndScript();
+}
+
+OnAlarm(){
+ printf("A4001 alarm");
+  
+  
+  Delay(2000);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(0);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(150);
+
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(0);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+
+
+// -----------------------------
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(0);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(150); 
+ HUMAN_TurnAt(turn);
+
+goto END;
+
+Label END:

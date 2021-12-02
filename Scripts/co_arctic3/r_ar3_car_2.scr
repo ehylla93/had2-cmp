@@ -1,0 +1,94 @@
+
+integer AIEvent;
+integer OnCar = 0;
+frame see;		FRM_FindFrame(see, "dummy_Car2_see");
+
+SetAlarmType(1023, False);
+HUMAN_SETMODE_Run();
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_Suspend(True);
+
+OnSignal(1)
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("opel_01" , True, 1); 	
+  Delay(600);
+  OnCar = 1;
+  HUMAN_SETSIGHTRANGE( 20);
+  HUMAN_SETHEARRANGE(25);
+  goto TheEnd;
+}
+
+// od Car_1 - dojelo se na konec 
+OnSignal(2)
+{
+  Delay(500);
+  HUMAN_BoardVehicle("" , False, 0);
+  HUMAN_SetOptimized(1);
+  HUMAN_MoveRandomRadius(3);	// Zda se ze to nefunguje	
+  Goto DeAlarm;
+}
+
+OnAlarm()
+{
+  DisableSignals(True);
+  If (OnCar == 1) 
+    { 
+       HUMAN_BoardVehicle("" , False, 0); 
+       OnCar = 0;
+//       HUMAN_MoveRandomRadius(10);	// Zda se ze to nefunguje
+    }
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      HUMAN_Stop();
+      HUMAN_SETSIGHTRANGE( 40);
+      HUMAN_SETHEARRANGE( 50);
+      HUMAN_Suspend(False);	
+    }
+  EndScript();
+}
+OnSignal(4)
+{
+  DisableSignals(True);
+  If (OnCar == 1) 
+    { 
+       HUMAN_BoardVehicle("" , False, 0); 
+       OnCar = 0;
+       HUMAN_MoveRandomRadius(10);	
+    }
+  Block
+    {
+      HUMAN_Stop();
+      HUMAN_SETSIGHTRANGE( 40);
+      HUMAN_SETHEARRANGE( 50);
+      HUMAN_Suspend(False);	
+    }
+  Goto TheEnd;
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Defensive();
+label DeAlarm:
+  SetAlarmType(1023, True);
+  HUMAN_Move("Car2_DeAlarm");
+  HUMAN_TurnAt(see); 
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

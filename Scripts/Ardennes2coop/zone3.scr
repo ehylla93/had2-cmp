@@ -1,0 +1,20 @@
+//Spawn3 (2)
+Block
+{
+Frame detect;	FRM_FindFrame (detect,"zone3");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame E1;		FRM_FindFrame(E1, "EG63");
+Frame E2;		FRM_FindFrame(E2, "EG64");
+Frame E3;		FRM_FindFrame(E3, "EG65");
+}
+goto end;
+
+Whenever Yes ((((_PlayerInRange(25)) and (_Actor_GetState(E1)==0)) and (_Actor_GetState(E2)==0)) and (_Actor_GetState(E3)==0))
+{
+Delay(5000);
+MP_EnableSpawnZone("zone3", 1);
+SendSignal(txt, 4);
+goto end;
+}
+
+label end:

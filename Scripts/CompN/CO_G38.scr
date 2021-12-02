@@ -1,0 +1,79 @@
+// Hlidka 7
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto patroll;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETHEARRANGE(38);
+HUMAN_SETSIGHTRANGE(41);
+goto patroll;
+
+Label patroll:
+HUMAN_SETMODE_Guard();
+HUMAN_Move("walker1_6");
+HUMAN_Move("walker1_5");
+
+HUMAN_Move("walker1_4");
+HUMAN_Move("walker1_3");
+
+HUMAN_Move("walker1_2");
+
+HUMAN_Move("walker1_1");
+HUMAN_Move("walker3_1");
+HUMAN_Move("walker3_2");
+
+HUMAN_Move("walker3_3");
+HUMAN_Move("walker3_4");
+
+HUMAN_Move("walker3_5");
+
+HUMAN_Move("walker3_6");
+HUMAN_Move("walker3_5");
+
+HUMAN_Move("walker3_4");
+
+HUMAN_Move("walker3_3");
+
+HUMAN_Move("walker3_2");
+
+HUMAN_Move("walker3_1");
+
+HUMAN_Move("walker1_1");
+HUMAN_Move("walker1_2");
+HUMAN_Move("walker1_3");
+HUMAN_Move("walker1_4");
+HUMAN_Move("walker1_5");
+goto patroll;
+
+Label END:

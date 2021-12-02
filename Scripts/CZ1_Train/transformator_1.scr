@@ -1,0 +1,19 @@
+// Obj 6 - find the valuables
+//-------------------------------------------------
+Block
+{
+Frame gold;	FRM_FindFrame(gold, "the_stolen_gold_boxes");
+}
+
+Whenever player(_PlayerInRange(1))
+{
+PlayMusic(36);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(21990030);
+Delay(4000);
+SUBTITLES_SetOn(0);	
+SetObjectiveStatus(6, 1);
+EndScript();
+}
+
+Label END:

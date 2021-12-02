@@ -1,0 +1,84 @@
+// S1_G01 - Sedi pod Delem a keca (Eastern Machinegun position)
+// --------------------------------------------------------------
+
+Block
+{
+Frame K1;	FRM_FindFrame(K1,"S1_G02");
+Frame K2;	FRM_FindFrame(K2,"S1_G03");
+
+Frame Kanon;	FRM_FindFrame(Kanon,"Kanon3");
+Frame Alcum;	FRM_FindFrame(Alcum,"BritCum");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+integer AIEvent;
+
+FRM_SwitchFaceTexture(me,"e_f015");
+}
+
+// ------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveToFrame(Kanon, 1);
+AIEvent =_GetAlarmType();
+
+If ((((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==4)) OR (AIEvent==32))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_MoveFromFrame(Kanon, 25);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_MoveFromFrame(Kanon, 11);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Kanon, 11);
+HUMAN_TurnAt(Alcum);
+HUMAN_WeaponUp(1);
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(100))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%sedimL4", 450, 300, 1);
+goto END;
+}
+
+// ------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

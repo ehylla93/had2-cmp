@@ -1,0 +1,55 @@
+// MG_B02
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1,1); 
+SetAlarmType(2,0);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,1);
+
+Frame this;		FRM_GetMyFrame(this);
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(50);
+}
+
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("MG_B02 dead");
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+}
+
+Whenever Spawn (_PlayerInRange(50))
+{
+HUMAN_BoardVehicle("Type97_01",  1, 0);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

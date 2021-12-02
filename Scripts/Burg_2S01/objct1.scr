@@ -1,0 +1,62 @@
+// Obj 1 - Rescue Prisoners
+// -------------------------------------
+
+Block
+{
+Frame Prisoner1;		FRM_FindFrame(Prisoner1,"SSgt. Gregory Dean");
+Frame Prisoner2;		FRM_FindFrame(Prisoner2,"Sgt. Siegfried Hirsch");
+Frame Prisoner3;		FRM_FindFrame(Prisoner3,"Cpl. David Foreman");
+
+Frame Enemy1;			FRM_FindFrame(Enemy1, "SF_G01");
+Frame Enemy2;			FRM_FindFrame(Enemy2, "SF_G02");
+Frame Enemy3;			FRM_FindFrame(Enemy3, "SF_G03");
+Frame Enemy4;			FRM_FindFrame(Enemy4, "SF_G04");
+
+Frame Obj2;				FRM_FindFrame(Obj2,"obj2");
+
+SetObjectiveStatus(1, 0);
+}
+
+
+Whenever Prisoners_Rescued (_SignalReceived(1))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999709);
+SetObjectiveStatus(2, 0);
+Delay(3500);
+SendSignal(Obj2, 1);
+SetObjectiveStatus(1, 1);
+SUBTITLES_SetText(52999902);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Prisoner_Killed (((_Actor_GetState(Prisoner1) == 0) OR (_Actor_GetState(Prisoner2) == 0)) OR (_Actor_GetState(Prisoner3) == 0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999706);
+Delay(3500);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(1, 2);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Obj1_Done (_SignalReceived(2))
+{
+EndScript();
+}
+
+OnSignal(3)
+{
+Delay(200000);
+SendSignal(Enemy1, 6);SendSignal(Enemy2, 6);
+SendSignal(Enemy3, 6);SendSignal(Enemy4, 6);
+Delay(180000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999706);
+Delay(3500);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(1, 2);
+SUBTITLES_SetOn(0);
+}

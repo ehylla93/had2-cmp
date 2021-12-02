@@ -1,0 +1,14 @@
+// Ardennes(SnowCamp) Objectives
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetObjectiveStatus(1, 0);     // Capture the German control post - ok
+SetObjectiveStatus(2, 0);     // Find documents containing the research results - ok
+SetObjectiveStatus(3, 0);     // Destroy all enemy tanks - ok
+SetObjectiveStatus(4, 0);     // Rescue the SAS commander - ok
+SetObjectiveStatus(5, 0);     // Rescue the rest of the SAS unit - ok
+SetObjectiveStatus(6, 0);     // Destroy the Enemy Radio Station - ok
+}
+
+//-------------------------------------------------------------------------------------

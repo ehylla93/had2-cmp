@@ -1,0 +1,10 @@
+// BU2_01_A2 - activator
+
+Block {
+Frame bu2_01;	FRM_FindFrame(bu2_01, "BU2_01");
+}
+
+Whenever player(_PlayerInRange(2))
+{
+	SendSignal(bu2_01, 1);
+}

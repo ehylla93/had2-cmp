@@ -1,0 +1,65 @@
+// C5_R19 - russian Isu 152 crew member
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1023, false);
+SetWhenever(PIR, false);
+}
+
+HUMAN_BoardVehicle("Isu152", true, 2);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(true);
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from C5_objective
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(31)	// received from C5_R17
+{
+	SetWhenever(PIR, true);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+Whenever PIR (_MP_IsTeamMemberInRange(1, 5))
+{
+	DisableWhenevers(1);
+	HUMAN_BoardVehicle("Isu152", false, 2);
+	HUMAN_TurnAtNearestPlayer();
+	SetAlarmType(1023, true);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

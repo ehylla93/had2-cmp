@@ -1,0 +1,59 @@
+// Spawnzones
+// ----------------------------------------------
+
+Block
+{
+// For enabling Zone 2
+Frame G09;	FRM_FindFrame(G09,"Ge_S09");
+Frame G10;	FRM_FindFrame(G10,"Ge_S10");
+Frame G11;	FRM_FindFrame(G11,"Ge_S11");
+Frame G12;	FRM_FindFrame(G12,"Ge_S12");
+Frame G13;	FRM_FindFrame(G13,"Ge_S13");
+Frame G14;	FRM_FindFrame(G14,"Ge_S14");
+
+// For enabling Zone 3
+Frame G04;	FRM_FindFrame(G04,"Ge_S04");
+Frame G05;	FRM_FindFrame(G05,"Ge_S05");
+Frame G06;	FRM_FindFrame(G06,"Ge_S06");
+Frame G07;	FRM_FindFrame(G07,"Ge_S07");
+Frame G08;	FRM_FindFrame(G08,"Ge_S08");
+Frame G36;	FRM_FindFrame(G36,"S_Al01");
+Frame G39;	FRM_FindFrame(G39,"S_Al04");
+Frame G43;	FRM_FindFrame(G43,"S_Al08");
+
+// For enabling Zone 4
+Frame G46;	FRM_FindFrame(G46,"Ge_S25");
+Frame G47;	FRM_FindFrame(G47,"Ge_S26");
+}
+
+// ----------------------------------------------
+
+Whenever Zone2_TurnOn ((((((_Actor_GetState(G09) == 0) And (_Actor_GetState(G10) == 0)) And (_Actor_GetState(G11) == 0)) And (_Actor_GetState(G12) == 0)) And (_Actor_GetState(G13) == 0)) And (_Actor_GetState(G14) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone2", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Zone3_TurnOn ((((((((_Actor_GetState(G04) == 0) And (_Actor_GetState(G05) == 0)) And (_Actor_GetState(G06) == 0)) And (_Actor_GetState(G07) == 0)) And (_Actor_GetState(G08) == 0)) And (_Actor_GetState(G36) == 0)) And (_Actor_GetState(G39) == 0)) And (_Actor_GetState(G43) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone3", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Zone4_TurnOn ((_Actor_GetState(G46) == 0) And (_Actor_GetState(G47) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone4", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}

@@ -1,0 +1,37 @@
+// Artillery Cannons (6)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame C1;	FRM_FindFrame(C1,"Ka_G01");
+Frame C2;	FRM_FindFrame(C2,"Kb_G01");
+Frame C3;	FRM_FindFrame(C3,"Kc_G01");
+Frame C4;	FRM_FindFrame(C4,"Kd_G01");
+Frame C5;	FRM_FindFrame(C5,"Ke_G01");
+Frame C6;	FRM_FindFrame(C6,"Kf_G01");
+
+Frame T1;	FRM_FindFrame(T1,"La_tiger_1");
+Frame T2;	FRM_FindFrame(T2,"La_tiger_2");
+Frame T3;	FRM_FindFrame(T3,"La_tiger_3");
+
+Integer Cas;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Palime (_SignalReceived(1))
+{
+Delay(6000);
+SendSignal(C4, 1);
+Cas =_RandomInt(6);
+
+If(Cas == 0){  Delay(20000);SendSignal(C1, 1);SendSignal(C2, 1);SendSignal(C3, 1);Delay(250);SendSignal(C4, 1);Delay(500);SendSignal(C5, 1);SendSignal(C6, 1);}
+If(Cas == 1){  Delay(35000);SendSignal(C1, 1);SendSignal(C2, 1);SendSignal(C3, 1);Delay(250);SendSignal(C4, 1);Delay(500);SendSignal(C5, 1);SendSignal(C6, 1);}
+If(Cas == 2){  Delay(50000);SendSignal(C1, 1);SendSignal(C2, 1);SendSignal(C3, 1);Delay(250);SendSignal(C4, 1);Delay(500);SendSignal(C5, 1);SendSignal(C6, 1);}
+If(Cas == 3){  Delay(60000);SendSignal(C1, 1);Delay(1000);SendSignal(C2, 1);Delay(500);SendSignal(C3, 1);Delay(250);SendSignal(C4, 1);Delay(500);SendSignal(C5, 1);SendSignal(C6, 1);}
+If(Cas == 4){  Delay(75000);SendSignal(C3, 1);Delay(2000);SendSignal(C2, 1);Delay(500);SendSignal(C1, 1);Delay(250);SendSignal(C4, 1);Delay(500);SendSignal(C5, 1);SendSignal(C6, 1);}
+If(Cas == 5){  Delay(100000);SendSignal(C3, 1);SendSignal(C2, 1);Delay(2000);SendSignal(C1, 1);Delay(250);SendSignal(C4, 1);Delay(500);SendSignal(C5, 1);SendSignal(C6, 1);}
+goto END;
+}
+
+Label END:

@@ -1,0 +1,3 @@
+FRAME this;		FRM_GetMyFrame(this);
+
+Car_SetFuel(this, 0);

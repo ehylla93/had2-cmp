@@ -1,0 +1,125 @@
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Walk();
+
+
+integer aievent;
+integer a;	a=0;
+Integer sus;	sus=0;
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+Frame cum;		FRM_FindFrame(cum, "spojarcum");
+
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f053");
+HUMAN_SetOptimized(2);
+
+}
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+//-------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+SetAlarmType(36,1);
+SetWhenever(go,0);
+aievent=(_GetAlarmType());
+PrintfNumber("spojar alarm c:",aievent);
+}
+
+
+if (sus==0)
+	{
+	sus=1;
+	HUMAN_Suspend(0);
+	}
+
+HUMAN_SetAnim("", 10, 10, 0);
+
+if (_PlayerInRange(5)==1)
+{
+ EndScript();
+}
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (a==0)
+{
+
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("spojar1");
+HUMAN_SETMODE_Crouch();
+delay (200);
+HUMAN_TurnAt(cum);
+//HUMAN_SetSniper(1, 1);
+a=1;
+}
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+
+delay (900);
+SetAlarmType(274,1);
+HUMAN_TurnAt(cum);
+goto end;
+}
+EndScript();
+
+}
+
+
+
+OnAlarmDone()
+{
+SetAlarmType(652,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+
+OnDeath()
+{
+  SendSignal(reinfo, 0);
+  Printf("radista is DEAD!!!");
+  EndScript();
+}
+
+
+
+Whenever go(_PlayerInRange(20))
+{
+HUMAN_Suspend(0);
+sus=1;
+delay (1000);
+HUMAN_SetAnim("%%spojar", 500, 500, 1);
+goto end;
+}
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+
+
+label end:

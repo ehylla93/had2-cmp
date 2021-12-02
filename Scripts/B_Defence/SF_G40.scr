@@ -1,0 +1,79 @@
+// SF_G40 - Hakler (Hakl1),4
+// ------------------------------------------------
+
+Block
+{
+Frame Hakl;	FRM_FindFrame(Hakl,"Hakl1");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f028");
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Hakl1", 1, 3);
+goto END;
+}
+
+Whenever HaklOff (_SignalReceived(2))
+{
+HUMAN_BoardVehicle("Hakl1", 0, 3);
+HUMAN_SETSIGHTRANGE(240);
+HUMAN_SETHEARRANGE(240);
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Hakl, 25);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+goto END;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

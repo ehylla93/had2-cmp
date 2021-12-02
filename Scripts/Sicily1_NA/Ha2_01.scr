@@ -1,0 +1,108 @@
+// Hakl 2 Driver
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Hakl1;	FRM_FindFrame(Hakl1,"Hakl2");
+Frame Hakl2;	FRM_FindFrame(Hakl2,"Hakl4");
+
+Frame H1g2;	FRM_FindFrame(H1g2,"Ha2_02");
+Frame H1g3;	FRM_FindFrame(H1g3,"Ha2_03");
+Frame H1g4;	FRM_FindFrame(H1g4,"Ha2_04");
+Frame H1g5;	FRM_FindFrame(H1g5,"Ha2_05");
+Frame H1g6;	FRM_FindFrame(H1g6,"Ha2_06");
+
+Frame me;	FRM_GetMyFrame(me);
+Frame Player;
+
+SetAlarmType(1023,0);
+FRM_SwitchFaceTexture(me, "e_f031");
+
+Integer Trasa;
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever Online (_SignalReceived(1))
+{
+Trasa = _RandomInt(2);
+HUMAN_Suspend(0);
+
+If(Trasa == 0)
+{
+HUMAN_BoardVehicle("Hakl2", 1, 0);
+SendSignal(H1g2, 1);
+SendSignal(H1g3, 1);
+SendSignal(H1g4, 1);
+SendSignal(H1g5, 1);
+SendSignal(H1g6, 1);
+HUMAN_Drive("Tank1_end", 80);
+}
+Else
+{
+HUMAN_BoardVehicle("Hakl4", 1, 0);
+SendSignal(H1g2, 3);
+SendSignal(H1g3, 3);
+SendSignal(H1g4, 3);
+SendSignal(H1g5, 3);
+SendSignal(H1g6, 3);
+HUMAN_Drive("Tank2_RND1", 70);
+}
+
+Delay(6000);
+If(Trasa == 0)
+{
+HUMAN_BoardVehicle("Hakl2", 0, 0);
+Car_SetFuel(Hakl1, 0);
+SendSignal(H1g2, 5);
+SendSignal(H1g3, 5);
+SendSignal(H1g4, 5);
+SendSignal(H1g5, 5);
+SendSignal(H1g6, 5);
+}
+Else
+{
+HUMAN_BoardVehicle("Hakl4", 0, 0);
+Car_SetFuel(Hakl2, 0);
+SendSignal(H1g2, 7);
+SendSignal(H1g3, 7);
+SendSignal(H1g4, 7);
+SendSignal(H1g5, 7);
+SendSignal(H1g6, 7);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(90);
+SetAlarmType(511,1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+FRM_GetNearestPlayer(me, Player);
+HUMAN_MoveToFrame(Player, 20);
+goto END;
+}
+
+
+Label END:

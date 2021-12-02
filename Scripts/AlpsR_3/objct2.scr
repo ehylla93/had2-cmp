@@ -1,0 +1,44 @@
+// Obj 2, Seize the Eastern Machinegun position
+// --------------------------------------------------
+
+Block
+{
+Frame s1;	FRM_FindFrame(s1,"S1_G01");
+Frame s2;	FRM_FindFrame(s2,"S1_G02");
+Frame s3;	FRM_FindFrame(s3,"S1_G03");
+Frame s4;	FRM_FindFrame(s4,"S1_G04");
+Frame s5;	FRM_FindFrame(s5,"S1_G11");
+Frame s6;	FRM_FindFrame(s6,"S1_G12");
+Frame s7;	FRM_FindFrame(s7,"Hunt03");
+Frame SnSelect;	FRM_FindFrame(SnSelect,"SniperSelector4");
+
+SetWhenever(CountDead, 0);
+SetWhenever(Player, 0);
+}
+
+// --------------------------------------------------
+
+Whenever CountDead (((((((_Actor_GetState(s1)==0) And (_Actor_GetState(s2)==0)) And (_Actor_GetState(s3)==0)) And (_Actor_GetState(s4)==0)) And (_Actor_GetState(s5)==0)) And (_Actor_GetState(s6)==0)) And (_Actor_GetState(s7)==0))
+{
+SetWhenever(Player, 1);
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(CountDead, 1);
+SetObjectiveStatus(2, 0);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(30))
+{
+SendSignal(SnSelect, 1);
+SetObjectiveStatus(2, 1);
+SetObjectiveStatus(11, 0);
+SetObjectiveStatus(12, 0);
+EndScript();
+}
+
+
+Label END:

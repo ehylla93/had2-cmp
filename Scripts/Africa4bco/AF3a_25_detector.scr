@@ -1,0 +1,506 @@
+// Africa(Oasis) Objectives - OBJ 1, 3, 6
+// -----------------------------------------------------------
+// 1) Use Radio
+// 2) Defend the Oasis - Cancelled
+// 3) Destroy the enemy Tank
+// 4) Find Documents
+// 5) Znicte pancejrova vozidla
+// 6) Zabijte Nepritele
+// -----------------------------------------------------------
+
+Block
+{
+Frame S01;		FRM_FindFrame(S01,"A5_G64");
+Integer Sn1;		Sn1 = 1;
+Frame S02;		FRM_FindFrame(S02,"A5_G65");
+Integer Sn2;		Sn2 = 1;
+Frame S03;		FRM_FindFrame(S03,"A5_G67");
+Integer Sn3;		Sn3 = 1;
+Frame S04;		FRM_FindFrame(S04,"A5_G68");
+Integer Sn4;		Sn4 = 1;
+Frame S05;		FRM_FindFrame(S05,"A5_G69");
+Integer Sn5;		Sn5 = 1;
+Frame S06;		FRM_FindFrame(S06,"A5_G72");
+Integer Sn6;		Sn6 = 1;
+Frame S07;		FRM_FindFrame(S07,"A5_G73");
+Integer Sn7;		Sn7 = 1;
+Frame S08;		FRM_FindFrame(S08,"AF3a_02");
+Integer Sn8;		Sn8 = 1;
+Frame S09;		FRM_FindFrame(S09,"AF3a_05");
+Integer Sn9;		Sn9 = 1;
+
+Frame S10;		FRM_FindFrame(S10,"AF3a_06");
+Integer Sn10;		Sn10 = 1;
+Frame S11;		FRM_FindFrame(S11,"AF3a_08");
+Integer Sn11;		Sn11 = 1;
+Frame S12;		FRM_FindFrame(S12,"AF3a_10");
+Integer Sn12;		Sn12 = 1;
+Frame S13;		FRM_FindFrame(S13,"AF3a_11");
+Integer Sn13;		Sn13 = 1;
+Frame S14;		FRM_FindFrame(S14,"AF3a_14");
+Integer Sn14;		Sn14 = 1;
+Frame S15;		FRM_FindFrame(S15,"AF3a_16");
+Integer Sn15;		Sn15 = 1;
+Frame S16;		FRM_FindFrame(S16,"AF3a_19");
+Integer Sn16;		Sn16 = 1;
+Frame S17;		FRM_FindFrame(S17,"AF3a_22");
+Integer Sn17;		Sn17 = 1;
+Frame S18;		FRM_FindFrame(S18,"AF3a_25");
+Integer Sn18;		Sn18 = 1;
+Frame S19;		FRM_FindFrame(S19,"AF3a_26");
+Integer Sn19;		Sn19 = 1;
+Frame S20;		FRM_FindFrame(S20,"AF3a_27");
+Integer Sn20;		Sn20 = 1;
+
+Frame S21;		FRM_FindFrame(S21,"AF3a_28");
+Integer Sn21;		Sn21 = 1;
+Frame S22;		FRM_FindFrame(S22,"AF3a_29");
+Integer Sn22;		Sn22 = 1;
+Frame S23;		FRM_FindFrame(S23,"AF3a_30");
+Integer Sn23;		Sn23 = 1;
+Frame S24;		FRM_FindFrame(S24,"AF3a_31");
+Integer Sn24;		Sn24 = 1;
+Frame S25;		FRM_FindFrame(S25,"AF3a_32");
+Integer Sn25;		Sn25 = 1;
+Frame S26;		FRM_FindFrame(S26,"AF3a_33");
+Integer Sn26;		Sn26 = 1;
+Frame S27;		FRM_FindFrame(S27,"AF3a_34");
+Integer Sn27;		Sn27 = 1;
+Frame S28;		FRM_FindFrame(S28,"AF3a_35");
+Integer Sn28;		Sn28 = 1;
+Frame S29;		FRM_FindFrame(S29,"AF3a_36");
+Integer Sn29;		Sn29 = 1;
+Frame S30;		FRM_FindFrame(S30,"AF3a_37");
+Integer Sn30;		Sn30 = 1;
+
+Frame S31;		FRM_FindFrame(S31,"C5_G07");
+Integer Sn31;		Sn31 = 1;
+Frame S32;		FRM_FindFrame(S32,"C5_G08");
+Integer Sn32;		Sn32 = 1;
+Frame S33;		FRM_FindFrame(S33,"C5_G09");
+Integer Sn33;		Sn33 = 1;
+Frame S34;		FRM_FindFrame(S34,"C5_G10");
+Integer Sn34;		Sn34 = 1;
+Frame S35;		FRM_FindFrame(S35,"La_tiger_2");
+Integer Sn35;		Sn35 = 1;
+
+Frame radio;	FRM_FindFrame(radio, "m_prist_a3");
+Frame T1;	FRM_FindFrame(T1,"C5_G02");
+Frame GetPlayer;
+
+SetWhenever(OBJ1_DONE_Radio, 0);
+SetActorState(radio, 0);
+
+Integer pocitac;
+	pocitac=0;
+
+Integer Tank;
+	Tank=1;
+
+SetObjectiveStatus(1, 4);	// Pouzij Vysilacku
+SetObjectiveStatus(2, 4);	// Ubran Oazu - Cancelled
+SetObjectiveStatus(3, 0);	// Znic Tigera
+SetObjectiveStatus(6, 4);	// Kill the Enemy
+}
+
+Whenever OBJ3_DONE_Tiger_Destroyed (_ACTOR_GetState(T1) == 0)
+{
+SetObjectiveStatus(6, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993413);
+Delay(4000);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetText(20994001);
+Delay(4000);
+SUBTITLES_SetOn(0);
+Tank = 0;
+Goto Enemy_Countdown; 
+}
+
+Whenever OBJ1_DONE_Radio (_ACTOR_GetState(radio) == 2)
+{
+FRM_GetNearestPlayer(Radio,GetPlayer);  
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(GetPlayer, 07991610, 3, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(GetPlayer, 07991611, 3, 10);
+Delay(2000);
+SUBTITLES_SetText(04990812);
+Delay(4000);
+SetObjectiveStatus(1, 1);
+SetActorState(radio, 0);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+goto END;
+
+Label Enemy_Countdown:
+
+If(Sn1 == 1)
+{
+
+If(_Actor_GetState(S01)==0)
+{	
+pocitac=pocitac+1;		
+Sn1=0;	
+}	
+}
+
+If(Sn2 == 1)
+{
+
+If(_Actor_GetState(S02)==0)
+{
+pocitac=pocitac+1;
+Sn2=0;
+}
+}
+
+If(Sn3 == 1)
+{
+
+If(_Actor_GetState(S03)==0)
+{
+pocitac=pocitac+1;
+Sn3=0;
+}
+}
+
+If(Sn4 == 1)
+{
+
+If(_Actor_GetState(S04)==0)
+{
+pocitac=pocitac+1;
+Sn4=0;
+}
+}
+
+If(Sn5 == 1)
+{
+
+If(_Actor_GetState(S05)==0)
+{
+pocitac=pocitac+1;
+Sn5=0;
+}
+}
+
+If(Sn6 == 1)
+{
+
+If(_Actor_GetState(S06)==0)
+{
+pocitac=pocitac+1;
+Sn6=0;
+}
+}
+
+If(Sn7 == 1)
+{
+
+If(_Actor_GetState(S07)==0)
+{
+pocitac=pocitac+1;
+Sn7=0;
+}
+}
+
+If(Sn8 == 1)
+{
+
+If(_Actor_GetState(S08)==0)
+{
+pocitac=pocitac+1;
+Sn8=0;
+}
+}
+
+If(Sn9 == 1)
+{
+
+If(_Actor_GetState(S09)==0)
+{
+pocitac=pocitac+1;
+Sn9=0;
+}
+}
+
+If(Sn10 == 1)
+{
+
+If(_Actor_GetState(S10)==0)
+{
+pocitac=pocitac+1;
+Sn10=0;
+}
+}
+
+If(Sn11 == 1)
+{
+
+If(_Actor_GetState(S11)==0)
+{
+pocitac=pocitac+1;
+Sn11=0;
+}
+}
+
+If(Sn12 == 1)
+{
+
+If(_Actor_GetState(S12)==0)
+{
+pocitac=pocitac+1;
+Sn12=0;
+}
+}
+
+If(Sn13 == 1)
+{
+
+If(_Actor_GetState(S13)==0)
+{
+pocitac=pocitac+1;
+Sn13=0;
+}
+}
+
+If(Sn14 == 1)
+{
+
+If(_Actor_GetState(S14)==0)
+{
+pocitac=pocitac+1;
+Sn14=0;
+}
+}
+
+If(Sn15 == 1)
+{
+
+If(_Actor_GetState(S15)==0)
+{
+pocitac=pocitac+1;
+Sn15=0;
+}
+}
+
+If(Sn16 == 1)
+{
+
+If(_Actor_GetState(S16)==0)
+{
+pocitac=pocitac+1;
+Sn16=0;
+}
+}
+
+If(Sn17 == 1)
+{
+
+If(_Actor_GetState(S17)==0)
+{
+pocitac=pocitac+1;
+Sn17=0;
+}
+}
+
+If(Sn18 == 1)
+{
+
+If(_Actor_GetState(S18)==0)
+{pocitac=pocitac+1;
+Sn18=0;
+}
+}
+
+If(Sn19 == 1)
+{
+
+If(_Actor_GetState(S19)==0)
+{
+pocitac=pocitac+1;
+Sn19=0;
+}
+}
+
+If(Sn20 == 1)
+{
+
+If(_Actor_GetState(S20)==0)
+{
+pocitac=pocitac+1;
+Sn20=0;
+}
+}
+
+If(Sn21 == 1)
+{
+
+If(_Actor_GetState(S21)==0)
+{
+pocitac=pocitac+1;
+Sn21=0;
+}
+}
+
+If(Sn22 == 1)
+{
+
+If(_Actor_GetState(S22)==0)
+{
+pocitac=pocitac+1;
+Sn22=0;
+}
+}
+
+If(Sn23 == 1)
+{
+
+If(_Actor_GetState(S23)==0)
+{
+pocitac=pocitac+1;
+Sn23=0;
+}
+}
+
+If(Sn24 == 1)
+{
+
+If(_Actor_GetState(S24)==0)
+{
+pocitac=pocitac+1;
+Sn24=0;
+}
+}
+
+If(Sn25 == 1)
+{
+
+If(_Actor_GetState(S25)==0)
+{
+pocitac=pocitac+1;
+Sn25=0;
+}
+}
+
+If(Sn26 == 1)
+{
+
+If(_Actor_GetState(S26)==0)
+{
+pocitac=pocitac+1;
+Sn26=0;
+}
+}
+
+If(Sn27 == 1)
+{
+
+If(_Actor_GetState(S27)==0)
+{
+pocitac=pocitac+1;
+Sn27=0;
+}
+}
+
+If(Sn28 == 1)
+{
+
+If(_Actor_GetState(S28)==0)
+{pocitac=pocitac+1;
+Sn28=0;
+}
+}
+
+If(Sn29 == 1)
+{
+
+If(_Actor_GetState(S29)==0)
+{
+pocitac=pocitac+1;
+Sn29=0;
+}
+}
+
+If(Sn30 == 1)
+{
+
+If(_Actor_GetState(S30)==0)
+{
+pocitac=pocitac+1;
+Sn30=0;
+}
+}
+
+If(Sn31 == 1)
+{
+
+If(_Actor_GetState(S31)==0)
+{
+pocitac=pocitac+1;
+Sn31=0;
+}
+}
+
+If(Sn32 == 1)
+{
+
+If(_Actor_GetState(S32)==0)
+{
+pocitac=pocitac+1;
+Sn32=0;
+}
+}
+
+If(Sn33 == 1)
+{
+
+If(_Actor_GetState(S33)==0)
+{
+pocitac=pocitac+1;
+Sn33=0;
+}
+}
+
+If(Sn34 == 1)
+{
+
+If(_Actor_GetState(S34)==0)
+{
+pocitac=pocitac+1;
+Sn34=0;
+}
+}
+
+If(Sn35 == 1)
+{
+
+If(_Actor_GetState(S35)==0)
+{
+pocitac=pocitac+1;
+Sn35=0;
+}
+}
+
+If((Tank == 0) And (pocitac > 33))
+{
+SetObjectiveStatus(1, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(09991805);
+Delay(4000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetText(04990803);
+Delay(4000);
+SetActorState(radio, 1);
+SetWhenever(OBJ1_DONE_Radio, 1);
+SUBTITLES_SetOn(0);
+pocitac=0;
+goto END;
+}
+goto Enemy_Countdown;
+
+
+Label END:

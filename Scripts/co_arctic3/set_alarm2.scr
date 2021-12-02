@@ -1,0 +1,51 @@
+// TURNING OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame E01;	FRM_FindFrame(E01,"Plane_1");
+Frame E02;	FRM_FindFrame(E02,"Plane_2");
+Frame E03;	FRM_FindFrame(E03,"Plane_3");
+Frame E04;	FRM_FindFrame(E04,"Driver");
+Frame E05;	FRM_FindFrame(E05,"Car_1");
+Frame E06;	FRM_FindFrame(E06,"Car_2");
+Frame E07;	FRM_FindFrame(E07,"Car_3");
+Frame E08;	FRM_FindFrame(E08,"Car_4");
+Frame E09;	FRM_FindFrame(E09,"Car_5");
+Frame E10;	FRM_FindFrame(E10,"Car_6");
+
+Frame E11;	FRM_FindFrame(E11,"FreeMan_1");
+Frame E12;	FRM_FindFrame(E12,"FreeMan_2");
+Frame E13;	FRM_FindFrame(E13,"Pilot");
+Frame E14;	FRM_FindFrame(E14,"Amik_1");
+Frame E15;	FRM_FindFrame(E15,"Amik_2");
+Frame E16;	FRM_FindFrame(E16,"Amik_3");
+Frame E17;	FRM_FindFrame(E17,"Trap1_1");
+Frame E18;	FRM_FindFrame(E18,"Trap1_2");
+Frame E19;	FRM_FindFrame(E19,"Trap1_3");
+Frame E20;	FRM_FindFrame(E20,"Trap1_4");
+
+Frame E21;	FRM_FindFrame(E21,"Trap1_5");
+Frame E22;	FRM_FindFrame(E22,"Trap2_1");
+Frame E23;	FRM_FindFrame(E23,"Trap2_2");
+Frame E24;	FRM_FindFrame(E24,"Trap2_3");
+Frame E25;	FRM_FindFrame(E25,"Guard_1");
+Frame E26;	FRM_FindFrame(E26,"Guard_2");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+Block {
+SendSignal(E01, 7);SendSignal(E02, 7);SendSignal(E03, 7);SendSignal(E04, 7);SendSignal(E05, 7);
+SendSignal(E06, 7);SendSignal(E07, 7);SendSignal(E08, 7);SendSignal(E09, 7);SendSignal(E10, 7);
+}
+Block {
+SendSignal(E11, 7);SendSignal(E12, 7);SendSignal(E13, 7);SendSignal(E14, 7);SendSignal(E15, 7);
+SendSignal(E16, 7);SendSignal(E17, 7);SendSignal(E18, 7);SendSignal(E19, 7);SendSignal(E20, 7);
+}
+SendSignal(E21, 7);SendSignal(E22, 7);SendSignal(E23, 7);SendSignal(E24, 7);SendSignal(E25, 7);
+SendSignal(E26, 7);
+EndScript();
+}

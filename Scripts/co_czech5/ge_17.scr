@@ -1,0 +1,78 @@
+//Opel - Pas - Leader of Formation
+
+Frame GE_18;			FRM_FindFrame(GE_18, "GE_18");
+Frame GE_19;			FRM_FindFrame(GE_19, "GE_19");
+Frame GE_14;			FRM_FindFrame(GE_14, "GE_14");
+Frame count;			FRM_FindFrame(count, "dead_counter");
+Frame me;			FRM_GetMyFrame(me);
+HUMAN_BoardVehicle("la_OpelE_5", 1, 3);
+SetAlarmType(1023, false);
+
+OnSignal(1)
+	{
+	Printf("GE_17 sig 1");
+	//HUMAN_SETMODE_Stand();
+	HUMAN_BoardVehicle("", 0, 3);
+	Delay(1500);
+	SetAlarmType(1023, true);
+	HUMAN_WeaponOnArm(true);
+	Delay(1000);
+	HUMAN_Move("GE_17_1");
+	HUMAN_Move("GE_17_2");
+	HUMAN_Move("GE_17_3");
+	HUMAN_SETMODE_Run();
+	//Delay(2000);
+	
+	SendSignal(GE_18, 2);
+	SendSignal(GE_19, 2);
+	SendSignal(GE_14, 2);
+	Delay(2000);
+	
+	//FORMATION_Create(me);
+	Delay(200);
+	//FORMATION_AddMember(GE_18, me);
+	//FORMATION_AddMember(GE_19, me);
+	//FORMATION_AddMember(GE_14, me);
+	//FORMATION_SetTypeLine(me);
+	//FORMATION_SetScale(me, 100);
+	Delay(200);
+	HUMAN_Move("F_1");
+	HUMAN_Move("F_2");
+	HUMAN_Move("F_3");
+	HUMAN_Move("F_4");
+	HUMAN_Move("F_5");
+	HUMAN_Move("F_6");
+	HUMAN_Move("F_7");
+	HUMAN_Move("F_8");
+	HUMAN_Move("F_9");
+	HUMAN_Move("F_10");
+	HUMAN_Move("F_11");
+	HUMAN_Move("F_12");
+
+	}
+
+OnAlarm()
+	{
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETMODE_Stand();
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("GE_17_3");
+	}
+	
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}

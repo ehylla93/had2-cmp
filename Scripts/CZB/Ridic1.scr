@@ -1,0 +1,85 @@
+//  Ridic Oplu (1)
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  Frame seda1;		FRM_FindFrame(seda1,"D5_G01");
+  Frame seda2;		FRM_FindFrame(seda2,"D5_G02");
+  Frame seda3;		FRM_FindFrame(seda3,"D5_G03");
+  Frame seda4;		FRM_FindFrame(seda4,"D5_G04");
+  Frame seda5;		FRM_FindFrame(seda5,"D5_G05");
+
+  Frame opl2;		FRM_FindFrame(opl2,"Ridic2");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnAlarm(){
+  HUMAN_Stop();
+  SendSignal(opl2, 3);
+  HUMAN_Drive("C5_tank11", 80);
+  Delay(1000);
+  HUMAN_BoardVehicle("Opel_04",  false, 0);
+  Delay(1000);
+  
+  SendSignal(seda1, 2);
+  SendSignal(seda2, 2);
+  SendSignal(seda3, 2);
+  SendSignal(seda4, 2);
+  SendSignal(seda5, 2);
+  
+  HUMAN_SETSIGHTRANGE(100);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("C5_G38_01");
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnDeath(){
+SendSignal(seda1, 3);
+SendSignal(seda2, 3);
+SendSignal(seda3, 3);
+SendSignal(seda4, 3);
+SendSignal(seda5, 3);
+EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+  FRM_SwitchFaceTexture(me, "e_f043");
+  HUMAN_SETSIGHTRANGE(0); 
+  HUMAN_SetOptimized(1);
+  Delay(15000);
+  HUMAN_BoardVehicle("Opel_04",  true, 0);
+  HUMAN_Drive("C5_tank11", 30);
+  Delay(1000);
+  SendSignal(opl2, 4);
+  
+  HUMAN_Drive("", 30);
+  HUMAN_BoardVehicle("Opel_04",  false, 0);
+  SendSignal(seda1, 2);
+  SendSignal(seda2, 2);
+  SendSignal(seda3, 2);
+  SendSignal(seda4, 2);
+  SendSignal(seda5, 2);
+  
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETSIGHTRANGE(100);
+  HUMAN_Move("C5_G38_01");
+  goto END;
+
+  Label END:

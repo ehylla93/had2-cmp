@@ -1,0 +1,15 @@
+Frame me;		FRM_GetMyFrame(me);
+
+Frame brana;		FRM_FindFrame(brana, "HV01_212");
+
+
+
+integer Door;		Door = 1;
+
+
+	{
+	printf ("oteviram");
+	DOOR_Lock(brana, 1);
+	SetActorState(brana,1);
+	Door = 1;
+	}

@@ -1,0 +1,20 @@
+
+Block
+{
+    Frame soldier1;    FRM_FindFrame( soldier1, "THOR3_RIF_1" );
+
+    Frame soldier2;    FRM_FindFrame( soldier2, "THOR3_RIF_2" );
+} 
+
+// -------------------------------------------------------------------
+// CHLAPI, ZNOVU OBSADTE CHECKPIOINT
+// ------------------------------------------------------------------
+EnableSignal( 1, 1 );
+OnSignal( 1 )   
+{
+     EnableSignal( 1, 0 );
+     SendSignal( soldier1,  2 );
+     Delay( 300 );
+     SendSignal( soldier2,  2 );
+     EndScript( );
+}

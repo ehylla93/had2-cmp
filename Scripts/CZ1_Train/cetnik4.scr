@@ -1,0 +1,112 @@
+// cetnik4
+
+Block
+{
+Frame cetnik3;
+	FRM_FindFrame(cetnik3, "cetnik3");
+Frame ridic;
+	FRM_FindFrame(ridic, "ridic nakladaku");
+Frame speech;
+	FRM_FindFrame(speech, "speech2");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer nuda;
+	nuda=0;
+Integer kecani;
+	kecani=0;
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f051");
+}
+
+Label turn_at:
+	HUMAN_TurnAt(cetnik3);
+	GoTo hlidka;
+
+Label hlidka:
+	HUMAN_TurnAt(cetnik3);
+	HUMAN_SETSIGHTRANGE(60);
+	kecani=_RandomInt(3);
+	If(kecani==0)
+	{
+		HUMAN_SetAnim("%%nuda1", 500, 1500, false);
+		Delay(12000);
+	}
+	nuda=_RandomInt(8) + 1;
+	If(nuda==1)
+	{
+		GoTo nuda;
+	}
+	Delay(2000);
+	GoTo hlidka;
+
+Label nuda:
+	HUMAN_SetAnim("%%lenin", 500, 1500, false);
+	Delay(12000);
+	GoTo hlidka;
+
+OnAlarm()
+{	
+	HUMAN_Stop();
+
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SetAnim("", 500, 1500, false);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETSIGHTRANGE(60);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("cet4");
+	GoTo turn_at;
+}
+
+OnSignal(1)	// received from ridic nakladaku ak je cetnik na zaciatku killed
+{
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("bkontr1");
+	HUMAN_LookAround(3);
+	Delay(2000);
+	HUMAN_Move("predek");
+}
+
+OnSignal(2)	// received from cetnik3 whenever ridic nakladaku in range 3
+{
+	HUMAN_TurnAt(ridic);
+	Delay(4000);
+	GoTo turn_at;
+}
+
+OnSignal(3)	// received from speech2
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+}
+
+OnDeath()
+{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}

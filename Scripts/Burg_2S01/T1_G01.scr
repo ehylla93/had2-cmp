@@ -1,0 +1,29 @@
+// T1_G01 - Reinforcement Panzer (S02_Panzer_01) Driver
+// ------------------------------------------------------
+
+Block
+{
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+DisableAlarms(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("S02_Panzer_01", 1, 0); 
+HUMAN_Drive("path01_02", 120);
+HUMAN_Drive("", 120);
+goto END;
+}
+
+
+Label END:

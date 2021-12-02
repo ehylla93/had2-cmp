@@ -1,0 +1,23 @@
+// Sherman crew
+
+Block
+ {
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+HUMAN_Suspend(True);
+goto TheEnd;
+
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_sherman", true, 3);
+}
+				
+OnAlarm()	{}
+
+OnAlarmDone()  {}
+
+Label TheEnd:

@@ -1,0 +1,35 @@
+//North - on street
+
+Frame count;		FRM_FindFrame(count, "dead_counter");
+Frame fence;		FRM_FindFrame(fence, "e_dfnc_2");
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+
+OnAlarm()
+	{
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETMODE_Run();
+	HUMAN_MoveFromFrame(fence, 10);
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SETAIMODE_Aggressive();
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_WeaponOnArm(false);
+	}
+	
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}

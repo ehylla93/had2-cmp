@@ -1,0 +1,46 @@
+// Randomize 1
+
+//SGV 30: gery_S01
+//SGV 31: gery_S02
+//SGV 32: gery_S03
+
+Block {
+SaveGameValue(30, 0);
+SaveGameValue(31, 0);
+SaveGameValue(32, 0);
+
+integer a =_RandomInt(7);
+}
+
+printfnumber("random spawn geryS set:", a);
+if(a==0) {
+SaveGameValue(32, 1);
+}
+if(a==1) {
+SaveGameValue(31, 1);
+}
+if(a==2) {
+SaveGameValue(31, 1);
+SaveGameValue(32, 1);
+}
+if(a==3) {
+SaveGameValue(30, 1);
+}
+if(a==4) {
+SaveGameValue(30, 1);
+SaveGameValue(32, 1);
+}
+if(a==5) {
+SaveGameValue(30, 1);
+SaveGameValue(31, 1);
+}
+if(a==6) {
+SaveGameValue(30, 1);
+SaveGameValue(31, 1);
+SaveGameValue(32, 1);
+}
+if(a==7) {
+
+}
+
+EndScript();

@@ -1,0 +1,69 @@
+
+Block {
+frame X1;			FRM_FindFrame(X1, "p1s01");
+frame X2;			FRM_FindFrame(X2, "m_dv_m01");
+frame lustrON;		FRM_FindFrame(lustrON, "m_svet_3");
+frame lustrOFF;		FRM_FindFrame(lustrOFF, "m_svet_4");
+
+FRM_SetOn(lustrON, False);
+FRM_SetOn(lustrOFF, True);
+
+SaveGameValue(21, 0);
+}
+
+OnUse()
+{
+If ( _LoadGameValue(21)==0 ) 
+  {
+    Block
+      {
+         SaveGameValue(21, 1);
+         FRM_SetOn(lustrON, True); 
+         FRM_SetOn(lustrOFF, False); 
+         PlaySound(3, 4);
+         FRM_SetGroupLightMap("Blikni_si",  4);
+       }
+    } else {
+
+    Block
+      {
+         SaveGameValue(21, 0);
+         FRM_SetOn(lustrON, False); 
+         FRM_SetOn(lustrOFF, True); 
+         PlaySound(3, 4);
+         FRM_SetGroupLightMap("Blikni_si",  0);
+         SendSignal(X1, 21);
+         SendSignal(X2, 21);
+     }
+  }
+}
+
+OnSignal(21)
+{
+Frame W1;	FRM_FindFrame(W1, "Walker_1");
+Frame W3;	FRM_FindFrame(W3, "Walker_3");
+SendSignal(W1, 21);
+SendSignal(W3, 21);
+If ( _LoadGameValue(21)==0 ) 
+  {
+    Block
+      {
+         SaveGameValue(21, 1);
+         FRM_SetOn(lustrON, True); 
+         FRM_SetOn(lustrOFF, False); 
+         PlaySound(3, 4);
+         FRM_SetGroupLightMap("Blikni_si",  4);
+       }
+    } else {
+    Block
+      {
+         SaveGameValue(21, 0); 
+         FRM_SetOn(lustrON, False); 
+         FRM_SetOn(lustrOFF, True); 
+         PlaySound(3, 4);
+         FRM_SetGroupLightMap("Blikni_si",  0);
+         SendSignal(X1, 21);
+         SendSignal(X2, 21);
+     }
+  }
+}

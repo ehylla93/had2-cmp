@@ -1,0 +1,23 @@
+//detect player
+
+Block {
+Frame al04;		FRM_FindFrame(al04, "al2_04");
+
+SetWhenever(ne, 0);
+}
+
+Whenever je(_PlayerInRange(4))
+{
+SendSignal (al04,6);
+SetWhenever(ne, 1);
+goto end;
+}
+
+Whenever ne(!_PlayerInRange(4))
+{
+SendSignal (al04,7);
+SetWhenever(je, 1);
+goto end;
+}
+
+Label end:

@@ -1,0 +1,31 @@
+
+frame Ally;		FRM_FindFrame(Ally, "ally_2");
+
+
+// 17993424	Pane!	
+// 17993425	Díky že jste pro nás pøišel.	
+// 17993426	Musíme se tady udržet než dorazí naše tanky.	
+// 17993427	S vaší pomocí to urèitì zvládnem.	
+OnSignal(1)
+{
+  SUBTITLES_SetOn(False);  // rusi tytulky od jineho dubingu
+  SUBTITLES_SetOn(True);
+  If (_ACTOR_GetState(Ally) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(Ally, 17993424, 5, 15);	  Delay(6);
+     }
+  If (_ACTOR_GetState(Ally) == 1) 
+     { 
+          FRM_MorphSpeechDelayed(Ally, 17993425, 5, 15);	  Delay(16);	 
+     }
+  If (_ACTOR_GetState(Ally) == 1) 
+     { 
+          FRM_MorphSpeechDelayed(Ally, 17993426, 5, 15);	  Delay(37);	 
+     }
+  If (_ACTOR_GetState(Ally) == 1) 
+     { 
+          FRM_MorphSpeechDelayed(Ally, 17993427, 5, 15);	  Delay(19);	 
+     }
+  SUBTITLES_SetOn(False);							// 7800
+}
+	

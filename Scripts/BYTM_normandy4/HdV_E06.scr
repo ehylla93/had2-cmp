@@ -1,0 +1,144 @@
+// HdV_E06 on patrol
+
+block
+{
+Frame SdKfZ;	FRM_FindFrame(SdKfZ, "SdKfZ_2");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+integer aievent;
+integer a = _RandomInt(4);
+integer b;
+integer time;
+}
+
+if(a==0) { HUMAN_SETAIMODE_Zombie(); }
+if(a==1) { HUMAN_SETAIMODE_Aggressive(); }
+else { HUMAN_SETAIMODE_Defensive(); }
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("HdV_E06 alarm:",aievent);
+HUMAN_SetAnim("", 200, 200, 0);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("HdV_E06 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(60))
+{
+FRM_TeleportNearCheckpoint(MyFRM, "way3_13", "");
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Guard();
+}
+
+Label rdmroute:
+a=_RandomInt(4);
+if(a==0) { printf("HdV_E06 taking route1"); goto route1; }
+if(a==1) { printf("HdV_E06 taking route2"); goto route2; }
+if(a==2) { printf("HdV_E06 taking route3"); goto route3; }
+if(a==3) { printf("HdV_E06 taking route4"); goto route4; }
+
+Label route1:
+HUMAN_Move("way3_03");
+HUMAN_Move("way3_12");
+a=_RandomInt(2);
+if(a==0) { HUMAN_Move("way3_11"); HUMAN_TurnAt(SdKfZ); gosub timer; }
+if(a==1) {  }
+HUMAN_Move("way3_10");
+HUMAN_Move("way3_13");
+goto rdmroute;
+
+Label route2:
+HUMAN_Move("way3_08");
+HUMAN_Move("way3_09");
+gosub timer;
+HUMAN_Move("way3_08");
+HUMAN_Move("way3_13");
+goto rdmroute;
+
+Label route3:
+HUMAN_Move("way3_10");
+a=_RandomInt(2);
+if(a==0) { HUMAN_Move("way3_11"); HUMAN_TurnAt(SdKfZ); gosub timer; }
+if(a==1) {  }
+HUMAN_Move("way3_12");
+HUMAN_Move("way3_13");
+goto rdmroute;
+
+Label route4:
+HUMAN_Move("way3_01");
+gosub timer;
+HUMAN_Move("way3_02");
+gosub timer;
+HUMAN_Move("way3_13");
+goto rdmroute;
+
+Label timer:
+time=((_RandomInt(20000)) + 5000);	// min 5 seconds, max 25 seconds
+printfnumber("HdV_E06 timer", time);
+Delay(time);
+b=b+1;
+gosub rdmanim;
+if(b==2) { b=0; Return; }
+goto timer;
+
+Label rdmanim:
+a=_RandomInt(4);
+if(a==0)
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+Delay(1000);
+HUMAN_SetAnim("%%c4_hlida1", 500, 500, 0);	
+Delay(4000);
+HUMAN_SETMODE_Stand();
+}
+if(a==1)
+{
+HUMAN_WeaponOnArm(0);
+Delay(1000);
+HUMAN_SetAnim("%%nuda", 500, 500, 0);
+Delay(8000);
+HUMAN_WeaponOnArm(1);
+}
+if(a==2)
+{
+HUMAN_WeaponOnArm(0);
+Delay(1000);
+HUMAN_SetAnim("%%protahovani", 500, 500, 0);
+Delay(7000);
+HUMAN_WeaponOnArm(1);
+}
+if(a==3)
+{
+HUMAN_WeaponOnArm(0);
+Delay(1000);
+HUMAN_SetAnim("%%flus1", 500, 500, 0);
+Delay(4000);
+HUMAN_WeaponOnArm(1);
+}
+Delay(1000);
+Return;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

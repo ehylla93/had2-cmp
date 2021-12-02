@@ -1,0 +1,22 @@
+// Detektor Smrti Britu - MISSION  FAILED
+// ------------------------------------------
+
+Whenever Dead (_SignalReceived(5))
+{
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(5, 4);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+SetObjectiveStatus(8, 4);
+SetObjectiveStatus(9, 4);
+SetObjectiveStatus(10, 4);
+SetObjectiveStatus(11, 4);
+SetObjectiveStatus(12, 4);
+Delay(500);
+SetObjectiveStatus(3, 2);
+SetObjectiveStatus(4, 2);
+Delay(500);
+DisableSignals(1);
+EndScript();
+}

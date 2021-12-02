@@ -1,0 +1,60 @@
+// S1_G08 - Alarmer z lesa
+// --------------------------------
+
+Block
+{
+Frame cp1;	FRM_FindFrame(cp1,"Kanon3");
+Frame cp2;	FRM_FindFrame(cp2,"Chata_Cp1");
+Frame cp3;	FRM_FindFrame(cp3,"Chata_Cp2");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f021");
+}
+
+// --------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(cp1, 5);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+// --------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

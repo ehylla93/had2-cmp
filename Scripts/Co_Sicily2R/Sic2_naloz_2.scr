@@ -1,0 +1,33 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Hlida NALOZ2 na moste - pro OBJ odminovani
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+  frame EX;			FRM_FindFrame(EX, "dummy_ex_2");
+}
+
+Whenever Stav ( _ACTOR_GetState(MyFRM) == 0 )
+{
+  //SetActorState(MyFRM, 3);
+  EndScript();
+}
+
+
+// od talose odpalovace IT 7
+OnSignal(1)
+{
+    Delay(800);	 	// pro sound delay
+    SetActorState(MyFRM, 2);
+    SetActorState(EX, 1);
+    MakeExplosion(MyFRM, 100000000, 10000);          /////////////////////////////////upravit
+}
+
+////////////////////////// Test - start
+//Delay(10000);
+//SendSignal(MyFRM, 1);
+////////////////////////// Test - end

@@ -1,0 +1,47 @@
+// Spawnzones
+// ----------------------------------------------
+
+Block
+{
+Frame Zone_S2;		FRM_FindFrame(Zone_S2,"Zone_S2");
+Frame Zone_S3;		FRM_FindFrame(Zone_S3,"Zone_S3");
+Frame Zone_S4;		FRM_FindFrame(Zone_S4,"Zone_S4");
+
+Frame Obj8;			FRM_FindFrame(Obj8,"obj8");
+Frame Obj9;			FRM_FindFrame(Obj9,"obj9");
+}
+
+// ----------------------------------------------
+
+Whenever Zone2_TurnOn (_SignalReceived(2))
+{
+MP_EnableSpawnZone("zone5", 1);
+MP_EnableSpawnZone("zone1", 2);
+}
+
+Whenever Zone3_TurnOn (_SignalReceived(3))
+{
+MP_EnableSpawnZone("zone6", 1);
+MP_EnableSpawnZone("zone5", 2);
+MP_EnableSpawnZone("zone1", 2);
+SetWhenever(Zone2_TurnOn, 0);
+}
+
+Whenever Zone4_TurnOn (_SignalReceived(4))
+{
+MP_EnableSpawnZone("zone2", 1);
+MP_EnableSpawnZone("zone6", 2);
+MP_EnableSpawnZone("zone5", 2);
+MP_EnableSpawnZone("zone1", 2);
+SetWhenever(Zone3_TurnOn, 0);
+SendSignal(Obj8, 1);
+SendSignal(Obj9, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999714);
+Delay(3500);
+SUBTITLES_SetText(02010417);
+Delay(3500);
+SUBTITLES_SetOn(0);
+Endscript();
+}
+

@@ -1,0 +1,129 @@
+
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+integer ridic;
+integer aievent;
+integer jedem = 1;
+
+frame hakl_panaci;		FRM_FindFrame(hakl_panaci,"hakl_panaci");
+frame hakl_panaci_a;	FRM_FindFrame(hakl_panaci_a,"hakl_panaci_alarm");
+frame hakl;				FRM_FindFrame(hakl,"hakl");
+frame ge12;				FRM_FindFrame(ge12,"ge_12");
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(40);
+}
+
+HUMAN_SETEVENTS(0);
+SetAlarmType(1023,0);
+SetAlarmType(64,1);
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+if ((aievent==64) and (jedem==1))
+{
+block
+{
+SendSignal (ge12,6);
+DisableSignals(0);
+PlaySound(9,48);
+HUMAN_SetAlarm(0);
+}
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+delay (20000);
+ridic=_LoadGameValue(1);
+if (ridic==1)
+{
+HUMAN_SETMODE_Walk();
+HUMAN_TurnAtNearestPlayer();
+delay (900);
+label hledej:
+HUMAN_MoveRandomRadius(30);
+HUMAN_LookAround(1);
+delay (5000);
+goto hledej;
+}
+HUMAN_SETEVENTS(0);
+HUMAN_BoardVehicle("hakl",1,3);
+jedem=1;
+SendSignal(hakl_panaci_a,15);
+goto end;
+}
+
+OnDeath()
+{
+SendSignal (ge12,6);
+SendSignal(hakl_panaci_a,25);
+DisableSignals(1);
+EndScript();
+}
+
+
+Whenever bez(_SignalReceived(1))			
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("hakl",1,3);
+HUMAN_SETEVENTS(0);
+SendSignal(hakl_panaci,15);
+goto end;
+}
+
+Whenever alarm(_SignalReceived(6))			
+{
+delay (300);
+HUMAN_BoardVehicle("hakl",0,3);
+jedem=0;
+delay(200);
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveFromFrame(hakl, 8);
+block
+{
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+HUMAN_TurnAtNearestPlayer();
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+//------------------------------------------------------------------------------------------
+
+label end:

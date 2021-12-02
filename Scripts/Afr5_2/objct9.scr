@@ -1,0 +1,55 @@
+// Obj 9 - Damage Radio Station
+// -----------------------------------------------
+
+Block
+{
+	Frame Obj10;		FRM_FindFrame(Obj10, "obj10");
+	Frame Radio_Bomb;	FRM_FindFrame(Radio_Bomb, "09_Radio_Bomb");
+	
+	SetActorState(Radio_Bomb, 3);
+	
+	SetWhenever(Disarmed, 0);
+	SetWhenever(Armed, 0);
+}
+
+Whenever Blow_it_up (_SignalReceived(1))
+{
+	Delay(200);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(52999703);
+	Delay(3000);
+	SetActorState(Radio_Bomb, 0);
+	SUBTITLES_SetOn(0);
+}
+
+Whenever Bomb_Planted (_Actor_GetState(Radio_Bomb) == 1)
+{
+	Delay(500);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(02990460);
+	SendSignal(Obj10, 1);
+	Delay(3000);
+	SetObjectiveStatus(9, 1);
+	SetWhenever(Disarmed, 1);
+	SUBTITLES_SetOn(0);
+}
+
+Whenever Disarmed (_Actor_GetState(Radio_Bomb) == 0)
+{
+	SUBTITLES_SetOn(1);
+	SetObjectiveStatus(9, 0);
+	SUBTITLES_SetText(02990419);
+	Delay(3000);
+	SetWhenever(Armed, 1);
+	SUBTITLES_SetOn(0);
+}
+
+Whenever Armed (_Actor_GetState(Radio_Bomb) == 1)
+{
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(02990460);
+	Delay(3000);
+	SetObjectiveStatus(9, 1);
+	SetWhenever(Disarmed, 1);
+	SUBTITLES_SetOn(0);
+}

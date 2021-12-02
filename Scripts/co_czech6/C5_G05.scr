@@ -1,0 +1,121 @@
+// C5_G05 - soldier defending German camp
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame g03;	FRM_FindFrame(g03, "C5_G03");
+Frame g04;	FRM_FindFrame(g04, "C5_G04");
+Frame g09;	FRM_FindFrame(g09, "C5_G09");
+Frame g10;	FRM_FindFrame(g10, "C5_G10");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Stand();
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever ger01(_SignalReceived(1))	// received from G01
+{
+	HUMAN_SetAnim("!salutovani", 500, 500, 0);
+	Delay(2500);
+	HUMAN_SetAnim("", 500, 500, 0);
+	GoTo walk;
+}
+
+OnSignal(2)	// received from G09
+{
+	GoTo kecy;
+}
+
+OnSignal(3)	// received from G10
+{
+	HUMAN_SetAnim("!salutovani", 500, 500, 0);
+	Delay(2500);
+	HUMAN_SetAnim("", 500, 500, 0);
+	SendSignal(g09, 2);
+	SendSignal(g10, 3);
+	GoTo end;
+}
+
+OnSignal(4)	// received from G09
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("C5_G05_06");
+	HUMAN_Move("C5_G05_05");
+	HUMAN_Move("C5_G05_04");
+	HUMAN_Move("C5_G05_03");
+	HUMAN_Move("C5_G05_02");
+	HUMAN_Move("C5_G05_01");
+	HUMAN_Move("C5_G05_08");
+	HUMAN_SETMODE_Guard();
+	GoTo walk2;
+}
+
+OnSignal(5)	// received from G01
+{
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_Stop();
+	HUMAN_TurnAtNearestPlayer();
+	SendSignal(g03, 1);
+	SendSignal(g04, 1);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f042");
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+GoTo end;
+
+Label walk:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("C5_G05_01");
+	HUMAN_Move("C5_G05_02");
+	HUMAN_Move("C5_G05_03");
+	HUMAN_Move("C5_G05_04");
+	HUMAN_Move("C5_G05_05");
+	HUMAN_Move("C5_G05_06");
+	HUMAN_Move("C5_G05_07");
+	SendSignal(g09, 1);
+	SendSignal(g10, 1);
+	HUMAN_SetAnim("!salutovani", 500, 500, 0);
+	Delay(2500);
+	HUMAN_SetAnim("", 500, 500, 0);
+	GoTo end;
+
+Label kecy:
+	HUMAN_SetAnim("%%kecy1", 500, 500, false);
+	Delay(8200);
+	SendSignal(g10, 2);
+	GoTo end;
+
+Label walk2:
+	HUMAN_Move("C5_G05_09");
+	HUMAN_Move("C5_G05_08");
+	GoTo walk2;
+
+Label end:

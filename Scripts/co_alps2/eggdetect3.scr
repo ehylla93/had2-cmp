@@ -1,0 +1,29 @@
+// Easteregg, gold bar detection 3 (archives)
+
+Block {
+frame nextd;	FRM_FindFrame(nextd, "egg");
+SetWhenever("jetu", 0);
+}
+
+Whenever "jetu"(_ItemInRange(245, 5))
+{
+SendSignal(nextd, 1);
+goto end;
+}
+
+Whenever "jetubrzo"(_ItemInRange(245, 5))
+{
+DisableSignals(1);
+goto end;
+}
+
+Whenever xxx(_SignalReceived(1))
+{
+SetWhenever("jetu", 1);
+SetWhenever("jetubrzo", 0);
+}
+
+SetWheneverTime("jetu", 2000);
+SetWheneverTime("jetubrzo", 2000);
+
+label end:

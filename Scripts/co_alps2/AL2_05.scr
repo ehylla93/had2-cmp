@@ -1,0 +1,264 @@
+// AL2_05 - room with knight's armours - Officer speaking with AL2_31
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+Integer aievent;
+Integer kectel = _RandomInt(3);
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);		//Detects player!
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(30);
+
+Frame cum;		FRM_FindFrame (cum,"al205cum1");
+Frame cum2;		FRM_FindFrame (cum2,"al205cum2");
+Frame cum3;		FRM_FindFrame (cum3,"al205cum3");
+Frame cum4;		FRM_FindFrame (cum4,"al205cum4");
+Frame me;		FRM_GetMyFrame(me);
+Frame al31;		FRM_FindFrame (al31,"al2_31");
+
+Frame shotalarm;	FRM_FindFrame (shotalarm,"shotalarm");
+
+frame sluch;	Frm_FindFrame(sluch,"k_founsluch1");
+frame polozs;	Frm_FindFrame(polozs,"polozs1");
+frame mrdkas;
+Frame foun;		FRM_FindFrame(foun, "k_foun_2");
+integer sus = 1;
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=_GetAlarmType();
+HUMAN_SetAnim("",50,50,0);
+FRM_MorphSpeech(me, 0, 0, 0);
+}
+if (((aievent==2) or (aievent==32)) or (aievent==256))
+{
+	SetWhenever(alarm,0);
+	SetAlarmType(274,0);
+	HUMAN_WeaponOnArm(1);
+	SendSignal(shotalarm,1);
+	HUMAN_TurnAtNearestPlayer();
+}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	SetAlarmType(754,0);
+	HUMAN_SetAlarm(0);
+}
+
+OnDeath()
+{
+FRM_MorphSpeech(me, 0, 0, 0);
+DisableSignals(1);
+EndScript();
+}
+
+Whenever alarm(_SignalReceived(3))
+{
+if (sus == 1)	{ HUMAN_Suspend(0); }
+DisableSignals(1);
+FRM_MorphSpeech(me, 0, 0, 0);
+SetAlarmType(274,0);
+HUMAN_Stop();
+HUMAN_SetAnim("",50,50,0);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_Move("AL2_05_04");
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+Whenever go(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+sus=0;
+SetAlarmType(140,0);
+delay (300);
+goto tabule;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+label tabule:
+SendSignal (al31,1);
+HUMAN_Move("AL2_05_01");
+delay(5000);
+HUMAN_TurnAt(cum);
+HUMAN_SetAnim("%%tabule",500,500,1);
+FRM_MorphSpeechDelayed(me, 15993059,4,8);		//" Impossible. We can't send Volkmann and Hetzer alone with the convoy."
+HUMAN_SetAnim("",300,300,0);
+SendSignal (al31,10);
+goto end;
+
+OnSignal (11)
+{
+HUMAN_SetAnim("%%tabule1",500,500,1);
+FRM_MorphSpeechDelayed(me, 15993061,4,8);
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 15993062,4,8);
+HUMAN_SetAnim("",500,500,0);
+SendSignal (al31,12);
+goto end;
+}
+
+OnSignal (13)
+{
+HUMAN_SetAnim("%%mluvi4",400,400,1);
+FRM_MorphSpeechDelayed(me, 15993064,4,8);
+HUMAN_SetAnim("",500,500,0);
+}
+
+label stuj1:
+if (_PlayerInRange(10)==0)
+{
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+goto stuj1;
+}
+
+label stul:
+SendSignal (al31,2);
+delay(2500);
+HUMAN_Move("AL2_05_02");
+HUMAN_TurnAt(cum2);
+HUMAN_SetAnim("%%studmapu",500,500,1);
+FRM_MorphSpeechDelayed(me, 15993065,4,8);
+FRM_MorphSpeechDelayed(me, 15993066,4,8);
+FRM_MorphSpeechDelayed(me, 15993067,4,8);
+HUMAN_SetAnim("",500,500,0);
+SendSignal (al31,14);
+goto end;
+
+OnSignal (15)
+{
+HUMAN_SetAnim("%%mluvi4",400,400,1);
+SendSignal(foun,1);
+FRM_MorphSpeechDelayed(me, 15993069,4,8);	//"Excellent, what's next..."
+HUMAN_SetAnim("",500,500,0);
+SendSignal(al31,3);
+goto stuj2;
+}
+
+OnSignal (17)
+{
+HUMAN_SetAnim("%%mluvi5",400,400,1);
+FRM_MorphSpeechDelayed(me, 15993071,4,8);
+HUMAN_SetAnim("",500,500,0);
+SendSignal (al31,18);
+goto end;
+}
+
+OnSignal (19)
+{
+HUMAN_SetAnim("%%mluvi5",400,400,1);
+FRM_MorphSpeechDelayed(me, 15993073,4,8);
+SendSignal (al31,20);
+HUMAN_SetAnim("",500,500,0);
+goto end;
+}
+
+Whenever aagentkakeca(_SignalReceived(23))
+{
+goto stuj2;
+}
+
+OnSignal (21)
+{
+HUMAN_SetAnim("%%mluvi5",400,400,1);
+SendSignal(foun,1);
+FRM_MorphSpeechDelayed(me, 15993075,4,8);
+HUMAN_SetAnim("",500,500,0);
+SendSignal (al31,22);
+Gosub telefon;
+goto tabule;
+}
+
+label stuj2:
+if (_PlayerInRange(10)==0)
+{
+delay (2000);
+goto stuj2;
+}
+Gosub telefon;
+
+label stul2:
+SendSignal (al31,16);
+HUMAN_Move("AL2_05_02");
+HUMAN_TurnAt(cum4);
+goto end;
+
+label telefon:
+	HUMAN_Move("AL2_05_03");
+	HUMAN_TurnAt(cum3);
+	delay (100);
+	HUMAN_SetAnim("%%telefon1",300,500,0);
+	delay(339);
+	SendSignal(foun,2);
+block
+{
+FRM_FindFrame(mrdkas, "al2_05.hw1");
+FRM_TeleportNearFrame(sluch,mrdkas,1);
+FRM_FindFrame(mrdkas, "");
+}
+delay(400);
+HUMAN_SetAnim("%%telefon2",500,300,1);
+
+kectel =kectel+1;
+if (kectel==3)	{	kectel=0;	}
+if (kectel==0)
+{
+FRM_MorphSpeechDelayed(me, 15993076, 2, 5);
+delay (500);
+FRM_MorphSpeechDelayed(me, 15993077, 2, 5);
+delay (1500);
+FRM_MorphSpeechDelayed(me, 15993078, 2, 5);
+delay (2000);
+}
+
+if (kectel==1)
+{
+FRM_MorphSpeechDelayed(me, 15993079, 2, 5);
+delay (1500);
+FRM_MorphSpeechDelayed(me, 15993080, 2, 5);
+delay (2000);
+FRM_MorphSpeechDelayed(me, 15993081, 2, 5);
+delay (2000);
+}
+
+if (kectel==2)
+{
+FRM_MorphSpeechDelayed(me, 15993082, 2, 5);
+delay (2000);
+FRM_MorphSpeechDelayed(me, 15993083, 2, 5);
+delay (1500);
+FRM_MorphSpeechDelayed(me, 15993084, 2, 5);
+delay (1500);
+}
+HUMAN_SetAnim("%%telefon3",500,500,0);
+DELAY (695);
+FRM_TeleportNearFrame(sluch,polozs,1);
+delay (800);
+HUMAN_SetAnim("",500,500,0);
+Return;
+
+label end:

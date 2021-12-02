@@ -1,0 +1,32 @@
+// random vehicle spawn
+// --------------------
+
+Block
+{
+Frame Jc;
+	FRM_FindFrame(Jc, "la_Jeepsas_c");
+Frame Jd;
+	FRM_FindFrame(Jd, "la_shermanAf1");
+
+FRM_SetOn(Jc, False);
+FRM_SetOn(Jd, False);
+
+Integer Arcade;
+	Arcade =_RandomInt(3);
+
+}
+
+// ---------------------------
+
+Delay(500);
+goto random;
+
+Label random:
+If(Arcade == 0){  FRM_SetOn(Jc, True); FRM_TeleportNearCheckpoint(Jc, "Tank2_08", "Tank2_09");}
+If(Arcade == 1){  FRM_SetOn(Jd, True); FRM_TeleportNearCheckpoint(Jd, "Tank2_08", "Tank2_09");}
+If(Arcade == 2){  FRM_SetOn(Jc, True); FRM_TeleportNearCheckpoint(Jc, "Tank2_08", "Tank2_09");}
+If(Arcade == 3){  FRM_SetOn(Jd, True); FRM_TeleportNearCheckpoint(Jd, "Tank2_08", "Tank2_09");}
+
+goto END;
+
+Label END:

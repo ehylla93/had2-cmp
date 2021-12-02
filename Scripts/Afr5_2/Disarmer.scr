@@ -1,0 +1,446 @@
+// Bomb Disarmer on Alarm (Enemy Soldiers Disarm Player placed Bombs)
+// --------------------------------------------------------------------
+
+Block
+{
+	Frame G01;		FRM_FindFrame(G01, "AL_G132");
+	Frame G02;		FRM_FindFrame(G02, "AL_G133");
+	Frame G03;		FRM_FindFrame(G03, "AL_G134");
+	Frame G04;		FRM_FindFrame(G04, "AL_G135");
+	Frame G05;		FRM_FindFrame(G05, "AL_G136");
+	Frame G06;		FRM_FindFrame(G06, "AL_G137");
+	Frame G07;		FRM_FindFrame(G07, "AL_G138");
+	Frame G08;		FRM_FindFrame(G08, "AL_G139");
+	Frame G09;		FRM_FindFrame(G09, "AL_G140");
+	Frame G10;		FRM_FindFrame(G10, "AL_G141");
+	
+	Frame G11;		FRM_FindFrame(G11, "AL_G142");
+	Frame G12;		FRM_FindFrame(G12, "AL_G143");
+	Frame G13;		FRM_FindFrame(G13, "AL_G144");
+	Frame G14;		FRM_FindFrame(G14, "AL_G145");
+	Frame G15;		FRM_FindFrame(G15, "AL_G146");
+	Frame G16;		FRM_FindFrame(G16, "AL_G147");
+	Frame G17;		FRM_FindFrame(G17, "AL_G148");
+	Frame G18;		FRM_FindFrame(G18, "AL_G149");
+	Frame G19;		FRM_FindFrame(G19, "AL_G150");
+	
+	Frame B01;		FRM_FindFrame(B01, "04_Bomb_01");
+	Frame B02;		FRM_FindFrame(B02, "04_Bomb_02");
+	
+	Frame B03;		FRM_FindFrame(B03, "06_Bomb_01");
+	Frame B04;		FRM_FindFrame(B04, "06_Bomb_02");
+	Frame B05;		FRM_FindFrame(B05, "06_Bomb_03");
+	Frame B06;		FRM_FindFrame(B06, "06_Bomb_04");
+	
+	Frame Obj3;		FRM_FindFrame(Obj3, "obj3");
+	Frame Obj4;		FRM_FindFrame(Obj4, "obj4");
+	
+	SetWhenever(Bomb_Disarmed_1, 0);
+	SetWhenever(Bomb_Disarmed_2, 0);
+	
+	Integer Secure;			Secure = 0;
+	Integer SpeechSelect;
+}
+
+Whenever Bomb_Disarmed_1 (((((_Actor_GetState(B03) == 0)) OR (_Actor_GetState(B04) == 0)) OR (_Actor_GetState(B05) == 0)) OR (_Actor_GetState(B06) == 0))
+{
+	Delay(1000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(02990419);
+	SetObjectiveStatus(4, 0);
+	SendSignal(Obj4, 3);
+	Delay(3000);
+	SUBTITLES_SetOn(0);
+	goto Speech;
+}
+
+Whenever Bomb_Disarmed_2 (((_Actor_GetState(B01) == 0)) OR (_Actor_GetState(B02) == 0))
+{
+	Delay(1000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(02990419);
+	SetObjectiveStatus(3, 0);
+	SendSignal(Obj3, 3);
+	Delay(3000);
+	SUBTITLES_SetOn(0);
+	goto Speech;
+}
+
+Whenever Active (_SignalReceived(1))
+{
+	Secure = 1;
+	SetWhenever(Bomb_Disarmed_1, 1);
+	SetWhenever(Bomb_Disarmed_2, 1);
+	goto Speech;
+}
+
+
+Label Speech:
+
+If(Secure == 1)
+{
+SpeechSelect = _RandomInt(3);
+
+Delay(1000);
+If(_Actor_GetState(G01) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G01, 90004000, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G01, 90004003, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G01, 90004023, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G02) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G02, 90003000, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G02, 90003003, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G02, 90003023, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G03) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G03, 90003004, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G03, 90003021, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G03, 90003022, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G04) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G04, 90004004, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G04, 90004021, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G04, 90004022, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G05) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G05, 90004007, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G05, 90004019, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G05, 90004025, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G06) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G06, 90004026, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G06, 90004028, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G06, 90004029, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G07) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G07, 90003026, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G07, 90003028, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G07, 90003029, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G08) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G08, 90003034, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G08, 90003037, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G08, 90003042, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G09) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G09, 90003044, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G09, 90003062, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G09, 90003000, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G10) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G10, 90003001, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G10, 90003003, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G10, 90003006, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G11) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G11, 90003009, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G11, 90003021, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G11, 90003026, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G12) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G12, 90001000, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G12, 90001012, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G12, 90001024, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G13) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G13, 90001036, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G13, 90001048, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G13, 90001084, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G14) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G14, 90001088, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G14, 90001092, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G14, 90001100, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G15) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G15, 90001104, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G15, 90001108, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G15, 90001112, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G16) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G16, 90002044, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G16, 90002052, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G16, 90002056, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G17) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G17, 90002058, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G17, 90002064, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G17, 90002068, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G18) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G18, 90002078, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G18, 90002092, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G18, 90002080, 5, 70);
+	}
+}
+
+Delay(400);
+If(_Actor_GetState(G19) == 1)
+{
+	If(SpeechSelect == 0)
+	{
+		FRM_MorphSpeech(G19, 90002014, 5, 70);
+	}
+	
+	If(SpeechSelect == 1)
+	{
+		FRM_MorphSpeech(G19, 90002012, 5, 70);
+	}
+	
+	If(SpeechSelect == 2)
+	{
+		FRM_MorphSpeech(G19, 90002008, 5, 70);
+	}
+}
+}
+
+goto Speech;

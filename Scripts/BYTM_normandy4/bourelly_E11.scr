@@ -1,0 +1,50 @@
+// bourelly_E11 - SS officer
+
+block
+{
+SetAlarmType(128,0);
+
+Frame reinf3;	FRM_FindFrame(reinf3, "reinf3");
+integer aievent;
+}
+
+HUMAN_SETAIMODE_Zombie();
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("bourelly_E10 alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("bourelly_E11 (SS-Officer) dead");
+printf("Reinf3 (bourelly_E11)");
+SendSignal(reinf3, 1);
+HUMAN_CreateItemInStore(239, 1);
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

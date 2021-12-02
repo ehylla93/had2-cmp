@@ -1,0 +1,74 @@
+// Is in smal building near gate (HERMANN)
+
+Block
+  {
+     frame sit;		FRM_FindFrame(sit,"dummy_Herman_sit");
+     frame see;		FRM_FindFrame(see,"tv5okno14");
+	FRAME me; 			FRM_GetMyFrame(me);
+     
+  }
+
+OnDeath()
+{
+	Block
+	{
+	MakeExplosion(me, 1500000, 7);
+	FRM_CreateParticle(41, me);
+	}
+	GoTo end;
+}
+
+
+Whenever A(_PlayerInRange(10))
+{
+	GoTo movement;
+}
+
+{
+Frame FRM;		FRM_GetMyFrame(FRM);
+Label movement:
+  HUMAN_SETMODE_StandFast();
+  HUMAN_Move("Herman_1");
+  HUMAN_Move("Herman_2");
+  HUMAN_Move("Herman_3");
+  HUMAN_WeaponOnArm(True);
+  Delay(500);
+  HUMAN_SETMODE_Crouch();
+  Delay(1000);
+  HUMAN_SETMODE_Stand();
+HUMAN_TurnAtNearestPlayer();
+Delay(500);
+SUBTITLES_SetOn(false);
+FRM_MorphSpeech(me, 19993842, 20, 50);
+  HUMAN_SETMODE_Walk();
+  Delay(2500);
+  HUMAN_WeaponOnArm(False);
+  Delay(200);
+  HUMAN_Move("Herman_2");
+  HUMAN_Move("Herman_1");
+  HUMAN_Move("Herman_4");
+  Delay(500);
+  HUMAN_TurnAt(see);
+  Delay(350);
+  HUMAN_ACTIVITY_Sit(sit);
+Delay(3500);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  Delay(2500);
+  HUMAN_WeaponOnArm(False);
+  Delay(200);
+  HUMAN_Move("Herman_2");
+  HUMAN_Move("Herman_1");
+  HUMAN_Move("Herman_4");
+  Delay(500);
+  HUMAN_TurnAt(see);
+  Delay(350);
+  HUMAN_ACTIVITY_Sit(sit);
+delay(2300);
+HUMAN_SetAnim("%%turnleft", 450, 500, False);                     
+    delay(2300);
+    HUMAN_SetAnim("%%turnright", 450, 500, False);
+    delay(2300);
+GoTo movement;
+}
+Label end:

@@ -1,0 +1,32 @@
+// SF_G25 - Ridic Panzeru (La_tiger_1)
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+DisableAlarms(1);
+HUMAN_BoardVehicle("La_tiger_1", 1, 0);
+HUMAN_Drive("C5_kubel01", 100);
+HUMAN_Drive("", 0);
+goto END;
+}
+
+Whenever Retreat (_SignalReceived(2))
+{
+HUMAN_Drive("", 0);
+HUMAN_Drive("C5_tank05", 60);
+HUMAN_Drive("C5_tank04", 60);
+goto END;
+}
+
+// ---------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

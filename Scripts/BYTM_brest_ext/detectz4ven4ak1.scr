@@ -1,0 +1,19 @@
+Frame z4_ven3;		FRM_FindFrame (z4_ven3,"z4_ven3");
+Frame z4_ven4;		FRM_FindFrame (z4_ven4,"z4_ven4");
+Frame E28;			FRM_FindFrame (E28,"n_E28");
+Frame E21;			FRM_FindFrame (E21,"n_E21");
+Frame E22;			FRM_FindFrame (E22,"n_E22");
+Frame ges;			FRM_FindFrame (ges,"n_gestapo");
+
+Whenever je(_PlayerInRange(40))
+{
+printf ("signal z4_ven3 E28,E21,E22,gestapo");
+SendSignal (z4_ven3,1);
+SendSignal (z4_ven4,1);
+SendSignal (E28,1);
+SendSignal (E21,1);
+SendSignal (E22,1);
+SendSignal (ges,1);
+}
+
+SetWheneverTime(je, 300);

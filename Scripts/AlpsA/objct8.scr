@@ -1,0 +1,18 @@
+// Obj 8 , Destroy all enemy tanks (2)
+//-----------------------------------------------
+
+Block
+{
+Frame Panzer1;	FRM_FindFrame(Panzer1,"La_tiger_1");
+Frame Panzer2;	FRM_FindFrame(Panzer2,"La_tiger_2");
+}
+//-----------------------------------------------
+
+Whenever Tanks_Destroyed((_Actor_GetState(Panzer1)==0) And (_Actor_GetState(Panzer2)==0))
+{
+SetObjectiveStatus(8, 1);
+Delay(500);
+DisableSignals(1);
+EndScript();
+}
+

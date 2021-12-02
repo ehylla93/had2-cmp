@@ -1,0 +1,48 @@
+// T2_G86 - Tiger Cannon
+// ----------------------------------------
+
+Block
+{
+Frame Jezek;	FRM_FindFrame(Jezek, "A3_Tiger_Vrak01");
+
+SetAlarmType(1023,0);
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+Whenever Nasedam (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A3_Tiger_01", 1, 2);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_TurnAt(Jezek);
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(20);
+SetAlarmType(1023,1);
+}
+
+OnAlarmDone(){
+HUMAN_TurnAt(Jezek);
+Goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

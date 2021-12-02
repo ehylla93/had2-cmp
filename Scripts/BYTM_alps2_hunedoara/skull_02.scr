@@ -1,0 +1,9 @@
+// Skull_02 - EE
+
+Frame ee;	FRM_FindFrame(ee, "ee");
+
+OnDeath()
+{
+	SendSignal(ee, 1);
+	EndScript();
+}

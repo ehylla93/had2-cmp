@@ -1,0 +1,42 @@
+// AF3b_begin_text
+// --------------------------------------------------------
+
+block
+{
+FRAME radio;		FRM_FindFrame(radio, "m_prist_a03b_01");
+FRAME faker;		FRM_FindFrame(faker, "dummy_radio");
+FRAME get_player;
+}
+goto END;
+
+// --------------------------------------------------------
+
+OnSignal(1)
+{
+Delay(2000);
+goto TEXT;
+}
+
+Whenever end_prepare (_ACTOR_GetState(radio) == 2)
+{
+DisableSignals(1);
+FRM_GetNearestPlayer(radio, get_player);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(get_player, 08991618, 3, 20);
+FRM_MorphSpeechDelayed(faker, 08991619, 3, 20);
+FRM_MorphSpeechDelayed(faker, 08991620, 3, 20);
+SUBTITLES_SetText(08991617);	// "The Germans are approaching the oasis."
+Delay(2500);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Label TEXT:
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(08991616);
+	Delay(4000);
+	SUBTITLES_SetOn(0);
+	Delay(4000);
+goto TEXT;
+
+Label END:

@@ -1,0 +1,12 @@
+Frame z4_ven3;		FRM_FindFrame (z4_ven3,"z4_ven3");
+Frame z4_ven4;		FRM_FindFrame (z4_ven4,"z4_ven4");
+Frame E28;			FRM_FindFrame (E28,"n_E28");
+
+Whenever je(_PlayerInRange(16))
+{
+SendSignal (z4_ven3,2);
+SendSignal (z4_ven4,2);
+SendSignal (E28,1);
+}
+
+SetWheneverTime(je, 300);

@@ -1,0 +1,21 @@
+
+frame small4;		FRM_FindFrame(small4,"small4");
+integer x;		x=0;
+
+OnSignal(22)
+{
+x=1;
+goto end;
+}
+
+OnSignal(23)
+{
+if (x==1)
+{
+SendSignal(small4,22);
+goto end;
+}
+SendSignal(small4,23);
+}
+
+label end:

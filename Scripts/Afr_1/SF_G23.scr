@@ -1,0 +1,29 @@
+// Tank 1 (La_tiger_1) Ridic
+// --------------------------------------
+
+Block
+{
+Frame T1;	FRM_FindFrame(T1,"La_tiger_1");
+}
+
+// --------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+Car_SetFuel(T1, 0);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_1", 1, 3);
+HUMAN_SetOptimized(2);
+goto END;
+}
+
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

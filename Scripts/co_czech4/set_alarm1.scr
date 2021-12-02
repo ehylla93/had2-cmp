@@ -1,0 +1,47 @@
+// TURN OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame E01;	FRM_FindFrame(E01,"CZ4_HajzlVeSkladu");
+Frame E02;	FRM_FindFrame(E02,"CZ4_HajzlNaPude");
+Frame E03;	FRM_FindFrame(E03,"CZ4_Guard_01");
+Frame E04;	FRM_FindFrame(E04,"CZ4_Chatter_01");
+Frame E05;	FRM_FindFrame(E05,"CZ4_Chatter_02");
+Frame E06;	FRM_FindFrame(E06,"CZ4_Chodnik_01");
+Frame E07;	FRM_FindFrame(E07,"CZ4_Runner_01");
+Frame E08;	FRM_FindFrame(E08,"CZ4_Runner_02");
+Frame E09;	FRM_FindFrame(E09,"CZ4_Runner_03");
+Frame E10;	FRM_FindFrame(E10,"CZ4_Grouper_01");
+Frame E11;	FRM_FindFrame(E11,"CZ4_Grouper_02");
+Frame E12;	FRM_FindFrame(E12,"CZ4_Grouper_03");
+Frame E13;	FRM_FindFrame(E13,"CZ4_Sniper_01");
+Frame E14;	FRM_FindFrame(E14,"CZ4_Statkar_05");
+Frame E15;	FRM_FindFrame(E15,"CZ4_MGM_01");
+Frame E16;	FRM_FindFrame(E16,"CZ4_Statkar_01");
+Frame E17;	FRM_FindFrame(E17,"CZ4_Statkar_02");
+Frame E18;	FRM_FindFrame(E18,"CZ4_Statkar_03");
+Frame E19;	FRM_FindFrame(E19,"CZ4_Quickman_01");
+Frame E20;	FRM_FindFrame(E20,"CZ4_Plazzars_01");
+Frame E21;	FRM_FindFrame(E21,"CZ4_Plazzars_02");
+Frame E22;	FRM_FindFrame(E22,"CZ4_Plazzars_03");
+Frame E23;	FRM_FindFrame(E23,"CZ4_Corners_01");
+Frame E24;	FRM_FindFrame(E24,"CZ4_Corners_02");
+Frame E25;	FRM_FindFrame(E25,"CZ4_Corners_03");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(E01, 19);SendSignal(E02, 19);SendSignal(E03, 19);
+SendSignal(E04, 19);SendSignal(E05, 19);SendSignal(E06, 19);
+SendSignal(E07, 19);SendSignal(E08, 19);SendSignal(E09, 19);
+SendSignal(E10, 19);SendSignal(E11, 19);SendSignal(E12, 19);
+SendSignal(E13, 19);SendSignal(E14, 19);SendSignal(E15, 19);
+SendSignal(E16, 19);SendSignal(E17, 19);SendSignal(E18, 19);
+SendSignal(E19, 19);SendSignal(E20, 19);SendSignal(E21, 19);
+SendSignal(E22, 19);SendSignal(E23, 19);SendSignal(E24, 19);
+SendSignal(E25, 19);
+EndScript();
+}

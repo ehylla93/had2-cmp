@@ -1,0 +1,46 @@
+// TURN OFF GLOBAL ALARM (2)
+// -------------------------------------------------------
+
+Block
+{
+//Frame E26;	FRM_FindFrame(E26,"AF2_raneny03");
+Frame E27;	FRM_FindFrame(E27,"AF2_osetrujici01");
+Frame E28;	FRM_FindFrame(E28,"AF2_osetrujici02");
+Frame E29;	FRM_FindFrame(E29,"AF2_m01");
+Frame E30;	FRM_FindFrame(E30,"AF2_m02");
+
+Frame E31;	FRM_FindFrame(E31,"AF2_m03");
+Frame E32;	FRM_FindFrame(E32,"AF2_m04");
+Frame E33;	FRM_FindFrame(E33,"AF2_m05");
+Frame E34;	FRM_FindFrame(E34,"AF2_posily_01");
+Frame E35;	FRM_FindFrame(E35,"AF2_posily_02");
+Frame E36;	FRM_FindFrame(E36,"AF2_posily_03");
+Frame E37;	FRM_FindFrame(E37,"AF2_posily_04");
+Frame E38;	FRM_FindFrame(E38,"AF2_Tiger_01");
+Frame E39;	FRM_FindFrame(E39,"AF2_Tiger_02");
+Frame E40;	FRM_FindFrame(E40,"AF2_Tiger_03");
+
+Frame E41;	FRM_FindFrame(E41,"SdKfZ1_01");
+Frame E42;	FRM_FindFrame(E42,"SdKfZ1_02");
+Frame E43;	FRM_FindFrame(E43,"SdKfZ1_03");
+Frame E44;	FRM_FindFrame(E44,"SdKfZ1_04");
+Frame E45;	FRM_FindFrame(E45,"SdKfZ1_05");
+Frame E46;	FRM_FindFrame(E46,"OpelF_01");
+Frame E47;	FRM_FindFrame(E47,"OpelF_02");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+//SendSignal(E26, 19);
+SendSignal(E27, 19);SendSignal(E28, 19);
+SendSignal(E29, 19);SendSignal(E30, 19);SendSignal(E31, 19);
+SendSignal(E32, 19);SendSignal(E33, 19);SendSignal(E34, 19);
+SendSignal(E35, 19);SendSignal(E36, 19);SendSignal(E37, 19);
+SendSignal(E38, 19);SendSignal(E39, 19);SendSignal(E40, 19);
+SendSignal(E41, 19);SendSignal(E42, 19);SendSignal(E43, 19);
+SendSignal(E44, 19);SendSignal(E45, 19);SendSignal(E46, 19);
+SendSignal(E47, 19);
+EndScript();
+}

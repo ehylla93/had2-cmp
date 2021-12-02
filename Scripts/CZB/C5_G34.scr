@@ -1,0 +1,141 @@
+// C5_G34
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd				= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  Frame kamos;	FRM_FindFrame(kamos,"C5_G35");
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(2)
+{
+FRM_MorphSpeechDelayed(me, 07991518, 5, 30); //
+Delay(500);
+SendSignal(kamos, 3);
+goto END;
+}
+
+OnSignal(4)
+{
+FRM_MorphSpeechDelayed(me, 07991520, 5, 30); //
+Delay(500);
+SendSignal(kamos, 5);
+goto END;
+}
+
+OnSignal(6)
+{
+FRM_MorphSpeechDelayed(me, 07991522, 5, 30); //
+Delay(500);
+SendSignal(kamos, 7);
+goto END;
+}
+
+OnSignal(8)
+{
+FRM_MorphSpeechDelayed(me, 07991524, 5, 30); //
+Delay(500);
+SendSignal(kamos, 9);
+goto END;
+}
+
+OnSignal(10)
+{
+FRM_MorphSpeechDelayed(me, 07991526, 5, 30); //
+Delay(500);
+SendSignal(kamos, 11);
+goto END;
+}
+
+OnSignal(12)
+{
+FRM_MorphSpeechDelayed(me, 07991528, 5, 30); //
+Delay(500);
+SendSignal(kamos, 13);
+goto END;
+}
+
+OnSignal(14)
+{
+FRM_MorphSpeechDelayed(me, 07991530, 5, 30); //
+Delay(500);
+SendSignal(kamos, 15);
+goto END;
+}
+
+OnSignal(16)
+{
+FRM_MorphSpeechDelayed(me, 07991533, 5, 30); //
+Delay(500);
+SendSignal(kamos, 17);
+goto END;
+}
+
+OnSignal(18)
+{
+FRM_MorphSpeechDelayed(me, 07991535, 5, 30); //
+Delay(500);
+goto END;
+}
+
+OnSignal(20)
+{
+HUMAN_Stop();
+HUMAN_SetAlarm(true);
+goto END;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  SendSignal(kamos, 20);
+  HUMAN_Stop();
+  HUMAN_SETMODE_Crouch();
+ SUBTITLES_SetOn(true);  
+FRM_MorphSpeechDelayed(me, 90004059, 5, 30); // hmm?
+Delay(700);
+FRM_MorphSpeechDelayed(me, 90004044, 5, 30); // I think I heard something...
+FRM_MorphSpeechDelayed(me, 90004045, 5, 30); // ....
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 90004046, 5, 30); // ....
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90004028, 5, 30); // kill them!
+Delay(300);
+FRM_MorphSpeechDelayed(me, 90004027, 5, 30); // kill them!
+SUBTITLES_SetOn(false);
+  HUMAN_SETSIGHTRANGE(100);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90004006, 5, 30); // got him
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(10)){
+HUMAN_Suspend(false);
+// kecy 
+HUMAN_TurnAt(kamos);
+FRM_MorphSpeechDelayed(me, 07991515, 5, 30); //
+SendSignal(kamos, 1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+Delay(1000);
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

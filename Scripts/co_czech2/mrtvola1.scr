@@ -1,0 +1,27 @@
+// dead soldier
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+HUMAN_SETEVENTS(0);
+Frame me;	FRM_GetMyFrame(me);
+
+HUMAN_SETMODE_Lie();
+HUMAN_SetOptimized(2);
+}
+
+delay (1000);
+HUMAN_SetAnim("%%mrtvolak1", 10, 10, 1);
+delay (1000);
+HUMAN_KillEx(me,0);
+HUMAN_Suspend(1);
+goto end;
+
+Whenever blik(_PlayerInRange(7))
+{
+SetWhenever(blik, false);
+HUMAN_Suspend(0);
+goto end;
+}
+
+label end:

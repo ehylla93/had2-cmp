@@ -1,0 +1,32 @@
+//Mission fails if alarm raised before obtaining documents
+
+block
+{
+Frame obj;		FRM_FindFrame(obj,"al2_objective");
+Frame alarm;	FRM_FindFrame(alarm, "AL2_alarm");
+SetWhenever(alarmgood, 0);
+}	
+
+Whenever alarmfail(_SignalReceived(1))
+{
+delay (4000);
+SendSignal (obj,3);		//fail
+}
+
+Whenever alarmgood(_SignalReceived(1))
+{
+delay (4000);
+SendSignal (alarm,6);
+}
+
+Whenever sklad(_SignalReceived(2))
+{
+block
+{
+SetWhenever(alarmfail, 0);
+SetWhenever(alarmgood, 1);
+}
+goto end;
+}
+
+Label end:

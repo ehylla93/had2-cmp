@@ -1,0 +1,65 @@
+// Nasledujici hodnoty se v initu naplni smysluplnou hodnotou
+Integer  unsuspend_range  = 10; 	 // V Initu naplnime smysluplnou hodnotou
+Integer  alarm_sight_range = 180;            //  Na jakou vzdalenost vidi pri alarmu
+
+integer signaled1 = 0;
+integer signaled2 = 0;
+integer player_range1 = 75;
+integer player_range2 = 40;
+integer player_range  = 75;
+Frame frm;
+
+DisableWhenevers( 1 );
+// ----------------------------------------------------------------------------------------------------
+// UNSUSPENDOVANI
+// ----------------------------------------------------------------------------------------------------
+Whenever "player_in_range" ( _PlayerInRange(player_range) )
+{
+   block { DisableWhenevers(true); }
+   SetWhenever("player_in_range", true);
+   if (_PlayerInRange(player_range1) and (signaled1==0)) {
+      printf("TIGER_DETECTOR: player in range, start defence #1 !");
+      FRM_FindFrame(frm, "TIGER_RIF_3");
+      SendSignal(frm, 1);
+      FRM_FindFrame(frm, "TIGER_RIF_5");
+      SendSignal(frm, 1);
+      FRM_FindFrame(frm, "TIGER_RIF_9");
+      SendSignal(frm, 1);
+      FRM_FindFrame(frm, "tiger_gunner");
+      SendSignal(frm, 1);
+      signaled1 = 1;
+   }
+   if (_PlayerInRange(player_range2) and (signaled2==0)) {
+      printf("TIGER_DETECTOR: player in range, start defence #2 !");
+      FRM_FindFrame(frm, "TIGER_RIF_6");
+      SendSignal(frm, 1);
+      FRM_FindFrame(frm, "TIGER_RIF_8");
+      SendSignal(frm, 1);
+      FRM_FindFrame(frm, "TIGER_RIF_10");
+      SendSignal(frm, 1);
+      signaled2 = 1;
+   }
+   if ((signaled1==1) and (signaled2==1)) {
+      SetWhenever("player_in_range", false);
+   }
+   block { DisableWhenevers(false); }
+   goto End;
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// INIT
+// ----------------------------------------------------------------------------------------------------
+Delay(300);  // Pro jistotu, at se stihnou nastavit GameValue
+SetWheneverTime("player_in_range", 2000);
+DisableWhenevers(0);
+
+goto End;
+
+
+// ----------------------------------------------------------------------------------------------------
+Label End:
+
+
+
+

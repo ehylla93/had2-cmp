@@ -1,0 +1,39 @@
+// T1_E02 - Tank_01 - MG
+// ----------------------------------------
+
+SetAlarmType(640,0);
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("T1_E02 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Aggressive();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_BoardVehicle("Tank_01",  1, 1);
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(50);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

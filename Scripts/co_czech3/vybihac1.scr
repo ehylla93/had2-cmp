@@ -1,0 +1,141 @@
+//na alarm vybehne  a vali na roh hlidat
+//w carnage disabled
+
+block
+{
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer a=0;
+integer b=0;
+Integer sus=0;
+
+frame sit;		Frm_FindFrame(sit,"hlidka_ohr_sit");
+frame cum1;		Frm_FindFrame(cum1,"naschodech1cum1");
+frame cum2;		Frm_FindFrame(cum2,"naschodech1cum2");
+frame cum3;		Frm_FindFrame(cum3,"naschodech1cum3");
+Frame ctrl;		Frm_FindFrame(ctrl,"vybihac_kontrol");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+FRM_SwitchFaceTexture(MyFRM, "e_f043");
+
+HUMAN_SETMODE_Run();
+}
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023, 1);
+SetAlarmType(749, 0);	// 274 = 256 + 16 + 2
+goto end;
+
+//-------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+aievent=(_GetAlarmType());
+PrintfNumber("vybihac1 alarm type:",aievent);
+DisableSignals(1);
+}
+if (sus==0)
+	{
+	if (_PlayerInRange(10)==1)	
+	{
+	delay (2000);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	if (_LoadGameValue(1)==1)
+	{
+	HUMAN_SETEVENTS(0);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	HUMAN_Suspend(0);
+	block
+	{
+	SendSignal(ctrl, 2);
+	sus=1;
+	}
+	}
+
+if (aievent==4)
+{
+SetAlarmType(4, 0);
+HUMAN_SetAlarm(0);
+HUMAN_Stop();
+HUMAN_TurnAtNearestPlayer();
+Delay(1000);
+HUMAN_LookAround(1);
+delay(5000);
+SetAlarmType(4, 1);
+if (a==0)	{ goto Move; }
+goto end;
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (a==0)
+{
+HUMAN_SetAlarm(0);
+HUMAN_Move("vybihac1_1");
+a=1;
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay(900);
+SetAlarmType(274,1);
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+printf("vybihac1 died");
+DisableSignals(1);
+EndScript();
+}
+
+Whenever vyp(_SignalReceived(1))
+{
+HUMAN_SETEVENTS(0);
+printf("vybihac1 events off");
+goto end;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+//DisableAlarms(1);
+goto end;
+}
+
+Label Move:
+printf("vybihac1 moves to vybihac1_1");
+HUMAN_Move("vybihac1_1");
+HUMAN_SETMODE_Crouch();
+SetAlarmType(274,1);
+HUMAN_SetAlarm(0);
+a=1;
+
+Label end:

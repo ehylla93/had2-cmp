@@ -1,0 +1,43 @@
+// Obj 11 - znic radia
+//----------------------------------
+
+Block
+{
+
+Integer radio;
+	radio=0;
+}
+
+OnSignal(1)
+{
+radio=radio+1;
+
+If(radio==2)
+{
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(52999801);
+PlayMusic(6);
+Delay(3000);
+SetobjectiveStatus(11, 1);
+SUBTITLES_SetOn(false);
+}
+goto end;
+}
+
+OnSignal(2)
+{
+radio=radio+1;
+
+If(radio==2)
+{
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(52999801);
+PlayMusic(6);
+Delay(3000);
+SetobjectiveStatus(11, 1);
+SUBTITLES_SetOn(false);
+}
+goto end;
+}
+
+Label end:

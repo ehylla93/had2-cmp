@@ -1,0 +1,71 @@
+// Driver
+// -----------------------------------------------------
+
+Block
+{
+Frame La_tiger_1;		FRM_FindFrame(La_tiger_1,"La_tiger_1");
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_DriveNearPlayer(25);
+HUMAN_Drive("A43", 60);
+goto Ride1;
+}
+
+OnAlarmDone(){
+goto Ride1;
+}
+
+Whenever Spawn (_SignalReceived(10))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_1", 1, 0);
+Delay(8000);
+HUMAN_Drive("A30", 25);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+HUMAN_SETSIGHTRANGE(240);
+HUMAN_SETHEARRANGE(240);
+goto Ride1;
+}
+
+Label Ride:
+HUMAN_Drive("A35", 15);
+HUMAN_Drive("A40", 15);
+HUMAN_Drive("A43", 15);
+goto Ride;
+
+Label Ride1:
+HUMAN_Drive("A35", 15);
+HUMAN_Drive("A40", 15);
+HUMAN_Drive("A43", 15);
+goto Ride1;
+
+
+Label END:

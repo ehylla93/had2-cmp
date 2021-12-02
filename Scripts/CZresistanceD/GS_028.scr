@@ -1,0 +1,79 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+FRM_SwitchFaceTexture(me,"e_f064");
+Frame B1;		FRM_FindFrame(B1,"Bx12");
+Frame B2;		FRM_FindFrame(B2,"Bx13");
+Frame S1;		FRM_FindFrame(S1,"GS_027");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponUp(1);
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Label WorkLoop:
+HUMAN_MoveToFrame(B1,0);
+HUMAN_TurnAt(B1);
+HUMAN_SetAnim("%%mina2", 1000, 1000, 1);
+Delay(25000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(B2,0);
+HUMAN_TurnAt(B2);
+HUMAN_SetAnim("%%mina2", 1000, 1000, 1);
+Delay(25000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(S1,0);
+HUMAN_TurnAt(S1);
+HUMAN_SetAnim("%%mluvi1", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(me, 18993609, 5, 30);
+FRM_MorphSpeechDelayed(me, 18993610, 5, 30);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(1000);
+FRM_MorphSpeechDelayed(S1, 18993611, 5, 30);
+Delay(1000);
+
+goto WorkLoop;
+
+//*WorkLoop
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(15);
+//*DefaultLoad
+goto WorkLoop;
+
+Label END:

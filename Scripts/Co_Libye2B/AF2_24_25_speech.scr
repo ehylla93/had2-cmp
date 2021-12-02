@@ -1,0 +1,50 @@
+// AF2_24_25_speech - rozhovor
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame af2_24;
+	FRM_FindFrame(af2_24, "AF2_24");
+Frame af2_25;
+	FRM_FindFrame(af2_25, "AF2_25");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever start (_PlayerInRange(50))
+{
+	SendSignal(af2_24, 2);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_24, 25, zruseni rozhovoru (alarm, smrt)
+{
+	FRM_MorphSpeechDelayed(af2_24, 0, 0, 0);
+	FRM_MorphSpeechDelayed(af2_25, 0, 0, 0);
+	EndScript();
+}
+
+OnSignal(2)	// received from AF2_24  - uz je na mieste
+{
+	GoTo start;
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label start:
+	Delay(1000);
+	FRM_MorphSpeechDelayed(af2_24, 53990014, 2, 41);
+	FRM_MorphSpeechDelayed(af2_25, 53990015, 2, 41);
+	FRM_MorphSpeechDelayed(af2_25, 53990016, 2, 41);
+	FRM_MorphSpeechDelayed(af2_25, 53990017, 2, 41);
+	FRM_MorphSpeechDelayed(af2_24, 53990018, 2, 41);
+	FRM_MorphSpeechDelayed(af2_24, 53990019, 2, 41);
+	FRM_MorphSpeechDelayed(af2_24, 53990020, 2, 41);
+	FRM_MorphSpeechDelayed(af2_25, 53990021, 2, 41);
+	FRM_MorphSpeechDelayed(af2_25, 53990022, 2, 41);
+//	FRM_MorphSpeechDelayed(af2_25, 53990023, 2, 41);	// zniceny vozovy park
+	FRM_MorphSpeechDelayed(af2_25, 53990024, 2, 41);
+
+Label end:

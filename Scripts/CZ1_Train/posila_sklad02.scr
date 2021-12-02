@@ -1,0 +1,72 @@
+// posila_sklad02
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame Treb;
+	FRM_FindFrame(Treb, "Ci_");
+
+FRM_SwitchFaceTexture(me, "e_f054");
+HUMAN_SETAIMODE_Aggressive();
+
+SetAlarmType(1,0); //shooting near
+SetAlarmType(2,0); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,0); //injured
+SetAlarmType(128,1); //from script
+SetAlarmType(256,0); //friendly fire
+SetAlarmType(512,0); //see a dead body
+
+HUMAN_SETMODE_Run();
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(5)	// received from Treb
+
+{
+	Block
+	{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_SETSIGHTRANGE(20);
+	HUMAN_SETHEARRANGE(20);
+	HUMAN_SetSniper(1, 5);
+	}
+///	HUMAN_SetAnim("", 100, 100, false);
+///	HUMAN_SETMODE_Run();
+	Delay(41500);
+	HUMAN_Move("SS2_01");
+	HUMAN_TurnAt(Treb);
+	Delay(75);
+	HUMAN_WeaponOnArm(1);
+  	HUMAN_Attack(Treb, 10000);
+	Delay(850);
+	HUMAN_Attack(Treb, 10000);
+///	SetAlarmType(1023,1); //all
+///	SetAlarmType(512,0); //see a dead body
+}
+
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	}
+	
+}
+
+Label end:

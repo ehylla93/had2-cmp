@@ -1,0 +1,117 @@
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer a;	a=0;
+
+frame sit;		Frm_FindFrame(sit,"ge16sit");
+frame cum;		Frm_FindFrame(cum,"ge16cum");
+Frame ge29;		Frm_FindFrame (ge29,"ge_29");
+Frame ge17;		Frm_FindFrame (ge17,"ge_17");
+
+HUMAN_SETMODE_Guard();
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+HUMAN_SETSIGHTRANGE(70);
+DisableSignals(1);
+SendSignal (ge29,3);
+aievent=(_GetAlarmType());
+}
+HUMAN_SETMODE_StandFast();
+HUMAN_SetAnim("",10,10,0);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (a==0)
+{
+a=1;
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(520,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))			
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(520,0);
+delay (2000);
+HUMAN_SetAnim("%%rozhovor",300,300,1);
+goto end;
+}
+
+Whenever sedni(_SignalReceived(2))	
+{
+if (_RandomInt(2)==0)	{ goto sedej; }
+HUMAN_SetAnim("",300,300,0);
+delay(2000);
+HUMAN_Move("ge16_02");
+label sedej:
+HUMAN_SetAnim("(tipnuti",300,300,0);
+delay (2100);
+HUMAN_Move("ge16_01");
+SendSignal (ge17,2);
+HUMAN_TurnAt(cum);
+delay (1000);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedila1", 500, 500, 1);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+//-------------------------------------------------------------------------
+
+label end:

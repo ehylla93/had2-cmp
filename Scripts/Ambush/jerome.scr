@@ -1,0 +1,137 @@
+Integer  suspended             = 1;
+// Nasledujici hodnoty se v initu naplni smysluplnou hodnotou
+Integer  unsuspend_range  = 10; 	 // V Initu naplnime smysluplnou hodnotou
+Integer  alarm_sight_range = 180;            //  Na jakou vzdalenost vidi pri alarmu
+Frame   hakl_na;    FRM_FindFrame( hakl_na, "hakl_na" );          
+Frame hakl_1_1;		FRM_FindFrame(hakl_1_1,"hakl_1_1");
+Frame hakl_1_2;		FRM_FindFrame(hakl_1_2,"hakl_1_2");
+Frame hakl_1_3;		FRM_FindFrame(hakl_1_3,"hakl_1_3");
+Frame hakl_1_4;		FRM_FindFrame(hakl_1_4,"hakl_1_4");
+Frame hakl_1_5;		FRM_FindFrame(hakl_1_5,"hakl_1_5");
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// 1   - blizka strelba    2   - strelba     4     - kroky                    8     - zvuky (OnUse)    16   - exploze
+// 32 - vidim                 64 - zraneni    128 - smrtelny vykrik    256 - friendly fire         512 - vidim mrtvolu
+// -------------------------------------------------------------------------------------------------------------
+SetAlarmType( 1023,  false );
+
+// ----------------------------------------------------------------------------------------------------
+// AKTIVACE ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarm()
+{
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+      HUMAN_SETSIGHTRANGE( alarm_sight_range );
+      EndScript();
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// KONEC ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarmDone()
+{
+      SetAlarmType( 1023, false );
+      Block { DisableSignals(0);  DisableWhenevers(0); }
+      GoTo Action;
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// SMRT
+// ----------------------------------------------------------------------------------------------------
+OnDeath()
+{
+     
+      EndScript( );
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// SIGNALY
+// ----------------------------------------------------------------------------------------------------
+EnableSignal( 1, true );
+// NASEDNUTI DO HAKLU - od hakl_na
+OnSignal(1)	
+{
+      EnableSignal(1, true);
+      Human_Suspend( false );
+	  SendSignal(hakl_1_1, 1);
+	  SendSignal(hakl_1_2, 1);
+	  SendSignal(hakl_1_3, 1);
+	  SendSignal(hakl_1_4, 1);
+	  SendSignal(hakl_1_5, 1);
+      //SetAlarmType( 1023,  false );
+      HUMAN_BoardVehicle( "hakl_na",  1, 0 );
+HUMAN_Drive("A43",40);
+HUMAN_Drive("A35",40);
+HUMAN_Drive("C25",40);
+HUMAN_Drive("Cx10",40);
+HUMAN_Drive("Cx1",40);
+
+HUMAN_BoardVehicle("hakl_na",  0, 0);
+SendSignal(hakl_1_1, 2);
+SendSignal(hakl_1_2, 2);
+SendSignal(hakl_1_3, 2);
+SendSignal(hakl_1_4, 2);
+SendSignal(hakl_1_5, 2);
+
+Car_SetFuel(hakl_na, 0);
+     GoTo Action;
+}
+
+EnableSignal( 2, false );
+// VYSEDNUTI Z HAKLU - od hakl_na
+OnSignal(2)	
+{
+      EnableSignal(2, false);
+
+      GoTo Action;
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// INIT
+// ----------------------------------------------------------------------------------------------------
+   Delay(300);  // Pro jistotu, at se stihnou nastavit GameValue   
+   Block
+   {
+
+   }
+   HUMAN_SetOptimized( 1 );
+   HUMAN_Suspend(true);  
+   //...................
+   // DOPLNIT DALSI INICIALIZACNI KOD
+   GoTo  End;
+
+
+Label Action:
+    Block 
+    {	
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+        HUMAN_SETMODE_Stand();
+    }
+	     HUMAN_Move( "GE_24_1" );
+         HUMAN_Move( "Ge32_1" );  
+	     HUMAN_Move( "Ge30_1" );
+         HUMAN_Move( "Ge30_2" );
+		    HUMAN_Move( "Ge30_3" );
+            HUMAN_Move( "Ge30_4" );
+	GoTo Action;
+
+// ----------------------------------------------------------------------------------------------------
+Label End:

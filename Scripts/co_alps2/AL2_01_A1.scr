@@ -1,0 +1,16 @@
+// AL2_01_A1 - activator for AL2_01
+
+Block {
+Frame al2_01;	FRM_FindFrame(al2_01, "AL2_01");
+SetWhenever(player,0);
+}
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(al2_01, 1);
+}
+
+Whenever zap(_SignalReceived(1))
+{
+	SetWhenever(player,1);
+}

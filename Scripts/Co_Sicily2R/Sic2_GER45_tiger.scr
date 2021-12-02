@@ -1,0 +1,111 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Osadka Tigra (strelec z kanonu) GER 45 - strili na predem vybrane pozice  (nic, dela, most) 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Block
+{
+  Frame delo1;			FRM_FindFrame( delo1, "dummy_PAK1_target");	// na tom to padalo proto dummy
+  Frame delo2;			FRM_FindFrame( delo2, "dummy_PAK2_target");	// na tom to padalo proto dummy
+  Frame D1;			FRM_FindFrame( D1, "PAK40_1");	
+  Frame D2;			FRM_FindFrame( D2, "PAK40_2");	
+  Frame most1;		FRM_FindFrame( most1, "dummy_T02");	// malej
+  Frame most2;		FRM_FindFrame( most2, "dummy_T01");	// velkej
+  Frame Bum1;			FRM_FindFrame( Bum1, "dummy_tiger_bum1");
+  Frame Bum2;			FRM_FindFrame( Bum2, "dummy_tiger_bum2");	
+  Frame Bum3;			FRM_FindFrame( Bum3, "dummy_tiger_bum3");
+  Frame Bum4;			FRM_FindFrame( Bum4, "dummy_tiger_bum4");	
+  Frame Bum5;			FRM_FindFrame( Bum5, "dummy_tiger_bum5");
+  Frame see;			FRM_FindFrame( see,  "Teren_53");
+  Frame Fake;			FRM_FindFrame(Fake, "fuck_bum_1");
+ 
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+HUMAN_Suspend(True);	
+/////////////////////////// test
+//frame X;		FRM_FindFrame(X, "Ger_43");
+//frame MyFRM;		FRM_GetMyFRame(MyFRM);
+//frame I5;		FRM_FindFrame(I5, "It_5");
+//HUMAN_Kill(I5);
+//sendSignal(X, 1);
+//sendSignal(MyFRM, 1);
+///////////////////////////
+goto TheEnd;
+
+// posila aktivator treti vlny
+Onsignal(1)		// aktivace 
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Tiger", true, 2);	
+} 
+
+Delay(55000);
+HUMAN_Attack(Bum1, 3000);
+Delay(11000);
+HUMAN_Attack(delo1, 3000);
+Delay(7500);
+HUMAN_Attack(Bum2, 3000);
+Delay(7000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na delo 1 - start");
+SendSignal(D1, 1);	// delo se samo odpali ...
+HUMAN_Attack(delo1, 2000);
+Printf("Delo 1 - se ma samo odpalit");
+Human_TurnAt(see);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na delo 1 - end");
+Delay(18000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na delo 2 - start prvni pokus");
+HUMAN_Attack(delo2, 3000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na delo 2 - end prvni pokus");
+Delay(10000);
+HUMAN_Attack(Bum3, 3000);
+Delay(12000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na delo 2 - start druhy pokus");
+SendSignal(D2, 1);	// delo se samo odpali ...
+HUMAN_Attack(delo2, 3000);
+Printf("Delo 2 - se ma samo odpalit");
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na delo 2 - end druhy pokus");
+Delay(9000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most - 1 start");
+HUMAN_Attack(most1, 3000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most - 1 end");
+Delay(10000);
+HUMAN_Attack(Bum4, 3000);
+Delay(10000);
+HUMAN_Attack(Bum5, 3000);
+Delay(10000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most - 2 start");
+HUMAN_Attack(most1, 3000);
+Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most - 2 end");
+Delay(10000);
+
+  Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most 3 -  start");
+  HUMAN_Attack(most2, 3000);
+  Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most 3 -  end");
+  Delay(8000);
+  Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most 4 -  start");
+  HUMAN_Attack(most2, 3000);
+  Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most 4 -  end");
+  Delay(8000);
+  Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most 5 -  start");
+  SendSignal(Fake, 2);		// pomocna exploze na dummy u mostu  - naloz 7
+  HUMAN_Attack(most2, 3000);
+  Printf("STRIIIIIIIIIIILIIIIIIIIIIIIIM na most 5 -  end");
+  Delay(8000);
+
+
+
+OnAlarm()  
+  {
+    Printf("HLASIT - nemelo by nikdy nastat - strelec Tigra presel do alarmu");      
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+} 
+
+label TheEnd:

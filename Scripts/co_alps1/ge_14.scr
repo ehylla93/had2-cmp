@@ -1,0 +1,126 @@
+
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+integer ridic;
+integer jedem;		jedem=1;
+integer aievent;
+
+frame hakl_panaci;		FRM_FindFrame(hakl_panaci,"hakl_panaci");
+frame hakl_panaci_a;	FRM_FindFrame(hakl_panaci_a,"hakl_panaci_alarm");
+frame hakl;				FRM_FindFrame(hakl,"hakl");
+frame ge12;				FRM_FindFrame(ge12,"ge_12");
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(40);
+}
+
+HUMAN_SETEVENTS(0);
+SetAlarmType(1023,0);
+SetAlarmType(64,1);
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+DisableSignals(1);
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+if ((aievent==64) and (jedem==1))
+{
+block
+{
+SendSignal (ge12,6);
+DisableSignals(0);
+PlaySound(9,49);
+HUMAN_SetAlarm(0);
+}
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+HUMAN_SETMODE_Crouch();
+delay (20000);
+ridic=_LoadGameValue(1);
+if (ridic==1)
+{
+goto end;
+}
+HUMAN_SETEVENTS(0);
+HUMAN_BoardVehicle("hakl",1,2);
+jedem=1;
+SendSignal(hakl_panaci_a,14);
+goto end;
+
+goto end;
+}
+
+OnDeath()
+{
+SendSignal (ge12,6);
+SendSignal(hakl_panaci_a,24);
+DisableSignals(1);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))			
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("hakl",1,2);
+HUMAN_SETEVENTS(0);
+SendSignal(hakl_panaci,14);
+goto end;
+}
+
+
+Whenever alarm(_SignalReceived(6))			
+{
+delay (800);
+jedem=0;
+HUMAN_BoardVehicle("hakl",0,2);
+delay(200);
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveFromFrame(hakl, 4);
+block
+{
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+HUMAN_TurnAtNearestPlayer();
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+//------------------------------------------------------------------------------------------
+
+label end:

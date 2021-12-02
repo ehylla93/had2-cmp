@@ -1,0 +1,33 @@
+// Panzer2, back seat
+// ----------------------------
+
+
+
+  Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame Panzer_2;		FRM_FindFrame (Panzer_2,"Panzer_2");
+}
+
+
+// ---------------------------
+
+delay (1000);
+FRM_TeleportNearCheckpoint(Panzer_2, "Panzer2_end4", "Panzer2_end");
+
+
+
+
+
+
+
+// ---------------------------
+
+  HUMAN_SETSIGHTRANGE(5);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("Panzer_2",  true, 3);
+  goto END;
+
+Label END:

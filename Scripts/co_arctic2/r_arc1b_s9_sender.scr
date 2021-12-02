@@ -1,0 +1,16 @@
+
+Block {
+  frame X;		FRM_FindFrame(X, "static_9");
+  frame MyFRM;	FRM_GetMyFrame(MyFRM);
+  Integer First_use = 1;
+}
+
+OnUse()
+{
+  If (first_use==1)
+      {
+          DOOR_Lock(MyFRM, false); 
+          first_use = 99;
+      }
+  SendSignal(X, 5);
+}

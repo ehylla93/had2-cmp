@@ -1,0 +1,91 @@
+// C4_G25 - (La_tiger_2) Ridic
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+// -------------------------------------
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto Drive;
+}
+
+HUMAN_SETHEARRANGE(60);
+HUMAN_BoardVehicle("La_tiger_2", 1, 0);
+goto Drive;
+
+
+Label Drive:
+HUMAN_Drive("xsec", 30);
+
+HUMAN_Drive("A21", 20);
+
+HUMAN_Drive("A22", 15);
+HUMAN_Drive("A23", 15);
+
+HUMAN_Drive("A24", 15);
+
+HUMAN_Drive("A25", 15);
+HUMAN_Drive("A26", 15);
+
+HUMAN_Drive("A27", 15);
+
+HUMAN_Drive("A28", 15);
+
+HUMAN_Drive("A29", 15);
+
+HUMAN_Drive("A30", 15);
+
+HUMAN_Drive("A31", 15);
+
+HUMAN_Drive("A32", 15);
+
+HUMAN_Drive("A33", 15);
+
+HUMAN_Drive("", 15);
+Delay(30000);
+HUMAN_Drive("A32", 15);
+
+HUMAN_Drive("A31", 15);
+
+HUMAN_Drive("A30", 15);
+
+HUMAN_Drive("A29", 15);
+
+HUMAN_Drive("A28", 15);
+
+HUMAN_Drive("A27", 15);
+
+HUMAN_Drive("A26", 15);
+
+HUMAN_Drive("A25", 15);
+
+HUMAN_Drive("A24", 15);
+
+HUMAN_Drive("A23", 15);
+
+HUMAN_Drive("A22", 15);
+
+HUMAN_Drive("A21", 15);
+
+HUMAN_Drive("xsec", 15);
+
+goto Drive;
+
+
+Label END:

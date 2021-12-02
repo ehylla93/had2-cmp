@@ -1,0 +1,63 @@
+// 07_G67 - T3, 2 - Machinegunner
+// -----------------------------------------------------
+
+Block
+{
+Frame MyTank;	FRM_FindFrame(MyTank, "07_Panther_03");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_BoardVehicle("07_Panther_03", 1, 1);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETSIGHTRANGE(280);
+HUMAN_SETHEARRANGE(280);
+goto END;
+}
+
+Label END:

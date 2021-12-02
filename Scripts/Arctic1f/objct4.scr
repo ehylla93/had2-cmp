@@ -1,0 +1,27 @@
+// Obj 4 - najdi vstup do komplexu
+// ----------------------------------------
+
+Block
+{
+Frame Obj5;	FRM_FindFrame(Obj5,"obj5");
+Frame Obj6;	FRM_FindFrame(Obj6,"obj6");
+
+SetObjectiveStatus(4, 0);
+}
+
+// ----------------------------------------
+
+Whenever Player (_PlayerInRange(6))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(01990205);
+SendSignal(Obj5, 1);
+SendSignal(Obj6, 1);
+SetObjectiveStatus(4, 1);
+Delay(3000);
+SUBTITLES_SetOn(0);  
+goto END;
+}
+
+
+Label END:

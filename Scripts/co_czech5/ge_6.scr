@@ -1,0 +1,40 @@
+//North - more to the east - patrols
+
+Frame count;		FRM_FindFrame(count, "dead_counter");
+
+SetAlarmType(1023, true);
+Label Guard:
+HUMAN_SETMODE_Guard();
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponOnArm(false);
+HUMAN_Move("GE_61");
+HUMAN_Move("GE_62");
+GoTo Guard;
+
+OnAlarm()
+	{
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_Move("GE_6s");
+	HUMAN_SetSniper(1,5);
+	HUMAN_SETAIMODE_Defensive();
+	EndScript();
+	}
+	
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	GoTo Guard;
+	}
+
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+	
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}

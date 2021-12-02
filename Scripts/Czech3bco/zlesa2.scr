@@ -1,0 +1,121 @@
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SetOptimized(1);
+
+
+Frame cum;		FRM_FindFrame(cum,"blocker1cum");
+
+Frame zles1;		FRM_FindFrame(zles1,"zlesa1");
+Frame me;		FRM_GetMyFrame(me);
+Frame zrusformaci;	FRM_FindFrame(zrusformaci, "zlesa_zrusformaci");
+ frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+
+	FRM_SwitchFaceTexture(me, "e_f054");
+
+Integer form;	form=0;
+Integer aievent;
+Integer sus;	sus=1;
+integer alarmpos;	alarmpos=0;		
+HUMAN_SETMODE_Guard();
+}
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+//------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+PrintfNumber("zlesa2 alarm c:",aievent);
+DisableSignals(1);
+FORMATION_DelMember(me);
+SetAlarmType(1023,1);
+SetAlarmType(140,0);
+}
+if (sus==1)
+	{
+	sus=0;
+	HUMAN_Suspend(0);
+	}
+delay (300);
+
+If (form==1)
+	{
+	BLOCK
+	
+	{
+	FORMATION_DelMember(me);
+	FORM=0;
+	}
+	}
+
+EndScript();
+}
+
+
+OnAlarmDone()
+{
+block
+{
+
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+goto end;
+
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+
+
+
+
+Whenever go(_SignalReceived(1))
+{
+//od zlesa1
+HUMAN_Suspend(0);
+sus=0;
+SetAlarmType(1023,1);
+SetAlarmType(140,0);
+goto end;
+}
+
+Whenever formx(_SignalReceived(2))
+{
+//od zlesa1 si ve formaci
+form=1;
+Goto end;
+}
+//------------------------------------------------------------------------------
+
+
+
+
+Label end:

@@ -1,0 +1,58 @@
+// Objective 5 - "Destroy the PaK 40 cannons"
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+FRAME tnt;		FRM_FindFrame(tnt, "tnt_02");
+FRAME tnt2;		FRM_FindFrame(tnt2, "tnt_03");
+FRAME PaK;		FRM_FindFrame(PaK, "PaK_1");
+FRAME PaK2;		FRM_FindFrame(PaK2, "PaK_2");
+FRAME dummy1;	FRM_FindFrame(dummy1, "dummy_expl01");
+FRAME dummy2;	FRM_FindFrame(dummy2, "dummy_expl_02");
+
+FRAME dummy3;	FRM_FindFrame(dummy3, "dummy_expl02");		//boom PaK2
+FRAME dummy4;	FRM_FindFrame(dummy4, "dummy_expl_03");		//boom crates
+
+FRAME crate;	FRM_FindFrame(crate, "crates_1");
+
+Integer b1=0;
+Integer b2=0;
+
+SetObjectiveStatus(5, 0);
+SaveGameValue(4, 0);	// 1, PaKs destroyed
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Boom (_ACTOR_GetState(tnt) == 2)
+{
+  block
+  {
+    b1=1;
+	SetActorState(dummy2, 1);
+	SetActorState(crate, 1);
+  }
+  Delay(200);
+  SetActorState(dummy1, 1);
+  SetActorState(PaK, 2);
+}
+
+Whenever Boom2 (_ACTOR_GetState(tnt2) == 2)
+{
+  b2=1;
+  Delay(200);
+  SetActorState(dummy3, 1);
+  SetActorState(PaK2, 2);
+}
+
+if((b1==1) and (b2==1))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001006);		//"OBJECTIVE ACCOMPLISHED: PAK 40 CANNONS DESTROYED"
+Delay(5000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(5, 1);
+SaveGameValue(4, 1);
+}
+
+Label END:

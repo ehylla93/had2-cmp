@@ -1,0 +1,63 @@
+// Ammoboxy - krabice s nabojema "AIRDROP"
+//-----------------------------------------------
+
+Block
+{
+Frame W1;	FRM_FindFrame(W1,"Weaponbox4");
+Frame W2;	FRM_FindFrame(W2,"Weaponbox5");
+Frame W3;	FRM_FindFrame(W3,"Ammobox3");
+Frame W4;	FRM_FindFrame(W4,"Aidkitbox3");
+
+Frame W5;	FRM_FindFrame(W5,"Weaponbox6");
+Frame W6;	FRM_FindFrame(W6,"Weaponbox7");
+Frame W7;	FRM_FindFrame(W7,"Ammobox4");
+Frame W8;	FRM_FindFrame(W8,"Aidkitbox4");
+
+Integer Poradi;
+	Poradi =_RandomInt(4);
+
+Integer AirDrop;
+	AirDrop =_RandomInt(4);
+}
+//------------------------------------------------
+
+Whenever AIRDROPS (_SignalReceived(1))
+{
+
+If(Poradi==0)
+{
+If(AirDrop==0){  Delay(200000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+If(AirDrop==1){  Delay(300000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+If(AirDrop==2){  Delay(400000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+If(AirDrop==3){  Delay(500000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+}
+
+If(Poradi==1)
+{
+If(AirDrop==0){  Delay(200000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+If(AirDrop==1){  Delay(300000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+If(AirDrop==2){  Delay(400000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+If(AirDrop==3){  Delay(500000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+}
+
+If(Poradi==3)
+{
+If(AirDrop==0){  Delay(400000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+If(AirDrop==1){  Delay(500000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+If(AirDrop==2){  Delay(600000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+If(AirDrop==3){  Delay(700000);SetActorState(W1, 1);Delay(500);SetActorState(W2, 1);Delay(500);SetActorState(W3, 1);Delay(500);SetActorState(W4, 1);}
+}
+
+If(Poradi==4)
+{
+If(AirDrop==0){  Delay(400000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+If(AirDrop==1){  Delay(500000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+If(AirDrop==2){  Delay(600000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+If(AirDrop==3){  Delay(700000);SetActorState(W5, 1);Delay(500);SetActorState(W6, 1);Delay(500);SetActorState(W7, 1);Delay(500);SetActorState(W8, 1);}
+}
+
+EndScript();
+}
+
+
+

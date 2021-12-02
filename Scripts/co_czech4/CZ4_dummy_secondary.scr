@@ -1,0 +1,17 @@
+// Objective 2 - Fuel drums destroyed
+
+Block {
+Frame OBJ;		FRM_FindFrame(OBJ, "CZ4_OD");
+}
+
+OnSignal(1)
+	{
+	If ( ((_LoadGameValue(21)==99) AND (_LoadGameValue(22)==99)) And (_LoadGameValue(23)==99))
+		{
+		SUBTITLES_SetOn(True);
+		SUBTITLES_SetText(21990003);	//"OPTIONAL OBJECTIVE ACCOMPLISHED: FUEL DRUMS DESTROYED."
+        SendSignal(OBJ, 1);
+		Delay(4000);
+		SUBTITLES_SetOn(false);
+		}
+	}

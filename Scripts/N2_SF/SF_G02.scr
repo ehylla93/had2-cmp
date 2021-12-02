@@ -1,0 +1,98 @@
+// SF_G02 - Vojak napadajici banku
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cil1;	FRM_FindFrame(Cil1,"Ger_pal01");
+Frame Cil2;	FRM_FindFrame(Cil2,"Ger_pal02");
+Frame Cil3;	FRM_FindFrame(Cil3,"Ger_pal03");
+Frame Reinf;	FRM_FindFrame(Reinf,"BR_G02");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+Integer VyberCil;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Delay(25000);
+SendSignal(Reinf, 1);
+EndScript();
+}
+
+OnAlarm(){
+SetAlarmType(32,1); //vidi
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_SETSIGHTRANGE(69);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Lie();
+HUMAN_Suspend(0);
+goto Palba;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Palba:
+
+VyberCil=_RandomInt(3);
+
+If(VyberCil==0)
+{
+HUMAN_TurnAt(Cil1);
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_Crouch();
+Delay(200);
+HUMAN_Attack(Cil1, 3000);
+HUMAN_SETMODE_Lie();
+Delay(7500);
+goto Palba;
+}
+
+If(VyberCil==1)
+{
+HUMAN_TurnAt(Cil2);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(Cil2, 3000);
+Delay(7500);
+goto Palba;
+}
+
+HUMAN_TurnAt(Cil3);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(Cil3, 3000);
+Delay(7500);
+goto Palba;
+
+
+Label END:

@@ -1,0 +1,6 @@
+
+
+Whenever MAGORINA  (_PlayerInRange(5))
+{
+  CheckpointJoin("Join_3", "Join_4");
+}

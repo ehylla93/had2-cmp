@@ -1,0 +1,51 @@
+
+integer  AIEvent;
+
+
+SetAlarmType(520, False);	
+HUMAN_SETEVENTS(False);
+
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(20)					// to sem posle Red_5 
+{						
+  HUMAN_Suspend(False);			 
+}			
+
+  Delay(2000);
+  HUMAN_WeaponOnArm(False);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("Red11_1");	
+  HUMAN_Move("Red11_2");					
+  HUMAN_SETEVENTS(True);
+  HUMAN_Move("Red11_3");					
+  HUMAN_SETMODE_Crouch();
+  Delay(500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 11: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("Red11_END");				
+}
+
+Label TheEND:

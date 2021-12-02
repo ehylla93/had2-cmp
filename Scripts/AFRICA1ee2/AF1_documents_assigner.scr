@@ -1,0 +1,109 @@
+// AF1_documents - documents somewhere on the airport
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(1000);
+
+block{
+  INTEGER rnd				= 0;
+  FRAME documents;			
+  FRAME doc1;				FRM_FindFrame(doc1, "dummy_doc1");
+  FRAME doc2;				FRM_FindFrame(doc2, "dummy_doc2");
+  FRAME doc3;				FRM_FindFrame(doc3, "dummy_doc3");
+  FRAME doc4;				FRM_FindFrame(doc4, "dummy_doc4");
+  FRAME doc5;				FRM_FindFrame(doc5, "dummy_doc5");
+  FRAME dustojnik;			FRM_FindFrame(dustojnik, "AF1_21");
+  FRAME obj;				FRM_FindFrame(obj, "AF1_obj");
+
+  FRM_SetOn(doc1, false);
+  FRM_SetOn(doc2, false);
+  FRM_SetOn(doc3, false);
+  FRM_SetOn(doc4, false);
+  FRM_SetOn(doc5, false);
+
+  INTEGER diff = _SPGetGameDifficulty();
+  printf("init done");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+if(diff == 1){  goto EASY; }
+if(diff == 2){  goto MEDIUM; }
+if(diff == 3){  goto HARD; }
+printf("WARRNING: invalid difficulty");
+goto HARD;
+
+Label EASY:
+  printf("game difficulty: EASY");
+  block
+  {
+    FRM_FindFrame(documents, "item_slozka3");
+    ITEM_Teleport(documents, doc1);
+    FRM_FindFrame(documents, "");
+  }
+goto END;
+
+Label MEDIUM:
+  printf("game difficulty: MEDIUM");
+  rnd = _RandomInt(2);
+  if(rnd == 0){ 
+    block
+    {
+      FRM_FindFrame(documents, "item_slozka3");
+      ITEM_Teleport(documents, doc1);
+      FRM_FindFrame(documents, "");
+    }
+  }
+  if(rnd == 1){ 
+    block
+    {
+      FRM_FindFrame(documents, "item_slozka3");
+      ITEM_Teleport(documents, doc2);
+      FRM_FindFrame(documents, "");
+    }
+  }
+goto END;
+
+Label HARD:
+  printf("game difficulty: HARD");
+  rnd = _RandomInt(3);
+  if(rnd == 0){ 
+    block
+    {
+      FRM_FindFrame(documents, "item_slozka3");
+      ITEM_Teleport(documents, doc5);
+      FRM_FindFrame(documents, "");
+    }
+  }
+  if(rnd == 1){ 
+    block
+    {
+      FRM_FindFrame(documents, "item_slozka3");
+      ITEM_Teleport(documents, doc3);
+      FRM_FindFrame(documents, "");
+    }
+  }
+  if(rnd == 2){ 
+    block
+    {
+      FRM_FindFrame(documents, "item_slozka3");
+      ITEM_Teleport(documents, doc4);
+      FRM_FindFrame(documents, "");
+    }
+  }
+goto END;
+
+Label END:
+  printfnumber("active documents: ", rnd);
+
+Whenever ininv (_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+  if((_LoadGameValue(21)) OR (!_ACTOR_GetState(dustojnik)))
+  {
+    SendSignal(obj, 6);
+  }
+  else
+  {
+    SetWhenever(ininv, true);
+  }
+}
+

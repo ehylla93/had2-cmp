@@ -1,0 +1,16 @@
+// BU1_checkpoint_joiner - joining and separating the checkpoints
+Block
+{
+CheckpointJoin("BU1_join2", "BU1_join3");
+CheckpointJoin("BU1_join1", "BU1_01_04");
+}
+
+OnSignal(1)	// received from most on death
+{
+	Block
+	{
+		DisableSignals(true);
+		CheckpointSeparate("BU1_join2", "BU1_join3");
+		CheckpointSeparate("BU1_join1", "BU1_01_04");
+	}
+}

@@ -1,0 +1,19 @@
+Frame zb_vstup2;	FRM_FindFrame (zb_vstup2,"zb_vstup2");
+Frame zb_vstup3;	FRM_FindFrame (zb_vstup3,"zb_vstup3");
+
+Frame zb_dok1_1;	FRM_FindFrame (zb_dok1_1,"zb_dok1_1");
+Frame zb_dok1_2;	FRM_FindFrame (zb_dok1_2,"zb_dok1_2");
+
+
+Whenever je(_PlayerInRange(7))
+{
+
+SendSignal (zb_vstup2,1);
+SendSignal (zb_vstup3,1);
+SendSignal (zb_dok1_1,1);
+SendSignal (zb_dok1_2,1);
+
+}
+
+
+SetWheneverTime(je, 200);

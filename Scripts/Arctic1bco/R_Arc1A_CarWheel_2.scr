@@ -1,0 +1,77 @@
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+Block
+{
+    integer AIEvent;
+    SetAlarmType(1023, True);	
+}
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;		
+  Whenever XXX (_PlayerInRange(105); )		
+  {							
+    HUMAN_Suspend(False);	
+    SendSignal(MyFRM, 1);			
+  }											
+  OnSignal(5)		
+  {							
+    HUMAN_Suspend(False);	 		
+  }							
+
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_WeaponOnArm(False);
+  HUMAN_SetOptimized(1);
+  Goto TheEnd;
+
+OnSignal(1)  // AKCE - START
+{
+  HUMAN_SetAnim("%%odtlacovac1", 400, 400, True);	 
+  Goto TheEnd;
+}  
+OnSignal(2)  // AKCE - END
+{
+  Delay(250);
+  HUMAN_SetAnim("", 280, 280, False);
+  Goto TheEnd;
+}  
+OnSignal(10)  // uklid po odjezdu auta
+{
+  Delay(2000);
+  HUMAN_Move("CW1_10");
+  HUMAN_Move("kulomet");
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SetAnim("%%nuda1", 100, 100, False);
+}
+
+
+OnAlarm()
+{
+  Block
+     {
+         AIEvent =_GetAlarmType(); 
+         PrintfNumber("AIE CarWheel 2: ", AIEvent);
+         HUMAN_SETAIMODE_Defensive();
+         DisableSignals(True);
+         SaveGameValue(30, 99);	// pro cutsc 4 (auto) - má-li se vynechat , nebo pøerušit
+     }
+     HUMAN_SetAnim("", 100, 100, False);
+     EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("kulomet");
+  HUMAN_SETMODE_Crouch();  
+  HUMAN_SetAlarm(False);
+}
+
+OnCutscene(4){}
+OnCutsceneDone(4){}
+
+Label TheEnd:
+

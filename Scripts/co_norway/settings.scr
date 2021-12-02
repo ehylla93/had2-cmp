@@ -1,0 +1,23 @@
+// OnSpawn
+// -------------------------------------------------------
+
+SaveGameValue(2, 0);	//0: no alarm raised
+
+// -------------------------------------------------------
+
+Whenever PIR (_MP_IsTeamMemberInRange(1, 1000))
+{
+SetWhenever(PIR, false);
+Delay(5000);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(11992201);
+Delay(4000);
+SUBTITLES_SetText(11992202);
+Delay(4000);
+SUBTITLES_SetText(11992203);
+Delay(4000);
+SUBTITLES_SetText(11992204);
+Delay(4000);
+SUBTITLES_SetOn(false);
+EndScript();
+}

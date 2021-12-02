@@ -1,0 +1,125 @@
+// Toto je hlidka, ktera bude pochodovat kolem vily (venku)
+//na strileni vali na roh a ceka na vidim
+
+
+
+
+
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+  integer AIEvent;
+Integer b;		b=0;
+
+  frame See1;			FRM_FindFrame(See1, "hlidkacum");
+  frame See2;			FRM_FindFrame(See2, "ja_patnik10");
+  frame See3;			FRM_FindFrame(See3, "ja_patnik7");
+  frame MyFrame;		FRM_GetMyFrame(MyFrame);
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f024");
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+}
+
+
+
+HUMAN_Suspend(True);
+goto end;
+
+//------------------------------------------------------------------------
+
+
+Whenever aaa (_PlayerInRange(70); )
+{
+  HUMAN_Suspend(False);
+goto start;
+}
+
+OnAlarm()
+{
+block
+{
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Hlidka-Out: ", AIEvent);
+}
+  HUMAN_Suspend(False);
+HUMAN_WeaponOnArm(1);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (b==0)
+{
+
+HUMAN_SETMODE_Run();
+HUMAN_Move("HV2_7");
+b=1;
+SetAlarmType(258,1);
+}
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+Delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+EndScript();
+}
+
+
+OnalarmDone()
+{
+HUMAN_SetAlarm(0);
+ HUMAN_Move("HV2_6");
+HUMAN_TurnAt(see3);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+  SendSignal(reinfo, 0);
+  Printf("u_vily_HOut is DEAD!!!");
+  EndScript();
+}
+
+
+
+//-------------------------------------------------------------------------------------------
+label start:
+  HUMAN_Move("HV2_6");
+  Delay(2500);
+  HUMAN_Move("HV2_5");
+  HUMAN_Move("HV2_4");
+  HUMAN_Move("HV2_3");
+  HUMAN_Move("HV2_2");
+  HUMAN_Move("HV2_1");
+  Delay(3000);
+  HUMAN_TurnAt(See1);
+  Delay(4000);
+  HUMAN_TurnAt(See2);
+  Delay(3000);
+  HUMAN_Move("HV2_2");
+  HUMAN_Move("HV2_3");
+  HUMAN_Move("HV2_4");
+  HUMAN_Move("HV2_5");
+goto start;
+
+
+
+
+label end:

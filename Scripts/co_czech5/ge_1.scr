@@ -1,0 +1,34 @@
+//North - on street
+
+Frame count;	FRM_FindFrame(count, "dead_counter");
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+
+OnAlarm()
+	{
+	HUMAN_Stop();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SetSniper(1,5);
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_WeaponOnArm(false);
+	HUMAN_Move("GE_1");
+	}
+	
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}

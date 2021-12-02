@@ -1,0 +1,129 @@
+// AL2_12 - soldier - speaks with AL2_11
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent = 0;
+Integer x=0;
+Frame me;			FRM_GetMyFrame(me);
+Frame cum1;			FRM_FindFrame (cum1,"al212cum1");
+Frame cum2;			FRM_FindFrame (cum2,"al212cum2");
+Frame shotalarm;	FRM_FindFrame (shotalarm,"shotalarm");
+frame mrdkas;		
+frame docs;			FRM_FindFrame(docs, "docs2");
+frame ge12docstel;	FRM_FindFrame(ge12docstel, "ge12docstel");
+Frame morph;		FRM_FindFrame(morph, "AL211kecac");
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SetOptimized(1);
+}
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+block
+{
+SendSignal (morph,3);
+DisableSignals(1);
+aievent=_GetAlarmType();
+SetWhenever(alarmed,0);
+SetWhenever(salute,0);
+FRM_TeleportNearFrame(docs, ge12docstel, 0);
+HUMAN_SetAnim("", 500, 500, 1);
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+	SetAlarmType(274,0);
+	SendSignal (shotalarm,1);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_Stop();
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(0);
+	delay (600);
+	SetAlarmType(274,1);
+if (x==0)		{  goto mode2;	}
+	goto mode3;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+SendSignal (morph,3);
+DisableSignals(1);
+EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received from AL2_11_A1, AL2_11_A2
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever salute(_SignalReceived(2))	// received from AL2_11
+{
+	HUMAN_SetAnim("!salutovani", 500, 500, 1);
+	Delay(1500);
+	HUMAN_SetAnim("", 500, 500, 1);
+	GoTo mode1;
+}
+
+Whenever alarmed(_SignalReceived(3))	// received from AL2_alarm
+{
+	GoTo mode2;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label mode1:			// before alarm
+	HUMAN_Move("AL2_12_01");
+	HUMAN_Move("AL2_12_02");
+	block
+	{
+	FRM_FindFrame(mrdkas, "al2_12.hw2");
+	FRM_TeleportNearFrame(docs, mrdkas, 1);
+	FRM_FindFrame(mrdkas, "");
+	}
+	HUMAN_Move("AL2_12_03");
+	HUMAN_TurnAt(cum1);
+	HUMAN_SetAnim("%%pisedonot1",500, 500,1);
+	GoTo end;
+
+Label mode2:			// after alarm
+	DisableSignals(1);
+	FRM_TeleportNearFrame(docs, ge12docstel, 0);
+	HUMAN_Suspend(false);
+	SetAlarmType(1011, true);
+	HUMAN_SetAnim("",50, 50,0);	
+	HUMAN_SETMODE_Silence();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_Move("AL2_12_04");
+	x=1;
+label mode3:
+	HUMAN_TurnAt(cum2);
+	GoTo end;
+
+Label end:

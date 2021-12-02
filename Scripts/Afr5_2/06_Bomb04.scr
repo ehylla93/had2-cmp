@@ -1,0 +1,17 @@
+// Bomb 04 at Fuel Storage
+// ----------------------------------------
+
+Block
+{
+Frame me;				FRM_GetMyFrame(me);
+
+SetActorState(me, 3);
+}
+
+// ----------------------------------------
+
+Whenever Player (_SignalReceived(1))
+{
+SetActorState(me, 0);
+EndScript();
+}

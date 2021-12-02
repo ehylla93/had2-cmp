@@ -1,0 +1,59 @@
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+//Frame speech;	FRM_FindFrame(speech, "AF1_48_AF1_49_speech");
+integer  AIEvent = 0; 
+}
+
+OnAlarm()
+{
+  Block
+  {
+    HUMAN_SetAnim("", 200, 200, false);
+    AIEvent =_GetAlarmType(); 
+    PrintfNumber("Vojak  --49--  jde do AI, alarm: ", AIEvent); 
+    HUMAN_SetOptimized(false);
+//    SendSignal(speech, 2);	// konec hovoru
+  } 
+  HUMAN_SETMODE_Stand();
+  EndScript();
+}
+
+OnDeath()
+{
+//  SendSignal(speech, 2);	// konec hovoru
+  Printf("mrtvola ... ---49--- ");
+  EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(true);
+	GoTo end;
+}
+
+Whenever activate(_SignalReceived(1))	// received from AF1_48_A1
+{
+	HUMAN_Suspend(false);
+	GoTo rozhovor;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+Block
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label rozhovor:
+	HUMAN_SetAnim("%%buchadostolu", 200, 200, true);
+//	SendSignal(speech, 1);
+	GoTo end;
+
+Label activity:
+
+Label end:

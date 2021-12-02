@@ -1,0 +1,20 @@
+// AF1_tank_2 - explosion of cistern
+// -------------------------------------------------------------------------------------------------------------
+
+  Block {
+  FRAME tank_organizer;		FRM_FindFrame(tank_organizer, "dummy_tanky_organizer");
+  FRAME me;      			FRM_GetMyFrame(me);
+  }
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  FRM_CreateParticle(53, me);
+  PlaySound(6, 2);
+  MakeExplosion(me, 5000, 40000);
+  SaveGameValue(12, 0);
+  SendSignal(tank_organizer, 1);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------

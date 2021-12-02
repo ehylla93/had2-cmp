@@ -1,0 +1,24 @@
+// Obj 4 - Destroy radio station
+// ---------------------------------------------
+
+Block
+{
+SetObjectiveStatus(4, 0);
+}
+
+// ------------------------------------
+
+ 
+OnDeath()
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999711);
+Delay(3000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Label END:
+

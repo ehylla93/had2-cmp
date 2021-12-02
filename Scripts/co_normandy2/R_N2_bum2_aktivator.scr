@@ -1,0 +1,25 @@
+
+Block {
+Frame BUM1; 
+Integer RND1;
+}
+
+goto TheEnd;
+
+Whenever AsiJo (_PlayerInRange(7))
+{
+  RND1 = _RandomInt(5) + 1;
+  goto znova;
+}
+
+Label znova:
+  If (RND1 == 1) { FRM_FindFrame(BUM1, "dummy_bum2_1"); }
+  If (RND1 == 2) { FRM_FindFrame(BUM1, "dummy_bum2_2"); }
+  If (RND1 == 3) { FRM_FindFrame(BUM1, "dummy_bum2_3"); }
+  If (RND1 == 4) { FRM_FindFrame(BUM1, "dummy_bum2_4"); }
+  If (RND1 == 5) { FRM_FindFrame(BUM1, "dummy_bum2_5"); }
+SendSignal(BUM1, 27);
+Delay(250000);
+SetWhenever(AsiJo, True);
+
+Label TheEnd:

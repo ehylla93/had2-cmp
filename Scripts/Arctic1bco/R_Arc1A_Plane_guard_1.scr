@@ -1,0 +1,223 @@
+// guarded plane
+
+// Prvni pokus o doplneni skriptu o dealarm a identifikaci typu alarmu
+Block
+  {
+     frame GP2;			FRM_FindFrame(GP2, "Plane_Guard_2");
+     frame GP3;			FRM_FindFrame(GP3, "Plane_Guard_3");
+     frame GP4;			FRM_FindFrame(GP4, "Plane_Guard_4");
+     frame MyFRM;		FRM_GetMyFrame(MyFRM);
+     frame see;			FRM_FindFrame(see, "Spitfire18");
+     integer AIEvent;		AIEvent = 99;
+     frame sit;			FRM_FindFrame(sit, "dummy_PG1_chata_sit");
+     frame see_chata;		FRM_FindFrame(see_chata, "dummy_PG2_chata_sit");
+     
+     frame Dabing1_2;		FRM_FindFrame(Dabing1_2, "dummy_dabing1_2");
+     frame Dabing3_1;		FRM_FindFrame(Dabing3_1, "dummy_dabing3_1");
+
+     integer DoChaty = 0;
+
+     SaveGameValue(10, 5);		// NEPRESKOC CUTSCENU u letadla
+
+     SetAlarmType(1023, True);
+     SetAlarmType(264, False);		// 8 + 256 = False
+  }
+
+  HUMAN_Suspend(True);				
+  Goto TheEnd;
+  Whenever A (_PlayerInRange(101);)			
+  {							
+    HUMAN_Suspend(False);				
+  }							
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+HUMAN_ACTIVITY_Smoke(true);
+
+OnCutscene(5)
+{
+  Goto TheEnd;
+}
+
+OnCutsceneDone(5)
+{
+  Goto TheEnd;
+}
+
+Whenever near (_PlayerInRange(35);)		
+  {						
+    SendSignal(MyFRM, 2);
+  }			
+OnSignal(2)		// From Rebel - "We are near - start talk."
+{
+  HUMAN_Move("PG1_1");	
+  HUMAN_ACTIVITY_Smoke(False);
+  HUMAN_Move("PG1_2");		
+  delay(750);
+  HUMAN_TurnAt(GP2);
+  If (_ACTOR_GetState(GP2);)
+   {
+      SendSignal(dabing1_2, 1);
+// 01990251	Uû mÏ to tady nebavÌ.	
+// 01990252	StojÌme tady jako dva blbouni, stejnÏ to letadlo nikoho nezajÌm·.	
+// 01990253	S tebou je taky z·bava jako s mrtvolou, tak ¯ekni aspoÚ nÏco.	
+
+// 01990249	Brzy nas p¯ijdou vyst¯Ìdat.	
+// 01990250	Tak neûvaÚ a vraù se zp·tky na pozici.
+   }
+}
+
+OnSignal(5)
+{
+// 01990268	Kdyû to bereö takhle, tak mi vlez na z·da.	
+  delay(1500);
+Label DeAlarm:
+  DisableSignals(False);
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("PG1_3");
+  delay(1000);
+  HUMAN_TurnAt(see_chata);
+  goto TheEnd;
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  SendSignal(dabing1_2, 2);	// kecy se rusi
+  SendSignal(dabing3_1, 2);	// kecy se rusi
+  EndScript();
+}
+
+OnAlarm()
+{
+  If (( DoChaty == 1) OR (DoChaty == 2)) 
+   {
+      Block
+        {
+           AIEvent =_GetAlarmType(); 
+           PrintfNumber("AIE PG2 (move): ", AIEvent);
+           HUMAN_SETSIGHTRANGE(49);
+           HUMAN_SETHEARRANGE(60);
+       }
+       HUMAN_Stop();
+       EndScript();
+    }
+  If (  DoChaty == 3 ) 
+   {
+      Block
+        {
+           AIEvent =_GetAlarmType(); 
+           PrintfNumber("AIE PG2 (Chata): ", AIEvent);
+           HUMAN_SETSIGHTRANGE(45);
+           HUMAN_SETHEARRANGE(60);
+       }
+       HUMAN_SETMODE_StandFast();
+       EndScript();
+    }
+  SaveGameValue(10, 10);		// PRESKOC CUTSCENU u letadla
+  SendSignal(dabing1_2, 2);	// kecy se rusi
+  SendSignal(dabing3_1, 2);	// kecy se rusi
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      HUMAN_SETSIGHTRANGE(49);
+      HUMAN_SETHEARRANGE(58);
+      HUMAN_SETAIMODE_Aggressive();
+      PrintfNumber("AIE PG1: ", AIEvent);
+      DisableSignals(True);
+      HUMAN_Stop();
+    }
+  HUMAN_ACTIVITY_Smoke(False);
+  If (AIEvent == 32) {goto AIE_32;}	// vidim
+  If (AIEvent == 64) {goto AIE_64;}	// zraneni
+  If (AIEvent == 1) {goto AIE_1;}	// blizka strelba
+  If (AIEvent == 4) {goto AIE_4;}	// kroky		  
+  GOTO miss;
+Label AIE_4:		// kroky
+  Block
+    {
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SETMODE_Silence();
+    }
+  Goto miss;
+Label AIE_1:		// blizka strelba
+      HUMAN_SETMODE_Lie();
+  goto miss;
+Label AIE_32:		// vidim
+Label AIE_64:		// zraneni
+  Block
+    {
+       HUMAN_SETMODE_Run();
+       HUMAN_SETAIMODE_Defensive();
+    }
+label miss:
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(37);
+  HUMAN_SETHEARRANGE(46);
+  SetAlarmType(1023, True);	
+  SetAlarmType(776, False);	
+  If (DoChaty == 1) { Goto Chata_1;}
+  If (DoChaty == 2) { Goto Chata_2;}
+  If (DoChaty == 3) { Goto Chata_3;}
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("PG1_1");
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  Goto TheEnd;
+}
+
+// rozhovor
+OnSignal(10)
+{
+  HUMAN_TurnAt(GP3);
+}
+
+// Stridani strazi
+OnSignal(11)
+{
+  SendSignal(dabing1_2, 2);	// kecy se rusi
+  DisableWhenevers(true);
+  HUMAN_Suspend(False);	
+  HUMAN_TurnAt(GP3);
+  HUMAN_ACTIVITY_Smoke(false);
+  HUMAN_SetAnim("%%rozhovor2", 250, 250, True);
+  Printf("Hmm, kde se fl·k·te! Je mi tady uû straön· zima."); 
+  Delay(3500);
+  HUMAN_SetAnim("", 250, 250, False);
+}
+OnSignal(12)
+{
+  DoChaty = 1;
+  Printf("Snad, ale teÔ se tÏöÌm jen na ten Ëaj.");  
+  Delay(2500);
+  Printf(" Tak zase za Ëty¯i hodiny ... uûijte si to tady, ahoj."); 
+  Delay(2500);
+  HUMAN_SetAnim("", 250, 250, False);
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("PG3_3");
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("PG3_2");
+Label Chata_1:
+  HUMAN_Move("PG3_1");
+  DoChaty = 2;
+Label Chata_2:
+Label Chata_3:
+  HUMAN_SETSIGHTRANGE(20);
+  HUMAN_SETHEARRANGE(25);
+  HUMAN_Move("PG1_chata");
+  HUMAN_TurnAt(see);
+  Delay(1000);
+  HUMAN_ACTIVITY_Sit(sit);
+  DoChaty = 3;
+}
+
+
+Label TheEnd:

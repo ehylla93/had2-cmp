@@ -1,0 +1,50 @@
+// convoy_E04, convoy_E05 takling
+
+Block
+{
+Frame talker1;		FRM_FindFrame(talker1, "convoy_E04");
+Frame talker2;		FRM_FindFrame(talker2, "convoy_E05");
+Integer tnum;
+}
+
+OnSignal(1)	// signal received from convoy_E04
+{
+	GoTo talk;
+}
+
+OnSignal(2)	// received from convoy_E04, convoy_E05 on death or on alarm
+{
+	FRM_MorphSpeechDelayed(talker1, 0, 0, 0);
+	FRM_MorphSpeechDelayed(talker2, 0, 0, 0);
+	EndScript();
+}
+
+GoTo end;
+
+Label talk:
+tnum = _RandomInt(2);
+if(tnum==0)
+	{
+	FRM_MorphSpeechDelayed(talker1, 18993578, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 18993579, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 18993580, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 18993581, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 18993582, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 18993583, 3, 20);
+	GoTo talk;
+	}
+if(tnum==1)
+	{
+	FRM_MorphSpeechDelayed(talker2, 59990039, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 59990040, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 59990041, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 59990042, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 59990043, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 59990044, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 59990045, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 59990046, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 59990047, 3, 20);
+	GoTo talk;
+	}
+
+Label end:

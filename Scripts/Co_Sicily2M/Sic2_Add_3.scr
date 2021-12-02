@@ -1,0 +1,63 @@
+// Add_3
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+//  Frame turn; 		FRM_FindFrame(turn, "dummy_it7_see");
+Frame me;	FRM_GetMyFrame(me);
+frame SAS1;	FRM_FindFrame(SAS1, "IT_11"); 
+//Frame Sherman_01;		FRM_FindFrame( Sherman_01, "Sherman_01");
+frame fuck;	FRM_FindFrame(fuck, "fuck_bum_1");
+frame dummyt;	FRM_FindFrame(dummyt, "dummy_tiger_bum1");
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(SAS1, 14);
+  EndScript();
+}
+
+OnAlarm(){
+//HUMAN_TurnAtNearestPlayer();
+//HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(dummyt, 1);
+HUMAN_TurnAt(fuck);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+//HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+HUMAN_SetSniper(1, 5);
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+
+
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SetOptimized(1);  
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Zombie();
+// HUMAN_TurnAt(investigat);
+  
+goto END;
+
+Label END:

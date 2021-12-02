@@ -1,0 +1,34 @@
+// Obj 4 - Plant Explosives
+// ---------------------------------------------
+
+Block
+{
+Frame N1;	FRM_FindFrame(N1, "Bomba_01");
+Frame N2;	FRM_FindFrame(N2, "Bomba_02");
+Frame N3;	FRM_FindFrame(N3, "Bomba_03");
+Frame N4;	FRM_FindFrame(N4, "Bomba_04");
+Frame N5;	FRM_FindFrame(N5, "Bomba_05");
+Frame N6;	FRM_FindFrame(N6, "Bomba_06");
+Frame N7;	FRM_FindFrame(N7, "Bomba_07");
+Frame N8;	FRM_FindFrame(N8, "Bomba_08");
+
+Frame DZ;	FRM_FindFrame(DZ, "DropZone");
+Frame obj6;	FRM_FindFrame(obj6, "obj6");
+}
+
+
+Whenever Planted ( (((((((_ACTOR_GetState(N1)==1) and (_ACTOR_GetState(N2)==1)) and (_ACTOR_GetState(N3)==1)) and (_ACTOR_GetState(N4)==1)) and (_ACTOR_GetState(N5)==1)) and (_ACTOR_GetState(N6)==1)) and (_ACTOR_GetState(N7)==1)) and (_ACTOR_GetState(N8)==1))
+{	
+SendSignal(DZ, 1);
+SendSignal(obj6, 1);
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(02990418);
+Delay(3000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label END:

@@ -1,0 +1,32 @@
+Block
+ {
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+Onsignal(1)			// aktivace z OBJ4
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_sherman", true, 3);
+}
+				
+OnAlarm()  
+  {
+      Printf("!!!!!!!!!!!!!!!!!! OKAMZITE HLASIT ----- PRUSER tank posadka - 4");
+  }
+
+OnAlarmDone()  {}
+
+
+Label TheEnd:
+
+//////////////////////////////////// - VYHODIT, ladící
+// frame MyFRM; 	FRM_GetMyFrame(MyFRM);
+// Delay(10100);
+// SendSignal(MYfrm, 1);
+//////////////////////////////

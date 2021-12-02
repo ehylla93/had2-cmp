@@ -1,0 +1,15 @@
+// Opel
+//--------------------
+
+Block
+{
+Frame Obj;	FRM_FindFrame(Obj,"obj5");
+}
+
+//--------------------
+
+Whenever Player(_PlayerInRange(5))
+{
+SendSignal(Obj, 2);
+EndScript();
+}

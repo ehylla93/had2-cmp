@@ -1,0 +1,11 @@
+
+frame H1;		FRM_FindFrame(H1, "Hunter_1");
+frame H2;		FRM_FindFrame(H2, "Hunter_2");
+frame H3;		FRM_FindFrame(H3, "Hunter_3");
+
+Whenever AAA ( _PlayerInRange(70) )
+{
+  SendSignal(H1, 13);
+  SendSignal(H2, 13);
+  SendSignal(H3, 13);
+}

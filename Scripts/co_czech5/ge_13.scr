@@ -1,0 +1,84 @@
+Frame car;			FRM_FindFrame(car, "la_OpelE_5");
+Frame tiger;		FRM_FindFrame(tiger, "la_TigerEv_1");
+Frame count;		FRM_FindFrame(count, "dead_counter");
+SetWhenever (TIR, false);
+SetWhenever (CIR, false);
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(true);
+
+HUMAN_WeaponOnArm(true);
+Label xx:
+
+OnSignal(1)
+	{
+	SetAlarmType(1023, true);
+	SetWhenever (TIR, true);
+	SetWhenever (CIR, true);
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("GE_13");
+	HUMAN_Move("GE_121");
+	HUMAN_Move("GE_122");
+	GoTo walk;
+	}
+
+Label walk:
+	HUMAN_Move("GE_123");
+	HUMAN_Move("GE_124");
+	HUMAN_Move("GE_125");
+	HUMAN_Move("GE_126");
+	HUMAN_Move("GE_127");
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("GE_128");
+	HUMAN_Move("GE_129");
+	HUMAN_Move("GE_129a");
+	HUMAN_Move("GE_129b");
+	HUMAN_Move("GE_129c");
+	HUMAN_Move("GE_129d");
+	HUMAN_Move("GE_129e");
+	HUMAN_Move("GE_129f");
+	HUMAN_Move("GE_129g");
+	HUMAN_Move("GE_129h");
+	HUMAN_Move("GE_129i");
+	HUMAN_Move("GE_129j");
+	HUMAN_Move("GE_129k");
+
+Whenever TIR (_FrameInRange(tiger)<2)
+	{
+	HUMAN_MoveFromFrame(tiger, 15);
+	SetWhenever (TIR, true);
+	}
+
+Whenever CIR (_FrameInRange(car)<2)
+	{
+	HUMAN_MoveFromFrame(car, 15);
+	SetWhenever (CIR, true);
+	}
+
+OnAlarm()
+	{
+	HUMAN_Stop();
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETMODE_Walk();
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_Move("GE_129e");
+	}
+
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}
+

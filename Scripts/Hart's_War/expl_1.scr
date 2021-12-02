@@ -1,0 +1,11 @@
+// Frame Mg7;		FRM_FindFrame(Mg7,"Mg7");
+// SetWhenever(player21,1);
+
+
+
+
+// Whenever player21(_PlayerInRange(15))
+// {	
+//  SendSignal(Mg7, 10);
+//  SetWhenever(player21,1);
+// }

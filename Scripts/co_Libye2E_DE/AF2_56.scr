@@ -1,0 +1,58 @@
+// AF2_56 - Gun Tank1
+
+// Variables definition
+Block
+{
+Frame look01;
+	FRM_FindFrame(look01, "AF2_53_look01");
+Frame me;
+	FRM_GetMyFrame(me);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+//	Delay(100);
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_53_A1
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+printf("AF2_56 Gun Tank1 dead");
+EndScript();
+}
+// ---------------------------
+// Starting pose
+HUMAN_BoardVehicle("Tank1", true, 2);
+FRM_SwitchFaceTexture(me, "e_f057");
+HUMAN_Suspend(true);
+GoTo end;
+
+
+Label end:

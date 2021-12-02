@@ -1,0 +1,74 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	bur1_01
+//	Vytvoril:		Iceman
+//	Zodpovida:		Iceman
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  FRAME this; 		FRM_GetMyFrame(this); 
+  INTEGER firstalarm = 0;
+  SetAlarmType(1023, true);	
+  SetAlarmType(4, false);
+}
+
+OnDeath()
+{
+  SaveGameValue(71, 2);
+  EndScript();
+}
+
+Whenever inrange (_PlayerInRange(160))
+{
+  goto ACTIVATE;
+}
+
+OnAlarm()
+{
+  block
+  {
+    HUMAN_Suspend(false);
+    SaveGameValue(71, 2);
+    HUMAN_SetOptimized(0);
+    DisableWhenevers(true);
+    DisableSignals(true);
+    HUMAN_SETSIGHTRANGE(160);
+    HUMAN_SETHEARRANGE(150);
+ }
+  if(!firstalarm)
+  {
+    HUMAN_LookAround(3);
+    Delay(1000);
+    firstalarm = 1;
+  }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, true);
+  HUMAN_SetAlarm(false);
+  goto ALARMDONE;
+}
+
+  SetAlarmType(1023, true);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Guard();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+Label ACTIVITYLOOP:
+  HUMAN_Move("02_01");
+  HUMAN_LookAround(3);
+  HUMAN_Move("02_02");
+  HUMAN_Move("02_03");
+goto ACTIVITYLOOP;
+
+Label ALARMDONE:
+
+Label END:

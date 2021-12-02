@@ -1,0 +1,62 @@
+// con conductor
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //Close shooting (si ferit, ataca)
+SetAlarmType(2,1); //Hear shooting
+SetAlarmType(4,0); //steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,0); //explozion
+SetAlarmType(32,1); //see
+SetAlarmType(64,0); //I´m wounded
+SetAlarmType(128,0); //from script
+SetAlarmType(256,0); //Friendly fire
+SetAlarmType(512,0); //I see a dead body
+
+Frame La_OpelE_2;	FRM_FindFrame(La_OpelE_2, "La_OpelE_2"); // PORTER
+
+
+FRM_SwitchFaceTexture(me,"e_f060");
+
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+HUMAN_SetAnim("%%odtlacovac2", 1000, 1000, 1);
+}
+goto END;
+
+
+
+// ----------------------------------------
+
+
+
+
+OnDeath(){
+SendSignal(La_OpelE_2, 35);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETAIMODE_Zombie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+goto END;
+}
+
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 360))
+{
+HUMAN_Suspend(0);
+}
+
+Label END:

@@ -1,0 +1,153 @@
+// Ridic Nakladaku 1
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame P1;	FRM_FindFrame(P1,"S_Tr02");
+Frame P2;	FRM_FindFrame(P2,"S_Tr03");
+Frame P3;	FRM_FindFrame(P3,"S_Tr04");
+Frame P4;	FRM_FindFrame(P4,"S_Tr05");
+Frame P5;	FRM_FindFrame(P5,"S_Tr06");
+Frame R2;	FRM_FindFrame(R2,"S_Tr11");
+Frame mujOpel;	FRM_FindFrame(mujOpel,"Opel_02");
+Frame Obj9;	FRM_FindFrame(Obj9,"obj9");
+Frame Obj10;	FRM_FindFrame(Obj10,"obj10");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f028");
+
+Integer vykladka;
+	vykladka=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+
+If(vykladka == 0)
+{
+SendSignal(Obj9, 1);
+SendSignal(R2, 7);
+SendSignal(P1, 3);
+SendSignal(P2, 3);
+SendSignal(P3, 3);
+SendSignal(P4, 3);
+SendSignal(P5, 3);
+}
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(Obj9, 1);
+SendSignal(R2, 7);
+HUMAN_Drive("", 0);
+Delay(5000);
+SendSignal(P1, 7);
+SendSignal(P2, 7);
+SendSignal(P3, 7);
+SendSignal(P4, 7);
+SendSignal(P5, 7);
+vykladka=vykladka+1;
+Delay(10000);
+HUMAN_Drive("hakl_10",80);
+HUMAN_Drive("hakl_11",90);
+Delay(7000);
+HUMAN_Drive("",0);
+SendSignal(Obj10, 2);
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SetAlarm(0);
+HUMAN_BoardVehicle("Opel_02", 0, 0);
+Delay(500);
+DisableSignals(1);
+HUMAN_Suspend(1);
+Delay(5000);
+goto END;
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("Opel_02", 1, 0);
+SendSignal(P1, 1);
+SendSignal(P2, 1);
+SendSignal(P3, 1);
+SendSignal(P4, 1);
+SendSignal(P5, 1);
+Delay(2000);
+HUMAN_Drive("hakl_001",30);
+HUMAN_Drive("hakl_01",30);
+HUMAN_Drive("hakl_02",30);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_Drive("hakl_03",30);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(40);
+HUMAN_Drive("hakl_04",40);
+HUMAN_Drive("hakl_05",30);
+HUMAN_Drive("hakl_06",40);
+HUMAN_Drive("hakl_09",50);
+HUMAN_Drive("hakl_07",40);
+HUMAN_Drive("hakl_08",30);
+HUMAN_Drive("hakl_10",50);
+HUMAN_Drive("hakl_11",80);
+Delay(7000);
+HUMAN_Drive("", 0);
+SendSignal(Obj10, 2);
+HUMAN_BoardVehicle("Opel_02", 0, 0);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+SendSignal(P4, 2);
+SendSignal(P5, 2);
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

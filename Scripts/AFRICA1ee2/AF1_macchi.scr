@@ -1,0 +1,11 @@
+block{
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME letcnt;		FRM_FindFrame(letcnt, "dummy_letcnt");
+}
+
+OnDeath(){
+  FRM_CreateParticle(53, this);		//79
+  PlaySound(6, 2);
+  MakeExplosion(this, 1500000, 8000);		// odremovat
+  SendSignal(letcnt, 1);
+}

@@ -1,0 +1,85 @@
+// T3, 1
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  INTEGER firstalarm				= 0;
+
+  FRAME posadka1;				FRM_FindFrame(posadka1, "AF1_08");
+  FRAME posadka2;				FRM_FindFrame(posadka2, "AF1_09");
+  FRAME a1;				      FRM_FindFrame(a1, "AF1_posila_01");
+  FRAME a2;				      FRM_FindFrame(a2, "AF1_posila_02");
+  FRAME a3;					FRM_FindFrame(a3, "AF1_posila_03");
+  FRAME a4;					FRM_FindFrame(a4, "AF1_posila_04");
+  FRAME a5;					FRM_FindFrame(a5, "AF1_posila_05");
+  FRAME a6;					FRM_FindFrame(a6, "AF1_posila_06");
+  FRAME a7;					FRM_FindFrame(a7, "AF1_posila_07");
+  FRAME a8;					FRM_FindFrame(a8, "AF1_posila_08");
+  FRAME a9;					FRM_FindFrame(a9, "AF1_posila_09");
+  FRAME a10;				FRM_FindFrame(a10,"AF1_posila_10");
+  FRAME t1;					FRM_FindFrame(t1, "AF1_tank01_01");
+  FRAME t2;					FRM_FindFrame(t2, "AF1_tank01_02");
+  FRAME t3;					FRM_FindFrame(t3, "AF1_tank01_03");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+  printf("tank2 driver: death");
+      SendSignal(a1, 1);
+      SendSignal(a2, 1);
+	SendSignal(a3, 1);
+      SendSignal(a4, 1);
+	SendSignal(a5, 1);
+      SendSignal(a6, 1);
+	SendSignal(a7, 1);
+      SendSignal(a8, 1);
+	SendSignal(a9, 1);
+      SendSignal(a10, 1);
+	SendSignal(t1, 1);
+      SendSignal(t2, 1);
+      SendSignal(t3, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    HUMAN_DriveNearPlayer(20);
+    SendSignal(posadka1, 1);
+    SendSignal(posadka2, 1);
+    firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+  HUMAN_DriveNearPlayer(20);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+  goto END;
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("Panzer3_03",  true, 0);
+goto END;
+
+Label END:

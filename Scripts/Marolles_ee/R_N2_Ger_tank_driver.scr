@@ -1,0 +1,60 @@
+Block
+ {
+    frame Target;	FRM_FindFrame(Target, "la_N2_balkon");		//////////////upravit//////////// DOPLNIT
+    frame Tankobornik; FRM_FindFrame(Tankobornik , "Corpse_1");
+    frame Tiger;		FRM_FindFrame(Tiger, "La_TigerEv");
+    frame zavoznik;	FRM_FindFrame(zavoznik, "GerTank_zavoznik");    
+
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+ HUMAN_Suspend(True);				
+ goto TheEnd;				
+
+Onsignal(1)		// aktivace 
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("La_tigerEv", true, 0);
+  SendSignal(zavoznik, 1);
+}
+				
+OnAlarm()  
+  {
+//      Printf("!!!!!!!!!!! prosim HLASIT ----- PRUSER s GER tank driverem");
+      Printf(" prosim TIGER -----ALARM STRELCE");
+      Printf(" prosim TIGER -----ALARM STRELCE ... 3");
+      Delay(900);
+      Printf(" prosim TIGER -----ALARM STRELCE ... 2");
+      Delay(900);
+      Printf(" prosim TIGER -----ALARM STRELCE ... 1");
+      Delay(900);
+      Printf(" prosim TIGER -----ALARM STRELCE ... TED ho davam do AI");
+      EndScript();
+  }
+  
+  SendSignal(Tiger, 1);
+  HUMAN_Drive("GerTank1", 10); 
+  HUMAN_Drive("GerTank2", 14); 
+  HUMAN_Drive("GerTank3", 16); 
+  SendSignal(Tiger, 2);
+  
+  SendSignal(Tankobornik, 1);
+  Printf("TIGER ---- DRIVER PRESEDA");
+  HUMAN_BoardVehicle("La_tigerEv", true, 2); 	 // PRESEDA za kanon
+  Delay(2500);
+  HUMAN_Attack(Target, 10000);  // nejak se mu nechce
+  Printf("TIGER ---- ZAPINAM MU SetAlarmType 1023 na TRUE!!!!");
+    SetAlarmType(1023, True);
+  
+
+OnAlarmDone()  
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+}
+
+Label TheEnd:
+
+

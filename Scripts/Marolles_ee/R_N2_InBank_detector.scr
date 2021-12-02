@@ -1,0 +1,91 @@
+
+
+Block
+{
+  Frame Ally4;		FRM_FindFrame(Ally4, "Ally_4");
+
+  Frame Blue11;	FRM_FindFrame(Blue11, "Blue_11");
+  //*//Frame Blue12;	FRM_FindFrame(Blue12, "Blue_12");
+  Frame Blue13;	FRM_FindFrame(Blue13, "Blue_13");
+  Frame Blue14;	FRM_FindFrame(Blue14, "Blue_14");
+  Frame Blue15;	FRM_FindFrame(Blue15, "Blue_15");
+  //*//Frame Blue16;	FRM_FindFrame(Blue16, "Blue_16");
+  Frame Blue17;	FRM_FindFrame(Blue17, "Blue_17");
+  Frame W1_1;		FRM_FindFrame(W1_1, "Wave1_1");
+  //*//Frame W1_2;		FRM_FindFrame(W1_2, "Wave1_2");
+  Frame W1_3;		FRM_FindFrame(W1_3, "Wave1_3");
+  //*//Frame W1_4;		FRM_FindFrame(W1_4, "Wave1_4");
+  Frame W1_5;		FRM_FindFrame(W1_5, "Wave1_5");
+  Frame W2_1;		FRM_FindFrame(W2_1, "Wave2_1");
+  Frame W2_2;		FRM_FindFrame(W2_2, "Wave2_2");
+  Frame W2_3;		FRM_FindFrame(W2_3, "Wave2_3");
+  //*//Frame W2_4;		FRM_FindFrame(W2_4, "Wave2_4");
+  //*//Frame W2_5;		FRM_FindFrame(W2_5, "Wave2_5");
+
+  SetWhenever( B11, False);
+  //*//SetWhenever( B12, False);
+  SetWhenever( B13, False);
+  SetWhenever( B14, False);
+  SetWhenever( B15, False);
+  //*//SetWhenever( B16, False);
+  SetWhenever( B17, False);
+  SetWhenever( W11, False);
+  //*//SetWhenever( W12, False);
+  SetWhenever( W13, False);
+  //*//SetWhenever( W14, False);
+  SetWhenever( W15, False);
+  SetWhenever( W21, False);
+  SetWhenever( W22, False);
+  SetWhenever( W23, False);
+//*//  SetWhenever( W24, False);
+//*//  SetWhenever( W25, False);
+}
+  Integer kdo = 0;
+
+Goto TheEND;
+
+Whenever W11 (  _FrameInRange(W1_1)<4 )  {  kdo = 1; Printf("W1_1 - is targer"); }
+//*//Whenever W12 (  _FrameInRange(W1_2)<4 )  {  kdo = 2; Printf("W1_2 - is targer"); }
+Whenever W13 (  _FrameInRange(W1_3)<4 )  {  kdo = 3; Printf("(W1_3 - is targer"); }
+//*//Whenever W14 (  _FrameInRange(W1_4)<4 )  {  kdo = 4; Printf("W1_4 - is targer"); }
+Whenever W15 (  _FrameInRange(W1_5)<4 )  {  kdo = 5; Printf("W1_5 - is targer"); }
+Whenever W21 (  _FrameInRange(W2_1)<4 )  {  kdo = 6; Printf("W2_1 - is targer"); }
+Whenever W22 (  _FrameInRange(W2_2)<4 )  {  kdo = 7; Printf("W2_2 - is targer"); }
+Whenever W23 (  _FrameInRange(W2_3)<4 )  {  kdo = 8; Printf("W2_3 - is targer"); }
+//*//Whenever W24 (  _FrameInRange(W2_4)<4 )  {  kdo = 9; Printf("W2_4 - is targer"); }
+//*//Whenever W25 (  _FrameInRange(W2_5)<4 )  {  kdo = 10; Printf("W2_5 - is targer"); }
+Whenever B11 (  _FrameInRange(Blue11)<4 )  {  kdo = 11; Printf("B11 - is targer"); }
+//*//Whenever B12 (  _FrameInRange(Blue12)<4 )  {  kdo = 12; Printf("B12 - is targer"); }
+Whenever B13 (  _FrameInRange(Blue13)<4 )  {  kdo = 13; Printf("B13 - is targer"); }
+Whenever B14 (  _FrameInRange(Blue14)<4 )  {  kdo = 14; Printf("B14 - is targer"); }
+Whenever B15 (  _FrameInRange(Blue15)<4 )  {  kdo = 15; Printf("B15 - is targer"); }
+//*//Whenever B16 (  _FrameInRange(Blue16)<4 )  {  kdo = 16; Printf("B16 - is targer"); }
+Whenever B17 (  _FrameInRange(Blue17)<4 )  {  kdo = 17; Printf("B17 - is targer"); }
+
+  SendSignal(Ally4, kdo); 
+
+OnSignal(1) // od Waves senderu 
+{
+Block
+  {   
+     SetWhenever( B11, True);
+     //*//SetWhenever( B12, True);
+     SetWhenever( B13, True);
+     SetWhenever( B14, True);
+     SetWhenever( B15, True);
+     //*//SetWhenever( B16, True);
+     SetWhenever( B17, True);
+     SetWhenever( W11, True);
+     //*//SetWhenever( W12, True);
+     SetWhenever( W13, True);
+     //*//SetWhenever( W14, True);
+     SetWhenever( W15, True);
+     SetWhenever( W21, True);
+     SetWhenever( W22, True);
+     SetWhenever( W23, True);
+     //*//SetWhenever( W24, True);
+     //*//SetWhenever( W25, True);
+  }
+}
+
+Label TheEND:

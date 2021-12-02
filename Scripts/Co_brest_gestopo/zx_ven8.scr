@@ -1,0 +1,215 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(60);
+
+integer a;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+frame cum1;		FRM_FindFrame(cum1, "zxven1cum");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "0_f052");
+
+}
+
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+block
+{
+SetWhenever(go2,0);
+suspend=0;
+SetAlarmType(375,1);	
+}
+goto chodim;
+}
+
+
+Whenever go2(_SignalReceived(2))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+block
+{
+SetWhenever(go,0);
+suspend=0;
+SetAlarmType(375,1);	
+}
+goto 2;
+}
+//-------------------------------------------------------------------------------------------------------------
+
+label chodim:
+
+a=1;
+HUMAN_Move("zxven0_01");
+
+a=2;
+
+label 2:
+HUMAN_Move("zxven8_02");
+a=1;
+
+
+goto chodim;
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+label rozdel:
+if (a==1)	{ goto chodim; }
+if (a==2)	{ goto 2; }
+
+
+goto end;
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+aievent=(_GetAlarmType());
+PrintfNumber("zxven8 alarm c:",aievent);
+}
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	endx=1;
+	EndScript();
+	}
+
+
+if (aievent==4)
+{
+
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+
+HUMAN_Stop();
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+SetAlarmType(4,1);
+
+goto rozdel;
+}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+
+
+
+if (_LoadGameValue(7)==0)
+
+	{
+	//neni w zone
+	if (suspend==1)
+	{
+	block
+	{
+	SetAlarmType(1023,0);
+	SetAlarmType(274,1);		//slysim strelbu
+	DisableWhenevers(0);
+	DisableSignals(0);
+	}
+	}
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+if (suspend==1)
+	{
+		suspend=0;
+		HUMAN_Suspend(0);
+		SetAlarmType(375,1);
+
+	}
+
+
+
+	endx=1;
+	EndScript();
+
+
+}
+
+endx=1;
+EndScript();
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("zxven8_03");
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(cum1);
+}
+
+OnDeath()
+{
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+
+
+
+

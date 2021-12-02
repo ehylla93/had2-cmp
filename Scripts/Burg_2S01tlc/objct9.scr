@@ -1,0 +1,63 @@
+// Obj 9,10,11 - Wait for Reinforcements
+// -------------------------------------------------
+
+Block
+{
+Frame Driver1;			FRM_FindFrame(Driver1,"Cpl. David Foreman");
+Frame Prisoner1;		FRM_FindFrame(Prisoner1,"Cpl. Arthur Muncie");
+Frame Prisoner2;		FRM_FindFrame(Prisoner2,"Cpl. Herbert Bennett");
+Frame Prisoner3;		FRM_FindFrame(Prisoner3,"Cpl. Simon Finch");
+
+SetWhenever(Player_Detected, 0);
+}
+
+
+Whenever Reinf_Arrived (_SignalReceived(1))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993408);
+SetObjectiveStatus(10, 0);
+Delay(3500);
+SetObjectiveStatus(9, 1);
+SUBTITLES_SetText(53999902);
+Delay(3500);
+SUBTITLES_SetText(52999902);
+Delay(3500);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Whenever Lets_go_home (_SignalReceived(3))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SetObjectiveStatus(11, 0);
+SUBTITLES_SetText(52999908);
+Delay(3500);
+SetObjectiveStatus(10, 1);
+SetWhenever(Player_Detected, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Whenever Driver_Dead (_Actor_GetState(Driver1)==0)
+{
+SetObjectiveStatus(10, 2);
+SetObjectiveStatus(11, 2);
+EndScript();
+}
+
+Whenever Player_Detected ((((_FrameInRange(Prisoner1) < 10)) Or (_FrameInRange(Prisoner2) < 10)) Or (_FrameInRange(Prisoner3) < 10))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999710);
+Delay(3500);
+SetObjectiveStatus(11, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+
+Label END:

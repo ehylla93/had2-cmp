@@ -1,0 +1,49 @@
+// AF3b_tankista02 Tiger01 Mg
+// -------------------------------------------------------------------------------------------------------------
+
+Block {
+FRAME organizer;		FRM_FindFrame(organizer, "dummy_organizer");
+
+SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(organizer, 1);
+  EndScript();
+}
+  
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, true);
+  goto END;
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+  goto ACTIVITY;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_BoardVehicle("Tiger01", true, 1);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+
+Label ACTIVITY:
+
+Label END:

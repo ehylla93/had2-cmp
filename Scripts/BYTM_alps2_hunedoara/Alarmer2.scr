@@ -1,0 +1,28 @@
+// TURNING OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame S01;	FRM_FindFrame(S01,"alp2_S01");
+Frame S02;	FRM_FindFrame(S02,"alp2_S02");
+Frame S03;	FRM_FindFrame(S03,"alp2_S03");
+
+Frame R01;	FRM_FindFrame(R01,"R1_E01");
+Frame R02;	FRM_FindFrame(R02,"R1_E02");
+Frame R03;	FRM_FindFrame(R03,"R1_E03");
+Frame R04;	FRM_FindFrame(R04,"R1_E04");
+Frame R05;	FRM_FindFrame(R05,"R1_E05");
+Frame R06;	FRM_FindFrame(R06,"R1_E06");
+Frame R07;	FRM_FindFrame(R07,"R2_E01");
+Frame R08;	FRM_FindFrame(R08,"R2_E02");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(S01, 5);SendSignal(S02, 5);SendSignal(S03, 5);
+SendSignal(R01, 5);SendSignal(R02, 5);SendSignal(R03, 5);SendSignal(R04, 5);
+SendSignal(R05, 5);SendSignal(R06, 5);SendSignal(R07, 5);SendSignal(R08, 5);
+EndScript();
+}

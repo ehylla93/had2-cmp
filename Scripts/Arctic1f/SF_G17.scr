@@ -1,0 +1,73 @@
+// SF_G17 - Hlidka v lese
+// ------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f032");
+SetWhenever(Spawn, 0);
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto Patrol;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Spawn, 1);
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(90))
+{
+HUMAN_Suspend(0);
+goto Patrol;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(1);
+goto END;
+
+Label Patrol:
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+HUMAN_Move("TreeG3_1");
+HUMAN_Move("TreeG3_2");
+HUMAN_Move("TreeG3_3");
+HUMAN_Move("TreeG3_4");
+HUMAN_Move("TreeG3_3");
+HUMAN_Move("TreeG3_2");
+goto Patrol;
+
+
+Label END:

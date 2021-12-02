@@ -1,0 +1,14 @@
+// N1_nadvorie_A1 - N1_nadvorie_A3
+Block
+{
+Frame N06;
+	FRM_FindFrame(N06, "N06");
+Frame N08;
+	FRM_FindFrame(N08, "N08");
+}
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(N06, 2);
+	SendSignal(N08, 2);
+}

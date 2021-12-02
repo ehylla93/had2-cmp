@@ -1,0 +1,229 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Guard();
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(100);
+
+integer a;		a=1;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+
+
+frame cum1;		FRM_FindFrame(cum1, "z3ven2cum1");
+Frame detect1;	FRM_FindFrame(detect1, "Zonna3");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "0_f024");
+
+}
+
+
+
+
+
+HUMAN_Suspend(1);
+
+goto end;
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+suspend=0;
+delay (500);
+SetAlarmType(1023,0);	
+SetAlarmType(883,1);		//bez kroku	
+goto kecej;
+}
+
+Whenever chodim(_SignalReceived(2))
+{
+SetAlarmType(4,1);		
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+goto chodim;
+}
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+label chodim:
+
+a=1;
+HUMAN_SETMODE_Walk();
+HUMAN_Move("z3_ve10_01");
+a=2;
+
+label 2:
+
+HUMAN_TurnAt(cum1);
+
+
+LAbel kourim:
+
+HUMAN_SetAnim("%%nuda1", 300, 300, 0);
+delay (9000);
+
+
+goto kourim; 
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+label rozdel:
+if (a==1)	{ goto chodim; }
+if (a==2)	{ goto 2; }
+
+goto end;
+//---------------------------------------------------------------------------------------------------------
+
+label kecej:
+
+
+
+HUMAN_SetAnim("%%mluvi6",900,900,0);
+delay (6000);
+
+goto kecej;
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(512,0);
+SetAlarmType(375,1);
+aievent=(_GetAlarmType());
+PrintfNumber("z3_ve10 alarm c:",aievent);
+}
+HUMAN_Stop();
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+block
+	{
+	endx=1;
+	HUMAN_SETSIGHTRANGE(40);	
+	}
+	HUMAN_SetAnim("", 30, 30, 0);
+	EndScript();
+	}
+
+
+if (aievent==4)
+{
+
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+
+HUMAN_Stop();
+HUMAN_SetAnim("", 100, 100, 0);
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+SetAlarmType(4,1);
+goto rozdel;
+}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+HUMAN_Stop();
+HUMAN_SetAnim("", 300, 300, 0);
+
+
+HUMAN_WeaponOnArm(1);
+
+label tstzona:
+
+if (_PlayerInBox(detect1)==0)
+
+{
+delay (1000);
+goto tstzona;
+}
+
+
+
+endx=1;
+EndScript();
+}
+
+if (aievent==512)
+{
+SetAlarmType(512,0);
+HUMAN_Stop();
+endx=1;
+EndScript();
+}
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Silence();
+HUMAN_WeaponUp(1);
+
+label bloud:
+
+HUMAN_MoveRandomRadius(30);
+HUMAN_SetAnim("%%kouka", 300, 300,0);
+delay (5000);
+HUMAN_SetAnim("", 300, 300, 0);
+goto bloud;
+
+
+}
+
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+
+
+
+

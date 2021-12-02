@@ -1,0 +1,33 @@
+
+Frame tank;		FRM_FindFrame(tank,"n_tiger");
+Frame tank2;	FRM_FindFrame(tank2,"n_tiger2");
+Frame obj10;	FRM_FindFrame(obj10,"n_objtank");
+Frame T1;		FRM_FindFrame(T1,"n_T01");
+Frame T2;		FRM_FindFrame(T2,"n_T02");
+Frame T3;		FRM_FindFrame(T3,"n_T03");
+Frame T4;		FRM_FindFrame(T4,"n_T04");
+
+integer rdm;
+SaveGameValue(21, 0);
+SetWhenever(Drive, false);
+
+
+OnSignal(1)
+{
+SendSignal(obj10, 1);
+rdm=_RandomInt(2);
+if(rdm==0) { SaveGameValue(21, 1); FRM_TeleportNearCheckpoint(tank, "tank1a", "tank1b"); }
+if(rdm==1) { SaveGameValue(21, 2); FRM_TeleportNearCheckpoint(tank, "tank2a", "tank2b"); }
+FRM_TeleportNearCheckpoint(tank2, "tank3a", "tank3b");
+SendSignal(T1, 1);SendSignal(T2, 1);
+SendSignal(T3, 1);SendSignal(T4, 1);
+printf("Tanks ready");
+SetWhenever(Drive, true);
+}
+
+Whenever Drive (_LoadGameValue(22)==1)
+{
+SendSignal(T1, 3);	//driving
+}
+
+Label end:

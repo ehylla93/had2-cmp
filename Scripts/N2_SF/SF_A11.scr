@@ -1,0 +1,49 @@
+// SF_A11 - Ridic Shermana (Sherman1)
+// -------------------------------------------
+
+Block
+{
+Frame Cas;		FRM_FindFrame(Cas,"Sh_Cas");
+Frame Kulometcik;	FRM_FindFrame(Kulometcik,"SF_A12");
+Frame Kanoner;		FRM_FindFrame(Kanoner,"SF_A13");
+}
+
+//---------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Sherman1", 1, 0);
+SendSignal(Cas, 1);
+Delay(250);
+HUMAN_Drive("GerTank3", 10);
+HUMAN_Drive("", 10);
+Delay(7000);
+SendSignal(Cas, 3);
+goto END;
+}
+
+Whenever Jedem_dal (_SignalReceived(2))
+{
+Delay(250);
+SendSignal(Cas, 4);
+HUMAN_Drive("AmiiTank_5", 15);
+goto END;
+}
+
+Whenever Stop (_SignalReceived(3))
+{
+HUMAN_Drive("", 15);
+SendSignal(Kulometcik, 3);
+SendSignal(Kanoner, 3);
+goto END;
+}
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

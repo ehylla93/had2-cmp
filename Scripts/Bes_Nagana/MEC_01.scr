@@ -1,0 +1,73 @@
+// MEC_01 - MECANIC
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame GTR1;		FRM_FindFrame(GTR1, "GTR1");
+Frame GTR2;		FRM_FindFrame(GTR2, "GTR2");
+Frame GTR3;		FRM_FindFrame(GTR3, "GTR3");
+Frame GTR4;		FRM_FindFrame(GTR4, "GTR4");
+Frame GTR5;		FRM_FindFrame(GTR5, "GTR5");
+Frame GTR6;		FRM_FindFrame(GTR6, "GTR6");
+Frame CAMIO2;	FRM_FindFrame(CAMIO2, "CAMIO2");
+
+SetAlarmType(1,1); //Close shooting (si ferit, ataca)
+SetAlarmType(2,1); //Hear shooting
+SetAlarmType(4,0); //steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explozion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //I´m wounded
+SetAlarmType(128,0); //from script
+SetAlarmType(256,0); //Friendly fire
+SetAlarmType(512,1); //I see a dead body
+
+
+FRM_SwitchFaceTexture(me,"e_f060");
+
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("!manipulm", 1000, 1000, 1);
+}
+goto END;
+
+// ----------------------------------------
+
+Whenever player(_PlayerInRange(5))
+{
+HUMAN_SETMODE_Stand(); 
+Delay(500); 
+HUMAN_SetAnim("%%nuda", 10, 10, true);
+GoTo end;
+}
+
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_DropObject();
+HUMAN_SETSIGHTRANGE(325);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetAnim("%%panika", 1000, 1000, 0);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 360))
+{
+HUMAN_Suspend(0);
+}
+
+Label END:

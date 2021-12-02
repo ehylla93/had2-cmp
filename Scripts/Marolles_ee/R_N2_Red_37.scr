@@ -1,0 +1,66 @@
+
+integer  AIEvent;
+integer  FirstAlarm = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red37_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_SETAIMODE_Zombie();
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(7)
+{
+  HUMAN_SETSIGHTRANGE(50);
+  HUMAN_SETHEARRANGE(60);
+  HUMAN_Suspend(False);
+}
+
+label DeAlarm:
+  Block
+    { 
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  If ( !_PlayerInRange(25); )
+    {
+       HUMAN_Move("Red37_1");		
+       HUMAN_TurnAt(turn);	
+    }
+  Delay(100);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 37: ", AIEvent);
+      FirstAlarm = 1;
+      HUMAN_Stop();
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+    }
+  If ( FirstAlarm == 0 ) 
+    {
+       HUMAN_Move("Red37_1");		
+       HUMAN_TurnAt(turn);	
+       HUMAN_SETMODE_Crouch();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);
+  HUMAN_SETAIMODE_Zombie();	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

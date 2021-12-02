@@ -1,0 +1,57 @@
+// Kontrolní detektor v oblasti Z, "Zacatek" a Alarmer
+// -----------------------------------------------------
+
+Block
+{
+// *** HLIDKY ***
+
+Frame G01;	FRM_FindFrame(G01,"SF_G01");
+Frame G02;	FRM_FindFrame(G02,"SF_G02");
+Frame G03;	FRM_FindFrame(G03,"SF_G03");
+Frame G04;	FRM_FindFrame(G04,"SF_G04");
+Frame G05;	FRM_FindFrame(G05,"SF_G05");
+Frame G06;	FRM_FindFrame(G06,"SF_G06");
+Frame G07;	FRM_FindFrame(G07,"SF_G07");
+Frame G08;	FRM_FindFrame(G08,"SF_G08");
+Frame G09;	FRM_FindFrame(G09,"SF_G09");
+Frame G17;	FRM_FindFrame(G17,"SF_G17");
+Frame G18;	FRM_FindFrame(G18,"SF_G18");
+Frame G19;	FRM_FindFrame(G19,"SF_G19");
+Frame G20;	FRM_FindFrame(G20,"SF_G20");
+Frame G21;	FRM_FindFrame(G21,"SF_G21");
+Frame G22;	FRM_FindFrame(G22,"SF_G22");
+Frame G23;	FRM_FindFrame(G23,"SF_G29");
+
+// *** ALARMERI ***
+
+Frame G10;	FRM_FindFrame(G10,"SF_G10");
+Frame G11;	FRM_FindFrame(G11,"SF_G11");
+Frame G12;	FRM_FindFrame(G12,"SF_G12");
+Frame G13;	FRM_FindFrame(G13,"SF_G13");
+Frame G14;	FRM_FindFrame(G14,"SF_G14");
+Frame G15;	FRM_FindFrame(G15,"SF_G15");
+Frame G16;	FRM_FindFrame(G16,"SF_G16");
+}
+
+// -----------------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SendSignal(G01, 1);SendSignal(G02, 1);SendSignal(G03, 1);SendSignal(G04, 1);
+SendSignal(G05, 1);SendSignal(G06, 1);SendSignal(G07, 1);SendSignal(G08, 1);
+SendSignal(G09, 1);SendSignal(G17, 1);SendSignal(G18, 1);SendSignal(G19, 1);
+SendSignal(G20, 1);SendSignal(G21, 1);SendSignal(G22, 1);SendSignal(G23, 1);
+goto END;
+}
+
+
+Whenever Alarm (_SignalReceived(2))
+{
+SendSignal(G10, 1);SendSignal(G11, 1);SendSignal(G12, 1);SendSignal(G13, 1);
+SendSignal(G14, 1);SendSignal(G15, 1);SendSignal(G16, 1);
+EndScript();
+}
+
+
+Label END:
+

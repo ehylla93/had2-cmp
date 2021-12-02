@@ -1,0 +1,52 @@
+// C5_G67
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  FRM_MorphSpeechDelayed(me, 90004042, 5, 30); // hey what´s that shit?
+Delay(500);
+FRM_MorphSpeechDelayed(me, 90004059, 5, 30); // hmm?
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90004061, 5, 30); // Mist!!
+FRM_MorphSpeechDelayed(me, 90004064, 5, 30); // Einzane traaaaitorr!
+  HUMAN_SETMODE_Lie();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(100)){
+  HUMAN_Suspend(false);
+ goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f025");
+HUMAN_SetOptimized(1);
+Delay(500);
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

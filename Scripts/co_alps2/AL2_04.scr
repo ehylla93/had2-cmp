@@ -1,0 +1,112 @@
+// AL2_04 - room with knight's armours - Guard sitting on chair
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+Integer aievent = 0;
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(30);
+
+Frame sit;			FRM_FindFrame (sit,"al204sit");
+Frame cum;			FRM_FindFrame (cum,"al204cum");
+Frame shotalarm;	FRM_FindFrame (shotalarm,"shotalarm");
+
+HUMAN_SETAIMODE_Defensive();
+integer sus;
+HUMAN_SetOptimized(2);
+}
+
+sus = 1;
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+HUMAN_SETMODE_StandFast();
+block
+{
+SetWhenever(alarm,0);
+aievent=_GetAlarmType();
+HUMAN_SetAnim("", 40,40,0);
+DisableSignals(1);
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+	SendSignal (shotalarm,1);
+	SetAlarmType(274,0);
+	HUMAN_SetAlarm(0);
+	goto hlidejnew;
+}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received from detectoral204
+{
+	HUMAN_Suspend(false);
+	sus=0;
+	HUMAN_ACTIVITY_Sit(sit);
+	HUMAN_SetAnim("%%sedim", 100, 100, 1);
+	goto end;
+}
+
+Whenever alarm(_SignalReceived(2))	// received from detectoral204 
+{
+	if (sus == 1)	{ HUMAN_Suspend(0); }
+DisableSignals(1);
+label hlidej:
+	SetAlarmType(1011, true);
+	HUMAN_SETMODE_StandFast();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_Move("al2_04_02");
+	HUMAN_TurnAt(cum);
+	HUMAN_SETMODE_Crouch();
+	goto end;
+}
+
+OnSignal (6)
+{
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedim", 100,100,1);
+goto end;
+}
+
+OnSignal (7)
+{
+HUMAN_SetAnim("", 400,400,0);
+goto end;
+}
+
+label hlidejnew:
+	SetAlarmType(1011, true);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_TurnAt(cum);
+	HUMAN_SETMODE_Crouch();
+	EndScript();
+
+Label end:

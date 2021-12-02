@@ -1,0 +1,25 @@
+// AF4_rozhovor_02_activator
+// -------------------------------------------------------------------------------------------------------------
+
+Block  {
+FRAME af16;				FRM_FindFrame(af16, "AF1_16");
+FRAME af17;				FRM_FindFrame(af17, "AF1_17");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever pir (_PlayerInRange(70))
+{
+  if(_ACTOR_GetState(af16) AND _ACTOR_GetState(af17))
+  {
+    SaveGameValue(90, 1);
+  }
+  else
+  {
+  }
+}
+
+Whenever deadmech ((!_ACTOR_GetState(af16)) OR (!_ACTOR_GetState(af17)))
+{
+  SaveGameValue(90, 0);
+}

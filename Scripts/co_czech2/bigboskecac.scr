@@ -1,0 +1,27 @@
+
+Block {
+Frame bos;	FRM_FindFrame(bos,"big_boss");
+}
+
+Whenever sig1 (_SignalReceived(1))
+{
+delay(3000);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeech(bos,19993810,4,10);		//"Stop shooting! Stop!"
+delay(4000);
+FRM_MorphSpeech(bos,19993811,4,10);		//"I'm Obergruppenfuhrer Freiberg, do you hear me?! I'm an officer, I surrender!"
+delay(4000);
+SUBTITLES_SetOn(0);
+}
+
+Whenever sig2 (_SignalReceived(2))
+{
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(bos,19993810,4,10);		//"Stop shooting! Stop!"
+FRM_MorphSpeechDelayed(bos,19993811,4,10);
+FRM_MorphSpeechDelayed(bos,19993813,4,10);		//"I have some information you might be interested in. I will give it to you in exchange for my life"
+FRM_MorphSpeechDelayed(bos,19993814,4,10);
+FRM_MorphSpeechDelayed(bos,19993815,4,10);
+SUBTITLES_SetOn(0);
+SendSignal(bos, 1);
+}

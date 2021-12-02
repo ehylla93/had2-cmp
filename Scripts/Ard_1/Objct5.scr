@@ -1,0 +1,46 @@
+// Obj 6 - Assemble at the location with a vehicle
+// -----------------------------------------
+
+Block
+{
+Frame Opel;		FRM_FindFrame(Opel,"Opel_01");
+
+Integer Obj_Done;
+	Obj_Done=0;
+
+SetObjectiveStatus(7, 0);
+
+SetWhenever(Players, 0);
+}
+
+// -----------------------------------------
+
+Whenever Players ((_MP_AllTeamMembersAreInRange(1, 30)) And (_FrameInRange(Opel) < 30))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993608);
+SetObjectiveStatus(6, 1);
+Delay(4000);
+SetObjectiveStatus(7, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+OnSignal(1)
+{
+Obj_Done=Obj_Done+1;
+
+If(Obj_Done > 4)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993607);
+SetObjectiveStatus(6, 0);
+SetWhenever(Players, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+}
+goto End;
+}
+
+
+Label End:

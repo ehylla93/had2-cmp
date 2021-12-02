@@ -1,0 +1,113 @@
+// SF_G63 - Hakler (Hakl2),1
+// ------------------------------------------------
+
+Block
+{
+Frame Hakl;	FRM_FindFrame(Hakl,"Hakl_02");
+Frame P1;	FRM_FindFrame(P1,"SF_G64");
+Frame P2;	FRM_FindFrame(P2,"SF_G65");
+Frame P3;	FRM_FindFrame(P3,"SF_G66");
+Frame P4;	FRM_FindFrame(P4,"SF_G67");
+Frame P5;	FRM_FindFrame(P5,"SF_G68");
+
+Frame Cp1;	FRM_FindFrame(Cp1,"Posily_Cp1");
+Frame Cp2;	FRM_FindFrame(Cp2,"Posily_Cp2");
+Frame Cp3;	FRM_FindFrame(Cp3,"Posily_Cp3");
+Frame Cp4;	FRM_FindFrame(Cp4,"Posily_Cp4");
+Frame Cp5;	FRM_FindFrame(Cp5,"Posily_Cp5");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer InHakl;
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+
+If(InHakl == 1)
+{
+HUMAN_Drive("", 0);
+Delay(4000);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+SendSignal(P4, 2);
+SendSignal(P5, 2);
+Delay(500);
+Car_SetFuel(Hakl, 0);
+HUMAN_BoardVehicle("Hakl_02", 0, 0);
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(80);
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(256,1); //pratelska strelba
+InHakl=0;
+}
+
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Lie();
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Hakl_02", 1, 0);
+Delay(1000);
+InHakl=1;
+HUMAN_Drive("3", 80);
+HUMAN_Drive("1", 50);
+Delay(2000);
+HUMAN_Drive("", 0);
+Delay(2000);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+SendSignal(P4, 2);
+SendSignal(P5, 2);
+Delay(1000);
+Car_SetFuel(Hakl, 0);
+HUMAN_BoardVehicle("Hakl_02", 0, 0);
+HUMAN_SETSIGHTRANGE(83);
+HUMAN_SETHEARRANGE(85);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(256,1); //pratelska strelba
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp1, 2);
+goto END;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(30);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

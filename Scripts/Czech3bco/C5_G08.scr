@@ -1,0 +1,72 @@
+// T3, 1
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  INTEGER firstalarm				= 0;
+
+  Frame pomoc1;		FRM_FindFrame(pomoc1,"C5_G11");
+  Frame pomoc2;		FRM_FindFrame(pomoc2,"C5_G17");
+ 
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(pomoc1, 8);
+  delay(5000);
+  SendSignal(pomoc2, 8);
+  EndScript();
+}
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    HUMAN_DriveNearPlayer(10);
+    firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+  HUMAN_DriveNearPlayer(10);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+  goto END;
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(2)
+{
+  goto ACTIVATE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_Suspend(true);
+  goto END;
+
+Label ACTIVATE:
+  
+  HUMAN_Suspend(false);
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("La_tiger_1",  true, 0);
+  HUMAN_Drive("BMW_1",20);
+  HUMAN_Drive("BMW_2",20);
+  HUMAN_Drive("BMW_3",20);
+  HUMAN_DriveNearPlayer(15);
+  goto END;
+
+
+Label END:

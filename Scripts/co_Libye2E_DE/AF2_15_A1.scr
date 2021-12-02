@@ -1,0 +1,92 @@
+// AF2_15_A1 - 2. zone detector
+// ---------------------------
+// Variables definition
+Block
+{
+Frame Add_12;
+	FRM_FindFrame(Add_12, "Add_12");
+Frame Add_13;
+	FRM_FindFrame(Add_13, "Add_13");
+Frame Add_14;
+	FRM_FindFrame(Add_14, "Add_14");
+Frame Add_15;
+	FRM_FindFrame(Add_15, "Add_15");
+Frame Add_16;
+	FRM_FindFrame(Add_16, "Add_16");
+Frame af2_12;
+	FRM_FindFrame(af2_12, "AF2_12");
+Frame af2_13;
+	FRM_FindFrame(af2_13, "AF2_13");
+Frame af2_14;
+	FRM_FindFrame(af2_14, "AF2_14");
+Frame af2_15;
+	FRM_FindFrame(af2_15, "AF2_15");
+Frame af2_59;
+	FRM_FindFrame(af2_59, "AF2_59");
+Frame af2_61;
+	FRM_FindFrame(af2_61, "AF2_61");
+Frame af2_62;
+	FRM_FindFrame(af2_62, "AF2_62");
+Frame af2_63;
+	FRM_FindFrame(af2_63, "AF2_63");
+Frame af2_64;
+	FRM_FindFrame(af2_64, "AF2_64");
+Frame af2_66;
+	FRM_FindFrame(af2_66, "AF2_66");
+Frame af2_67;
+	FRM_FindFrame(af2_67, "AF2_67");
+Frame af2_68;
+	FRM_FindFrame(af2_68, "AF2_68");
+Frame af2_69;
+	FRM_FindFrame(af2_69, "AF2_69");
+Frame af2_70;
+	FRM_FindFrame(af2_70, "AF2_70");
+Frame af2_71;
+	FRM_FindFrame(af2_71, "AF2_71");
+Frame af2_72;
+	FRM_FindFrame(af2_72, "AF2_72");
+Frame af2_89;
+	FRM_FindFrame(af2_89, "AF2_89");
+Frame af2_90;
+	FRM_FindFrame(af2_90, "AF2_90");
+Frame af2_91;
+	FRM_FindFrame(af2_91, "AF2_91");
+Frame bf2_11;
+	FRM_FindFrame(bf2_11, "BF2_11");
+
+}
+// --------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(60))
+{
+	Block
+	{
+	SendSignal(Add_12, 1);
+	SendSignal(Add_13, 1);
+	SendSignal(Add_14, 1);
+	SendSignal(Add_15, 1);
+	SendSignal(Add_16, 1);
+		SendSignal(af2_12, 1);
+		SendSignal(af2_13, 1);
+		SendSignal(af2_14, 1);
+		SendSignal(af2_15, 1);
+		SendSignal(af2_59, 1);
+		SendSignal(af2_61, 1);
+		SendSignal(af2_62, 1);
+		SendSignal(af2_63, 1);
+		SendSignal(af2_64, 1);
+		SendSignal(af2_66, 1);
+		SendSignal(af2_67, 1);
+		SendSignal(af2_68, 1);
+		SendSignal(af2_69, 1);
+		SendSignal(af2_70, 1);
+		SendSignal(af2_71, 1);
+		SendSignal(af2_72, 1);
+		SendSignal(af2_89, 1);
+		SendSignal(af2_90, 1);
+		SendSignal(af2_91, 1);
+		SendSignal(bf2_11, 1);
+	}
+}
+// --------------------------
+// Starting pose

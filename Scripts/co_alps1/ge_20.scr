@@ -1,0 +1,128 @@
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+integer a;	a=0;
+frame ge21;		FRM_FindFrame(ge21, "ge_21");
+frame cum;		FRM_FindFrame(cum,"ge20cum");
+frame cum1;		FRM_FindFrame(cum1,"ge20cum1");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETSIGHTRANGE(50);
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+if (a==0)
+{
+SetAlarmType(274,0);
+HUMAN_WeaponOnArm(1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_run();
+HUMAN_TurnAtNearestPlayer();
+delay (600);
+HUMAN_Move("ge20_01");
+block
+{
+a=1;
+SetAlarmType(274,1);
+}
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+delay (300);
+HUMAN_Move("ge20_09");
+label rozhled:
+HUMAN_TurnAt(cum);
+delay (6000);
+HUMAN_TurnAt(cum1);
+delay (6000);
+goto rozhled;
+}
+}
+EndScript();
+
+}
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(8,0);
+HUMAN_SETMODE_Silence();
+}
+HUMAN_Move("ge20_08");
+HUMAN_TurnAt(cum);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(8,0);
+HUMAN_Move("ge20_01");
+a=1;
+HUMAN_Move("ge20_02");
+HUMAN_Move("ge20_03");
+HUMAN_Move("ge20_04");
+HUMAN_Move("ge20_05");
+HUMAN_Move("ge20_06");
+HUMAN_Move("ge20_07");
+
+Label formation:
+HUMAN_Move("ge21_05");
+HUMAN_Move("ge21_11");
+HUMAN_Move("ge21_12");
+HUMAN_Move("ge21_13");
+HUMAN_Move("ge21_14");
+HUMAN_Move("ge21_15");
+HUMAN_Move("ge21_16");
+HUMAN_Move("ge21_17");
+HUMAN_Move("ge21_18");
+HUMAN_Move("ge21_19");
+HUMAN_Move("ge21_20");
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+//-------------------------------------------------------------------------
+
+label end:

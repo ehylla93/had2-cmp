@@ -1,0 +1,63 @@
+// N39 - action guard behind the edge
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;	aievent=0;
+Frame me;	FRM_GetMyFrame(me);
+	
+SetAlarmType(16, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnSignal(1)	// received from N39_A1
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("N39_1");
+	GoTo end;
+}
+
+OnSignal(2)	// received from N39_A2
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("N39_2");
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f052");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label end:

@@ -1,0 +1,51 @@
+// A1_G02 (MG1) Kulometcik
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("MG1", 1, 1);
+goto END;
+}
+
+// -------------------------------------
+
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

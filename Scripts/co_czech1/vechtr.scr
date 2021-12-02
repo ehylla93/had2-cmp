@@ -1,0 +1,104 @@
+// Pointsman
+
+Block
+{
+Frame sloup;		FRM_FindFrame(sloup,"l_ndrlamp10");
+Frame zidla;		FRM_FindFrame(zidla,"zidla1");
+Frame kreslo;		FRM_FindFrame(kreslo, "budkakreslo");
+Frame objectives;	FRM_FindFrame(objectives, "objectives");
+
+Frame me;	FRM_GetMyFrame(me);
+
+FRM_SwitchFaceTexture(me, "e_f054");
+
+Integer speechdone=0;
+Integer objdone=0;
+Integer ctr=0;
+
+SetAlarmType(1023, 0);
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+Whenever sus (_MP_IsTeamMemberInRange(1, 1000))
+{
+SetWhenever(sus, false);
+HUMAN_ACTIVITY_Sit(kreslo);
+HUMAN_SetAnim("%%sedim", 500, 500, 1);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(false);
+goto end;
+}
+
+Whenever player(_PlayerInRange(3))
+{
+	SetWhenever(player, false);
+	GoTo speech;
+}
+
+OnSignal(5)	// received from objectives after contact
+{
+	DisableSignals(1);
+	DisableWhenevers(1);
+	GoTo smoke;
+}
+
+OnDeath()
+{
+if(objdone==0) { SendSignal(objectives, 6); }
+	DisableSignals(1);
+	DisableWhenevers(1);
+	PlayMusic(34);
+	goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+Label speech:
+	speechdone=1;
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("budkakreslo");
+	HUMAN_TurnAtNearestPlayer();
+	SUBTITLES_SetOn(true);
+	FRM_MorphSpeechDelayed(me, 18993604, 3, 20);
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 18993605, 3, 20);
+	SUBTITLES_SetOn(false);
+	Block {
+	SendSignal(objectives, 4);
+	objdone=1;
+	}
+GoTo end;
+
+Label smoke:
+	Delay(4500);
+	HUMAN_SetAnim("%(koureniB", 1000, 1000, 0);		//(Looking Through Pockets Then Lights Fag)
+	Delay(10000);
+		Label SMOKE2:
+		ctr=ctr+1;
+		if(ctr==4)
+		{
+		ctr=0;
+		goto sitdown;
+		}
+		HUMAN_SetAnim("%(koureni5", 1000, 1000, 0);		//(Brings Hand Up To Smoke)
+		Delay(9000);
+		goto SMOKE2;
+
+Label sitdown:
+	HUMAN_Move("budkazidla");
+	HUMAN_TurnAt(sloup);
+	Delay(100);
+	HUMAN_SetOptimized(2);
+	HUMAN_ACTIVITY_Sit(zidla);
+	HUMAN_SetAnim("%%sedim", 500, 500, 1);
+goto end;
+		
+Label end:

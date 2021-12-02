@@ -1,0 +1,63 @@
+// Alarmer ve Stredu mapy - na Alarm pribehnou dalsi
+// --------------------------------------------------------
+
+Block
+{
+// ***** NEMCI OD CHATY *****
+
+Frame S1;		FRM_FindFrame(S1,"S_Al01");
+Frame S2;		FRM_FindFrame(S2,"S_Al02");
+Frame S3;		FRM_FindFrame(S3,"S_Al03");
+Frame S4;		FRM_FindFrame(S4,"S_Al04");
+Frame S5;		FRM_FindFrame(S5,"S_Al05");
+Frame S6;		FRM_FindFrame(S6,"S_Al06");
+Frame S7;		FRM_FindFrame(S7,"S_Al07");
+Frame S8;		FRM_FindFrame(S8,"S_Al08");
+
+// ***** NEMCI Z LESA *****
+
+// ** KE KANONU **
+
+Frame S9;		FRM_FindFrame(S9,"S1_G06");
+Frame S10;		FRM_FindFrame(S10,"S1_G07");
+Frame S11;		FRM_FindFrame(S11,"S1_G08");  
+
+// ** K CHATE **
+
+Frame S12;		FRM_FindFrame(S12,"S1_G09");
+Frame S13;		FRM_FindFrame(S13,"S1_G10");
+
+Integer AlarmerVyber;
+}
+
+// -------------------------------------------------------
+// ** CASOVE ROZMEZI (20000 - 80000) ** 
+
+Whenever Alarm (_SignalReceived(1))
+{
+AlarmerVyber = _RandomInt(21);
+
+If(AlarmerVyber == 0){ Delay(20000);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 1){ Delay(40000);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 2){ Delay(60000);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 3){ Delay(80000);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 4){ Delay(20000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S13, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 5){ Delay(40000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S13, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 6){ Delay(60000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S13, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 7){ Delay(80000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S13, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);}
+If(AlarmerVyber == 8){ Delay(20000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);}
+If(AlarmerVyber == 9){ Delay(40000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);}
+If(AlarmerVyber == 10){ Delay(60000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);}
+If(AlarmerVyber == 11){ Delay(80000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);}
+If(AlarmerVyber == 12){ Delay(20000);SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S6, 1);SendSignal(S8, 1);SendSignal(S10, 1);SendSignal(S12, 1);}
+If(AlarmerVyber == 13){ Delay(40000);SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S6, 1);SendSignal(S8, 1);SendSignal(S10, 1);SendSignal(S12, 1);}
+If(AlarmerVyber == 14){ Delay(60000);SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S6, 1);SendSignal(S8, 1);SendSignal(S10, 1);SendSignal(S12, 1);}
+If(AlarmerVyber == 15){ Delay(80000);SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S6, 1);SendSignal(S8, 1);SendSignal(S10, 1);SendSignal(S12, 1);}
+If(AlarmerVyber == 16){ Delay(20000);SendSignal(S1, 1);SendSignal(S3, 1);SendSignal(S5, 1);SendSignal(S7, 1);SendSignal(S9, 1);SendSignal(S11, 1);SendSignal(S13, 1);}
+If(AlarmerVyber == 17){ Delay(40000);SendSignal(S1, 1);SendSignal(S3, 1);SendSignal(S5, 1);SendSignal(S7, 1);SendSignal(S9, 1);SendSignal(S11, 1);SendSignal(S13, 1);}
+If(AlarmerVyber == 18){ Delay(60000);SendSignal(S1, 1);SendSignal(S3, 1);SendSignal(S5, 1);SendSignal(S7, 1);SendSignal(S9, 1);SendSignal(S11, 1);SendSignal(S13, 1);}
+If(AlarmerVyber == 19){ Delay(80000);SendSignal(S1, 1);SendSignal(S3, 1);SendSignal(S5, 1);SendSignal(S7, 1);SendSignal(S9, 1);SendSignal(S11, 1);SendSignal(S13, 1);}
+If(AlarmerVyber == 20){ SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);Delay(20000);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S13, 1);}
+EndScript();
+}
+

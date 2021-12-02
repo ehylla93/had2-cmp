@@ -1,0 +1,46 @@
+// BU2_xplo03 - explosion effect
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame xplo03;	FRM_FindFrame(xplo03, "x_vybuch_03");
+Frame a01;	FRM_FindFrame(a01, "BU2_Allied01");
+Frame a02;	FRM_FindFrame(a02, "BU2_Allied02");
+Frame a03;	FRM_FindFrame(a03, "BU2_Allied03");
+Frame a04;	FRM_FindFrame(a04, "BU2_Allied04");
+Frame a05;	FRM_FindFrame(a05, "BU2_Allied05");
+Frame a06;	FRM_FindFrame(a06, "BU2_Allied06");
+Frame a07;	FRM_FindFrame(a07, "BU2_Allied07");
+Frame a08;	FRM_FindFrame(a08, "BU2_Allied08");
+Frame tank;	FRM_FindFrame(tank, "Sherman");
+Integer rnd;	rnd=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_MP_IsTeamMemberInRange(1, 22))
+{
+	SetWhenever(allies, false);
+	rnd=_RandomInt(2000);
+	Delay(rnd);
+	SetActorState(xplo03, 1);
+	Delay(700);
+	FRM_SetOn(xplo03, false);
+	GoTo end;
+}
+
+Whenever allies((_FrameInRange(a01)<15) OR (_FrameInRange(a02)<15) OR (_FrameInRange(a03)<15) OR (_FrameInRange(a04)<15) OR (_FrameInRange(a05)<15) OR (_FrameInRange(a06)<15) OR (_FrameInRange(a07)<15) OR (_FrameInRange(a08)<15) OR (_FrameInRange(tank)<25))
+{
+	SetWhenever(player, false);
+	GoTo xplo;
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label xplo:
+		SetActorState(xplo03, 1);
+		Delay(700);
+		FRM_SetOn(xplo03, false);
+	GoTo end;
+
+Label end:

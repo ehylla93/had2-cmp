@@ -1,0 +1,66 @@
+// la_svetlo4.Mesh01
+Block
+{
+Frame svetlo4b;
+	FRM_FindFrame(svetlo4b, "la_svetlo4.Rectangle01");
+Frame stolnalampa;
+	FRM_FindFrame(stolnalampa, "la_stolamp_6.FLe");
+Frame light;
+	FRM_FindFrame(light, "inner lamp omni_10");
+Integer zapnute;
+	zapnute=1;
+}
+
+OnHit()
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo4b, false);
+	FRM_SetOn(stolnalampa, false);
+	FRM_SetOn(light, false);
+	FRM_SetGroupLightMap("nadrazi2", 1);
+	}
+	GoTo end;
+}
+
+OnSignal(1)	// received from vypinac10
+{
+	If(zapnute==1)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo4b, false);
+		FRM_SetOn(stolnalampa, false);
+		FRM_SetOn(light, false);
+		FRM_SetGroupLightMap("nadrazi2", 1);
+			zapnute=0;
+		}
+		GoTo end;
+	}
+	If(zapnute==0)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo4b, true);
+		FRM_SetOn(light, true);
+		FRM_SetGroupLightMap("nadrazi2", 0);
+			zapnute=1;
+		}
+		GoTo end;
+	}
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo4b, false);
+	FRM_SetOn(stolnalampa, false);
+	FRM_SetOn(light, false);
+	FRM_SetGroupLightMap("nadrazi2", 1);
+	}
+}
+
+Label end:

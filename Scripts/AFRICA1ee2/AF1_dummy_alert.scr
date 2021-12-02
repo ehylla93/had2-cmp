@@ -1,0 +1,39 @@
+// AF1_dummy_alarm - sending guards when alarm occured
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME en01;			FRM_FindFrame(en01, "AF1_01");		// tanking plane
+  FRAME en04;			FRM_FindFrame(en04, "AF1_04");		// sitting near windmill
+  FRAME en07;			FRM_FindFrame(en07, "AF1_07");		// watching battleplan
+  FRAME en08;			FRM_FindFrame(en08, "AF1_08");		// watching battleplan
+  FRAME en09;			FRM_FindFrame(en09, "AF1_09");		// watching battleplan - at the table
+  FRAME en10;			FRM_FindFrame(en10, "AF1_10");		// guarding main building
+  FRAME en11;			FRM_FindFrame(en11, "AF1_11");		// officier at main building
+  FRAME en12;			FRM_FindFrame(en12, "AF1_12");		// sniper on the main building
+  FRAME en15;			FRM_FindFrame(en15, "AF1_15");		// guarding hangar
+  FRAME en16;			FRM_FindFrame(en16, "AF1_16");		// technican
+  FRAME en22;			FRM_FindFrame(en22, "AF1_22");		// pilot
+  FRAME pobocnik;		FRM_FindFrame(pobocnik, "AF1_pobocnik");		// pobocnik hanse schumanna
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever globalalarm (_SignalReceived(1)){
+  DisableSignals(true);
+  printf("G.L.O.B.A.L.   A.L.E.R.T.");
+  SendSignal(pobocnik, 20);
+  SendSignal(en01, 20);
+  SendSignal(en04, 20);
+  SendSignal(en07, 20);
+  SendSignal(en08, 20);
+  SendSignal(en09, 20);
+  SendSignal(en10, 20);
+  SendSignal(en11, 20);
+  SendSignal(en12, 20);
+  SendSignal(en15, 20);
+  SendSignal(en16, 20);
+  SendSignal(en22, 20);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,42 @@
+// 03_F02 - Next to 03_F04
+// ----------------------------------------
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f054");
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("03_F02 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+Whenever Spawn (_PlayerInRange(170))
+{
+printf("03_F02 spawns");
+HUMAN_SetAnim("%%nuda", 500, 500, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

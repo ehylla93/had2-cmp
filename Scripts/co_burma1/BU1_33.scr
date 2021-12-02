@@ -1,0 +1,68 @@
+// BU1_33 - guard running to the bridge on alarm
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Integer aievent;	aievent=0;
+Frame me;			FRM_GetMyFrame(me);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+FRM_SwitchFaceTexture(me, "e_f048");
+
+SetAlarmType(12, false);
+}
+
+HUMAN_Suspend(true);
+
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+//	printf("BU1_33: alarmed");
+		aievent=_GetAlarmType();
+	HUMAN_SETSIGHTRANGE(55);
+
+	If((aievent==2) OR (aievent==16) OR (aievent==256) OR (aievent==512))
+	{
+		GoTo aie2;
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(60))
+{
+//	printf("BU1_33: activating");
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+GoTo end;
+}
+
+Label aie2:
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("BU1_33_01");
+	HUMAN_SETMODE_Crouch();
+	EndScript();
+
+Label end:

@@ -1,0 +1,36 @@
+// Obj 4 - eliminate all enemy snipers
+//---------------------------------------------------------------------------------
+
+Block
+{
+Frame Sn1;	FRM_FindFrame(Sn1, "Snipe1"); 
+Frame Sn2;	FRM_FindFrame(Sn2, "Snipe2"); 
+Frame Sn3;	FRM_FindFrame(Sn3, "Snipe3"); 
+
+SetObjectiveStatus(4, 0);
+}
+
+Whenever Snipers (( (_Actor_GetState(Sn1)==0) And (_Actor_GetState(Sn2)==0) ) And (_Actor_GetState(Sn3)==0) ) 
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993405);
+Delay(5000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(4, 1);
+GoTo end;
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999701);
+Delay(4000);
+SUBTITLES_SetText(52999704);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label end:

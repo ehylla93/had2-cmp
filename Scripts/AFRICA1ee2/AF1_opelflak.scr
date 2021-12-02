@@ -1,0 +1,42 @@
+// AF1_opelflak - Explosion of cars
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME me;      		FRM_GetMyFrame(me);
+  INTEGER cnt			= 0;
+  INTEGER proc		= 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever allplinrange (_AllPlayersInRange(15)){
+  Delay(1500);
+  integer obj5active = _LoadGameValue(18);
+  if(obj5active){
+    printf("GATHERING NEAR OPEL ... SUCESS");
+    if((!_IsTeamMemberDead()) AND (_SPGetGameType() != 2))
+    {
+      SetObjectiveStatus(7, 1);
+    }
+    block
+    {
+      SaveGameValue(51, 2);
+      SetObjectiveStatus(10, 4);
+      SetObjectiveStatus(5, 1);
+    }
+    goto END;
+  }
+  else
+  {
+    SetWhenever(allplinrange, true);
+  }
+}
+
+Whenever umrel (!_ACTOR_GetState(me)){
+  SetWhenever(allplinrange, false);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+LABEL END:

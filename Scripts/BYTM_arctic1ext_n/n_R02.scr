@@ -1,0 +1,111 @@
+//n_R02
+
+Block
+{
+Integer unsuspend_range  = 10;
+Integer alarm_sight_range = 50;
+Integer rdm;
+Frame   veh;    FRM_FindFrame( veh, "n_SdKfZ_1" );
+Frame   frm;    FRM_FindFrame( frm, "w_mg42Crouch_2" );
+Frame   R01;    FRM_FindFrame( R01, "n_R01" );
+frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1023, false);
+SaveGameValue(22, 0);
+}
+
+OnAlarm()
+{
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+      HUMAN_SETSIGHTRANGE( alarm_sight_range );
+	  HUMAN_WeaponOnArm(1);
+      EndScript();
+}
+
+OnAlarmDone()
+{
+      SetAlarmType( 1023, false );
+      Block { DisableSignals(0);  DisableWhenevers(0); }
+      GoTo End;
+}
+
+OnDeath()
+{
+      SendSignal( veh, 2 );
+      EndScript( );
+}
+
+EnableSignal( 1, true );
+OnSignal(1)	
+{
+      EnableSignal(1, false);
+      Human_Suspend( false );	      
+      HUMAN_BoardVehicle( "n_SdKfZ_1",  1, 1 );
+      GoTo end;
+}
+
+EnableSignal( 2, true );
+OnSignal(2)	
+{
+	  EnableSignal(3, false);
+      EnableSignal(2, false);
+      HUMAN_BoardVehicle( "n_SdKfZ_1",  0, 1 );
+      GoTo Action;
+}
+
+EnableSignal( 3, true );
+OnSignal(3)	
+{
+      EnableSignal(3, false);
+      HUMAN_BoardVehicle( "n_SdKfZ_1",  0, 1 );
+      GoTo Default;
+}
+
+   Delay(300);
+   HUMAN_SetOptimized(1);
+   HUMAN_Suspend(true);  
+   GoTo End;
+
+Label Action:
+    Block 
+    {	
+        SetAlarmType( 255,  true );
+        HUMAN_SetOptimized( 1 );
+        HUMAN_SETMODE_Run();
+        HUMAN_SETMODE_Stand();
+    }
+     HUMAN_MoveFromFrame(veh, 10);
+	 goto End;
+	 
+Label Default:
+    Block 
+    {	
+        SetAlarmType( 255,  true );
+        HUMAN_SetOptimized( 1 );
+        HUMAN_SETMODE_Walk();
+        HUMAN_SETMODE_Stand();
+    }
+     HUMAN_Move("reinf2_1");
+	 SaveGameValue(22, 1);
+	 Label wait:
+	 if(_LoadGameValue(21)==1)
+	 {
+	 HUMAN_TurnAt(R01);
+	 HUMAN_WeaponOnArm(0);
+	 goto Tanim;
+	 }
+	 else { Delay(2000); goto wait; }
+	 
+Label Tanim:
+rdm=_RandomInt(7);
+if(rdm==0) { HUMAN_SetAnim("%%mluvi1", 300, 300, 0); }
+if(rdm==1) { HUMAN_SetAnim("%%mluvi2", 300, 300, 0); }
+if(rdm==2) { HUMAN_SetAnim("%%kecy1", 300, 300, 0); }
+if(rdm==3) { HUMAN_SetAnim("%%kecy2", 300, 300, 0); }
+if(rdm==4) { HUMAN_SetAnim("%%kecy3", 300, 300, 0); }
+if(rdm==5) { HUMAN_SetAnim("%%rozhovor", 300, 300, 0); }
+if(rdm==6) { HUMAN_SetAnim("%%rozhovor2", 300, 300, 0); }
+Delay(7000);
+goto Tanim;
+
+Label End:

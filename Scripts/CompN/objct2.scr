@@ -1,0 +1,22 @@
+// Obj 2 - najdi dokumenty
+// ------------------------------------
+
+Block
+{
+Frame Documents;
+
+SetObjectiveStatus(1, 0);
+SetObjectiveStatus(2, 0);
+}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(14992804);
+Delay(4000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

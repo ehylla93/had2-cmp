@@ -1,0 +1,98 @@
+// vechtr - zavorar ovladajuci zavoru
+//-----------------------------------------------------------------
+Block
+{
+
+Frame a1;     FRM_FindFrame(a1, "C1_G39");
+Frame a2;     FRM_FindFrame(a2, "C1_G40");
+Frame a3;     FRM_FindFrame(a3, "C1_G41");
+Frame a4;     FRM_FindFrame(a4, "C1_G42");
+Frame a5;     FRM_FindFrame(a5, "C1_G43");
+Frame a6;     FRM_FindFrame(a6, "C1_G44");
+
+Frame hl1;     FRM_FindFrame(hl1, "C1_G82");
+Frame hl2;     FRM_FindFrame(hl2, "C1_G83");
+
+Frame sloup;    FRM_FindFrame(sloup,"l_ndrlamp10");
+Frame obj8;     FRM_FindFrame(obj8, "obj8");
+Frame me;       FRM_GetMyFrame(me);
+FRAME get_player;
+
+Frame vlak;         FRM_FindFrame(vlak,"lokotka");
+}
+//------------------------------------------------------------------
+
+OnDeath()
+{
+SendSignal(obj8, 2);
+EndScript();
+}
+
+Onsignal(8)
+{
+SetWhenever(hodilkecbrit, 1);
+GoTo cekam;
+}
+
+Whenever hodilkecbrit (_PlayerInRange(4))
+{
+Delay(800);
+HUMAN_Stop();
+HUMAN_TurnAtNearestPlayer();
+Delay(500);
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Stand();
+HUMAN_SetOptimized(1);
+SUBTITLES_SetOn(true);
+FRM_GetNearestPlayer(me, get_player); 
+FRM_MorphSpeechDelayed(me, 18993604, 3, 20);
+HUMAN_TurnAtNearestPlayer();
+Delay(700);
+
+If(_PlayerInRange(4))
+{
+FRM_MorphSpeechDelayed(me, 18993605, 3, 20);
+Delay(500);
+FRM_MorphSpeechDelayed(get_player, 90000235, 5, 30); // jasan
+SendSignal(obj8, 1);
+SUBTITLES_SetOn(false);
+HUMAN_Move("budkazidla");
+HUMAN_TurnAt(sloup);
+Delay(100);
+SendSignal(hl1, 1);
+SendSignal(hl2, 1);
+Delay(100);
+SendSignal(a1, 1);
+SendSignal(a2, 1);
+SendSignal(a3, 1);
+SendSignal(a4, 1);
+SendSignal(a5, 1);
+SendSignal(a6, 1);
+GoTo end;
+}
+SUBTITLES_SetOn(false);
+HUMAN_Move("budkazidla");
+HUMAN_TurnAt(sloup);
+Delay(100);
+SendSignal(obj8, 2);
+GoTo end;
+}
+
+//---------------------------------------------------------------------------
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+SetWhenever(hodilkecbrit, 0);
+FRM_SwitchFaceTexture(me, "e_f054");
+HUMAN_Move("budkazidla");
+HUMAN_TurnAt(sloup);
+Delay(100);
+GoTo end;
+
+Label cekam:
+Delay(120000);
+SendSignal(obj8, 2);
+GoTo end;
+
+Label end:

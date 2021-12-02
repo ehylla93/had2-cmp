@@ -1,0 +1,39 @@
+Block
+{
+    Frame   __artilery;                      FRM_FindFrame( __artilery, "__artilery" );
+    Frame   soldier1;                        FRM_FindFrame ( soldier1,     "AF1_01" ); 
+    Frame   soldier2;                        FRM_FindFrame ( soldier2,     "AF1_03" ); 
+    Frame   soldier3;                        FRM_FindFrame ( soldier3,     "AF1_04" ); 
+    Frame   soldier4;                        FRM_FindFrame ( soldier4,     "AF1_05" ); 
+}
+
+// -----------------------------------------------------------------------
+//OBJ1 - KONTROLNI CHECKPOINT OBSAZEN
+// -----------------------------------------------------------------------
+Whenever "InRange" ( _PlayerInRange( 100 ) )
+{     // objective1 splnen
+      SendSignal( soldier1, 1 );	
+      SendSignal( soldier3, 1 );	
+      Delay(800);
+	 
+      SendSignal( soldier2, 1 );	
+      SendSignal( soldier4, 1 );
+	  Delay(60000);
+      GoTo End;
+}
+SetWheneverTime( "InRange",  1000 );
+
+OnSignal(100)
+{
+Delay ( 10000 );
+SendSignal ( __artilery, 1 );
+//^artilery
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label End:

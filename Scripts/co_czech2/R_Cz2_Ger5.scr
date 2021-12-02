@@ -1,0 +1,157 @@
+// R_Cz2_Ger5 - soldier near spawn, pisshead
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;	aievent=0;
+Frame ger1;		FRM_FindFrame(ger1, "Ger_");
+Frame ger4;		FRM_FindFrame(ger4, "Ger_4");
+Frame ger7;		FRM_FindFrame(ger7, "Ger_7");
+Frame me;		FRM_GetMyFrame(me);
+Frame bedna;	FRM_FindFrame(bedna,"e_gerbsml_42");
+Frame cum;		FRM_FindFrame(cum,"ge05cum1");
+
+SetAlarmType(1023,0);
+SetAlarmType(884,1);
+}
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Walk();
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(1);
+	aievent=_GetAlarmType();
+	SendSignal(ger4, 1);
+	SendSignal(ger1, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SETSIGHTRANGE(50);
+	}
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_WeaponOnArm(true);
+
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{
+		HUMAN_SETMODE_Crouch();
+		HUMAN_TurnAtNearestPlayer();
+		HUMAN_SetSniper(1,2);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, false);
+	SetAlarmType(499, true);
+	HUMAN_SETMODE_Walk();
+	}
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+	DisableSignals(1);
+	SendSignal(ger7,1);
+	EndScript();
+}
+
+Whenever alarm(_SignalReceived(1))	// received from ger4, ger_
+{
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+Whenever start(_SignalReceived(5))
+{
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_Move("ger5_01");
+HUMAN_TurnAt(ger1);
+SendSignal(ger1,2);
+delay(2000);
+HUMAN_SetAnim("%%kecy1", 300, 300, true);
+delay (6000);
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+HUMAN_Move("ger5_02");
+SendSignal (ger4,2);
+HUMAN_TurnAt(ger4);
+goto end;
+}
+
+Whenever akce1(_SignalReceived(3))
+{
+HUMAN_TurnAt(ger4);
+HUMAN_SetAnim("%%mluvi4", 300, 300, true);
+FRM_MorphSpeechDelayed(me, 19993836, 6, 28);	//"What about the machine gun? Is it ready yet?"
+HUMAN_SetAnim("", 300, 300, 0);
+SendSignal (ger4,3);
+goto end;
+}
+
+Whenever akce2(_SignalReceived(4))
+{
+FRM_MorphSpeech(me, 19993840, 6, 28);		//"Christ, hurry! Do you want me to fix it?"
+HUMAN_SetAnim("%%mluvi5", 300, 300, true);
+delay (1714);
+HUMAN_SetAnim("%%mluvi4", 300, 300, true);
+delay (900);
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+SendSignal (ger4,4);
+HUMAN_Move("ger5_03");
+HUMAN_TurnAt(bedna);
+HUMAN_SetAnim("%%divase", 300, 300, true);
+delay (1500);
+HUMAN_SetAnim("%%rozcilujese", 500, 500, true);
+FRM_MorphSpeechDelayed(me, 19993834, 6, 28);	//"Damn! What good are these MP44s without bullets?!"
+FRM_MorphSpeechDelayed(me, 19993835, 6, 28);	//"Which idiot planned this transport!?"
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+HUMAN_Move("ger5_02");
+HUMAN_TurnAt(ger4);
+HUMAN_SetAnim("%%rozcilujese", 500, 500, true);
+FRM_MorphSpeechDelayed(me, 19993832, 6, 28);	//"Christ, hurry with that machine gun!"
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+HUMAN_Move("ger5_03");
+SendSignal (ger1,3);
+HUMAN_TurnAt(ger1);
+delay (400);
+HUMAN_SetAnim("%%mluvi5", 300, 300, true);
+FRM_MorphSpeechDelayed(me, 19993842, 6, 28);	//"Don't stand here like an idiot, go guard the front! There aren't enough men there!"
+HUMAN_SetAnim("", 300, 300, 0);
+SendSignal (ger1,4);
+delay (200);
+HUMAN_TurnAt(bedna);
+HUMAN_SetAnim("%%divase", 300, 300, true);
+delay (3000);
+HUMAN_SetAnim("", 300, 300, 0);
+delay (500);
+HUMAN_Move("ger5_05");
+HUMAN_TurnAt(cum);
+delay (300);
+HUMAN_SetAnim("%%hledam1", 500, 500, true);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

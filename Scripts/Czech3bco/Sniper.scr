@@ -1,0 +1,95 @@
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETAIMODE_Aggressive();
+
+
+integer aievent;
+integer a;	a=0;
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f052");
+
+
+frame sit;		Frm_FindFrame(sit,"sniper_sit");
+frame cum;		Frm_FindFrame(cum,"sniper_cum1");
+frame cum2;		Frm_FindFrame(cum2,"sniper_cum2");
+
+
+HUMAN_SETMODE_Guard();
+
+HUMAN_SetOptimized(2);
+
+Frame reinfo;			FRM_FindFrame(reinfo,"dummy_reinforcement");
+}
+
+//-------------------------------------------------------------------------------------------
+OnAlarm()
+	{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("sniper alarm c:",aievent);
+}
+	HUMAN_SETMODE_StandFast();
+	HUMAN_Move("Sniper");
+	HUMAN_SetSniper(1, 5);
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	SetAlarmType(652,0);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+
+OnDeath()
+	{
+	DisableSignals(1);
+	SendSignal(reinfo,0);
+	Printf("Sniper is DEAD!!!");
+	EndScript();
+	}
+//-------------------------------------------------------------------------------------------
+
+label hlidej:
+
+HUMAN_Move("sniper");
+HUMAN_TurnAt(cum);
+HUMAN_LookAround(1);
+delay (6000);
+HUMAN_LookAround(1);
+delay (6000);
+HUMAN_Move("sniper3");
+HUMAN_TurnAt(cum);
+HUMAN_ACTIVITY_Sit(sit);
+delay (20000);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("sniper2");
+HUMAN_TurnAt(cum2);
+HUMAN_LookAround(1);
+delay (6000);
+HUMAN_LookAround(1);
+delay (6000);
+
+
+goto hlidej;
+
+
+label end:

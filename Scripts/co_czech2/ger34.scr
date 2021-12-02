@@ -1,0 +1,81 @@
+// R_Cz2_Ger34
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;	aievent=0;
+integer a;	a=0;
+
+frame ge32;	FRM_FindFrame(ge32,"ger_32");
+
+SetAlarmType(926, false);
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	If((aievent==2) OR (aievent==16))	
+	{
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	If (a==0)
+	{
+	HUMAN_Move("Ger34_02");
+	HUMAN_Move("Ger34_01");
+	a=1;
+	HUMAN_TurnAtNearestPlayer();
+	}
+	goto end;
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(908, false);
+	SetAlarmType(115, true);
+}
+	If (a==0)
+	{
+	HUMAN_Move("Ger34_01");
+	a=1;
+	HUMAN_TurnAtNearestPlayer();
+	}
+goto end;	
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever detector(_SignalReceived(1))
+{
+	delay (1500);
+	HUMAN_Suspend(false);
+	HUMAN_Move("Ger34_01");
+	a=1;
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

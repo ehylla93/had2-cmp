@@ -1,0 +1,13 @@
+Frame kartar;
+	FRM_FindFrame(kartar, "ge_4");
+Frame opilec_zidla;
+	FRM_FindFrame(opilec_zidla, "ge_7");
+Frame opilec_postel;
+	FRM_FindFrame(opilec_postel, "ge_");
+
+Whenever player(_PlayerInRange(290) )
+{
+SendSignal(kartar, 1);
+SendSignal(opilec_zidla, 1);
+SendSignal(opilec_postel, 1);
+}

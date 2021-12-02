@@ -1,0 +1,175 @@
+// 05_P03 enemy patrol (zone5) - 
+// ----------------------------------------
+
+Block
+{
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f045");
+SetAlarmType(1023, 0);
+SetAlarmType(867, 1);
+HUMAN_SETSIGHTRANGE(180);
+HUMAN_SetOptimized(1);
+Integer AIEvent;
+Integer AIStyle;
+Integer done = 0;
+Integer way = 0;
+Integer clockwise = 0;
+Integer a;
+Integer first = 1;
+
+HUMAN_SETAIMODE_Defensive();
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath()
+{
+printf("05_P03 dead");
+EndScript();
+}
+
+OnAlarm() 
+{
+DisableWhenevers(1);
+HUMAN_SetAnim("", 400, 400, 0);
+If((_LoadGameValue(1)==0) and (first==1))
+{
+AIEvent = _GetAlarmType();
+printfnumber("05_P03 alarm type: ", AIEvent);
+If(AIEvent == 1) { HUMAN_SETMODE_Lie(); gosub Speak; }
+If(AIEvent == 2) { HUMAN_SETMODE_Crouch(); gosub Speak; }
+If(AIEvent == 4) { HUMAN_MoveToAlarm(); }
+If(AIEvent == 32) { gosub Speak; }
+If(AIEvent == 64) { HUMAN_SETMODE_Lie(); gosub Speak; }
+If(AIEvent == 256) { HUMAN_SETMODE_Crouch(); }
+If(AIEvent == 512) { HUMAN_SETMODE_Stand(); HUMAN_WeaponOnArm(1); HUMAN_WeaponUp(1); HUMAN_SETMODE_Silence(); HUMAN_MoveToAlarm(); gosub Speak; }
+}
+EndScript();
+}
+
+OnAlarmDone() 
+{
+done = 1;
+HUMAN_SetAlarm(0);
+Block {	SetAlarmType( 1023, false );SetAlarmType( 255, true ); }
+goto Patrol;
+}
+
+OnSignal(1)
+{
+FRM_TeleportNearCheckpoint(MyFRM, "way3_12", "");
+HUMAN_Suspend(0);
+}
+
+Label Patrol:
+HUMAN_SETMODE_Stand();
+if(done==1) { HUMAN_SETMODE_Walk(); }
+else { HUMAN_SETMODE_Guard(); }
+gosub Animation;
+way = _RandomInt(3);
+
+if(way==1) {
+clockwise = _RandomInt(2);
+if(clockwise==1) { printf("05_P03 way1 clockwise"); goto Patrol3; }
+else { printf("05_P03 way1 anti-clockwise"); goto Patrol4; }
+}
+
+if(way==2) {
+clockwise = _RandomInt(2);
+if(clockwise==1) { printf("05_P03 way2 clockwise"); goto Patrol5; }
+else { printf("05_P03 way1 anti-clockwise"); goto Patrol6; }
+}
+
+else {
+clockwise = _RandomInt(2);
+if(clockwise==1) { printf("05_P03 way0 clockwise"); goto Patrol1; }
+else { printf("05_P03 way0 anti-clockwise"); goto Patrol2; }
+}
+
+Label Patrol1:
+HUMAN_Move("way3_11");
+HUMAN_Move("way3_10");
+HUMAN_Move("way3_12");
+gosub Animation;
+goto Patrol;
+
+Label Patrol2:
+HUMAN_Move("way3_10");
+HUMAN_Move("way3_11");
+HUMAN_Move("way3_12");
+goto Patrol;
+
+Label Patrol3:
+HUMAN_Move("way3_09");
+HUMAN_Move("way3_08");
+HUMAN_Move("way3_07");
+HUMAN_Move("way3_12");
+goto Patrol;
+
+Label Patrol4:
+HUMAN_Move("way3_07");
+HUMAN_Move("way3_08");
+HUMAN_Move("way3_09");
+HUMAN_Move("way3_12");
+goto Patrol;
+
+Label Patrol5:
+HUMAN_Move("way3_06");
+HUMAN_Move("way3_05");
+HUMAN_Move("way3_04");
+HUMAN_Move("way3_03");
+HUMAN_Move("way3_02");
+HUMAN_Move("way3_01");
+HUMAN_Move("way3_12");
+goto Patrol;
+
+Label Patrol6:
+HUMAN_Move("way3_01");
+HUMAN_Move("way3_02");
+HUMAN_Move("way3_03");
+HUMAN_Move("way3_04");
+HUMAN_Move("way3_05");
+HUMAN_Move("way3_06");
+HUMAN_Move("way3_12");
+goto Patrol;
+
+Label Speak:
+FRM_MorphSpeech(MyFRM, 14992828, 20, 80);
+SaveGameValue(1, 1);
+printf("GV1 = 1");
+Return;
+
+Label Animation:
+if(done==0) {
+a = _RandomInt(4);
+if(a==0) { HUMAN_SetAnim("%%nuda", 600, 600, 0); Delay(11500); }
+if(a==1) { HUMAN_SetAnim("%%nuda1", 600, 600, 0); Delay(4000); }
+if(a==2) { HUMAN_SetAnim("%%divase", 600, 600, 0); Delay(6000); }
+if(a==3) { HUMAN_SetAnim("%%turnleft", 600, 600, 0); Delay(3500); HUMAN_SetAnim("%%turnright", 600, 600, 0); Delay(3500); }
+}
+Return;
+
+Whenever Alarm (_LoadGameValue(1)==1)
+{
+DisableWhenevers(1);
+done = 1;
+Delay(1000);
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_WeaponOnArm(1);
+Delay(700);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveRandomRadius(20);
+goto Patrol;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

@@ -1,0 +1,79 @@
+// R2_E02
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(512,0);
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+Integer a;
+FRM_SwitchFaceTexture(MyFRM, "e_f052");
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("R2_E02 dead");
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_WeaponOnArm(1);	
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnSignal(1)
+{
+DisableWhenevers(1);
+HUMAN_SETAIMODE_Aggressive();
+Delay(1000);
+HUMAN_Suspend(0);
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Run();
+HUMAN_Move("way9_01");
+HUMAN_Move("way9_02");
+HUMAN_Move("way9_03");
+HUMAN_TurnAtNearestPlayer();
+goto end;
+}
+
+Whenever PIR (_PlayerInRange(150))
+{
+Integer AImode = _RandomInt(99);
+if(AImode > 75) { HUMAN_SETAIMODE_Aggressive(); }
+if(AImode < 25) { HUMAN_SETAIMODE_Zombie(); }
+else { HUMAN_SETAIMODE_Defensive(); }
+HUMAN_Suspend(0);
+}
+
+Label TALKING:
+a =_RandomInt(7);
+if(a==0) { HUMAN_SetAnim("%%mluvi1", 300, 300, 0); }
+if(a==1) { HUMAN_SetAnim("%%mluvi2", 300, 300, 0); }
+if(a==2) { HUMAN_SetAnim("%%kecy1", 300, 300, 0); }
+if(a==3) { HUMAN_SetAnim("%%kecy2", 300, 300, 0); }
+if(a==4) { HUMAN_SetAnim("%%kecy3", 300, 300, 0); }
+if(a==5) { HUMAN_SetAnim("%%rozhovor", 300, 300, 0); }
+if(a==6) { HUMAN_SetAnim("%%rozhovor2", 300, 300, 0); }
+Delay(7000);
+goto TALKING;
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

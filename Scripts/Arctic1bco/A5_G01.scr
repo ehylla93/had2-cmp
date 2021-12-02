@@ -1,0 +1,158 @@
+// guarded plane
+
+  frame GP1;		FRM_FindFrame(GP1, "Plane_Guard_1");
+  frame GP3;		FRM_FindFrame(GP3, "Plane_Guard_3");
+  frame GP4;		FRM_FindFrame(GP4, "Plane_Guard_4");
+  frame see;		FRM_FindFrame(see, "seed_m_str1a13031");
+  frame dabing1_2;	FRM_FindFrame(dabing1_2, "dummy_dabing1_2");
+  integer AIEvent;	AIEvent = 99;
+  frame sit;		FRM_FindFrame(sit, "dummy_PG2_chata_sit");
+  frame chata_see;	FRM_FindFrame(chata_see, "dummy_PG1_chata_sit");
+  frame MyFRM;	FRM_GetMyFrame(MyFRM);
+  frame Rebel;		FRM_FindFrame(Rebel, "Rebel");
+
+  integer DoChaty = 0;
+
+  SaveGameValue(10, 5);		// NEPRESKOC CUTSCENU u letadla
+
+ SetAlarmType(1023, True);
+ SetAlarmType(8, False);
+
+
+  HUMAN_Suspend(True);				
+  Goto TheEnd;
+  Whenever A (_PlayerInRange(101);)			
+  {							
+    HUMAN_Suspend(False);				
+  }							
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+
+HUMAN_Move("PG2_1");
+HUMAN_ACTIVITY_Smoke(true);
+
+OnCutscene(5)
+{
+  Goto TheEnd;
+}
+
+OnCutsceneDone(5)
+{
+  HUMAN_Move("PG2_1");
+}
+
+OnSignal(5)		// Talking started
+{
+  HUMAN_TurnAt(GP1);
+  Delay(1000);
+  HUMAN_ACTIVITY_Smoke(False);
+  Delay(1000);
+/////////////////////////////////////////////////////// Dabing1_2
+  Delay(1350);
+  HUMAN_SetOptimized(0);
+  Delay(1350);
+  HUMAN_TurnAt(see);
+  Delay(1000);
+  HUMAN_SetOptimized(1);
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  SendSignal(dabing1_2, 2);
+  EndScript();
+}
+
+OnAlarm()
+{
+  If (( DoChaty == 1) OR (DoChaty == 2)) 
+   {
+      Block
+        {
+           AIEvent =_GetAlarmType(); 
+           PrintfNumber("AIE PG2 (move): ", AIEvent);
+           HUMAN_SETSIGHTRANGE(49);
+           HUMAN_SETHEARRANGE(60);
+           If ((AIEvent == 2) or (AIEvent == 256)) {SendSignal(Rebel, 17); }
+       }
+       HUMAN_Stop();
+       EndScript();
+    }
+  If (  DoChaty == 3 ) 
+   {
+      Block
+        {
+           AIEvent =_GetAlarmType(); 
+           PrintfNumber("AIE PG2 (Chata): ", AIEvent);
+           HUMAN_SETSIGHTRANGE(45);
+           HUMAN_SETHEARRANGE(60);
+       }
+       HUMAN_SETMODE_StandFast();
+       EndScript();
+    }
+  SaveGameValue(10, 10);		// PRESKOC CUTSCENU u letadla
+  Block
+  {
+    SendSignal(dabing1_2, 2);
+    AIEvent =_GetAlarmType(); 
+    PrintfNumber("AIE PG2: ", AIEvent);
+    HUMAN_SETSIGHTRANGE(49);
+    HUMAN_SETHEARRANGE(60);
+    HUMAN_Stop();
+  }
+  HUMAN_ACTIVITY_Smoke(False);
+  If ( ((AIEvent == 2) OR (AIEvent == 32)) OR (AIEvent == 64) )  {goto AIE_2_32_64;}
+  HUMAN_SETMODE_Crouch();
+  // play animace pádu k zemi - DOPLNIT - blizka strelba
+  goto miss;
+Label AIE_2_32_64:		
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Defensive();
+label miss:
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(35);
+  HUMAN_SETHEARRANGE(45);
+  SetAlarmType(1023, True);	
+  SetAlarmType(776, False);		// 512 + 256 + 8
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  If (DoChaty == 1) { Goto Chata_1;}
+  If (DoChaty == 2) { Goto Chata_2;}
+  If (DoChaty == 3) { Goto Chata_3;}
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("PG2_1");
+  HUMAN_SetOptimized(1);
+  Delay(500);
+  HUMAN_TurnAt(see);
+}
+
+// Stridani strazi
+OnSignal(11)
+{
+  HUMAN_Suspend(False);
+  DoChaty = 1;	
+  HUMAN_Move("PG3_3");
+  HUMAN_Move("PG3_2");
+label Chata_1:
+  HUMAN_Move("PG3_1");
+  DoChaty = 2;
+label Chata_2:	
+label Chata_3:	
+  HUMAN_SETSIGHTRANGE(20);
+  HUMAN_SETHEARRANGE(25);
+  HUMAN_Move("PG2_chata");
+  HUMAN_TurnAt(chata_see);
+  Delay(1000);
+  HUMAN_ACTIVITY_Sit(sit);
+  DoChaty = 3;	
+}
+
+Label TheEnd:

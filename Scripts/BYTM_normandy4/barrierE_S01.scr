@@ -1,0 +1,55 @@
+// barrierE_S01
+
+block
+{
+SetAlarmType(128,0);
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+integer aievent;
+SetWhenever(PIR, 0);
+}
+
+HUMAN_SetSniper(1, 70);
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("barrierE_S01 alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("barrierE_S01 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+SetWhenever(PIR, 1);
+}
+
+Whenever PIR (_PlayerInRange(10))
+{
+SetWhenever(PIR, 0);
+HUMAN_SetSniper(0, 70);
+HUMAN_SETAIMODE_Zombie();
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

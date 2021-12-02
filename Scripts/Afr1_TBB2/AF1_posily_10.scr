@@ -1,0 +1,86 @@
+// AF1_posily_10 - reinforcement on BMW
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME vehicle;			FRM_FindFrame(vehicle, "la_bmwr_");
+  INTEGER namiste 			= 0;
+  INTEGER Atype 			= 0;
+
+  SetAlarmType(1023, true);		// all off
+  SetAlarmType(768, false);		// all off
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  block
+  {
+    Atype = _GetAlarmType(); 
+    printfnumber("poslila08 :: ", Atype);
+    HUMAN_Stop();
+  }
+
+  if((((Atype != 1) AND (Atype != 32)) AND (Atype != 64)) AND (!namiste)){
+    HUMAN_SetAlarm(false);
+    HUMAN_SetMODE_Run();
+    goto PRESUN;
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  if(_LoadGameValue(25))
+  {
+    goto PRESUN;
+  }
+  else
+  {
+    goto END;
+  }
+}
+
+OnSignal(1){
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  SetAlarmType(1023, false);
+  HUMAN_BoardVehicle("la_BmwR_", true, 2);
+goto END;
+
+Label PRESUN:
+  if(!namiste){  
+    HUMAN_SetMODE_Run();
+    HUMAN_Move("AF1_posily_10en");
+    SetAlarmType(1023, true);
+    namiste = 1;
+    HUMAN_SETMODE_Crouch();
+  }
+  HUMAN_TurnAtNearestPlayer();
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  goto END;
+}
+
+OnSignal(10){
+  printf("zkur... panak by mel vystoupit ze sajdkary");
+  HUMAN_BoardVehicle("la_BmwR_", false, 2);
+  SetAlarmType(1023, true);
+  goto PRESUN;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Run();
+  HUMAN_Suspend(true);
+goto END;
+
+Label END:

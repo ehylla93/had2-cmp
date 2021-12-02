@@ -1,0 +1,35 @@
+// Obj 5 - znic vsechny pancejraky
+//----------------------------------------------
+
+Block
+{
+  Frame t1;		FRM_FindFrame(t1, "La_tiger_1");
+  Frame t2;		FRM_FindFrame(t2, "La_tiger_2");
+  Frame t3;		FRM_FindFrame(t3, "La_tiger_3");
+  Frame h1;		FRM_FindFrame(h1, "Hakl1");
+  Frame h2;		FRM_FindFrame(h2, "Hakl2");
+}
+
+Whenever All_Armoured_Vehicles_Destroyed (((((_Actor_GetState(t1)==0) And (_Actor_GetState(t2)==0) ) And (_Actor_GetState(t3)==0) ) And (_Actor_GetState(h1)==0) ) And (_Actor_GetState(h2)==0) )
+{	
+  SUBTITLES_SetOn(true);
+  PlayMusic(6);
+  SUBTITLES_SetText(09991829);   
+  Delay(4000);
+  SetObjectiveStatus(5, 1);
+  SUBTITLES_SetOn(false);
+  goto end;
+}
+
+OnSignal(1)
+{	
+SetWhenever(All_Armoured_Vehicles_Destroyed  , 1);
+goto end;
+}
+
+//--------------------------------------------------------
+
+SetWhenever(All_Armoured_Vehicles_Destroyed , 0);
+goto end;
+
+Label end:

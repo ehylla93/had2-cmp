@@ -1,0 +1,62 @@
+// AF1_obj - objectives detector
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+  SetObjectiveStatus(1, 0);		// Hans Schumann
+  SetObjectiveStatus(2, 4);		// Documents about Schumanns departure
+  SetObjectiveStatus(3, 0);		// Eliminate all enemies
+  SetObjectiveStatus(4, 4);		// Aircrafts
+  SetObjectiveStatus(5, 4);		// Fuel tanks
+  SetObjectiveStatus(6, 4);		// Flak vehicle
+  SetObjectiveStatus(7, 4);		// All team members must survive 8 - Gather at the SAS jeep 9 - Gather at the Flak vehicle or SAS jeep
+  INTEGER obj2					= 0;
+  INTEGER obj3					= 0;
+  SaveGameValue(18, 0);
+  Frame Documents;
+  
+  SetWhenever(ininv, 0);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever ininv (_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+    SUBTITLES_SetOn(true);
+    SUBTITLES_SetText(05011010);		//"OBJECTIVE ACCOMPLISHED: FLIGHT INFORMATION FOUND"
+    Delay(4000);
+    SUBTITLES_SetOn(false);
+	
+	if(obj3 == 1){
+      SaveGameValue(18, 1);
+    }
+    obj2 = 1;
+    if(obj3 == 0)
+    {
+      SetObjectiveStatus(2, 1);
+    }
+    goto END;
+}
+
+OnSignal(1){
+SetWhenever(ininv, 1);
+}
+
+Whenever alldead (_SignalReceived(2)) {
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(05991005);		//"OBJECTIVE ACCOMPLISHED: ENEMY UNITS ELIMINATED"
+  Delay(3500);
+  SUBTITLES_SetOn(false);
+  if(obj2 == 1){
+    SaveGameValue(18, 1);
+  }
+  obj3 = 1;
+  if(obj2 == 0)
+  {
+    SetObjectiveStatus(3, 1);
+  }
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

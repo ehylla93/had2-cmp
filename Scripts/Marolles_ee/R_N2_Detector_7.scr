@@ -1,0 +1,34 @@
+// Detector - looking for player in definned area
+
+frame Red_26;		FRM_FindFrame(Red_26, "Red_26");
+frame Red_28;		FRM_FindFrame(Red_28, "Red_28");
+frame Red_29;		FRM_FindFrame(Red_29, "Red_29");
+frame Red_36;		FRM_FindFrame(Red_36, "Red_36");
+//**frame Red_37;		FRM_FindFrame(Red_37, "Red_37");
+frame Sniper_3;	FRM_FindFrame(Sniper_3, "Sniper_3");
+frame Sniper_4;	FRM_FindFrame(Sniper_4, "Sniper_4");
+frame Sniper_5;	FRM_FindFrame(Sniper_5, "Sniper_5");
+frame Sniper_6;	FRM_FindFrame(Sniper_6, "Sniper_6");
+frame Ally_1;		FRM_FindFrame(Ally_1, "Ally_1");
+frame Ally_4;		FRM_FindFrame(Ally_4, "Ally_4");
+frame Ally_5;		FRM_FindFrame(Ally_5, "Ally_5");
+
+
+Whenever Det_7 (_PlayerInRange(8); )
+{
+Block
+  {    
+    SendSignal(Red_26,   7);
+    SendSignal(Red_28,   7);
+    SendSignal(Red_29,   7);
+    SendSignal(Red_36,   7);
+//*//    SendSignal(Red_37,   7);
+    SendSignal(Sniper_3, 7);
+    SendSignal(Sniper_4, 7);
+    SendSignal(Sniper_5, 7);
+    SendSignal(Sniper_6, 7);
+    SendSignal(Ally_1, 7);	
+    SendSignal(Ally_4, 7);
+    SendSignal(Ally_5, 7);
+  }
+}

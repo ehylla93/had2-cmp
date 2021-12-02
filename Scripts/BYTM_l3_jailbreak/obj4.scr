@@ -1,0 +1,48 @@
+// Objective 4 - Destroy equipment on board the Liberator 
+// ----------------------------------
+
+Frame tnt;			FRM_FindFrame(tnt, "03_tnt_liberator");
+Frame lib;			FRM_FindFrame(lib, "03_liberator");
+Frame particle3;	FRM_FindFrame(particle3, "__Particle3");
+
+SetObjectiveStatus(4, 4);
+SetWhenever(PIR, 0);
+SetWhenever(Boom, 0);
+SaveGameValue(8, 0);
+goto end;
+
+OnSignal(1)
+{
+printf("Obj4 PIR activated!");
+SetWhenever(PIR, 1);
+}
+
+Whenever PIR (_PlayerInRange(130))
+{
+SetWhenever(PIR, 0);
+SetWhenever(Boom, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(54999901);		//"NEW OBJECTIVE: DESTROY THE EQUIPMENT ON BOARD THE LIBERATOR"
+Delay(4000);
+SetObjectiveStatus(4, 0);
+SendSignal(tnt, 1);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Boom (_Actor_GetState(tnt)==2)
+{
+Delay(300);
+printf("Obj4 Boom acc");
+SetActorState(lib, 0);
+FRM_CreateParticle(125, particle3);
+Delay(100);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(54999904);	// "OBJECTIVE ACCOMPLISHED: EQUIPMENT ON BOARD THE LIBERATOR DESTROYED"
+Delay(4000);
+SUBTITLES_SetOn(0);
+SetobjectiveStatus(4, 1);
+SaveGameValue(8, 1);
+EndScript();
+}
+
+Label end:

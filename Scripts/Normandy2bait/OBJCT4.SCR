@@ -1,0 +1,73 @@
+// Obj 4 - eliminate all enemy officers
+//---------------------------------------------------------------------------------
+
+Block
+{
+  
+  Frame Of1;	FRM_FindFrame(Of1, "N2_G15"); 
+  Frame Of2;	FRM_FindFrame(Of2, "N2_G17"); 
+  Frame Of3;	FRM_FindFrame(Of3, "N2_G24"); 
+  Frame Of4;	FRM_FindFrame(Of4, "N2_G63"); 
+  Frame Of5;	FRM_FindFrame(Of5, "N2_G68"); 
+  Frame Of6;	FRM_FindFrame(Of6, "N2_G99"); 
+  Frame Of7;	FRM_FindFrame(Of7, "N2_G89"); 
+  Frame Of8;	FRM_FindFrame(Of8, "G2_G01"); 
+  Frame Of9;	FRM_FindFrame(Of9, "G2_G02");  
+
+SetObjectiveStatus(4, 0);
+
+Integer officer;
+	officer=0;
+
+}
+
+Whenever Oficers1 (( (_Actor_GetState(Of1)==0) And (_Actor_GetState(Of2)==0) ) And (_Actor_GetState(Of3)==0) ) 
+{
+officer=officer+1;
+
+If(officer==3)
+{
+PlayMusic(6);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999715);
+Delay(4000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+}
+GoTo end;
+}
+
+
+Whenever Oficers2 (( (_Actor_GetState(Of4)==0) And (_Actor_GetState(Of5)==0) ) And (_Actor_GetState(Of6)==0) ) 
+{
+officer=officer+1;
+
+If(officer==3)
+{
+PlayMusic(6);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999715);
+Delay(4000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+}
+GoTo end;
+}
+
+Whenever Oficers3 (( (_Actor_GetState(Of7)==0) And (_Actor_GetState(Of8)==0) ) And (_Actor_GetState(Of9)==0) ) 
+{
+officer=officer+1;
+
+If(officer==3)
+{
+PlayMusic(6);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999715);
+Delay(4000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+}
+GoTo end;
+}
+
+Label end:

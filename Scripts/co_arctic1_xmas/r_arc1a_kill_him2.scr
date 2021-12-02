@@ -1,0 +1,8 @@
+
+frame Albert;		FRM_FindFrame(Albert, "rebel");
+
+Onsignal(1)
+{
+  HUMAN_Kill(Albert);
+  EndScript();
+}

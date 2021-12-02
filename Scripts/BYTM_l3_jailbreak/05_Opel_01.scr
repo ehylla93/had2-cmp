@@ -1,0 +1,5 @@
+// 05_Opel_01 - German Truck
+// -----------------------------------------------------
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Car_SetFuel(MyFRM, 0);

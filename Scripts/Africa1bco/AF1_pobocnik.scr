@@ -1,0 +1,156 @@
+// AF1_pobocnik
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME letadlo;			FRM_FindFrame(letadlo, "#MchEscape_");
+  FRAME blur;				FRM_FindFrame(blur, "#mchescape_.bluur");
+  FRAME listy;				FRM_FindFrame(listy, "#mchescape_.listy");
+  FRAME this;				FRM_GetMyFrame(this);
+  FRAME af20;				FRM_FindFrame(af20, "af1_20");
+  FRAME snd_organizer;		FRM_FindFrame(snd_organizer, "snd_odlet_org");
+  FRAME pryc;				FRM_FindFrame(pryc, "dummy_letadlo_pryc");
+
+  FRAME damac;			FRM_FindFrame(damac, "mchescaped");
+  FRAME body_letadla;		FRM_FindFrame(body_letadla, "#MchEscape_.BODY");
+  FRAME body_pomoc;		FRM_FindFrame(body_pomoc, "MchEscapeD.BODY");
+  FRAME expl;				FRM_FindFrame(expl, "w_explosive_13");
+
+  FRAME fake_pobocnik;		FRM_FindFrame(fake_pobocnik, "AF1_pobocnik_");
+
+  INTEGER Atype			= 0;
+  INTEGER atpos			= 0;
+  INTEGER rnd 			= 0;
+  INTEGER after			= 0;
+ 
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+}
+
+  FRM_SetOn(fake_pobocnik, false);
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+//  FRM_SetOn(this, false);
+  PlayMusic(36);
+  EndScript();
+}
+
+OnSignal(20){
+  SendSignal(af20, 20);
+  goto ALERT;
+}
+
+Whenever inrange (_PlayerInRange(150)){
+  SendSignal(af20, 21);
+  SetWhenever(inclrange, false);
+  goto ACTIVATE;
+}
+
+Whenever inclrange (_PlayerInRange(10)){
+  SetWhenever(inrange, false);
+  goto ALERT;
+}
+
+OnAlarm(){
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("pobocnik: ", Atype);
+    SendSignal(af20, 20);
+  }
+
+  if(_ACTOR_GetState(letadlo))
+  {
+    goto ALERT;
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(768, false);		// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_Suspend(true);
+  HUMAN_SetEvents(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetMODE_Walk();
+
+  HUMAN_Move("AF1_pobocnik_01");
+  after = 1;
+  HUMAN_Move("AF1_pobocnik_02");
+  HUMAN_TurnAt(af20);
+
+  Label LOOP:
+  rnd = _RandomInt(3);
+    if(rnd == 0){  HUMAN_SetAnim("%%rozhovor1", 200, 200, true); Delay(8000); }
+    if(rnd == 1){  HUMAN_SetAnim("%%rozhovor2", 200, 200, true); Delay(10000); }
+    if(rnd == 2){  HUMAN_SetAnim("%%rozhovor3", 200, 200, true); Delay(11000); }
+  goto LOOP;
+goto END;
+
+Label ALERT:
+  HUMAN_Stop();
+  printf("pobocnik ALERT");
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SetMODE_Run();
+  HUMAN_SetMODE_Stand();
+  if(!after)
+  {
+    HUMAN_SetOptimized(1);
+    HUMAN_Move("AF1_pobocnik_01");
+    HUMAN_SetOptimized(0);
+  }
+  HUMAN_Move("AF1_pobocnik_al");
+  if(!_ACTOR_GetState(letadlo))
+  {
+    goto END;
+  }
+  block
+  {
+    CSC_FrameSetShadow(fake_pobocnik, false);
+    SendSignal(snd_organizer, 1);
+    FRM_SetOn(expl, false);
+    FRM_SetAnimation(letadlo, "#mchdepart.i3d", 1);
+    FRM_SetAnimation(damac, "#mchdepartb.i3d", 1);
+    HUMAN_SetEvents(false);
+    DisableSignals(true);
+    DisableWhenevers(true);
+    FRM_SetOn(this, false);
+    FRM_SetAnimation(fake_pobocnik, "%%sedim", true);
+    FRM_SetOn(fake_pobocnik, true);
+    SendSignal(pryc, 1);
+ }
+  HUMAN_Suspend(true);
+  block
+  {
+    printf("panak by mel byt kompletne odjebanej");
+    FRM_SetOn(listy, false);
+    FRM_SetOn(blur, true);
+  }
+
+Label END:

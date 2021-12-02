@@ -1,0 +1,16 @@
+
+Block {
+Frame al2_20;	FRM_FindFrame (al2_20,"Al2_20");
+
+SetWhenever (player,0);
+}
+
+Whenever player(_PlayerInRange(2))
+{
+SendSignal (al2_20,2);
+}
+
+Whenever alrm(_SignalReceived(1))		//od al2_alarm
+{
+SetWhenever (player,1);
+}

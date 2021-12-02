@@ -1,0 +1,12 @@
+// Dest
+// -------------------------
+
+Block
+{
+WEATHER_SetColorOut(41, 48, 44, 00);
+WEATHER_SetColorIn(37, 37, 37, 128);
+WEATHER_SetSize(700, 12);
+WEATHER_SetSpeed(26000);
+WEATHER_SetCount(12000);
+WEATHER_SetOn(1);
+}

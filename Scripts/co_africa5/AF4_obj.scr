@@ -1,0 +1,81 @@
+// AF4_obj - objectives detector
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME schumann;			FRM_FindFrame(schumann, "AF4_23");
+  FRAME af31;				FRM_FindFrame(af31, "AF4_31");
+  FRAME this;				FRM_GetMyFrame(this);
+  INTEGER schuman_found	= 0;
+  FRAME letadlo_ingame;		FRM_FindFrame(letadlo_ingame, "la_Ju_88");
+  FRM_SetOn(letadlo_ingame, true);
+  
+  INTEGER splneno = 0;
+  INTEGER lgv;
+}
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever objective5 ((_MP_AllTeamMembersAreInRange(1, 25)) AND (schuman_found == 1)) {
+  lgv = _LoadGameValue(40);
+  splneno = 0;
+
+	if(_LoadGameValue(77) AND (!_ACTOR_GetState(af31))){ splneno = 1; }
+	if(!_LoadGameValue(77)){ splneno = 1; }
+	if(_LoadGameValue(40) AND (splneno==1))
+	{
+    goto OBJ5_COMPLETE;  
+	}
+	else
+		{
+		SetWhenever(objective5, true);
+		goto END;
+		}
+}
+
+OnSignal(1){
+  goto OBJ1_COMPLETE;
+}
+
+OnSignal(2){
+  goto OBJ1_INCOMPLETE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label OBJ1_COMPLETE:
+  schuman_found = 1;
+  SetObjectiveStatus(3, 0);
+  SetObjectiveStatus(4, 0);
+  SetObjectiveStatus(1, 1);
+goto END;
+
+Label OBJ1_INCOMPLETE:
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(09991809);		//"OBJECTIVE FAILED: HANS SCHUMANN WAS KILLED."
+  Delay(3500);
+  SetObjectiveStatus(3, 3);
+  SUBTITLES_SetOn(false);
+goto END;
+
+Label OBJ5_COMPLETE:
+  if(_FrameInRange(schumann) < 15){
+    block
+    {
+	SetWhenever(objective5, false);
+    SaveGameValue(88, 1);
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(09991808);	//"OBJECTIVE ACCOMPLISHED: TEAM ASSEMBLED AT THE JUNKERS."
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(5, 1);
+    SetObjectiveStatus(3, 1);
+    }
+    goto END;
+  }
+  SetWhenever(objective5, true);
+goto END;
+
+
+Label END:

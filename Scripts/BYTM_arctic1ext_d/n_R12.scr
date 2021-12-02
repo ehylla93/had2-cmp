@@ -1,0 +1,105 @@
+//n_R12 - SdKfZ2 passenger - zb
+
+Block
+{
+Integer  unsuspend_range  = 10;
+Integer  alarm_sight_range = 50;
+Frame SdKfZ2;   FRM_FindFrame( SdKfZ2, "n_SdKfZ_2" );
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame R10;		FRM_FindFrame(R10, "n_R10");
+Frame door2;    FRM_FindFrame(door2, "m_dv_st02");
+Frame crate;	FRM_FindFrame(crate, "m_dv_t01");
+
+SetAlarmType( 1023,  false );
+SaveGameValue(30, 0);
+}
+
+Delay(300);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);  
+GoTo End;
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 300, 300, 0);
+Block { DisableSignals(1);  DisableWhenevers(1); }
+HUMAN_SETSIGHTRANGE( alarm_sight_range );
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType( 1023, false );
+Block { DisableSignals(0);  DisableWhenevers(0); }
+GoTo bySdKfZ;
+}
+
+OnDeath()
+{
+SendSignal( SdKfZ2, 2 );
+EndScript();
+}
+
+EnableSignal(1, true);
+OnSignal(1)	
+	{
+	EnableSignal(1, false);
+	Human_Suspend(false);
+	HUMAN_BoardVehicle( "n_SdKfZ_2",  1, 5 );
+	GoTo end;
+	}
+
+EnableSignal(2, true);
+OnSignal(2)	
+{
+      EnableSignal(2, false);
+      HUMAN_BoardVehicle( "n_SdKfZ_2",  0, 5 );
+      GoTo bySdKfZ;
+}
+
+EnableSignal(3, true);
+OnSignal(3)	
+{
+      EnableSignal(3, false);
+      GoTo byfoot;
+}
+
+Label bySdKfZ:
+	Block 
+	{
+	SetAlarmType(255, true);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETMODE_Stand();
+	}
+	HUMAN_MoveToFrame(crate, 1);
+goto End;
+
+Label byfoot:
+	Block
+	{
+	SetAlarmType(255, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	}
+	Delay(4000);
+	FRM_TeleportNearCheckpoint(MyFRM, "form3_1", "");
+	HUMAN_Suspend(0);
+	if(_LoadGameValue(5)==1)
+	{
+	HUMAN_SETMODE_Run();
+	}
+	HUMAN_Move("form3_2");
+	HUMAN_Move("form3_3b");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_TurnAt(R10);
+	SaveGameValue(30, 1);
+	Label wait:
+	if(_LoadGameValue(28)==1)
+	{
+	HUMAN_SETMODE_Run();
+	HUMAN_MoveToFrame(door2, 2);
+	}
+	else { Delay(2000); goto wait; }	
+
+Label End:

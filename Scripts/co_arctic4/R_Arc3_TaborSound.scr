@@ -1,0 +1,9 @@
+
+ frame Sound;		FRM_FindFrame(Sound, "S_tabor");
+
+Whenever Vypni  (_PlayerInRange(100); )
+{
+  FRM_SetOn(Sound, False); 
+}
+
+SetWheneverTime(Vypni, 1200);

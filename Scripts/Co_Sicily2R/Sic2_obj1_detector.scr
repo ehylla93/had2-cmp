@@ -1,0 +1,28 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Tak toto je script hlidajici OBJ "most zajisten"
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+integer BylTu = 0;
+frame It_5;		FRM_FindFrame(It_5, "It_5");
+frame It_7;		FRM_FindFrame(It_7, "It_7");
+frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+frame MyFRM;		FRM_GetMyframe(MyFRM);
+SaveGameValue(99, 0); 
+
+Whenever Near  ( _PlayerInRange(20) )
+{
+  BylTu = 1;
+}
+
+Whenever Bezpecno ( (_ACTOR_GetState(It_7) == 0 ) AND (BylTu == 1) )
+{
+  SendSignal(OBJ, 1);
+}
+
+Label Loop:
+  If (  (!_EnemyInRange(MyFRM, 55)) )   { SaveGameValue(99, 99); } else { SaveGameValue(99, 0); }
+  Delay(5000);
+goto Loop;

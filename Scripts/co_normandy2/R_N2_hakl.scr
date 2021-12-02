@@ -1,0 +1,31 @@
+
+Block {
+integer counter;	counter = 0;
+frame W1;	FRM_FindFrame(W1, "wave2_1");
+frame W2;	FRM_FindFrame(W2, "wave2_2");
+frame W3;	FRM_FindFrame(W3, "wave2_3");
+
+frame W4;	FRM_FindFrame(W4, "wave2_4");
+frame W5;	FRM_FindFrame(W5, "wave2_5");
+}
+
+OnSignal(1)
+{
+  counter = counter +1;
+  If (counter == 5)
+    {
+       SendSignal(W1,10);     // start driving
+    }
+	goto End;
+}
+
+OnSignal(2)
+{
+SendSignal(W1, 2);
+SendSignal(W2, 2);
+SendSignal(W3, 2);
+SendSignal(W4, 2);
+SendSignal(W5, 2);
+}
+
+Label End:

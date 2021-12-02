@@ -1,0 +1,47 @@
+// BU1_barelx - exploding barel script sending signal to 4 barels
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame barel;
+	FRM_GetMyFrame(barel);
+Frame barel_03z;
+	FRM_FindFrame(barel_03z, "BU1_barel_03z");
+Frame barel_04z;
+	FRM_FindFrame(barel_04z, "BU1_barel_04z");
+Frame xplosives;
+	FRM_FindFrame(xplosives, "BU1_explosives");
+Integer dynamitexplo;
+	dynamitexplo=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnDeath()
+{
+	If(dynamitexplo==1)
+	{
+		SendSignal(barel_03z, 1);
+		SendSignal(barel_04z, 1);
+		GoTo end;
+	}
+	FRM_CreateParticle(20, barel);
+	MakeExplosion(barel, 800000, 15000);
+	EndScript();
+}
+
+Whenever barelx(_SignalReceived(1))	// received from BU1_obj_01
+{
+	dynamitexplo=1;
+	GoTo end;
+}
+
+Whenever barelx2(_SignalReceived(2))	// received from BU1_16
+{
+	dynamitexplo=0;
+	SendSignal(barel_03z, 1);
+	SendSignal(barel_04z, 1);
+	FRM_SetOn(xplosives, false);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Label end:

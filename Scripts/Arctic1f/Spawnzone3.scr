@@ -1,0 +1,28 @@
+// Spawnzone 3 (zone6)
+//----------------------------------------------
+
+Block
+{
+Frame Tank;	FRM_FindFrame(Tank,"La_tiger_1");
+
+SetWhenever(Panzer_Down, 0);
+}
+
+//----------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Panzer_Down, 1);
+goto END;
+}
+
+Whenever Panzer_Down (_Actor_GetState(Tank)==0)
+{
+MP_EnableSpawnZone("zone6", 1);
+MP_EnableSpawnZone("zone2", 2);
+Delay(5000);
+EndScript();
+}
+
+
+Label END:

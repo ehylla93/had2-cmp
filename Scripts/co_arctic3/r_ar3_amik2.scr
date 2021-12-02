@@ -1,0 +1,78 @@
+Block
+{
+  frame MyFRM;	FRM_GetMyFrame(MyFRM); 
+  frame see;		FRM_FindFrame(see, "dummy_Amik2_See"); 
+  frame TheEndOBJ;	FRM_FindFrame(TheEndOBJ, "dummy_TheEnd");
+  frame dabing;	FRM_FindFrame(dabing, "dummy_dabing");
+  frame death_see;	FRM_FindFrame(death_see, "dummy_amik2_death");
+  Integer Hrac_je_kokot = 1;
+}
+
+  HUMAN_SetOptimized(2);
+  HUMAN_Suspend(True);
+  goto TheEnd;
+
+OnSignal(1)
+{
+  Label loop:
+  If( (_CameraInRange() > 30) and ( !_PlayerInRange(30)) )
+    {
+       HUMAN_Suspend(False);
+       HUMAN_SETMODE_Run();
+       HUMAN_Move("Amik2");
+       HUMAN_TurnAt(see);
+       HUMAN_WeaponOnArm(False);
+         } else {
+      Delay(2500);
+      Goto loop;  
+    }
+}
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAt(death_see);
+  Delay(1000);
+  HUMAN_SetAnim("%%umre", 100, 100, True); 
+
+
+OnSignal(10)
+{
+Label KECY:
+  If (  (_LoadGameValue(50) != 0) or ( _GetDistToActivePlayer() < 10) ) 
+    {
+        } else {
+      delay(1500);
+      goto KECY; 
+    }
+  SendSignal(dabing, 5);	//17800 + 200 !
+  Delay(30000);
+OnSignal(5) {}
+delay(500);
+  Block
+    {	
+       SendSignal(TheEndOBJ, 2);
+       Hrac_je_kokot = 0;
+    }
+  HUMAN_KillEx(MyFRM, 0);
+  goto DEAD;
+}
+
+OnDeath()
+{
+Label DEAD:
+  SendSignal(dabing, 10);
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  HUMAN_SetAnim("%%umrel", 250, 250, False); 
+  If ( Hrac_je_kokot )
+   {
+     SendSignal(TheEndOBJ, 3);
+   }
+  Delay(5000);
+  HUMAN_SetAnim("%%umrel1", 250, 250, True); 
+  EndScript(); 
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+label TheEnd:

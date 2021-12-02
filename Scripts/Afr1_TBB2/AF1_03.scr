@@ -1,0 +1,46 @@
+// T1, 3
+// ---------------------------
+
+
+//Frame X1;	FRM_FindFrame(X1, "m_nadrz5");
+//Frame X2;	FRM_FindFrame(X2, "la_macchi06");
+
+Block
+{
+  HUMAN_SetOptimized(2);
+//  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+
+Whenever player(_PlayerInRange(350))		
+{
+  HUMAN_Suspend(False);
+  HUMAN_SETSIGHTRANGE(500);
+  HUMAN_BoardVehicle("La_tiger_1", true, 2);	
+  SetAlarmType(1023, True); 
+} 
+
+OnDeath(){
+Delay(1500);
+printf("3, Main gunner Tiger: dead");  
+  EndScript();
+}
+
+OnAlarm()  
+  {
+    
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+  SetAlarmType(1023, True);
+  HUMAN_TurnAtNearestPlayer(); 
+} 
+
+
+label TheEnd:
+

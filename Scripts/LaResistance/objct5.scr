@@ -1,0 +1,206 @@
+// Obj 5 - eliminate all enemy Officers
+//---------------------------------------------------------------------------------
+
+Block
+{
+  
+  frame 001;		FRM_FindFrame(001, "N2_001");
+  frame 002;		FRM_FindFrame(002, "N2_002");
+  frame 003;		FRM_FindFrame(003, "N2_003");
+  frame 004;		FRM_FindFrame(004, "N2_004");
+  frame 005;		FRM_FindFrame(005, "N2_005");
+  frame 006;		FRM_FindFrame(006, "N2_006");
+  frame 007;		FRM_FindFrame(007, "N2_007");
+  frame 008;		FRM_FindFrame(008, "N2_008");
+  frame 009;		FRM_FindFrame(009, "N2_009");
+  frame 010;		FRM_FindFrame(010, "N2_010"); 
+  frame 011;		FRM_FindFrame(011, "N2_011");
+  frame 012;		FRM_FindFrame(012, "N2_012");
+  Frame 013;		FRM_FindFrame(013, "N2_013");
+  Frame 014;		FRM_FindFrame(014, "N2_014");
+  Frame 015;		FRM_FindFrame(015, "N2_015");
+  Frame 016;		FRM_FindFrame(016, "N2_016");
+  Frame 017;		FRM_FindFrame(017, "N2_017");
+  Frame 018;		FRM_FindFrame(018, "N2_018");
+  Frame 019;		FRM_FindFrame(019, "N2_019");
+  Frame 020;		FRM_FindFrame(020, "N2_020");
+  Frame 021;		FRM_FindFrame(021, "N2_021");
+  Frame 029;		FRM_FindFrame(029, "N2_029");
+  Frame 034;		FRM_FindFrame(034, "N2_034");
+  Frame 035;		FRM_FindFrame(035, "N2_035");
+  Frame 036;		FRM_FindFrame(036, "N2_036");
+  Frame 037;		FRM_FindFrame(037, "N2_037");
+  Frame 038;		FRM_FindFrame(038, "N2_038");
+  Frame 041;		FRM_FindFrame(041, "N2_041");
+  Frame 042;		FRM_FindFrame(042, "N2_042");
+  Frame 044;		FRM_FindFrame(044, "N2_044");
+  Frame 045;		FRM_FindFrame(045, "N2_045");
+  Frame 046;		FRM_FindFrame(046, "N2_046");
+  Frame 047;		FRM_FindFrame(047, "NPC_6");
+  Frame 048;		FRM_FindFrame(048, "N2_048");
+  Frame 049;		FRM_FindFrame(049, "N2_049");
+  Frame 050;		FRM_FindFrame(050, "N2_050");
+
+SetObjectiveStatus(5, 0);
+
+Integer officer=0;
+}
+
+Whenever Oficers1 (( (_Actor_GetState(001)==0) And (_Actor_GetState(002)==0) ) And (_Actor_GetState(003)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+
+Whenever Oficers2 (( (_Actor_GetState(004)==0) And (_Actor_GetState(005)==0) ) And (_Actor_GetState(006)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers3 (( (_Actor_GetState(007)==0) And (_Actor_GetState(008)==0) ) And (_Actor_GetState(009)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers4 (( (_Actor_GetState(010)==0) And (_Actor_GetState(011)==0) ) And (_Actor_GetState(012)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers5 (( (_Actor_GetState(013)==0) And (_Actor_GetState(014)==0) ) And (_Actor_GetState(015)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers6 (( (_Actor_GetState(016)==0) And (_Actor_GetState(017)==0) ) And (_Actor_GetState(018)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers7 (( (_Actor_GetState(019)==0) And (_Actor_GetState(020)==0) ) And (_Actor_GetState(021)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers8 (( (_Actor_GetState(029)==0) And (_Actor_GetState(034)==0) ) And (_Actor_GetState(035)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers9 (( (_Actor_GetState(036)==0) And (_Actor_GetState(037)==0) ) And (_Actor_GetState(038)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers10 (( (_Actor_GetState(041)==0) And (_Actor_GetState(042)==0) ) And (_Actor_GetState(044)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers11 (( (_Actor_GetState(045)==0) And (_Actor_GetState(046)==0) ) And (_Actor_GetState(047)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers12 (( (_Actor_GetState(048)==0) And (_Actor_GetState(049)==0) ) And (_Actor_GetState(050)==0) ) 
+{
+officer=officer+1;
+
+If(officer==12)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+}
+GoTo end;
+}
+
+Label end:

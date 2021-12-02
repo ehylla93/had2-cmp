@@ -1,0 +1,38 @@
+// AF1_letcnt - detects whatever aircrafts are destroyed
+// -------------------------------------------------------------------------------------------------------------
+
+  Delay(1000);
+  INTEGER num_players		= _GetNumMembersOfClientTeam();
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1){
+  if(!_LoadGameValue(31)){ goto END; }
+  if(!_LoadGameValue(32)){ goto END; }
+  if(!_LoadGameValue(33)){ goto END; }
+  if(!_LoadGameValue(34)){ goto END; }
+  if(!_LoadGameValue(35)){ goto END; }
+  if(!_LoadGameValue(36)){ goto END; }
+  if(!_LoadGameValue(37)){ goto END; }
+  if(!_LoadGameValue(38)){ goto END; }
+  if(!_LoadGameValue(39)){ goto END; }
+  if(!_LoadGameValue(40)){ goto END; }
+  if(!_LoadGameValue(41)){ goto END; }
+  if(!_LoadGameValue(42)){ goto END; }
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(05991006);
+  Delay(2000);
+  SetObjectiveStatus(4, 1);
+  SUBTITLES_SetOn(false); 
+  if(num_players == 1)
+  {
+    AddDiaryText(4115);
+  }
+  else
+  {
+    AddDiaryText(4112);
+  }
+  DisableSignals(true);
+}
+
+Label END:

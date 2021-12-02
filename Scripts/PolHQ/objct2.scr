@@ -1,0 +1,28 @@
+// Obj 2 - Kill Gestapo (MSTGAD)
+// -------------------------------------------------
+
+Block
+{
+Frame MSTGAD;	FRM_FindFrame(MSTGAD,"MSTGAD -crazy medic-");
+Frame DZ;	FRM_FindFrame(DZ, "DropZone");
+Frame obj6;	FRM_FindFrame(obj6, "obj6");
+
+SetObjectiveStatus(2, 0);
+}
+
+Whenever Gestapo_Dead (_Actor_GetState(MSTGAD)==0)
+{
+SendSignal(DZ, 1);
+SendSignal(obj6, 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(58999905);
+Delay(3000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+
+Label END:

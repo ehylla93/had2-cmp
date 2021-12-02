@@ -1,0 +1,48 @@
+// Konec mapy / Straze
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+
+// ** TANKY **
+
+Frame T1;	FRM_FindFrame(T1,"La_tiger_1");
+Frame T2;	FRM_FindFrame(T2,"La_tiger_2");
+Frame T3;	FRM_FindFrame(T3,"La_tiger_3");
+
+// *** LES ***
+
+Frame V1;	FRM_FindFrame(V1,"A1_G02");
+Frame V2;	FRM_FindFrame(V2,"A1_G03");
+Frame V3;	FRM_FindFrame(V3,"A1_G04");
+Frame V4;	FRM_FindFrame(V4,"A1_G05");
+Frame V5;	FRM_FindFrame(V5,"A1_G06");
+Frame V6;	FRM_FindFrame(V6,"A1_G07");
+Frame V7;	FRM_FindFrame(V7,"A1_G08");
+Frame V8;	FRM_FindFrame(V8,"A1_G09");
+Frame V9;	FRM_FindFrame(V9,"A1_G11");
+Frame V10;	FRM_FindFrame(V10,"A1_G12");
+Frame V11;	FRM_FindFrame(V11,"A1_G13");
+Frame V12;	FRM_FindFrame(V12,"A1_G14");
+Frame V13;	FRM_FindFrame(V13,"A1_G15");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Tigers_Destroyed (((_Actor_GetState(T1)==0) OR (_Actor_GetState(T2)==0)) OR (_Actor_GetState(T3)==0))
+{
+SendSignal(V1, 1);
+SendSignal(V2, 1);
+SendSignal(V3, 1);
+SendSignal(V4, 1);
+SendSignal(V5, 1);
+SendSignal(V6, 1);
+SendSignal(V7, 1);
+SendSignal(V8, 1);
+SendSignal(V9, 1);
+SendSignal(V10, 1);
+SendSignal(V11, 1);
+SendSignal(V12, 1);
+SendSignal(V13, 1);
+EndScript();
+}

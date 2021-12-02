@@ -1,0 +1,101 @@
+
+Block
+{
+  integer  AIEvent;
+  	     Frame sniper;		FRM_FindFrame(sniper,"A4_R33");
+//         Frame Opel3;		FRM_FindFrame(Opel3,"Opel3");        
+         Frame turn; 		FRM_FindFrame(turn, "sniper_hill4"); 
+		 
+		 
+		 
+		 
+  SetAlarmType(1023, True);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+OnSignal(1)
+{
+  HUMAN_Suspend(False);
+printf("A4005 spawn");
+     HUMAN_SETSIGHTRANGE(300);
+   HUMAN_SETHEARRANGE(300);
+  GoTo activity;
+}
+
+Block
+  {
+     HUMAN_SETSIGHTRANGE(300);
+     HUMAN_SETHEARRANGE(300);
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+     SetAlarmType(1023, True);		
+   }
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+	   HUMAN_SETSIGHTRANGE(300);
+   HUMAN_SETHEARRANGE(300);
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+	
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;
+
+OnDeath()
+{
+  printf("A4005 dead");
+  EndScript();
+}
+				
+
+OnAlarm()
+{
+  HUMAN_SetAnim("", 100, 100, False); 
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" A4005 alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  If ( ((AIEvent == 32) or (AIEvent ==4)) or ( _PlayerInRange(1500)) )
+    {  
+       EndScript(); 
+     } else {
+       HUMAN_SetAlarm(False);       
+       goto TheEnd;
+    }
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+     HUMAN_SETSIGHTRANGE(300);
+   HUMAN_SETHEARRANGE(300);
+  HUMAN_SetAlarm(False);
+  GoTo activity;
+}
+
+Label activity:
+HUMAN_MoveToFrame(sniper, 13);
+Delay(4000);
+
+HUMAN_TurnAt(turn);
+GoTo activity;
+
+Label END:
+
+
+Label TheEND:

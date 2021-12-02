@@ -1,0 +1,127 @@
+// AF1_11 - officier near main building
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME look;				FRM_FindFrame(look, "af1_dummy10");
+  FRAME look1;			FRM_FindFrame(look1, "m_palma5");
+  FRAME look2;			FRM_FindFrame(look2, "af1_dummy11");
+  FRAME sit;				FRM_FindFrame(sit, "af1_dummy22");
+  FRAME af12;				FRM_FindFrame(af12, "af1_12");
+  FRAME dummy_point;		FRM_FindFrame(dummy_point, "Cylinder03");
+  INTEGER atpos			= 0;	// if 1, soldier is hiding in the main building.
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  DisableSignals(true);
+  SetAlarmType(256, false);
+  goto ALERT;
+}
+
+OnDeath(){
+  printf("11: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(250)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  block{
+    HUMAN_Stop();
+    DisableSignals(true);
+    SetWhenever(player, false);
+    HUMAN_Suspend(false);
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(200);
+//    HUMAN_SetOptimized(false);
+    HUMAN_SETMODE_Run();
+    Atype = _GetAlarmType();
+    printfnumber("11: ", Atype);
+  }
+  HUMAN_SETMODE_Crouch();
+  SendSignal(dummyalert, 1);				// alerts nearby enemies
+
+Label ALERT:
+  if(!atpos){
+    HUMAN_SetMode_Run();
+    HUMAN_Move("af1_11_ad");
+    atpos = 1;
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_WeaponOnArm(true);
+    block
+    {
+      HUMAN_SetAlarm(false);
+      SetAlarmType(1023, true);		// all alarm events are on
+      SetAlarmType(512, false);		// 512
+    }
+    goto END;
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){
+  
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, true);
+  if(atpos){
+    goto END;
+  } 
+  else{
+    goto ACTIVATE;
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true); 
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+
+Label START:
+  HUMAN_Move("af1_11_01");
+  HUMAN_TurnAt(look);
+  Delay(35000);
+  HUMAN_Move("af1_11_02");
+  HUMAN_TurnAt(look1);
+  HUMAN_Move("af1_11_03");
+  HUMAN_TurnAt(look2);
+  HUMAN_WeaponOnArm(true);
+  Delay(1500);
+  HUMAN_ACTIVITY_Sit(sit);
+  HUMAN_ACTIVITY_Smoke(true);
+  Delay(10000);
+  HUMAN_ACTIVITY_Smoke(false);
+  HUMAN_SETMODE_Stand();
+  HUMAN_WeaponOnArm(false);
+  Delay(1000);
+  HUMAN_Move("af1_11_04");
+  Delay(1000);
+goto START;
+
+Label END:

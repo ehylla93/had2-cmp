@@ -1,0 +1,73 @@
+// 07_G60 - T1, 1 - Driver
+// -----------------------------------------------------
+
+Block
+{
+Frame MyTank;	FRM_FindFrame(MyTank, "07_Panther_02"); 
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer RideSelect;		RideSelect = _RandomInt(2);
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+
+If (RideSelect == 0)
+{
+	HUMAN_Drive("", 0);
+}
+
+If (RideSelect == 1)
+{
+	HUMAN_DriveNearPlayer(10);
+	HUMAN_Drive("AF4_car_cut07", 60);
+}
+
+goto Ride;
+}
+
+OnAlarmDone(){
+goto Ride;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("07_Panther_02", 1, 0);
+Delay(2000);
+HUMAN_Drive("AF4_car_cut04", 20);
+HUMAN_SETSIGHTRANGE(240);
+HUMAN_SETHEARRANGE(240);
+SetAlarmType(227,1);
+goto Ride;
+}
+
+Label Ride:
+HUMAN_Drive("AF4_car_cut04", 15);
+HUMAN_Drive("AF4_car_endt", 15);
+HUMAN_Drive("AF4_car_endt", 15);
+goto Ride;
+
+
+Label END:

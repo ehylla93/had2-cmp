@@ -1,0 +1,21 @@
+// Obj 1 - Go Without being spotted
+// ------------------------------------
+
+Block
+{
+	Frame Obj10;		FRM_FindFrame(Obj10, "obj10");
+
+	SetObjectiveStatus(1, 0);
+}
+
+Whenever Player_Spotted (_SignalReceived(2)) 
+{
+	Delay(1000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(00990172);
+	SendSignal(Obj10, 2);
+	Delay(3500);
+	SetObjectiveStatus(1, 2);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}

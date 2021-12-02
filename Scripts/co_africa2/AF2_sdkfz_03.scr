@@ -1,0 +1,77 @@
+// AF2_posily_03 - rescue team
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, false);		// disable all alarms
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+HUMAN_SETEVENTS(true);
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1){
+  goto ACTIVATE;
+}
+
+OnSignal(2){
+  HUMAN_BoardVehicle("SdKfZ_1", 0, 2);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetMODE_Crouch();
+  gosub SETALARM;
+  HUMAN_Move("p03_01");
+  goto END;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  block{
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("posily03", Atype);
+  }
+  HUMAN_SETMODE_Crouch();
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SETMODE_Guard();
+  gosub SETALARM;
+  goto ACTIVITY;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("SdKfZ_1", 1, 2);
+goto END;
+
+Label ACTIVITY:
+goto END;
+
+Label SETALARM:
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+return;
+
+Label END:

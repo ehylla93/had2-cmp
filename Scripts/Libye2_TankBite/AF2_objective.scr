@@ -1,0 +1,203 @@
+// AF2_obj - objective skript
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame af2_44;
+	FRM_FindFrame(af2_44, "AF2_44");
+Frame af2_45;
+	FRM_FindFrame(af2_45, "AF2_45");
+Frame af2_46;
+	FRM_FindFrame(af2_46, "AF2_46");
+Frame af2_47;
+	FRM_FindFrame(af2_47, "AF2_47");
+Frame af2_48;
+	FRM_FindFrame(af2_48, "AF2_48");
+Frame af2_49;
+	FRM_FindFrame(af2_49, "AF2_49");
+Frame texty;
+	FRM_FindFrame(texty, "AF2_texty");
+Frame opel1;
+	FRM_FindFrame(opel1, "Opel1");
+Frame la_panther_;
+	FRM_FindFrame(la_panther_, "la_panther_");
+Frame opel3;
+	FRM_FindFrame(opel3, "Opel3");
+Frame opel4;
+	FRM_FindFrame(opel4, "Opel4");
+Frame la_panther1;
+	FRM_FindFrame(la_panther1, "la_panther1");
+Frame la_panther2;
+	FRM_FindFrame(la_panther2, "la_panther2");
+Frame la_panther3;
+	FRM_FindFrame(la_panther3, "la_panther3");
+Frame kubel;
+	FRM_FindFrame(kubel, "la_kubelAf_");
+Frame la_BoatGun_1;
+	FRM_FindFrame(la_BoatGun_1, "la_BoatGun_1");
+Frame la_BoatGun_2;
+	FRM_FindFrame(la_BoatGun_2, "la_BoatGun_2");
+Integer gametype;
+	gametype=666;
+}
+gametype=_SPGetGameType();
+SetWhenever(players, false);
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_MP_AllTeamMembersAreInRange(1, 45))
+{
+	If((_ACTOR_GetState(af2_44)==0) AND (_ACTOR_GetState(af2_45)==0) AND (_ACTOR_GetState(af2_46)==0) AND (_ACTOR_GetState(af2_47)==0) AND (_ACTOR_GetState(af2_48)==0) AND (_ACTOR_GetState(af2_49)==0))
+	{
+	printf("presiel si kanonom");
+	SetObjectiveStatus(1, 1);
+	SendSignal(texty, 1);
+	SetWhenever(players, true);
+	GoTo end;
+	}
+	Delay(1000);
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+Whenever players(_MP_AllTeamMembersAreInRange(1, 80))
+{
+	If(_FrameInRange(opel1)<80)
+	{
+	printf("Opel1 je v range");
+	If(_ACTOR_GetState(opel1)==1)
+		{
+	printf("Opel1 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(la_panther_)<80)
+	{
+	printf("la_panther_ je v range");
+	If(_ACTOR_GetState(la_panther_)==1)
+		{
+	printf("la_panther_ je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opel3)<80)
+	{
+	printf("Opel3 je v range");
+	If(_ACTOR_GetState(opel3)==1)
+		{
+	printf("Opel3 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opel4)<80)
+	{
+	printf("Opel4 je v range");
+	If(_ACTOR_GetState(opel4)==1)
+		{
+	printf("Opel4 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(la_panther1)<80)
+	{
+	printf("la_panther1 je v range");
+	If(_ACTOR_GetState(la_panther1)==1)
+		{
+	printf("la_panther1 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(la_panther2)<80)
+	{
+	printf("la_panther2 je v range");
+	If(_ACTOR_GetState(la_panther2)==1)
+		{
+	printf("la_panther2 je v range a nie je poskodeny");
+	SaveGameValue(33, 4);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(la_panther3)<80)
+	{
+	printf("la_panther3 je v range");
+	If(_ACTOR_GetState(la_panther3)==1)
+		{
+	printf("la_panther3 je v range a nie je poskodeny");
+	SaveGameValue(33, 4);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(kubel)<80)
+	{
+	printf("Kubel je v range");
+	If(_ACTOR_GetState(kubel)==1)
+		{
+	printf("Kubel je v range a nie je poskodeny");
+	SaveGameValue(33, 2);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(la_BoatGun_1)<80)
+	{
+	printf("la_BoatGun_1 je v range");
+	If(_ACTOR_GetState(la_BoatGun_1)==1)
+		{
+	printf("la_BoatGun_1 je v range a nie je poskodeny");
+	SaveGameValue(33, 1);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(la_BoatGun_2)<80)
+	{
+	printf("la_BoatGun_2 je v range");
+	If(_ACTOR_GetState(la_BoatGun_2)==1)
+		{
+	printf("la_BoatGun_2 je v range a nie je poskodeny");
+	SaveGameValue(33, 1);
+			GoTo dalej;	}
+	}
+	// la_BoatGun = 1, kubel = 2, opel = 3, la_panther = 4
+	printf("OBJECTIVE: hraci su v range, ale nemaju sebou vozidlo testujem znova");
+	Delay(1000);
+	SetWhenever(players, true);
+	GoTo end;
+	Label dalej:
+	printf("zhromazdil si sa kdesi v pici");
+	SendSignal(texty, 2);
+	SetObjectiveStatus(2, 1);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_obj3
+{
+	printf("rozjebal si im vozovy park, zasa medaila naviac!");
+	SetObjectiveStatus(3, 1);
+	SendSignal(texty, 3);
+	GoTo end;
+}
+
+Whenever objfail((_ACTOR_GetState(la_BoatGun_1)==0) AND (_ACTOR_GetState(la_BoatGun_2)==0) AND (_ACTOR_GetState(kubel)==0) AND (_ACTOR_GetState(la_panther2)==0) AND (_ACTOR_GetState(la_panther3)==0) AND (_ACTOR_GetState(opel1)==0) AND (_ACTOR_GetState(la_panther_)==0) AND (_ACTOR_GetState(opel3)==0) AND (_ACTOR_GetState(opel4)==0) AND (_ACTOR_GetState(la_panther1)==0))
+{
+	SendSignal(texty, 5);
+	printf("tak to je fkunde... musis pesi, dojebal si to, chcipnes v pusti");
+	Delay(3000);
+	SetObjectiveStatus(1, 2);
+	SetObjectiveStatus(2, 2);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+SetObjectiveStatus(1, 0);	// prejst kanonom
+SetObjectiveStatus(2, 0);	// zhromazdit sa na exitpointe s funkcnym vozidlom
+//SetObjectiveStatus(3, 4);	// optional - sposobit co najvacsie skody na vozovom parku (6 vozidiel)
+//SetObjectiveStatus(4, 4);	// optional - vsetci musia prezit
+
+Delay(1000);
+SUBTITLES_SetOn(true);
+printf("prejst kanonom");
+SUBTITLES_SetText(53999901);
+Delay(3000);
+printf("zhromazdit sa s vozidlom");
+SUBTITLES_SetText(53999902);
+Delay(3000);
+SUBTITLES_SetOn(false);
+
+Label end:

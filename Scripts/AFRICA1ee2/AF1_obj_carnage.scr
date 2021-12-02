@@ -1,0 +1,32 @@
+// AF1_obj_carnage - carnage objectives detector
+// -------------------------------------------------------------------------------------------------------------
+
+//INTEGER game_type = _SPGetGameType();
+
+// -------------------------------------------------------------------------------------------------------------
+
+//Whenever alldead (_GetCountOfCarnageEnemies() == 0){
+//  if((!_LoadGameValue(42)) AND (_LoadGameValue(80)))
+//  {
+//    SetWhenever(alldead, true);
+//    goto END;
+//  }
+//  SUBTITLES_SetOn(true);
+//  SUBTITLES_SetText(20994001);
+//  Delay(2000);
+//  SetObjectiveStatus(8, 1);
+//  goto END;
+//}
+
+// -------------------------------------------------------------------------------------------------------------
+
+//if((game_type == 3) OR (game_type == 7))
+//{
+//  SetObjectiveStatus(8, 0);		// carnage objective
+//}
+//else
+//{
+//  SetWhenever(alldead, false);
+//}
+
+Label END:

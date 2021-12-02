@@ -1,0 +1,101 @@
+block
+{
+SetAlarmType(1,1);			//Close shooting
+SetAlarmType(2,1);			//enemy shots
+SetAlarmType(4,1);			//hear steps (dosn't work for clients)
+SetAlarmType(8,0);			//action sounds
+SetAlarmType(16,1);			//explosions
+SetAlarmType(32,1);			//sighted
+SetAlarmType(64,1);			//is injured
+SetAlarmType(128,0);		//from script
+SetAlarmType(256,1);		//friendly shots
+SetAlarmType(512,1);		//sights corpse
+
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer a=0;
+
+Frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f055");
+
+frame cum;		Frm_FindFrame(cum,"hlidka_ohr2_cum");
+frame reinfo;	FRM_FindFrame(reinfo, "dummy_reinforcement");
+}
+
+goto hlidani;
+
+//-----------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+HUMAN_SETMODE_StandFast();
+HUMAN_SetAnim("",0,0,0);
+HUMAN_WeaponOnArm(1);
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+else {
+EndScript();
+}
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Silence();
+HUMAN_Move("hlidka_ohr2_6");
+HUMAN_TurnAt(cum);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+//-----------------------------------------------------------------------------------------------------
+
+Label hlidani:
+	a=(_RandomInt(5));
+	HUMAN_SETMODE_Guard();
+	if (a==0)	{	HUMAN_Move("hlidka_ohr2_1");	Gosub rozhled;	}
+	if (a==1)	{	HUMAN_Move("hlidka_ohr2_2");	Gosub rozhled;	}
+	if (a==2)	{	HUMAN_Move("hlidka_ohr2_3");	Gosub rozhled;	}
+	if (a==3)	{	HUMAN_Move("hlidka_ohr2_4");	Gosub rozhled;	}
+	if (a==4)	{	HUMAN_Move("hlidka_ohr2_5");	Gosub rozhled;	}
+goto hlidani;
+
+label rozhled:
+	HUMAN_SetAnim("%%turnleft",200,200,0);
+	Delay(2800);
+	HUMAN_SetAnim("%%turnright",200,200,0);
+	Delay(3700);
+	HUMAN_SetAnim("",200,200,0);
+Return;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

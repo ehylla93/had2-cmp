@@ -1,0 +1,55 @@
+// Obj 6, Aquire the Documents
+// ------------------------------------
+
+Block
+{
+Frame Obj6;	FRM_FindFrame(Obj6,"obj6");
+Frame Documents;
+
+SetObjectiveStatus(6, 0);
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 254, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990815);
+Delay(3000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+SendSignal(Obj6, 1);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 254, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);
+Delay(3000);
+SetObjectiveStatus(6, 0);
+SUBTITLES_SetOn(0);
+SendSignal(Obj6, 2);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 254, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);
+Delay(3000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+SendSignal(Obj6, 1);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+
+Label END:

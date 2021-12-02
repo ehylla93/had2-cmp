@@ -1,0 +1,13 @@
+frame FRM;		FRM_FindFrame(FRM, "Object155");
+integer what;		what = 0;
+integer wait;		wait  = 100;
+
+FRM_SetLightMap(FRM, what);
+
+Label Loop:
+  what = _RandomInt(3);
+//  wait  = _RandomInt(20)+10;
+  FRM_SetLightMap(FRM, what);
+//  delay(wait);
+Goto Loop;
+

@@ -1,0 +1,65 @@
+//stridave mrska na blockery mluveni a po signalu od detectoru je posle na obchuzky
+Frame bl2;		FRM_FindFrame (bl2,"blocker_02");
+Frame bl1;		FRM_FindFrame (bl1,"blocker_01");
+Frame detect;		FRM_FindFrame (detect,"detector_blockerz");
+Frame detect1;		FRM_FindFrame (detect1,"detector_blockerz1");
+Integer a;	a=0;
+
+Whenever go(_SignalReceived(1))
+{
+SendSignal (detect,1);
+SendSignal (detect,1);
+sendSignal (bl1,1);
+FRM_MorphSpeech(bl1, 20994037, 5,50);
+goto end;
+}
+
+
+OnSignal (2)
+{
+FRM_MorphSpeech(bl1, 0, 0,0);
+sendSignal (bl2,1);
+FRM_MorphSpeech(bl2, 20994037, 5,50);
+goto end;
+}
+
+OnSignal (3)
+{
+FRM_MorphSpeech(bl2, 0, 0,0);
+a=a+1;
+If (a==4)
+	{
+	a=0;
+	sendSignal (bl2,3);
+	goto end;
+	}
+	
+sendSignal (bl1,1);
+FRM_MorphSpeech(bl1, 20994037, 5,50);
+goto end;
+}
+
+Whenever alarm(_SignalReceived(6))
+{
+//alarm
+DisableSignals(1);
+FRM_MorphSpeech(bl2, 0, 0,0);
+FRM_MorphSpeech(bl1, 0, 0,0);
+goto end;
+}
+
+
+Whenever hrac(_SignalReceived(4))
+{
+//detectory hracu
+DisableSignals(1);
+sendSignal (bl1,2);
+sendSignal (bl2,2);
+goto end;
+}
+
+
+
+
+
+label end:

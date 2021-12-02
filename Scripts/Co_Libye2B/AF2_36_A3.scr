@@ -1,0 +1,53 @@
+// AF2_36_A3 - 5. stanoviste detektor
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame af2_36;
+	FRM_FindFrame(af2_36, "AF2_36");
+Frame af2_37;
+	FRM_FindFrame(af2_37, "AF2_37");
+Frame af2_38;
+	FRM_FindFrame(af2_38, "AF2_38");
+Frame af2_39;
+	FRM_FindFrame(af2_39, "AF2_39");
+Frame af2_40;
+	FRM_FindFrame(af2_40, "AF2_40");
+Frame af2_41;
+	FRM_FindFrame(af2_41, "AF2_41");
+Frame af2_42;
+	FRM_FindFrame(af2_42, "AF2_42");
+Frame af2_43;
+	FRM_FindFrame(af2_43, "AF2_43");
+Frame af2_58;
+	FRM_FindFrame(af2_58, "AF2_58");
+Frame opel3;
+	FRM_FindFrame(opel3, "Opel3");
+Frame opel4;
+	FRM_FindFrame(opel4, "Opel4");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(60))
+{
+	Block
+	{
+		SendSignal(af2_36, 1);
+		SendSignal(af2_37, 1);
+		SendSignal(af2_38, 1);
+		SendSignal(af2_39, 1);
+		SendSignal(af2_40, 1);
+		SendSignal(af2_41, 1);
+		SendSignal(af2_42, 1);
+		SendSignal(af2_43, 1);
+		SendSignal(af2_58, 1);
+	}
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+
+Label end:

@@ -1,0 +1,21 @@
+// Obj 1 - Destroy the Radio Station
+// ----------------------------------
+
+Block
+{
+Frame Obj5;	FRM_FindFrame(Obj5,"obj5");
+
+SetObjectiveStatus(1, 0);
+}
+
+Whenever Radio_Destroyed (_SignalReceived(1))
+{
+SendSignal(Obj5, 2);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999711);
+Delay(3500);
+SetobjectiveStatus(1, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

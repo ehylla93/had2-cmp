@@ -1,0 +1,236 @@
+// Ridic Jeepu 1
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame b2;		FRM_FindFrame(b2,"Brit02");
+Frame b3;		FRM_FindFrame(b3,"Brit03");
+Frame b4;		FRM_FindFrame(b4,"Brit04");
+Frame b5;		FRM_FindFrame(b5,"Brit05");
+Frame b6;		FRM_FindFrame(b6,"Brit06");
+Frame b7;		FRM_FindFrame(b7,"Brit07");
+Frame b8;		FRM_FindFrame(b8,"Brit08");
+
+Frame N1;		FRM_FindFrame(N1,"BK_G01");
+Frame N2;		FRM_FindFrame(N2,"BK_G02");
+Frame N3;		FRM_FindFrame(N3,"BK_G03");
+Frame N4;		FRM_FindFrame(N4,"BK_G04");
+Frame N5;		FRM_FindFrame(N5,"BK_G05");
+Frame N6;		FRM_FindFrame(N6,"BK_G06");
+Frame N7;		FRM_FindFrame(N7,"BK_G07");
+Frame N8;		FRM_FindFrame(N8,"BK_G08");
+
+Frame mujJeep;		FRM_FindFrame(mujJeep,"Jeep1");
+Frame Dopredu;		FRM_FindFrame(Dopredu,"Britcum");
+Frame Uder;		FRM_FindFrame(Uder,"AntiBritUder");
+Frame Britkec;		FRM_FindFrame(Britkec,"Britkec");
+Frame Hrackec;		FRM_FindFrame(Hrackec,"BritkecHrac");
+Frame Schuzka;		FRM_FindFrame(Schuzka,"BritSchuzka");          
+Frame Nakladaky;	FRM_FindFrame(Nakladaky,"Supply_Trucks");
+Frame Obj3;		FRM_FindFrame(Obj3,"obj3");
+Frame kill;		FRM_FindFrame(kill,"Ally_Detect");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(kill, 5);
+EndScript();
+}
+
+OnSignal(7)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Jeep1",  1, 0);
+SendSignal(b2, 1);
+SendSignal(b3, 1);
+SendSignal(b4, 1);
+HUMAN_Drive("hakl_001",90);
+HUMAN_Drive("hakl_01",90);
+HUMAN_Drive("hakl_02",80);
+HUMAN_Drive("hakl_03",30);
+SendSignal(b5, 2);
+HUMAN_Drive("",0);
+Delay(1000);
+SendSignal(b2, 2);
+SendSignal(b3, 2);
+SendSignal(b4, 2);
+Delay(2500);
+HUMAN_BoardVehicle("Jeep1",  0, 0);
+Car_SetFuel(mujJeep, 0);
+Delay(1000);
+HUMAN_SetAnim("%%protahovaniD", 800,800,1);
+Delay(2500);
+HUMAN_SetAnim("%%protahovaniD1", 800,800,1);
+Delay(2500);
+HUMAN_SetAnim("%%protahovani", 800,800,1);
+Delay(3000);
+HUMAN_SetAnim("%%nuda", 800,800,1);
+Delay(5000);
+HUMAN_SetAnim("%%kopkamen", 800,800,1);
+Delay(3000);
+HUMAN_SetAnim("%%turnleft",200,200,1);
+Delay (2800);
+HUMAN_SetAnim("%%turnright",200,200,1);
+Delay(3700);
+HUMAN_SetAnim("",200,200,1);
+HUMAN_SETMODE_Guard();
+HUMAN_MoveFromFrame(mujJeep, 6);
+HUMAN_SetAnim("%%turnright",200,200,1);
+Delay(3700);
+HUMAN_SetAnim("%%kopkamen", 800,800,1);
+Delay(3000);
+HUMAN_SetAnim("%%poklopec", 800,800,1);
+Delay(1000);
+HUMAN_SetAnim("%%chcije", 800,800,1);
+Delay(8000);
+HUMAN_SetAnim("%%poklopec", 800,800,1);
+Delay(1000);
+HUMAN_SetAnim("", 800,800,1);
+HUMAN_SETMODE_Walk();
+HUMAN_TurnAt(mujJeep);
+Delay(1800);
+HUMAN_MoveToFrame(mujJeep, 2);
+HUMAN_SETMODE_Guard();
+HUMAN_TurnAt(Dopredu);
+HUMAN_SetAnim("%%nuda1", 800,800,1);
+Delay(10000);
+HUMAN_SetAnim("", 800,800,1);
+FRM_MorphSpeechDelayed(me, 90000708, 5, 30);  // Visual contact !!
+Delay(500);
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+FRM_MorphSpeechDelayed(me, 90000029, 5, 30);  // Find Cover !! 
+HUMAN_WeaponUp(1);
+Delay(200);
+SendSignal(Britkec, 1);
+SendSignal(b2, 10);
+SendSignal(b3, 10);
+SendSignal(b4, 10);
+SendSignal(b5, 10);
+SendSignal(b6, 10);
+SendSignal(b7, 10);
+SendSignal(b8, 10);
+Delay(8000);
+SendSignal(Uder, 1);
+goto END;
+}
+
+OnSignal(1)
+{
+FRM_MorphSpeechDelayed(me, 90000516, 5, 30);  // Shoot them!!
+Delay(200);
+SendSignal(b2, 11);
+SendSignal(b3, 11);
+SendSignal(b4, 11);
+SendSignal(b5, 11);
+SendSignal(b6, 11);
+SendSignal(b7, 11);
+SendSignal(b8, 11);
+Delay(1000);
+SendSignal(Britkec, 2);
+HUMAN_Attack(Dopredu, 6000);
+HUMAN_SETMODE_Lie();
+Delay(500);
+HUMAN_Attack(Dopredu, 4000);
+HUMAN_Attack(N2, 8000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Attack(N7, 2000);
+FRM_MorphSpeechDelayed(me, 90000720, 5, 30);  // cover me!!
+goto END;
+}
+
+Whenever gokec (_PlayerInRange(6))
+{
+SendSignal(b6, 20);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(4000);
+HUMAN_TurnAtNearestPlayer();
+Delay(4000);
+HUMAN_TurnAtNearestPlayer();
+Delay(4000);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+// **** TADY ZACINA KONVERZACE S HRACEM ****
+
+OnSignal(16)
+{
+Delay(400);
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(0);
+HUMAN_MoveToFrame(Schuzka, 0);
+HUMAN_TurnAtNearestPlayer();
+
+If(_PlayerInRange(7))
+{
+SendSignal(b6, 20);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(4000);
+HUMAN_TurnAtNearestPlayer();
+Delay(4000);
+HUMAN_TurnAtNearestPlayer();
+Delay(4000);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+FRM_MorphSpeechDelayed(me, 13022605, 5, 30); // sssst !!
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 90000531, 5, 30); // folow me!
+HUMAN_TurnAtNearestplayer();
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90000233, 5, 30); // move there!!
+HUMAN_TurnAtNearestplayer();
+SetWhenever(gokec, 1);
+Delay(20000);
+goto END;
+}
+
+OnSignal(18)
+{
+HUMAN_TurnAt(mujJeep);
+Delay(1000);
+HUMAN_MoveToFrame(mujJeep, 1);
+HUMAN_BoardVehicle("Jeep1",  1, 0);
+SendSignal(Obj3, 1);
+Delay(500);
+SendSignal(b5, 8);
+SendSignal(Nakladaky, 1);
+HUMAN_Drive("hakl_04",70);
+HUMAN_Drive("hakl_05",90);
+HUMAN_Drive("hakl_06",90);
+HUMAN_Drive("hakl_09",90);
+HUMAN_Drive("hakl_07",90);
+HUMAN_Drive("hakl_08",90);
+HUMAN_Drive("hakl_10",90);
+HUMAN_Drive("hakl_11",90);
+Delay(5000);
+SendSignal(b5, 9);
+HUMAN_Drive("",0);
+Delay(500);
+SendSignal(b2, 3);
+SendSignal(b3, 3);
+SendSignal(b4, 3);
+SendSignal(b5, 3);
+HUMAN_BoardVehicle("Jeep1",  0, 0);
+DisableSignals(1);
+Delay(200);
+HUMAN_Suspend(1);
+goto END;
+}
+
+// **** TADY KONCI KONVERZACE S HRACEM ****
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+SetWhenever(gokec, 0);
+goto END;
+
+Label END:

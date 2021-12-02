@@ -1,0 +1,30 @@
+// Vybira Snipry kteri hlidaj S zatactu s MG3  2/4
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"S1_S01");
+Frame S2;	FRM_FindFrame(S2,"S1_S02");
+Frame S3;	FRM_FindFrame(S3,"S1_S03");
+Frame S4;	FRM_FindFrame(S4,"S1_S04");
+
+Integer SnipVyber;
+	SnipVyber =_RandomInt(3);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Player(_PlayerInRange(50))
+{
+If(SnipVyber == 0){  SendSignal(S1, 1);SendSignal(S2, 1);}
+
+If(SnipVyber == 1){  SendSignal(S2, 1);SendSignal(S3, 1);}
+
+If(SnipVyber == 2){  SendSignal(S1, 1);SendSignal(S4, 1);}
+
+If(SnipVyber == 3){  SendSignal(S2, 1);SendSignal(S3, 1);}
+
+Goto END;
+}
+
+Label END:

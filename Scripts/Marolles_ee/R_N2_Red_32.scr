@@ -1,0 +1,54 @@
+
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red32_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(8)
+{
+  HUMAN_SETSIGHTRANGE(50);
+  HUMAN_SETHEARRANGE(60);
+  HUMAN_Suspend(False);
+  HUMAN_SetSniper(True, 4);
+}
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red32_1");		
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 32: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

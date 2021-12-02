@@ -1,0 +1,46 @@
+// C5_G20
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  HUMAN_SetAnim("",200,200,0);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90004024, 5, 30); // got him
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+goto anim;
+
+Label anim:
+HUMAN_SetAnim("%%turnleft",200,200,1);
+HUMAN_SetAnim("%%turnright",200,200,1);
+Delay(40000);
+goto anim;
+
+Label END:

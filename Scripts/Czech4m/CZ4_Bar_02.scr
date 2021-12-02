@@ -1,0 +1,17 @@
+// GAME VALUE  22
+
+Frame la_bar_2;		FRM_FindFrame(la_bar_2,"la_bar_2");
+Frame dummy_secondary;	FRM_FindFrame(dummy_secondary, "dummy_secondary");
+
+SaveGameValue(22, 0);       
+
+OnDeath()
+	{
+               Block
+                   {
+   	           MakeExplosion(la_bar_2, 800000, 8000);            
+                       SaveGameValue(22, 99);       
+                    }  
+	  SendSignal(dummy_secondary, 1);
+	  EndScript();
+	}

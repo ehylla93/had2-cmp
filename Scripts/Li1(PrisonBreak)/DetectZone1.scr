@@ -1,0 +1,30 @@
+// ----------------------Zone1----------------------
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone1");
+Frame EP07;			FRM_FindFrame(EP07,"EP07");
+Frame EP08;			FRM_FindFrame(EP08,"EP08");
+Frame EP09;			FRM_FindFrame(EP09,"EP09");
+Frame EP16;			FRM_FindFrame(EP16,"EP16");
+Frame EG13;			FRM_FindFrame(EG13,"EG13");
+Frame EG14;			FRM_FindFrame(EG14,"EG14");
+Frame EG15;			FRM_FindFrame(EG15,"EG15");
+Frame EG17;			FRM_FindFrame(EG17,"EG17");
+}
+goto end;
+
+Whenever Yes(_PlayerInBox(detect))
+{
+printf ("Player in zone 1");
+sendsignal (EP07,1);
+sendsignal (EP08,1);
+sendsignal (EP09,1);
+sendsignal (EP16,1);
+sendsignal (EG13,1);
+sendsignal (EG14,1);
+sendsignal (EG15,1);
+sendsignal (EG17,1);
+goto end;
+}
+
+label end:

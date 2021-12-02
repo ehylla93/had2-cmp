@@ -1,0 +1,56 @@
+// Oplak
+// -----------------------------------------------------------------------------------------------------------
+
+block
+{
+INTEGER Atype				= 0;
+INTEGER rnd					= 0;  
+Frame me;		            FRM_GetMyFrame(me);
+SetAlarmType(1023, true);
+SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90003024, 5, 30); // got him
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_BoardVehicle("Opel_04",  false, 1);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_Move("C5_G34_01");
+goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_BoardVehicle("Opel_04",  false, 1);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_TurnAtNearestPlayer();
+goto END; 
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+  FRM_SwitchFaceTexture(me, "e_f029");
+  HUMAN_SETSIGHTRANGE(0); 
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("Opel_04",  true, 1);
+  goto END; 
+
+Label END:

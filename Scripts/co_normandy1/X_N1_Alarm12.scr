@@ -1,0 +1,53 @@
+// Alarm script
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame alarm;
+	FRM_GetMyFrame(alarm);
+Frame distro;
+	FRM_FindFrame(distro, "Alarmdistro");
+Frame n17;
+	FRM_FindFrame(n17, "N17");
+Frame n18;
+	FRM_FindFrame(n18, "N18");
+Frame n19;
+	FRM_FindFrame(n19, "N19");
+Frame n20;
+	FRM_FindFrame(n20, "N20");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)			// alarm sa zapol
+{
+	Block
+	{
+	SendSignal(n17, 5);
+	SendSignal(n18, 3);
+	SendSignal(n19, 3);
+	SendSignal(n20, 2);
+	}
+	FRM_SetOn(alarm, 1);
+	GoTo end;
+}
+
+OnSignal(2)			// alarm sa vypol
+{
+	FRM_SetOn(alarm, 0);
+	GoTo end;
+}
+
+OnAlarm()
+{
+	GoTo end;
+}
+
+OnAlarmDone()		// alarm sa vypol
+{
+	FRM_SetOn(alarm, 0);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+FRM_SetOn(alarm, 0);
+
+Label end:

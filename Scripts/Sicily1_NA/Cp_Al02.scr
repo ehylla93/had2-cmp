@@ -1,0 +1,68 @@
+// Cp_Al02 - Base alarm
+// --------------------------------------
+
+Block
+{
+Frame D1;		FRM_FindFrame(D1,"Cp_Al01");
+Frame D2;		FRM_FindFrame(D2,"Cp_Al03");
+
+Frame R01;		FRM_FindFrame(R01,"S_Al18");
+Frame R02;		FRM_FindFrame(R02,"S_Al19");
+Frame R03;		FRM_FindFrame(R03,"S_Al20");
+Frame R04;		FRM_FindFrame(R04,"S_Al21");
+Frame R05;		FRM_FindFrame(R05,"S_Al22");
+Frame R06;		FRM_FindFrame(R06,"S_Al23");
+Frame R07;		FRM_FindFrame(R07,"S_Al24");
+Frame R08;		FRM_FindFrame(R08,"S_Al25");
+Frame R09;		FRM_FindFrame(R09,"S_Al26");
+Frame R10;		FRM_FindFrame(R10,"S_Al27");
+Frame R11;		FRM_FindFrame(R11,"S_Al28");
+Frame R12;		FRM_FindFrame(R12,"S_Al29");
+
+Integer Select;
+}
+
+Whenever Reinf_Online (_MP_IsTeamMemberInRange(1, 35))
+{
+SendSignal(D1, 2);SendSignal(D2, 2);
+Select = _RandomInt(3);
+
+If(Select == 0)
+{
+Delay(15000);
+SendSignal(R01,1);SendSignal(R02,1);SendSignal(R03,1);
+SendSignal(R04,1);SendSignal(R05,1);SendSignal(R06,1);
+Delay(25000);
+SendSignal(R07,1);SendSignal(R08,1);SendSignal(R09,1);
+Delay(30000);
+SendSignal(R10,1);SendSignal(R11,1);SendSignal(R12,1);
+}
+
+If(Select == 1)
+{
+Delay(35000);
+SendSignal(R01,1);SendSignal(R02,1);SendSignal(R03,1);
+SendSignal(R04,1);SendSignal(R05,1);SendSignal(R06,1);
+Delay(30000);
+SendSignal(R07,1);SendSignal(R08,1);SendSignal(R09,1);
+SendSignal(R10,1);SendSignal(R11,1);SendSignal(R12,1);
+}
+
+If(Select == 2)
+{
+Delay(45000);
+SendSignal(R01,1);SendSignal(R02,1);SendSignal(R03,1);
+Delay(30000);
+SendSignal(R04,1);SendSignal(R05,1);SendSignal(R06,1);
+Delay(40000);
+SendSignal(R07,1);SendSignal(R08,1);SendSignal(R09,1);
+SendSignal(R10,1);SendSignal(R11,1);SendSignal(R12,1);
+}
+
+EndScript();
+}
+
+Whenever Offline (_SignalReceived(2))
+{
+EndScript();
+}

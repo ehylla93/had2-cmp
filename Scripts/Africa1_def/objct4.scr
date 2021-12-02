@@ -1,0 +1,73 @@
+// Obj 4 - Rescue the SAS Commander
+//---------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame C1;	FRM_FindFrame(C1,"obj1");
+Frame c2;	FRM_FindFrame(c2,"AF1_01_A1");
+FRM_SwitchFaceTexture(me,"e_f044");
+
+SetObjectiveStatus(4, 4);
+}
+
+OnDeath(){
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999908);
+Delay(2500);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(5, 4);
+SetObjectiveStatus(6, 4);
+Delay(200);
+SetObjectiveStatus(4, 2);
+SUBTITLES_SetOn(0);
+goto END;
+
+}
+Whenever obj1 (_SignalReceived(1))
+{
+SetObjectiveStatus(4, 0);
+goto END;
+} 
+
+Whenever Player (_PlayerInRange(2))
+{
+HUMAN_SetAnim("", 1000,1000,1);
+Delay(300);
+HUMAN_SETMODE_Stand();
+Delay(300);
+SUBTITLES_SetOn(1);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 59990052, 5, 30);
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 59990053, 5, 30);
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 59990055, 5, 30);
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 59990056, 5, 30);
+Delay(1500);
+HUMAN_SETMODE_Crouch();
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999705);
+Delay(3000);
+SUBTITLES_SetText(08991617);
+Delay(5000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SendSignal(c2, 1);
+GoTo end;
+}
+
+//-------------------------------------
+
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%KUCASEDI", 1000,1000,1);
+HUMAN_SetOptimized(1);
+goto end;
+
+Label end:

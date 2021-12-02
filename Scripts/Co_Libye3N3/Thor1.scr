@@ -1,0 +1,55 @@
+
+Block
+{
+    Frame soldier1;    FRM_FindFrame( soldier1, "THOR1_SMG_2" );
+    Frame soldier2;    FRM_FindFrame( soldier2, "THOR1_SMG_4" );
+    Frame soldier3;    FRM_FindFrame( soldier3, "THOR1_RIF_2" );
+    Frame soldier4;    FRM_FindFrame( soldier4, "THOR1_SMG_1" );
+    Frame soldier5;    FRM_FindFrame( soldier5, "THOR1_SMG_3" );
+    Frame soldier6;    FRM_FindFrame( soldier6, "THOR1_RIF_1" );
+}
+
+
+// -------------------------------------------------------------------
+// CHLAPI, ZNOVU OBSADTE CHECKPIOINT
+// ------------------------------------------------------------------
+EnableSignal( 1, 1 );
+OnSignal( 1 )   
+{
+     DisableSignals( 1 ); 
+     EnableSignal( 1, 0 );
+
+     SendSignal( soldier1,  1 );
+     Delay ( 500 );
+     SendSignal( soldier2,  1 );
+     Delay ( 500 );
+     SendSignal( soldier3,  1 );
+     Delay ( 5500 );
+     SendSignal( soldier4,  1 );
+     Delay ( 500 );
+     SendSignal( soldier5,  1 );
+     Delay ( 500 );
+     SendSignal( soldier6,  1 );
+     DisableSignals( 0 ); 
+}
+
+// -------------------------------------------------------------------
+// CHLAPI, NEKDO UMREL, BUDTE OPATRNI
+// ------------------------------------------------------------------
+EnableSignal( 2, 1 );
+OnSignal( 2 )   
+{
+     Block
+     {
+         EnableSignal( 2, 0 );
+         SendSignal( soldier1,  2 );
+         SendSignal( soldier2,  2 );
+         SendSignal( soldier3,  2 );
+         SendSignal( soldier4,  2 );
+         SendSignal( soldier5,  2 );
+         SendSignal( soldier6,  2 );
+     }
+     EndScript( );
+}
+
+

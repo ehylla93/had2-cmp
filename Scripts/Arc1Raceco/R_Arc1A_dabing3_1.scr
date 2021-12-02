@@ -1,0 +1,4 @@
+Frame door1;		FRM_FindFrame(door1, "tv5bran24");
+Frame door2;		FRM_FindFrame(door2, "tv5bran35");
+SetActorState(door1, 1);
+SetActorState(door2, 1);

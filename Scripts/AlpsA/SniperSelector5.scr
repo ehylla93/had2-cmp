@@ -1,0 +1,34 @@
+// Vybira Snipry kteri budou hlidat Oblast Chaty a Kanonu 2  4/6
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"KSnip1");
+Frame S2;	FRM_FindFrame(S2,"KSnip2");
+Frame S3;	FRM_FindFrame(S3,"KSnip3");
+Frame S4;	FRM_FindFrame(S4,"KSnip4");
+Frame S5;	FRM_FindFrame(S5,"KSnip5");
+Frame S6;	FRM_FindFrame(S6,"KSnip6");
+
+Frame T2;	FRM_FindFrame(T2,"T2_G01");
+
+Integer SnipVyber;
+	SnipVyber =_RandomInt(4);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Player(_PlayerInRange(50))
+{
+If(SnipVyber == 0){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S5, 1);Delay(40000);SendSignal(T2, 1);}
+
+If(SnipVyber == 1){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S6, 1);Delay(50000);SendSignal(T2, 1);}
+
+If(SnipVyber == 2){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S6, 1);Delay(30000);SendSignal(T2, 1);}
+
+If(SnipVyber == 3){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S5, 1);Delay(70000);SendSignal(T2, 1);}
+
+If(SnipVyber == 4){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S6, 1);Delay(90000);SendSignal(T2, 1);}
+
+EndScript();
+}

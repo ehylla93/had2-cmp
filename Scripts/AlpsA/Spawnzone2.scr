@@ -1,0 +1,47 @@
+// Spawnzone 2
+//----------------------------------------------
+Block
+{
+Frame Airdrop;		FRM_FindFrame(Airdrop,"Ammoboxy");
+
+Frame U1;		FRM_FindFrame(U1,"S1_G14");
+Frame U2;		FRM_FindFrame(U2,"S1_G15");
+Frame U3;		FRM_FindFrame(U3,"S1_G16");
+
+Integer Jdem;
+	Jdem = _RandomInt(1);
+}
+//----------------------------------------------
+
+Whenever Player (_PlayerInRange(15))
+{
+Delay(1000);
+Sendsignal(Airdrop, 2);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone5", 1);
+Delay(5000);
+SUBTITLES_SetOn(false);
+Delay(50000);
+
+If(Jdem == 0)
+{
+SendSignal(U1, 1);
+SendSignal(U2, 1);
+SendSignal(U3, 1);
+}
+EndScript();
+}
+
+OnSignal(6)
+{
+SetWhenever(Player, 1);
+goto END;
+}
+
+//----------------------------------------------
+
+SetWhenever(Player, 0);
+goto END;
+
+Label END:

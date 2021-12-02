@@ -1,0 +1,25 @@
+// Obj 4 - zabij nemce v komplexu
+//---------------------------------------------------------------------------------
+
+Block
+{
+SetWhenever(AED, 0);
+}
+Delay(5000);
+
+Whenever AED (_AllEnemiesDead())
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(21990002);
+Delay(4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(4, 1);
+EndScript();
+}
+
+Delay(300000);
+SetWhenever(AED, 1);
+goto END;
+
+
+Label END:

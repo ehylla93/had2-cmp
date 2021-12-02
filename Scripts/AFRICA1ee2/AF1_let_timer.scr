@@ -1,0 +1,17 @@
+// AF1_let_timer
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME pobocnik;			FRM_FindFrame(pobocnik, "AF1_pobocnik");
+FRAME letadlo;			FRM_FindFrame(letadlo, "macchi_nalet");
+
+INTEGER gt = _SPGetGameDifficulty();
+
+INTEGER vall = 60000 + ((gt) * 60000);
+
+OnSignal(1)
+{
+  Delay(vall);		// pet minut
+  SendSignal(letadlo, 2);	// aby letel do hajzlu
+  Delay(10000);
+  HUMAN_Kill(pobocnik);
+}

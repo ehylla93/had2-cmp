@@ -1,0 +1,154 @@
+// AF3b_12
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME m01;			FRM_FindFrame(m01, "AF3b_15");
+  FRAME m02;			FRM_FindFrame(m02, "AF3b_18");
+  FRAME m03;			FRM_FindFrame(m03, "AF3b_21");
+  FRAME m04;			FRM_FindFrame(m04, "AF3b_24");
+  FRAME m05;			FRM_FindFrame(m05, "AF3b_32");
+  FRAME this;				FRM_GetMyFrame(this);
+  INTEGER randdist 			= _RandomInt(80)+40;
+  INTEGER rnd				= 0;
+  INTEGER AType				= 0;
+  INTEGER AtPos				= 0;
+
+  SetAlarmType(1023, true);		// all alarm events on
+  SetAlarmType(924, false);		// 512, 256, 128, 16, 8, 4, 2
+}
+  
+  rnd = _RandomInt(2);
+  if(rnd == 0){  HUMAN_SETAIMODE_Aggressive();}
+  if(rnd == 1){  HUMAN_SETAIMODE_Defensive();}
+  HUMAN_SetSightRange(300);
+  HUMAN_SETMODE_Run();
+  HUMAN_SetOptimized(1);
+  HUMAN_Suspend(true);
+  HUMAN_SetEvents(true);
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(22){			// RETREAT SECTION
+  SetAlarmType(1023, false);
+  DisableSignals(true);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF3b_retreat");
+  goto END;
+}
+
+OnDeath(){
+  SendSignal(m01, 3);
+  SendSignal(m02, 3);
+  SendSignal(m03, 3);
+  SendSignal(m04, 3);
+  SendSignal(m05, 3);
+  EndScript();
+}
+  
+OnAlarm(){
+  block {
+    HUMAN_Stop();
+    Atype = _GetAlarmType();
+  }
+  if((((Atype == 32) OR (Atype == 64)) OR (Atype == 1)) AND (_PlayerInRange(randdist))){
+    EndScript();
+  }
+  if(AtPos > 1){
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();     
+    goto END;
+  }
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(1);
+  goto ACTIVITY1;
+}
+
+OnAlarmDone(){
+  HUMAN_SETMODE_Run();
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(1);
+  goto ACTIVITY1;
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+  SetAlarmType(264, true);			// 256, 8
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetMODE_Run();
+  HUMAN_SetOptimized(1);
+  goto ACTIVITY;
+}
+
+OnSignal(2){
+  HUMAN_Suspend(false);
+  HUMAN_WeaponOnArm(false);
+  HUMAN_SetMODE_Walk();
+  HUMAN_SetOptimized(1);
+  goto ACTIVITY;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVITY:
+  Delay(2000);
+Label ACTIVITY1:
+  if(AtPos == 0){
+    HUMAN_Move("AF3b_c1_01");
+    AtPos = 1;
+    goto ACTIVITY1;
+  }
+  if(AtPos == 1){
+    HUMAN_Move("AF3b_c1_02");
+    AtPos = 2;
+    goto ACTIVITY1;
+  }
+  if(AtPos == 2){
+    HUMAN_Move("AF3b_c1_03");
+    AtPos = 3;
+    goto ACTIVITY1;
+  }
+  if(AtPos == 3){
+    HUMAN_Move("AF3b_c1_04");
+    AtPos = 4;
+    goto ACTIVITY1;
+  }
+  if(AtPos == 4){
+    HUMAN_Move("AF3b_c1_05");
+    AtPos = 5;
+    SendSignal(m01, 3);
+    SendSignal(m02, 3);
+    SendSignal(m03, 3);
+    SendSignal(m04, 3);
+    SendSignal(m05, 3);
+  }
+goto CROUCH_END;
+
+Label ACTIVITY2:
+  Delay(2000);
+  HUMAN_Move("AF3b_12_03");
+goto CROUCH_END;
+
+Label CHANGEPOS:
+  rnd = _RandomInt(2);
+  if(rnd == 0){ HUMAN_SetMODE_Stand();}
+  if(rnd == 1){ HUMAN_SetMODE_Crouch();}
+return;
+
+Label CROUCH_END:
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_WeaponOnArm(true);
+Label CROUCH_END_LOOP:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1500);
+goto CROUCH_END_LOOP;  
+
+Label END:

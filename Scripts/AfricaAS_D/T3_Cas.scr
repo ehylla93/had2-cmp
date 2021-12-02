@@ -1,0 +1,20 @@
+// Casovac Tanku 3 (La_tiger_3)
+//-------------------------------------------------------------------
+
+Block
+{
+Frame Kanoner;		FRM_FindFrame(Kanoner,"T3_G03");
+}
+
+//-------------------------------------------------------------------
+
+Whenever TurnOn (_Signalreceived(1))
+{
+Delay(20000);
+SendSignal(Kanoner, 2);
+Delay(33000);
+SendSignal(Kanoner, 3); // BOOM
+Delay(7000);
+SendSignal(Kanoner, 4);
+EndScript();
+}

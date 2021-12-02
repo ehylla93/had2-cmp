@@ -1,0 +1,26 @@
+// Obj 7 - Eliminate the Gestapo Officer
+// ----------------------------------------
+
+Block
+{
+Frame MSTGAD;		FRM_FindFrame(MSTGAD,"MSTGAD medic noob Gestapo");
+
+SetWhenever(Gestapo_Dead, 0);
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetObjectiveStatus(7, 0);
+SetWhenever(Gestapo_Dead, 1);
+}
+
+Whenever Gestapo_Dead (_Actor_GetState(MSTGAD) == 0)
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(58999905);
+Delay(3500);
+SetObjectiveStatus(7, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

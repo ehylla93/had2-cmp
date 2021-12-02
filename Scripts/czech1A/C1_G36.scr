@@ -1,0 +1,61 @@
+// Keca pod lampou na zacatku s C1_G37
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame kamos;    FRM_FindFrame(kamos,"C1_G37");
+Frame vechtr;    FRM_FindFrame(vechtr,"vechtr");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 200, 200, 1);
+HUMAN_Stop();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetSniper(True, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(5000);
+HUMAN_TurnAt(kamos);
+Delay(3000);
+HUMAN_SetAnim("%%mluvi4", 200, 200, 1);
+Delay(10000);
+HUMAN_SetAnim("", 200, 200, 1);
+HUMAN_TurnAt(vechtr);
+HUMAN_ACTIVITY_Point(vechtr);
+Delay(500);
+HUMAN_TurnAt(kamos);
+Delay(1000);
+HUMAN_TurnAt(vechtr);
+Delay(7000);
+HUMAN_Move("nastenka");
+goto END;
+
+Label END:

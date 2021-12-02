@@ -1,0 +1,21 @@
+// MISSION settings
+// -------------------------------------------------------
+
+Block
+{
+Frame text;		FRM_FindFrame(text, "m_prist_a");
+
+SaveGameValue(99, 0);		//Global Alarm
+Integer a;
+}
+
+// -------------------------------------------------------
+
+Whenever Player_In (_MP_IsTeamMemberInRange(1, 1000))
+{
+// SaveGameValue(99, 1);	//To disable alarms uncomment this line
+a = _LoadGameValue(99);
+printfnumber("Global Alarm Off: ", a);
+SendSignal(text, 1);		// af3b_begin_text.scr
+EndScript();
+}

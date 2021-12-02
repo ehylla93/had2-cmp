@@ -1,0 +1,56 @@
+////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - START - GATE
+  frame K2;		FRM_FindFrame(K2, "K2");
+  frame K2a;		FRM_FindFrame(K2a, "K2a");
+  frame null; 		FRM_FindFrame(null, "");
+  frame TRG;		FRM_FindFrame(TRG, "Gate_Guard");
+
+  frame OFF3;		FRM_FindFrame(OFF3, "walker_guard_2");
+  frame OFF4;		FRM_FindFrame(OFF4, "walker_guard_3");
+
+OnSignal(1)
+{
+  CSC_FadeOut(100);
+  CSC_RunCutscene(2);
+}
+
+OnSignal(3)
+{
+  DisableSignals(True);
+}
+
+OnCutScene(2)
+{
+  block
+  {
+//    FRM_SetOn(OFF3, False);
+//    FRM_SetOn(OFF4, False);
+    SUBTITLES_SetOn(True);
+  }
+  Delay(100);
+  FRM_SetActiveCamera(K2);
+  CSC_FadeIn(250);
+  Delay(12000);
+  CSC_FadeOut(100);
+  FRM_SetActiveCamera(K2a);
+  Delay(200);
+  CSC_FadeIn(200);
+  Delay(5000);
+  CSC_FadeOut(100);
+  FRM_SetActiveCamera(K2);
+  Delay(200);
+  CSC_FadeIn(200);
+  Delay(25000);
+  CSC_FadeOut(100);
+  Delay(100);
+  CSC_EndCutscene();
+}
+
+OnCutSceneDone(2)
+{
+  FRM_SetCameraFrame(null);
+//    FRM_SetOn(OFF3, True);
+//    FRM_SetOn(OFF4, True);
+  SUBTITLES_SetOn(False);
+  CSC_FadeIn(250); 
+}
+//////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - KONEC - GATE

@@ -1,0 +1,52 @@
+// this is detector and coordinator for transporters - for play cards
+
+block 
+{
+  frame N1;		FRM_FindFrame(N1, "nosic1");
+  frame N2;		FRM_FindFrame(N2, "nosic2");
+  integer counter;	counter = 0;
+}
+
+whenever AAA (counter == 2)
+  {
+    Delay(5000);
+    SendSignal(N1, 2);		// N1start play cards - cards on hands
+  }
+
+// signal - both are ready to play cards 
+OnSignal(1)
+{
+  counter = counter + 1;
+}
+
+// N1 is ready - cards is on hands
+OnSignal(2)
+{
+  delay(4000);
+  SendSignal(N2, 2);		
+}
+
+// N2 is ready - cards is on hands
+OnSignal(3)
+{
+  delay(4000);
+  SendSignal(N1, 4);	
+}
+
+// invitation N2 to drop card
+OnSignal(4)
+{
+  delay(4000);
+  SendSignal(N2, 5);		
+}
+
+// invitation N1 to drop card
+OnSignal(5)
+{
+  delay(4000);
+  SendSignal(N1, 4);		
+}
+
+label wait_signal:
+  delay(10000);
+goto wait_signal;

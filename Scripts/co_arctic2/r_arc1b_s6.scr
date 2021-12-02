@@ -1,0 +1,151 @@
+// Enemy Soldier, working at electricity panel downstairs
+
+Block {
+integer  AIEvent;
+
+frame turn;				FRM_FindFrame(turn, "m_elpr0200");
+frame alarm;			FRM_FindFrame(alarm, "dummy_GlobalAlarm");
+frame MyFRM;			FRM_GetMyFrame(MyFRM);	
+frame kladivo;			FRM_Findframe(kladivo, "kladivo");
+frame ruka;				FRM_FindFrame(ruka, ""); 
+frame klic;				FRM_FindFrame(klic, "klic");
+frame klic_vizual;		FRM_Findframe(klic_vizual, "klic.Line01");
+frame posranej_buton;	FRM_FindFrame(posranej_buton, "m_alarm_15");
+frame kladivo_vizual;	FRM_Findframe(kladivo_vizual, "kladivo.mi_hamm");
+
+SetWhenever(Usni, false);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+}
+
+HUMAN_Suspend(true);
+goto TheEnd;
+
+
+Whenever Usni ( _LoadGameValue(74) == 1 )
+{
+  HUMAN_SetAnim("", 300, 300, False);  
+  HUMAN_Stop();
+  HUMAN_Suspend(True);
+  SetWhenever(Budicek, true);
+  Goto TheEnd;
+}
+Whenever Budicek ( (_PlayerInRange(30)) and (_LoadGameValue(74) == 2) )
+{
+  HUMAN_Suspend(False);
+  SetWhenever(Usni, true);
+}
+
+Whenever FAKE_ALARM ( ( _SignalReceived(10) ) and (_LoadGameValue(5) == 99) )
+{
+  HUMAN_SetAnim("", 200, 200, False);
+  HUMAN_Move("S6_FAKE");
+  HUMAN_LookAround(4);
+  Delay(15000);
+  HUMAN_LookAround(0);
+  delay(500);
+  HUMAN_Move("S6");		
+  SetWhenever(FAKE_ALARM, True);
+  goto CONTINUE;
+}
+
+label Start:			
+  HUMAN_Move("S6");		
+  FRM_TeleportNearCheckpoint(MyFRM, "S6", "");
+  Delay(500);
+  HUMAN_WeaponOnArm(False);
+  Delay(1500);
+  FRM_SetOn(klic, false);
+  FRM_SetOn(kladivo, false);
+block
+  {
+  FRM_FindFrame(ruka, "Static_6.HW1");
+  FRM_TeleportNearFrame(klic, ruka, true);
+  FRM_TeleportNearFrame(kladivo, ruka, true);
+  FRM_FindFrame(ruka, "");
+  }
+
+label CONTINUE:
+  Delay(1000);
+  FRM_SetOn(klic, false);
+  FRM_SetOn(kladivo, false);
+  HUMAN_TurnAt(turn);
+  HUMAN_SetAnim("%%mechanik", 400, 400, True);
+
+	Delay(5200);
+	FRM_SetOn(klic, true);
+	Delay(3220);
+	FRM_SetOn(klic, false);
+	Delay(140);
+	FRM_SetOn(kladivo, true);
+	Delay(3700);
+	FRM_SetOn(kladivo, false);
+	FRM_SetOn(klic, true);
+	Delay(3400);
+	FRM_SetOn(klic, false);
+	Delay(200);
+	GoTo CONTINUE;
+
+OnAlarm()
+{
+  DisableWhenevers(True);
+  HUMAN_SETMODE_Stand();
+  Block
+    {
+      HUMAN_SETSIGHTRANGE(40);
+      AIEvent =_GetAlarmType(); 
+      HUMAN_Stop();
+      HUMAN_SetAnim("", 250, 250, False);
+block
+  {
+      FRM_FindFrame(ruka, "Static_6.HW1");
+      FRM_TeleportNearFrame(kladivo, ruka, False);
+      FRM_FindFrame(ruka, "");
+  }
+      FRM_CreatePhysicalObject(kladivo_vizual, 1, false, false);
+      FRM_SetOn(kladivo, False);
+      HUMAN_SETMODE_Walk();
+      HUMAN_SETAIMODE_Defensive();
+    }
+  If (((_FrameInRange(Posranej_buton)<8) AND (!_PlayerInRange(10))) AND (_LoadGameValue(5) != 666) )
+    {
+       HUMAN_SETMODE_Run();  
+       HUMAN_Move("alarm_15");
+       HUMAN_TurnAt(Posranej_buton);
+       	HUMAN_SetAnim("(ukazovani", 500, 500, false);
+		Delay(2500);
+		HUMAN_SetAnim("", 200, 200, 0);
+       If (_LoadGameValue(5) != 666) { SendSignal(alarm , 2); }
+       EndScript();
+     }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  DisableWhenevers(False);
+If ( ((AIEvent != 4) AND (AIEvent != 8)) and (AIEvent != 128) )  
+    { SendSignal(alarm , 1); }
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("S6_DeAlarm");
+Label Loop: 
+  HUMAN_TurnAtNearestPlayer();
+  Delay(3500);
+goto loop;
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

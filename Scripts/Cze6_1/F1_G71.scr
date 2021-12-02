@@ -1,0 +1,79 @@
+// F1_G71 - F1 zone guard (Inside Bunker)
+// ----------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1,"Cp_G74_1");
+Frame Cp2;		FRM_FindFrame(Cp2,"Cp_G74_2");
+Frame Cum;		FRM_FindFrame(Cum,"F1_G79");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f071");
+
+HUMAN_SETSIGHTRANGE(110);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Run();
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Walk();
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 12))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Guard();
+goto Patrol;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label Patrol:
+HUMAN_MoveToFrame(Cp1, 0);
+HUMAN_TurnAt(Cum);
+HUMAN_SetAnim("%%divase", 1000, 1000, 1);
+Delay(6000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(500);
+HUMAN_MoveToFrame(Cp2, 0);
+HUMAN_TurnAt(Cum);
+Delay(10000);
+goto Patrol;
+
+
+Label END:

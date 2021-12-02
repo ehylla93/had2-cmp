@@ -1,0 +1,59 @@
+// AF1_23 
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME attackat;			FRM_FindFrame(attackat, "dummy_fireat");
+  FRAME look;				FRM_FindFrame(look, "HL_dvh_x03");
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SUBTITLES_SetOn(false);
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(10)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  block{
+    HUMAN_Stop();
+    SetWhenever(player, false);
+    HUMAN_SETMODE_Run();
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("20: ", Atype);
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(768, false);		// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+
+Label END:
+  Delay(2000);
+  SUBTITLES_SetOn(false);

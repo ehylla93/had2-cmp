@@ -1,0 +1,36 @@
+Frame FRM;		FRM_GetMyFrame(FRM);
+Frame Partikl1;	FRM_FindFrame(Partikl1, "dummy_kra1_efekt_1");
+Frame Partikl2;	FRM_FindFrame(Partikl2, "dummy_kra1_efekt_2");
+Frame Partikl3;	FRM_FindFrame(Partikl3, "dummy_kra1_efekt_3");
+Frame Partikl4;	FRM_FindFrame(Partikl4, "dummy_kra1_efekt_4");
+Frame Partikl5;	FRM_FindFrame(Partikl5, "dummy_kra1_efekt_5");
+Frame Partikl6;	FRM_FindFrame(Partikl6, "dummy_kra1_efekt_6");
+Frame Partikl7;	FRM_FindFrame(Partikl7, "dummy_kra1_efekt_7");
+Frame Sound1;	FRM_FindFrame(Sound1, "SKra1");
+
+
+OnSignal(1)
+{
+  Printf("KRA 1 ------ start");
+FRM_SetOn(Sound1,true);
+
+  FRM_SetAnimation(FRM, "M_A3an_ice01a.I3D", 2);
+  Delay(1200);
+    Block
+       {
+          SendSignal(partikl1, 1);
+          SendSignal(partikl2, 1);
+          SendSignal(partikl3, 1);
+          SendSignal(partikl4, 1);
+          SendSignal(partikl5, 1);
+          SendSignal(partikl6, 1);
+          SendSignal(partikl7, 1);
+       }
+  Delay(5300);
+  FRM_SetOn(FRM, False);
+  Printf("KRA 1 ------ konec");
+
+// pojistka
+  Delay(7500);
+  FRM_SetOn(sound1, False);
+}

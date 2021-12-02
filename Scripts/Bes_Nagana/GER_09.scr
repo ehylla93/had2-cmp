@@ -1,0 +1,72 @@
+// GER_09 - Soldat amb gorra
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+Frame GER10;		FRM_FindFrame(GER10, "GER10");
+
+SetAlarmType(1,1); //Close shooting (si ferit, ataca)
+SetAlarmType(2,1); //Hear shooting
+SetAlarmType(4,0); //steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,0); //explozion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //I´m wounded
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //Friendly fire
+SetAlarmType(512,1); //I see a dead body
+
+
+FRM_SwitchFaceTexture(me,"e_f023");
+
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("%%kecy3", 1000, 1000, 1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnSignal(14)	// received from ss DOCS
+{
+HUMAN_SetAnim("", 1000, 1000, 0);
+HUMAN_SETMODE_Walk();
+HUMAN_Move("MAGATZEM");
+HUMAN_TurnAt(GER10);
+HUMAN_SetAnim("%%rozcilujese", 1000, 1000, 0);
+FRM_MorphSpeechDelayed(me, 53990002,5,1000);	//"conversational tone, but angry"
+HUMAN_SetAnim("%%af1_stojiceka", 500, 500, 1); 
+HUMAN_Suspend(0);
+}
+
+
+
+OnDeath(){
+goto END;
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 0);
+HUMAN_WeaponUp(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 360))
+{
+HUMAN_Suspend(0);
+}
+
+Label END:

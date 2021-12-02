@@ -1,0 +1,52 @@
+// BU2_Allied11 - allied soldier - below eastern MG posts, panic
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;	FRM_GetMyFrame(me);
+
+HUMAN_SETEVENTS(false);
+FRM_SwitchFaceTexture(me, "e_f054");
+
+SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever player(_PlayerInRange(40))
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetAnim("%%panika1", 200, 200, true);
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+}
+
+Whenever player2(_PlayerInRange(5))
+{
+	GoTo panika;
+}
+
+OnDeath()
+{
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Label panika:
+	If(_PlayerInRange(5))
+	{
+	FRM_MorphSpeech(me, 13992601, 3, 20);
+	Delay(10000);
+	}
+	If(_PlayerInRange(5))
+	{
+	FRM_MorphSpeech(me, 13992602, 3, 20);
+	Delay(10000);
+	GoTo panika;
+	}
+	Delay(30000);
+	GoTo panika;
+
+Label end:

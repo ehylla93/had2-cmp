@@ -1,0 +1,9 @@
+
+Block {
+Frame ge19;		Frm_FindFrame (ge19,"ge_19");
+}
+
+Whenever ted(_PlayerInRange(3))
+{
+SendSignal (ge19,3);
+}

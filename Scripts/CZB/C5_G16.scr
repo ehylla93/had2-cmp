@@ -1,0 +1,99 @@
+// C5_G16 - soldier at the Flak
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame g17;
+	FRM_FindFrame(g17, "C5_G17");
+Integer radioalarm;
+	radioalarm=0;
+Frame me;
+	FRM_GetMyFrame(me);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(1000);
+	HUMAN_SETMODE_Run();
+	}
+	If(radioalarm==0)
+	{
+	HUMAN_ACTIVITY_Smoke(false);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	FRM_MorphSpeechDelayed(me, 90004024, 5, 30); // got him
+     GoTo end;
+}
+
+Whenever player(_SignalReceived(1))	// received from C5_G39_A1
+{
+	HUMAN_Suspend(false);
+	If(radioalarm==1)
+	{
+		GoTo action2;
+	}
+	GoTo action;
+}
+
+OnSignal(2)	// received from C5_G11
+{
+	radioalarm=1;
+	GoTo action2;
+}
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(2);
+HUMAN_SETSIGHTRANGE(500);
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label action:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("C5_G16_01");
+	HUMAN_Move("C5_G16_02");
+	HUMAN_Move("C5_G16_01");
+	HUMAN_Move("C5_G16_02");
+	HUMAN_TurnAt(g17);
+	HUMAN_WeaponOnArm(false);
+	Delay(1000);
+	HUMAN_ACTIVITY_Smoke(true);
+	Delay(60000);
+	HUMAN_ACTIVITY_Smoke(false);
+	Delay(1000);
+	HUMAN_WeaponOnArm(true);
+	Delay(1000);
+	GoTo action;
+
+Label action2:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("C5_G16_01");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+
+Label end:

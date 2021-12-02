@@ -1,0 +1,69 @@
+// qsign05 - BU1_goddetector
+Block
+{
+Frame god;	FRM_FindFrame(god, "Goddess");
+Frame q01;	FRM_FindFrame(q01, "qsign01");
+Frame q02;	FRM_FindFrame(q02, "qsign02");
+Frame q03;	FRM_FindFrame(q03, "qsign03");
+Frame q04;	FRM_FindFrame(q04, "qsign04");
+Frame q05;	FRM_FindFrame(q05, "qsign05");
+Frame q06;	FRM_FindFrame(q06, "qsign06");
+Frame q07;	FRM_FindFrame(q07, "qsign07");
+Frame q08;	FRM_FindFrame(q08, "qsign08");
+Frame q09;	FRM_FindFrame(q09, "qsign09");
+Frame q10;	FRM_FindFrame(q10, "qsign10");
+Frame q11;	FRM_FindFrame(q11, "qsign11");
+Frame q12;	FRM_FindFrame(q12, "qsign12");
+Frame q13;	FRM_FindFrame(q13, "qsign13");
+Frame q14;	FRM_FindFrame(q14, "qsign14");
+Frame q15;	FRM_FindFrame(q15, "qsign15");
+Frame q16;	FRM_FindFrame(q16, "qsign16");
+Frame q17;	FRM_FindFrame(q17, "qsign17");
+Frame q18;	FRM_FindFrame(q18, "qsign18");
+Frame q19;	FRM_FindFrame(q19, "qsign19");
+Frame q20;	FRM_FindFrame(q20, "qsign20");
+Frame ee;	FRM_FindFrame(ee, "BU1_EE");
+}
+GoTo end;
+
+Whenever frame(_FrameInRange(god)<5)
+{
+	SendSignal(ee, 3);
+	GoTo zapal;
+}
+
+Label zapal:
+FRM_CreateParticle(15, q01);
+Delay(200);
+FRM_CreateParticle(15, q02);
+Delay(200);
+FRM_CreateParticle(15, q03);
+Delay(200);
+FRM_CreateParticle(15, q04);
+Delay(200);
+FRM_CreateParticle(15, q05);
+Delay(200);
+FRM_CreateParticle(15, q06);
+FRM_CreateParticle(15, q12);
+Delay(200);
+FRM_CreateParticle(15, q07);
+FRM_CreateParticle(15, q13);
+Delay(200);
+FRM_CreateParticle(15, q08);
+FRM_CreateParticle(15, q14);
+Delay(200);
+FRM_CreateParticle(15, q09);
+FRM_CreateParticle(15, q15);
+Delay(200);
+FRM_CreateParticle(15, q10);
+FRM_CreateParticle(15, q16);
+Delay(200);
+FRM_CreateParticle(15, q11);
+FRM_CreateParticle(15, q17);
+Delay(200);
+FRM_CreateParticle(15, q18);
+FRM_CreateParticle(15, q19);
+Delay(200);
+FRM_CreateParticle(15, q20);
+
+Label end:

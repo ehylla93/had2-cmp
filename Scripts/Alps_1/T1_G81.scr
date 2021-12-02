@@ -1,0 +1,63 @@
+// T1_G81 - Panzer Driver (Reinf)
+// ----------------------------------------
+
+Block
+{
+Frame Panzer1;	FRM_FindFrame(Panzer1, "A1_Panzer");
+Frame Panzer2;	FRM_FindFrame(Panzer2, "A2_Panzer");
+Frame C1;		FRM_FindFrame(C1, "T1_G82");
+Frame C2;		FRM_FindFrame(C2, "T1_G83");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1023,0);
+
+Integer Route;
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+Route = _RandomInt(2);
+
+HUMAN_Suspend(0);
+
+If(Route == 0)
+{
+	HUMAN_BoardVehicle("A1_Panzer", 1, 0);
+	SendSignal(C1, 1);
+	SendSignal(C2, 1);
+	HUMAN_DriveNearPlayer(30);
+}
+
+If(Route == 1)
+{
+	HUMAN_BoardVehicle("A2_Panzer", 1, 0);
+	SendSignal(C1, 2);
+	SendSignal(C2, 2);
+	HUMAN_Drive("hakl_11", 40);
+	HUMAN_Drive("cutop1", 20);
+	HUMAN_Drive("", 0);
+	HUMAN_BoardVehicle("A2_Panzer", 1, 3);
+}
+
+goto END;
+}
+
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

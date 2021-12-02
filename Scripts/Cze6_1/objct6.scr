@@ -1,0 +1,45 @@
+// Obj 6 - Rescue the Prisoners
+// ------------------------------------
+
+Block
+{
+Frame Prisoner1;		FRM_FindFrame(Prisoner1,"Cpl. William Broadhurst");
+Frame Prisoner2;		FRM_FindFrame(Prisoner2,"SSgt. Gregory Dean");
+Frame Obj10;			FRM_FindFrame(Obj10,"obj10");
+
+Integer Prisoner_Count;
+		Prisoner_Count = 0;
+
+SetWhenever(Prisoners_Rescued, 0);
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetObjectiveStatus(6, 0);
+SetWhenever(Prisoners_Rescued, 1);
+}
+
+OnSignal(2)
+{
+Prisoner_Count = Prisoner_Count + 1;
+}
+
+Whenever Prisoners_Rescued (Prisoner_Count > 1)
+{
+SendSignal(Obj10, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999906);
+Delay(3500);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Prisoner_Killed ((_Actor_GetState(Prisoner1) == 0) OR (_Actor_GetState(Prisoner2) == 0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999907);
+Delay(3500);
+SetObjectiveStatus(6, 2);
+SUBTITLES_SetOn(0);
+EndScript();
+}

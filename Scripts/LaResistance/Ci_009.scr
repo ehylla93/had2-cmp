@@ -1,0 +1,65 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+FRM_SwitchFaceTexture(me,"e_f023");
+Frame Player;
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("%%panika1", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever Painter (_PlayerInRange(2))
+{
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAnim("%%mluvi8", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(me, 05991028, 5, 30);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(700);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 1);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+
+FRM_GetNearestPlayer(me, Player); 
+FRM_MorphSpeechDelayed(Player, 00990045, 5, 30);
+Delay(30000);
+
+//*WE-P
+}
+
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SetAnim("%%cumvoda", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+//*DefaultLoad
+goto END;
+
+Label END:

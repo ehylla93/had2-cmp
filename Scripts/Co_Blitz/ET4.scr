@@ -1,0 +1,104 @@
+//ET4 Tank3 Cannon
+// ----------------------Block----------------------
+Block
+{
+frame me;			FRM_GetMyFrame(me);
+frame hd2;			FRM_FindFrame(hd2,"hdummy02");
+frame target2;		FRM_FindFrame(target2,"ertarget2");
+Frame turn1;		FRM_FindFrame(turn1,"Jezek00");
+Frame Tank;			FRM_FindFrame(Tank, "panther3");
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rndpause;
+integer alarm;  alarm=0;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+Block
+{
+printf ("ET4 spawn");
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(65);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_BoardVehicle("panther3", 1, 2);
+goto checkpoint1;
+}
+label checkpoint1:
+rnd1= _randomint(4)+1;
+  if ((rnd1==1) and (alarm==1))
+  {
+  HUMAN_TurnAt(target2);
+  rndpause= _randomint(20000)+15000;
+  delay(rndpause);
+  goto checkpoint1;
+  }
+  if (rnd1==2) 
+  {
+  HUMAN_TurnAt(hd2);
+  rndpause= _randomint(20000)+10000;
+  delay(rndpause);
+  goto checkpoint1;
+  }
+  if (rnd1==3) 
+  {
+  HUMAN_TurnAt(turn1);
+  rndpause= _randomint(25000)+20000;
+  delay(rndpause);
+  goto checkpoint1;
+  }
+  if (rnd1==4) 
+  {
+  HUMAN_TurnAt(turn1);
+  rndpause= _randomint(25000)+20000;
+  delay(rndpause);
+  goto checkpoint1;
+  }
+}
+  label checkpoint2:
+  rndpause= _randomint(10000)+10000;
+  delay(rndpause);
+  goto checkpoint1;
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+printf ("ET4 Alarm");
+alarm=1;
+EndScript();
+}
+// ----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+printf ("ET4 Alarm done");
+HUMAN_SetAlarm(0);
+goto checkpoint2;
+}
+// ----------------------OnDeath----------------------
+OnDeath()
+{
+printf ("ET4 - Enemy killed");
+FRM_CreateParticle(48, Tank);
+delay(500);
+FRM_CreateParticle(40, Tank);
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+// ----------------------END----------------------
+Label END:

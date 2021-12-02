@@ -1,0 +1,62 @@
+// AF3a_22 - Chodi pred Oazou
+// ----------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Cp1;	FRM_FindFrame(Cp1,"Opelflak1");
+Frame Cp2;	FRM_FindFrame(Cp2,"Flak3");
+
+SetAlarmType(1,1); //blizka strelba  - shooting close by
+SetAlarmType(2,1); //slysim strelbu  - shooting
+SetAlarmType(4,1); //kroky         - hear steps
+SetAlarmType(8,0); //zvuky by use  - sounds by "use"
+SetAlarmType(16,0); //exploze  - explosion (does not work in MP)
+SetAlarmType(32,1); //vidi     - see
+SetAlarmType(64,1); //jsem zranen      - gets injured
+SetAlarmType(128,1); //zeskriptu       - from script
+SetAlarmType(256,1); //pratelska strelba - friendly fire
+SetAlarmType(512,1); //vidim flakotu  - see a dead body
+
+FRM_SwitchFaceTexture(me,"e_f016");
+}
+
+// ----------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(0);
+goto Patrol;
+}
+
+Whenever Player (_PlayerInRange(500))
+{
+HUMAN_Suspend(0);
+goto Patrol;
+}
+
+// ----------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto  END;
+
+Label Patrol:
+HUMAN_SETMODE_Guard();
+HUMAN_MoveToFrame(Cp1, 6);
+HUMAN_MoveToFrame(Cp2, 8);
+goto Patrol;
+
+
+Label END:

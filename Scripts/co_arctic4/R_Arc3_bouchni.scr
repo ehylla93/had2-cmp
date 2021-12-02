@@ -1,0 +1,10 @@
+
+Block {
+frame FRM;		FRM_GetMyFrame(FRM);
+frame Ulomek;   FRM_FindFrame(Ulomek, "ulomek_4");
+}
+
+OnSignal(1)
+{
+  SetActorState(Ulomek, 1);
+}

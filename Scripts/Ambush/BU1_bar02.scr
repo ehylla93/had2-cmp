@@ -1,0 +1,40 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+Frame klika;		FRM_FindFrame(klika,"klika");
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever BU1_bar41 (_PlayerInRange(70))
+{
+SendSignal(klika, 7);
+SetWhenever(BU1_bar41, 1);
+//^Whenever-BU1_bar41
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:

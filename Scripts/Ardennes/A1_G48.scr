@@ -1,0 +1,42 @@
+// Ridic (La_tiger_4)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_DriveNearPlayer(10);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(50);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("La_tiger_4", 1, 0);
+goto END;
+
+Label END:

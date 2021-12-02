@@ -1,0 +1,26 @@
+// Obj 1 - Destroy the Enemy Heavy Equipment
+// ==========================================
+
+Block
+{
+Frame H1;	FRM_FindFrame(H1,"la_hakl_Ev_1");
+Frame K1;            FRM_FindFrame(K1, "la_kubelEv_1");
+Frame O1;           FRM_FindFrame(O1, "La_OpelE_1");
+Frame O2;            FRM_FindFrame(O2, "La_OpelE_5");
+Frame T1;           FRM_FindFrame(T1, "La_tigerEv_1");
+
+SetObjectiveStatus(1,0);
+}
+
+//-----------------------------------
+
+Whenever Heavy_Equipment_Destroyed (((((_Actor_GetState(H1)==0) And (_Actor_GetState(K1)==0)) And (_Actor_GetState(O1)==0)) And (_Actor_GetState(O2)==0)) And (_Actor_GetState(T1)==0))
+{
+Delay(1500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(16993207);
+SetObjectiveStatus(1, 1);
+Delay(3000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

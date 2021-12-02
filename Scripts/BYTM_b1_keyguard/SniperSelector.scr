@@ -1,0 +1,116 @@
+// Random Sniper Selector
+// -------------------------------------------------------
+
+Block
+{
+Frame S21;	FRM_FindFrame(S21,"02_S01");
+Frame S22;	FRM_FindFrame(S22,"02_S02");
+Frame S23;	FRM_FindFrame(S23,"02_S03");
+
+Frame S31;	FRM_FindFrame(S31,"03_S01");
+Frame S32;	FRM_FindFrame(S32,"03_S02");
+Frame S33;	FRM_FindFrame(S33,"03_S03");
+Frame S34;	FRM_FindFrame(S34,"03_S04");
+Frame S35;	FRM_FindFrame(S35,"03_S05");
+
+Frame S41;	FRM_FindFrame(S41,"04_S01");
+Frame S42;	FRM_FindFrame(S42,"04_S02");
+Frame S43;	FRM_FindFrame(S43,"04_S03");
+Frame S44;	FRM_FindFrame(S44,"04_S04");
+Frame S45;	FRM_FindFrame(S45,"04_S05");
+Frame S46;	FRM_FindFrame(S46,"04_S06");
+Frame S47;	FRM_FindFrame(S47,"04_S07");
+
+Frame S51;	FRM_FindFrame(S51,"05_S01");
+Frame S52;	FRM_FindFrame(S52,"05_S02");
+Frame S53;	FRM_FindFrame(S53,"05_S03");
+Frame S54;	FRM_FindFrame(S54,"05_S04");
+Frame S55;	FRM_FindFrame(S55,"05_S05");
+Frame S56;	FRM_FindFrame(S56,"05_S06");
+Frame S57;	FRM_FindFrame(S57,"05_S07");
+
+Frame S61;	FRM_FindFrame(S61,"06_S01");
+Frame S62;	FRM_FindFrame(S62,"06_S02");
+
+Frame S71;	FRM_FindFrame(S71,"07_S01");
+Frame S72;	FRM_FindFrame(S72,"07_S02");
+
+Integer SniperSelect;
+		SniperSelect = _RandomInt(10);
+		
+	If (SniperSelect == 0)
+	{
+	SendSignal(S21, 1);SendSignal(S23, 1);SendSignal(S31, 1);SendSignal(S33, 1);SendSignal(S42, 1);
+	SendSignal(S44, 1);SendSignal(S52, 1);SendSignal(S53, 1);SendSignal(S62, 1);SendSignal(S56, 1);
+	SendSignal(S71, 1);SendSignal(S45, 1);SendSignal(S46, 1);
+	}
+	
+	If (SniperSelect == 1)
+	{
+	SendSignal(S21, 1);SendSignal(S22, 1);SendSignal(S31, 1);SendSignal(S41, 1);SendSignal(S43, 1);
+	SendSignal(S51, 1);SendSignal(S52, 1);SendSignal(S62, 1);SendSignal(S34, 1);SendSignal(S72, 1);
+	SendSignal(S47, 1);
+	}
+	
+	If (SniperSelect == 2)
+	{
+	SendSignal(S22, 1);SendSignal(S23, 1);SendSignal(S32, 1);SendSignal(S43, 1);SendSignal(S42, 1);
+	SendSignal(S52, 1);SendSignal(S55, 1);SendSignal(S61, 1);SendSignal(S57, 1);SendSignal(S72, 1);
+	SendSignal(S45, 1);SendSignal(S46, 1);
+	}
+	
+	If (SniperSelect == 3)
+	{
+	SendSignal(S21, 1);SendSignal(S23, 1);SendSignal(S31, 1);SendSignal(S32, 1);SendSignal(S45, 1);
+	SendSignal(S42, 1);SendSignal(S51, 1);SendSignal(S53, 1);SendSignal(S61, 1);SendSignal(S56, 1);
+	SendSignal(S47, 1);
+	}
+	
+	If (SniperSelect == 4)
+	{
+	SendSignal(S22, 1);SendSignal(S23, 1);SendSignal(S32, 1);SendSignal(S42, 1);SendSignal(S44, 1);
+	SendSignal(S41, 1);SendSignal(S52, 1);SendSignal(S55, 1);SendSignal(S62, 1);SendSignal(S61, 1);
+	SendSignal(S35, 1);SendSignal(S71, 1);SendSignal(S45, 1);SendSignal(S46, 1);
+	}
+	
+	If (SniperSelect == 5)
+	{
+	SendSignal(S21, 1);SendSignal(S23, 1);SendSignal(S31, 1);SendSignal(S34, 1);SendSignal(S42, 1);
+	SendSignal(S44, 1);SendSignal(S43, 1);SendSignal(S52, 1);SendSignal(S53, 1);SendSignal(S62, 1);
+	SendSignal(S61, 1);SendSignal(S47, 1);
+	}
+	
+	If (SniperSelect == 6)
+	{
+	SendSignal(S21, 1);SendSignal(S31, 1);SendSignal(S43, 1);SendSignal(S44, 1);SendSignal(S51, 1);
+	SendSignal(S62, 1);SendSignal(S56, 1);SendSignal(S35, 1);SendSignal(S72, 1);SendSignal(S71, 1);
+	SendSignal(S46, 1);
+	}
+	
+	If (SniperSelect == 7)
+	{
+	SendSignal(S23, 1);SendSignal(S32, 1);SendSignal(S41, 1);SendSignal(S44, 1);SendSignal(S52, 1);
+	SendSignal(S61, 1);SendSignal(S57, 1);SendSignal(S34, 1);SendSignal(S71, 1);SendSignal(S45, 1);
+	SendSignal(S47, 1);
+	}
+	
+	If (SniperSelect == 8)
+	{
+	SendSignal(S22, 1);SendSignal(S31, 1);SendSignal(S32, 1);SendSignal(S42, 1);SendSignal(S45, 1);
+	SendSignal(S51, 1);SendSignal(S52, 1);SendSignal(S53, 1);SendSignal(S61, 1);SendSignal(S57, 1);
+	SendSignal(S35, 1);SendSignal(S72, 1);SendSignal(S46, 1);
+	}
+	
+	If (SniperSelect == 9)
+	{
+	SendSignal(S22, 1);SendSignal(S21, 1);SendSignal(S32, 1);SendSignal(S44, 1);SendSignal(S45, 1);
+	SendSignal(S51, 1);SendSignal(S52, 1);SendSignal(S53, 1);SendSignal(S61, 1);SendSignal(S62, 1);
+	SendSignal(S56, 1);SendSignal(S33, 1);SendSignal(S71, 1);SendSignal(S47, 1);
+	}
+	
+EndScript();
+}
+
+
+
+

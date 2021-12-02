@@ -1,0 +1,43 @@
+// Spawnzones
+//----------------------------------------------
+
+Whenever On (_SignalReceived(3))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone4", 1);
+MP_EnableSpawnZone("zone5", 1);
+MP_EnableSpawnZone("zone6", 1);
+MP_EnableSpawnZone("zone9", 0);
+Delay(5000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Start (_SignalReceived(2))
+{
+SetWhenever(On, 1);
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Start, 1);
+MP_EnableSpawnZone("zone9", 1);
+goto END;
+}
+
+//-----------------------------
+
+SetWhenever(On, 0);
+SetWhenever(Start, 0);
+goto END;
+
+Label END:
+
+
+
+
+
+

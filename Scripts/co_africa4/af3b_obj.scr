@@ -1,0 +1,78 @@
+// AF3a_obj - objectives detector
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+SetObjectiveStatus(1, 0);			// enemies defeated
+SetObjectiveStatus(2, 0);			// protect car
+
+Frame E01;	FRM_FindFrame(E01,"AF3b_01");
+Frame E02;	FRM_FindFrame(E02,"AF3b_02");
+Frame E03;	FRM_FindFrame(E03,"AF3b_03");
+Frame E04;	FRM_FindFrame(E04,"AF3b_04");
+Frame E05;	FRM_FindFrame(E05,"AF3b_05");
+Frame E06;	FRM_FindFrame(E06,"AF3b_06");
+Frame E07;	FRM_FindFrame(E07,"AF3b_07");
+Frame E08;	FRM_FindFrame(E08,"AF3b_08");
+Frame E09;	FRM_FindFrame(E09,"AF3b_09");
+Frame E10;	FRM_FindFrame(E10,"AF3b_10");
+Frame E11;	FRM_FindFrame(E11,"AF3b_11");
+Frame E12;	FRM_FindFrame(E12,"AF3b_12");
+Frame E13;	FRM_FindFrame(E13,"AF3b_13");
+Frame E14;	FRM_FindFrame(E14,"AF3b_14");
+Frame E15;	FRM_FindFrame(E15,"AF3b_15");
+Frame E16;	FRM_FindFrame(E16,"AF3b_16");
+Frame E17;	FRM_FindFrame(E17,"AF3b_17");
+Frame E18;	FRM_FindFrame(E18,"AF3b_18");
+Frame E19;	FRM_FindFrame(E19,"AF3b_19");
+Frame E20;	FRM_FindFrame(E20,"AF3b_20");
+Frame E21;	FRM_FindFrame(E21,"AF3b_21");
+Frame E22;	FRM_FindFrame(E22,"AF3b_22");
+Frame E23;	FRM_FindFrame(E23,"AF3b_23");
+Frame E24;	FRM_FindFrame(E24,"AF3b_24");
+Frame E25;	FRM_FindFrame(E25,"AF3b_25");
+Frame E26;	FRM_FindFrame(E26,"AF3b_26");
+Frame E27;	FRM_FindFrame(E27,"AF3b_27");
+Frame E28;	FRM_FindFrame(E28,"AF3b_28");
+Frame E29;	FRM_FindFrame(E29,"AF3b_29");
+Frame E30;	FRM_FindFrame(E30,"AF3b_30");
+Frame E31;	FRM_FindFrame(E31,"AF3b_31");
+Frame E32;	FRM_FindFrame(E32,"AF3b_32");
+Frame E33;	FRM_FindFrame(E33,"AF3b_33");
+}
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1){
+SendSignal(E01, 22);SendSignal(E02, 22);SendSignal(E03, 22);SendSignal(E04, 22);
+SendSignal(E05, 22);SendSignal(E06, 22);SendSignal(E07, 22);SendSignal(E08, 22);
+SendSignal(E09, 22);SendSignal(E10, 22);SendSignal(E11, 22);SendSignal(E12, 22);
+SendSignal(E13, 22);SendSignal(E14, 22);SendSignal(E15, 22);SendSignal(E16, 22);
+SendSignal(E17, 22);SendSignal(E18, 22);SendSignal(E19, 22);SendSignal(E20, 22);
+SendSignal(E21, 22);SendSignal(E22, 22);SendSignal(E23, 22);SendSignal(E24, 22);
+SendSignal(E25, 22);SendSignal(E26, 22);SendSignal(E27, 22);SendSignal(E28, 22);
+SendSignal(E29, 22);SendSignal(E30, 22);SendSignal(E31, 22);SendSignal(E32, 22);
+SendSignal(E33, 22);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(08991607);	//"Retreat!  Retreat!"
+Delay(4000);
+SUBTITLES_SetOn(false);
+Delay(2000);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+
+Label obj1complete:
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(08991602);	//"OBJECTIVE ACCOMPLISHED: ENEMY ASSAULT REPELLED."
+Delay(3500);
+SUBTITLES_SetText(08991605);	//"OBJECTIVE ACCOMPLISHED: VEHICLE REMAINED UNDAMAGED."
+Delay(3500);
+SUBTITLES_SetOn(false);
+SetObjectiveStatus(1, 1);
+SetObjectiveStatus(2, 1);
+
+Label END:

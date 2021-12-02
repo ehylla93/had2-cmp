@@ -1,0 +1,47 @@
+// R3_E08
+
+block
+{
+SetAlarmType(1023,0);
+
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("R3_E08 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+Delay(3000);
+FRM_TeleportNearCheckpoint(MyFRM, "gap2_01", "");
+HUMAN_Suspend(0);
+HUMAN_Move("gap2_02");
+SetAlarmType(1023, 1);
+HUMAN_Move("gap2_03");
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

@@ -1,0 +1,66 @@
+    FRAME this;			FRM_GetMyFrame(this);
+    FRM_SwitchFaceTexture(this, "e_f079");
+HUMAN_SETMODE_Stand();
+HUMAN_Suspend(true);
+GoTo Guard;
+Whenever PIR (_PlayerInRange(200))
+	{
+	SetWhenever (PIR, false);
+	SetWhenever (PNIR, true);
+	HUMAN_Suspend(false);
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+	HUMAN_TurnAtNearestPlayer();
+	}
+
+Whenever PNIR (!_PlayerInRange(200))
+	{
+	SetWhenever (PNIR, false);
+	SetWhenever (PIR, true);
+	HUMAN_Suspend(true);
+	}
+
+
+OnAlarm()
+	{
+	HUMAN_SETMODE_Run();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETAIMODE_Defensive();
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SETMODE_Stand();
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+	GoTo Guard;
+	}
+
+OnCutscene(2)
+	{
+	HUMAN_Suspend(true);
+	}
+
+OnCutsceneDone(2)
+	{
+	}
+	
+Label Guard:
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+HUMAN_SETSIGHTRANGE(350);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponOnArm(false);
+HUMAN_Move("GE_128");
+HUMAN_Move("GE_129b");
+GoTo Guard;
+Label END:
+

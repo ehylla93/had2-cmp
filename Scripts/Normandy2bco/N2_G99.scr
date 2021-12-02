@@ -1,0 +1,76 @@
+// Ciha v trosce
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame k1;		FRM_FindFrame(k1,"G2_G01");
+Frame k2;		FRM_FindFrame(k2,"G2_G02");
+Frame k3;		FRM_FindFrame(k3,"G2_G03");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(k1, 1);
+SendSignal(k2, 1);
+SendSignal(k3, 1);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAt(k2);
+Delay(1000);
+SUBTITLES_SetOn(true);
+FRM_MorphSpeechDelayed(me, 90003059, 5, 30); //
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90003060, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90003061, 5, 30); //
+FRM_MorphSpeechDelayed(me, 90004033, 5, 30); // 
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 90004027, 5, 30); // 
+FRM_MorphSpeechDelayed(k1, 15993013, 5, 30); //
+Delay(200);
+SUBTITLES_SetOn(false);
+SendSignal(k1, 1);
+SendSignal(k2, 1);
+SendSignal(k3, 1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever player (_PlayerInRange(7))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETMODE_Crouch();
+HUMAN_SetOptimized(1);
+Delay(1000);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

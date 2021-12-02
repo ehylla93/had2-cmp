@@ -1,0 +1,59 @@
+// pobìží od vraku k protìjší stìnì
+
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red26_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(6)
+{
+  HUMAN_Suspend(False);
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETEVENTS(false);
+}
+
+Whenever near ( _PlayerInRange(7); )
+{			
+  HUMAN_SETEVENTS(true);
+}						
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_Stop();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("Red26_1");			
+  HUMAN_TurnAt(turn);
+  Delay(500);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 26: ", AIEvent);
+      HUMAN_SETMODE_Run();
+    }
+  HUMAN_SETMODE_Crouch();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

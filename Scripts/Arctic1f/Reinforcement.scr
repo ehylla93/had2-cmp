@@ -1,0 +1,50 @@
+// Enemy Reinforcements
+// ----------------------------------------------------
+
+Block
+{
+// ** HAKL 1 **
+
+Frame G01;	FRM_FindFrame(G01,"SF_G57");
+Frame G02;	FRM_FindFrame(G02,"SF_G58");
+Frame G03;	FRM_FindFrame(G03,"SF_G59");
+Frame G04;	FRM_FindFrame(G04,"SF_G60");
+Frame G05;	FRM_FindFrame(G05,"SF_G61");
+Frame G06;	FRM_FindFrame(G06,"SF_G62");
+
+// ** HAKL 2 **
+
+Frame G07;	FRM_FindFrame(G07,"SF_G63");
+Frame G08;	FRM_FindFrame(G08,"SF_G64");
+Frame G09;	FRM_FindFrame(G09,"SF_G65");
+Frame G10;	FRM_FindFrame(G10,"SF_G66");
+Frame G11;	FRM_FindFrame(G11,"SF_G67");
+Frame G12;	FRM_FindFrame(G12,"SF_G68");
+
+Frame SpZone;	FRM_FindFrame(SpZone,"Spawnzone2");
+
+SetWhenever(Hakler, 0);
+}
+
+// ----------------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Hakler, 1);
+goto END;
+}
+
+
+Whenever Hakler (_SignalReceived(2))
+{
+SendSignal(SpZone, 5);
+SendSignal(G01, 1);SendSignal(G02, 1);SendSignal(G03, 1);
+SendSignal(G04, 1);SendSignal(G05, 1);SendSignal(G06, 1);
+Delay(2000);
+SendSignal(G07, 1);SendSignal(G08, 1);SendSignal(G09, 1);
+SendSignal(G10, 1);SendSignal(G11, 1);SendSignal(G12, 1);
+EndScript();
+}
+
+
+Label END:

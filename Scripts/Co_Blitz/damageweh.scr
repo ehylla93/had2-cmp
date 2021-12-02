@@ -1,0 +1,212 @@
+//----------------------DamageWehicles----------------------
+Block
+{
+Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame weh1;		FRM_FindFrame(weh1,"panther1");
+Frame weh2;		FRM_FindFrame(weh2,"kubel1");
+Frame weh3;		FRM_FindFrame(weh3,"kubel2");
+Frame weh4;		FRM_FindFrame(weh4,"bmw1");
+Frame weh5;		FRM_FindFrame(weh5,"bmw2");
+Frame weh6;		FRM_FindFrame(weh6,"bmw3");
+Frame weh7;		FRM_FindFrame(weh7,"opel1");
+Frame weh8;		FRM_FindFrame(weh8,"opel2");
+Frame weh9;		FRM_FindFrame(weh9,"opel3");
+Frame weh10;	FRM_FindFrame(weh10,"opel4");
+Frame weh11;	FRM_FindFrame(weh11,"hakl1");
+Frame weh12;	FRM_FindFrame(weh12,"hakl2");
+Frame weh13;	FRM_FindFrame(weh13,"la_krupp_");
+Frame weh14;	FRM_FindFrame(weh14,"panther2");
+Frame weh15;	FRM_FindFrame(weh15,"panther3");
+Frame weh16;	FRM_FindFrame(weh16,"kubel3");
+Frame weh17;	FRM_FindFrame(weh17,"opel5");
+Frame weh18;	FRM_FindFrame(weh18,"opel6");
+Frame weh19;	FRM_FindFrame(weh19,"opel7");
+Frame weh20;	FRM_FindFrame(weh20,"opel8");
+Integer count;			count=0;
+Integer a2;				a2=0;
+Integer a3;				a3=0;
+Integer a4;				a4=0;
+Integer a5;				a5=0;
+Integer a6;				a6=0;
+Integer a7;				a7=0;
+Integer a8;				a8=0;
+Integer a9;				a9=0;
+Integer a10;			a10=0;
+Integer a11;			a11=0;
+Integer a12;			a12=0;
+Integer a13;			a13=0;
+Integer a14;			a14=0;
+Integer a15;			a15=0;
+Integer a16;			a16=0;
+integer rnd1;
+rnd1=(_randomint(6)+4);
+goto loop;
+}
+Whenever dmgweh (((((_Actor_GetState(weh1)==0) and (_Actor_GetState(weh11)==0)) and (_Actor_GetState(weh12)==0)) and (_Actor_GetState(weh14)==0)) and (_Actor_GetState(weh15)==0))
+{
+Delay(2500);
+SendSignal (obj,5);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993010);  //OBJECTIVE COMPLETED
+Delay(3000);
+SUBTITLES_SetOn(0);
+goto loop;
+}
+//2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 16, 17, 18, 19, 20
+label loop:
+Block
+{
+If(_Actor_GetState(weh2)==0)
+{
+If (a2==0)
+{
+count=count+1;
+a2=1;
+printf ("Counter - kubel 1 killed");
+}
+}
+If(_Actor_GetState(weh3)==0)
+{
+If (a3==0)
+{
+count=count+1;
+a3=1;
+printf ("Counter - kubel 2 killed");
+}
+}
+If(_Actor_GetState(weh4)==0)
+{
+If (a4==0)
+{
+count=count+1;
+a4=1;
+printf ("Counter - bmw 1 killed");
+}
+}
+If(_Actor_GetState(weh5)==0)
+{
+If (a5==0)
+{
+count=count+1;
+a5=1;
+printf ("Counter - bmw 2 killed");
+}
+}
+If(_Actor_GetState(weh6)==0)
+{
+If (a6==0)
+{
+count=count+1;
+a6=1;
+printf ("Counter - bmw 3 killed");
+}
+}
+If(_Actor_GetState(weh7)==0)
+{
+If (a7==0)
+{
+count=count+1;
+a7=1;
+printf ("Counter - opel 1 killed");
+}
+}
+If(_Actor_GetState(weh8)==0)
+{
+If (a8==0)
+{
+count=count+1;
+a8=1;
+printf ("Counter - opel 2 killed");
+}
+}
+If(_Actor_GetState(weh9)==0)
+{
+If (a9==0)
+{
+count=count+1;
+a9=1;
+printf ("Counter - opel 3 killed");
+}
+}
+If(_Actor_GetState(weh10)==0)
+{
+If (a10==0)
+{
+count=count+1;
+a10=1;
+printf ("Counter - opel 4 killed");
+}
+}
+If(_Actor_GetState(weh13)==0)
+{
+If (a11==0)
+{
+count=count+1;
+a11=1;
+printf ("Counter - krupp killed");
+}
+}
+If(_Actor_GetState(weh16)==0)
+{
+If (a12==0)
+{
+count=count+1;
+a12=1;
+printf ("Counter - kubel 3 killed");
+}
+}
+If(_Actor_GetState(weh17)==0)
+{
+If (a13==0)
+{
+count=count+1;
+a13=1;
+printf ("Counter - opel 5 killed");
+}
+}
+If(_Actor_GetState(weh18)==0)
+{
+If (a14==0)
+{
+count=count+1;
+a14=1;
+printf ("Counter - opel 6 killed");
+}
+}
+If(_Actor_GetState(weh19)==0)
+{
+If (a15==0)
+{
+count=count+1;
+a15=1;
+printf ("Counter - opel 7 killed");
+}
+}
+If(_Actor_GetState(weh20)==0)
+{
+If (a16==0)
+{
+count=count+1;
+a16=1;
+printf ("Counter - opel 8 killed");
+}
+}
+}
+If (count>rnd1)
+{
+Delay(2500);
+printf ("Wehicle Counter - signal to obj");
+SendSignal(obj, 10);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993010);  //OBJECTIVE COMPLETED
+Delay(3000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+delay(5000);
+
+goto loop;
+
+label END:

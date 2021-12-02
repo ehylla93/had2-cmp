@@ -1,0 +1,52 @@
+// C5_G12 - soldier at the sandbags
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(140, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_SETMODE_Stand();
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from C5_G03
+{
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_Move("C5_G12_01");
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f055");
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetAnim("%%sedimL", 200, 200, true);
+HUMAN_SetOptimized(2);
+
+Label end:

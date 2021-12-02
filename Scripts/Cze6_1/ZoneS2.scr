@@ -1,0 +1,295 @@
+// Countdown of dead enemies for Respawn No. 2
+// -------------------------------------------------------
+
+Block
+{
+Frame SpZone;	FRM_FindFrame(SpZone,"Spawnzones");
+
+Frame S01;		FRM_FindFrame(S01,"RC_G01");
+Integer Sn1;		Sn1 = 1;
+Frame S02;		FRM_FindFrame(S02,"RC_G02");
+Integer Sn2;		Sn2 = 1;
+Frame S03;		FRM_FindFrame(S03,"RC_G03");
+Integer Sn3;		Sn3 = 1;
+Frame S04;		FRM_FindFrame(S04,"RC_G04");
+Integer Sn4;		Sn4 = 1;
+Frame S05;		FRM_FindFrame(S05,"RC_G05");
+Integer Sn5;		Sn5 = 1;
+Frame S06;		FRM_FindFrame(S06,"RC_G06");
+Integer Sn6;		Sn6 = 1;
+Frame S07;		FRM_FindFrame(S07,"RC_G07");
+Integer Sn7;		Sn7 = 1;
+Frame S08;		FRM_FindFrame(S08,"A1_G08");
+Integer Sn8;		Sn8 = 1;
+Frame S09;		FRM_FindFrame(S09,"A1_G09");
+Integer Sn9;		Sn9 = 1;
+
+Frame S10;		FRM_FindFrame(S10,"B1_G10");
+Integer Sn10;		Sn10 = 1;
+Frame S11;		FRM_FindFrame(S11,"B1_G11");
+Integer Sn11;		Sn11 = 1;
+Frame S12;		FRM_FindFrame(S12,"B1_G12");
+Integer Sn12;		Sn12 = 1;
+Frame S13;		FRM_FindFrame(S13,"B1_G13");
+Integer Sn13;		Sn13 = 1;
+Frame S14;		FRM_FindFrame(S14,"B1_G14");
+Integer Sn14;		Sn14 = 1;
+Frame S15;		FRM_FindFrame(S15,"B1_G15");
+Integer Sn15;		Sn15 = 1;
+Frame S16;		FRM_FindFrame(S16,"B1_G16");
+Integer Sn16;		Sn16 = 1;
+Frame S17;		FRM_FindFrame(S17,"A1_G17");
+Integer Sn17;		Sn17 = 1;
+Frame S18;		FRM_FindFrame(S18,"A1_G18");
+Integer Sn18;		Sn18 = 1;
+Frame S19;		FRM_FindFrame(S19,"C1_G34");
+Integer Sn19;		Sn19 = 1;
+Frame S20;		FRM_FindFrame(S20,"C1_G35");
+Integer Sn20;		Sn20 = 1;
+
+Frame S21;		FRM_FindFrame(S21,"C1_G36");
+Integer Sn21;		Sn21 = 1;
+Frame S22;		FRM_FindFrame(S22,"C1_G37");
+Integer Sn22;		Sn22 = 1;
+
+Integer pocitac;
+	pocitac=0;
+}
+
+
+Label Enemy_Countdown:
+
+Block
+{
+If(Sn1 == 1)
+{
+
+If(_Actor_GetState(S01)==0)
+{	
+pocitac=pocitac+1;		
+Sn1=0;	
+}	
+}
+
+If(Sn2 == 1)
+{
+
+If(_Actor_GetState(S02)==0)
+{
+pocitac=pocitac+1;
+Sn2=0;
+}
+}
+
+If(Sn3 == 1)
+{
+
+If(_Actor_GetState(S03)==0)
+{
+pocitac=pocitac+1;
+Sn3=0;
+}
+}
+
+If(Sn4 == 1)
+{
+
+If(_Actor_GetState(S04)==0)
+{
+pocitac=pocitac+1;
+Sn4=0;
+}
+}
+
+If(Sn5 == 1)
+{
+
+If(_Actor_GetState(S05)==0)
+{
+pocitac=pocitac+1;Sn5=0;
+}
+}
+
+If(Sn6 == 1)
+{
+
+If(_Actor_GetState(S06)==0)
+{
+pocitac=pocitac+1;
+Sn6=0;
+}
+}
+
+If(Sn7 == 1)
+{
+
+If(_Actor_GetState(S07)==0)
+{
+pocitac=pocitac+1;
+Sn7=0;
+}
+}
+
+If(Sn8 == 1)
+{
+
+If(_Actor_GetState(S08)==0)
+{
+pocitac=pocitac+1;
+Sn8=0;
+}
+}
+
+If(Sn9 == 1)
+{
+
+If(_Actor_GetState(S09)==0)
+{
+pocitac=pocitac+1;
+Sn9=0;
+}
+}
+
+If(Sn10 == 1)
+{
+
+If(_Actor_GetState(S10)==0)
+{
+pocitac=pocitac+1;
+Sn10=0;
+}
+}
+
+If(Sn11 == 1)
+{
+
+If(_Actor_GetState(S11)==0)
+{
+pocitac=pocitac+1;
+Sn11=0;
+}
+}
+
+If(Sn12 == 1)
+{
+
+If(_Actor_GetState(S12)==0)
+{
+pocitac=pocitac+1;
+Sn12=0;
+}
+}
+
+If(Sn13 == 1)
+{
+
+If(_Actor_GetState(S13)==0)
+{
+pocitac=pocitac+1;
+Sn13=0;
+}
+}
+
+If(Sn14 == 1)
+{
+
+If(_Actor_GetState(S14)==0)
+{
+pocitac=pocitac+1;
+Sn14=0;
+}
+}
+
+If(Sn15 == 1)
+{
+
+If(_Actor_GetState(S15)==0)
+{
+pocitac=pocitac+1;
+Sn15=0;
+}
+}
+
+If(Sn16 == 1)
+{
+
+If(_Actor_GetState(S16)==0)
+{
+pocitac=pocitac+1;
+Sn16=0;
+}
+}
+
+If(Sn17 == 1)
+{
+
+If(_Actor_GetState(S17)==0)
+{
+pocitac=pocitac+1;
+Sn17=0;
+}
+}
+
+If(Sn18 == 1)
+{
+
+If(_Actor_GetState(S18)==0)
+{pocitac=pocitac+1;
+Sn18=0;
+}
+}
+
+If(Sn19 == 1)
+{
+
+If(_Actor_GetState(S19)==0)
+{
+pocitac=pocitac+1;
+Sn19=0;
+}
+}
+
+If(Sn20 == 1)
+{
+
+If(_Actor_GetState(S20)==0)
+{
+pocitac=pocitac+1;
+Sn20=0;
+}
+}
+
+If(Sn21 == 1)
+{
+
+If(_Actor_GetState(S21)==0)
+{
+pocitac=pocitac+1;
+Sn21=0;
+}
+}
+
+If(Sn22 == 1)
+{
+
+If(_Actor_GetState(S22)==0)
+{
+pocitac=pocitac+1;
+Sn22=0;
+}
+}
+
+}
+
+If (pocitac > 21)
+{
+Delay(1000);
+SendSignal(SpZone, 2);
+pocitac=0;
+EndScript();
+}
+
+goto Enemy_Countdown;
+
+
+Label End:

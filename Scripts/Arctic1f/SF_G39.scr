@@ -1,0 +1,75 @@
+// SF_G39 - Posila k Zatarasam (2),7
+// ------------------------------------------------
+
+Block
+{
+Frame Cil;	FRM_FindFrame(Cil,"Zatarasa10");
+Frame Cil2;	FRM_FindFrame(Cil2,"Zatarasa02");
+Frame Cp1;	FRM_FindFrame(Cp1,"Posily_Cp1");
+Frame Cp2;	FRM_FindFrame(Cp2,"Posily_Cp2");
+Frame Cp3;	FRM_FindFrame(Cp3,"Posily_Cp3");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f045");
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp3, 1);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAt(Cil2);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp3, 10);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Zombie();
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETHEARRANGE(85);
+HUMAN_TurnAt(Cil2);
+goto END;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(10);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

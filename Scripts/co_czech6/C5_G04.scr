@@ -1,0 +1,62 @@
+// C5_G04 - soldier defending German camp
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	Block
+	{
+	HUMAN_SETMODE_Run();
+	HUMAN_SETSIGHTRANGE(80);
+	DisableSignals(true);
+	}
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_BoardVehicle("Flak3", 1, 0);
+	HUMAN_SETSIGHTRANGE(200);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	DisableSignals(false);
+	}
+	GoTo end;
+}
+
+OnSignal(1)	// received from C5_G05
+{
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_BoardVehicle("Flak3", 1, 0);
+	HUMAN_SETSIGHTRANGE(200);
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+FRM_SwitchFaceTexture(me, "e_f039");
+}
+HUMAN_SetAnim("%%sedimL4", 200, 200, true);
+
+Label end:

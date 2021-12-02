@@ -1,0 +1,31 @@
+// Detector - looking for player in definned area
+
+frame Blue_10;	FRM_FindFrame(Blue_10, "Blue_10");
+frame Blue_11;	FRM_FindFrame(Blue_11, "Blue_11");
+//*//frame Blue_12;	FRM_FindFrame(Blue_12, "Blue_12");
+frame Blue_13;	FRM_FindFrame(Blue_13, "Blue_13");
+
+frame Blue_7;		FRM_FindFrame(Blue_7, "Blue_7");
+frame Blue_8;		FRM_FindFrame(Blue_8, "Blue_8");
+frame Blue_9;		FRM_FindFrame(Blue_9, "Blue_9");
+
+Whenever Det_10 (_PlayerInRange(6); )
+{
+Block
+  {
+    SendSignal(Blue_10,  10);
+    SendSignal(Blue_11,  10);
+//*//    SendSignal(Blue_12,  10);
+    SendSignal(Blue_13,  10);
+
+    SendSignal(Blue_7,  10);
+    SendSignal(Blue_8,  10);
+    SendSignal(Blue_9,  10);
+  }
+}
+
+SetWhenever(Det_10, False);
+OnSignal(10)				// od OBJ - zpáteèní cesta
+{
+  SetWhenever(Det_10, True);
+}

@@ -1,0 +1,61 @@
+// Lezi v trosce u Tigra (La_tiger_4) se zb26
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame r1;		FRM_FindFrame(r1,"Runne1");
+Frame r2;		FRM_FindFrame(r2,"Runne2");
+Frame r3;		FRM_FindFrame(r3,"Runne3");
+Frame r4;		FRM_FindFrame(r4,"Runne4");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(r1, 1);
+SendSignal(r2, 1);
+SendSignal(r3, 1);
+SendSignal(r4, 1);
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(35))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(True, 5);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETMODE_Lie();
+HUMAN_SetOptimized(1);
+Delay(1000);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

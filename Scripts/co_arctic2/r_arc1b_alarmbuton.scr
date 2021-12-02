@@ -1,0 +1,27 @@
+Block
+{
+  Frame Global;	FRM_FindFrame(Global , "dummy_globalAlarm");
+  Frame hide;		FRM_FindFrame(hide , "m_alarm_.Cylinder01");
+  integer hidden = 0;
+}
+FRM_SetOn(hide, True);
+
+
+OnUse()
+{
+   SendSignal(Global, 2);
+   If ( hidden == 0 ) 
+      {
+          hidden = 1;
+          FRM_SetOn(hide, False);
+         } else {
+          hidden = 0;
+          FRM_SetOn(hide, True);
+      }
+}
+
+OnSignal(1)
+{
+   hidden = 1;
+   FRM_SetOn(hide, false);
+}

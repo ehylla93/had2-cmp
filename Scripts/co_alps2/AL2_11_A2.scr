@@ -1,0 +1,13 @@
+// AL2_11_A2 - second activator for AL2_11, AL2_08
+
+Block {
+Frame al2_08;	FRM_FindFrame(al2_08, "AL2_08");
+Frame al2_11;	FRM_FindFrame(al2_11, "AL2_11");
+}
+
+OnUse()
+{
+	Delay(500);
+	SendSignal(al2_08, 1);
+	SendSignal(al2_11, 2);
+}

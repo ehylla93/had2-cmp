@@ -1,0 +1,41 @@
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone11");
+Frame EG22;		FRM_FindFrame(EG22, "EG22");
+Frame EG23;		FRM_FindFrame(EG23, "EG23");
+Frame EG24;		FRM_FindFrame(EG24, "EG24");
+Frame EG25;		FRM_FindFrame(EG25, "EG25");
+Frame EH8;		FRM_FindFrame(EH8, "EH08");
+Frame EH9;		FRM_FindFrame(EH9, "EH09");
+Frame EH15;		FRM_FindFrame(EH15, "EH15");
+Frame EH16;		FRM_FindFrame(EH16, "EH16");
+Frame EDOC;		FRM_FindFrame(EDOC, "EDOC");
+Frame ESUB1;	FRM_FindFrame(ESUB1, "ESUB1");
+Frame ESUB2;	FRM_FindFrame(ESUB2, "ESUB2");
+Frame ESUB3;	FRM_FindFrame(ESUB3, "ESUB3");
+Frame ESUB4;	FRM_FindFrame(ESUB4, "ESUB4");
+Frame ESUB5;	FRM_FindFrame(ESUB5, "ESUB5");
+}
+Whenever Yes(_PlayerInBox(detect))
+{
+sendsignal (ESUB3,1);
+sendsignal (ESUB4,1);
+sendsignal (ESUB5,1);
+delay(500);
+sendsignal (EG22,1);
+sendsignal (EG23,1);
+sendsignal (EG24,1);
+sendsignal (EG25,1);
+delay(500);
+sendsignal (EH8,1);
+sendsignal (EH9,1);
+sendsignal (EH15,1);
+sendsignal (EH16,1);
+delay(500);
+sendsignal (EDOC,1);
+sendsignal (ESUB1,1);
+sendsignal (ESUB2,1);
+
+goto end;
+}
+label end:

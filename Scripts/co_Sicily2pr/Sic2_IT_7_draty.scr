@@ -1,0 +1,90 @@
+// IT_7 at device
+// -----------------------------
+
+block{
+Frame turn; 		FRM_FindFrame(turn, "dummy_it7_see");
+
+Frame box; 		FRM_FindFrame(box, "la_bedzb_");
+Frame me;	FRM_GetMyFrame(me);
+frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+Frame Officer;	FRM_FindFrame(Officer, "SF_G48");
+
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// -----------------------------
+
+OnDeath(){
+SendSignal(SAS1, 14);
+  EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 400, 400, false);
+HUMAN_SETMODE_Walk();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAnim("", 400, 400, false);
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetSniper(1, 5);
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+	Delay(27500);
+//	HUMAN_Suspend(0);
+      HUMAN_SetAnim("", 400, 400, false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_MoveToFrame(Officer, 2);
+	SendSignal(Officer, 2);
+	HUMAN_TurnAt(Officer);
+	Delay(1500);
+	FRM_MorphSpeechDelayed(me, 15993022, 5, 70);
+	Delay(300);
+	FRM_MorphSpeechDelayed(Officer, 15993008, 5, 70);
+	Delay(300);
+	FRM_MorphSpeechDelayed(me, 05991031, 5, 50);
+	Delay(200);
+	FRM_MorphSpeechDelayed(Officer, 15993018, 5, 70);
+	SendSignal(Officer, 3);
+	Delay(800); //200
+	FRM_MorphSpeech(me, 05991029, 5, 70);
+	HUMAN_MoveToFrame(box, 2);
+     HUMAN_TurnAt(turn);
+     Delay(400); 
+      HUMAN_SetAnim("%%nuda1", 400, 400, true);
+	goto END;
+}
+
+
+// -----------------------------
+
+    HUMAN_SetOptimized(1);
+    HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Defensive();
+//  HUMAN_SETSIGHTRANGE(200);
+//  HUMAN_SETHEARRANGE(100);
+ // HUMAN_TurnAt(investigat);
+  HUMAN_SetAnim("%%nuda1", 400, 400, true);
+  
+goto END;
+
+Label END:

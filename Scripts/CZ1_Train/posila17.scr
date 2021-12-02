@@ -1,0 +1,50 @@
+// posila17
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f024");
+}
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from suspend detektor2 whenever player in range 45
+{
+	Block
+	{
+	DisableSignals(true);
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_SETSIGHTRANGE(35);
+	HUMAN_SETHEARRANGE(40);
+	}
+	HUMAN_SetAnim("%%nudazed1", 200, 200, true);
+	HUMAN_SetOptimized(2);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Crouch();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+}

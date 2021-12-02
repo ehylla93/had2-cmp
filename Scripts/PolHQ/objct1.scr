@@ -1,0 +1,533 @@
+// Obj 1 - Eliminate all Enemies
+// -------------------------------------------------
+
+Block
+{
+Frame S01;		FRM_FindFrame(S01,"SF_G01");
+Integer Sn1;		Sn1 = 1;
+Frame S02;		FRM_FindFrame(S02,"SF_G02");
+Integer Sn2;		Sn2 = 1;
+Frame S03;		FRM_FindFrame(S03,"SF_G03");
+Integer Sn3;		Sn3 = 1;
+Frame S04;		FRM_FindFrame(S04,"SF_G04");
+Integer Sn4;		Sn4 = 1;
+Frame S05;		FRM_FindFrame(S05,"SF_G05");
+Integer Sn5;		Sn5 = 1;
+Frame S06;		FRM_FindFrame(S06,"SF_G06");
+Integer Sn6;		Sn6 = 1;
+Frame S07;		FRM_FindFrame(S07,"SF_G07");
+Integer Sn7;		Sn7 = 1;
+Frame S08;		FRM_FindFrame(S08,"SF_G08");
+Integer Sn8;		Sn8 = 1;
+Frame S09;		FRM_FindFrame(S09,"SF_G09");
+Integer Sn9;		Sn9 = 1;
+
+Frame S10;		FRM_FindFrame(S10,"SF_G10");
+Integer Sn10;		Sn10 = 1;
+Frame S11;		FRM_FindFrame(S11,"SF_G11");
+Integer Sn11;		Sn11 = 1;
+Frame S12;		FRM_FindFrame(S12,"SF_G12");
+Integer Sn12;		Sn12 = 1;
+Frame S13;		FRM_FindFrame(S13,"SF_G13");
+Integer Sn13;		Sn13 = 1;
+Frame S14;		FRM_FindFrame(S14,"SF_G14");
+Integer Sn14;		Sn14 = 1;
+Frame S15;		FRM_FindFrame(S15,"SF_G15");
+Integer Sn15;		Sn15 = 1;
+Frame S16;		FRM_FindFrame(S16,"SF_G16");
+Integer Sn16;		Sn16 = 1;
+Frame S17;		FRM_FindFrame(S17,"SF_G17");
+Integer Sn17;		Sn17 = 1;
+Frame S18;		FRM_FindFrame(S18,"SF_G18");
+Integer Sn18;		Sn18 = 1;
+Frame S19;		FRM_FindFrame(S19,"SF_G19");
+Integer Sn19;		Sn19 = 1;
+Frame S20;		FRM_FindFrame(S20,"SF_G20");
+Integer Sn20;		Sn20 = 1;
+
+Frame S21;		FRM_FindFrame(S21,"SF_G21");
+Integer Sn21;		Sn21 = 1;
+Frame S22;		FRM_FindFrame(S22,"SF_G22");
+Integer Sn22;		Sn22 = 1;
+Frame S23;		FRM_FindFrame(S23,"SF_G23");
+Integer Sn23;		Sn23 = 1;
+Frame S24;		FRM_FindFrame(S24,"SF_G24");
+Integer Sn24;		Sn24 = 1;
+Frame S25;		FRM_FindFrame(S25,"SF_G25");
+Integer Sn25;		Sn25 = 1;
+Frame S26;		FRM_FindFrame(S26,"SF_G26");
+Integer Sn26;		Sn26 = 1;
+Frame S27;		FRM_FindFrame(S27,"SF_G27");
+Integer Sn27;		Sn27 = 1;
+Frame S28;		FRM_FindFrame(S28,"SF_G28");
+Integer Sn28;		Sn28 = 1;
+Frame S29;		FRM_FindFrame(S29,"SF_G29");
+Integer Sn29;		Sn29 = 1;
+Frame S30;		FRM_FindFrame(S30,"SF_G30");
+Integer Sn30;		Sn30 = 1;
+
+Frame S31;		FRM_FindFrame(S31,"SF_G31");
+Integer Sn31;		Sn31 = 1;
+Frame S32;		FRM_FindFrame(S32,"SF_G32");
+Integer Sn32;		Sn32 = 1;
+Frame S33;		FRM_FindFrame(S33,"SF_G33");
+Integer Sn33;		Sn33 = 1;
+Frame S34;		FRM_FindFrame(S34,"SF_G34");
+Integer Sn34;		Sn34 = 1;
+Frame S35;		FRM_FindFrame(S35,"SF_G35");
+Integer Sn35;		Sn35 = 1;
+Frame S36;		FRM_FindFrame(S36,"SF_G36");
+Integer Sn36;		Sn36 = 1;
+Frame S37;		FRM_FindFrame(S37,"SF_G37");
+Integer Sn37;		Sn37 = 1;
+Frame S38;		FRM_FindFrame(S38,"SF_G38");
+Integer Sn38;		Sn38 = 1;
+Frame S39;		FRM_FindFrame(S39,"SF_G41");
+Integer Sn39;		Sn39 = 1;
+Frame S40;		FRM_FindFrame(S40,"SF_G42");
+Integer Sn40;		Sn40 = 1;
+Frame S41;		FRM_FindFrame(S41,"SF_G43");
+Integer Sn41;		Sn41 = 1;
+
+Frame DZ;		FRM_FindFrame(DZ, "DropZone");
+Frame obj6;		FRM_FindFrame(obj6, "obj6");
+
+Integer pocitac;
+	pocitac=0;
+
+SetObjectiveStatus(1, 0);
+goto Enemy_Countdown;
+}
+
+
+Label Enemy_Countdown:
+
+Block
+{
+If(Sn1 == 1)
+{
+
+If(_Actor_GetState(S01)==0)
+{	
+pocitac=pocitac+1;		
+Sn1=0;	
+}	
+}
+
+If(Sn2 == 1)
+{
+
+If(_Actor_GetState(S02)==0)
+{
+pocitac=pocitac+1;
+Sn2=0;
+}
+}
+
+If(Sn3 == 1)
+{
+
+If(_Actor_GetState(S03)==0)
+{
+pocitac=pocitac+1;
+Sn3=0;
+}
+}
+
+If(Sn4 == 1)
+{
+
+If(_Actor_GetState(S04)==0)
+{
+pocitac=pocitac+1;
+Sn4=0;
+}
+}
+
+If(Sn5 == 1)
+{
+
+If(_Actor_GetState(S05)==0)
+{
+pocitac=pocitac+1;Sn5=0;
+}
+}
+
+If(Sn6 == 1)
+{
+
+If(_Actor_GetState(S06)==0)
+{
+pocitac=pocitac+1;
+Sn6=0;
+}
+}
+
+If(Sn7 == 1)
+{
+
+If(_Actor_GetState(S07)==0)
+{
+pocitac=pocitac+1;
+Sn7=0;
+}
+}
+
+If(Sn8 == 1)
+{
+
+If(_Actor_GetState(S08)==0)
+{
+pocitac=pocitac+1;
+Sn8=0;
+}
+}
+
+If(Sn9 == 1)
+{
+
+If(_Actor_GetState(S09)==0)
+{
+pocitac=pocitac+1;
+Sn9=0;
+}
+}
+
+If(Sn10 == 1)
+{
+
+If(_Actor_GetState(S10)==0)
+{
+pocitac=pocitac+1;
+Sn10=0;
+}
+}
+
+If(Sn11 == 1)
+{
+
+If(_Actor_GetState(S11)==0)
+{
+pocitac=pocitac+1;
+Sn11=0;
+}
+}
+
+If(Sn12 == 1)
+{
+
+If(_Actor_GetState(S12)==0)
+{
+pocitac=pocitac+1;
+Sn12=0;
+}
+}
+
+If(Sn13 == 1)
+{
+
+If(_Actor_GetState(S13)==0)
+{
+pocitac=pocitac+1;
+Sn13=0;
+}
+}
+
+If(Sn14 == 1)
+{
+
+If(_Actor_GetState(S14)==0)
+{
+pocitac=pocitac+1;
+Sn14=0;
+}
+}
+
+If(Sn15 == 1)
+{
+
+If(_Actor_GetState(S15)==0)
+{
+pocitac=pocitac+1;
+Sn15=0;
+}
+}
+
+If(Sn16 == 1)
+{
+
+If(_Actor_GetState(S16)==0)
+{
+pocitac=pocitac+1;
+Sn16=0;
+}
+}
+
+If(Sn17 == 1)
+{
+
+If(_Actor_GetState(S17)==0)
+{
+pocitac=pocitac+1;
+Sn17=0;
+}
+}
+
+If(Sn18 == 1)
+{
+
+If(_Actor_GetState(S18)==0)
+{pocitac=pocitac+1;
+Sn18=0;
+}
+}
+
+If(Sn19 == 1)
+{
+
+If(_Actor_GetState(S19)==0)
+{
+pocitac=pocitac+1;
+Sn19=0;
+}
+}
+
+If(Sn20 == 1)
+{
+
+If(_Actor_GetState(S20)==0)
+{
+pocitac=pocitac+1;
+Sn20=0;
+}
+}
+
+If(Sn21 == 1)
+{
+
+If(_Actor_GetState(S21)==0)
+{
+pocitac=pocitac+1;
+Sn21=0;
+}
+}
+
+If(Sn22 == 1)
+{
+
+If(_Actor_GetState(S22)==0)
+{
+pocitac=pocitac+1;
+Sn22=0;
+}
+}
+
+If(Sn23 == 1)
+{
+
+If(_Actor_GetState(S23)==0)
+{
+pocitac=pocitac+1;
+Sn23=0;
+}
+}
+
+If(Sn24 == 1)
+{
+
+If(_Actor_GetState(S24)==0)
+{
+pocitac=pocitac+1;
+Sn24=0;
+}
+}
+
+If(Sn25 == 1)
+{
+
+If(_Actor_GetState(S25)==0)
+{
+pocitac=pocitac+1;
+Sn25=0;
+}
+}
+
+If(Sn26 == 1)
+{
+
+If(_Actor_GetState(S26)==0)
+{
+pocitac=pocitac+1;
+Sn26=0;
+}
+}
+
+If(Sn27 == 1)
+{
+
+If(_Actor_GetState(S27)==0)
+{
+pocitac=pocitac+1;
+Sn27=0;
+}
+}
+
+If(Sn28 == 1)
+{
+
+If(_Actor_GetState(S28)==0)
+{
+pocitac=pocitac+1;
+Sn28=0;
+}
+}
+
+If(Sn29 == 1)
+{
+
+If(_Actor_GetState(S29)==0)
+{
+pocitac=pocitac+1;
+Sn29=0;
+}
+}
+
+If(Sn30 == 1)
+{
+
+If(_Actor_GetState(S30)==0)
+{
+pocitac=pocitac+1;
+Sn30=0;
+}
+}
+
+If(Sn31 == 1)
+{
+
+If(_Actor_GetState(S31)==0)
+{
+pocitac=pocitac+1;
+Sn31=0;
+}
+}
+
+If(Sn32 == 1)
+{
+
+If(_Actor_GetState(S32)==0)
+{
+pocitac=pocitac+1;
+Sn32=0;
+}
+}
+
+If(Sn33 == 1)
+{
+
+If(_Actor_GetState(S33)==0)
+{
+pocitac=pocitac+1;
+Sn33=0;
+}
+}
+
+If(Sn34 == 1)
+{
+
+If(_Actor_GetState(S34)==0)
+{
+pocitac=pocitac+1;
+Sn34=0;
+}
+}
+
+If(Sn35 == 1)
+{
+
+If(_Actor_GetState(S35)==0)
+{
+pocitac=pocitac+1;
+Sn35=0;
+}
+}
+
+If(Sn36 == 1)
+{
+
+If(_Actor_GetState(S36)==0)
+{
+pocitac=pocitac+1;
+Sn36=0;
+}
+}
+
+If(Sn37 == 1)
+{
+
+If(_Actor_GetState(S37)==0)
+{
+pocitac=pocitac+1;
+Sn37=0;
+}
+}
+
+If(Sn38 == 1)
+{
+
+If(_Actor_GetState(S38)==0)
+{
+pocitac=pocitac+1;
+Sn38=0;
+}
+}
+
+If(Sn39 == 1)
+{
+
+If(_Actor_GetState(S39)==0)
+{
+pocitac=pocitac+1;
+Sn39=0;
+}
+}
+
+If(Sn40 == 1)
+{
+
+If(_Actor_GetState(S40)==0)
+{
+pocitac=pocitac+1;
+Sn40=0;
+}
+}
+
+If(Sn41 == 1)
+{
+
+If(_Actor_GetState(S41)==0)
+{
+pocitac=pocitac+1;
+Sn41=0;
+}
+}
+
+}
+
+If (pocitac > 40)
+{
+SendSignal(DZ, 1);
+SendSignal(obj6, 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05991005);
+Delay(3000);
+SetObjectiveStatus(1, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+goto Enemy_Countdown;
+
+
+Label END:

@@ -1,0 +1,161 @@
+// soldier inside house, upstairs
+
+block
+{
+SetAlarmType(1,1);			//Close shooting
+SetAlarmType(2,1);			//enemy shots
+SetAlarmType(4,0);			//hear steps (dosn't work for clients)
+SetAlarmType(8,0);			//action sounds
+SetAlarmType(16,1);			//explosions
+SetAlarmType(32,1);			//sighted
+SetAlarmType(64,1);			//is injured
+SetAlarmType(128,0);		//from script
+SetAlarmType(256,1);		//friendly shots
+SetAlarmType(512,0);		//sights corpse
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer a=0;
+integer b=0;
+Integer sus=0;
+
+frame sit;		Frm_FindFrame(sit,"hlidka_ohr_sit");
+frame cum1;		Frm_FindFrame(cum1,"naschodech1cum1");
+frame cum2;		Frm_FindFrame(cum2,"naschodech1cum2");
+frame cum3;		Frm_FindFrame(cum3,"naschodech1cum3");
+frame reinfo;	FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+Frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f042");
+
+HUMAN_SETMODE_Walk();
+}
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+
+//-------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+
+if (sus==0)
+	{
+	if (_PlayerInRange(10)==1)	
+	{
+	delay (2000);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	HUMAN_Suspend(0);
+	sus=1;
+	}
+
+if (aievent==4)
+{
+HUMAN_Stop();
+SetAlarmType(4,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+SetAlarmType(4,1);
+goto rozdel;
+}
+
+HUMAN_WeaponOnArm(1);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+SetAlarmType(274,1);
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+goto end;
+}
+
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+Whenever player(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+block
+{
+sus=1;
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+SetAlarmType(4,1);
+}
+
+a=2;
+label 2:
+HUMAN_Move("naschodech1_02");
+a=3;
+label 3:
+HUMAN_Move("naschodech1_03");
+a=4;
+label 4:
+HUMAN_Move("naschodech1_04");
+a=5;
+label 5:
+
+a=6;
+label kur:
+HUMAN_TurnAt(cum1);
+delay (8000);
+HUMAN_TurnAt(cum2);
+delay (8000);
+HUMAN_TurnAt(cum3);
+delay (10000);
+b=b+1;
+a=7;
+goto kur;
+
+label 7:
+HUMAN_Move("naschodech1_01");
+SetAlarmType(4,0);
+goto end;
+}
+
+label rozdel:
+if (a==2)	{ goto 2; }
+if (a==3)	{ goto 3; }
+if (a==4)	{ goto 4; }
+if (a==5)	{ goto 5; }
+if (a==6)	{ goto kur; }
+if (a==7)	{ goto 7; }
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

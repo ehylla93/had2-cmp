@@ -1,0 +1,75 @@
+Block
+  {
+     integer AIEvent;
+     integer Rubikon = 0;
+     frame see;		FRM_FindFrame(see, "dummy_Wood2_see");
+     frame MyFRM;	FRM_GetMyFrame(MyFRM);
+  
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SETMODE_Walk();
+     HUMAN_SetOptimized(1);
+     SetAlarmType(1023, False);
+     SetAlarmType(511, True);
+  }
+
+
+  HUMAN_Suspend(true);
+  Goto TheEnd;
+
+///////////////////////////////////// DOPLNIT posilani (po aktivaci OBJ)
+OnSignal(1)		
+{
+  HUMAN_Suspend(False);
+  Goto TheEnd;
+}
+
+
+OnAlarm()
+{
+  Block
+    {
+      DisableSignals(True);
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Wood 2: ", AIEvent);
+//      FORMATION_DelMember(MyFRM);			/// nefunguje ????
+    }
+  HUMAN_Stop();
+  EndScript();
+}
+
+OnSignal(5)
+{
+  Goto Dealarm;
+}
+
+OnAlarmDone()
+{
+Label Dealarm: 
+  DisableSignals(False);
+  SetAlarmType(1023, False);
+  SetAlarmType(511, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Run();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  if (Rubikon == 0) 
+     {
+        HUMAN_Move("PEVNY_BOD");		
+        Rubikon = 1;
+     }
+  HUMAN_Move("Wood2_DeAlarm"); 	
+  HUMAN_TurnAt(see);				
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

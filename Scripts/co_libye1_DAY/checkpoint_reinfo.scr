@@ -1,0 +1,62 @@
+// Lybie3- COOP
+// Zodpovida: TS+MF
+
+Block
+{
+    Frame   reinfo1;       FRM_FindFrame( reinfo1, "CHECKPOINT_REINF_1"  );
+    Frame   reinfo2;       FRM_FindFrame( reinfo2, "CHECKPOINT_REINF_2"  );
+    Frame   reinfo3;       FRM_FindFrame( reinfo3, "CHECKPOINT_REINF_3"  );
+    Frame   reinfo4;       FRM_FindFrame( reinfo4, "CHECKPOINT_REINF_4"  );
+    Frame   reinfo5;       FRM_FindFrame( reinfo5, "CHECKPOINT_REINF_5"  );
+    Frame   reinfo6;       FRM_FindFrame( reinfo6, "CHECKPOINT_REINF_6"  );
+	Frame N2_G01;		FRM_FindFrame(N2_G01,"N2_G01");
+    Frame N2_G02;		FRM_FindFrame(N2_G02,"N2_G02");
+    Frame N2_G03;		FRM_FindFrame(N2_G03,"N2_G03");
+    Frame N2_G04;		FRM_FindFrame(N2_G04,"N2_G04");
+    Frame N2_G05;		FRM_FindFrame(N2_G05,"N2_G05");
+}
+
+// -------------------------------------------------------------------------------------
+// Posily, vybihajici z baraku.
+// -------------------------------------------------------------------------------------
+Whenever "Checkpoint_Reinfo" (  _PlayerInRange(30) )
+{
+     EnableSignal( 1, 1 );  
+     GoTo Work;
+}
+
+
+
+// ------------------------------------------------------------------------------------
+// NEKTERY REINFO BYL ZABIT - ROZCHOD OSTATNI 
+// ------------------------------------------------------------------------------------
+EnableSignal( 1, 1 );
+OnSignal( 1 )
+{
+     Block
+     {		
+          EnableSignal( 1, 1 );  
+          SetWheneverTime(  "Checkpoint_Reinfo", 100000 ); // At se to uz netestuje
+     }
+     GoTo Work;
+}
+GoTo  End;
+
+Label  Work:
+    SendSignal(reinfo1, 1);
+    SendSignal(reinfo4, 1);
+    Delay(800); 
+    SendSignal(reinfo2, 1);
+    SendSignal(reinfo5, 1);
+    Delay(800); 
+    SendSignal(reinfo3, 1);
+    SendSignal(reinfo6, 1);
+	Delay(60000);
+	SendSignal(N2_G05, 1);
+    SendSignal(N2_G04, 1);
+	Delay(8000);
+    SendSignal(N2_G03, 1);
+    SendSignal(N2_G02, 1);
+	Delay(8000);
+    SendSignal(N2_G01, 1);
+Label End:

@@ -1,0 +1,47 @@
+
+block {
+Frame OBJ;		FRM_FindFrame(OBJ, "dummy_objectives");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame documents;
+
+  FRM_SetOn(MyFRM, False);
+  SetWhenever(X, false);
+  SetWhenever(LOST, False);
+  SetWhenever(FIND, False);
+}
+
+Whenever Near (_PlayerInRange(10))
+{
+  SetWhenever(X, True);
+}
+
+Whenever X (_MP_IsItemInTeamInventory(1, 254, documents))
+{
+  Block
+    {
+       SendSignal(OBJ, 24);  
+      SetWhenever(LOST, True);
+   }
+}
+
+Whenever LOST (!_MP_IsItemInTeamInventory(1, 254, documents))
+{
+  Block
+    {
+       SendSignal(OBJ, 25);  
+       SetWhenever(FIND, True);
+   }
+       SetInterfaceTimer(120000);
+       Delay(119900);
+       SendSignal(OBJ, 30);  
+}
+
+Whenever FIND (_MP_IsItemInTeamInventory(1, 254, documents))
+{
+  Block
+   {
+      SetInterfaceTimer(0);   
+      SendSignal(OBJ, 26);  
+      SetWhenever(LOST, True);
+   }
+}

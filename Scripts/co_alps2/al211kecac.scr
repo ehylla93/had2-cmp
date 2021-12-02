@@ -1,0 +1,46 @@
+//ovlada morph xichtu
+
+Block {
+Frame al2_11;		FRM_FindFrame(al2_11,"al2_11");
+Frame al2_12;		FRM_FindFrame(al2_12,"al2_12");
+}
+
+//-----------------------------------------------------------------------------------------------
+
+Whenever 1(_SignalReceived(1))
+{
+FRM_MorphSpeechDelayed(al2_11, 15993012,5,20);		//"You need to arrange the folders carefully and write down their numbers."
+delay (100);
+SendSignal (al2_11,6);
+FRM_MorphSpeechDelayed(al2_12, 15993013,5,20);
+delay (100);
+SendSignal (al2_11,5);
+FRM_MorphSpeechDelayed(al2_11, 15993014,5,20);
+delay (100);
+SendSignal (al2_11,6);
+FRM_MorphSpeechDelayed(al2_12, 15993015,5,20);
+delay (100);
+SendSignal (al2_11,5);
+FRM_MorphSpeechDelayed(al2_11, 15993016,5,20);
+delay (100);
+SendSignal (al2_11,6);
+FRM_MorphSpeechDelayed(al2_12, 15993017,5,20);
+delay (100);
+SendSignal (al2_11,5);
+FRM_MorphSpeechDelayed(al2_11, 15993018,5,20);
+delay (100);
+SendSignal ( al2_11,4);
+goto end;
+}
+
+Whenever 3(_SignalReceived(3))
+{
+DisableSignals(1);
+FRM_MorphSpeech(al2_11,0,0,0);
+FRM_MorphSpeech(al2_12,0,0,0);
+goto end;
+}
+
+label end:
+
+

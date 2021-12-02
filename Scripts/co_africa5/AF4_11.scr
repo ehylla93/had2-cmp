@@ -1,0 +1,66 @@
+// AF4_11 - flight tower radio operator
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME device;			FRM_FindFrame(device, "m_AF5_prisj19");
+  INTEGER Atype			= 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(100)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  block{
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(0);
+    SetWhenever(player, false);
+    Atype = _GetAlarmType();
+  }
+  HUMAN_SETMODE_Stand();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(512, false);
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(1);
+  goto ACTIVITY;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETMODE_Stand();
+goto END;
+
+Label ACTIVITY:
+  HUMAN_WeaponOnArm(true);
+  HUMAN_Move("AF4_14_01");
+  HUMAN_Move("AF4_14_02");
+  HUMAN_Move("AF4_14_03");
+  HUMAN_Move("AF4_14_04");
+  HUMAN_Move("AF4_14_05");
+goto ACTIVITY;
+
+Label END:

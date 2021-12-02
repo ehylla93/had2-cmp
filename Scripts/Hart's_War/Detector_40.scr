@@ -1,0 +1,30 @@
+//Object434
+//Object433
+// Frame Object434;		FRM_FindFrame(Object434,"Object434");
+// 	Flip LightMap Doors
+SetWhenever (PIR, true);
+SetWhenever (PNIR, true);
+Frame me;		FRM_GetMyFrame(me);
+Frame brana;		FRM_FindFrame(brana, "Object434");
+integer Door;		Door = 0;
+
+
+
+
+Whenever PIR (_PlayerInRange(2))
+	{
+	SetWhenever (PIR, false);
+	SetWhenever (PNIR, true);
+	SetActorState(brana,0);
+    DOOR_Lock(brana, 0);
+	Door = 0;
+	}
+
+Whenever PNIR (!_PlayerInRange(4))
+	{
+	SetWhenever (PNIR, false);
+	SetWhenever (PIR, true);
+	SetActorState(brana,1);	
+    DOOR_Lock(brana, 1);
+	Door = 1;
+	}

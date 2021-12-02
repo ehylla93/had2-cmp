@@ -1,0 +1,119 @@
+// SS_G06 - Reinforcement (Forest patrol)
+// ------------------------------------------------
+
+Block
+{
+Frame Cp;		FRM_FindFrame(Cp, "TVrak_01");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f020");
+
+Integer WaySelect;
+
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SETMODE_Run();
+HUMAN_SETSIGHTRANGE(130);
+HUMAN_SETHEARRANGE(150);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+goto Patrol;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+goto Patrol;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label Patrol:
+WaySelect = _RandomInt(4);
+
+If(WaySelect == 0)
+{
+HUMAN_MoveToFrame(Cp, 70);
+HUMAN_SETMODE_Walk();
+HUMAN_MoveToFrame(Cp, 35);
+HUMAN_TurnAtNearestPlayer();
+}
+
+If(WaySelect == 1)
+{
+HUMAN_MoveToFrame(Cp, 70);
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Lie();
+Delay(15000);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Cp, 20);
+HUMAN_TurnAtNearestPlayer();
+}
+
+If(WaySelect == 2)
+{
+HUMAN_MoveToFrame(Cp, 80);
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Lie();
+Delay(25000);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Cp, 50);
+HUMAN_TurnAtNearestPlayer();
+}
+
+If(WaySelect == 3)
+{
+HUMAN_MoveToFrame(Cp, 70);
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Lie();
+Delay(35000);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Cp, 50);
+HUMAN_TurnAtNearestPlayer();
+Delay(20000);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Cp, 60);
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(259,1);
+}
+
+goto Patrol;
+
+
+Label END:

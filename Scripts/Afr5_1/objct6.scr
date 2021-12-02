@@ -1,0 +1,21 @@
+// Obj 6 - Kill the commander of german garrison
+// -----------------------------------------------
+
+Block
+{
+Frame MSTGAD;		FRM_FindFrame(MSTGAD,"09_G103");
+
+SetObjectiveStatus(6, 0);
+}
+
+
+Whenever Gestapo_Dead (_Actor_GetState(MSTGAD) == 0)
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(54999611);
+Delay(3500);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

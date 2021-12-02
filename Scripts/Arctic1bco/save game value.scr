@@ -1,0 +1,7 @@
+integer num;
+
+num=_GetNumMembersOfClientTeam();
+
+SaveGameValue(1,num);
+
+

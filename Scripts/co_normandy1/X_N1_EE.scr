@@ -1,0 +1,15 @@
+// N1_EE - easter egg script
+
+Block {
+Frame n48;			FRM_FindFrame(n48, "N48");
+Integer bottles;	bottles=0;
+}
+
+OnSignal(1)	// received from broken bottle
+{
+	bottles=bottles+1;
+	If(bottles==10)
+	{
+		SendSignal(n48, 2);
+	}
+}

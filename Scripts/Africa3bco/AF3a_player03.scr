@@ -1,0 +1,130 @@
+// AF3a_spawn03	- player at spawn 03 (also cutscenescript)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME me;				FRM_GetMyFrame(me);
+  FRAME null;				FRM_FindFrame(null, "");
+  FRAME opel;				FRM_FindFrame(opel, "la_OpelAfK_01.Cylinder02");
+  FRAME cam_new;			FRM_FindFrame(cam_new, "cam_begin");
+  FRAME cam_new2;			FRM_FindFrame(cam_new2, "camera_new02");
+  FRAME cam_sold01;			FRM_FindFrame(cam_sold01, "camera_01");
+  FRAME cam_sold02;			FRM_FindFrame(cam_sold02, "camera_02");
+  FRAME cam_sold03;			FRM_FindFrame(cam_sold03, "camera_03");
+  FRAME cam_old;			FRM_GetActiveCamera(cam_old);
+  FRAME lookstart;			FRM_FindFrame(lookstart, "dummy_lookstart");
+  FRAME fader;			FRM_FindFrame(fader, "la_OpelAfK_01");
+  FRAME obj;				FRM_FindFrame(obj, "AF3a_obj");
+  FRAME mesita;			FRM_FindFrame(mesita, "MINARET03");
+  FRAME soldier_01;			FRM_FindFrame(soldier_01, "AF3a_02.stand4");
+  FRAME soldier_02;			FRM_FindFrame(soldier_02, "AF3a_05");
+  FRAME soldier_03;			FRM_FindFrame(soldier_03, "AF3a_10");
+  FRAME pl02;				FRM_FindFrame(pl02, "_player_ 1");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+CSC_RunCutscene(1); 
+Delay(200);
+
+OnCutscene(1){
+  HUMAN_SETMODE_Walk();
+  SUBTITLES_SetOn(true);
+  Delay(500);
+  HUMAN_TurnAt(opel);
+  Delay(500);
+  HUMAN_WeaponOnArm(false);
+
+  Delay(300);
+  FRM_SetCameraFrame(me);
+  FRM_SetActiveCamera(cam_new);
+
+  Delay(300);
+
+  HUMAN_SetAnim("!manipul1", 500, 500, false);
+  Delay(200);
+  CSC_FadeIn(200);
+  Delay(5000);
+  HUMAN_SetAnim("", 500, 500, false);
+  Delay(500);
+
+  CSC_FadeOut(100);
+  Delay(100);
+  FRM_SetActiveCamera(cam_new2);
+  CSC_FadeIn(100);
+  HUMAN_SetAnim("(teplous", 500, 500, false);
+  SUBTITLES_SetText(07011401);
+  Delay(1700);
+  HUMAN_SetAnim("", 500, 500, false);
+  Delay(500);
+  HUMAN_SetAnim("%%kopkamen", 500, 500, false);
+  Delay(2000);
+  HUMAN_SetAnim("", 500, 500, false);
+  Delay(500);
+
+  CSC_FadeOut(200);					// camera watching walking soldier
+  //Delay(300);
+  FRM_SetCameraFrame(me);
+  FRM_SetActiveCamera(cam_new);
+  CSC_FadeIn(200);
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetAnim("", 500, 500, false);
+  HUMAN_Move("player_10");
+  //SendSignal(pl02, 3);
+  //HUMAN_WeaponOnArm(true);
+
+  Delay(1500);
+
+  CSC_FadeOut(200);					// rotate camera round the mosque
+  Delay(300);
+  FRM_WatchTrack(cam_new, "mosque_track");
+  FRM_SetCameraFrame(mesita);
+  CSC_FadeIn(200);
+  Delay(1000);
+  SUBTITLES_SetText(07011402);
+  Delay(4000);
+
+  CSC_FadeOut(200);					// fade to soldier 01
+  Delay(300);
+  FRM_WatchTrack(cam_sold01, "sold_track01");
+  FRM_SetCameraFrame(soldier_01);
+  FRM_SetActiveCamera(cam_sold01);
+  CSC_FadeIn(200);
+  SUBTITLES_SetText(07011403);
+  Delay(2500);
+
+  CSC_FadeOut(100);					// fade to soldier 03
+  Delay(200);
+//  FRM_WatchTrack(cam_sold03, "sold_track03");
+  FRM_SetCameraFrame(null);
+  FRM_SetActiveCamera(cam_sold03);
+  CSC_FadeIn(100);
+  Delay(3000);
+
+  CSC_FadeOut(100);					// fade to soldier 02
+  Delay(200);
+//  FRM_WatchTrack(cam_sold02, "sold_track02");
+//  FRM_SetCameraFrame(soldier_02);
+  FRM_SetActiveCamera(cam_sold02);
+  CSC_FadeIn(100);
+  Delay(3000);
+
+  CSC_FadeOut(200);					// fade to player
+  Delay(300);
+  FRM_SetCameraFrame(null);
+//  FRM_SetActiveCamera(cam_old);
+  //HUMAN_TurnAt(lookstart);
+  CSC_EndCutscene();
+}
+
+OnCutsceneDone(1){
+  SUBTITLES_SetOn(false);
+  FRM_SetCameraFrame(null);
+  HUMAN_SetAnim("", 0, 0, false);
+//  FRM_TeleportNearCheckpoint(me, "player_10", "lookstart");
+//  HUMAN_TurnAt(lookstart);
+  CSC_FadeIn(200);
+//  Delay(200);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------

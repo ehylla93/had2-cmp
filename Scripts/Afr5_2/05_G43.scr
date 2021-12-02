@@ -1,0 +1,301 @@
+// 05_G43 - Waits for command
+// -----------------------------------------------------
+
+Block
+{
+	Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+	Frame Officer;	FRM_FindFrame(Officer, "05_G48");
+	Frame Comm;		FRM_FindFrame(Comm, "07_G77");
+	Frame Opel;		FRM_FindFrame(Opel, "07_Opel");
+	Frame me;		FRM_GetMyFrame(me);
+
+	SetAlarmType(1,1); //blizka strelba
+	SetAlarmType(2,1); //slysim strelbu
+	SetAlarmType(4,0); //kroky
+	SetAlarmType(8,0); //zvuky by use
+	SetAlarmType(16,1); //exploze
+	SetAlarmType(32,0); //vidi
+	SetAlarmType(64,1); //jsem zranen
+	SetAlarmType(128,1); //zeskriptu
+	SetAlarmType(256,1); //pratelska strelba
+	SetAlarmType(512,1); //vidim flakotu
+
+	FRM_SwitchFaceTexture(me,"e_f043");
+
+	Integer SpSelect;
+	Integer AIEvent;
+	Integer AIStyle;
+
+	HUMAN_SETSIGHTRANGE(110);
+	HUMAN_SETHEARRANGE(100);
+	HUMAN_SetOptimized(1);
+	HUMAN_Suspend(1);
+	SetWhenever(Player_Stencl, 0);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+	SendSignal(Reinf, 3);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETSIGHTRANGE(265);
+	HUMAN_SETHEARRANGE(80);
+	AIEvent = _GetAlarmType();
+	AIStyle = _RandomInt(2);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETMODE_Run();
+
+	If(AIStyle == 0)
+	{
+		HUMAN_SETMODE_Stand();
+	}
+
+	Else
+	{
+		HUMAN_SETMODE_Crouch();
+	}
+}
+
+If((AIEvent == 4) OR (AIEvent == 8))
+{
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Run();
+
+	If(AIStyle == 0)
+	{
+		HUMAN_SETMODE_Stand();
+	}
+
+	Else
+	{
+		HUMAN_SETMODE_Crouch();
+	}
+}
+
+If(AIEvent == 32)
+{
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETMODE_Run();
+}
+
+If(AIEvent == 64)
+{
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_SETMODE_Lie();
+	HUMAN_SETMODE_Run();
+}
+
+If(AIEvent == 256)
+{
+	HUMAN_SETMODE_Walk();
+
+	If(AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Defensive();
+		HUMAN_SETMODE_Lie();
+	}
+
+	Else
+	{
+		HUMAN_SETAIMODE_Zombie();
+		HUMAN_SETMODE_Crouch();
+	}
+}
+
+If(AIEvent == 512)
+{
+	HUMAN_SETMODE_Silence();
+	HUMAN_SETMODE_Crouch();
+
+	If(AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	Else
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETHEARRANGE(180);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETMODE_Run();
+	goto END;
+}
+
+Whenever Player_Stencl (_MP_IsTeamMemberInRange(1, 2))
+{
+	SpSelect = _RandomInt(100);
+
+	If (SpSelect == 0)
+	{
+		HUMAN_Stop();
+		HUMAN_SetAnim("", 1000, 1000, 1);
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		Delay(400);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90002134, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeech(me, 90004028, 5, 30);
+		SetAlarmType(44,1);
+		HUMAN_TurnAtNearestPlayer();
+	}
+
+	If (SpSelect == 1)
+	{
+		HUMAN_Stop();
+		HUMAN_SetAnim("", 1000, 1000, 1);
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		Delay(400);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90004056, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeech(me, 90004029, 5, 30);
+		SetAlarmType(44,1);
+		HUMAN_TurnAtNearestPlayer();
+	}
+	
+	If (SpSelect == 2)
+	{
+		HUMAN_Stop();
+		HUMAN_SetAnim("", 1000, 1000, 1);
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		Delay(400);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90004059, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90004060, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		Delay(300);
+		FRM_MorphSpeech(me, 90004061, 5, 30);
+		SetAlarmType(44,1);
+		HUMAN_TurnAtNearestPlayer();
+	}
+	
+	If (SpSelect == 3)
+	{
+		HUMAN_Stop();
+		HUMAN_SetAnim("", 1000, 1000, 1);
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		Delay(400);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90004067, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		Delay(100);
+		FRM_MorphSpeech(me, 90004007, 5, 30);
+		SetAlarmType(44,1);
+		HUMAN_TurnAtNearestPlayer();
+	}
+	
+	If (SpSelect == 4)
+	{
+		HUMAN_Stop();
+		HUMAN_SetAnim("", 1000, 1000, 1);
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		Delay(400);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90004039, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		Delay(100);
+		FRM_MorphSpeech(me, 90004022, 5, 30);
+		SetAlarmType(44,1);
+		HUMAN_TurnAtNearestPlayer();
+	}
+
+	If (SpSelect == 5)
+	{
+		HUMAN_Stop();
+		HUMAN_SetAnim("", 1000, 1000, 1);
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		Delay(400);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90004058, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		Delay(100);
+		FRM_MorphSpeech(me, 90004006, 5, 30);
+		SetAlarmType(44,1);
+		HUMAN_TurnAtNearestPlayer();
+	}
+	
+	If (SpSelect == 6)
+	{
+		HUMAN_Stop();
+		HUMAN_SetAnim("", 1000, 1000, 1);
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		Delay(400);
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(me, 90001330, 5, 30);
+		HUMAN_TurnAtNearestPlayer();
+		Delay(100);
+		FRM_MorphSpeechDelayed(me, 90004034, 5, 30);
+		FRM_MorphSpeech(me, 15993021, 5, 30);
+		SetAlarmType(44,1);
+		HUMAN_TurnAtNearestPlayer();
+	}
+	
+	goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+	HUMAN_Suspend(0);
+	HUMAN_SETMODE_Walk();
+	HUMAN_MoveToFrame(Officer, 2);
+	SendSignal(Officer, 2);
+	HUMAN_TurnAt(Officer);
+	Delay(1500);
+	FRM_MorphSpeechDelayed(me, 15993022, 5, 70);
+	Delay(300);
+	FRM_MorphSpeechDelayed(Officer, 15993008, 5, 70);
+	Delay(300);
+	FRM_MorphSpeechDelayed(me, 15993013, 5, 50);
+	Delay(200);
+	FRM_MorphSpeechDelayed(Officer, 15993018, 5, 70);
+	SendSignal(Officer, 3);
+	Delay(200);
+	FRM_MorphSpeech(me, 15993040, 5, 70);
+	goto END;
+}
+
+Whenever Go_to_Work (_SignalReceived(2))
+{
+	HUMAN_SETMODE_Walk();
+	SetWhenever(Player_Stencl, 1);
+	HUMAN_MoveToFrame(Comm, 5);
+	HUMAN_MoveToFrame(Opel, 7);
+	HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+	goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+	DisableAlarms(1);
+}
+
+
+Label END:

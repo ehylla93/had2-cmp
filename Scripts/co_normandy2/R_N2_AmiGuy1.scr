@@ -1,0 +1,43 @@
+
+Block {
+  Frame illF;		FRM_FindFrame(illF, "dummy_Amik1");              
+
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_SetOptimized(1);
+  SetAlarmType(1023, False);
+  }
+  
+HUMAN_Suspend(True);
+Goto TheEnd;
+
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+  
+    Delay(800);
+    HUMAN_Move("AMX_1");
+    HUMAN_SETMODE_Walk();
+    HUMAN_Move("AM12_2");
+    HUMAN_SETMODE_Crouch();
+    HUMAN_SETMODE_Run();
+    HUMAN_Move("AM1_3");
+    HUMAN_Move("AM1_4");
+    HUMAN_TurnAt(illF);
+    HUMAN_illFire(illF, 1500);
+    Delay(1500);
+    HUMAN_illFire(illF, 1700);
+    Delay(1500);
+    HUMAN_illFire(illF, 1900);
+    Delay(1500);
+    HUMAN_illFire(illF, 2500);
+    Delay(500);
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Label TheEnd:

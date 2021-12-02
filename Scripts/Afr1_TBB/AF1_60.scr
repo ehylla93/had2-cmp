@@ -1,0 +1,162 @@
+// AF1_60 (09)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME point;				FRM_FindFrame(point, "af1_dummy7");
+  FRAME af58;				FRM_FindFrame(af58, "af1_58");
+  FRAME af59;				FRM_FindFrame(af08, "af1_59");
+  INTEGER rndtime			= 0;
+  INTEGER Atype			= 0;
+  INTEGER atpos			= 0; 
+  INTEGER rnd				= 0;
+ 
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  goto ALERT;
+}
+
+OnDeath(){
+  printf("09: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(270)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  SetWhenever(player, false);
+  block{
+    SaveGameValue(89, 0);
+    SendSignal(af58, 10);
+    SendSignal(af59, 10);
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+  }
+  printfnumber("09: ", Atype);
+
+  if((Atype == 256) OR (Atype == 512)){
+    SetAlarmType(256, false);
+    SetAlarmType(512, false);
+    goto ALERT;
+  }
+
+  SendSignal(dummyalert, 1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1){
+//  printf("S tou delostreleckou podporou s vami souhlasim, ale posilat letectvo je sebevrazda");
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SetAIMode_Zombie();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SETAIMODE_Zombie();			// mel by byt Defensive ale nesmi se pohybovat
+  HUMAN_SETMODE_Stand();
+
+Label START:
+//  printf("09 >> now at START lbl");
+  gosub RND_ACTION;
+  Delay(200);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_TurnAt(af59);
+  GoSub RND_ACTION;
+  HUMAN_TurnAt(point);
+  Delay(300);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_TurnAt(af59);
+  GoSub RND_ACTION;
+goto START2;
+
+Label START2:
+//  printf("Nase jednotky jsou rozmistene tady a take tady");
+  HUMAN_TurnAt(point);
+  Delay(3000);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_ACTIVITY_Point(point);
+  HUMAN_TurnAt(af59);
+  Delay(2000);
+//  printf("Nepratelske vojska obsadili pozice priblizne v teto oblasti");
+  HUMAN_TurnAt(point);
+  Delay(3000);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_TurnAt(af59);
+//  printf("Navrhnite dalsi postup");
+  Delay(3000);
+  SendSignal(af58, 1);
+goto START;
+
+Label RND_ACTION:
+  rnd = _RandomInt(5);
+  rndtime = _RandomInt(3000) + 5000;
+  if(rnd == 0){
+    HUMAN_SetAnim("%%kecy1", 200, 200, false);
+    Delay(rndtime);
+   }
+  if(rnd == 1){
+    HUMAN_SetAnim("%%kecy2", 200, 200, false);
+    Delay(rndtime);
+  }
+  if(rnd == 2){
+    HUMAN_SetAnim("%%kecy3", 200, 200, false);
+    Delay(rndtime);
+  }
+  if(rnd == 3){
+    HUMAN_SetAnim("%%tabule", 200, 200, false);
+    Delay(6600);
+  }
+  if(rnd == 4){
+    HUMAN_SetAnim("%%tabule1", 200, 200, false);
+    Delay(4600);
+  }
+  HUMAN_SetAnim("", 200, 200, false);
+  Delay(200);
+return;
+
+Label ALERT:
+    if(!atpos){
+      HUMAN_SetAnim("", 100, 100, false);
+      Delay(100);
+      HUMAN_SetMODE_Crouch();
+      HUMAN_SETMODE_Run();
+      HUMAN_SetSniper(true, 1);
+      HUMAN_Move("AF1_09_alarm");
+      HUMAN_TurnAt(af07);
+      HUMAN_WeaponOnArm(true);
+      atpos = 1;
+  }
+  HUMAN_SetAlarm(false);
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(300);
+goto END;

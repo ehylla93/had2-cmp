@@ -1,0 +1,21 @@
+// Obj 3 - Destroy the Enemy RadioStation
+// ==========================================
+
+Block
+{
+
+SetObjectiveStatus(3,0);
+}
+
+//-----------------------------------
+
+OnDeath()
+{
+Delay(1500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999801);
+SetObjectiveStatus(3, 1);
+Delay(3000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

@@ -1,0 +1,50 @@
+// T5, 1
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd				= 0;
+  INTEGER firstalarm		= 0;
+
+  Frame tigr;		FRM_FindFrame(tigr,"La_tiger_5");
+  Frame opl;		FRM_FindFrame(opl,"Opel_01");
+  Frame posadka1;	FRM_FindFrame(posadka1,"C5_G84");
+  Frame posadka2;	FRM_FindFrame(posadka2,"tanke3");
+  Frame posadka3;	FRM_FindFrame(posadka3,"tanke2");
+
+  SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+HUMAN_Suspend(false);
+FRM_TeleportNearCheckpoint(tigr, "C5_isu_tele", "C5_isu01");
+FRM_TeleportNearCheckpoint(opl, "C5_kubel_tele", "C5_kubel01");
+SendSignal(posadka1, 2);
+SendSignal(posadka2, 2);
+SendSignal(posadka3, 3);
+HUMAN_BoardVehicle("La_tiger_5",  true, 0);
+HUMAN_Drive("C5_tank11", 10);
+goto END;
+}
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(true);
+Label END:

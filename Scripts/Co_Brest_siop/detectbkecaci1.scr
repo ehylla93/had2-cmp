@@ -1,0 +1,30 @@
+block
+{
+frame me;	FRM_GetMyFrame(me);
+Frame zb_mechanik2;	FRM_FindFrame (zb_mechanik2,"zb_mechanik2");
+Frame zb_dok2_1;	FRM_FindFrame (zb_dok2_1,"zb_dok2_1");
+SetWhenever(je,0);
+}
+
+OnSignal(1)
+{
+SetWhenever(je,1);
+goto end;
+}
+
+
+Whenever je(_PlayerInBox(me))
+{
+
+
+SendSignal (zb_mechanik2,2);
+SendSignal (zb_dok2_1,2);
+
+}
+
+
+SetWheneverTime(je, 200);
+
+
+
+label end:

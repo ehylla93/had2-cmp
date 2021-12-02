@@ -1,0 +1,33 @@
+// Lybie3- COOP
+// Zodpovida: TS+MF
+
+Block
+{   Frame __obj6_det2;		FRM_FindFrame(__obj6_det2,"__obj6_det2");
+     Frame   __artilery;   FRM_FindFrame( __artilery, "__artilery" );
+    Frame   radista;       FRM_FindFrame( radista, "CHECKPOINT_RADISTA"  );
+}
+
+// -------------------------------------------------------------------------------------
+// Hlaseni radisty.
+// -------------------------------------------------------------------------------------
+Whenever "Checkpoint_Radista" (  _PlayerInRange(35) )
+{
+   
+    SendSignal(__obj6_det2, 100);
+     DisableWhenevers( 1 );
+     Integer  rand = 1000 +  _RandomInt( 5000 );
+     Delay( rand );
+     SUBTITLES_SetOn( true );
+     printf("Zde kanec kanec, jsme napadeni Anglany. Zadam o podpurnou palbu na nase souradnice.");
+     SUBTITLES_SetText( 54990032 );
+     Delay ( 3000 );
+     SUBTITLES_SetText( 54990033 );
+     Delay ( 3000 );
+     SUBTITLES_SetOn( false );    
+     SendSignal ( radista, 1 );  
+	 
+	 
+     EndScript(); 
+}
+SetWheneverTime(  "Checkpoint_Radista", 1000 );
+

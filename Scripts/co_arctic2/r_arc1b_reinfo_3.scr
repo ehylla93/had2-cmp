@@ -1,0 +1,71 @@
+// Reinforcement 3
+
+Block {
+integer AIEvent;
+Frame FRM; 			FRM_GetMyFrame(FRM);
+Frame see;			FRM_FindFrame(see, "dummy_reinfo_3_see");
+frame alarm;		FRM_FindFrame(alarm, "dummy_GlobalAlarm");
+}
+
+HUMAN_SETEVENTS(false);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+  
+goto TheEnd;
+
+
+Whenever ACTIVE  ( _SignalReceived(1) )
+{
+goto wait_2;
+}
+
+  Label wait_2:
+    if (_PlayerInRange(10))
+      {
+        delay(5000);
+        goto wait_2;
+      }
+	else {
+		HUMAN_Suspend(false);
+		HUMAN_SETAIMODE_Defensive();
+		HUMAN_SETMODE_Walk();
+		HUMAN_SETEVENTS(true);
+		HUMAN_Move("Reinfo3");
+		HUMAN_TurnAt(see);
+		HUMAN_SETMODE_Crouch();
+		goto TheEnd;
+		}
+		
+OnAlarm()
+{
+  Block
+    {
+      DisableWhenevers(True);
+      AIEvent =_GetAlarmType(); 
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+If ( ((AIEvent != 4) AND (AIEvent != 8)) and (AIEvent != 128) )  
+    { SendSignal(alarm , 1);  }
+   HUMAN_Move("Reinfo3");
+   HUMAN_TurnAt(see);
+   HUMAN_SETMODE_Crouch();
+   DisableWhenevers(False);
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+label TheEnd:
+ 

@@ -1,0 +1,52 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	SAS7 potencionalni NPC spojenec - budto se prida, nebo se tvari ze bojuje a casem umira nebo je ranen 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+frame MyFRM;		FRM_GetMyFrame(MyFRM);
+frame Target_1;	FRM_FindFrame(Target_1, "Target7_1");
+frame Target_2;	FRM_FindFrame(Target_2, "Target7_2");
+integer RND_time;	RND_time = 5000;
+integer RND_raneny;	RND_raneny = 0;
+integer TMP = 1;
+
+HUMAN_Suspend(True);
+Goto TheEnd;
+
+Whenever Resume ( _PlayerInRange(85); )	
+{
+  HUMAN_Suspend(False);
+}
+goto Akce;
+
+Whenever NPCecko ( _PlayerInRange(2) )
+{
+  FRM_MorphSpeech(MyFRM,  56990051, 1, 30);
+}
+
+Label Akce:
+  RND_raneny = _RandomInt(20);
+  RND_time = _RandomInt(5000) + 4000;
+  Delay(RND_time);
+  If ( _LoadGameValue(99) == 0) {HUMAN_IllFire(Target_1, 1500);}
+  Delay(2000);
+  If ( _LoadGameValue(99) == 0) {HUMAN_IllFire(Target_2, 1500);}
+  Delay(2000);
+  ////////////////////////// upravit rusovou strelbu, nebo zapnout AI na strelbu (jestli to pude) ....
+  If (RND_raneny == 10) { goto Ran_me; }
+goto akce;
+Label Ran_me:
+  SetWhenever(NPCecko, False);
+  Printf("NPC 7 ...... fligna - umrel");
+  HUMAN_Kill(MyFRM);    
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  EndScript();
+}
+
+Label TheEnd: 
+

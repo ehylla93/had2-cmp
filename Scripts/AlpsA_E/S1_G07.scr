@@ -1,0 +1,56 @@
+// Alarmer z lesa
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame cp1;		FRM_FindFrame(cp1,"Kanon3");
+Frame cp2;		FRM_FindFrame(cp2,"Chata_Cp1");
+Frame cp3;		FRM_FindFrame(cp3,"Chata_Cp2");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1){
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+Delay(200);
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp1, 25);
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

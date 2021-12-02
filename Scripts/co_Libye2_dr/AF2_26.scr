@@ -1,0 +1,72 @@
+// Opelflak2, driver(0)
+// -----------------------------------------------------
+
+Block
+{
+Frame Opelflak2;	FRM_FindFrame(Opelflak2, "Opelflak2"); 
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_DriveNearPlayer(55);
+HUMAN_Drive("Opel5_01", 52);
+goto Ride;
+}
+
+OnAlarmDone(){
+goto Ride;
+}
+
+Whenever inrange ( _PlayerInRange(530))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Opelflak2", 1, 0);
+Delay(10000);
+HUMAN_Drive("Opel5_01", 55);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+HUMAN_SETSIGHTRANGE(240);
+HUMAN_SETHEARRANGE(240);
+goto Ride;
+}
+
+Label Ride:
+	HUMAN_Drive("Opel5_02", 53);
+	HUMAN_Drive("Opel5_03", 55);
+	HUMAN_Drive("Opel5_04", 58);
+	HUMAN_Drive("Opel5_05", 52);
+	HUMAN_Drive("Opel2_01", 65);
+	HUMAN_Drive("Opel2_02", 65);
+	HUMAN_Drive("Opel5_04", 50);
+	HUMAN_Drive("Opel5_03", 55);
+	HUMAN_Drive("Opel5_02", 58);
+	HUMAN_Drive("Opel5_01", 49);
+goto Ride;
+
+
+Label END:

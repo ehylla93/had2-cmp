@@ -1,0 +1,89 @@
+
+
+  integer  AIEvent;
+  integer RND;
+  integer RND_wait;
+  frame see; 		FRM_FindFrame(see, "dummy_Radio_Guard");
+  frame turn; 		FRM_FindFrame(turn, "m_dvere_21");
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(true);
+HUMAN_WeaponOnArm(False);
+HUMAN_SETMODE_Stand();
+
+SetAlarmType(8, False);	// zvuky OnUse
+
+HUMAN_Suspend(True);				
+goto TheEnd;
+			
+Whenever A (_PlayerInRange(202))		
+{						
+  HUMAN_Suspend(False);			
+}			
+
+label loop:
+  RND = _RandomInt(6) + 1;
+  RND_wait = _RandomInt(10000) + 1500;
+  If (RND == 1)
+    { 
+       HUMAN_SetAnim("%%nudazed1", 800, 800, true);
+     }
+  If (RND == 2)
+    { 
+       HUMAN_SetAnim("%%nudazed2", 800, 800, true);
+     }
+  If (RND == 3)
+    { 
+       HUMAN_SetAnim("%%nudazed3", 800, 800, true);
+     }
+  If (RND == 4)
+    { 
+       HUMAN_SetAnim("%%nudazed4", 800, 800, true);
+     }
+  If (RND == 5)
+    { 
+       HUMAN_SetAnim("", 500, 500, False);
+     }
+  Delay(RND_wait);
+goto loop;
+
+
+OnAlarm()
+{
+  HUMAN_SETMODE_Crouch();
+  Block
+    {
+      AIEvent =_GetAlarmType();
+      PrintfNumber("Radio Guard: ", AIEvent);
+      HUMAN_SetAnim("", 300, 300, False);
+      HUMAN_Stop();
+      HUMAN_SetOptimized(false);
+      HUMAN_SETSIGHTRANGE(90);
+      HUMAN_SETHEARRANGE(110);
+    }
+  HUMAN_Move("RadioG_END");
+  HUMAN_TurnAt(turn);
+  HUMAN_SETMODE_Crouch();
+  Delay(1500);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  HUMAN_WeaponOnArm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(true);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("RadioGuard");
+  HUMAN_TurnAt(see);
+  Delay(300000);
+  goto loop;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

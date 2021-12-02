@@ -1,0 +1,51 @@
+// loges_E01
+
+block
+{
+SetAlarmType(128,0);
+
+integer aievent;
+integer spawn = _RandomInt(2);
+}
+
+if(spawn==0) { SetWhenever(PIR, 0); printf("loges_E01 in-active"); }
+
+HUMAN_Suspend(1);
+//HUMAN_ACTIVITY_Turk();
+HUMAN_SetAnim("%%sedimL", 500, 500, 1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("loges_E01 alarm:",aievent);
+HUMAN_SetAnim("", 500, 500, 0);
+HUMAN_SETMODE_StandFast();
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("loges_E01 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(60))
+{
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

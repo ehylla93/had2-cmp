@@ -1,0 +1,58 @@
+
+Frame 	A4;		FRM_FindFrame(A4, "Ally_4");
+Frame 	A5;		FRM_FindFrame(A5, "Ally_5");
+
+Frame Blue_3;		FRM_FindFrame(Blue_3, "Blue_3");
+Frame Blue_4;		FRM_FindFrame(Blue_4, "Blue_4");
+Frame Blue_5;		FRM_FindFrame(Blue_5, "Blue_5");
+Frame Blue_11;	FRM_FindFrame(Blue_11, "Blue_11");
+Frame Blue_14;	FRM_FindFrame(Blue_14, "Blue_14");
+Frame Blue_17;	FRM_FindFrame(Blue_17, "Blue_17");
+Frame W1_1;		FRM_FindFrame(W1_1, "Wave1_1");
+Frame W1_3;		FRM_FindFrame(W1_3, "Wave1_3");
+
+Integer Target;
+integer RND;
+
+SetWhenever(B3, False);
+SetWhenever(B4, False);
+SetWhenever(B5, False);
+SetWhenever(B11, False);
+SetWhenever(B14, False);
+SetWhenever(B17, False);
+SetWhenever(W1, False);
+SetWhenever(W3, False);
+
+// od wavers
+OnSignal(1)
+{
+SetWhenever(B3, True);
+SetWhenever(B4, True);
+SetWhenever(B5, True);
+SetWhenever(B11, True);
+SetWhenever(B14, True);
+SetWhenever(B17, True);
+SetWhenever(W1, True);
+SetWhenever(W3, True);
+}
+
+Goto TheEnd;
+
+
+Whenever B3  ( _FrameInRange(Blue_3)<6 )		{  Target = 26; }
+Whenever B4  ( _FrameInRange(Blue_4)<6 )		{  Target = 27; }
+Whenever B5  ( _FrameInRange(Blue_5)<6 )		{  Target = 20; }
+Whenever B11 ( _FrameInRange(Blue_11)<6 )	{  Target = 11; }
+Whenever B14 ( _FrameInRange(Blue_14)<6 )	{  Target = 14; }
+Whenever B17 ( _FrameInRange(Blue_17)<6 )	{  Target = 17; }
+Whenever W1 ( _FrameInRange(W1_1)<6 )		{  Target = 1; }
+Whenever W3 ( _FrameInRange(W1_3)<6 )		{  Target = 3; }
+
+  DisableWhenevers(True);
+  PrintfNumber("GLOBAL  1  uraaaaaaaaaaa", Target);
+  SendSignal(A4, Target); 
+  SendSignal(A5, Target); 
+  DisableWhenevers(False);
+
+  label TheEnd:
+

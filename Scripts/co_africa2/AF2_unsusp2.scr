@@ -1,0 +1,20 @@
+// AF2_unsusp2 - 2nd enemy group unsuspender
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME af2_07;			FRM_FindFRAME(af2_07, "AF2_07");
+FRAME af2_08;			FRM_FindFRAME(af2_08, "AF2_08");
+FRAME af2_09;			FRM_FindFRAME(af2_09, "AF2_09");
+FRAME af2_10;			FRM_FindFRAME(af2_10, "AF2_10");
+FRAME af2_11;			FRM_FindFRAME(af2_11, "AF2_11");
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever detector(_PlayerInRange(200)){
+  SendSignal(af2_07, 2);
+  SendSignal(af2_08, 2);
+  SendSignal(af2_09, 2);
+  SendSignal(af2_10, 2);
+  SendSignal(af2_11, 2);
+}
+
+// -------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,18 @@
+
+Frame MyFRM; 		FRM_GetMyFrame(MyFRM);
+FRM_SetOn(MyFRM, True);		// INICIALIZACE !!!!
+
+OnCutscene(4){}
+OnCutsceneDone(4){}
+
+// hide
+OnSignal(1)
+{
+  FRM_SetOn(MyFRM, False);
+}
+
+// unhide
+OnSignal(2)
+{
+  FRM_SetOn(MyFRM, True);
+}

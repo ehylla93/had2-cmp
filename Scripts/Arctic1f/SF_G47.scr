@@ -1,0 +1,71 @@
+// SF_G47 - Hlidka u Brany Komplexu
+// ------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Cp2;	FRM_FindFrame(Cp2,"Posily_Cp3");
+Frame Cum;	FRM_FindFrame(Cum,"SF_G46");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f020");
+SetWhenever(Spawn, 0);
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp2, 20);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp2, 10);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAt(Cp2);
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Spawn, 1);
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(90))
+{
+HUMAN_Suspend(0);
+goto END;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

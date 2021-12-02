@@ -1,0 +1,33 @@
+// Particles on Objects
+// -----------------------------------------------------------------
+
+Block
+{
+Frame TigerVrak1;		FRM_FindFrame(TigerVrak1, "A3_Tiger_Vrak01_Kour");
+Frame PanzerVrak1;		FRM_FindFrame(PanzerVrak1, "A3_Panzer_Kour");
+Frame HaklVrak1;		FRM_FindFrame(HaklVrak1, "A3_Hakl_Kour");
+Frame Ohen1;			FRM_FindFrame(Ohen1, "k_al1_ohen_");
+
+Frame Nadrz1;			FRM_FindFrame(Nadrz1,"A3_Ftank_01");
+Frame Nad1X;			FRM_FindFrame(Nad1X,"A3_Ftank_01X");
+Frame Nadrz2;			FRM_FindFrame(Nadrz2,"A3_Ftank_02");
+Frame Nad2X;			FRM_FindFrame(Nad2X,"A3_Ftank_02X");
+
+FRM_CreateParticle(95, TigerVrak1);
+FRM_CreateParticle(95, PanzerVrak1);
+FRM_CreateParticle(95, HaklVrak1);
+FRM_CreateParticle(40, Ohen1);
+}
+
+Whenever Nad1 (_Actor_GetState(Nadrz1) == 0)
+{
+MakeExplosion(Nadrz1, 250000, 20000);
+FRM_CreateParticle(68, Nad1X);
+}
+
+Whenever Nad2 (_Actor_GetState(Nadrz2) == 0)
+{
+MakeExplosion(Nadrz2, 250000, 20000);
+FRM_CreateParticle(68, Nad2X);
+}
+

@@ -1,0 +1,130 @@
+// velitel v aute // Officer going to map in building
+
+Block
+{
+Frame ridic;
+	FRM_FindFrame(ridic, "ridic_z_mesta");
+Frame vojak1;
+	FRM_FindFrame(vojak1, "posila v aute1");
+Frame vojak2;
+	FRM_FindFrame(vojak2, "posila v aute2");
+Frame mapa;
+	FRM_FindFrame(mapa, "m_b2_mapa_2");
+Frame strom;
+	FRM_FindFrame(strom, "b_strm");
+Frame ge12;
+	FRM_FindFrame(ge12, "Ge_12");
+Frame ge13;
+	FRM_FindFrame(ge13, "Ge_13");
+Frame me;
+	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f043");
+HUMAN_SETSIGHTRANGE(35);
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor1
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(2);
+	GoTo keci;
+}
+
+OnSignal(2)	// received from Ge_12
+{
+	HUMAN_Move("nastenka");
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	HUMAN_SETMODE_Walk();
+	GoTo elektrika;
+}
+
+Label keci:
+	Delay(1000);
+	HUMAN_SetAnim("%%kecy1", 200, 200, false);
+	Delay(8300);
+	HUMAN_SetAnim("%%rozcilujese", 200, 200, false);
+	SendSignal(vojak1, 2);
+	SendSignal(vojak2, 2);
+	Delay(4000);
+	HUMAN_SetAnim("%%mluvi4", 200, 200, false);
+	SendSignal(ridic, 2);
+	Delay(2000);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("velitel1");
+	HUMAN_Move("nastenka");
+	HUMAN_TurnAt(mapa);
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%lenin", 100, 100, true);
+	GoTo end;
+
+Label elektrika:
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_Move("velitel_01");
+	SendSignal(ge13, 2);
+	HUMAN_TurnAt(ge13);
+	HUMAN_SetAnim("%%kecy2", 200, 200, false);
+	Delay(11000);
+	HUMAN_ACTIVITY_Point(strom);
+	SendSignal(ge13, 3);
+	Delay(1000);
+	HUMAN_ACTIVITY_Point(ge12);
+	SendSignal(ge12, 2);
+	GoTo end;
+
+Whenever inrange (_PlayerInRange(2))
+{
+Frame FRM;		FRM_GetMyFrame(FRM);
+Delay(1500);
+FRM_MorphSpeech(me, 05991029,8,30); 
+}
+
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SETMODE_Run();
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(80);
+	DisableSignals(true);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETSIGHTRANGE(30);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_Move("velitel_01");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+Label end:

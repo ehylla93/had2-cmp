@@ -1,0 +1,74 @@
+// Random Sniper Selector
+// -------------------------------------------------------
+
+Block
+{
+// Snipers
+Frame S01;	FRM_FindFrame(S01,"C1_S01");
+Frame S02;	FRM_FindFrame(S02,"C1_S02");
+Frame S03;	FRM_FindFrame(S03,"03_S01");
+Frame S04;	FRM_FindFrame(S04,"C3_S01");
+Frame S05;	FRM_FindFrame(S05,"C3_S02");
+Frame S06;	FRM_FindFrame(S06,"C3_S03");
+Frame S07;	FRM_FindFrame(S07,"C3_S04");
+Frame S08;	FRM_FindFrame(S08,"04_S01");
+Frame S09;	FRM_FindFrame(S09,"04_S02");
+Frame S10;	FRM_FindFrame(S10,"04_S03");
+
+Integer SniperSelect;
+}
+
+SniperSelect = _RandomInt(4);
+
+If (SniperSelect == 0)
+{
+SendSignal(S01, 1);
+SendSignal(S02, 1);
+SendSignal(S03, 1);
+SendSignal(S04, 1);
+SendSignal(S06, 1);
+SendSignal(S08, 1);
+SendSignal(S10, 1);
+EndScript();
+}
+
+If (SniperSelect == 1)
+{
+SendSignal(S01, 1);
+SendSignal(S03, 1);
+SendSignal(S06, 1);
+SendSignal(S07, 1);
+SendSignal(S09, 1);
+SendSignal(S10, 1);
+EndScript();
+}
+
+If (SniperSelect == 2)
+{
+SendSignal(S02, 1);
+SendSignal(S04, 1);
+SendSignal(S05, 1);
+SendSignal(S07, 1);
+SendSignal(S08, 1);
+SendSignal(S09, 1);
+EndScript();
+}
+
+If (SniperSelect == 3)
+{
+SendSignal(S03, 1);
+SendSignal(S05, 1);
+SendSignal(S06, 1);
+SendSignal(S07, 1);
+SendSignal(S08, 1);
+SendSignal(S09, 1);
+SendSignal(S10, 1);
+EndScript();
+}
+
+
+// ----------------------------------------
+
+Label END:
+
+

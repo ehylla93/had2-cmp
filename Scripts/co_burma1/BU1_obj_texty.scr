@@ -1,0 +1,124 @@
+// BU1_obj_texty - objective texts
+
+OnSignal(1)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992408);		//"OBJECTIVE ACCOMPLISHED: CONSIGNMENT OF AIRCRAFT PARTS DISCOVERED."
+	Delay(3000);
+	SUBTITLES_SetText(12992409);		//"NEW OBJECTIVE: LOCATE TECHNICAL DOCUMENTATION ON THE AIRCRAFT PARTS."
+	Delay(3000);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(2)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992410);		//"OBJECTIVE FAILED: FAILED TO DISCOVER THE REASON FOR THE TRANSPORTS."
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(3)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992411);	//"OBJECTIVE ACCOMPLISHED: TECHNICAL DOCUMENTATION ON THE PARTS LOCATED."
+	Delay(3500);
+	SUBTITLES_SetText(12992412);	//"NEW OBJECTIVE: DESTROY THE AIRCRAFT PARTS."
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(4)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992413);	//"DOCUMENTATION LOST."
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(5)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(04990826);	//"DOCUMENTS RECOVERED."
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(6)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992423);	//"OBJECTIVE FAILED: TECHICAL DOCUMENTATION NOT LOCATED."
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(7)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992415);
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(8)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992417);
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(9)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992418);
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(5, 1);
+	GoTo end;
+}
+
+OnSignal(10)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992419);
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(11)
+{	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992420);
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(12)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992421);
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(13)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992416);
+	Delay(3500);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+Label end:

@@ -1,0 +1,39 @@
+// Maggor 1
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+    Frame tigru;		FRM_FindFrame(tigru,"tank02");
+  Frame hakl2;		FRM_FindFrame(hakl2,"hakle1");
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(tigru, 1);
+SendSignal(hakl2, 1); 
+  EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("MG42_Stand01",  true, 0);
+goto END;
+
+Label END:

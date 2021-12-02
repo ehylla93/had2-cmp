@@ -1,0 +1,110 @@
+// Schuman
+// --------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f023");
+Frame Player;   
+
+Frame Obj;	FRM_FindFrame(Obj,"obj7");
+Frame SpawnZ;	FRM_FindFrame(SpawnZ,"SpawnZone");
+Frame KillObj;	FRM_FindFrame(KillObj,"obj4");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+SetWhenever(PlayerIn, 0);
+}
+// ---------------------------------------------------------
+
+OnDeath(){
+SendSignal(Obj, 2);
+EndScript();
+}
+
+OnAlarm(){
+Endscript();
+}
+
+Whenever PlayerIn (_PlayerInRange(2))
+{
+
+HUMAN_TurnAtNearestPlayer();
+FRM_GetNearestPlayer(me, Player);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(Player, 09991951, 3, 9);
+Delay(100);
+
+If(_PlayerInRange(7))
+{
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAnim("%%kecy1", 200, 200, 1);
+FRM_MorphSpeechDelayed(me, 09991952, 3, 9);
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_TurnAtNearestPlayer();
+Delay(200);
+FRM_GetNearestPlayer(me, Player);
+FRM_MorphSpeechDelayed(Player, 09991953, 3, 9);
+HUMAN_TurnAtNearestPlayer();
+FRM_GetNearestPlayer(me, Player);
+FRM_MorphSpeechDelayed(Player, 09991954, 3, 9);
+HUMAN_TurnAtNearestPlayer();
+}
+
+If(_PlayerInRange(7))
+{
+HUMAN_TurnAtNearestPlayer();
+FRM_GetNearestPlayer(me, Player);
+FRM_MorphSpeechDelayed(Player, 09991955, 3, 9);
+HUMAN_TurnAtNearestPlayer();
+}
+
+If(_PlayerInRange(7))
+{
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAnim("%%kecy1", 200, 200, 1);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 09991956, 3, 9);
+HUMAN_SetAnim("", 0, 0, 1);
+SUBTITLES_SetOn(0);
+HUMAN_TurnAtNearestPlayer();
+SendSignal(KillObj, 3);
+SendSignal(Obj, 1);
+SendSignal(SpawnZ, 3);
+SetAlarmType(32,1); //vidi
+goto END;
+}
+
+SetWhenever(PlayerIn, 1);
+goto END;
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+SetWhenever(PlayerIn, 1);
+goto END;
+}
+
+// -------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

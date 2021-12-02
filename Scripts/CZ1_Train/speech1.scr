@@ -1,0 +1,77 @@
+// speech1 - speech dummy for cetnik_, cetnik01
+Frame c1;
+	FRM_FindFrame(c1, "cetnik_");
+Frame c2;
+	FRM_FindFrame(c2, "cetnik01");
+Integer rozhovorcounter;
+	rozhovorcounter=1;
+
+SetWhenever(player, false);
+SetWhenever(notplayer, false);
+// -------------------------------------------------------------------------------------------------------------
+Whenever player(_PlayerInRange(10))
+{
+	SetWhenever(notplayer, true);
+	SendSignal(c2, 3);	// zapina mod rozhovoru na panakoch
+	SendSignal(c1, 4);
+	If(rozhovorcounter==1)	{	GoTo rozhovor;	}
+	If(rozhovorcounter==2)	{	GoTo rozhovor2;	}
+	If(rozhovorcounter==3)	{	GoTo rozhovor3;	}
+	
+}
+
+Whenever notplayer(!_PlayerInRange(12))
+{
+	rozhovorcounter=rozhovorcounter+1;
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+OnSignal(1)	// received from cetnik01
+{
+	SetWhenever(player, true);
+}
+
+OnSignal(2)	// received from cetnik_, cetnik01 on death, on alarm
+{
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(c1, 18993609, 12, 20);
+	FRM_MorphSpeechDelayed(c2, 18993611, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993610, 12, 20);
+	GoTo end;
+
+Label rozhovor2:
+	FRM_MorphSpeechDelayed(c2, 18993564, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993565, 12, 20);
+	FRM_MorphSpeechDelayed(c2, 18993566, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993567, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993568, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993569, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993570, 12, 20);
+	GoTo end;
+
+Label rozhovor3:
+	rozhovorcounter=0;
+	FRM_MorphSpeechDelayed(c2, 18993571, 12, 20);
+	FRM_MorphSpeechDelayed(c2, 18993572, 12, 20);
+	FRM_MorphSpeechDelayed(c2, 18993573, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993574, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993575, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993576, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993577, 12, 20);
+	FRM_MorphSpeechDelayed(c2, 18993578, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993579, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993580, 12, 20);
+	FRM_MorphSpeechDelayed(c2, 18993581, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993582, 12, 20);
+	FRM_MorphSpeechDelayed(c1, 18993583, 12, 20);
+	GoTo end;
+
+
+
+Label end:

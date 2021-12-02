@@ -1,0 +1,51 @@
+// Keca s vojakem u stodoly
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 450, 300, 1);
+HUMAN_SETMODE_Crouch();
+FRM_MorphSpeechDelayed(me, 14992829, 5, 30);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETHEARRANGE(160);
+HUMAN_SETSIGHTRANGE(160);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETMODE_Crouch();
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SetAnim("%%sedimL4", 450, 300, 1);
+HUMAN_WeaponOnArm(0);
+goto END;
+
+Label END:

@@ -1,0 +1,59 @@
+// AF1_cisterny_organizer - organizuje nepovinny ukol - znic vsechny cisterny
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME me;      			FRM_GetMyFrame(me);
+
+  INTEGER cist1			= 1;
+  INTEGER cist2			= 1;
+  INTEGER cist3			= 1;
+  INTEGER cist4			= 1;
+  INTEGER cist5			= 1;
+  INTEGER num_players		= 0;
+  SaveGameValue(1, 1);
+  SaveGameValue(2, 1);
+  SaveGameValue(3, 1);
+  SaveGameValue(4, 1);
+  SaveGameValue(5, 1);
+}
+
+Delay(1000);
+num_players = _GetNumMembersOfClientTeam();
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1){
+  cist1 = _LoadGameValue(1);  printfnumber("cist1: ", cist1);
+  cist2 = _LoadGameValue(2);  printfnumber("cist2: ", cist2);
+  cist3 = _LoadGameValue(3);  printfnumber("cist3: ", cist3);
+  cist4 = _LoadGameValue(4);  printfnumber("cist4: ", cist4);
+  cist5 = _LoadGameValue(5);  printfnumber("cist5: ", cist5);
+
+  if(cist1){ goto END;  }
+  if(cist2){ goto END;  }
+  if(cist3){ goto END;  }
+  if(cist4){ goto END;  }
+  if(cist5){ goto END;  }
+
+  SUBTITLES_SetOn(true);
+  printf("nepovinný úkol byl splnìn: Znièil jsi veškeré zásoby leteckého benzínu");
+  SUBTITLES_SetText(05011015);			// nepovinný úkol byl splnìn: Znièil jsi veškeré zásoby leteckého benzínu
+  Delay(2000);
+  SetObjectiveStatus(6, 1);
+  
+  if(num_players == 1)
+  {
+    AddDiaryText(4116);
+  }
+  else
+  {
+    AddDiaryText(4113);
+  }
+
+  SUBTITLES_SetOn(false);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

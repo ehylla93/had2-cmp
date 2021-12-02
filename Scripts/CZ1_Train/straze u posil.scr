@@ -1,0 +1,85 @@
+// Ge_10
+
+Block
+{
+Frame lampa;
+	FRM_FindFrame(lampa, "l_ndrlamp8.lamp");
+Frame vagon;
+	FRM_FindFrame(vagon, "la_vagon11");
+Frame doleva1;
+	FRM_FindFrame(doleva1,"Mesh124");
+Frame doprava1;
+	FRM_FindFrame(doprava1,"la_vagon6");
+Frame doleva2;
+	FRM_FindFrame(doleva2,"la_vagon_");
+Frame doprava2;
+	FRM_FindFrame(doprava2,"translow10.sloupy");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer look_at;
+	look_at=0;
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+HUMAN_SETSIGHTRANGE(55);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f057");
+}
+
+Label hlidka:	
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_10_01");
+	HUMAN_SetOptimized(2);
+	Delay(2000);
+	HUMAN_TurnAt(doleva1);
+	look_at =_RandomInt(1000) + 5000;
+	Delay(look_at);
+	HUMAN_TurnAt(doprava1);
+	Delay(look_at);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_10_02");
+	HUMAN_SetOptimized(2);
+	Delay(2000);
+	HUMAN_TurnAt(doleva2);
+	Delay(look_at);
+	HUMAN_TurnAt(doprava2);
+	Delay(look_at);
+	GoTo hlidka;
+
+Label hlidka2:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_10_04");
+	Delay(2000);
+	HUMAN_Move("Ge_10_03");
+	Delay(2000);
+	GoTo hlidka2;
+
+OnAlarm()
+{	
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(90);
+	HUMAN_SETAIMODE_Defensive();
+	SetAlarmType(8, true);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_WeaponOnArm(false);
+	GoTo hlidka2;
+}

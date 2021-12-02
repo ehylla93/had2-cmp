@@ -1,0 +1,130 @@
+Block
+	{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+	Frame reinfo;		FRM_FindFrame(reinfo,"dummy_reinforcement");
+	Frame dusit;		FRM_FindFrame(dusit,"dummy_sit_klady");
+	Frame seee;		FRM_FindFrame(seee,"plot_a50");
+	Frame seeee;		FRM_FindFrame(seeee,"plot_a59");
+
+	Integer aievent;
+	integer a;	a=0;
+	integer b;	b=0;
+	HUMAN_SETMODE_Guard();
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f023");
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+
+
+
+	}
+
+
+//----------------------------------------------------------------------------------
+
+
+
+Label hlidani:
+	
+	a=(_RandomInt(4));
+	if (a==0)	{	HUMAN_Move("hp2_7");	 Gosub rozhled;	}
+	if (a==1)	{	HUMAN_Move("HP1_4");	Gosub rozhled;	}
+	if (a==2)	{	HUMAN_Move("HP1_5");	Gosub rozhled;	}
+	if (a==3)	{	HUMAN_Move("HP2_4");	Gosub rozhled;	}
+	if (a==4)	
+		{
+			HUMAN_Move("rozhled");
+			HUMAN_TurnAt(seeee);
+			HUMAN_SetAnim("%%turnleft",200,200,0);
+			Delay(2800);
+			HUMAN_SetAnim("%%turnright",200,200,0);
+			Delay(3700);
+			HUMAN_SetAnim("",200,200,0);
+		}
+goto hlidani;
+
+label rozhled:
+
+HUMAN_LookAround(1);
+delay (5000);
+Return;
+
+//----------------------------------------------------------------------------------
+OnAlarm()
+	{
+	block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("mgm alarm c:",aievent);
+}
+HUMAN_SetAnim("",50,50,0);
+HUMAN_WeaponOnArm(1);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (b==0)
+{
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("mgm_1");
+b=1;
+
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+
+EndScript();
+}
+	
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(0);
+	HUMAN_Move("MGM_plazza");
+	HUMAN_TurnAt(seee);
+	goto end;
+	
+	}
+
+OnDeath()
+	{
+	DisableSignals(1);
+	SendSignal(reinfo,0);
+	Printf("MachineGunMan is DEAD!!!");
+	EndScript();
+	}
+	
+
+
+
+label end:
+
+
+
+
+
+
+
+
+

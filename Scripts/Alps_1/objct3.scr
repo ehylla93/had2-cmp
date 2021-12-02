@@ -1,0 +1,41 @@
+// Obj 3 - Rescue the Pilot
+// ----------------------------------------------
+
+Block
+{
+Frame Pilot;	FRM_FindFrame(Pilot, "Allied Pilot");
+
+SetWhenever(Pilot_Rescued, 0);
+}
+
+Whenever Pilot_Rescued (_SignalReceived(2))
+{
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(03990622);
+Delay(3500);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Pilot_Rescued, 1);
+}
+
+Whenever Pilot_Not_Rescued (_Actor_GetState(Pilot) == 0)
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(03990627);
+Delay(3500);
+SUBTITLES_SetText(51999706);
+Delay(3500);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 2);
+SetObjectiveStatus(4, 2);
+SUBTITLES_SetOn(0);
+EndScript();
+}

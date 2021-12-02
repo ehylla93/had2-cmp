@@ -1,0 +1,111 @@
+// walking guard #1
+
+Block
+{
+    frame FRM;		FRM_FindFrame(FRM, "");	// default flask
+    frame GG;		FRM_FindFrame(GG, "Gate_Guard");
+    integer counter;	counter = 0;
+    integer AIEvent;
+    frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+    SetAlarmType(1023, True);	
+    SetAlarmType(256, False);	
+}
+
+  HUMAN_Suspend(True);	
+  goto TheEnd;
+  Whenever A (_PlayerInRange(110);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Stand();
+Label DeAlarm:
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SETMODE_Guard();
+
+
+HUMAN_SetOptimized(1);
+
+label XX:
+  counter = counter +1;
+  HUMAN_Move("walker1_1");
+    Delay(250);
+    If (counter == 4)     { HUMAN_ACTIVITY_DrinkBottle(FRM);  }
+  HUMAN_Move("walker1_2");
+  HUMAN_Move("walker1_3");
+    If (counter == 10)   
+      {
+         HUMAN_SetAnim("", 0, 0, False);
+         HUMAN_WeaponOnArm(True);  
+//         HUMAN_SetAnim("!strazny03", 250, 150, True);
+      }
+  HUMAN_Move("walker1_4");
+  HUMAN_Move("walker1_5");
+  HUMAN_Move("walker1_6");
+    Delay(250);
+    If ((counter == 2) or (counter == 8))
+       { 
+         HUMAN_SetAnim("", 0, 0, False);
+         HUMAN_WeaponOnArm(False);  
+//         HUMAN_SetAnim("!strazny02", 250, 150, True);
+       }
+  HUMAN_Move("walker1_5");
+  HUMAN_Move("walker1_4");
+    If (counter == 6)   
+      {
+         HUMAN_SetAnim("", 0, 0, False);
+         HUMAN_WeaponOnArm(True);  
+//         HUMAN_SetAnim("!strazny01", 250, 150, True);
+      }
+  HUMAN_Move("walker1_3");
+  HUMAN_Move("walker1_2");
+  If (counter == 13)     {   counter = 0;    }
+goto XX;
+
+
+OnAlarm()
+{
+  Block
+    {
+        HUMAN_SETSIGHTRANGE(50);
+        HUMAN_SETHEARRANGE(60);
+        AIEvent =_GetAlarmType(); 
+        PrintfNumber("AIE walker 1: ", AIEvent);
+        SaveGameValue(29, 99);		// skip CSC 3 - roof 
+    }
+  HUMAN_SetAnim("", 0, 0, False);
+  HUMAN_Stop();
+  HUMAN_SETMODE_Run();
+//  HUMAN_SETSIGHTRANGE(80);	  // UPRAVIT POZDEJI
+//  HUMAN_SETHEARRANGE(95);
+
+  HUMAN_SETAIMODE_Defensive();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(39);
+  HUMAN_SETHEARRANGE(47);
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SETMODE_Silence();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SETMODE_Crouch();  
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("walker1_DeAlarm");
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  HUMAN_SetAnim("", 0, 0, False);
+  SendSignal(GG, 5);
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+label TheEnd:

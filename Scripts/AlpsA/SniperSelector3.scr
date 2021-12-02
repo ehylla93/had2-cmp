@@ -1,0 +1,45 @@
+// Vybira Snipry kteri budou hlidat Oblast Reky a Kanonu 3  5/7
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"SSnip1");
+Frame S2;	FRM_FindFrame(S2,"SSnip2");
+Frame S3;	FRM_FindFrame(S3,"SSnip3");
+Frame S4;	FRM_FindFrame(S4,"SSnip4");
+Frame S5;	FRM_FindFrame(S5,"SSnip5");
+Frame S6;	FRM_FindFrame(S6,"SSnip6");
+Frame S7;	FRM_FindFrame(S7,"SSnip7");
+Frame S8;	FRM_FindFrame(S8,"SSnip8");
+Frame S9;	FRM_FindFrame(S9,"SSnip9");
+
+Integer SnipVyber;
+	SnipVyber =_RandomInt(3);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(7000);
+If(SnipVyber == 0){  SendSignal(S3, 1);}
+
+If(SnipVyber == 1){  SendSignal(S4, 1);}
+
+If(SnipVyber == 2){  SendSignal(S3, 1);}
+
+If(SnipVyber == 3){  SendSignal(S4, 1);}
+goto END;
+
+Whenever Briti_Jeli(_SignalReceived(1))
+{
+If(SnipVyber == 0){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S7, 1);SendSignal(S9, 1);}
+
+If(SnipVyber == 1){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S6, 1);SendSignal(S8, 1);}
+
+If(SnipVyber == 2){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S6, 1);SendSignal(S7, 1);}
+
+If(SnipVyber == 3){  SendSignal(S1, 1);SendSignal(S5, 1);SendSignal(S8, 1);SendSignal(S9, 1);}
+
+Goto END;
+}
+
+Label END:

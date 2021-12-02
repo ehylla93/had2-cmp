@@ -1,0 +1,20 @@
+// Tank_02
+// ----------------------------------------
+
+Frame T1;	FRM_FindFrame(T1,"T2_E01");
+Frame T2;	FRM_FindFrame(T2,"T2_E02");
+Frame T3;	FRM_FindFrame(T3,"T2_E03");
+
+// ----------------------------------------
+
+Whenever PIR (_MP_IsTeamMemberInRange(1, 90))
+{
+SendSignal(T1, 1);
+SendSignal(T2, 1);
+SendSignal(T3, 1);
+EndScript();
+}
+
+// ----------------------------------------
+
+Label END:

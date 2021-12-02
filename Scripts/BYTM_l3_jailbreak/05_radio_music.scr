@@ -1,0 +1,11 @@
+// Radio playing music
+
+Frame sound;	 FRM_FindFrame(sound, "bytm_01");
+
+// ----------------------------------------
+
+OnDeath()
+{
+FRM_SetOn(sound, 0);
+EndScript();
+}

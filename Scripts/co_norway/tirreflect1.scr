@@ -1,0 +1,45 @@
+
+block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame kuzel;	FRM_FindFrame(kuzel,"k_tirpicrefl2");
+Frame refl;		FRM_FindFrame(refl, "k_tirpicreflx2");
+Frame sir1;		FRM_FindFrame(sir1, "S_tripovy_alarm");
+Frame sir2;		FRM_FindFrame(sir2, "S_tripovy_alarm2");
+Frame sir3;		FRM_FindFrame(sir3, "S_tripovy_alarm3");
+frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+
+FRM_SetOn(sir1,0);
+FRM_SetOn(sir2,0);
+FRM_SetOn(sir3,0);
+FRM_SetOn(kuzel,0);
+}
+
+goto end;
+
+OnSignal(1)
+{
+delay (4000);
+SendSignal(obj, 10);
+block
+{
+FRM_SetOn(refl,0);
+FRM_SetOn(kuzel,1);
+FRM_SetOn(sir1,1);
+FRM_SetOn(sir2,1);
+FRM_SetOn(sir3,1);
+}
+delay (1000);
+FRM_RotateY(me,70, 10);
+delay (5000);
+goto svit;
+}
+
+label svit:
+delay (4000);
+FRM_RotateY(me,-27, 10);
+delay (4000);
+FRM_RotateY(me,27,10);
+goto svit;
+
+Label end:

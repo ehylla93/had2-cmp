@@ -1,0 +1,36 @@
+Block
+{
+Frame E21;		FRM_FindFrame(E21, "alp2_E21");
+Frame E23;		FRM_FindFrame(E23, "alp2_E23");
+Frame E24;		FRM_FindFrame(E24, "alp2_E24");
+Frame E25;		FRM_FindFrame(E25, "alp2_E25");
+Frame E26;		FRM_FindFrame(E26, "alp2_E26");
+Frame E12;		FRM_FindFrame(E12, "alp2_E12");
+Frame E13;		FRM_FindFrame(E13, "alp2_E13");
+Frame E09;		FRM_FindFrame(E09, "alp2_E09");
+Frame E10;		FRM_FindFrame(E10, "alp2_E10");
+Frame E11;		FRM_FindFrame(E11, "alp2_E11");
+Frame E15;		FRM_FindFrame(E15, "alp2_E15");
+Frame E16;		FRM_FindFrame(E16, "alp2_E16");
+Frame E22;		FRM_FindFrame(E22, "alp2_E22");
+Frame E19;		FRM_FindFrame(E19, "alp2_E19");
+}
+
+OnSignal(1)
+{
+SendSignal(E12, 4);
+SendSignal(E13, 4);
+SendSignal(E21, 4);
+SendSignal(E23, 4);
+SendSignal(E24, 4);
+SendSignal(E25, 4);
+SendSignal(E26, 4);
+SendSignal(E09, 4);
+SendSignal(E10, 4);
+SendSignal(E11, 4);
+SendSignal(E15, 4);
+SendSignal(E16, 4);
+SendSignal(E22, 4);
+SendSignal(E19, 4);
+EndScript();
+}

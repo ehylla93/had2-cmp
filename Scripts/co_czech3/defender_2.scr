@@ -1,0 +1,219 @@
+//Defender 2 - playing with his P08
+
+block
+{
+SetAlarmType(1,1);			//Close shooting
+SetAlarmType(2,1);			//enemy shots
+SetAlarmType(4,1);			//hear steps (dosn't work for clients)
+SetAlarmType(8,0);			//action sounds
+SetAlarmType(16,1);			//explosions
+SetAlarmType(32,1);			//sighted
+SetAlarmType(64,1);			//is injured
+SetAlarmType(128,1);		//from script
+SetAlarmType(256,1);		//friendly shots
+SetAlarmType(512,1);		//sights corpse
+
+integer aievent;
+
+frame sit;			FRM_FindFrame(sit,"defender2sit");
+frame sit1;			FRM_FindFrame(sit1,"defender2sit1");
+frame reinfo;		FRM_FindFrame(reinfo, "dummy_reinforcement");
+Frame me;			FRM_GetMyFrame(me);
+Frame def1;			FRM_FindFrame(def1, "defender_1");
+Frame velitel;		FRM_FindFrame (velitel,"velitel");
+Frame cum1;			FRM_FindFrame(cum1, "defender2cum1");
+Frame cum2;			FRM_FindFrame(cum2, "defender2cum2");
+Frame cum3;			FRM_FindFrame(cum3, "defender2cum3");
+
+FRM_SwitchFaceTexture(me, "e_f023");
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Walk();
+}
+
+goto start;
+
+//---------------------------------------------------------------------------------------------------
+
+Label start:
+HUMAN_ACTIVITY_Sit(sit);
+Block {
+HUMAN_WeaponOnArm(1);
+HUMAN_SetAnim("%%manipulacerev", 900, 900, 1);
+}
+goto end;
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+HUMAN_SetAnim("", 100, 100, 0);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_StandFast();
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(140,0);
+HUMAN_SetAlarm(false);
+HUMAN_Move("Defender_02_04");
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+Whenever vstan(_SignalReceived(1))
+{
+HUMAN_SetAnim("", 500, 500, 0);
+HUMAN_SETMODE_StandFast();
+goto end;
+}
+
+Whenever kecej(_SignalReceived(2))
+{
+printf("Hm. That's great. Now we'll have to help carry the crates or something like that.");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994018, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+goto end;
+}
+
+Whenever odesli(_SignalReceived(3))
+{
+HUMAN_Move("Defender_02_03");
+HUMAN_TurnAt(def1);
+printf("Okay. What are we going to do now?");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994021, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 2);
+goto end;
+}
+
+Whenever def1domluv(_SignalReceived(4))
+{
+printf("You're right. I'm going to see where he is.");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994023, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 3);
+goto end;
+}
+
+Whenever def1domluv2(_SignalReceived(5))
+{
+HUMAN_Move("Defender_02_04");
+	HUMAN_SetAnim("%%turnleft",200,200,0);
+	Delay(2800);
+	HUMAN_SetAnim("%%turnright",200,200,0);
+	Delay(3700);
+	HUMAN_SetAnim("",200,200,0);
+HUMAN_Move("Defender_02_05");
+HUMAN_TurnAt(cum1);
+	HUMAN_SetAnim("%%turnleft",200,200,0);
+	Delay(2800);
+	HUMAN_SetAnim("%%turnright",200,200,0);
+	Delay(3700);
+	HUMAN_SetAnim("",200,200,0);
+HUMAN_Move("Defender_02_06");
+HUMAN_TurnAt(velitel);
+SendSignal (velitel,4);
+printf("Major, do you know when Horst will be here?");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994025, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,5);
+goto end;
+}
+
+Whenever velitel1(_SignalReceived(6))
+{
+printf("Oh. What should Klaus and I do?");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994027, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,6);
+goto end;
+}
+
+Whenever odchod(_SignalReceived(7))
+{
+HUMAN_Move("NearDet_0202");
+HUMAN_Move("NearDet_0204");
+HUMAN_Move("Defender_02_07");
+HUMAN_Move("Defender_02_08");
+if (_FrameInRange(def1)>6)
+{
+printf("Klaus!!!");
+FRM_MorphSpeech(me, 20994029,20, 50);
+SendSignal(def1, 4);			//pod seeeem
+goto end;
+}
+else {
+SendSignal(def1, 4);			//pod seeeem
+goto end;
+}
+}
+
+Whenever turnat(_SignalReceived(12))
+{
+HUMAN_TurnAt(def1);
+goto end;
+}
+
+Whenever def1x1(_SignalReceived(8))
+{
+printf("We're to wait here. So far so good.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994031, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 5);
+goto end;
+}
+
+Whenever def1x2(_SignalReceived(9))
+{
+printf("Don't be a fool. We're miles from the front. This is as safe a place as any to be.");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994033, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 6);
+goto end;
+}
+
+Whenever def1x3(_SignalReceived(10))
+{
+printf("Oh, please. Don't be paranoid.");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994035, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 7);
+goto end;
+}
+
+Whenever def1x4(_SignalReceived(11))
+{
+HUMAN_Move("Defender_02_04");
+HUMAN_TurnAt(cum3);
+delay (300);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+goto end;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//---------------------------------------------------------------------------------------------------
+
+label end:

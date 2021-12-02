@@ -1,0 +1,24 @@
+// explosives place 3
+// ---------------------------
+
+Block
+{
+
+Frame Ex3;		FRM_FindFrame (Ex3,"Explosive_bridge7");
+
+
+Frame bridge2;		FRM_FindFrame (bridge2,"d_D01");
+
+SetActorState(Ex3, 3);
+
+}
+
+// ---------------------------
+
+
+Whenever Ex2gone (_Actor_GetState(bridge2)==0) 
+{
+SetActorState(Ex3, 0);
+EndScript();
+}
+

@@ -1,0 +1,96 @@
+// Trafo at main building (outside wall)
+// Turns out light in main building
+
+Block
+{
+Frame svetlo01;	FRM_FindFrame(svetlo01, "la_svetlo.Mesh01");
+Frame svetlo02;	FRM_FindFrame(svetlo02, "la_svetlo_9.Mesh01");
+Frame svetlo03;	FRM_FindFrame(svetlo03, "la_svetlo_8.Mesh01");
+Frame svetlo04;	FRM_FindFrame(svetlo04, "la_svetlo6.Mesh01");
+Frame svetlo05;	FRM_FindFrame(svetlo05, "la_svetlo_6.Mesh01");
+Frame svetlo06;	FRM_FindFrame(svetlo06, "la_svetlo5.Mesh01");
+Frame svetlo07;	FRM_FindFrame(svetlo07, "la_svetlo_5.Mesh01");
+Frame svetlo08;	FRM_FindFrame(svetlo08, "la_svetlo4.Mesh01");
+Frame svetlo09;	FRM_FindFrame(svetlo09, "la_svetlo_4.Mesh01");
+Frame svetlo10;	FRM_FindFrame(svetlo10, "la_svetlo3.Mesh01");
+Frame svetlo11;	FRM_FindFrame(svetlo11, "la_svetlo_3.Mesh01");
+Frame svetlo12;	FRM_FindFrame(svetlo12, "la_svetlo2.Mesh01");
+Frame svetlo13;	FRM_FindFrame(svetlo13, "la_svetlo_19.Mesh01");
+Frame svetlo14;	FRM_FindFrame(svetlo14, "la_svetlo_18.Mesh01");
+Frame svetlo15;	FRM_FindFrame(svetlo15, "la_svetlo_17.Mesh01");
+Frame svetlo16;	FRM_FindFrame(svetlo16, "la_svetlo_16.Mesh01");
+Frame svetlo17;	FRM_FindFrame(svetlo17, "la_svetlo_11.Mesh01");
+Frame svetlo18;	FRM_FindFrame(svetlo18, "la_svetlo_10.Mesh01");
+Frame svetlo19;	FRM_FindFrame(svetlo19, "la_svetlo_.Mesh01");
+Frame vojak01;	FRM_FindFrame(vojak01, "velitel v aute");
+Frame vojak02;	FRM_FindFrame(vojak02, "Ge_12");
+Frame vojak03;	FRM_FindFrame(vojak03, "Ge_13");
+Frame vojak04;	FRM_FindFrame(vojak04, "posila2b");
+Frame vojak05;	FRM_FindFrame(vojak05, "cutsc2");
+Frame vojak06;	FRM_FindFrame(vojak06, "ss_railst00");
+Frame vojak07;	FRM_FindFrame(vojak07, "Ge27b_");
+Frame vojak08;	FRM_FindFrame(vojak08, "Ge_8");
+Frame prsk1;	FRM_FindFrame(prsk1, "trafo2_01");
+Frame zvuk1;	FRM_FindFrame(zvuk1, "S_trafoB_1");
+Frame zvuk2;	FRM_FindFrame(zvuk2, "S_trafoB_2");
+Frame object119;	FRM_FindFrame(object119, "Object119");
+Integer rnd=0;
+Integer randomsound=0;
+Integer firsttime=1;
+}
+
+GoTo end;
+
+OnHit()
+{
+	If(firsttime==1)
+	{
+		firsttime=0;	
+		GoTo zhasinanie;
+	}
+goto prskanie;
+}
+
+Label zhasinanie:
+	Block
+	{
+		SendSignal(svetlo01, 31);
+		SendSignal(svetlo02, 31);
+		SendSignal(svetlo03, 31);
+		SendSignal(svetlo04, 31);
+		SendSignal(svetlo05, 31);
+		SendSignal(svetlo06, 31);
+		SendSignal(svetlo07, 31);
+		SendSignal(svetlo08, 31);
+		SendSignal(svetlo09, 31);
+		SendSignal(svetlo10, 31);
+		SendSignal(svetlo11, 31);
+		SendSignal(svetlo12, 31);
+		SendSignal(svetlo13, 31);
+		SendSignal(svetlo14, 31);
+		SendSignal(svetlo15, 31);
+		SendSignal(svetlo16, 31);
+		SendSignal(svetlo17, 31);
+		SendSignal(svetlo18, 31);
+		SendSignal(svetlo19, 31);
+		SendSignal(vojak01, 31);
+		SendSignal(vojak02, 31);
+		SendSignal(vojak03, 31);
+		SendSignal(vojak04, 31);
+		SendSignal(vojak05, 31);
+		SendSignal(vojak06, 31);
+		SendSignal(vojak07, 31);
+		SendSignal(vojak08, 31);
+		SendSignal(object119, 2);
+	}
+
+Label prskanie:
+	rnd=_RandomInt(10000);
+	randomsound=_RandomInt(2);
+	Delay(rnd);
+	FRM_CreateParticle(72, prsk1);
+	If(randomsound==0)	{	FRM_SetOn(zvuk1, true);	}
+	If(randomsound==1)	{	FRM_SetOn(zvuk2, true);	}
+	GoTo prskanie;
+
+Label end:

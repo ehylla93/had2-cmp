@@ -1,0 +1,26 @@
+Frame sound;		FRM_FindFrame(sound, "S_kus3");
+frame D1;		FRM_FindFrame(D1, "dummy_U3_efekt1");
+frame D2;		FRM_FindFrame(D2, "dummy_U3_efekt2");
+frame D3;		FRM_FindFrame(D3, "dummy_U3_efekt3");
+frame D4;		FRM_FindFrame(D4, "dummy_U3_efekt4");
+
+
+OnDeath()
+{
+    FRM_SetOn(sound, true);
+
+  Delay(1324);
+  FRM_CreateParticle(69, D1);
+  Delay(24);
+  FRM_CreateParticle(69, D3);
+  Delay(13);
+  FRM_CreateParticle(69, D4);
+  Delay(41);
+  FRM_CreateParticle(69, D2);
+
+// pojistka
+  Delay(7500);
+  FRM_SetOn(sound, False);
+
+}
+

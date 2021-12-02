@@ -1,0 +1,77 @@
+// A5_G72 - Pred Oazou
+// ----------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba  - shooting close by
+SetAlarmType(2,1); //slysim strelbu  - shooting
+SetAlarmType(4,1); //kroky         - hear steps
+SetAlarmType(8,0); //zvuky by use  - sounds by "use"
+SetAlarmType(16,0); //exploze  - explosion (does not work in MP)
+SetAlarmType(32,1); //vidi     - see
+SetAlarmType(64,1); //jsem zranen      - gets injured
+SetAlarmType(128,1); //zeskriptu       - from script
+SetAlarmType(256,1); //pratelska strelba - friendly fire
+SetAlarmType(512,1); //vidim flakotu  - see a dead body
+
+FRM_SwitchFaceTexture(me,"e_f005");
+
+Integer Alarm;
+}
+
+// ----------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+Alarm =_GetAlarmType();
+
+If (((Alarm == 1) OR (Alarm == 2)) OR (Alarm == 256))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Walk();
+}
+
+If (((Alarm == 4) OR (Alarm == 8)) OR (Alarm == 512))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+}
+
+If(Alarm == 32)
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+}
+
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(500))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+// ----------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(100);
+HUMAN_Suspend(1);
+goto  END;
+
+
+Label END:

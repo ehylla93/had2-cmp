@@ -1,0 +1,63 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,0);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+
+
+
+FRM_SwitchFaceTexture(me,"e_f052");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Zombie();
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Zombie();
+//*OnAlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//*CustomSection
+
+Label SpeechLoop:
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(me, 04990875, 5, 30);
+Delay(3000);
+FRM_MorphSpeechDelayed(me, 04990874, 5, 30);
+Delay(7000);
+//*SpeechLoop
+goto SpeechLoop;
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+HUMAN_WeaponOnArm(0);
+//*DefaultLoad
+goto SpeechLoop;
+
+Label END:

@@ -1,0 +1,59 @@
+// C5_G37 - soldier in the bunker
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame g34;	FRM_FindFrame(g34, "C5_G34");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(140, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	SendSignal(g34, 2);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever signal(_SignalReceived(1))	// received C5_G37_activator01
+{
+	HUMAN_Suspend(false);
+	GoTo activate;
+}
+
+Whenever signal2(_SignalReceived(2))	// received from C5_G33
+{
+	HUMAN_Suspend(false);
+	GoTo activate;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+FRM_SwitchFaceTexture(me, "e_f045");
+HUMAN_SETAIMODE_Defensive();
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label activate:
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+
+Label end:

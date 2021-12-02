@@ -1,0 +1,23 @@
+
+
+HUMAN_Suspend(True);
+goto TheEnd;
+
+OnSignal(1) 
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("La_tigerEv", true, 1);
+}
+
+OnAlarm()
+{
+  Endscript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  Goto TheEnd;
+}
+
+Label TheEnd:

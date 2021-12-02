@@ -1,0 +1,31 @@
+// Obj 9 , Find out what the trucks transport - Looool  ;) , I am sure you will be surprised ;)
+//-----------------------------------------------
+
+Block
+{
+Frame Obj10;	FRM_FindFrame(Obj10,"obj10");
+}
+//-----------------------------------------------
+
+Whenever Truck_Alarm(_SignalReceived(1))
+{
+SendSignal(Obj10, 1);
+SetObjectiveStatus(8, 0);
+SetObjectiveStatus(10, 0);
+Delay(500);
+SetObjectiveStatus(9, 1);
+Delay(500);
+DisableSignals(1);
+EndScript();
+}
+
+
+Whenever Nejedou(_SignalReceived(2))
+{
+SetObjectiveStatus(8, 0);
+SetObjectiveStatus(10, 4);
+SetObjectiveStatus(9, 4);
+Delay(500);
+DisableSignals(1);
+EndScript();
+}

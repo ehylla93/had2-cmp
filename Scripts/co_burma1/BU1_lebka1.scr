@@ -1,0 +1,13 @@
+// BU1_lebka1 - skull script
+
+Block {
+Frame ee;	FRM_FindFrame(ee, "BU1_EE");
+}
+
+OnDeath()
+{
+	SendSignal(ee, 1);
+	goto end;
+}
+
+Label end:

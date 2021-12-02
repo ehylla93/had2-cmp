@@ -1,0 +1,73 @@
+// Reinforcements
+
+Block
+{
+Frame R2_E01;	FRM_FindFrame(R2_E01, "R2_E01");
+Frame R2_E02;	FRM_FindFrame(R2_E02, "R2_E02");
+Frame R2_E03;	FRM_FindFrame(R2_E03, "R2_E03");
+Frame R2_E04;	FRM_FindFrame(R2_E04, "R2_E04");
+Frame R2_E05;	FRM_FindFrame(R2_E05, "R2_E05");
+Frame R2_E06;	FRM_FindFrame(R2_E06, "R2_E06");
+Frame R2_E07;	FRM_FindFrame(R2_E07, "R2_E07");
+Frame R2_E08;	FRM_FindFrame(R2_E08, "R2_E08");
+Frame R2_E09;	FRM_FindFrame(R2_E09, "R2_E09");
+
+Frame R4_1;		FRM_FindFrame(R4_1, "reinf4_1");
+Frame R4_2;		FRM_FindFrame(R4_2, "reinf4_2");
+Frame R4kw;		FRM_FindFrame(R4kw, "1_kubel_1");
+
+Frame artillery;	FRM_FindFrame(artillery, "02_artillery");
+Frame obj6;			FRM_FindFrame(obj6, "obj6");
+Frame zone3;		FRM_FindFrame(zone3, "spawnzone3");
+
+Integer time;
+}
+goto end;
+
+// ----------------------------------------
+
+Label Timer1:
+time = _RandomInt(10000) + 5000;
+printfnumber("Timer1: ", time);
+Delay(time);
+Return;
+
+Label Timer2:
+time = _RandomInt(25000) + 7000;
+printfnumber("Timer2: ", time);
+Delay(time);
+Return;
+
+OnSignal(1)		// received from 04_E04 (by flare gun)
+{
+EnableSignal(1, 0);
+printf("R2 inc");
+Delay(1500);	// reaction time 1.5 seconds
+Block {
+SendSignal(R2_E01, 1);SendSignal(R2_E02, 1);SendSignal(R2_E03, 1);
+SendSignal(R2_E04, 1);SendSignal(R2_E05, 1);SendSignal(R2_E06, 1);
+SendSignal(R2_E07, 1);SendSignal(R2_E08, 1);SendSignal(R2_E09, 1);
+}
+}
+
+OnSignal(3)	// received from obj3
+{
+EnableSignal(3, 0);
+printf("R4 inc");
+gosub Timer1;
+SendSignal(artillery, 1);
+gosub Timer2;
+
+Delay(500);
+Block {
+SendSignal(obj6, 1);	// starts kill counter
+SendSignal(zone3, 1);	// inits spawnzone3
+SendSignal(R4_1, 1);	// triggers infantry
+SendSignal(R4_2, 1);	// triggers SdKfZ and tiger tank
+SendSignal(R4kw, 1);	// triggers Kübelwagen
+}
+}
+
+// ----------------------------------------
+
+Label end:

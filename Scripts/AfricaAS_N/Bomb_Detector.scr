@@ -1,0 +1,17 @@
+// Bomba
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Brana1;		FRM_FindFrame(Brana1,"Brana1");
+Frame Brana2;		FRM_FindFrame(Brana2,"Brana2");
+Frame Bomba;		FRM_FindFrame(Bomba,"Bomb_01");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Bum ((_Actor_GetState(Brana1)==2) OR (_Actor_GetState(Brana2)==2))
+{
+Block{FRM_SetOn(Bomba, 0);}
+EndScript();
+}

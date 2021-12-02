@@ -1,0 +1,63 @@
+
+  frame OBJ;		FRM_FindFrame(OBJ, "dummy_marine_activator");
+  frame sit;		FRM_FindFrame(sit, "dummy_marine4_sit");
+  integer  AIEvent;
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+  SetAlarmType(128, False);
+
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+OnSignal(20)
+{						
+  HUMAN_Suspend(False);	
+  Goto TheEnd;			// Ja se mužu vysrat na ladìní toho kdy nahodou nebude èernej
+  HUMAN_ACTIVITY_Sit(sit);
+  Delay(700);
+  HUMAN_SetAnim("%%sedimtak", 400, 400, True);		
+}						
+
+OnAlarm()
+{
+  HUMAN_SetAnim("", 250, 250, False);	
+  HUMAN_SETMODE_StandFast();
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Marine4: ", AIEvent);
+      HUMAN_Stop();
+    }
+  If (AIEvent == 32) 
+    {
+       EndScript();
+    } else {
+       HUMAN_TurnAtNearestPlayer();
+       EndScript();  
+   }  
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(511, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetOptimized(1);
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 10);
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

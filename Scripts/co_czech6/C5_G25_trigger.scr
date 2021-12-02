@@ -1,0 +1,8 @@
+// C5_G25 - trigger on ladder
+
+Frame g25;	FRM_FindFrame(g25, "C5_G25");
+
+Whenever player(_PlayerInRange(2))
+{
+SendSignal(g25, 1);
+}

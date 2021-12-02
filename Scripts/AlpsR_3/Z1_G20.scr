@@ -1,0 +1,52 @@
+// Z1_G20 - Sedi u Skaly u reky vedle Huntera
+// -----------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f009");
+}
+
+// -----------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 600, 600, 1);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Lie();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+// -----------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%sedimL", 600, 600, 1);
+goto END;
+
+Label END:

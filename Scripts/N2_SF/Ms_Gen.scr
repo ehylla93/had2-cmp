@@ -1,0 +1,49 @@
+// MISSION Generator / Random objects + Start of mission
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+// *** DETEKTORY ***
+
+Frame D1;	FRM_FindFrame(D1,"Bank_Assault");
+Frame D2;	FRM_FindFrame(D2,"Spawnzones");
+Frame D3;	FRM_FindFrame(D3,"SnipersSelector");
+Frame D4;	FRM_FindFrame(D4,"Ally_Speech");
+
+// **** Hlavni Spinace ****
+// 1 = ON / 0 = OFF
+
+Integer S1; // Bank Assault
+	S1=1;
+
+Integer S2; // Spawnzones
+	S2=1;
+
+Integer S3; // Snipers
+	S3=1;
+
+Integer S4; // Speech
+	S4=1;
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+If(S2==1){SendSignal(D2, 1);}
+
+Whenever Player (_PlayerInRange(300))
+{
+If(S1==1){SendSignal(D1, 1);}
+If(S3==1){SendSignal(D3, 1);}
+
+Delay(8000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993404);
+Delay(4000);
+SUBTITLES_SetText(17993401);
+Delay(2000);
+SUBTITLES_SetText(17993402);
+Delay(2000);
+SUBTITLES_SetOn(0);
+
+If(S4==1){SendSignal(D4, 1);}
+}

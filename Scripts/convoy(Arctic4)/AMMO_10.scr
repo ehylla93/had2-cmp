@@ -1,0 +1,92 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame 1;		FRM_FindFrame(1,"1");
+Frame 2;		FRM_FindFrame(2,"2");
+Frame 3;		FRM_FindFrame(3,"3");
+
+Frame 6;		FRM_FindFrame(6,"6");
+Frame 7;		FRM_FindFrame(7,"7");
+Frame 8;		FRM_FindFrame(8,"8");
+Frame 9;		FRM_FindFrame(9,"9");
+Frame 10;		FRM_FindFrame(10,"10");
+
+Frame 11;		FRM_FindFrame(11,"11");
+Frame 12;		FRM_FindFrame(12,"12");
+Frame 13;		FRM_FindFrame(13,"13");
+Frame 14;		FRM_FindFrame(14,"14");
+Frame 15;		FRM_FindFrame(15,"15");
+
+
+Frame zones66;		FRM_FindFrame(zones66,"zones66");
+Frame zones67;		FRM_FindFrame(zones67,"zones67");
+Frame zones68;		FRM_FindFrame(zones68,"zones68");
+Frame zones69;		FRM_FindFrame(zones69,"zones69");
+
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(1)
+{
+SendSignal(1, 1);
+SendSignal(2, 1);
+SendSignal(3, 1);
+SendSignal(6, 1);
+SendSignal(7, 1);
+SendSignal(8, 1);
+SendSignal(9, 1);
+SendSignal(10, 1);
+SendSignal(11, 1);
+SendSignal(12, 1);
+SendSignal(13, 1);
+SendSignal(14, 1);
+SendSignal(15, 1);
+SendSignal(zones66, 1);
+SendSignal(zones67, 1);
+SendSignal(zones68, 1);
+SendSignal(zones69, 1);
+
+  Delay(3000);
+  SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993607);
+DisableSignals(1);
+
+//^object6
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:

@@ -1,0 +1,21 @@
+// BU2_rndxplo05 - explosion effect
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame rndxplo05;	FRM_FindFrame(rndxplo05, "rndxplo05");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(1)	// received from BU2_bomber
+{
+If(_PlayerInRange(50))
+{
+	Block
+	{
+		SetActorState(rndxplo05, 1);
+		//MakeExplosion(rndxplo05, 800000, 15000);
+	}
+}
+}

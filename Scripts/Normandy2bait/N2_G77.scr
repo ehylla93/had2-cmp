@@ -1,0 +1,28 @@
+// driver Panzer III (La_tiger_4)
+// -----------------------------------------------
+
+Block
+{
+Frame kanon;		FRM_FindFrame(kanon,"N2_G78");
+Frame kulomet;		FRM_FindFrame(kulomet,"N2_G79");
+
+}
+
+// -----------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+
+
+// -----------------------------------------------
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("La_tiger_4",  1, 0);
+goto END;
+
+
+Label END:

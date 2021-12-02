@@ -1,0 +1,23 @@
+// Obj 4 - Destroy the Transport Vehicles
+// --------------------------------------------
+
+Block
+{
+	Frame Obj8;			FRM_FindFrame(Obj8, "obj8"); 
+	Frame T1;			FRM_FindFrame(T1, "Opel1");
+	Frame T2;			FRM_FindFrame(T2, "Opel2");
+
+	SetObjectiveStatus(4, 0);
+}
+
+Whenever Trucks_Destroyed ((_Actor_GetState(T1) == 0) And (_Actor_GetState(T2) == 0 ))
+{
+	Delay(1000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(52999712);
+	SendSignal(Obj8, 1);
+	Delay(3500);
+	SetObjectiveStatus(4, 1);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}

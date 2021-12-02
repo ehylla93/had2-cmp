@@ -1,0 +1,13 @@
+// BU1_soundfall_right
+Frame soundB1;
+	FRM_FindFrame(soundB1, "S_troskyB1");
+Frame soundB2;
+	FRM_FindFrame(soundB2, "S_troskyB2");
+
+OnSignal(1)	// received from Most_right
+{
+	Delay(2300);
+	FRM_SetOn(soundB1, true);
+	Delay(200);
+	FRM_SetOn(soundB2, true);
+}

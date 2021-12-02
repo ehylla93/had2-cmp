@@ -1,0 +1,38 @@
+// sklad u nadrazi
+Frame svetlox09;	FRM_FindFrame(svetlox09, "storage outdoor light_7");
+Frame lensx09;	FRM_FindFrame(lensx09, "e_raslmp_13.Rectangle01");
+
+Frame svetlox10;	FRM_FindFrame(svetlox10, "storage outdoor light_8");
+Frame lensx10;	FRM_FindFrame(lensx10, "e_raslmp_12.Rectangle01");
+
+Frame svetlox11;	FRM_FindFrame(svetlox11, "storage outdoor light_9");
+Frame lensx11;	FRM_FindFrame(lensx11, "e_raslmp_4.Rectangle01");
+
+Frame svetlox12;	FRM_FindFrame(svetlox12, "storage outdoor light_10");
+Frame lensx12;	FRM_FindFrame(lensx12, "e_raslmp_14.Rectangle01");
+
+Frame svetlox13;	FRM_FindFrame(svetlox13, "storage outdoor light_11");
+Frame lensx13;	FRM_FindFrame(lensx13, "e_raslmp_15.Rectangle01");
+
+Frame svetlox14;	FRM_FindFrame(svetlox14, "storage outdoor light_12");
+Frame lensx14;	FRM_FindFrame(lensx14, "e_raslmp_9.Rectangle01");
+
+Frame ostatnesvetla05;	FRM_FindFrame(ostatnesvetla05, "window in effect_5");
+Frame ostatnesvetla06;	FRM_FindFrame(ostatnesvetla06, "window in effect_6");
+Frame ostatnesvetla07;	FRM_FindFrame(ostatnesvetla07, "window in effect_7");
+
+OnSignal(1)
+{
+	Delay(1000);
+	Block	{	FRM_SetOn(svetlox09, 0);	FRM_SetOn(lensx09, 0);
+			FRM_SetOn(svetlox10, 0);	FRM_SetOn(lensx10, 0);
+			FRM_SetOn(svetlox11, 0);	FRM_SetOn(lensx11, 0);
+			FRM_SetOn(svetlox12, 0);	FRM_SetOn(lensx12, 0);
+			FRM_SetOn(svetlox13, 0);	FRM_SetOn(lensx13, 0);
+			FRM_SetOn(svetlox14, 0);	FRM_SetOn(lensx14, 0);
+			FRM_SetOn(ostatnesvetla05, 0);
+			FRM_SetOn(ostatnesvetla06, 0);
+			FRM_SetOn(ostatnesvetla07, 0);
+
+			FRM_SetGroupLightMap("sklad02", 1);			}
+}

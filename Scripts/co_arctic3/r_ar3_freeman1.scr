@@ -1,0 +1,45 @@
+// Freeman 1
+
+Block {
+integer AIEvent;
+
+SetAlarmType(1023, 1);
+}
+
+HUMAN_Suspend(1);
+HUMAN_SetOptimized(1);
+
+goto END;
+
+OnAlarm()
+{
+  AIEvent =_GetAlarmType(); 
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetAlarm(False);
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_Move("FreeMan1_Start");
+HUMAN_Move("Free1_carnage");
+HUMAN_SETMODE_Crouch();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label END:

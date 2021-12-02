@@ -1,0 +1,48 @@
+// Sniper Selector
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"Snip01");
+Frame S2;	FRM_FindFrame(S2,"Snip02");
+Frame S3;	FRM_FindFrame(S3,"Snip03");
+Frame S4;	FRM_FindFrame(S4,"Snip04");
+Frame S5;	FRM_FindFrame(S5,"Snip05");
+Frame S6;	FRM_FindFrame(S6,"Snip06");
+Frame S7;	FRM_FindFrame(S7,"Snip07");
+Frame S8;	FRM_FindFrame(S8,"Snip08");
+Frame S9;	FRM_FindFrame(S9,"Snip09");
+Frame S10;	FRM_FindFrame(S10,"Snip10");
+Frame S11;	FRM_FindFrame(S11,"Snip11");
+Frame S12;	FRM_FindFrame(S12,"Snip12");
+Frame S13;	FRM_FindFrame(S13,"Snip13");
+Frame S14;	FRM_FindFrame(S14,"Snip14");
+
+Integer SnipVyber;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Snipers (_SignalReceived(1))
+{
+SnipVyber =_RandomInt(14);
+
+If(SnipVyber == 0){  SendSignal(S1, 1);SendSignal(S3, 1);SendSignal(S5, 1);SendSignal(S7, 1);SendSignal(S9, 1);SendSignal(S14, 1);}
+If(SnipVyber == 1){  SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S6, 1);SendSignal(S8, 1);SendSignal(S10, 1);SendSignal(S12, 1);}
+If(SnipVyber == 2){  SendSignal(S13, 1);SendSignal(S10, 1);SendSignal(S7, 1);SendSignal(S4, 1);SendSignal(S1, 1);SendSignal(S14, 1);}
+If(SnipVyber == 3){  SendSignal(S12, 1);SendSignal(S11, 1);SendSignal(S8, 1);SendSignal(S4, 1);SendSignal(S2, 1);SendSignal(S5, 1);}
+If(SnipVyber == 4){  SendSignal(S11, 1);SendSignal(S8, 1);SendSignal(S6, 1);SendSignal(S3, 1);SendSignal(S5, 1);SendSignal(S7, 1);}
+If(SnipVyber == 5){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S8, 1);SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S14, 1);}
+If(SnipVyber == 6){  SendSignal(S5, 1);SendSignal(S6, 1);SendSignal(S7, 1);SendSignal(S8, 1);SendSignal(S10, 1);SendSignal(S12, 1);}
+If(SnipVyber == 7){  SendSignal(S9, 1);SendSignal(S10, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S13, 1);SendSignal(S14, 1);}
+If(SnipVyber == 8){  SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S7, 1);SendSignal(S8, 1);SendSignal(S10, 1);}
+If(SnipVyber == 9){  SendSignal(S1, 1);SendSignal(S5, 1);SendSignal(S9, 1);SendSignal(S13, 1);SendSignal(S6, 1);SendSignal(S14, 1);}
+If(SnipVyber == 10){  SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S7, 1);SendSignal(S8, 1);SendSignal(S11, 1);SendSignal(S13, 1);}
+If(SnipVyber == 11){  SendSignal(S12, 1);SendSignal(S4, 1);SendSignal(S3, 1);SendSignal(S7, 1);SendSignal(S9, 1);SendSignal(S14, 1);}
+If(SnipVyber == 12){  SendSignal(S5, 1);SendSignal(S8, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S1, 1);SendSignal(S3, 1);}
+If(SnipVyber == 13){  SendSignal(S1, 1);SendSignal(S4, 1);SendSignal(S9, 1);SendSignal(S11, 1);SendSignal(S12, 1);SendSignal(S14, 1);}
+goto END;
+}
+
+
+Label END:

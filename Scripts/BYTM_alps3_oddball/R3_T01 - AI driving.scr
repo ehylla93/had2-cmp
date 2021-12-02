@@ -1,0 +1,82 @@
+// R3_T01
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 0);
+
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(40);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame tank4;	FRM_FindFrame(tank4, "tank4");
+Frame T02;		FRM_FindFrame(T02, "R3_T02");
+Frame T03;		FRM_FindFrame(T03, "R3_T03");
+Frame Sherman;	FRM_FindFrame(Sherman, "tank2");
+}
+
+HUMAN_Suspend(1);
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+FRM_SetOn(tank4, true);
+FRM_TeleportNearCheckpoint(tank4, "tank4_01", "tank4_02");
+HUMAN_Suspend(0);
+Block {
+SendSignal(T02, 1);
+SendSignal(T03, 1);
+}
+HUMAN_BoardVehicle("tank4", 1, 0);
+goto checkpos;
+}
+
+// ------------------------------------
+
+Label checkpos:
+if(_LoadGameValue(100)==1) { HUMAN_Drive("road_01", 15); }
+if(_LoadGameValue(101)==1) { HUMAN_Drive("road_02", 15); }
+if(_LoadGameValue(102)==1) { HUMAN_Drive("road_03", 15); }
+if(_LoadGameValue(103)==1) { HUMAN_Drive("road_04", 15); }
+if(_LoadGameValue(104)==1) { HUMAN_Drive("road_05", 15); }
+if(_LoadGameValue(105)==1) { HUMAN_Drive("road_06", 15); }
+if(_LoadGameValue(106)==1) { HUMAN_Drive("road_07", 15); }
+if(_LoadGameValue(107)==1) { HUMAN_Drive("road_08", 15); }
+if(_LoadGameValue(108)==1) { HUMAN_Drive("road_09", 15); }
+if(_LoadGameValue(109)==1) { HUMAN_Drive("road_10", 15); }
+if(_LoadGameValue(110)==1) { HUMAN_Drive("road_11", 15); }
+if(_LoadGameValue(111)==1) { HUMAN_Drive("road_12", 15); }
+HUMAN_Drive("", 0);
+
+// ------------------------------------
+
+Whenever TIR (_FrameInRange(Sherman) < 25)
+{
+DisableSignals(1);
+DisableWhenevers(1);
+HUMAN_Drive("", 0);
+printf("Sherman closer then 25m");
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

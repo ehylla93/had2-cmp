@@ -1,0 +1,96 @@
+// AF1_48 - walking on the roof (MGcrouch_)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME look;				FRM_FindFrame(look, "m_palma48");
+  FRAME look1;			FRM_FindFrame(look1 , "la_macchi06");
+  FRAME look2;			FRM_FindFrame(look2 , "la_macchi05");
+  FRAME drink;				FRM_FindFrame(drink, "");
+  FRAME look3;			FRM_FindFrame(look3 , "box13");
+  FRAME look4;			FRM_FindFrame(look4 , "m_palma21");
+  INTEGER Atype			= 0;
+  INTEGER atpos			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+
+OnDeath(){
+  printf("48: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(550)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{ 
+    SetWhenever(player, false);
+    DisableSignals(true);
+    HUMAN_Stop();
+    HUMAN_SetMODE_Stand();
+    HUMAN_SETMODE_Run();
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("12: ", Atype);
+    HUMAN_SetSightRange(600);
+    SendSignal(dummyalert, 1);
+  }
+
+  if(!atpos)
+  {
+    HUMAN_BoardVehicle("w_mg42Crouch_", true, 0);
+  //  PlaySound(9, 50);
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SetSniper(false, 5);
+
+  HUMAN_SetSightRange(2000);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_Move("af1_12_01");
+  HUMAN_SetMODE_Stand();
+  HUMAN_LookAround(6);
+  goto END;
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetAnim("%%sedimL4", 300, 300, true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_SetOptimized(true);
+  HUMAN_Suspend(false);
+goto END;
+
+Label PATH_01:
+  HUMAN_SetMODE_Guard();
+  HUMAN_Move("af1_12_02");
+  HUMAN_TurnAt(look4);
+  Delay(2000);
+  HUMAN_Move("af1_12_03");
+  HUMAN_WeaponOnArm(false);
+  Delay(1000);
+  HUMAN_TurnAt(look3);
+  HUMAN_ACTIVITY_DrinkBottle(drink);
+  Delay(3000);
+  HUMAN_WeaponOnArm(true);
+  Delay(1500);
+goto PATH_01;
+
+Label END:

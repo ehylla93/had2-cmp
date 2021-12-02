@@ -1,0 +1,25 @@
+// Guard 6 Ally (Sit)
+// ------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+
+FRM_SwitchFaceTexture(me,"e_f008");
+}
+
+// ------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+// ------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("%%sedimL4", 100, 100, 1);
+goto END;
+
+
+Label END:

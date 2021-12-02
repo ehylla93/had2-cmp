@@ -1,0 +1,37 @@
+// Reinforcements
+// -------------------------------------------
+
+Block
+{
+Frame R1;	FRM_FindFrame(R1,"SF_G31");
+Frame R2;	FRM_FindFrame(R2,"SF_G32");
+Frame R3;	FRM_FindFrame(R3,"SF_G33");
+Frame R4;	FRM_FindFrame(R4,"SF_G34");
+Frame R5;	FRM_FindFrame(R5,"SF_G35");
+Frame R6;	FRM_FindFrame(R6,"SF_G36");
+Frame R7;	FRM_FindFrame(R7,"SF_G37");
+Frame R8;	FRM_FindFrame(R8,"SF_G38");
+Frame R9;	FRM_FindFrame(R9,"SF_G39");
+Frame R10;	FRM_FindFrame(R10,"SF_G40");
+Frame R11;	FRM_FindFrame(R11,"SF_G41");
+Frame R12;	FRM_FindFrame(R12,"SF_G42");
+Frame R13;	FRM_FindFrame(R13,"SF_G43");
+Frame R14;	FRM_FindFrame(R14,"SF_G44");
+Frame R15;	FRM_FindFrame(R15,"SF_G45");
+}
+
+// -------------------------------------------
+
+Whenever Reinf (_SignalReceived(1))
+{
+SendSignal(R1, 1);SendSignal(R2, 1);SendSignal(R3, 1);
+Delay(1000);
+SendSignal(R4, 1);SendSignal(R5, 1);SendSignal(R6, 1);
+Delay(1000);
+SendSignal(R7, 1);SendSignal(R8, 1);SendSignal(R9, 1);
+Delay(1000);
+SendSignal(R10, 1);SendSignal(R11, 1);SendSignal(R12, 1);
+Delay(1000);
+SendSignal(R13, 1);SendSignal(R14, 1);SendSignal(R15, 1);
+EndScript();
+}

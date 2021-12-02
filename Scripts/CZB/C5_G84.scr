@@ -1,0 +1,37 @@
+// C5_G84
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd				= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(2) 
+{
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("La_tiger_5",  true, 3);
+  HUMAN_SETSIGHTRANGE(1000);
+  HUMAN_SETAIMODE_Aggressive();
+ goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(true);
+Label END:

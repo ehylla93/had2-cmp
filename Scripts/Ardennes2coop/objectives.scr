@@ -1,0 +1,154 @@
+//----------------------objectives----------------------
+// 1 - Capture the German control post.
+// 2 - Kill the snipers.
+// 3 - Destroy all enemy tanks.
+// 4 - Eliminate the Gestapo officer.
+// 5 - Damage the radio-station.
+// 6 - Place the homing transmitter.
+// 7 - Destroy the anti-aircraft defence.
+// 8 - Assemble at the planned location.
+//----------------------objectives----------------------
+block
+{
+Frame txt;	FRM_FindFrame(txt,"Text");
+SetWhenever (end2,0);
+integer obj1;		obj1=0;
+integer obj2;		obj2=0;
+integer obj3;		obj3=0;
+integer obj4;		obj4=0;
+integer obj5;		obj5=0;
+integer obj6;		obj6=0;
+integer obj7;		obj7=0;
+}
+SetObjectiveStatus(8, 4);
+SetObjectiveStatus(1, 0);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+SetObjectiveStatus(5, 0);
+SetObjectiveStatus(6, 0);
+SetObjectiveStatus(7, 0);
+goto end;
+//----------------------Capture the German control post----------------------
+OnSignal(1) 
+{
+block
+{
+if ((((((obj7==1) AND (obj2==1)) AND (obj3==1)) AND (obj4==1)) AND (obj5==1))AND (obj6==1))
+{
+SetObjectiveStatus(8, 0);
+SendSignal(txt, 2);
+}
+SetObjectiveStatus(1, 1);
+MP_EnableSpawnZone("zone1", 1);
+obj1=1;
+goto end;
+}
+}
+//----------------------Kill the snipers----------------------
+OnSignal(2) 
+{
+block
+{
+if ((((((obj1==1) AND (obj7==1)) AND (obj3==1)) AND (obj4==1)) AND (obj5==1))AND (obj6==1))
+{
+SetObjectiveStatus(8, 0);
+SendSignal(txt, 2);
+}
+SetObjectiveStatus(2, 1);
+obj2=1;
+goto end;
+}
+}
+//----------------------Destroy all enemy tanks----------------------
+OnSignal(3) 
+{
+block
+{
+if ((((((obj1==1) AND (obj2==1)) AND (obj7==1)) AND (obj4==1)) AND (obj5==1))AND (obj6==1))
+{
+SetObjectiveStatus(8, 0);
+SendSignal(txt, 2);
+}
+SetObjectiveStatus(3, 1);
+obj3=1;
+goto end;
+}
+}
+//----------------------Eliminate the Gestapo officer----------------------
+OnSignal(4) 
+{
+block
+{
+if ((((((obj1==1) AND (obj2==1)) AND (obj3==1)) AND (obj7==1)) AND (obj5==1))AND (obj6==1))
+{
+SetObjectiveStatus(8, 0);
+SendSignal(txt, 2);
+}
+SetObjectiveStatus(4, 1);
+obj4=1;
+goto end;
+}
+}
+//----------------------Damage the radio-station----------------------
+OnSignal(5) 
+{
+block
+{
+if ((((((obj1==1) AND (obj2==1)) AND (obj3==1)) AND (obj4==1)) AND (obj7==1))AND (obj6==1))
+{
+SetObjectiveStatus(8, 0);
+SendSignal(txt, 2);
+}
+SetObjectiveStatus(5, 1);
+obj5=1;
+goto end;
+}
+}
+//----------------------Place the homing transmitter----------------------
+OnSignal(6) 
+{
+block
+{
+if ((((((obj1==1) AND (obj2==1)) AND (obj3==1)) AND (obj4==1)) AND (obj5==1))AND (obj7==1))
+{
+SetObjectiveStatus(8, 0);
+SendSignal(txt, 2);
+}
+SetObjectiveStatus(6, 1);
+obj6=1;
+goto end;
+}
+}
+//----------------------Destroy the anti-aircraft defence----------------------
+OnSignal(7) 
+{
+block
+{
+if ((((((obj1==1) AND (obj2==1)) AND (obj3==1)) AND (obj4==1)) AND (obj5==1))AND (obj6==1))
+{
+SetObjectiveStatus(8, 0);
+SendSignal(txt, 2);
+}
+SetObjectiveStatus(7, 1);
+obj7=1;
+goto end;
+}
+}
+//----------------------Assemble at the planned location----------------------
+OnSignal(8) 
+{
+SetWhenever (end2,1);
+goto end;
+}
+Whenever end2 (_MP_AllTeamMembersAreInRange(1, 25))
+{
+Delay(1000);
+SendSignal(txt, 3);
+Delay(6000);
+SetObjectiveStatus(8, 1);
+goto end;
+}
+//----------------------END----------------------
+
+label end:

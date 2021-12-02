@@ -1,0 +1,34 @@
+// Supply na Hrad Nakladakem (2)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame R1;		FRM_FindFrame(R1,"S_Tr01");  // **Ridici Nakladaku**
+Frame R2;		FRM_FindFrame(R2,"S_Tr11");
+
+Frame R3;		FRM_FindFrame(R3,"T1_G01");  // **Ridic Panzeru**
+Frame Obj3;		FRM_FindFrame(Obj3,"obj3");
+
+Integer jedem;
+	jedem = _RandomInt(3);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+Delay(5000);
+
+If(jedem == 0){  SendSignal(Obj3, 2);Delay(70000);SendSignal(R1, 1);SendSignal(R2, 1);Delay(140000);SendSignal(R3, 1);}
+
+If(jedem == 1){  SendSignal(Obj3, 2);Delay(180000);SendSignal(R1, 1);SendSignal(R2, 1);Delay(60000);SendSignal(R3, 1);}
+
+
+// ***** VUBEC NAKLADAK NEPOJEDE *****
+
+If(jedem == 2){  SendSignal(Obj3, 3);Delay(50000);SendSignal(R3, 1);}
+
+goto END;
+}
+
+
+Label END:

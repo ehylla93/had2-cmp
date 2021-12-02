@@ -1,0 +1,122 @@
+// Hakl 2 (Hakl_02) Ridic
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+
+Frame Hakl;	FRM_FindFrame(Hakl,"Hakl_02");
+
+Frame H2g2;	FRM_FindFrame(H2g2,"H2_G02");
+Frame H2g3;	FRM_FindFrame(H2g3,"H2_G03");
+Frame H2g4;	FRM_FindFrame(H2g4,"H2_G04");
+Frame H2g5;	FRM_FindFrame(H2g5,"H2_G05");
+Frame H2g6;	FRM_FindFrame(H2g6,"H2_G06");
+
+Frame Cp1;	FRM_FindFrame(Cp1,"Cp_Oasis_01");
+Frame Cp2;	FRM_FindFrame(Cp2,"Cp_Oasis_02");
+Frame Cp3;	FRM_FindFrame(Cp3,"Radio1");
+Frame Cp4;	FRM_FindFrame(Cp4,"Cp_Brana1");
+Frame Cp5;	FRM_FindFrame(Cp5,"Cp_Brana2");
+Frame Cp6;	FRM_FindFrame(Cp6,"Cp_S1G06_Relax");
+Frame Cp7;	FRM_FindFrame(Cp7,"obj1");
+Frame Cp8;	FRM_FindFrame(Cp8,"Weaponbox3");
+Frame Cp9;	FRM_FindFrame(Cp9,"Weaponbox1");
+Frame Cp10;	FRM_FindFrame(Cp10,"Aidkitbox1");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f095");
+
+Integer Trasa;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Car_SetFuel(Hakl, 0);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp7, 3);
+HUMAN_TurnAt(Cp6);
+goto END;
+}
+
+Whenever Jedem (_SignalReceived(1))
+{
+Block{FRM_SetOn(Hakl, 1);}
+Car_SetFuel(Hakl, 900);
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_BoardVehicle("Hakl_02", 1, 0);
+HUMAN_SetOptimized(2);
+HUMAN_Drive("o2_act1_01", 40);
+Trasa = _RandomInt(2);
+
+If(Trasa == 0)
+{
+HUMAN_Drive("o1_act1_02", 70);
+}
+
+If(Trasa == 1)
+{
+HUMAN_Drive("tank02_al02", 90);
+}
+
+Delay(7000);
+
+SendSignal(H2g2, 2);
+SendSignal(H2g3, 2);
+SendSignal(H2g4, 2);
+SendSignal(H2g5, 2);
+SendSignal(H2g6, 2);
+
+HUMAN_BoardVehicle("Hakl_02", 0, 0);
+HUMAN_SetOptimized(1);
+HUMAN_WeaponOnArm(1);
+Car_SetFuel(Hakl, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETSIGHTRANGE(220);
+HUMAN_SETHEARRANGE(180);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp7, 3);
+HUMAN_TurnAt(Cp6);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

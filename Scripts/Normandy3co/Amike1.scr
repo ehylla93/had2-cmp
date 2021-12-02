@@ -1,0 +1,60 @@
+// Ally 
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame t1;	FRM_FindFrame(t1,"obj3");
+}
+
+HUMAN_Suspend(1);
+HUMAN_SetOptimized(1);
+FRM_SwitchFaceTexture(me, "e_f004");
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+printf("Amike1 dead");
+goto END;
+}
+
+OnSignal(1)
+{
+DisableSignals(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_Stop();
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(0);
+}
+
+Delay(4000);
+HUMAN_BoardVehicle("w_mgBrowning",  true, 0);
+HUMAN_illFire(t1, 8000);
+goto palim;
+
+Label palim:
+Delay(8000);
+HUMAN_illFire(t1, 8000);
+Delay(8000);
+HUMAN_illFire(t1, 8000);
+Delay(8000);
+HUMAN_illFire(t1, 8000);
+goto gun;
+
+Label gun:
+HUMAN_BoardVehicle("w_mgBrowning",  false, 0);
+HUMAN_illFire(t1, 8000);
+Delay(8000);
+goto gun2;
+
+Label gun2:
+HUMAN_illFire(t1, 8000);
+Delay(8000);
+goto gun2;
+
+Label END:

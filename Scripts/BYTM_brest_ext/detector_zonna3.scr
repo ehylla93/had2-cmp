@@ -1,0 +1,21 @@
+block
+{
+SaveGameValue(10, 0);
+SetWhenever(neni,0);
+frame detect;		FRM_FindFrame (detect,"zonna3");
+}
+
+
+Whenever je(_PlayerInBox(detect)==1)
+{
+printf ("PLAYER zonna3 JE");
+SaveGameValue(10, 1);
+SetWhenever(neni,1);
+}
+
+Whenever neni(_PlayerInBox(detect)==0)
+{
+printf ("PLAYER zonna3  NENI");
+SaveGameValue(10, 0);
+SetWhenever(je,1);
+}

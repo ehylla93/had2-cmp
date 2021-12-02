@@ -1,0 +1,121 @@
+
+block
+{
+
+Frame ruka;			//FRM_FindFrame(ruka,"ci_03.hw1");
+Frame axe;			FRM_FindFrame(axe,"m_alp01_sekr_2");
+Frame poloz;		FRM_FindFrame(poloz,"ci03poloz");
+Frame poloz1;		FRM_FindFrame(poloz1,"ci03poloz1");
+frame obj;			FRM_FindFrame(obj,"objectives");
+frame kecac;		FRM_FindFrame(kecac,"ci03kecac");
+frame alarm;		FRM_FindFrame(alarm,"dreva_alarm");
+frame me;			FRM_GetMyFrame(me);
+frame krik;			FRM_FindFrame (krik,"ci03krik");
+Frame eventmusic;	FRM_FindFrame(eventmusic,"eventmusic_civil");
+HUMAN_SETMODE_Run();
+HUMAN_SetOptimized(2);
+}
+
+HUMAN_SETEVENTS(0);
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+DisableSignals(1);
+FRM_TeleportNearFrame(axe,poloz,1);
+SendSignal (kecac,1);
+HUMAN_SetAnim("",1000,1000,0);
+HUMAN_Move("ci03_lehni");
+HUMAN_SETMODE_Lie();
+delay (1000);
+HUMAN_SetAnim("%%lezipanica",500,1000,1);
+Goto end;
+}
+
+OnAlarmDone()
+{
+goto end;
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_SETEVENTS(1);
+SetAlarmType(733,0);
+SetAlarmType(32,1);
+goto sekej;
+}
+
+OnDeath()
+{
+SendSignal (kecac,2);
+SendSignal (obj,2);
+SendSignal(eventmusic,1);
+goto end;
+}
+
+Whenever alarm2(_SignalReceived(8))
+{
+DisableSignals(1);
+HUMAN_SETEVENTS(0);
+gosub prestan;
+HUMAN_SetAnim("",200,200,0);
+SendSignal (krik,1);
+SendSignal (alarm,1);
+HUMAN_Move("ci03_02");
+HUMAN_SETMODE_Lie();
+SendSignal (kecac,1);
+delay (1000);
+HUMAN_SetAnim("%%lezipanica",500,1000,1);
+Goto end;
+}
+
+Whenever alarm3(_SignalReceived(9))
+{
+DisableSignals(1);
+gosub prestan;
+HUMAN_SetAnim("",200,200,0);
+HUMAN_Move("ci03_lehni");
+HUMAN_SETMODE_Lie();
+SendSignal (kecac,1);
+delay (1000);
+HUMAN_SetAnim("%%lezipanica",500,1000,1);
+Goto end;
+}
+
+//-------------------------------------------------------------------------
+
+block
+{
+FRM_FindFrame(ruka,"ci_03.hw1");
+FRM_TeleportNearFrame(axe,ruka,1);
+FRM_FindFrame(ruka,"");
+}
+label sekej:
+HUMAN_SetAnim("%%drevorubec",100,100,1);
+delay(26000);
+gosub prestan;
+HUMAN_SetAnim("%%protahovanid",500,1000,0);
+delay (8000);
+HUMAN_SetAnim("",500,500,0);
+gosub zacni;
+goto sekej;
+
+Label prestan:
+HUMAN_SetAnim("%%drevorubecap",300,100,0);
+delay (300);
+FRM_TeleportNearFrame(axe,poloz1,1);
+return;
+
+Label zacni:
+HUMAN_SetAnim("%%drevorubecap",200,200,0);
+delay (200);
+block
+{
+FRM_FindFrame(ruka,"ci_03.hw1");
+FRM_TeleportNearFrame(axe,ruka,1);
+FRM_FindFrame(ruka,"");
+}
+return;
+
+label end:

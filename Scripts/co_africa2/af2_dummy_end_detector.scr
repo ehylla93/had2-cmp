@@ -1,0 +1,36 @@
+FRAME opel;		FRM_FindFrame(opel, "opelsflakem");
+FRAME jeep;		FRM_FindFrame(jeep, "la_Jeepsas_");
+
+SetWhenever(opel_not_in_range, false);
+SetWhenever(jeep_not_in_range, false);
+
+Delay(20000);
+SaveGameValue(51, 3);
+
+Whenever opel_in_range (_FrameInRange(opel) < 95)
+{
+  printf("YOU ARE LEAVING MISSION WITH OPEL");
+  SaveGameValue(51, 2);
+  SetWhenever(opel_not_in_range, true);
+}
+
+Whenever opel_not_in_range (_FrameInRange(opel) < 105)
+{
+  printf("YOU ARE LEAVING MISSION WITHOUT OPEL");
+  SaveGameValue(51, 3);
+  SetWhenever(opel_in_range, true);
+}
+
+Whenever jeep_in_range (_FrameInRange(jeep) < 95)
+{
+  printf("YOU ARE LEAVING MISSION WITH JEEP");
+  SaveGameValue(51, 1);
+  SetWhenever(opel_not_in_range, true);
+}
+
+Whenever jeep_not_in_range (_FrameInRange(jeep) < 105)
+{
+  printf("YOU ARE LEAVING MISSION WITHOUT JEEP");
+  SaveGameValue(51, 3);
+  SetWhenever(opel_in_range, true);
+}

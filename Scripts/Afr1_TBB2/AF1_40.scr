@@ -1,0 +1,133 @@
+// AF1_40 - sitting near main building ... doing nothing :-)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER rnd				= 0;
+  INTEGER Atype			= 0;
+  INTEGER atpos			= 0;
+
+  SetAlarmType(1023, true);		// all alarm events are on
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("05: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(250)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(player, false);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("05: ", Atype);
+  }
+
+  if((((!atpos) AND (Atype != 32)) AND (Atype != 1)) AND (Atype !=64)){
+    goto ALERT;
+  }
+  
+  if(Atype == 256){
+    HUMAN_SetAlarm(false);
+    HUMAN_TurnAtNearestPlayer();
+    goto END;
+  }
+  
+  if((Atype != 1) AND (Atype != 32) AND (Atype != 64)){
+    SetAlarmType(6, false);
+    HUMAN_SetMODE_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    goto ALARM_DONE;
+  }
+  else{
+    SetAlarmType(6, true);
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetMODE_Guard();
+  
+  rnd =  _RandomInt(2);
+  if((rnd == 0) AND (atpos)){
+    goto ALARM_DONE;
+  }
+  else{
+    if(!atpos){
+      goto ALERT;
+    }
+  } 
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SetOptimized(true);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetAnim("%%sedimL", 200, 200, true);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+goto END;
+
+Label ALARM_DONE:
+  HUMAN_SetMODE_Stand();
+  HUMAN_SetMODE_Silence();
+Label ALARM_DONE2:
+  HUMAN_Move("AF1_04_01");
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500); HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+  HUMAN_Move("AF1_04_02");
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500); HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+  HUMAN_Move("AF1_04_03");
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500); HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+  HUMAN_Move("AF1_04_04");
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500); HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+  HUMAN_Move("AF1_04_05");
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500); HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+  HUMAN_Move("AF1_04_06");
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500); HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+  HUMAN_Move("AF1_04_07");
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500); HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+goto ALARM_DONE2;
+
+Label ALERT:
+  HUMAN_SetMODE_Run();
+  Delay(100);
+  HUMAN_SetMODE_Crouch();
+  Delay(100);
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_Move("AF1_05_alert");
+  atpos = 1;
+  HUMAN_SetSniper(true, 5);
+  HUMAN_SetAIMODE_Zombie();
+  HUMAN_TurnAtNearestPlayer();
+goto END;
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(500);
+goto END;

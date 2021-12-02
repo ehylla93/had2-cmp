@@ -1,0 +1,30 @@
+// Detector - looking for player in definned area
+
+frame Red_30;		FRM_FindFrame(Red_30, "Red_30");
+frame Red_31;		FRM_FindFrame(Red_31, "Red_31");
+frame Red_32;		FRM_FindFrame(Red_32, "Red_32");
+frame Red_33;		FRM_FindFrame(Red_33, "Red_33");
+//*//frame Red_34;		FRM_FindFrame(Red_34, "Red_34");
+frame Red_35;		FRM_FindFrame(Red_35, "Red_35");
+
+frame MQ3;		FRM_FindFrame(MQ3, "MQ3");
+
+goto TheEnd;
+
+Whenever Det_8 (_PlayerInRange(8) )
+{
+Block
+  {
+    SendSignal(Red_30,   8);
+    SendSignal(Red_31,   8);
+    SendSignal(Red_32,   8);
+    SendSignal(Red_33,   8);
+//*//    SendSignal(Red_34,   8);
+    SendSignal(Red_35,   8);
+  }
+}
+
+Delay(30000);
+SendSignal(MQ3, 1); 
+
+Label TheEnd:

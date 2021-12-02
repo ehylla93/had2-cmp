@@ -1,0 +1,49 @@
+// RS_T05 - Machinegunner
+// ------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1023,0);
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Tiger_01", 1, 1);
+HUMAN_SETAIMODE_Aggressive();
+SetAlarmType(1023,1);
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+
+Label END:

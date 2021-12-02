@@ -1,0 +1,55 @@
+// SF_G11 - Sniper
+// ---------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f020");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(100))
+{
+HUMAN_Suspend(0);
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+// ---------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SETHEARRANGE(60);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

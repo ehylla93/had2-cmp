@@ -1,0 +1,61 @@
+// BU2_12 - guard in the bunkers
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame look01;	FRM_FindFrame(look01, "BU2_12_look01");
+Frame look02;	FRM_FindFrame(look02, "BU2_12_look02");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(280, false);	// 8, 16, 256
+}
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(280, false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_12_03");
+	HUMAN_TurnAt(look02);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_SignalReceived(1))	// received from BU2_12_A1
+{
+	HUMAN_Suspend(false);
+	GoTo action1;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f047");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label action1:
+	HUMAN_Move("BU2_12_01");
+	HUMAN_Move("BU2_12_02");
+	HUMAN_TurnAt(look01);
+	GoTo end;
+
+Label end:

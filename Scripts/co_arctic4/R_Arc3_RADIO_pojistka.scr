@@ -1,0 +1,20 @@
+frame radio;		FRM_FindFrame(radio, "m_AF5_prisj_2");
+integer A = 0;
+integer B = 0;
+integer C = 0;
+
+
+Label loop:
+Delay(4000);
+A = _LoadGameValue(2);
+B = _LoadGameValue(4);
+C = _LoadGameValue(5);
+If (((A==99) and (B==99)) and (C==99) )
+  {
+    Printf("POJISTKA radia");
+    If (_Actor_GetState(Radio) != 1)
+      {
+         Printf("POJISTKA pouzita");
+         SetActorState(radio, 1);
+      }
+  }

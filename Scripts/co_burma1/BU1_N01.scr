@@ -1,0 +1,90 @@
+// BU1_N01 - shaman of hate
+Block
+{
+Frame n02;	FRM_FindFrame(n02, "BU1_N02");
+Frame n03;	FRM_FindFrame(n03, "BU1_N03");
+Frame ee;	FRM_FindFrame(ee, "BU1_EE");
+Frame n01p;	FRM_FindFrame(n01p, "BU1_N01_particle");
+Frame ohen;	FRM_FindFrame(ohen, "BU1_N01_ohen");
+Frame me;	FRM_GetMyFrame(me);
+}
+
+FRM_SwitchFaceTexture(me, "e_f023");	// nahradit za domorodca
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from BU1_EE
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("BU1_N01");
+	HUMAN_Move("BU1_N02");
+	HUMAN_Move("BU1_N03");
+	HUMAN_Move("BU1_N04");
+	HUMAN_Move("BU1_N05");
+	HUMAN_Move("BU1_N06");
+	HUMAN_Move("BU1_N07");
+	HUMAN_Move("BU1_N08");
+	HUMAN_Move("BU1_N09");
+	HUMAN_Move("BU1_N10");
+	HUMAN_Move("BU1_N11");
+	HUMAN_Move("BU1_Nx1");
+	HUMAN_TurnAt(ee);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(2)	// received from BU1_N03
+{
+	HUMAN_SetAnim("%%flus", 200, 200, false);
+	Delay(1500);
+	SendSignal(n01p, 1);
+	SendSignal(n02, 2);
+	GoTo end;
+}
+
+OnSignal(3)	// received from BU1_N03
+{
+	HUMAN_SetAnim("%%duma", 200, 200, true);
+	SendSignal(n02, 3);
+	SendSignal(ee, 2);
+	Delay(4000);
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(1000);
+	HUMAN_SetAnim("%%couvani", 200, 200, true);
+	GoTo end;
+}
+
+OnSignal(4)	// received from BU1_EE
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(500);
+	HUMAN_SetAnim("%%lenin", 500, 500, true);
+	FRM_CreateParticle(25, ohen);
+	CheckpointJoin("BU1_Nx1", "BU1_Nu01");
+	HUMAN_SetOptimized(2);
+	HUMAN_Move("BU1_Nu01");
+	SendSignal(n02, 5);
+	HUMAN_Move("BU1_Nu02");
+	HUMAN_Move("BU1_Nu03");
+	HUMAN_Move("BU1_Nu04");
+	HUMAN_Move("BU1_Nu05");
+	HUMAN_Move("BU1_Nu06");
+	HUMAN_Suspend(true);
+	GoTo end;
+}
+
+OnDeath()
+{
+	Block
+	{
+	FRM_CreateParticle(36, ohen);
+	MakeExplosion(ohen, 1000000, 30);
+	SendSignal(ee, 31);
+	HUMAN_Kill(n02);
+	HUMAN_Kill(n03);
+	SendSignal(n01p, 2);
+	}
+	EndScript();
+}
+
+Label end:

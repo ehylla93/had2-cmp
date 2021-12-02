@@ -1,0 +1,458 @@
+
+Block 
+{
+  frame MyFRM;		FRM_GetMyFrame(MyFRM);
+  frame cut_fence;		FRM_FindFrame(cut_fence, "m_svets5");
+  frame Roof;			FRM_FindFrame(Roof, "Roof_walker");
+  frame GP1;			FRM_FindFrame(GP1, "Plane_Guard_1");
+  frame plane;			FRM_FindFrame(plane, "spitfire19");
+  frame swamp;		FRM_FindFrame(swamp, "seed_m_rakos24390");
+  frame Swamp_back;		FRM_FindFrame(Swamp_back, "seed_m_str1b06602");
+  frame CrossWay;		FRM_FindFrame(CrossWay, "m_stoz158");
+  frame null;			FRM_FindFrame(null, "");
+  frame OBJ;			FRM_FindFrame(OBJ, "objectives");
+  frame vyprostovani;		FRM_FindFrame(vyprostovani, "Auti_BAD");
+  frame dabing;		FRM_FindFrame(dabing, "dummy_rebel_dabing");
+  frame Diary;			FRM_FindFrame(Diary, "dummy_diary");
+
+  integer swampYesNo = 1;
+
+  SetWhenever(Near, false);
+  SetWhenever(ZACATEK, False);
+
+  SetAlarmType(1023, False);
+  SetAlarmType(258, True);	
+  
+  HUMAN_SetOptimized(1);
+  
+  SaveGameValue(29, 0);	// pro cutsc 3 (roof) - má-li se vynechat , nebo pøerušit   0...OK  99...skip 
+  SaveGameValue(30, 0);	// pro cutsc 4 (auto) - má-li se vynechat , nebo pøerušit   0...OK  99...skip 
+}
+
+goto init;
+
+// DOPLNIT "OnAlarm" a podle eventu 2, 256 se rozhodnout kudy se pùjde - pak to vypnout DisableAlarms(-integer-); 
+OnAlarm()
+{
+  Block
+    {
+       swampYesNo = 0;
+       Printf("ALARRRRRRRRRRRRRRRRRRRRRRMMMMMMMM - REAL");
+       SendSignal(Diary, 1);
+       HUMAN_SetAlarm(False);
+       DisableAlarms(True); 
+       SetWhenever(USI, False);
+    }
+}
+Whenever USI (_SignalReceived(17) ) 
+{
+  Block
+    {
+       swampYesNo = 0;
+       Printf("ALARRRRRRRRRRRRRRRRRRRRRRMMMMMMMM - DETECTED");
+       SendSignal(Diary, 1);
+       HUMAN_SetAlarm(False);
+       DisableAlarms(True); 
+       SetWhenever(USI, False);
+    }
+}
+
+
+Whenever Near (_PlayerInRange(5) )
+{
+  Block
+    {
+       DisableAlarms(True); 
+       SetWhenever(USI , False);
+    }
+    HUMAN_SetAnim("", 0, 0, False);
+  goto start;
+}
+
+OnSignal(10)
+{
+  SendSignal(dabing, 3);
+	//  01990235 	Printf("Je dobøe, že jste prošel skrz Nìmecké hlídky tiše.");
+	//  01990211	Printf("Proto vás mohu bezpeènì provést pres bazinu."); 
+	//  01990217	printf("Tak tedy pojdte za mnou.");
+label loop_d3:
+  HUMAN_TurnAtNearestPlayer();  delay(1400);
+goto loop_d3;
+OnSignal(3) {}
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("AlBert_1");
+
+  SendSignal(dabing, 4);
+	//  01990219	printf("Urcitì jste si všimli sestøeleného Spitfiru. ");
+	// 01990220	 printf("Musím vám øíct že pilot to prezil a ja ho ukryl nedaleko odsud. ");
+	//  01990221 	printf("I kdyz je lehce ranen cestu do Anglie zvladne.");
+	//  01990222	printf("Zkuste se pro neho vratit driv, nez pojedete domu.");
+	//  01990223	printf("Nejdriv vas odvedu k tovarne a pak pro neho pujdu.");
+	//  01990224	printf("Pockame na vas zase nekde pobliz srubu.");
+  HUMAN_Move("AlBert_2");
+  HUMAN_Move("AlBert_3");
+  HUMAN_Move("AlBert_4");
+  HUMAN_Move("AlBert_5");
+  HUMAN_Move("AlBert_6");
+  HUMAN_Move("AlBert_7");
+  Goto swamp;
+}
+
+OnSignal(12)
+{
+  SendSignal(MyFRM, 11);
+}
+
+OnSignal(11)
+{
+  SendSignal(dabing, 5);
+	//  01990210  Printf("Slysel jsem strelbu, to neni dobré.");
+	//  01990212  Printf("Myslim, ze pro vas bude bezpecnejsi jit po silnici.");  
+	//  01990217  printf("Tak tedy pojdte za mnou.");
+label loop_d5:
+  HUMAN_TurnAtNearestPlayer();	  delay(2000);
+goto loop_d5;
+OnSignal(5) {}
+  Delay(1000);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("Al_Bert_1");
+  SendSignal(dabing, 4);
+	//  01990219	printf("Urcitì jste si všimli sestøeleného Spitfiru. ");
+	// 01990220	 printf("Musím vám øíct že pilot to prezil a ja ho ukryl nedaleko odsud. ");
+	//  01990221 	printf("I kdyz je lehce ranen cestu do Anglie zvladne.");
+	//  01990222	printf("Zkuste se pro neho vratit driv, nez pojedete domu.");
+	//  01990223	printf("Nejdriv vas odvedu k tovarne a pak pro neho pujdu.");
+	//  01990224	printf("Pockame na vas zase nekde pobliz srubu.");
+  HUMAN_Move("Al_Bert_2");
+  HUMAN_Move("Al_Bert_3");
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Al_Bert_4");
+  HUMAN_SetAnim("%%Albert", 250, 250, true);
+  Delay(7000);
+  HUMAN_SetAnim("", 250, 250, false);
+  Delay(250);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Al_Bert_5");
+  HUMAN_Move("Al_Bert_6");
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Al_Bert_7");
+  HUMAN_Move("Al_Bert_8");
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("Al_Bert_9");
+  HUMAN_Move("Al_Bert_10");
+  goto NoSwamp;
+}
+
+label init:
+goto TheEnd;
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - START - OBJ - je to v ...cutscene.scr
+  frame def;
+  frame K0;		FRM_FindFrame(K0, "K0");
+  frame K1;		FRM_FindFrame(K1, "K1");
+OnCutscene(1)
+{
+  Goto TheEnd;
+}
+
+OnCutsceneDone(1) 
+{ 
+  SetWhenever(ZACATEK, True);
+  HUMAN_SETMODE_Crouch();
+  Goto TheEnd;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - KONEC - OBJ
+  Whenever ZACATEK (_PlayerInRange(30); ) 
+  {  
+     HUMAN_SETMODE_StandFast();
+     SetAlarmType(1023, False);	
+   }
+  HUMAN_SETMODE_Run();
+  SendSignal(dabing, 1);
+    		//SUBTITLES_SetText(01990241);
+		//  printf("Tadyyyyyyy.");
+  HUMAN_SetAnim("%%mava", 100, 250, False);
+  Delay(4500);
+  HUMAN_SetAnim("", 0, 0, False);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  SetWhenever(Near, true);
+  goto TheEnd;
+label start:
+		//  01990213  printf("Dobry vecer.");
+		//  01990214  printf("Ja jsem Albert, vas kontakt.");
+		//  01990215  printf("Kde jste tak dlouho?");
+		//  01990216  printf("Cekam na vas zalezlej v krovi uz vic jak dve hodiny.");
+  SendSignal(dabing, 2);
+label loop_d2:
+  HUMAN_TurnAtNearestPlayer();  Delay(1500);
+goto loop_d2;
+OnSignal(2) {}
+  HUMAN_SETMODE_Run();
+  HUMAN_SetWaitForPlayer(True, 12, 8, True);    
+  DisableAlarms(True);  
+  If ( swampYesNo == 1 ) 
+     { 
+        SendSignal(MyFRM, 10); 
+     } else {
+        SendSignal(MyFRM, 11); 
+     }
+  goto TheEnd;
+
+label swamp:		// go throuth swamp
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+// Doplnit otoceni se na hrace a postoj cekani pred bazinou
+  delay(1500);
+  HUMAN_TurnAt(swamp);
+  SendSignal(dabing, 6);
+	//  01990225  printf("Tady zacina pruchod bazinou. ");
+	//  01990226  printf("Nasledujte me prosim naprosto presne.");
+  delay(700);
+  HUMAN_ACTIVITY_Point(swamp);
+  delay(10000);
+OnSignal(6) {}
+  CheckpointJoin("swamp_1", "swamp_2");	
+  delay(1000);
+  HUMAN_Move("Rebel_8");
+  SendSignal(dabing, 7);
+		// SUBTITLES_SetText(01990227);
+		// printf("Tady pozor, at neslapnete vedle."); 
+  HUMAN_Move("Rebel_9");
+  HUMAN_Move("Rebel_10");
+  CheckpointJoin("swamp_3", "swamp_4");
+  SendSignal(dabing, 8);
+		// SUBTITLES_SetText(01990228);
+		// printf("Uf, ... , jeste maly kousek a jsme venku."); 
+  HUMAN_Move("Rebel_11");
+  HUMAN_SETMODE_Crouch();
+  delay(450); 
+Label wait_Swamp_end:
+  If (_PlayerInRange(8); ) 
+    { 
+       Printf("SendSignal(OBJ, 4); ........................ UFFFFFFFFFFFFFFFF 9");
+       SendSignal(OBJ, 4);	
+       Delay(1500);		// !!! nezmensovat, konflikt titulku -  dabing 9 X OBJ 4
+      } else { 
+       Delay(1500);
+       goto wait_Swamp_end;
+    }
+////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - START - ROOF
+
+  frame K3;		FRM_FindFrame(K3, "K3");
+  frame K3a;		FRM_FindFrame(K3a, "K3a");
+  frame TRG;		FRM_FindFrame(TRG, "Roof_walker");
+
+//  integer SKIP_CSC3;  SKIP_CSC3 = _LoadGameValue(29);
+  integer SKIP_CSC3;  SKIP_CSC3 = 99;	// DOSTAL JSEM PRIKAZ ZRUSIT TO
+
+  If (SKIP_CSC3 == 99) 
+    {
+        Delay(2500);		// !!! nezmensovat, konflikt titulku -  dabing 9 X OBJ 4
+        SendSignal(dabing, 9);        
+        SendSignal(Roof, 1);
+        Goto Back;
+    }
+  CSC_FadeOut(1); 
+  CSC_RunCutscene(3);
+
+OnCutscene(3)
+{ 
+		  SUBTITLES_SetOn(True);	
+  Delay(200);
+  FRM_SetCameraFrame(MyFRM);
+  FRM_SetActiveCamera(K3a);
+  CSC_FadeIn(250); 
+  HUMAN_ACTIVITY_Point(cut_fence);
+  SendSignal(dabing, 9);
+		//  SUBTITLES_SetText(01990229);
+		//  printf("Tam je vas cil.");
+  delay(1500); 
+		//  SUBTITLES_SetText(01990230);
+		//  printf("Davejte na sebe pozor.");
+  SendSignal(Roof, 1);
+  CSC_FadeOut(100);
+   Delay(100);
+  FRM_SetCameraFrame(null);
+  FRM_SetActiveCamera(K3);
+  FRM_WatchTrack(K3, "kamera 3");
+  CSC_FadeIn(250);
+  delay(6500);
+  FRM_SetCameraFrame(TRG);
+  delay(3500);
+  CSC_FadeOut(100);
+  delay(300);
+  CSC_EndCutscene(); 
+} 
+
+OnCutsceneDone(3)
+{ 
+  FRM_SetCameraFrame(null);
+  CSC_FadeIn(250); 
+} 
+//////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - KONEC - ROOF    
+
+goto back;
+
+
+label NoSwamp:	// go around swamp
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Crouch();
+  Delay(500);
+Label wait_Car_end:
+  If (_PlayerInRange(8); ) 
+    {
+       Printf("SendSignal(OBJ, 4); ........................ UFFFFFFFFFFFFFFFF 10");
+       SendSignal(OBJ, 4);	 
+       Delay(1500);		// !!! nezmensovat, konflikt titulku -  dabing 10 X OBJ 4
+     } else
+    {
+       Delay(1500);
+       goto wait_Car_end;
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - START - Nakaldak
+  frame K4;		FRM_FindFrame(K4, "K4");
+  frame K4a;		FRM_FindFrame(K4a, "K4a");
+  frame K4b;		FRM_FindFrame(K4b, "K4b");
+  frame AutiBad;	FRM_FindFrame(AutiBad, "Auti_Bad");
+  frame kanisternik;	FRM_FindFrame(kanisternik, "kanisternik");
+//  integer SKIP_CSC4;  SKIP_CSC4 = _LoadGameValue(30);
+  integer SKIP_CSC4;  SKIP_CSC4 = 99;	// DOSTAL JSEM PRIKAZ ZRUSIT TO
+
+
+  If (SKIP_CSC4 == 99) 
+    {
+        Delay(2500);		// !!! nezmensovat,  konflikt titulku -  dabing 10 X OBJ 4
+        SendSignal(dabing, 10);        
+        SendSignal(vyprostovani, 1);
+        SendSignal(kanisternik, 5);  // unhidni se 
+        Goto Back;
+    }
+  CSC_FadeOut(1); 
+  CSC_RunCutscene(4);
+
+OnCutscene(4)
+{ 
+  Delay(100);
+  FRM_SetActiveCamera(K4a);
+  FRM_SetCameraFrame(MyFRM);
+  CSC_FadeIn(250); 
+  Delay(250);
+  SendSignal(dabing, 10);
+		//  SUBTITLES_SetText(01990231);
+		//  printf("Neco je spatne, ten nakladak se mi nelibi.");
+  Delay(2500);
+  CSC_FadeOut(100); 
+  Delay(100);
+  FRM_SetActiveCamera(K4);
+  FRM_SetCameraFrame(AutiBad);
+  FRM_WatchTrack(K4, "kamera 4");
+SendSignal(kanisternik, 5);  // unhidni se 
+  CSC_FadeIn(250); 
+  Delay(250);
+		//  SUBTITLES_SetText(01990232);
+		//  printf("Dal uz s vama nepujdu, stejne uz to odsud nemate daleko.");
+  Delay(2500);
+		//  SUBTITLES_SetText(01990233);
+		//  printf("Tamhle na krizovatce se date doleva.");
+SendSignal(vyprostovani, 1);
+  Delay(2500);
+  CSC_FadeOut(100); 
+  Block
+  {
+     FRM_SetActiveCamera(K4b);
+     FRM_SetCameraFrame(Kanisternik);
+  } 
+  Delay(100);
+  CSC_FadeIn(100);
+		//  SUBTITLES_SetText(01990234);
+		//  printf("Cesta vas dovede az k tovarne. Ale pozor na nemecke hlidky.");
+  delay(6500);
+
+  FRM_SetCameraFrameSlide(MyFRM, 25);
+  delay(4500);
+	
+  CSC_FadeOut(100);
+  CSC_EndCutscene();
+} 
+
+OnCutsceneDone(4)
+{ 
+  FRM_SetCameraFrame(null);
+  CSC_FadeIn(250); 
+} 
+//////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - KONEC - Nakaldak    
+
+goto back;
+
+
+label back:
+  HINT_Add(10500);
+  // 10500 "When you need to cut a hole in a fence, get close to it and press the <Action_button>. Then select the appropriate action and confirm it."
+  If (swampYesNo==1) {goto back_swamp;}
+  HUMAN_SetWaitForPlayer( False, 12, 8, False);
+  delay(30000);
+// 4 is correct (dabing 10)
+OnSignal(4) {}	
+delay(5000);
+  SendSignal(Dabing, 30); // aktivace testu na pronasledovani
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Rebel_back");	
+  HUMAN_SETMODE_Walk();
+  HUMAN_LookAround(2);
+  Delay(5000);
+  HUMAN_LookAround(0);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Rebel_Joinn1");
+  HUMAN_SetOptimized(1);
+  CheckpointJoin("Rebel_Joinn1", "Rebel_Joinn2");	
+  HUMAN_SetOptimized(2);
+  HUMAN_Move("Rebel_Joinn2");
+  CheckpointSeparate("Rebel_Joinn1", "Rebel_Joinn2");
+  HUMAN_Move("Rebel_hide");
+label hide:
+  If ( !_PlayerInRange(25); )    
+     { 
+        HUMAN_Suspend(True);
+        goto TheEND;
+     }
+  Delay(2500);
+goto hide;
+
+Label back_swamp:
+  HUMAN_SetWaitForPlayer( False, 12, 8, False);
+  delay(30000);
+OnSignal(9) {}
+delay(5000);
+  SendSignal(Dabing, 31); // aktivace testu na pronasledovani
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("back_swamp");	
+  HUMAN_Move("swamp_1");	
+  HUMAN_Move("Rebel_Joinn1");
+  HUMAN_SetOptimized(1);
+  CheckpointJoin("Rebel_Joinn1", "Rebel_Joinn2");	
+  HUMAN_SetOptimized(2);
+  HUMAN_Move("Rebel_Joinn2");
+  CheckpointSeparate("Rebel_Joinn1", "Rebel_Joinn2");
+  HUMAN_Move("Rebel_hide");
+goto hide;
+
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  Sendsignal(dabing, 15);	// umrel jsem - uz nic nespoustej
+  HUMAN_SetAnim("", 0, 0, False);
+  SetWhenever(Near, false);
+  SendSignal(OBJ, 9); // obj - nasleduj pruvodce
+  EndScript();
+}
+
+label TheEND:

@@ -1,0 +1,106 @@
+Block
+{
+Frame player1;
+Frame start1;
+Frame duplicated_player;
+Frame ruka;
+Frame sten;
+Frame target;
+Integer gametype;
+	gametype=0;
+}
+
+gametype=_SPGetGameType();
+If((gametype==3) OR (gametype==7))
+{
+	HUMAN_SETMODE_Silence();
+	HUMAN_SETMODE_Lie();
+	EndScript();
+}
+
+OnCutscene(1)
+{
+
+
+
+
+
+	Block
+	
+	{
+		FRM_FindFrame(start1,"CUTsas_start2");
+	
+		FRM_GetMyFrame(player1);
+		CSC_DuplicateHuman(player1, duplicated_player,"_PLAYER_cuts_sasik2");
+		FRM_TeleportNearFrame(duplicated_player, start1, true);
+		CSC_FreeHands(duplicated_player);
+		
+		FRM_FindChildFrame(ruka, "hw1", duplicated_player);
+		FRM_FindChildFrame(target, "wt", duplicated_player);
+		FRM_FindFrame(sten,"CUTsten2");
+		
+
+		CSC_FreeHands(duplicated_player);
+		FRM_TeleportNearFrame(sten, ruka, true);		//////////link zbrane
+		FRM_SetTarget(sten,target,true );	
+
+		FRM_SetOn(player1, false);
+		FRM_SetOn(duplicated_player, false);
+		
+	}
+
+Delay(27000);
+
+FRM_SetOn(duplicated_player, true);
+FRM_SetAnimation(duplicated_player, "%%B_eng1.I3D",true);
+Delay(25000);
+
+FRM_SetAnimation(duplicated_player, "%%sashlida.I3D",true);
+
+
+
+}
+
+
+
+OnCutsceneDone(1)
+{
+
+	Block
+	{
+
+
+	FRM_SetAnimation(duplicated_player, "",true);
+	CSC_ReleaseHuman(duplicated_player);
+	FRM_FindFrame(duplicated_player, "");
+	FRM_FindFrame(ruka, "");
+	FRM_FindFrame(target, "");
+	FRM_SetOn(player1, true);
+//	FRM_SetOn(sten, false);
+
+
+	}
+
+
+HUMAN_SETMODE_Silence();
+
+HUMAN_SETMODE_Lie();
+
+EndScript();
+
+
+}
+
+OnCutscene(2)
+{
+HUMAN_Suspend(true);
+
+}
+
+OnCutsceneDone(2)
+{
+HUMAN_Suspend(false);
+
+
+// EndScript(); - sem nedavat endscript, player uz nie je na skriptu
+}

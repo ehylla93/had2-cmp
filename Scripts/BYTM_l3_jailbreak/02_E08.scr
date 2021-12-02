@@ -1,0 +1,58 @@
+// 02_E08
+// ----------------------------------------
+
+Integer	alarm_sight_range = 180;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f042");
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+HUMAN_SETAIMODE_Zombie();
+goto end;
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 300, 300, 0);
+Block { DisableSignals(1); DisableWhenevers(1); }
+HUMAN_SETSIGHTRANGE(alarm_sight_range);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+Block { DisableSignals(0); DisableWhenevers(0); }
+goto end;
+}
+
+OnDeath()
+{
+printf("02_E08 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(150))
+{
+Integer AImode = _RandomInt(99);
+if(AImode > 65) { HUMAN_SETAIMODE_Aggressive(); }
+else {
+	if(AImode < 25) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+	}
+printf("02_E08 spawns");
+HUMAN_SetAnim("%%b_svaruje1", 400, 400, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

@@ -1,0 +1,69 @@
+// 04_E04 - Calls Reinforcements on alarm (Signal pistol)
+// ----------------------------------------
+
+Block
+{
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame cp;		FRM_FindFrame(cp,"04_cp_01");
+Frame Sig;		FRM_FindFrame(Sig, "04_E04_target");
+Frame Reinf;	FRM_FindFrame(Reinf, "Reinforcements");
+Integer first = 0;
+
+FRM_SwitchFaceTexture(MyFRM, "e_f054");
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+HUMAN_SETAIMODE_Defensive();
+goto end;
+
+// ----------------------------------------
+
+OnDeath(){
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+printf("04_E04 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 400, 400, 0);
+SaveGameValue(2, 1);
+if(first==0) {
+first = 1;
+FRM_MorphSpeech(MyFRM, 90001192, 5, 30);
+SetAlarmType(1023, 0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("4_E01_01");
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAt(Sig);
+Delay(200);
+HUMAN_Attack(Sig, 800);
+SendSignal(Reinf, 1);
+HUMAN_RemoveItemsFromStore(MyFRM, 261);
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(1023, 1);
+}
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+Whenever Spawn (_PlayerInRange(110))
+{
+printf("04_E04 spawns");
+HUMAN_SetAnim("%%sedimL", 400, 400, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

@@ -1,0 +1,52 @@
+//mines zone14
+//------------------
+
+
+Block
+{
+//Frame me;		FRM_GetMyFrame(me);
+//FramePlayer;
+
+integer y;
+}
+
+
+label arty:
+if (((_MP_IsTeamMemberInRange(1, 15))  ) and (y==0)){
+
+Delay(100);
+Frame   x;
+    
+   
+    FRM_FindFrame( x, "AF2_16_17_speech" );  
+    MakeExplosion(x, 100000000, 10000);
+    Delay(20);
+    
+    FRM_FindFrame( x, "_expl11_1" );   
+    //SetActorState( x, 1 );
+    MakeExplosion(x, 100000000, 10000);
+    Delay(20);
+
+    FRM_FindFrame( x, "_expl11_2" ); 
+    //SetActorState( x, 1 );  
+    MakeExplosion(x, 100000000, 10000);
+    Delay(20);
+
+FRM_FindFrame( x, "AF2_16_17_speech" );  
+MakeExplosion(x, 100000000, 10000);
+Delay(20);
+FRM_FindFrame( x, "_expl11_1" );
+MakeExplosion(x, 100000000, 10000);
+Delay(20);
+FRM_FindFrame( x, "_expl11_2" );
+MakeExplosion(x, 100000000, 10000);
+Delay(20);  
+  
+
+y=0;
+//EndScript( );
+}
+
+
+goto arty;
+

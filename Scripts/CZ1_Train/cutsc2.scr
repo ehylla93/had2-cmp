@@ -1,0 +1,56 @@
+// cutsc2
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETAIMODE_Defensive();
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,1); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,1); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f042");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Whenever player(_PlayerInRange(10))
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetAnim("%%divase", 500, 500, true);
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	HUMAN_Suspend(false);
+	SetWhenever(player, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_Move("cutsc2_01");
+	GoTo end;
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 500, 500, false);
+	HUMAN_SETSIGHTRANGE(20);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+}
+
+Label end:

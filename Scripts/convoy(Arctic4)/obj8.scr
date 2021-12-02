@@ -1,0 +1,41 @@
+// Obj 8 - Kill All Enemy
+//----------------------------------------------------------
+Block
+{ 
+Frame R01;		FRM_FindFrame(R01, "CC2");
+Frame R02;		FRM_FindFrame(R02, "crete");
+Frame R03;		FRM_FindFrame(R03, "crete1");
+Frame R04;		FRM_FindFrame(R04, "crete2");
+Frame R05;		FRM_FindFrame(R05, "crete3");
+Frame R06;		FRM_FindFrame(R06, "zones4");
+Frame R07;		FRM_FindFrame(R07, "zones5");
+Frame R08;		FRM_FindFrame(R08, "zones6");
+Frame R09;		FRM_FindFrame(R09, "zones66");
+Frame R10;		FRM_FindFrame(R10, "zones67");
+Frame R11;		FRM_FindFrame(R11, "zones68");
+Frame R12;		FRM_FindFrame(R12, "zones69");
+Frame R13;		FRM_FindFrame(R13, "crete0");
+Frame R14;		FRM_FindFrame(R14, "renfortjeep0");
+Frame T1;		FRM_FindFrame(T1, "renfortjeep1");
+Frame T2;		FRM_FindFrame(T2, "renfortjeep2");
+Frame T3;		FRM_FindFrame(T3, "renfortjeep3");
+}
+
+
+Block
+{
+SetObjectiveStatus(8, 0);
+}
+
+Whenever Dead (((((((((((((((((_Actor_GetState(R01) == 0) And (_Actor_GetState(R02) == 0)) And (_Actor_GetState(R03) == 0)) And (_Actor_GetState(R04) == 0)) And (_Actor_GetState(R05) == 0)) And (_Actor_GetState(R06) == 0)) And (_Actor_GetState(R07) == 0)) And (_Actor_GetState(R08) == 0)) And (_Actor_GetState(R09) == 0)) And (_Actor_GetState(R10) == 0)) And (_Actor_GetState(R11) == 0)) And (_Actor_GetState(R12) == 0)) And (_Actor_GetState(R13) == 0)) And (_Actor_GetState(R14) == 0)) And (_Actor_GetState(T1) == 0)) And (_Actor_GetState(T2) == 0)) And (_Actor_GetState(T3) == 0))
+{
+SUBTITLES_SetOn(0);
+SUBTITLES_SetText(58999707);
+SetObjectiveStatus(8, 1);
+Delay(4000);
+SUBTITLES_SetOn(1);
+EndScript();
+}
+
+
+

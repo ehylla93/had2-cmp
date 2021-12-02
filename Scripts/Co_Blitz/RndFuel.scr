@@ -1,0 +1,132 @@
+//----------------------www.RandomFuel.com----------------------
+Block
+{
+Frame weh1;		FRM_FindFrame(weh1,"panther1");
+Frame weh2;		FRM_FindFrame(weh2,"kubel1");
+Frame weh3;		FRM_FindFrame(weh3,"kubel2");
+Frame weh4;		FRM_FindFrame(weh4,"bmw1");
+Frame weh5;		FRM_FindFrame(weh5,"bmw2");
+Frame weh6;		FRM_FindFrame(weh6,"bmw3");
+Frame weh7;		FRM_FindFrame(weh7,"opel1");
+Frame weh8;		FRM_FindFrame(weh8,"opel2");
+Frame weh9;		FRM_FindFrame(weh9,"opel3");
+Frame weh10;	FRM_FindFrame(weh10,"opel4");
+Frame weh11;	FRM_FindFrame(weh11,"hakl1");
+Frame weh12;	FRM_FindFrame(weh12,"hakl2");
+Frame weh13;	FRM_FindFrame(weh13,"la_krupp_");
+Frame weh14;	FRM_FindFrame(weh14,"panther2");
+Frame weh15;	FRM_FindFrame(weh15,"panther3");
+Frame weh16;	FRM_FindFrame(weh16,"kubel3");
+Frame weh17;	FRM_FindFrame(weh17,"opel5");
+Frame weh18;	FRM_FindFrame(weh18,"opel6");
+Frame weh19;	FRM_FindFrame(weh19,"opel7");
+Frame weh20;	FRM_FindFrame(weh20,"opel8");
+Integer rnd1;
+Integer rnd2;
+Integer rnd3;
+Integer rnd4;
+Integer rnd5;
+Integer rnd6;
+Integer rnd7;
+Integer rnd8;
+Integer rnd9;
+Integer rnd10;
+Integer rnd11;
+Integer rnd12;
+Car_SetFuel(weh1, 0);
+Car_SetFuel(weh2, 0);
+Car_SetFuel(weh3, 0);
+Car_SetFuel(weh4, 0);
+Car_SetFuel(weh5, 0);
+Car_SetFuel(weh6, 0);
+Car_SetFuel(weh7, 0);
+Car_SetFuel(weh8, 0);
+Car_SetFuel(weh9, 0);
+Car_SetFuel(weh10, 0);
+Car_SetFuel(weh11, 0);
+Car_SetFuel(weh12, 0);
+Car_SetFuel(weh13, 0);
+//Car_SetFuel(weh14, 0);
+//Car_SetFuel(weh15, 0);
+Car_SetFuel(weh16, 0);
+Car_SetFuel(weh17, 0);
+Car_SetFuel(weh18, 0);
+Car_SetFuel(weh19, 0);
+Car_SetFuel(weh20, 0);
+}
+delay(2000);
+Block
+{
+rnd1= (_randomint(3)+1);
+  if (rnd1==1)
+  {
+  Car_SetFuel(weh2, 100);
+  printf ("kubel 1");
+  }
+rnd2= (_randomint(3)+1);
+  if (rnd2==1)
+  {
+  Car_SetFuel(weh4, 100);
+  printf ("bmw 1");
+  }
+rnd3= (_randomint(3)+1);
+  if (rnd3==1)
+  {
+  Car_SetFuel(weh5, 100);
+  printf ("bmw 2");
+  }
+rnd4= (_randomint(3)+1);
+  if (rnd4==1)
+  {
+  Car_SetFuel(weh6, 100);
+  printf ("bmw 3");
+  }
+rnd5= (_randomint(3)+1);
+  if (rnd5==1)
+  {
+  Car_SetFuel(weh7, 100);
+  printf ("opel 1");
+  }
+rnd6= (_randomint(3)+1);
+  if (rnd6==1)
+  {
+  Car_SetFuel(weh8, 100);
+  printf ("opel 2");
+  }
+rnd7= (_randomint(3)+1);
+  if (rnd7==1)
+  {
+  Car_SetFuel(weh9, 100);
+  printf ("opel 3");
+  }
+rnd8= (_randomint(3)+1);
+  if (rnd8==1)
+  {
+  Car_SetFuel(weh13, 100);
+  printf ("krupp");
+  }
+rnd9= (_randomint(3)+1);
+  if (rnd9==1)
+  {
+  Car_SetFuel(weh16, 100);
+  printf ("kubel 3");
+  }
+rnd10= (_randomint(3)+1);
+  if (rnd10==1)
+  {
+  Car_SetFuel(weh18, 100);
+  printf ("opel 6");
+  }
+rnd11= (_randomint(3)+1);
+  if (rnd11==1)
+  {
+  Car_SetFuel(weh19, 100);
+  printf ("opel 7");
+  }
+rnd12= (_randomint(3)+1);
+  if (rnd12==1)
+  {
+  Car_SetFuel(weh20, 100);
+  printf ("opel 8");
+  }
+}

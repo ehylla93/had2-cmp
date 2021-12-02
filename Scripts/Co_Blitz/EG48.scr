@@ -1,0 +1,190 @@
+//EG48
+// ----------------------Block----------------------
+Block
+{
+frame me;		FRM_GetMyFrame(me);
+frame hd1;		FRM_FindFrame(hd1,"hdummy01");
+frame rd13;		FRM_FindFrame(rd13,"erdummy13");
+Frame weh1;		FRM_FindFrame(weh1,"panther3");
+Frame weh2;		FRM_FindFrame(weh2,"kubel3");
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rndpause;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+Block
+{
+printf ("EG48 wtf where am I ?");
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(75);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_Stop();
+HUMAN_TurnAt(weh1);
+goto checkpoint1;
+}
+label checkpoint1:
+HUMAN_Stop();
+HUMAN_MoveToFrame(weh2, 1);
+HUMAN_MoveRandomRadius(4);
+HUMAN_TurnAt(weh1);
+rnd1= _randomint(15)+1;
+  if (rnd1==5)
+  {
+  printf ("cp2");
+  goto checkpoint2;
+  }
+  else
+  {
+  printf ("Timer");
+  goto timer;
+  }
+label timer:
+HUMAN_TurnAt(weh1);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+rndpause= _randomint(15000)+15000;
+delay(rndpause);
+goto checkpoint1;
+//
+label checkpoint2:
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Walk();
+HUMAN_MoveToFrame(hd1, 1);
+rndpause= _randomint(10000)+15000;
+delay(rndpause);
+printf ("Ready or not, here I come !");
+HUMAN_MoveToFrame(weh2, 1);
+goto checkpoint1;
+}
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+printf ("Enemy Guard 48 alarmaaaaaa");
+Block
+{
+AIEvent = _GetAlarmType();
+If(AIEvent == 1)
+{
+//printf ("Alarm Type 1");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 2)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Aggressive();
+}
+If(AIEvent == 4)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 8)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 16)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 32)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper( 1, 90 );
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 64)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 128)
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 256)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 512)
+{
+HUMAN_Stop();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+}
+}
+EndScript();
+}
+// ----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+//printf ("Quit your day job and tell them all to fuck off");
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETAIMODE_Defensive();
+goto alrmdone;
+}
+label alrmdone:
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveRandomRadius(15);
+delay(3000);
+HUMAN_MoveRandomRadius(10);
+delay(2500);
+HUMAN_MoveRandomRadius(15);
+delay(1500);
+HUMAN_MoveRandomRadius(10);
+delay(3500);
+HUMAN_MoveRandomRadius(10);
+goto alrmdone;
+// ----------------------OnDeath----------------------
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+// ----------------------END----------------------
+Label END:

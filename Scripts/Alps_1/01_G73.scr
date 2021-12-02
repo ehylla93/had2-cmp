@@ -1,0 +1,74 @@
+// 01_G73 - Truck (Reinf)
+// ----------------------------------------
+
+Block
+{
+Frame Opel;		FRM_FindFrame(Opel, "A2_Opel_01");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1023,0);
+
+FRM_SwitchFaceTexture(me,"e_f073");
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+FRM_MorphSpeech(me, 90003025, 10, 50);
+EndScript();
+}
+
+Whenever Nasedam (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A2_Opel_01", 1, 4);
+}
+
+Whenever Vysedam (_SignalReceived(2))
+{
+HUMAN_BoardVehicle("A2_Opel_01", 0, 4);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Opel, 30);
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(80);
+SetAlarmType(1023,1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_TurnAtNearestPlayer();
+}
+
+Whenever Vysedam_Fast (_SignalReceived(3))
+{
+HUMAN_BoardVehicle("A2_Opel_01", 0, 4);
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(80);
+SetAlarmType(1023,1);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Opel, 35);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_TurnAtNearestPlayer();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

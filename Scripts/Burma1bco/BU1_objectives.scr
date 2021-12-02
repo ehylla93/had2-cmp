@@ -1,0 +1,46 @@
+// Burma objective
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+SetObjectiveStatus(1, 0);     // destroy the transport bridge
+SetObjectiveStatus(2, 0);	// kill the enemy
+}
+
+OnSignal(4)	// bridge down
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992417);
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(1, 1);
+	goto END;
+}
+
+Whenever "AED" (!_EnemyInRange(me, 1000))
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(21990002);	//"OBJECTIVE ACCOMPLISHED: ALL ENEMY KILLED."
+	Delay(4000);
+	SetObjectiveStatus(2, 1);
+	SUBTITLES_SetOn(false);
+	goto END;
+}
+
+Whenever Player_In (_MP_IsTeamMemberInRange(1, 1000))
+{
+	Delay(7000);
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(12992405);	//"NEW OBJECTIVE: DESTROY THE TRANSPORT BRIDGE."
+	Delay(4000);
+	SUBTITLES_SetText(20994001);	//"NEW OBJECTIVE: KILL ALL OF THE ENEMY."
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+SetWheneverTime( "AED",  5000);
+Label END:

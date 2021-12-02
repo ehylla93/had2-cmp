@@ -1,0 +1,15 @@
+// Objective 3 - "Cross the bridge"
+// -------------------------------------------------------------------------------------------------------------
+
+Frame Sherman;		FRM_FindFrame(Sherman, "tank2");
+SetObjectiveStatus(3, 4);
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever BridgeCrossed (_FrameInRange(Sherman) < 10)
+{
+SetObjectiveStatus(3, 1);
+EndScript();
+}
+
+Label END:

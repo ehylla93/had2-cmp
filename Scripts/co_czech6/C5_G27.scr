@@ -1,0 +1,54 @@
+// C5_G27 - soldier in the bunker
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame look01;	FRM_FindFrame(look01, "C5_G27_look01");
+Frame me;		FRM_GetMyFrame(me);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(10))
+{
+	HUMAN_Suspend(false);
+	GoTo activate;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+FRM_SwitchFaceTexture(me, "e_f055");
+HUMAN_SetOptimized(true);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label activate:
+	HUMAN_Move("C5_G27_01");
+	HUMAN_TurnAt(look01);
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+
+Label end:

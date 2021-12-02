@@ -1,0 +1,54 @@
+// Opelflak1, Flak(2)
+// ---------------------------
+
+block{
+//  INTEGER Atype				= 0;
+//  INTEGER rnd					= 0;
+FRAME me; 			FRM_GetMyFrame(me);
+Frame MG42_1;	FRM_FindFrame(MG42_1, "MG42_1");
+
+  SetAlarmType(1023, true);
+//  SetAlarmType(768, true);
+}
+// --------------------------
+
+Whenever inrange ( _PlayerInRange(650))
+{
+  HUMAN_SETSIGHTRANGE(1000);
+//  HUMAN_SETAIMODE_Aggressive();
+//  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("Opelflak1",  true, 2);
+  HUMAN_TurnAt(MG42_1);
+//  SetAlarmType(1023, true);
+//  SetAlarmType(768, true);
+  goto END;
+}
+
+OnDeath()
+	{
+  
+  
+	EndScript();
+	}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+//  SetAlarmType(1023, true);
+//  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// ---------------------------
+
+  HUMAN_SETSIGHTRANGE(300);
+  HUMAN_SETHEARRANGE(300);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("Opelflak1",  true, 3);
+goto END;
+
+Label END:

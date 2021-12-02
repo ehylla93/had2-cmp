@@ -1,0 +1,81 @@
+// AF2_rozhovor_02 - rozhovor mezi trema vojakama v hangaru
+// -------------------------------------------------------------------------------------------------------------
+
+SaveGameValue(90, 2);
+FRAME af16;			FRM_FindFrame(af16, "AF1_16");
+FRAME af17;			FRM_FindFrame(af17, "AF1_17");
+INTEGER v_min				= 8;		// min hear distance
+INTEGER v_max				= 30;		// max hear distance
+INTEGER v_del				= 200;		// same person speech delay
+
+//	AF1_17	05991033	NOSUB How is it going?
+//	AF1_16	05991034	NOSUB Well …I've had better days.
+//	AF1_16	05991035	NOSUB Captain Fabris complained that the flaps were a bit stiff when he came in to land.
+//	AF1_16	05991036	NOSUB I looked at them but there didn't seem to be anything wrong.
+//	AF1_16	05991037	NOSUB I oiled the gears and checked the cable, so they should be working okay.
+//	AF1_17	05991038	NOSUB  I'm sure you're right. But then, I don't know anything about them, I've never worked on them before.
+//	AF1_16	05991039	NOSUB What did d you do before you joined up?
+//	AF1_17	05991040	NOSUB Not much. I couldn't get a job during the depression
+//	AF1_17	05991041	NOSUB but when I could I laboured on construction sites  
+//	AF1_17	05991042	NOSUB and when I couldn't  ... I stole some things, you know.
+//	AF1_16	05991043	NOSUB No, I don't know. Are you saying you were a thief?
+//	AF1_17	05991044	NOSUB If you had a wife and four kids you wouldn't be so quick to judge.
+//	AF1_16	05991045	NOSUB I understand that you had to provide for them. But stealing? I'm not sure about that.
+//	AF1_16	05991046	NOSUB I have a wife and a child but I always found away to support them.
+//	AF1_17	05991047	NOSUB You were lucky then. I didn't always have the choice. That's the reason I joined the army, it's an opportunity to learn a skill.
+//	AF1_17	05991048	NOSUB If I can work as a mechanic after the war it will mean I won’t have to steal again.
+//	AF1_17	05991049	NOSUB It's a good job. I send most of my pay to my wife and I'm taken care of here.
+//	AF1_17	05991050	NOSUB I know I don’t know much yet, but I'm learning.
+//	AF1_17	05991051	NOSUB I hang around the other mechanics and try to learn from them.
+//	AF1_16	05991052	NOSUB You'll be in trouble if the pilots find out you con't know what you're doing. But I'll help you, just don't touch anything unless I tell you.
+//	AF1_17	05991053	NOSUB Don't worry, I'm just doing what I'm told, finding tools, handing parts, whatever is needed.
+
+Whenever begin_chat (_LoadGameValue(90) == 1){
+  printf("BEGIN TALK BETWEEN MECHS");
+  SUBTITLES_SetOn(true);
+
+  FRM_MorphSpeechDelayed(af17, 05991033, v_min, v_max);
+  FRM_MorphSpeechDelayed(af16, 05991034, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af16, 05991035, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af16, 05991036, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af16, 05991037, v_min, v_max);
+  FRM_MorphSpeechDelayed(af17, 05991038, v_min, v_max);
+  FRM_MorphSpeechDelayed(af16, 05991039, v_min, v_max);
+  FRM_MorphSpeechDelayed(af17, 05991040, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af17, 05991041, v_min, v_max);
+  FRM_MorphSpeechDelayed(af17, 05991042, v_min, v_max);
+  FRM_MorphSpeechDelayed(af16, 05991043, v_min, v_max);
+  FRM_MorphSpeechDelayed(af17, 05991044, v_min, v_max);
+  FRM_MorphSpeechDelayed(af16, 05991045, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af16, 05991046, v_min, v_max);
+  FRM_MorphSpeechDelayed(af17, 05991047, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af17, 05991048, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af17, 05991049, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af17, 05991050, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af17, 05991051, v_min, v_max);
+  FRM_MorphSpeechDelayed(af16, 05991052, v_min, v_max);
+  FRM_MorphSpeechDelayed(af17, 05991053, v_min, v_max);
+
+  SUBTITLES_SetOn(false);
+}
+
+Whenever end_chat (_LoadGameValue(90) == 0){
+  block
+  {
+    FRM_MorphSpeech(af16, 0, 0, 0);
+    FRM_MorphSpeech(af17, 0, 0, 0);
+    SUBTITLES_SetOn(false);
+  }
+  EndScript();
+}
+
+Label END:

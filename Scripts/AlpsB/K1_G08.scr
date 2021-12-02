@@ -1,0 +1,81 @@
+// Freiberg
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Obj5;	FRM_FindFrame(Obj5,"obj5");
+Frame me;	FRM_GetMyFrame(me);
+Frame Player;   
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(Obj5, 2);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_TurnAtNearestPlayer();
+FRM_GetNearestPlayer(me, Player);
+
+If(_PLayerInRange(5))
+{
+FRM_MorphSpeechDelayed(Player, 09991953, 3, 9);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(Player, 09991954, 3, 9);
+HUMAN_TurnAtNearestPlayer();
+}
+
+If(_PLayerInRange(5))
+{
+FRM_MorphSpeechDelayed(Player, 09991955, 3, 9);
+HUMAN_TurnAtNearestPlayer();
+}
+
+If(_PLayerInRange(5))
+{
+HUMAN_SetAnim("%%kecy1", 200, 200, 1);
+FRM_MorphSpeechDelayed(me, 09991956, 3, 9);
+HUMAN_SetAnim("", 0, 0, 1);
+Endscript();
+}
+
+SendSignal(Obj5, 2);
+Goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(6))
+{
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("%%nuda1", 500, 1000, 1);
+FRM_MorphSpeechDelayed(me, 18023602, 8, 50);
+FRM_MorphSpeechDelayed(me, 18023603, 8, 50);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

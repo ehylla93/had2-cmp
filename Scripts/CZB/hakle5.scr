@@ -1,0 +1,58 @@
+// Haklak
+// -----------------------------------------------------------------------------------------------------------
+
+block
+{
+INTEGER Atype				= 0;
+INTEGER rnd					= 0;  
+Frame me;		            FRM_GetMyFrame(me);
+SetAlarmType(1023, true);
+SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+FRM_MorphSpeechDelayed(me, 90004009, 5, 30); // hands up!
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90004009, 5, 30); // hands up!
+FRM_MorphSpeechDelayed(me, 90004009, 5, 30); // hands up!
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90004028, 5, 30); // hey
+FRM_MorphSpeechDelayed(me, 90004022, 5, 30); // I kill you
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+EndScript();
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90003022, 5, 30); // got him
+ HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_Suspend(false);
+HUMAN_BoardVehicle("Hakl1",  true, 4);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_BoardVehicle("Hakl1",  false, 4);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SetOptimized(2);
+goto END; 
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+HUMAN_Suspend(true);
+HUMAN_SETSIGHTRANGE(0);
+goto END; 
+
+Label END:

@@ -1,0 +1,17 @@
+// Bomb on 17mm_02
+// -----------------------------------------
+
+Block 
+{
+Frame Kanon;	FRM_FindFrame(Kanon,"Pak_03");
+Frame me;	FRM_GetMyFrame(me);
+}
+
+// -----------------------------------------
+
+Whenever BUM (_Actor_GetState(me)==2)
+{
+SetActorState(Kanon, 2);
+EndScript();
+}
+

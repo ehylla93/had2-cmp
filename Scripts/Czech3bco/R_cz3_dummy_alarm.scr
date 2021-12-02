@@ -1,0 +1,11 @@
+// if is not outcomming squad complete - will be alarm
+
+frame commander;	FRM_FindFrame(commander, "commander");
+
+
+OnSignal(1)
+{ 
+  Delay(60000);
+  SendSignal(commander, 2);
+}
+

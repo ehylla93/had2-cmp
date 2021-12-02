@@ -1,0 +1,66 @@
+// Walking Guard 2
+
+  integer  AIEvent;
+  Frame see;		FRM_FindFrame(see, "dummy_WG2_see");
+
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+
+SetAlarmType(8, False);	// zvuky OnUse
+
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+Whenever A (_PlayerInRange(202);)		
+{						
+  HUMAN_Suspend(False);			
+}						
+
+label DeAlarm:
+  HUMAN_SETMODE_Guard();
+
+label loop:
+  HUMAN_Move("WalkingGuard2_1");
+  Delay(2400);
+  HUMAN_Move("WalkingGuard2_2");
+  Delay(2400);
+  HUMAN_Move("WalkingGuard2_3");
+  Delay(2400);
+goto loop;
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType();
+      PrintfNumber("Walking Guard 2: ", AIEvent);
+      HUMAN_SetAnim("", 300, 300, False);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+      HUMAN_SETAIMODE_Zombie();
+      HUMAN_SETSIGHTRANGE(180);
+      HUMAN_SETHEARRANGE(215);
+    }
+  HUMAN_Move("WalkingGuard2_4");
+  HUMAN_TurnAt(see);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(520, False);	  
+  SetAlarmType(503, True);	
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  goto DeAlarm;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

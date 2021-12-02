@@ -1,0 +1,117 @@
+// AF1_dvere
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME opel;			FRM_FindFrame(opel, "la_OpelFuj");
+  FRAME jeep;			FRM_FindFrame(jeep, "la_Jeepsas_01");
+  INTEGER a_opel		= 1;
+  INTEGER a_jeep		= 1;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+// jestlize je posledni objective aktivni
+Whenever l_obj_active (_LoadGameValue(18))
+{
+  a_opel = _ACTOR_GetState(opel);
+  a_jeep = _ACTOR_GetState(jeep);
+  SUBTITLES_SetOn(true);
+  if((a_opel) AND (a_jeep))
+  {
+    SUBTITLES_SetText(05991071);
+    SetObjectiveStatus(10, 0);
+  }
+  else
+  {
+    if(a_opel)
+    {
+      SUBTITLES_SetText(05011016);
+      SetObjectiveStatus(5, 0);
+    }
+    if(a_jeep)
+    {
+      SUBTITLES_SetText(05991070);
+      SetObjectiveStatus(9, 0);
+    }
+  }
+  SetObjectiveStatus(1, 4);
+  SetObjectiveStatus(2, 1);
+  SetObjectiveStatus(3, 1);
+  Delay(2000);
+  SUBTITLES_SetOn(false); 
+}
+
+Whenever allwdead ((!_ACTOR_GetState(opel)) AND (!_ACTOR_GetState(jeep)))
+{
+  goto LAST_OBJ_FAILED;
+}
+
+Whenever opeldead ((!_ACTOR_GetState(opel)) AND (!_LoadGameValue(18)))
+{
+  SetWhenever(opelznicen, false);
+}
+
+Whenever jeepdead ((!_ACTOR_GetState(jeep)) AND (!_LoadGameValue(18)))
+{
+  SetWhenever(jeepznicen, false);
+}
+
+Whenever opelznicen ((!_ACTOR_GetState(opel)) AND (_LoadGameValue(18)))
+{
+  if(_ACTOR_GetState(jeep))
+  {
+    SUBTITLES_SetOn(true);
+    SUBTITLES_SetText(05991072);
+    block
+    {
+      SetObjectiveStatus(10, 4);
+      SetObjectiveStatus(5, 4);
+      SetObjectiveStatus(9, 0);
+    }
+    Delay(2000);
+    SUBTITLES_SetOn(false);
+  }
+  else
+  {
+    goto LAST_OBJ_FAILED;   
+  }
+}
+
+Whenever jeepznicen ((!_ACTOR_GetState(jeep)) AND (_LoadGameValue(18)))
+{
+  if(_ACTOR_GetState(opel))
+  {
+    SUBTITLES_SetOn(true);
+    SUBTITLES_SetText(05991073);
+    block
+    {
+      SetObjectiveStatus(10, 4);
+      SetObjectiveStatus(9, 4);
+      SetObjectiveStatus(5, 0);
+    }
+    Delay(2000);
+    SUBTITLES_SetOn(false);
+  }
+  else
+  {
+    goto LAST_OBJ_FAILED;   
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+goto END;
+
+Label LAST_OBJ_FAILED:
+    SUBTITLES_SetOn(true);
+    SUBTITLES_SetText(05011003);
+    Delay(3000);
+    SUBTITLES_SetOn(false);    
+  block
+  {
+    SetObjectiveStatus(5 ,4);
+    SetObjectiveStatus(9 ,4);
+    SetObjectiveStatus(10, 3);
+  }
+
+Label END:

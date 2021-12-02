@@ -1,0 +1,67 @@
+// Obj 1 , Seize the Western Machinegun position
+//--------------------------------------------------
+
+Block
+{
+Frame s1;	FRM_FindFrame(s1,"Z1_G18");
+Frame s2;	FRM_FindFrame(s2,"Z1_G19");
+Frame s3;	FRM_FindFrame(s3,"Z1_G20");
+Frame s4;	FRM_FindFrame(s4,"Z1_G21");
+Frame s5;	FRM_FindFrame(s5,"Z1_G22");
+Frame s6;	FRM_FindFrame(s6,"Z1_G23");
+Frame s7;	FRM_FindFrame(s7,"Hunt01");
+
+Frame Zone3;	FRM_FindFrame(Zone3,"Spawnzone1");
+
+Integer counter;
+	counter=0;
+
+SetObjectiveStatus(1, 0);
+}
+//--------------------------------------------------
+
+
+Whenever count1 ((((_Actor_GetState(s1)==0) And (_Actor_GetState(s2)==0)) And (_Actor_GetState(s3)==0)) And (_Actor_GetState(s4)==0))
+{
+counter=counter+1;
+
+If(counter == 2)
+{
+SetWhenever(Zone1_Ok, 1);
+Delay(500);
+SendSignal(Zone3, 2);
+}
+goto END;
+}
+
+Whenever count2 (((_Actor_GetState(s5)==0) And (_Actor_GetState(s6)==0)) And (_Actor_GetState(s7)==0)) 
+{
+counter=counter+1;
+
+If(counter == 2)
+{
+SetWhenever(Zone1_Ok, 1);
+Delay(500);
+SendSignal(Zone3, 2);
+}
+goto END;
+}
+
+Whenever Zone1_Ok(_SignalReceived(2))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(55999704);
+Delay(4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(3, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+EndScript();
+}
+
+//--------------------------------------------------
+
+SetWhenever(Zone1_Ok, 0);
+goto END;
+
+Label END:

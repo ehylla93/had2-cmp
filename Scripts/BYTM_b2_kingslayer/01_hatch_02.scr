@@ -1,0 +1,13 @@
+// 01_hatch_02 Bunker 01 Hatch 02
+
+Frame Obj3;		FRM_FindFrame(obj3, "obj3");
+
+Whenever PlayerNear (_MP_IsTeamMemberInRange(1, 10))
+{
+SendSignal(Obj3, 1);
+EndScript();
+}
+
+// ----------------------------------------
+
+Label END:

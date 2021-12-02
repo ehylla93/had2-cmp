@@ -1,0 +1,107 @@
+// BU1_N02 - shaman of illness
+Block
+{
+Frame n02p;	FRM_FindFrame(n02p, "BU1_N02_particle");
+Frame ohen;	FRM_FindFrame(ohen, "BU1_N02_ohen");
+Frame chcije;	FRM_FindFrame(chcije, "BU1_N02_chcanie");
+Frame n01;	FRM_FindFrame(n01, "BU1_N01");
+Frame n03;	FRM_FindFrame(n03, "BU1_N03");
+Frame ee;	FRM_FindFrame(ee, "BU1_EE");
+Frame me;	FRM_GetMyFrame(me);
+}
+FRM_SwitchFaceTexture(me, "e_f077");
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from BU1_EE
+{
+	HUMAN_Suspend(false);
+	Delay(2000);
+	HUMAN_Move("BU1_N01");
+	HUMAN_Move("BU1_N02");
+	HUMAN_Move("BU1_N03");
+	HUMAN_Move("BU1_N04");
+	HUMAN_Move("BU1_N05");
+	HUMAN_Move("BU1_N06");
+	HUMAN_Move("BU1_N07");
+	HUMAN_Move("BU1_N08");
+	HUMAN_Move("BU1_N09");
+	HUMAN_Move("BU1_N10");
+	HUMAN_Move("BU1_N11");
+	HUMAN_Move("BU1_Nx2");
+	HUMAN_TurnAt(ee);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(2)	// received from BU1_N01
+{
+	HUMAN_SetAnim("%%chcije", 200, 200, true);
+	SendSignal(chcije, 1);
+	Delay(1500);
+	SendSignal(n02p, 1);
+	Delay(10500);
+	HUMAN_SetAnim("", 200, 200, false);
+	SendSignal(n03, 2);
+	GoTo end;
+}
+
+OnSignal(3)	// received from BU1_N01
+{
+	HUMAN_SetAnim("%%duma", 200, 200, true);
+	SendSignal(n03, 3);
+	Delay(5000);
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(1000);
+	HUMAN_SetAnim("%%couvani", 200, 200, true);
+	GoTo end;
+}
+
+OnSignal(4)	// received from BU1_EE
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(500);
+	GoTo end;
+}
+
+OnSignal(5)	// received from BU1_N01
+{
+	Delay(3000);
+	HUMAN_SetOptimized(2);
+	CheckpointJoin("BU1_Nx2", "BU1_Nu01b");
+	HUMAN_SetAnim("%%lenin", 500, 500, true);
+	FRM_CreateParticle(25, ohen);
+	HUMAN_Move("BU1_Nu01b");
+	CheckpointSeparate("BU1_Nx2", "BU1_Nu01b");
+	SendSignal(n03, 5);
+	printf("idem na 02");
+	HUMAN_Move("BU1_Nu02b");
+	printf("idem na 03");
+	HUMAN_Move("BU1_Nu03b");
+	printf("idem na 04");
+	HUMAN_Move("BU1_Nu04b");
+	printf("idem na 05");
+	HUMAN_Move("BU1_Nu05b");
+	Delay(200);
+	printf("idem na 05");
+	HUMAN_Move("BU1_Nu05b");
+	printf("idem na 06");
+	HUMAN_Move("BU1_Nu06b");
+	HUMAN_Suspend(true);
+}
+
+OnDeath()
+{
+	Block
+	{
+	FRM_CreateParticle(36, ohen);
+	MakeExplosion(ohen, 1000000, 30);
+	SendSignal(ee, 31);
+	HUMAN_Kill(n01);
+	HUMAN_Kill(n03);
+	SendSignal(n02p, 2);
+	}
+	EndScript();
+}
+
+Label end:

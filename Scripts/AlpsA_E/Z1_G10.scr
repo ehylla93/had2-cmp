@@ -1,0 +1,156 @@
+// Sedi za skalou
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame K1;	FRM_FindFrame(K1,"Z1_G11");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+integer AIEvent;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+AIEvent =_GetAlarmType();
+
+If (((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+If ((AIEvent==4) OR (AIEvent==256))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+HUMAN_SetSniper(1, 5);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto patrol;
+}
+
+OnSignal(1)
+{
+HUMAN_SetAnim("", 1000,1000,1);
+HUMAN_SETMODE_StandFast();
+HUMAN_TurnAt(K1);
+Delay(250);
+HUMAN_ACTIVITY_Salute(1);
+HUMAN_SETMODE_Walk();
+HUMAN_Move("ge07_08");
+HUMAN_TurnAt(K1);
+Delay(500);
+SendSignal(K1, 1);
+Delay(500);
+HUMAN_SetAnim("%%kecy2", 1000,1000,1);
+
+FRM_MorphSpeechDelayed(K1, 07991536, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991537, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991538, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991539, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991540, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991541, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(K1, 07991542, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991543, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991544, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991545, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991546, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991547, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(K1, 07991548, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991549, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991550, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991551, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991552, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(K1, 07991553, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991554, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991555, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991556, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991557, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991558, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991559, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991560, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(K1, 07991561, 5, 30); // 
+Delay(200);
+HUMAN_SetAnim("", 1000,1000,1);
+SendSignal(K1, 2);
+goto patrol;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%SedimL4", 1000,1000,1);
+HUMAN_SETHEARRANGE(30);
+goto END;
+
+Label patrol:
+HUMAN_SETMODE_Guard();
+HUMAN_Move("ge07_04");
+HUMAN_Move("ge07_05");
+HUMAN_Move("ge07_06");
+HUMAN_Move("ge07_07");
+HUMAN_Move("ge07_08");
+HUMAN_Move("ge07_09");
+HUMAN_Move("ge07_08");
+HUMAN_Move("ge07_07");
+HUMAN_Move("ge07_06");
+HUMAN_Move("ge07_05");
+goto patrol;
+
+Label END:

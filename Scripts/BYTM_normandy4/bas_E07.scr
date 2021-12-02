@@ -1,0 +1,76 @@
+// bas_E07 spiking around corner
+
+block
+{
+SetAlarmType(128, 0);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+integer aievent;
+integer a = _RandomInt(3);
+}
+
+if(a==0) { HUMAN_SETAIMODE_Zombie(); }
+else { HUMAN_SETAIMODE_Defensive(); }
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+PrintfNumber("bas_E07 alarm:",aievent);
+}
+HUMAN_SetAnim("", 200, 200, 0);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("bas_E07 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+a=_RandomInt(3);
+if(a==0) {
+printf("bas_E07 spawned");
+FRM_TeleportNearCheckpoint(MyFRM, "spiking_01", "");
+//SetAlarmType(32, 1);
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%radek1", 800, 800, 0);
+Delay(3500);
+HUMAN_SetAlarm(0);
+//SetAlarmType(1023, 1);
+HUMAN_MoveToAlarm();
+}
+if(a==1) {
+printf("bas_E07 spawned");
+HUMAN_SetAnim("%%nudazed4", 500, 500, 1);
+HUMAN_WeaponOnArm(0);
+HUMAN_Suspend(0);
+//SetAlarmType(1023, 1);
+}
+//EndScript();
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//------------------------------------------------------------------------------------------
+
+label end:

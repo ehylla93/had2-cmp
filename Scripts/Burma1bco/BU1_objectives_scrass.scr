@@ -1,0 +1,19 @@
+// BU_obj_scrass - objectives script assigner
+// -------------------------------------------------------------------------------------------------------------
+Frame obj;
+	FRM_FindFrame(obj, "BU_obj");
+Integer gametype;
+	gametype=0;
+// -------------------------------------------------------------------------------------------------------------
+gametype=_SPGetGameType();
+
+If((gametype==3) OR (gametype==7))
+{
+	ScriptAssign(obj, "BU1_objectives2");
+	printf("assigned bloodshed script BU1_objectives2");
+	GoTo end;
+}
+ScriptAssign(obj, "BU1_objectives");
+printf("assigned normal mission script BU1_objectives");
+
+Label end:

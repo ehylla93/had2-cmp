@@ -1,0 +1,86 @@
+// AF2_22
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME cp;			FRM_FindFRAME(cp, "z03_08");
+  FRAME E23;		FRM_FindFRAME(E23, "AF2_23");
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+}
+
+HUMAN_SETSIGHTRANGE(400);
+HUMAN_SETHEARRANGE(200);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+HUMAN_SETEVENTS(true);
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inlongrange(_PlayerInRange(350)){
+  SetWhenever(inlongrange, false);
+  SetWhenever(inshortrange, true);
+  goto ACTIVATE;
+}
+
+Whenever inshortrange(_PlayerInRange(160)){
+  goto GO;
+}
+
+OnSignal(1) {
+  HUMAN_SetMODE_Stand();
+  HUMAN_SetMODE_Run();
+  HUMAN_MoveToFrame(cp, 1);
+  goto END;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(inlongrange, false);
+	SetWhenever(inshortrange, false);
+    HUMAN_Suspend(false);
+	SendSignal(E23, 1);
+  }
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetMODE_Run();
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Guard();
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAnim("%%sedimL4", 1000, 1000, 1);
+goto END;
+
+Label GO:
+HUMAN_SetAnim("", 100, 100, false);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_MoveToFrame(cp, 1);
+goto END;
+
+Label END:

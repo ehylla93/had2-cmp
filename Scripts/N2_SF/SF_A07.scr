@@ -1,0 +1,54 @@
+// Sgt. Larry Smith
+// ---------------------------------------------
+
+Block
+{
+Frame Esc;	FRM_FindFrame(Esc,"Ally_Escape");
+Frame Cum;	FRM_FindFrame(Cum,"Ally_Escape_Cum");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%sedimL4", 150, 150, 1);
+goto END;
+}
+
+Whenever Tank_Coming_In (_SignalReceived(2))
+{
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAt(Cum);
+goto END;
+}
+
+Whenever Reinforcements_Arrived (_SignalReceived(3))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%sedimL", 150, 150, 1);
+goto END;
+}
+
+Whenever Suspend (_SignalReceived(9))
+{
+HUMAN_Stop();
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+// ----------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

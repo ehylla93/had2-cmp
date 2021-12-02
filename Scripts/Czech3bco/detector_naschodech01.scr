@@ -1,0 +1,10 @@
+Frame ge29;		Frm_FindFrame (ge29,"naschodech_01");
+
+
+
+Whenever ted(_PlayerInRange(6))
+{
+
+SendSignal (ge29,1);
+
+}

@@ -1,0 +1,36 @@
+// Obj 4 - znic vsechny tanky
+//----------------------------------------------
+
+Block
+{
+Frame t1;	FRM_FindFrame(t1, "La_tiger_2");
+Frame t3;	FRM_FindFrame(t3, "La_tiger_3");
+Frame t4;	FRM_FindFrame(t4, "La_tiger_4");
+Frame obj5;	FRM_FindFrame(obj5, "obj5");
+
+SetObjectiveStatus(4, 0);
+}
+
+Whenever All_Armoured_Vehicles_Destroyed (((_Actor_GetState(t1)==0) And (_Actor_GetState(t3)==0) ) And (_Actor_GetState(t4)==0) ) 
+{	
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(09991829);   
+Delay(4000);
+SendSignal(obj5, 3);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+goto end;
+}
+
+Whenever Player (_PlayerInRange(1000))  
+{
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993801);
+Delay(4000);
+SUBTITLES_SetOn(0);
+GoTo end;
+}
+
+
+Label end:

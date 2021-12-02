@@ -1,0 +1,86 @@
+// R_Cz2_Ger28 na pomoc ger13ce
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+block
+{
+Integer aievent;	aievent=0;
+
+SetAlarmType(652, false);
+HUMAN_SETMODE_Walk();
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	DisableSignals(1);
+	aievent=_GetAlarmType();
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+		{
+		SetAlarmType(274,0);
+		HUMAN_WeaponOnArm(1);
+		HUMAN_TurnAtNearestPlayer();
+		HUMAN_SetAlarm(false);
+		delay (500);
+		SetAlarmType(274,1);
+		goto end;
+	}
+	
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))
+	{	EndScript();	}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+	SetAlarmType(371, true);
+}
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_PlayerInRange(30))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever ger13(_SignalReceived(1))	// received from Ger13
+{
+HUMAN_SetAlarm(false);
+SetAlarmType(274, false);
+HUMAN_Move("ger28_01");
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+SetAlarmType(274, true);
+goto end;	
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

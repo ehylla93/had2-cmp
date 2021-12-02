@@ -1,0 +1,7 @@
+
+frame small10;	FRM_FindFrame(small10,"small10");
+
+OnUse()
+{
+SendSignal(small10,1);
+}

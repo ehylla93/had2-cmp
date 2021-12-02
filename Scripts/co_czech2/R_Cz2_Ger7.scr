@@ -1,0 +1,116 @@
+// R_Cz2_Ger7 - soldier coming out 2nd carriage and walks outside
+
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+Integer aievent;	aievent=0;
+Integer counter;	counter=0;
+integer x;	x=0;
+
+Frame ger8;	FRM_FindFrame(ger8, "Ger_8");
+
+SetAlarmType(652, false);
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(1);
+	aievent=_GetAlarmType();
+	SendSignal(ger8, 1);
+	}
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64)){ EndScript(); }
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+{	
+	SetAlarmType(274, false);
+
+if (x==0)
+{
+	HUMAN_SETMODE_Silence();
+	HUMAN_SetAlarm(false);
+	HUMAN_Move("Ger_7_01");
+	x=1;
+}
+	HUMAN_SetAlarm(false);	
+	HUMAN_TurnAtNearestPlayer();
+	delay (900);
+	SetAlarmType(274, true);
+	goto end;
+}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+OnSignal(1)
+{						// received from Ger_, Ger_4, Ger_5
+	counter=counter+1;
+	If(counter==2)
+	{
+		SetWhenever(player,0);
+		HUMAN_Suspend(false);
+		GoTo end;
+	}
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(4))
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("Ger_7_01");
+	x=1;
+	HUMAN_Move("ger7_2");
+	HUMAN_Move("ger7_3");
+	HUMAN_Move("ger7_4");
+HUMAN_SetAnim("%%turnleft",500,500,0);
+delay(2101);
+HUMAN_SetAnim("%%turnright",500,500,0);
+delay(2800);
+HUMAN_SetAnim("",500,500,0);
+	HUMAN_Move("ger7_5");
+	HUMAN_Move("ger7_6");
+HUMAN_SetAnim("%%turnleft",500,500,0);
+delay(2101);
+HUMAN_SetAnim("%%turnright",500,500,0);
+delay(2800);
+HUMAN_SetAnim("",500,500,0);
+	HUMAN_Move("ger7_7");
+HUMAN_SetAnim("%%turnleft",500,500,0);
+delay(2101);
+HUMAN_SetAnim("%%turnright",500,500,0);
+delay(2800);
+HUMAN_SetAnim("",500,500,0);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

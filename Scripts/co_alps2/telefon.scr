@@ -1,0 +1,27 @@
+// telephon ring
+
+block
+{
+frame s;	FRM_FindFrame(s, "S_telefon");
+FRM_SetOn(s, 0);
+}
+
+goto end;
+
+OnSignal(1)
+{
+delay (1000);
+goto crr;
+}
+
+OnSignal(2)
+{
+FRM_SetOn(s, 0);
+}
+
+label crr:
+FRM_SetOn(s, 1);
+delay (2253);
+goto crr;
+
+Label end:

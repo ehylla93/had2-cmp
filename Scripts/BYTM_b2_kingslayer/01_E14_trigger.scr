@@ -1,0 +1,12 @@
+// 01_E14_trigger
+
+Block
+{
+Frame E14;		FRM_FindFrame(E14, "01_E14");
+}
+
+Whenever Near (_MP_IsTeamMemberInRange(1, 2))
+{
+SendSignal(E14, 1);
+EndScript();
+}

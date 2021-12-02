@@ -1,0 +1,80 @@
+// walking guard #2
+
+Block
+{
+   integer AIEvent;	
+   frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+   SetAlarmType(1023, True);	
+   SetAlarmType(256, False);      
+}
+
+  HUMAN_Suspend(true);	
+  Goto TheEnd;
+  Whenever A (_PlayerInRange(110);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Stand();
+Label DeAlarm:
+  HUMAN_WeaponOnArm(False);  
+  HUMAN_SETMODE_Guard();
+//  HUMAN_SetAnim("!strazny02", 250, 150, True);
+
+HUMAN_SetOptimized(1);
+
+label XX:
+        HUMAN_WeaponOnArm(true);  
+  HUMAN_Move("walker2_2");
+  HUMAN_Move("walker2_3");
+  HUMAN_Move("walker2_4");
+  HUMAN_Move("walker2_5");
+  HUMAN_Move("walker2_4");
+  HUMAN_Move("walker2_3");
+  HUMAN_Move("walker2_2");
+  HUMAN_Move("walker2_1");
+goto XX;
+
+OnAlarm()
+{
+   Block
+      {  
+           HUMAN_SETSIGHTRANGE(52);
+           HUMAN_SETHEARRANGE(62);
+           SaveGameValue(29, 99);		// skip CSC 3 - roof 
+           AIEvent =_GetAlarmType(); 
+           PrintfNumber("AIE walker 2: ", AIEvent);
+      }
+  DisableSignals(True);
+  HUMAN_Stop();
+  HUMAN_SETMODE_Run();
+//  HUMAN_SETSIGHTRANGE(70);	  // UPRAVIT POZDEJI
+//  HUMAN_SETHEARRANGE(85);
+
+  HUMAN_SETAIMODE_Aggressive();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(40);
+  HUMAN_SETHEARRANGE(45);
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETMODE_Silence();
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("walker2_DeAlarm");
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  HUMAN_SetAnim("", 0, 0, False);
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+Label TheEnd:

@@ -1,0 +1,22 @@
+Frame svetlo12;	FRM_FindFrame(svetlo12, "railroad lamp_12");
+Frame lens4;		FRM_FindFrame(lens4, "l_ndrlamp4.lenz");
+
+OnSignal(1)
+{
+	Block	{	FRM_SetOn(svetlo12, 0);	FRM_SetOn(lens4, 0);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo12, 1);	FRM_SetOn(lens4, 1);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo12, 0);	FRM_SetOn(lens4, 0);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo12, 1);	FRM_SetOn(lens4, 1);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo12, 0);	FRM_SetOn(lens4, 0);	}
+	Delay(300);
+	Block	{	FRM_SetOn(svetlo12, 1);	FRM_SetOn(lens4, 1);	}
+	Block	{	FRM_SetOn(svetlo12, 0);	FRM_SetOn(lens4, 0);	}
+	Block	{	FRM_SetOn(svetlo12, 1);	FRM_SetOn(lens4, 1);	}
+	Block	{	FRM_SetOn(svetlo12, 0);	FRM_SetOn(lens4, 0);	}
+	Block	{	FRM_SetOn(svetlo12, 1);	FRM_SetOn(lens4, 1);	}
+	Block	{	FRM_SetOn(svetlo12, 0);	FRM_SetOn(lens4, 0);	}
+}

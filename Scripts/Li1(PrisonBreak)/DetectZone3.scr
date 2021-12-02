@@ -1,0 +1,37 @@
+// ----------------------Zone3----------------------
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone3");
+Frame EP06;			FRM_FindFrame(EP06,"EP06");
+Frame EP07;			FRM_FindFrame(EP07,"EP07");
+Frame EP08;			FRM_FindFrame(EP08,"EP08");
+Frame EP09;			FRM_FindFrame(EP09,"EP09");
+Frame EP10;			FRM_FindFrame(EP10,"EP10");
+Frame EP11;			FRM_FindFrame(EP11,"EP11");
+Frame EP12;			FRM_FindFrame(EP12,"EP12");
+Frame EP16;			FRM_FindFrame(EP16,"EP16");
+Frame EG16;			FRM_FindFrame(EG16,"EG16");
+Frame EG21;			FRM_FindFrame(EG21,"EG21");
+Frame EG28;			FRM_FindFrame(EG28,"EG28");
+}
+goto end;
+
+Whenever Yes(_PlayerInBox(detect))
+{
+printf ("Player in zone 3");
+sendsignal (EP06,1);
+sendsignal (EP07,1);
+sendsignal (EP08,1);
+sendsignal (EP09,1);
+sendsignal (EP10,1);
+sendsignal (EP11,1);
+sendsignal (EP12,1);
+sendsignal (EP16,1);
+sendsignal (EG16,1);
+sendsignal (EG21,1);
+sendsignal (EG28,1);
+goto end;
+}
+
+
+label end:

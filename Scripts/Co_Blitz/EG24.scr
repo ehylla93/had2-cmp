@@ -1,0 +1,195 @@
+//EG24 Guard
+// ----------------------Block----------------------
+Block
+{
+frame gd54;			FRM_FindFrame(gd54,"gdummy54");
+frame gd55;			FRM_FindFrame(gd55,"gdummy55");
+frame gd56;			FRM_FindFrame(gd56,"gdummy56");
+frame gd57;			FRM_FindFrame(gd57,"gdummy57");
+frame gd58;			FRM_FindFrame(gd58,"gdummy58");
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rnd2;
+integer rndpause;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+Block
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(85);
+HUMAN_SETHEARRANGE(75);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+goto checkpoint55;
+}
+  label checkpoint54:
+  HUMAN_MoveToFrame(gd54, 1);
+  HUMAN_TurnAt(gd57);
+  delay(9500);
+  goto checkpoint55;
+//
+  label checkpoint55:
+  HUMAN_MoveToFrame(gd55, 1);
+  rnd1= _randomint(2)+1;
+  if (rnd1==1)
+  {
+  //printf ("cp54");
+  goto checkpoint54;
+  }
+  if (rnd1==2)
+  {
+  //printf ("cp56");
+  goto checkpoint56;
+  }
+  label checkpoint56:
+  HUMAN_MoveToFrame(gd56, 1);
+  HUMAN_TurnAt(gd58);
+  delay(6000);
+  rnd2= _randomint(2)+1;
+  if (rnd2==1)
+  {
+  //printf ("cp55");
+  goto checkpoint55;
+  }
+  if (rnd2==2)
+  {
+  //printf ("cp57");
+  goto checkpoint57;
+  }
+  label checkpoint57:
+  HUMAN_MoveToFrame(gd57, 1);
+  delay(6000);
+  goto checkpoint56;
+}
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_Stop();
+Block
+{
+AIEvent = _GetAlarmType();
+If(AIEvent == 1)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive(); 
+}
+If(AIEvent == 2)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Aggressive();
+
+}
+If(AIEvent == 4)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 8)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 16)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 32)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper( 1, 90 );
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 64)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 128)
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 256)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 512)
+{
+HUMAN_Stop();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+}
+}
+EndScript();
+}
+// ----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETAIMODE_Defensive();
+goto alrmdone;
+}
+label alrmdone:
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveRandomRadius(25);
+delay(3000);
+HUMAN_MoveRandomRadius(20);
+delay(2500);
+HUMAN_MoveRandomRadius(20);
+delay(4000);
+HUMAN_MoveRandomRadius(10);
+delay(2000);
+HUMAN_MoveRandomRadius(15);
+delay(3500);
+HUMAN_MoveRandomRadius(10);
+goto alrmdone;
+// ----------------------OnDeath----------------------
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+// ----------------------END----------------------
+Label END:

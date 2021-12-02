@@ -1,0 +1,183 @@
+// Obj 1 - Capture the controll post
+//------------------------------------
+
+Block
+{
+Frame e1;	FRM_FindFrame(e1, "A1_G01"); 
+Frame e2;	FRM_FindFrame(e2, "A1_G02");
+Frame e3;	FRM_FindFrame(e3, "A1_G03"); 
+Frame e4;	FRM_FindFrame(e4, "A1_G04");
+Frame e5;	FRM_FindFrame(e5, "A1_G05"); 
+Frame e6;	FRM_FindFrame(e6, "A1_G06");
+Frame e7;	FRM_FindFrame(e7, "A1_G07"); 
+Frame e8;	FRM_FindFrame(e8, "A1_G08");
+Frame e9;	FRM_FindFrame(e9, "A1_G09"); 
+
+Frame e10;	FRM_FindFrame(e10, "A1_G10");
+Frame e11;	FRM_FindFrame(e11, "A1_G11");
+Frame e12;	FRM_FindFrame(e12, "A1_G12");
+Frame e13;	FRM_FindFrame(e13, "A1_G13");
+Frame e14;	FRM_FindFrame(e14, "A1_G14");
+Frame e15;	FRM_FindFrame(e15, "A1_G15");
+Frame e16;	FRM_FindFrame(e16, "A1_G16");
+Frame e17;	FRM_FindFrame(e17, "A1_G17");
+Frame e18;	FRM_FindFrame(e18, "A1_G18");
+Frame e19;	FRM_FindFrame(e19, "A1_G19");
+Frame e20;	FRM_FindFrame(e20, "A1_G20");
+
+Frame e21;	FRM_FindFrame(e21, "A1_G21");
+Frame e22;	FRM_FindFrame(e22, "A1_G22");
+Frame e23;	FRM_FindFrame(e23, "A1_G23");
+Frame e24;	FRM_FindFrame(e24, "A1_G24");
+Frame e25;	FRM_FindFrame(e25, "A1_G25");
+Frame e26;	FRM_FindFrame(e26, "A1_G26");
+Frame e27;	FRM_FindFrame(e27, "A1_G27");
+Frame e28;	FRM_FindFrame(e28, "A1_G28");
+Frame e29;	FRM_FindFrame(e29, "A1_G29");
+Frame e30;	FRM_FindFrame(e30, "A1_G30");
+Frame e31;	FRM_FindFrame(e31, "A1_G31");
+
+Frame p1;	FRM_FindFrame(p1, "Priso1");
+Frame p2;	FRM_FindFrame(p2, "Priso2");
+
+Integer captured;
+	captured=0;
+
+SetObjectiveStatus(1, 0);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(5, 4);
+}
+
+//------------------------------------
+
+Whenever Controll_Post_Captured_1 (((((_Actor_GetState(e1)==0) And (_Actor_GetState(e2)==0) ) And (_Actor_GetState(e3)==0) ) And (_Actor_GetState(e4)==0) ) And (_Actor_GetState(e5)==0) )
+{
+captured=captured+1;
+
+If(captured==7)
+{
+Delay(3000);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+}
+GoTo end;
+}
+
+Whenever Controll_Post_Captured_2 (((((_Actor_GetState(e6)==0) And (_Actor_GetState(e7)==0) ) And (_Actor_GetState(e8)==0) ) And (_Actor_GetState(e9)==0) ) And (_Actor_GetState(e10)==0) )
+{
+captured=captured+1;
+
+If(captured==7)
+{
+Delay(3000);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+}
+GoTo end;
+}
+
+Whenever Controll_Post_Captured_3 (((((_Actor_GetState(e11)==0) And (_Actor_GetState(e12)==0) ) And (_Actor_GetState(e13)==0) ) And (_Actor_GetState(e14)==0) ) And (_Actor_GetState(e15)==0) )
+{
+captured=captured+1;
+
+If(captured==7)
+{
+Delay(3000);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+}
+GoTo end;
+}
+
+Whenever Controll_Post_Captured_4 (((((_Actor_GetState(e16)==0) And (_Actor_GetState(e17)==0) ) And (_Actor_GetState(e18)==0) ) And (_Actor_GetState(e19)==0) ) And (_Actor_GetState(e20)==0) )
+{
+captured=captured+1;
+
+If(captured==7)
+{
+Delay(3000);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+}
+GoTo end;
+}
+
+Whenever Controll_Post_Captured_5 (((((_Actor_GetState(e21)==0) And (_Actor_GetState(e22)==0) ) And (_Actor_GetState(e23)==0) ) And (_Actor_GetState(e24)==0) ) And (_Actor_GetState(e25)==0) )
+{
+captured=captured+1;
+
+If(captured==7)
+{
+Delay(3000);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+}
+GoTo end;
+}
+
+Whenever Controll_Post_Captured_6 (((((_Actor_GetState(e26)==0) And (_Actor_GetState(e27)==0) ) And (_Actor_GetState(e28)==0) ) And (_Actor_GetState(e29)==0) ) And (_Actor_GetState(e30)==0) )
+{
+captured=captured+1;
+
+If(captured==7)
+{
+Delay(3000);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+}
+GoTo end;
+}
+
+Whenever Controll_Post_Captured_7 (_Actor_GetState(e31)==0) 
+{
+captured=captured+1;
+
+If(captured==7)
+{
+Delay(3000);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+}
+GoTo end;
+}
+
+//--------------------------------------------------------
+
+Label end:

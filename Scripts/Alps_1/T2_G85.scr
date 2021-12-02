@@ -1,0 +1,47 @@
+// T2_G85 - Tiger MG
+// ----------------------------------------
+
+Block
+{
+Frame Jezek;	FRM_FindFrame(Jezek, "A3_Jezek03");
+
+SetAlarmType(1023,0);
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAt(Jezek);
+EndScript();
+}
+
+Whenever Nasedam (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A3_Tiger_01", 1, 1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(120);
+SetAlarmType(1023,1);
+}
+
+OnAlarmDone(){
+HUMAN_TurnAt(Jezek);
+Goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

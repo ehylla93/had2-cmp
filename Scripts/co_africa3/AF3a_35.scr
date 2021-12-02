@@ -1,0 +1,68 @@
+// AF3a_35 - soldier hidden in the house
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  INTEGER Atype	= 0;
+  INTEGER rnd	= _RandomInt(2);
+
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME turn1;			FRM_FindFrame(turn1, "oa_dv74");
+
+  SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    HUMAN_Suspend(false);
+    Atype = _GetAlarmType();
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Crouch();
+  goto END;
+}
+
+Whenever player (_PlayerInRange(8)){
+  goto ACTIVATE;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_TurnAt(turn1);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetMODE_Crouch();
+  HUMAN_Suspend(true);
+goto  END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  block
+  {
+    HUMAN_SetOptimized(1);
+    SetAlarmType(1023, true);
+    SetAlarmType(768, false);
+  }
+  HUMAN_SetMODE_Stand();
+goto END;
+
+Label END:

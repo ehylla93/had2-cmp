@@ -1,0 +1,22 @@
+// Obj 4 - Destroy all enemy tanks
+// ------------------------------------
+
+Block
+{
+Frame T1;		FRM_FindFrame(T1,"07_Panther_01");
+Frame T2;		FRM_FindFrame(T2,"07_Panther_02");
+Frame T3;		FRM_FindFrame(T3,"07_Panther_03");
+
+SetObjectiveStatus(4, 0);
+}
+
+Whenever Tanks_Destroyed (((_Actor_GetState(T1) == 0) And (_Actor_GetState(T2) == 0 )) And (_Actor_GetState(T3) == 0 ))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999802);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

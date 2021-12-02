@@ -1,0 +1,62 @@
+// V La_tiger_3 (panzer)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame mg;		FRM_FindFrame(mg,"MG1");
+Frame mg2;		FRM_FindFrame(mg2,"MG5");
+Frame hakl;		FRM_FindFrame(hakl,"N2_G40");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Delay(130000);
+SendSignal(hakl, 1);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto turnat;
+}
+
+Whenever player (_PlayerInRange(60)){
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("La_tiger_3",  true, 2);
+goto turnat;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label turnat:
+HUMAN_TurnAt(mg);
+Delay(7000);
+HUMAN_TurnAt(mg2);
+Delay(6000);
+goto turnat;
+
+Label END:
