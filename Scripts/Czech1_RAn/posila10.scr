@@ -1,0 +1,54 @@
+// posila10
+
+Block
+{
+Frame posila10b;
+	FRM_FindFrame(posila10b, "posila10b");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETAIMODE_Aggressive();
+SetAlarmType(12, false);
+FRM_SwitchFaceTexture(me, "e_f039");
+}
+HUMAN_Suspend(true);
+
+Whenever signal(_SignalReceived(1))	// received from Ge_9
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Run();
+	Delay(1500);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila10_01");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetOptimized(2);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(80);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila10_01");
+	HUMAN_SetOptimized(2);
+}
+
+OnDeath()
+{
+	SendSignal(posila10b, 1);
+	EndScript();
+}
+
+Label end:

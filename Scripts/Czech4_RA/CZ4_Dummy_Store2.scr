@@ -1,0 +1,4 @@
+Whenever PIR (_PlayerInRange(3))
+	{
+	Printf("Objevil jsi ukradene cennosti");
+	}

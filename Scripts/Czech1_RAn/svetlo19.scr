@@ -1,0 +1,73 @@
+// la_svetlo_19.Mesh01
+Block
+{
+Frame svetlo19;
+	FRM_FindFrame(svetlo19, "la_svetlo_19.Rectangle01");
+Frame light1;
+	FRM_FindFrame(light1, "inner lamp omni_4");
+Frame light2;
+	FRM_FindFrame(light2, "omni help_9");
+Frame light3;
+	FRM_FindFrame(light3, "omni help_10");
+Integer zapnute;
+	zapnute=1;
+}
+
+OnHit()
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo19, false);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(light2, false);
+	FRM_SetOn(light3, false);
+	FRM_SetGroupLightMap("nadrazi5", 1);
+	}
+	GoTo end;
+}
+
+OnSignal(1)	// received from vypinac17
+{
+	If(zapnute==1)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo19, false);
+		FRM_SetOn(light1, false);
+		FRM_SetOn(light2, false);
+		FRM_SetOn(light3, false);
+		FRM_SetGroupLightMap("nadrazi5", 1);
+			zapnute=0;
+		}
+		GoTo end;
+	}
+	If(zapnute==0)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo19, true);
+		FRM_SetOn(light1, true);
+		FRM_SetOn(light2, true);
+		FRM_SetOn(light3, true);
+		FRM_SetGroupLightMap("nadrazi5", 0);
+			zapnute=1;
+		}
+		GoTo end;
+	}
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo19, false);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(light2, false);
+	FRM_SetOn(light3, false);
+	FRM_SetGroupLightMap("nadrazi5", 1);
+	}
+}
+
+Label end:

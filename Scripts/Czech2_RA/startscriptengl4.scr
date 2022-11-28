@@ -1,0 +1,38 @@
+
+
+
+
+OnCutscene(1)
+{
+
+HUMAN_SETMODE_Silence();
+
+Delay(9000);
+HUMAN_Move("en4");
+HUMAN_SETMODE_Crouch();
+
+
+
+}
+
+
+OnCutsceneDone(1)
+{
+
+Frame player4;
+FRM_GetMyFrame(player4);
+Frame mrtvola;
+FRM_FindFrame(mrtvola, "mrtvola01");
+
+
+
+FRM_TeleportNearCheckpoint(player4,"en4","Ger1_1");
+HUMAN_TurnAt(mrtvola);
+
+HUMAN_SETMODE_Crouch();
+
+
+EndScript();
+
+
+}

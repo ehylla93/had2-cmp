@@ -1,0 +1,16 @@
+//detekuje auto a posiela signal cetnikom
+
+frame cetnik;
+FRM_FindFrame(cetnik, "cetnik_");
+frame cetnik2;
+FRM_FindFrame(cetnik2, "cetnik01");
+frame auto;
+FRM_FindFrame(auto, "blitz1");
+
+
+Whenever nakladak(_FrameInRange(auto)<4;)
+{           
+
+           SendSignal(cetnik, 1);
+           SendSignal(cetnik2, 1);
+}

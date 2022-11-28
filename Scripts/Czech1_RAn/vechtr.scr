@@ -1,0 +1,201 @@
+// vechtr - zavorar ovladajuci zavoru
+Block
+{
+Frame klika;
+	FRM_FindFrame(klika,"klika");
+Frame klikaanim;
+	FRM_FindFrame(klikaanim, "klika");
+Frame sloup;
+	FRM_FindFrame(sloup,"l_ndrlamp10");
+Frame zidla;
+	FRM_FindFrame(zidla,"zidla1");
+Frame kreslo;
+	FRM_FindFrame(kreslo, "budkakreslo");
+Frame pike1;
+	FRM_FindFrame(pike1,"zavora1.Cylinder01");
+Frame pike2;
+	FRM_FindFrame(pike2,"zavora2.Cylinder01");
+Frame vlak;
+	FRM_FindFrame(vlak,"lokotka");
+Frame objectives;
+	FRM_FindFrame(objectives, "ObjMis");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer speechdone;
+	speechdone=0;
+Integer smoke;
+	smoke=0;
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(true);
+FRM_SwitchFaceTexture(me, "e_f054");
+SetWhenever(player, false);
+}
+
+Label zacatek:
+	HUMAN_Move("budkazidla");
+	HUMAN_TurnAt(sloup);
+	Delay(100);
+	HUMAN_SetOptimized(2);
+	HUMAN_ACTIVITY_Sit(zidla);
+	GoTo end;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	DisableSignals(true);
+	DisableWhenevers(true);
+	HUMAN_SetOptimized(2);
+	}
+	HUMAN_SETMODE_Stand();
+	Delay(1000);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetAnim("%%panika", 500, 500, true);
+	Delay(5000);
+	HUMAN_SetAnim("", 500, 500, false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("budkakreslo");
+	HUMAN_SetAlarm(false);
+	If(speechdone==0)
+	{
+		printf("setwhenever player true");
+		DisableWhenevers(false);
+		SetWhenever(player, true);
+	}
+	HUMAN_SETMODE_Stand();
+	If(smoke==0)
+	{
+		HUMAN_ACTIVITY_Smoke(true);
+	}
+	GoTo smoke;
+}
+
+OnSignal(2)	// received from lokotka, cesta k zavore
+{
+	HUMAN_SetOptimized(2);
+	HUMAN_SETMODE_Stand();
+	Delay(1000);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("in");
+	HUMAN_Move("out");
+       	HUMAN_Move("zavora");
+       	HUMAN_TurnAt(klika);
+	Delay(1000);
+	HUMAN_SetOptimized(2);
+	If(_ACTOR_GetState(klika)==1)
+	{
+	HUMAN_SetAnim("%%zavorar1", 100, 1000, true);
+	FRM_SetAnimation(klikaanim, "la_tocKlikou01", 0);
+	SetActorState(klika, 2);
+	Delay(7000);
+	HUMAN_SetAnim("", 100, 50, false);
+	FRM_SetAnimation(klikaanim, "", 0);
+	}
+	Delay(3000);
+	HUMAN_TurnAt(sloup);
+	If(speechdone==0)	{	SetWhenever(player, true);	}
+	GoTo end;
+}
+
+OnSignal(3)	// received from Box171
+{
+	HUMAN_ACTIVITY_Salute(3);
+	GoTo end;
+}
+
+OnSignal(1)	// received from detect posledneho vagonu, cesta do budky
+{
+       	HUMAN_Move("zavora");
+	HUMAN_TurnAt(klika);
+	Delay(1000);
+	If(_ACTOR_GetState(klika)==2)
+	{
+	HUMAN_SetAnim("%%zavorar1R", 100, 50, true);	
+	FRM_SetAnimation(klikaanim, "la_tocKlikou02", 0);
+	SetActorState(klika, 1);
+	Delay(7000);
+	HUMAN_SetAnim("", 100, 50, false);	
+	FRM_SetAnimation(klikaanim, "", 0);
+	}
+	Delay(5000);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("out");
+	HUMAN_Move("in");
+	SetWhenever(player, false);
+	HUMAN_Move("budkakreslo");
+	HUMAN_ACTIVITY_Smoke(true);
+	Delay(5000);
+	HUMAN_ACTIVITY_Sit(kreslo);
+	HUMAN_SetOptimized(2);
+	GoTo smoke;
+}
+
+Whenever signal(_SignalReceived(4))	// received from playerinside
+{
+	SetWhenever(player, false);
+	EnableSignal(3, false);
+	GoTo speech;
+}
+
+Whenever player(_PlayerInRange(4))
+{
+	SetWhenever(signal, false);
+	EnableSignal(3, false);
+	GoTo speech;
+}
+
+Label speech:
+	Block
+	{
+	EnableSignal(4, false);
+	speechdone=1;
+	}
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_Move("budkakreslo");
+
+Label speech2:
+	HUMAN_SetOptimized(2);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_TurnAtNearestPlayer();
+	SUBTITLES_SetOn(true);
+	printf("Hello, you must hurry, Trebissky was captured!");
+	FRM_MorphSpeechDelayed(me, 18993604, 3, 20);
+	HUMAN_TurnAtNearestPlayer();
+	printf("He's being interrogated in the station building!");
+	FRM_MorphSpeechDelayed(me, 18993605, 3, 20);
+	SUBTITLES_SetOn(false);
+	SendSignal(objectives, 4);
+	GoTo turnat;
+
+OnSignal(5)	// received from objectives
+{
+	EnableSignal(4, false);
+	GoTo zacatek;
+}
+
+OnDeath()
+{
+	SendSignal(objectives, 6);
+	PlayMusic(34);
+	EndScript();
+}
+
+Label turnat:
+	HUMAN_TurnAtNearestPlayer();
+	Delay(1000);
+	GoTo turnat;
+
+Label smoke:
+	smoke=1;
+	Delay(200000);
+	HUMAN_ACTIVITY_Smoke(false);
+	smoke=0;
+	DisableSignals(false);
+	GoTo end;
+
+Label end:

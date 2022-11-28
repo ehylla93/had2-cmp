@@ -1,0 +1,31 @@
+// Ge_
+
+Block
+{
+Frame opilec1;
+	FRM_FindFrame(opilec1,"ge_");
+Frame me;
+	FRM_GetMyFrame(me);
+
+FRM_SwitchFaceTexture(me, "e_f055");
+}
+HUMAN_Suspend(true);
+
+
+OnSignal(1)	// received from detektor v domku
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_SETMODE_Lie();
+	Delay(2000);
+	HUMAN_SetAnim("%%ospalozral", 500, 100, true);
+}
+
+OnAlarm()
+{
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+}

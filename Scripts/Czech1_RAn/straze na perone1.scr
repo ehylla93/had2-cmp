@@ -1,0 +1,77 @@
+// Ge_12
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame trafo;
+	FRM_FindFrame(trafo, "la_Cz1_transf_");
+Frame speech;
+	FRM_FindFrame(speech, "speech4");
+
+SetAlarmType(8, false);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SETSIGHTRANGE(40);
+FRM_SwitchFaceTexture(me, "e_f020");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor2
+{
+	HUMAN_Suspend(false);
+	GoTo keci;
+}
+
+OnSignal(2)	// received from velitel v aute
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_12_01");
+	HUMAN_Move("Ge_12_02");
+	HUMAN_TurnAt(trafo);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	HUMAN_Stop();
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	GoTo end;
+}
+
+Label keci:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ge_12");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	SetAlarmType(256, false);
+	HUMAN_SETSIGHTRANGE(50);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Label end:

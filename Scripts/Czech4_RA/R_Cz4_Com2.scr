@@ -1,0 +1,8 @@
+
+Frame player;
+
+OnUse()
+{
+  ScriptAssign(player, "CUTplayer2_cz4a");
+}
+

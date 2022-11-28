@@ -1,0 +1,19 @@
+Frame ge04;		Frm_FindFrame (ge04,"Ger_4");
+goto end;
+
+label mumlej:
+//FRM_MorphSpeech(ge04,19993812,4,40);
+delay (26681);
+goto mumlej;
+
+
+Whenever alarm(_SignalReceived(1))
+{
+
+FRM_MorphSpeech(ge04,0,0,0);
+goto end;
+
+}
+
+label end:
+

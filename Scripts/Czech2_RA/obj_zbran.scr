@@ -1,0 +1,22 @@
+//obj_zbran
+
+integer x;	x=0;
+Frame obj;	FRM_FindFrame(obj,"objectives");
+
+
+OnUse()
+
+{
+//otevrel viko bedny
+if(x==0)
+{
+x=1;
+SendSignal (obj,4);
+  SUBTITLES_SetOn(1);
+  SUBTITLES_SetText(19993806); 
+  Delay(4000);
+  SUBTITLES_SetOn(0);
+}
+
+
+}

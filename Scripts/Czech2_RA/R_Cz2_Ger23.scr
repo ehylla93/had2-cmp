@@ -1,0 +1,97 @@
+// R_Cz2_Ger23 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+Frame freiberg;
+	FRM_FindFrame(freiberg, "Big_Boss");
+Frame ger25;
+	FRM_FindFrame(ger25,"ger_25");
+Frame ger24;
+	FRM_FindFrame(ger24,"ger_24");
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(926, false);	// reaguje na blizku strelbu,  vidim a zranenie
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+block
+{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+//	printf("Ger23 alarmed OK");
+	PrintfNumber("Ger23 dostal alarm cislo ", aievent);
+	HUMAN_SETMODE_Walk();
+}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(926, false);
+	SetAlarmType(97, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo bez;
+}
+}
+
+OnDeath()
+{
+block
+{
+	SendSignal(ger24, 2);
+	SendSignal(ger25, 2);
+	DisableSignals(1);
+}
+	EndScript();
+
+}
+
+Whenever player(_PlayerInRange(40))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever detectory(_SignalReceived(1))
+{
+	goto bez;
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+label bez:
+	HUMAN_Move("ger23_01");
+	HUMAN_SETMODE_Crouch();
+goto end;
+
+Label aie2:
+Label aie16:
+	HUMAN_SetAlarm(false);
+	EndScript();
+
+Label end:

@@ -1,0 +1,112 @@
+// R_Cz2_Ger30 help for ger 18
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(652, false);	// reaguje na blizku strelbu,  vidim, zranenie 
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+block
+{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+//	printf("Ger18 alarmed OK");
+	PrintfNumber("Ger18 dostal alarm cislo ", aievent);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETMODE_Crouch();
+}
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))
+	{	EndScript();
+	}
+		If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{	
+	SetAlarmType(274,0);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	delay (900);
+	SetAlarmType(274,1);
+	goto end;
+	}
+	
+ 
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+	
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_SignalReceived(1))
+{
+SetWhenever(playerxx, 0);
+	delay (2000);
+	HUMAN_Suspend(false);
+	HUMAN_Move("ger30_1");
+	HUMAN_Move("ger30_2");
+	HUMAN_Move("ger30_3");
+	HUMAN_Move("ger30_4");
+	HUMAN_Move("ger30_5");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	SetAlarmType(258, true);  	//frenly fajr+fajr
+
+
+	GoTo end;
+}
+
+Whenever playerxx(_PlayerInRange(18))
+{
+	
+SetWhenever(player, 0);
+	HUMAN_Suspend(false);
+	HUMAN_Move("ger30_1");
+	HUMAN_Move("ger30_2");
+	HUMAN_Move("ger30_3");
+	HUMAN_Move("ger30_4");
+	HUMAN_Move("ger30_5");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	SetAlarmType(258, true);  	//frenly fajr+fajr
+
+
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+Label end:

@@ -1,0 +1,16 @@
+frame ger23;		FRM_FindFrame(ger23,"ger_23");
+frame ger22;		FRM_FindFrame(ger22,"ger_22");
+
+
+Whenever blik(_PlayerInRange(1))
+{
+block
+{
+Printf("detektor posilaa");
+
+SendSignal(ger22,1);
+SendSignal(ger23,1);
+}
+}
+
+SetWheneverTime(blik, 100);

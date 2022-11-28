@@ -1,0 +1,78 @@
+Frame CZ4_Chatter_01;		FRM_FindFrame(CZ4_Chatter_01, "CZ4_Chatter_01");
+// 02 je pitomec
+Frame CZ4_Chatter_02;		FRM_FindFrame(CZ4_Chatter_02, "CZ4_Chatter_02");
+SetWhenever (PIR, true);
+Integer titles = 1;
+
+OnSignal(1)
+  {
+     titles = 0;
+     SUBTITLES_SetOn(false);
+     SetWhenever (PIR, False);
+  }
+
+// 21990007 ... Povídám ti, je to jednoduché. Ty mi seženeš láhev toho místního chlastu
+//a já ti seženu støíkaèku od doktora.	
+// 21990008 Píchneš si pod kùži pár kapek petroleje a za chvíli budeš mít poøádnou horeèku.				
+// 21990009 Doktor ví o co jde, je to mùj známý, napíše ti propouštìcí papíry a pomašíruješ domù.			
+// 21990010 Když já nevím. Když je to tak jednoduché, proè to nedìlají všichni?						
+// 21990011 Protože každý není takový zbabìlec, jako ty! Ale jsi mùj kamarád, nìco ti dlužím, 
+//tak to pro tebe udìlám.	
+// 21990012 Co když se pak neuzdravím? Co když umøu?									
+// 21990013 Svatá prostoto! Tak budeš mrtvý! Ne, neboj se, ruèím ti za to, že budeš v poøádku.				
+// 21990014 A za pár dnù jsi doma u Kristýny.										
+// 21990015 Dobøe, vìøím ti. Na veèer by mìl Eichner jet do sousední vsi, øeknu mu aby mi tu láhev sehnal.		
+// 21990016 Takhle se mi líbíš, koneènì je s tebou rozumná øeè. Tu láhev spolu vypijeme na rozlouèenou.		
+// 21990017 A na to abychom se v Nìmecku po válce ve zdraví sešli.							
+// 21990018 O mne se bát nemusíš. Mám za sebou Afriku i Evropu, od zaèátku války.					
+// 21990019 A teï si dávám zatracený pozor, taky mám doma ženu a nechci aby z ní byla vdova.			
+// 21990020 Vidìl jsem tvou Martu na té fotce. Myslím, že by nebyla vdova dlouho. 					
+// 21990021 Žena s její vizáží nebude mít problém se znovu vdát.								
+// 21990022 Ty pitomèe! O èem to sakra mluvíš! Za prvé: ještì žiju!							
+// 21990023 A za druhé: i kdyby mì tady rozestøíleli na malinkaté kousíèky, o takového slabocha, jako jsi ty,		
+// 21990024 by moje Marta ani pohledem nezavadila!									
+// 21990025 No, no. Snad jsem toho tolik neøekl. Nemyslel jsem to tak ...							
+// 21990026 Vím dobøe jak jsi to myslel! Já ti tady pomáhám dostat se domù a ty bys mne nejradìji vidìl mrtvého!	
+// 21990027 Opravdu jsem to tak nemyslel, Friedrichu, už se nezlob.							
+// 21990028 Hele dej mi pokoj, hleï si svého a mne si nevšímej.								
+// 21990029 Dobøe, jak myslíš.		
+// 6179  3343  5270  3477  5926  2589  4539  2519  5108  3686  3227  4423  4446  3599  3076  1068  3517  2380  3186  4690	
+// 1654	1172  1654	
+
+
+Whenever PIR (_PlayerInRange(10))
+  {
+	If (titles == 1)
+	{
+	SendSignal(CZ4_Chatter_01, 5); // pohyby u rozhovoru
+	SendSignal(CZ4_Chatter_02, 5); // pohyby u rozhovoru
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990007 , 5 , 35 );	Delay(62);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990008 , 5 , 35 );	Delay(34);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990009 , 5 , 35 );	Delay(53);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990010 , 5 , 35 );	Delay(35);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990011 , 5 , 35 );	Delay(60);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990012 , 5 , 35 );	Delay(26);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990013 , 5 , 35 );	Delay(46);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990014 , 5 , 35 );	Delay(26);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990015 , 5 , 35 );	Delay(52);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990016 , 5 , 35 );	Delay(37);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990017 , 5 , 35 );	Delay(33);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990018 , 5 , 35 );	Delay(45);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990019 , 5 , 35 );	Delay(45);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990020 , 5 , 35 );	Delay(36);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990021 , 5 , 35 );	Delay(31);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990022 , 5 , 35 );	Delay(12);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990023 , 5 , 35 );	Delay(36);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990024 , 5 , 35 );	Delay(24);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990025 , 5 , 35 );	Delay(32);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990026 , 5 , 35 );	Delay(47);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990027 , 5 , 35 );	Delay(17);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_01, 21990028 , 5 , 35 );	Delay(12);
+	FRM_MorphSpeechDelayed(CZ4_Chatter_02, 21990029 , 5 , 35 );	Delay(17);
+	SendSignal(CZ4_Chatter_01, 10); // bez hrat urazeneho	
+            Delay(950);
+	SendSignal(CZ4_Chatter_02, 10); // poodejdi nekam dal
+	}
+  }
+
+

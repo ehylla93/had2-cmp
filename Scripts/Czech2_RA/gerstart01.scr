@@ -1,0 +1,230 @@
+// gerstart01 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+
+integer x;	x=0;
+
+Frame ger4;
+	FRM_FindFrame(ger4, "Ger_4");
+Frame ger5;
+	FRM_FindFrame(ger5, "Ger_5");
+Frame ger6;
+	FRM_FindFrame(ger6, "Ger_6");
+Frame ger7;
+	FRM_FindFrame(ger7, "Ger_7");
+Frame sed;
+	FRM_FindFrame(sed, "Gersed");
+Frame cum;
+	FRM_FindFrame(cum, "Gercum");
+Frame cum1;
+	FRM_FindFrame(cum1, "Gercum1");
+
+Frame me;	FRM_GetMyFrame(me);
+Frame cum2;	FRM_FindFrame (cum2,"la_lokoroz_");
+
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_WeaponOnArm(0);
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+	SetWhenever(alarm, false);
+	SendSignal(ger4, 1);
+	SendSignal(ger5, 1);
+	SendSignal(ger6, 3);
+	PrintfNumber("Ger_ dostal alarm  ", aievent);
+	HUMAN_SETMODE_StandFast();
+	}
+		
+	HUMAN_SETMODE_StandFast();
+	HUMAN_SetAnim("", 40, 40,0);
+
+
+If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{
+	HUMAN_Stop();	
+	SetAlarmType(274,0);
+if (x==0)
+{
+	HUMAN_WeaponOnArm(1);
+	x=1;
+}
+	HUMAN_SetAlarm(false);
+	HUMAN_TurnAtNearestPlayer();
+	
+	delay (1200);
+	SetAlarmType(274,1);
+	HUMAN_TurnAt(cum2);
+	HUMAN_SetAlarm(false);
+	HUMAN_LookAround(1);
+	goto end;
+
+	}
+
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	DisableSignals(0);
+	HUMAN_WeaponOnArm(1);
+
+	//SetWhenever(alarm, true);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, false);
+	SetAlarmType(499, true);
+	HUMAN_SETMODE_Walk();
+	}
+	HUMAN_SETMODE_Stand();
+	Delay(2000);
+	GoTo move;
+}
+
+Whenever alarm(_SignalReceived(1))	// received from ger4, ger5
+{
+	
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_SETMODE_StandFast();
+	HUMAN_ACTIVITY_Smoke(0);
+
+	HUMAN_WeaponOnArm(1);
+	x=1;
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAt(cum2);
+	GoTo end;
+}
+
+OnDeath()
+{
+	SendSignal(ger7, 1);
+	DisableSignals(1);
+	EndScript();
+}
+
+Whenever funguj(_SignalReceived(2))	
+{
+//Od ge 5
+HUMAN_SETMODE_Stand();
+HUMAN_Move("ger_03");
+HUMAN_TurnAt(ger5);
+delay (8000);
+
+HUMAN_Move("ger_7_01");
+HUMAN_SetAnim("%%cumvoda", 400, 400,0);
+delay(5000);
+HUMAN_SetAnim("", 400, 400,0);
+HUMAN_Move("Ger_04");
+HUMAN_SETMODE_Crouch();
+HUMAN_LookAround(1);
+delay(4000);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("Ger_05");
+HUMAN_SETMODE_Crouch();
+HUMAN_LookAround(1);
+delay(4000);
+HUMAN_SETMODE_Stand();
+label 1:
+HUMAN_Move("Ger_08");
+HUMAN_Move("Ger_07");
+HUMAN_TurnAt(cum1);
+FRM_MorphSpeech(me, 19993841, 6, 28);
+HUMAN_SetAnim("%%cumvoda", 400, 400,0);
+delay(5000);
+HUMAN_SetAnim("", 400, 400,0);
+
+
+goto end;
+}
+
+Whenever funguj2(_SignalReceived(3))	
+{
+//Od ge 5
+HUMAN_SetAnim("", 400, 400,0);
+HUMAN_TurnAt(ger5);
+goto end;
+}
+
+
+Whenever funguj3(_SignalReceived(4))	
+{
+//Od ge 5
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ger_08");
+HUMAN_Move("ger_13");
+
+label hlidka:
+
+HUMAN_Move("ger_09");
+HUMAN_Move("ger_10");
+HUMAN_Move("ger_11");
+HUMAN_SetAnim("%%turnleft",200,200,0);
+	Delay(2800);
+	HUMAN_SetAnim("%%turnright",200,200,0);
+	Delay(3700);
+HUMAN_Move("ger_12");
+HUMAN_Move("ger_14");
+HUMAN_Move("ger_15");
+HUMAN_Move("ger_16");
+HUMAN_Move("ger_17");
+HUMAN_SetAnim("%%turnleft",200,200,0);
+	Delay(2800);
+	HUMAN_SetAnim("%%turnright",200,200,0);
+	Delay(3700);
+HUMAN_SETMODE_Guard();
+goto hlidka;
+
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+
+
+
+HUMAN_Move("Ger_03");
+HUMAN_SETMODE_Crouch();
+goto end;
+
+
+//------------------------
+Label move:
+	HUMAN_Move("g1");
+	
+	HUMAN_LookAround(2);
+	delay (3000);
+	HUMAN_Move("ger_02");
+	delay (500);
+GoTo move;
+
+
+
+
+
+Label end:

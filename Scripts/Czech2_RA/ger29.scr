@@ -1,0 +1,105 @@
+// R_Cz2_Ger29 ceka na signal a vykloni se
+block
+{
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Integer aievent;
+	aievent=0;
+
+Frame pred;	FRM_FindFrame(pred,"ger29pred");
+Frame zad;	FRM_FindFrame(zad,"ger29zad");
+Frame stred;	FRM_FindFrame(stred,"ger29stred");
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(927, false);	// reaguje, vidim a zranenie
+
+HUMAN_SetOptimized(2);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+block
+{
+		aievent=_GetAlarmType();
+//	printf("Ger14 alarmed OK");
+	PrintfNumber("Ger29  alarm cislo ", aievent);
+	HUMAN_WeaponOnArm(1);
+}
+	HUMAN_SetAnim("", 500,500,0);
+	
+
+	EndScript();
+}
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, true);
+	SetAlarmType(927, false);
+	
+}
+	GoTo end;
+}
+
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+
+Whenever player(_PlayerInRange(15))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(1)
+{
+Printf("29 signal 1");
+
+HUMAN_WeaponOnArm(0);
+HUMAN_TurnAt(pred);
+delay (100);
+HUMAN_SetAnim("%%vykoukp", 300,300,0);
+delay (1142);
+HUMAN_SetAnim("", 300,300,0);
+HUMAN_TurnAt(stred);
+HUMAN_WeaponOnArm(1);
+goto end;
+}
+OnSignal(2)
+{
+Printf("29 signal 2");
+HUMAN_WeaponOnArm(0);
+HUMAN_TurnAt(zad);
+delay (100);
+HUMAN_SetAnim("%%vykoukl", 300,300,0);
+delay (1142);
+HUMAN_SetAnim("", 300,300,0);
+HUMAN_TurnAt(stred);
+HUMAN_WeaponOnArm(1);
+goto end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_TurnAt(stred);
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+Label end:

@@ -1,0 +1,8 @@
+Frame obj;	FRM_FindFrame(obj,"objectives");
+Frame Freid;	FRM_FindFrame (Freid,"Big_Boss");
+
+
+Whenever end(_AllPlayersInRange(15) and (_FrameInRange(freid)<15))
+{
+SendSignal(obj,2);
+}

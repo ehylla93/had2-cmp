@@ -1,0 +1,24 @@
+Integer type;
+type=_SPGetGameType();
+
+if (type <> 2)
+
+{
+block
+{
+Frame box1;		FRM_FindFrame(box1, "la_ammo_4");
+Frame med;		FRM_FindFrame(med, "l_medkitBIG");
+Frame pryc;		FRM_FindFrame(pryc, "medpryc");
+ITEM_Teleport(med, pryc);
+FRM_FindFrame(med, "");
+}
+
+SetActorState(box1, 0);
+goto end;
+}
+
+
+
+
+
+label end:

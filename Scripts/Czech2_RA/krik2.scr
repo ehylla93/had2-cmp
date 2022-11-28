@@ -1,0 +1,11 @@
+Frame ge16;	FRM_FindFrame(ge16, "ger_23");
+
+
+
+
+Whenever xxx(_PlayerInRange(16))
+{
+printf ("krik 2");
+FRM_MorphSpeech(ge16, 19993846, 40, 60);
+
+}

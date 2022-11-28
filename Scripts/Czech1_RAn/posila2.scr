@@ -1,0 +1,49 @@
+// posila2
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETMODE_Guard();
+SetAlarmType(12, false);
+FRM_SwitchFaceTexture(me, "e_f042");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Whenever player(_PlayerInRange(100))
+{
+	HUMAN_Suspend(false);
+	GoTo hlidka;
+}
+
+Label hlidka:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila2_01");
+	HUMAN_Move("posila2_02");
+	GoTo hlidka;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(70);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila2_02");
+	GoTo hlidka;
+}
+
+Label end:

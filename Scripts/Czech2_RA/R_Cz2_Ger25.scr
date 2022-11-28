@@ -1,0 +1,114 @@
+// R_Cz2_Ger25 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+integer al;
+
+frame ge32;	FRM_FindFrame(ge32,"ger_32");
+frame door;	FRM_FindFrame(door, "dobytcak146");
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+al=(512+128+8+4);
+SetAlarmType(al, false);	// reaguje na blizku strelbu, strelbu, kroky, zvuky, explozie, vidim a zranenie
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+//	printf("Ger25 alarmed OK");
+	PrintfNumber("Ger25 dostal alarm cislo ", aievent);
+
+	If(((aievent==2) OR (aievent==256)) or (aievent==16))	
+	{
+	SetAlarmType(274,0);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	Delay (900);
+	SetAlarmType(274,1);
+	goto end;
+	}
+	
+	
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, true);
+	SetAlarmType(al, false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+}
+	HUMAN_Move("Ger25_01");
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(12))
+{
+	Printf("ger 25 dostal signal");
+	SetAlarmType(258, false);
+	HUMAN_Suspend(false);
+	delay (100);
+	HUMAN_Move("Ger_23_001");
+	SetActorState(door, 1);
+	
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	SetAlarmType(258, true);
+	GoTo end;
+}
+
+Whenever dvere(_SignalReceived(3))		//od dweri
+{
+	delay(1000);
+	HUMAN_LookAround(1);
+	delay(4000);
+	HUMAN_Move("Ger25_01");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	SetAlarmType(258, true);
+	goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableSignals(1);
+SendSignal(ge32,1);
+}
+EndScript();
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+SetWheneverTime(player, 100);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+
+Label end:

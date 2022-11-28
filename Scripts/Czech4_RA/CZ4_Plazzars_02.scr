@@ -1,0 +1,126 @@
+SetAlarmType(1023,false);
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+integer AIEvent;
+integer KONECNA;
+
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+
+OnDeath()
+	{
+	SendSignal(CZ4_OD, 0);
+	EndScript();
+	}
+HUMAN_Suspend(true);
+
+OnSignal(3)
+	{
+	HUMAN_Suspend(false);
+	Delay(1500);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_SETMODE_Crouch();
+	SetAlarmType(1, true);
+	SetAlarmType(2, true);
+	SetAlarmType(32, true);
+	HUMAN_Move("hop2");
+	HUMAN_Move("DDP");
+	HUMAN_Move("RRR1");
+	HUMAN_Move("RRR2");
+	HUMAN_Move("RRR3");
+	HUMAN_Move("RRR4");
+	SetAlarmType(16, true);
+	SetAlarmType(64, true);
+	}
+
+OnSignal(7)
+	{
+	HUMAN_Suspend(false);
+	Delay(1500);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_SETMODE_Crouch();
+	SetAlarmType(1023, true);
+	HUMAN_Move("hop2");
+	HUMAN_Move("DDP");
+	HUMAN_Move("RRR1");
+	HUMAN_Move("RRR2");
+	HUMAN_Move("RRR3");
+	HUMAN_Move("RRR4");
+	}
+
+OnSignal(16)
+	{
+	HUMAN_Suspend(false);
+	SetAlarmType(1023, true);
+	}
+
+OnAlarm()
+	{
+            Block
+              {     
+	  DisableSignals(True);
+	  DisableWhenevers(True);
+	  SetWhenever(PIR, False);
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Plazzars 2: ", AIEvent);
+	  HUMAN_SETAIMODE_Aggressive();
+              }
+ 	HUMAN_Stop();
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	HUMAN_SetSniper(1,30);
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	  DisableSignals(False);
+	  SetAlarmType(511, True);
+	  SetAlarmType(512, False);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+	  HUMAN_SETMODE_Guard();
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+	}
+
+Whenever PIR (_PlayerInRange(60))
+	{
+	HUMAN_Suspend(false);
+	SetAlarmType(1023, true);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETAIMODE_Aggressive();
+	}
+
+Label TheEnd:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Plazzars_02");
+       DisableSignals(True);
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+  Delay (10000);
+Goto TheEnd;
+
+label wait:

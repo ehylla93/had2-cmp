@@ -1,0 +1,30 @@
+// R_Cz2_Ger1 - dead soldier
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+HUMAN_SETMODE_Crouch();
+
+
+block
+{
+
+Frame me;	FRM_GetMyFrame(me);
+HUMAN_SETEVENTS(0);
+integer a;	a=_RandomInt(8000)+15000;
+
+Frame ger2;	FRM_FindFrame(ger2,"ger_2");		//osetruje ho
+}
+// -------------------------------------------------------------------------------------------------------------
+
+
+HUMAN_SetAnim("%%umre",400,400,1);
+delay (a);
+
+
+HUMAN_SetAnim("%%umrel",400,400,0);
+delay (2000);
+SendSignal(ger2,1);
+delay(2001);
+HUMAN_SetAnim("%%umrel1",400,400,1);
+HUMAN_KillEx(me, 2);
+
+label end:

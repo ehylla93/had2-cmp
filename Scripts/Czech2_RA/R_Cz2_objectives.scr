@@ -1,0 +1,147 @@
+// R_Cz2_objectives - objectives for Czech2
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+integer plnum;
+
+SetObjectiveStatus(1, 0);
+}
+goto end;
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever obj(_SignalReceived(1))
+{
+
+Integer type;
+type=_SPGetGameType();
+
+if (type <> 2)
+
+{
+
+  If((_IsTeamMemberDead())==0)
+{
+SetObjectiveStatus(5, 0);				//Nekdo z tymu chcipl
+SetObjectiveStatus(5, 1);
+}
+}
+
+AddDiaryText(39);
+
+if (plnum>1)
+{
+
+Printf("pridawam diary text pro tym");
+AddDiaryText(4301);
+}
+
+else
+
+{
+
+Printf("pridawam diary text pro jednoho");
+AddDiaryText(4302);
+}
+
+
+if (_IsInInventory(239)==1)
+{
+//doklady
+if (plnum>1)
+{
+
+Printf("pridawam diary text pro tym");
+AddDiaryText(4304);
+}
+
+else
+
+{
+
+Printf("pridawam diary text pro jednoho");
+AddDiaryText(4306);
+}
+	
+
+}
+
+if (_IsInInventory(26)==1)
+{
+//doklady
+if (plnum>1)
+{
+
+Printf("pridawam diary text pro tym");
+AddDiaryText(4303);
+}
+
+else
+
+{
+
+Printf("pridawam diary text pro jednoho");
+AddDiaryText(4305);
+}
+}
+	CSC_FadeIn(100);
+	delay (100);
+	SetObjectiveStatus(1, 1);	
+
+	GoTo end;
+
+}
+
+Whenever det(_SignalReceived(3))
+{
+	printf("Freid_death");
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(19993803);	// doplnit v textaci
+	Delay(5000);
+	SetObjectiveStatus(1, 3);
+	GoTo end;
+}
+
+
+Whenever bed(_SignalReceived(4))
+{
+	//bedna
+	SetObjectiveStatus(3, 0);
+	SetObjectiveStatus(3, 1);
+	goto end;
+}
+
+OnSignal(5)
+{
+	//doklady
+	SetObjectiveStatus(4, 0);
+	SetObjectiveStatus(4, 1);
+	goto end;
+}
+
+OnSignal(6)
+{
+	//doklady pryc
+	SetObjectiveStatus(4, 4);
+	goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+OnCutscene(1)
+{
+goto end;
+}
+
+OnCutsceneDone(1)
+{
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993801);
+Delay(4000);
+	SUBTITLES_SetOn(false);
+plnum=_GetNumMembersOfClientTeam()		//kolik je playeru
+}
+
+
+
+Label end:

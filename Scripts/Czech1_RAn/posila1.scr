@@ -1,0 +1,89 @@
+// posila1
+
+Block
+{
+Frame zabr1;
+	FRM_FindFrame(zabr1,"storg186");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETSIGHTRANGE(55);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Zombie();
+SetAlarmType(12, false);
+FRM_SwitchFaceTexture(me, "e_f039");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor2
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila1_01");
+	GoTo hlidka;
+}
+
+OnSignal(31)	// received from transformator_1
+{
+	HUMAN_Stop();
+	HUMAN_SETMODE_Guard();
+	HUMAN_LookAround(1);
+	GoTo hlidka2;
+}
+
+Label hlidka:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila1_02");
+	HUMAN_SetOptimized(2);
+	Delay(5000);
+	HUMAN_ACTIVITY_Smoke(true);
+	Delay(15000);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila1_03");
+	HUMAN_Move("posila1_04");
+	Delay(2000);
+	HUMAN_ACTIVITY_Smoke(false);
+	Delay(2000);
+	HUMAN_Move("zabr");
+	HUMAN_SetOptimized(2);
+	Delay(1000);
+	HUMAN_TurnAt(zabr1);
+	HUMAN_SetAnim("%%zabradli1", 500, 500, true);
+	Delay(30000);
+	HUMAN_SetAnim("", 500, 500, false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila1_01");
+	GoTo hlidka;
+
+Label hlidka2:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila1_01");
+	Delay(1000);
+	HUMAN_Move("posila1_05");
+	Delay(1000);
+	GoTo hlidka2;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{	
+	HUMAN_SetAnim("", 100, 100,false);
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(40);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila1_01");
+	HUMAN_SetOptimized(2);
+}
+
+Label end:

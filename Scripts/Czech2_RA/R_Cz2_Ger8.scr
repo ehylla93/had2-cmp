@@ -1,0 +1,126 @@
+// R_Cz2_Ger8 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+// Variables definition
+Integer aievent;
+	aievent=0;
+frame sed;	FRM_FindFrame(sed, "ger8sed");
+
+frame cum1;		FRM_FindFrame(cum1, "ger8cum1");
+frame cum2;		FRM_FindFrame(cum2, "ger8cum2");
+frame cum3;		FRM_FindFrame(cum3, "ger8cum3");
+// -------------------------------------------------------------------------------------------------------------
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+	printf("Ger8 alarmed OK");
+	PrintfNumber("Ger8 dostal alarm cislo ", aievent);	
+
+}
+				
+if (aievent==32)
+{
+EndScript(); 
+}
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+delay (200);
+HUMAN_WeaponOnArm(1);
+
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+label rozhled:
+HUMAN_TurnAt(cum2);
+delay (4000);
+HUMAN_TurnAt(cum3);
+delay (4000);
+goto rozhled;
+
+}
+
+if ((aievent==4) or (aievent==8))
+{
+SetAlarmType(12,0);
+HUMAN_SetAnim("", 200, 200, 0);
+delay (200);
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay (1500);
+SetAlarmType(12,1);
+HUMAN_TurnAt(cum1);
+
+goto sedni;
+}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_PlayerInRange(20))
+{
+	HUMAN_Suspend(false);
+	SetWhenever(ger7, false);
+	GoTo sedni;
+}
+
+Whenever ger7(_SignalReceived(1))	// received from Ger_7
+{
+	HUMAN_Suspend(false);
+	SetWhenever(player, false);
+	GoTo sedni;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_SetSniper(1, 1);
+HUMAN_Suspend(true);
+GoTo end;
+
+label sedni:
+HUMAN_SETMODE_Crouch();
+delay (300);
+HUMAN_SetAnim("%%medik", 400, 400, 1);
+
+goto end;
+
+
+Label end:

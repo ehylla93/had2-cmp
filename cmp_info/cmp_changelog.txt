@@ -1,5 +1,17 @@
 CHANGELOG
 
+28/11/2022 - Coop Map Package (CMP) v2.0.2 (unofficial)
+==========================================
+* + Cz1(Red_Army)
+* + Cz2(Red_Army)
+* + Cz4(Red_Army)
+* + Italy2
+* + Cz4(Semper_Fidelis)
+* + Cz5(Semper_Fidelis)
+* + Li1(Supercharge)Day
+* + Sicily3
+* + Cz6(Defence)B
+
 28/07/2021 - Coop Map Package (CMP) v2.0.1
 ==========================================
  * new version of Nm4(Calais) added

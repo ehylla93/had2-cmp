@@ -1,0 +1,11 @@
+Frame ger29;		FRM_FindFrame(ger29,"ger_29");
+
+
+Whenever chuj(_PlayerInRange(1))
+{
+SendSignal(ger29,2);
+
+}
+
+SetWheneverTime(chuj, 100);
+label end:

@@ -1,0 +1,105 @@
+// R_Cz2_Ger9 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+Frame ger11;
+	FRM_FindFrame(ger11, "Ger_11");
+Frame cum;	FRM_FindFrame(cum,"ger9cum");
+Frame ger27;
+	FRM_FindFrame(ger27, "Ger_27");
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(1023, true);
+SetAlarmType(652, false);	// reaguje na blizku strelbu, strelbu, explozie, vidim a zranenie
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+		aievent=_GetAlarmType();
+//	printf("Ger9 alarmed OK");
+	PrintfNumber("Ger9 dostal alarm cislo ", aievent);
+	SendSignal(ger11, 1);
+	HUMAN_WeaponOnArm(1);
+	}
+	HUMAN_SetAnim("",50,50,0);
+
+
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{	
+	SetAlarmType(274,0);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	delay (1200);
+	SetAlarmType(274,1);
+label 1:
+	HUMAN_LookAround(1);
+	delay (4500);
+goto 1;
+	}
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))
+	{
+	block
+	{	
+	SendSignal(ger27, 1);
+	EndScript();
+	}
+	}
+	goto end;
+}
+
+OnAlarmDone()
+{
+	
+Block
+{
+HUMAN_SetAlarm(false);
+	SetAlarmType(1023, true);
+	SetAlarmType(652, false);
+}
+	HUMAN_Move("ger9_01");
+	HUMAN_TurnAt(cum);
+	HUMAN_SETMODE_Crouch();
+
+	GoTo end;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+
+Whenever player(_PlayerInRange(15);)
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetAnim("%%medik1",300,300,1);
+
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+	
+
+Label end:

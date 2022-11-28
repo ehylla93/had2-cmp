@@ -1,0 +1,173 @@
+// Hakla1 (Ridic haklu 2 - Hakl2)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame p1;		FRM_FindFrame(p1,"Hakla2");
+Frame p2;		FRM_FindFrame(p2,"Hakla3");
+Frame p3;		FRM_FindFrame(p3,"Hakla4");
+Frame p4;		FRM_FindFrame(p4,"Hakla5");
+Frame p5;		FRM_FindFrame(p5,"Hakla6");
+
+Frame t1;		FRM_FindFrame(t1,"La_tiger_3");
+
+Frame s1;		FRM_FindFrame(s1,"SW_G04");
+Frame s2;		FRM_FindFrame(s2,"SW_G05");
+Frame s3;		FRM_FindFrame(s3,"SW_G06");
+Frame s4;		FRM_FindFrame(s4,"SW_G07");
+Frame s5;		FRM_FindFrame(s5,"SW_G08");
+Frame s6;		FRM_FindFrame(s6,"SW_G09");
+Frame s7;		FRM_FindFrame(s7,"SW_G10");
+Frame s8;		FRM_FindFrame(s8,"SW_G11");
+Frame s9;		FRM_FindFrame(s9,"SW_G12");
+Frame s10;		FRM_FindFrame(s10,"SW_G13");
+Frame s11;		FRM_FindFrame(s11,"SW_G14");
+Frame s12;		FRM_FindFrame(s12,"SW_G15");
+Frame s13;		FRM_FindFrame(s13,"SW_G16");
+Frame s14;		FRM_FindFrame(s14,"SW_G17");
+Frame s15;		FRM_FindFrame(s15,"SW_G18");
+Frame s16;		FRM_FindFrame(s16,"SW_G19");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer pechota;
+	pechota=0;
+}
+
+//--------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+
+If(pechota==0)
+{
+SendSignal(s1, 1);
+SendSignal(s2, 1);
+SendSignal(s3, 1);
+SendSignal(s4, 1);
+Delay(2000);
+SendSignal(s5, 1);
+SendSignal(s6, 1);
+SendSignal(s7, 1);
+SendSignal(s8, 1);
+Delay(2000);
+SendSignal(s9, 1);
+SendSignal(s10, 1);
+SendSignal(s11, 1);
+SendSignal(s12, 1);
+Delay(2000);
+SendSignal(s13, 1);
+SendSignal(s14, 1);
+SendSignal(s15, 1);
+SendSignal(s16, 1);
+}
+
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_Stop();
+HUMAN_Drive("", 30);
+Delay(2000);
+SendSignal(p1, 2);
+SendSignal(p2, 2);
+SendSignal(p3, 2);
+SendSignal(p4, 2);
+SendSignal(p5, 2);
+HUMAN_BoardVehicle("Hakl2" , false, 0);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(300);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_Move("C5_G38_01");
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Panther_Destroyed (_Actor_GetState(t1)==0)
+{
+Delay(80000);
+SendSignal(s1, 1);
+SendSignal(s2, 1);
+SendSignal(s3, 1);
+SendSignal(s4, 1);
+Delay(500);
+SendSignal(s5, 1);
+SendSignal(s6, 1);
+SendSignal(s7, 1);
+SendSignal(s8, 1);
+Delay(5000);
+SendSignal(p1, 2);
+SendSignal(p2, 2);
+SendSignal(p3, 2);
+SendSignal(p4, 2);
+SendSignal(p5, 2);
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("Hakl2" , true, 0);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+SendSignal(p3, 1);
+SendSignal(p4, 1);
+SendSignal(p5, 1);
+Delay(500);
+HUMAN_Drive("C5_kubel_tele", 60); 
+HUMAN_Drive("", 60);
+Delay(2000);
+SendSignal(s9, 1);
+SendSignal(s10, 1);
+SendSignal(s11, 1);
+SendSignal(s12, 1);
+Delay(2000);
+SendSignal(s13, 1);
+SendSignal(s14, 1);
+SendSignal(s15, 1);
+SendSignal(s16, 1);
+
+pechota=pechota+1;
+
+HUMAN_BoardVehicle("Hakl2" , false, 0);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(300);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_Move("C5_G38_01");
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

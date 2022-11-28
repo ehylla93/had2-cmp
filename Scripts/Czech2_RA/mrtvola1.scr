@@ -1,0 +1,29 @@
+// dead soldier
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+HUMAN_SETEVENTS(0);
+delay (1000);
+printf ("mrtwolak");
+HUMAN_SetOptimized(2);
+
+Frame me;	FRM_GetMyFrame(me);
+
+HUMAN_SETMODE_Lie();
+delay (1000);
+
+HUMAN_SetAnim("%%mrtvolak1", 10, 10, 1);
+
+delay (1000);
+HUMAN_KillEx(me,0);
+HUMAN_Suspend(1);
+goto end;
+
+
+Whenever blik(_PlayerInRange(7))
+{
+HUMAN_Suspend(0);
+EndScript();
+}
+
+
+label end:

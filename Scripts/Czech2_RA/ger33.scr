@@ -1,0 +1,107 @@
+// R_Cz2_Ger33 na signal ven z wagonu,zaklekne a sniper
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+Integer a;	a=0;
+
+frame ge32;	FRM_FindFrame(ge32,"ger_32");
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(926, false);	// reaguje na blizku strelbu, strelbu, kroky, zvuky, explozie, vidim a zranenie
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+		aievent=_GetAlarmType();
+//	printf("Ger25 alarmed OK");
+	PrintfNumber("Ger32 dostal alarm cislo ", aievent);
+
+	If((aievent==2) OR (aievent==16))	
+	{
+	
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	
+	If(a==0)
+	{
+	HUMAN_Move("Ger32_01");
+	a=1;
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetSniper(1, 2);
+	HUMAN_TurnAtNearestPlayer();
+	}
+
+	goto end;
+	}
+	
+	
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(908, false);
+	SetAlarmType(115, true);
+	
+}
+	If(a==0)
+	{
+	HUMAN_Move("Ger32_01");
+	a=1;
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetSniper(1, 2);
+	HUMAN_TurnAtNearestPlayer();
+	}
+goto end;	
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever detector(_SignalReceived(1))
+{
+	Printf("ger 33 dostal signal");
+
+	HUMAN_Suspend(false);
+	HUMAN_Move("Ger33_01");
+	a=1;
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetSniper(1, 2);
+	HUMAN_TurnAtNearestPlayer();
+
+	GoTo end;
+}
+
+
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+
+Label end:

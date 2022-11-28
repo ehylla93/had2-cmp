@@ -1,0 +1,18 @@
+Block
+{
+Frame ger1;
+	FRM_FindFrame(ger1, "Ger_");
+Frame ger4;
+	FRM_FindFrame(ger4, "Ger_4");
+Frame ger5;
+	FRM_FindFrame(ger5, "Ger_5");
+}
+
+
+
+Whenever posli(_PlayerInRange(4))
+{
+SendSignal(ger5, 2);
+}
+
+SetWheneverTime(posli, 200);

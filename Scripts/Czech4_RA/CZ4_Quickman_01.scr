@@ -1,0 +1,129 @@
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+frame see1;			FRM_FindFrame(see1, "dummy_Q_see1");
+frame see2;			FRM_FindFrame(see2, "dummy_Q_see2");
+frame see3;			FRM_FindFrame(see3, "dummy_Q_see3");
+Frame Detector_03;		FRM_FindFrame(Detector_03, "Detector_03");
+integer AIEvent;
+integer KONECNA;
+
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+SetAlarmType(1023, false);
+HUMAN_Suspend(true);
+goto wait;
+
+OnSignal(3)
+	{
+	HUMAN_Suspend(false);
+            SetWhenever(PIR, false);
+            SetAlarmType(1023, true);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	Label shoot1:
+	HUMAN_Move("hop2");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_IllFire(Detector_03, 1000);
+	HUMAN_Move("Susp11_1");
+	Delay(2000);
+	GoTo shoot1;
+	}
+
+OnSignal(16)
+	{
+	HUMAN_Suspend(false);
+            SetWhenever(PIR, false);
+	SetAlarmType(1023, true);
+            HUMAN_SETMODE_Walk();
+            HUMAN_SETMODE_Stand();
+            HUMAN_Move("Q_look");
+	HUMAN_SETMODE_Crouch();
+            HUMAN_LookAround(5);
+	Delay(2000);
+            HUMAN_TurnAt(see1);
+	Delay(5000);
+            HUMAN_TurnAt(see2);
+	Delay(5000);
+            HUMAN_TurnAt(see3);
+	Delay(5000);
+	HUMAN_SETMODE_Stand();
+            HUMAN_TurnAt(see1);
+	Delay(5000);
+            HUMAN_TurnAt(see2);
+	Delay(5000);
+	HUMAN_SETMODE_Crouch();
+            HUMAN_LookAround(3);
+	}
+
+Whenever PIR (_PlayerInRange(30))
+	{
+	HUMAN_Suspend(false);
+	SetAlarmType(1023, true);
+	}
+
+OnAlarm()
+	{
+            Block
+              {     
+	  HUMAN_Suspend(false);
+	  DisableSignals(True);
+	  DisableWhenevers(True);
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Quickman 1: ", AIEvent);
+	  HUMAN_SETMODE_Crouch();
+	  HUMAN_SETAIMODE_Defensive();
+              }
+ 	HUMAN_Stop();
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	EndScript();
+	}
+	
+OnAlarmDone()
+	{
+	  DisableSignals(False);
+	  SetAlarmType(511, True);
+	  SetAlarmType(512, False);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+	  HUMAN_SETMODE_Walk();
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+              If ( _LoadGameValue(16) > 0) { goto TheEnd; }
+	  HUMAN_Move("Susp11_1");
+	  HUMAN_SETAIMODE_Zombie();
+	}
+
+OnDeath()
+	{
+	SendSignal(CZ4_OD, 0);
+	EndScript();
+	}
+
+
+Label TheEnd:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Quickman_01");
+       DisableSignals(true);
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+  Delay (10000);
+Goto TheEnd;
+
+label wait:

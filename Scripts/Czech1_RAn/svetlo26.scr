@@ -1,0 +1,65 @@
+// la_svetlo_26.Mesh01
+Block
+{
+Frame svetlo26;
+	FRM_FindFrame(svetlo26, "la_svetlo_26.Rectangle01");
+Frame light1;
+	FRM_FindFrame(light1, "inner lamp omni_19");
+Frame light2;
+	FRM_FindFrame(light2, "window out light effect_9");
+Frame light3;
+	FRM_FindFrame(light3, "window out light effect_10");
+Frame object120;
+	FRM_FindFrame(object120, "Object120");
+Integer zapnute;
+	zapnute=1;
+}
+
+OnHit()
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo26, false);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(light2, false);
+	FRM_SetOn(light3, false);
+	FRM_SetGroupLightMap("budka1", 1);
+	SendSignal(object120, 2);
+	}
+	GoTo end;
+}
+
+OnSignal(1)	// received from vypinac21
+{
+	If(zapnute==1)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo26, false);
+		FRM_SetOn(light1, false);
+		FRM_SetOn(light2, false);
+		FRM_SetOn(light3, false);
+		FRM_SetGroupLightMap("budka1", 1);
+		SendSignal(object120, 2);
+			zapnute=0;
+		}
+		GoTo end;
+	}
+	If(zapnute==0)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo26, true);
+		FRM_SetOn(light1, true);
+		FRM_SetOn(light2, true);
+		FRM_SetOn(light3, true);
+		FRM_SetGroupLightMap("budka1", 0);
+		SendSignal(object120, 3);
+			zapnute=1;
+		}
+		GoTo end;
+	}
+}
+
+Label end:

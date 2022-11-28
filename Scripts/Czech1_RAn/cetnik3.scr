@@ -1,0 +1,123 @@
+// cetnik3
+
+Block
+{
+Frame cetnik4;
+	FRM_FindFrame(cetnik4, "cetnik4");
+Frame ridic;
+	FRM_FindFrame(ridic, "ridic nakladaku");
+Frame speech;
+	FRM_FindFrame(speech, "speech2");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer kur;
+	kur=0;
+Integer wait;
+	wait=0;
+Integer smoking_time;
+	smoking_time=0;
+Integer kecani;
+	kecani=0;
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f045");
+}
+
+Label turn_at:
+	HUMAN_TurnAt(cetnik4);
+	GoTo hlidka;
+
+Label hlidka:
+	HUMAN_TurnAt(cetnik4);
+	HUMAN_SETSIGHTRANGE(50);
+	kecani=_RandomInt(3);
+	If(kecani==0)
+	{
+		HUMAN_SetAnim("%%kecy3", 500, 1500, false);
+		Delay(12000);
+	}
+	kur=_RandomInt(8) + 1;
+	If(kur==1)
+	{
+		Gosub cigaro;
+	}
+	Delay(2000);
+	GoTo hlidka;
+
+Label cigaro:                                   //koureni
+	wait =_RandomInt(200) + 50;
+	Delay(wait);
+	HUMAN_ACTIVITY_Smoke(true);
+	smoking_time=_RandomInt(50000) + 150000;
+	Delay(smoking_time);
+	HUMAN_ACTIVITY_Smoke(false);
+	wait =_RandomInt(100) + 50;
+	Delay(wait);
+	Return;
+
+OnAlarm()
+{	
+	HUMAN_Stop();
+
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SetAnim("", 500, 1500, false);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETSIGHTRANGE(60);
+	}
+	HUMAN_ACTIVITY_Smoke(false);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("cet3");
+	GoTo turn_at;
+}
+
+Whenever bonzak(_FrameInRange(ridic)<3 )
+{
+	Block
+	{
+	HUMAN_SetAnim("", 500, 1500, false);
+	SendSignal(cetnik4, 2);
+	}
+	HUMAN_TurnAt(ridic);
+	Delay(4000);
+	SendSignal(speech, 1);
+	GoTo turn_at;
+}
+
+OnSignal(1)	// received from ridic nakladaku ak je cetnik na zaciatku killed
+{
+	HUMAN_ACTIVITY_Smoke(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("bkontr2");
+	HUMAN_LookAround(3);
+	Delay(2000);
+	HUMAN_Move("zastavit");
+	HUMAN_SetOptimized(2);
+}
+
+OnSignal(2)	// received from speech2
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+}
+
+OnDeath()
+{
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	}
+	EndScript();
+}

@@ -1,0 +1,67 @@
+// speech4 - speech dummy for Ge_12, Ge_12
+Frame ge12;
+	FRM_FindFrame(ge12, "Ge_12");
+Frame ge13;
+	FRM_FindFrame(ge13, "Ge_13");
+Integer rozhovorcounter;
+	rozhovorcounter=1;
+
+SetWhenever(notplayer, false);
+// -------------------------------------------------------------------------------------------------------------
+Whenever player(_PlayerInRange(22))
+{
+	SetWhenever(notplayer, true);
+//	SendSignal(ge12, 1);
+//	SendSignal(ge13, 1);
+	If(rozhovorcounter==1)	{	GoTo rozhovor;	}
+	If(rozhovorcounter==2)	{	GoTo rozhovor2;	}
+	If(rozhovorcounter==3)	{	GoTo rozhovor3;	}
+	GoTo rozhovor3;
+}
+
+Whenever notplayer(!_PlayerInRange(25))
+{
+	rozhovorcounter=rozhovorcounter+1;
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+OnSignal(1)	// received from Ge_12, Ge_13 on alarm, on death
+{
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(ge13, 18993625, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993623, 3, 20);
+	FRM_MorphSpeechDelayed(ge13, 18993626, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993624, 3, 20);
+	FRM_MorphSpeech(ge13, 18993627, 3, 20);
+	Delay(20000);
+
+Label rozhovor2:
+	FRM_MorphSpeechDelayed(ge12, 18993800, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993801, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993802, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993803, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993804, 3, 20);
+	FRM_MorphSpeechDelayed(ge13, 18993805, 3, 20);
+	FRM_MorphSpeechDelayed(ge13, 18993806, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993807, 3, 20);
+	FRM_MorphSpeechDelayed(ge13, 18993808, 3, 20);
+	FRM_MorphSpeechDelayed(ge13, 18993809, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993810, 3, 20);
+	FRM_MorphSpeechDelayed(ge12, 18993811, 3, 20);
+	FRM_MorphSpeechDelayed(ge13, 18993812, 3, 20);
+	GoTo end;
+
+Label rozhovor3:
+	FRM_MorphSpeech(ge12, 19993812, 3, 20);
+	Delay(30000);
+	FRM_MorphSpeech(ge13, 19993812, 3, 20);
+	Delay(30000);
+	GoTo rozhovor3;
+
+Label end:

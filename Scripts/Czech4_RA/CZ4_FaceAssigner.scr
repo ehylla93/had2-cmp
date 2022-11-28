@@ -1,0 +1,104 @@
+Block
+{
+INTEGER german_faces_count		= 14;		// pocet dostpuných nemeckých tvárí -  NEMENIT
+INTEGER italian_faces_count			= 5;		// pocet dostpuných italských tvárí -  NEMENIT
+INTEGER japan_faces_count			= 5;		// pocet dostpuných japonských tvárí -  NEMENIT
+INTEGER american_faces_count		= 5;		// pocet dostpuných amerických tvárí -  NEMENIT
+INTEGER russian_faces_count		= 5;		// pocet dostpuných ruských tvárí -  NEMENIT
+
+INTEGER rnd_german			= _RandomInt(german_faces_count);
+INTEGER rnd_italian			= _RandomInt(italian_faces_count);
+INTEGER rnd_japan			= _RandomInt(japan_faces_count);
+INTEGER rnd_american		= _RandomInt(american_faces_count);
+INTEGER rnd_rusian			= _RandomInt(russian_faces_count);
+FRAME act;				FRM_FindFrame(act, "");			// aktuální human, kterému se má priradit face
+}
+// TADY SI NAPISTE SEZNAM PANACU, KTERYM SE MAJI XICHTY PRIRADIT
+
+FRM_FindFrame(act, "CZ4_APumperz_01"); gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Corners_01"); gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Corners_02");gosub RUSIAN_FACE; 
+FRM_FindFrame(act, "CZ4_Corners_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Grouper_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Grouper_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Grouper_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Guard_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Guard_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Chatter_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Chatter_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Chodnik_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_MGM_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Platoon_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Platoon_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Platoon_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Platoon_04");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Platoon_05");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Platoon_06");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Plazzars_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Plazzars_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Plazzars_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Quickman_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Runner_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Runner_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Runner_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Runner_04");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Sklepers_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Sklepers_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Sklepers_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Sniper_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_04");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_05");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_06");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_07");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Statkar_08");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Streeters_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Streeters_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Streeters_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Streeters_04");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Vata_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Vata_02");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Vata_03");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Vata_04");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Potok_01");gosub RUSIAN_FACE;
+FRM_FindFrame(act, "CZ4_Stodola_01");gosub RUSIAN_FACE;
+
+
+EndScript();
+
+// -------------------------------------------------------------------------------------------------------------
+
+LABEL GERMAN_FACE:
+Block
+{
+  if(rnd_german == 0){  FRM_SwitchFaceTexture(act, "e_f021"); }
+  if(rnd_german == 1){  FRM_SwitchFaceTexture(act, "e_f059"); }
+  if(rnd_german == 2){  FRM_SwitchFaceTexture(act, "e_f024"); }
+  if(rnd_german == 3){  FRM_SwitchFaceTexture(act, "e_f039"); }
+  if(rnd_german == 4){  FRM_SwitchFaceTexture(act, "e_f042"); }
+  if(rnd_german == 5){  FRM_SwitchFaceTexture(act, "e_f043"); }
+  if(rnd_german == 6){  FRM_SwitchFaceTexture(act, "e_f045"); }
+  if(rnd_german == 7){  FRM_SwitchFaceTexture(act, "e_f051"); }
+  if(rnd_german == 8){  FRM_SwitchFaceTexture(act, "e_f052"); }
+  if(rnd_german == 9){  FRM_SwitchFaceTexture(act, "e_f053"); }
+  if(rnd_german == 10){  FRM_SwitchFaceTexture(act, "e_f054"); }
+  if(rnd_german == 11){  FRM_SwitchFaceTexture(act, "e_f055"); }
+  if(rnd_german == 12){  FRM_SwitchFaceTexture(act, "e_f056"); }
+  if(rnd_german == 13){  FRM_SwitchFaceTexture(act, "e_f057"); }
+  rnd_german = rnd_german + 1;
+  if(rnd_german == german_faces_count){ rnd_german = 0; }
+}
+LABEL RUSIAN_FACE:
+Block
+{
+  if(rnd_rusian == 0){  FRM_SwitchFaceTexture(act, "e_f054"); }
+  if(rnd_rusian == 1){  FRM_SwitchFaceTexture(act, "e_f055"); }
+  if(rnd_rusian == 2){  FRM_SwitchFaceTexture(act, "e_f056"); }
+  if(rnd_rusian == 3){  FRM_SwitchFaceTexture(act, "e_f057"); }
+  if(rnd_rusian == 4){  FRM_SwitchFaceTexture(act, "e_f059"); }
+  rnd_rusian = rnd_rusian + 1;
+  if(rnd_rusian == russian_faces_count){ rnd_rusian = 0; }
+}
+return;

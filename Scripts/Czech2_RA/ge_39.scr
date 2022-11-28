@@ -1,0 +1,73 @@
+block
+{
+SetAlarmType(652, 0);
+frame cum1;			FRM_FindFrame(cum1, "ge39cum1");
+frame cum2;			FRM_FindFrame(cum2, "ge39cum2");
+Integer aievent;
+HUMAN_SetOptimized(1);
+}
+HUMAN_SETMODE_Guard();
+
+
+
+//-------------------------------------------------------------------------------------------------------
+OnAlarm()
+{
+block
+{
+	aievent=_GetAlarmType();
+	PrintfNumber("Ger39 alarm ", aievent);
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(652, 0);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Silence();
+HUMAN_Move("ge39_3");
+HUMAN_TurnAt(cum1);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+
+
+//-------------------------------------------------------------------------------------------------------
+
+label hlidka:
+
+HUMAN_Move("ge39_1");
+HUMAN_TurnAt(cum1);
+HUMAN_LookAround(1);
+delay (5000);
+HUMAN_LookAround(1);
+delay (5000);
+
+HUMAN_Move("ge39_2");
+HUMAN_TurnAt(cum2);
+HUMAN_LookAround(1);
+delay (5000);
+HUMAN_LookAround(1);
+delay (5000);
+
+goto hlidka;
+
+
+
+
+
+
+
+
+
+
+
+label end:

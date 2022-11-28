@@ -1,0 +1,190 @@
+// Prijemce signalu dveri #01
+
+block
+
+{
+Frame LM1;		FRM_FindFrame(LM1,"tunel07");
+Frame LM3;		FRM_FindFrame(LM3,"tunel08");
+
+Frame LM5;		FRM_FindFrame(LM5,"koleje03");
+Frame LM6;		FRM_FindFrame(LM6,"mesh14");
+Frame LM4;		FRM_FindFrame(LM4,"tunel16");
+Frame lajt;		FRM_FindFrame(lajt,"dobytcak5point_");
+Frame lajt1;		FRM_FindFrame(lajt1,"dobytcak7point");
+
+Frame bed;		FRM_FindFrame(bed,"e_gerbsml_77.gerbsml");
+
+Frame LM2;		FRM_FindFrame(LM2,"koleje04");
+
+integer Door1; 	Door1 = 0;
+integer Door2; 	Door2 = 0;
+integer Door3; 	Door3 = 0;
+
+FRM_SetOn(lajt,0);
+FRM_SetOn(lajt1,0);
+
+
+}
+
+
+OnSignal(1)
+  {
+     if (Door1 == 0) { Door1 = 1; }
+       else               { Door1 = 0; }
+  }
+
+OnSignal(2)
+  {
+     if (Door2 == 0) { Door2 = 1; }
+       else               { Door2 = 0; }
+  }
+
+OnSignal(3)
+  {
+     if (Door3 == 0) { Door3 = 1; }
+       else               { Door3 = 0; }
+  }
+
+
+// 	Vyber lightmapy
+//----------------------------------------------------------------------------------------
+  if (((Door1 == 0) and (Door2 ==0)) and (Door3 ==0))
+
+     {
+block
+{
+        FRM_SetLightMap(LM1, 0);
+        FRM_SetLightMap(LM2, 0);
+        FRM_SetLightMap(LM3, 0);
+        FRM_SetLightMap(LM4, 0);
+        FRM_SetLightMap(LM5, 0);
+        FRM_SetLightMap(LM6, 0);
+        FRM_SetLightMap(bed, 0);
+	FRM_SetOn(lajt,0);
+	FRM_SetOn(lajt1,0);
+}
+     }
+
+  if (((Door1 == 0) and (Door2 ==0)) and (Door3 ==1))
+
+     {
+block
+{
+        FRM_SetLightMap(LM1, 0);
+        FRM_SetLightMap(LM2, 0);
+        FRM_SetLightMap(LM3, 1);
+        FRM_SetLightMap(LM4, 1);
+        FRM_SetLightMap(LM5, 1);
+        FRM_SetLightMap(LM6, 1);
+        FRM_SetLightMap(bed, 0);
+	FRM_SetOn(lajt,1);
+	FRM_SetOn(lajt1,0);
+}
+     }
+
+
+  if (((Door1 == 1) and (Door2 ==0)) and (Door3 ==0))
+     {
+block
+{
+        FRM_SetLightMap(LM1, 1);
+        FRM_SetLightMap(LM2, 1);
+        FRM_SetLightMap(LM3, 0);
+        FRM_SetLightMap(LM4, 0);
+        FRM_SetLightMap(LM5, 0);
+        FRM_SetLightMap(LM6, 0);
+        FRM_SetLightMap(bed, 0);
+	FRM_SetOn(lajt,0);	
+	FRM_SetOn(lajt1,1);
+}
+    
+     }
+
+
+  if (((Door1 == 1) and (Door2 ==0)) and (Door3 ==1))
+     {
+block
+{
+        FRM_SetLightMap(LM1, 1);
+        FRM_SetLightMap(LM2, 1);
+        FRM_SetLightMap(LM3, 1);
+        FRM_SetLightMap(LM4, 1);
+        FRM_SetLightMap(LM5, 1);
+        FRM_SetLightMap(LM6, 1);
+        FRM_SetLightMap(bed, 0);
+	FRM_SetOn(lajt,1);
+	FRM_SetOn(lajt1,1);
+}
+    
+     }
+
+
+
+  if (((Door1 == 0) and (Door2 ==1))and (Door3 ==0))
+     {
+block
+{
+        FRM_SetLightMap(LM1, 2);
+        FRM_SetLightMap(LM2, 2);
+        FRM_SetLightMap(LM3, 2);
+        FRM_SetLightMap(LM4, 0);
+        FRM_SetLightMap(LM5, 0);
+        FRM_SetLightMap(LM6, 0);
+        FRM_SetLightMap(bed, 2);
+	FRM_SetOn(lajt,0);
+	FRM_SetOn(lajt1,1);
+}
+    
+      }
+
+
+  if (((Door1 == 0) and (Door2 ==1))and (Door3 ==1))
+     {
+block
+{
+        FRM_SetLightMap(LM1, 2);
+        FRM_SetLightMap(LM2, 2);
+        FRM_SetLightMap(LM3, 3);
+        FRM_SetLightMap(LM4, 1);
+        FRM_SetLightMap(LM5, 1);
+        FRM_SetLightMap(LM6, 1);
+        FRM_SetLightMap(bed, 2);
+	FRM_SetOn(lajt,1);
+	FRM_SetOn(lajt1,1);
+}
+    
+      }
+
+  if (((Door1 == 1) and (Door2 ==1)) and (Door3 ==0))
+     {
+block
+{
+        FRM_SetLightMap(LM1, 3);
+        FRM_SetLightMap(LM2, 3);
+        FRM_SetLightMap(LM3, 2);
+        FRM_SetLightMap(LM4, 0);
+        FRM_SetLightMap(LM5, 0);
+        FRM_SetLightMap(LM6, 0);
+        FRM_SetLightMap(bed, 2);
+	FRM_SetOn(lajt,0);
+	FRM_SetOn(lajt1,1);
+}
+    
+     }
+
+  if (((Door1 == 1) and (Door2 ==1))and (Door3 ==1))
+     {
+block
+{
+        FRM_SetLightMap(LM1, 3);
+        FRM_SetLightMap(LM2, 3);
+        FRM_SetLightMap(LM3, 3);
+        FRM_SetLightMap(LM4, 1);
+        FRM_SetLightMap(LM5, 1);
+        FRM_SetLightMap(LM6, 1);
+        FRM_SetLightMap(bed, 2);
+	FRM_SetOn(lajt,1);
+	FRM_SetOn(lajt1,1);
+}
+    
+      }

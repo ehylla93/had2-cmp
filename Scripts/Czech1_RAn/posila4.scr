@@ -1,0 +1,95 @@
+// posila4
+
+Block
+{
+Frame posila4b;
+	FRM_FindFrame(posila4b, "posila4b");
+Frame sedni;
+	FRM_FindFrame(sedni, "sed1");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETSIGHTRANGE(55);
+HUMAN_SETAIMODE_Aggressive();
+SetAlarmType(12, false);
+FRM_SwitchFaceTexture(me, "e_f045");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from l_bedny_3.bedny09
+{
+	HUMAN_Suspend(false);
+	DisableSignals(true);
+	HUMAN_ACTIVITY_Sit(sedni);
+	HUMAN_SetAnim("%%sedimL4", 100, 100, true);
+	GoTo end;
+}
+
+OnSignal(2)	// received from cetnik01
+{
+	HUMAN_Suspend(false);
+	DisableSignals(true);
+	HUMAN_SETMODE_Run();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila4_01");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_1
+{
+	DisableSignals(true);
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila4_02");
+	HUMAN_Move("posila4_03");
+	HUMAN_Move("posila4_04");
+	HUMAN_Move("posila4_05");
+	HUMAN_Move("posila4_06");
+	HUMAN_LookAround(3);
+	Delay(1000);
+	HUMAN_SETMODE_Guard();
+}
+
+Label hlidka:
+	HUMAN_Move("posila4_07");
+	Delay(1000);
+	HUMAN_Move("posila4_08");
+	Delay(1000);
+	GoTo hlidka;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 100, 100,false);
+	HUMAN_SETMODE_Stand();
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(80);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("posila4_01");
+	HUMAN_SetOptimized(2);
+}
+
+OnDeath()
+{
+	SendSignal(posila4b, 1);
+	EndScript();
+}
+
+Label end:

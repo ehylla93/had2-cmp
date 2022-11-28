@@ -1,0 +1,32 @@
+// objective_airdefense - optional objective to destroy air defense
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer deadcounter;
+	deadcounter=0;
+Frame obj;
+	FRM_FindFrame(obj, "objectives");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)
+{
+	GoTo vyhodnot;
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label vyhodnot:
+		deadcounter=deadcounter+1;
+	If(deadcounter==5)
+	{
+		SendSignal(obj, 5);
+		//PlayMusic(36);
+		GoTo end;
+	}
+	GoTo end;
+
+Label end:

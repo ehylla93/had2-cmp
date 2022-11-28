@@ -1,0 +1,166 @@
+//	1 ... enemáèi sou mtvoly
+//	2 ... barely s palivem znièený
+//          3 ... poklad nalezen  -  v scr. terascer
+//	4 ... celý tým pøežil
+
+
+Block
+{ 
+SetObjectiveStatus(1,0);
+Frame CZ4_APumperz_01;		FRM_FindFrame(CZ4_APumperz_01, "CZ4_APumperz_01");
+Frame CZ4_Corners_01;		FRM_FindFrame(CZ4_Corners_01, "CZ4_Corners_01");
+Frame CZ4_Corners_02;		FRM_FindFrame(CZ4_Corners_02, "CZ4_Corners_02");
+Frame CZ4_Corners_03;		FRM_FindFrame(CZ4_Corners_03, "CZ4_Corners_03");
+Frame CZ4_Grouper_01;		FRM_FindFrame(CZ4_Grouper_01, "CZ4_Grouper_01");
+Frame CZ4_Grouper_02;		FRM_FindFrame(CZ4_Grouper_02, "CZ4_Grouper_02");
+Frame CZ4_Grouper_03;		FRM_FindFrame(CZ4_Grouper_03, "CZ4_Grouper_03");
+Frame CZ4_Guard_01;		FRM_FindFrame(CZ4_Guard_01, "CZ4_Guard_01");
+Frame CZ4_Guard_02;		FRM_FindFrame(CZ4_Guard_02, "CZ4_Guard_02");
+Frame CZ4_Chatter_01;		FRM_FindFrame(CZ4_Chatter_01, "CZ4_Chatter_01");
+Frame CZ4_Chatter_02;		FRM_FindFrame(CZ4_Chatter_02, "CZ4_Chatter_01");
+Frame CZ4_Chodnik_01;		FRM_FindFrame(CZ4_Chodnik_01, "CZ4_Chodnik_01");
+Frame CZ4_MGM_01;			FRM_FindFrame(CZ4_MGM_01, "CZ4_MGM_01");
+Frame CZ4_Platoon_01;		FRM_FindFrame(CZ4_Platoon_01, "CZ4_Platoon_01");
+Frame CZ4_Platoon_02;		FRM_FindFrame(CZ4_Platoon_02, "CZ4_Platoon_02");
+Frame CZ4_Platoon_03;		FRM_FindFrame(CZ4_Platoon_03, "CZ4_Platoon_03");
+Frame CZ4_Platoon_04;		FRM_FindFrame(CZ4_Platoon_04, "CZ4_Platoon_04");
+Frame CZ4_Platoon_05;		FRM_FindFrame(CZ4_Platoon_05, "CZ4_Platoon_05");
+Frame CZ4_Platoon_06;		FRM_FindFrame(CZ4_Platoon_06, "CZ4_Platoon_06");
+Frame CZ4_Plazzars_01;		FRM_FindFrame(CZ4_Plazzars_01, "CZ4_Plazzars_01");
+Frame CZ4_Plazzars_02;		FRM_FindFrame(CZ4_Plazzars_02, "CZ4_Plazzars_02");
+Frame CZ4_Plazzars_03;		FRM_FindFrame(CZ4_Plazzars_03, "CZ4_Plazzars_03");
+Frame CZ4_Quickman_01;		FRM_FindFrame(CZ4_Quickman_01, "CZ4_Quickman_01");
+Frame CZ4_Runner_01;		FRM_FindFrame(CZ4_Runner_01, "CZ4_Runner_01");
+Frame CZ4_Runner_02;		FRM_FindFrame(CZ4_Runner_02, "CZ4_Runner_02");
+Frame CZ4_Runner_03;		FRM_FindFrame(CZ4_Runner_03, "CZ4_Runner_03");
+Frame CZ4_Runner_04;		FRM_FindFrame(CZ4_Runner_04, "CZ4_Runner_04");
+Frame CZ4_Sklepers_01;		FRM_FindFrame(CZ4_Sklepers_01, "CZ4_Sklepers_01");
+Frame CZ4_Sklepers_02;		FRM_FindFrame(CZ4_Sklepers_02, "CZ4_Sklepers_02");
+Frame CZ4_Sklepers_03;		FRM_FindFrame(CZ4_Sklepers_03, "CZ4_Sklepers_03");
+Frame CZ4_Sniper_01;		FRM_FindFrame(CZ4_Sniper_01, "CZ4_Sniper_01");
+Frame CZ4_Statkar_01;		FRM_FindFrame(CZ4_Statkar_01, "CZ4_Statkar_01");
+Frame CZ4_Statkar_02;		FRM_FindFrame(CZ4_Statkar_02, "CZ4_Statkar_02");
+Frame CZ4_Statkar_03;		FRM_FindFrame(CZ4_Statkar_03, "CZ4_Statkar_03");
+Frame CZ4_Statkar_04;		FRM_FindFrame(CZ4_Statkar_04, "CZ4_Statkar_04");
+Frame CZ4_Statkar_05;		FRM_FindFrame(CZ4_Statkar_05, "CZ4_Statkar_05");
+Frame CZ4_Statkar_06;		FRM_FindFrame(CZ4_Statkar_06, "CZ4_Statkar_06");
+Frame CZ4_Statkar_07;		FRM_FindFrame(CZ4_Statkar_07, "CZ4_Statkar_07");
+Frame CZ4_Statkar_08;		FRM_FindFrame(CZ4_Statkar_08, "CZ4_Statkar_08");
+Frame CZ4_Streeters_01;		FRM_FindFrame(CZ4_Streeters_01, "CZ4_Streeters_01");
+Frame CZ4_Streeters_02;		FRM_FindFrame(CZ4_Streeters_02, "CZ4_Streeters_02");
+Frame CZ4_Streeters_03;		FRM_FindFrame(CZ4_Streeters_03, "CZ4_Streeters_03");
+Frame CZ4_Streeters_04;		FRM_FindFrame(CZ4_Streeters_04, "CZ4_Streeters_04");
+Frame CZ4_Vata_01;			FRM_FindFrame(CZ4_Vata_01, "CZ4_Vata_01");
+Frame CZ4_Vata_02;			FRM_FindFrame(CZ4_Vata_02, "CZ4_Vata_02");
+Frame CZ4_Vata_03;			FRM_FindFrame(CZ4_Vata_03, "CZ4_Vata_03");
+Frame CZ4_Vata_04;			FRM_FindFrame(CZ4_Vata_04, "CZ4_Vata_04");
+Frame CZ4_Potok_01;			FRM_FindFrame(CZ4_Potok_01, "CZ4_Potok_01");
+Frame CZ4_Stodola_01;		FRM_FindFrame(CZ4_Stodola_01, "CZ4_Stodola_01");
+Frame CZ4_Cleric;			FRM_FindFrame(CZ4_Cleric, "CZ4_Cleric");
+Frame CZ4_HajzlNaPude;		FRM_FindFrame(CZ4_HajzlNaPude, "CZ4_HajzlNaPude");
+Frame CZ4_HajzlVeSkladu;		FRM_FindFrame(CZ4_HajzlVeSkladu, "CZ4_HajzlVeSkladu");
+Integer Counter;		Counter = 0;
+Integer BD;			BD = 0;
+Integer UKONCOVAC = 0;
+Integer Diary;
+}
+
+SaveGameValue(15, 0);	// test na silence pruchod ("15" == 0) ... silence, jinak ne
+SaveGameValue(16, 0);	// test na poslední tøi ("16" == 99 ) ... Srazu statku (AGRESSIVE)
+Delay(1000);		// CSC Delay ... obj až po csc
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(21990001);
+  If (_GetNumMembersOfClientTeam() > 1)    {  Diary = 4331; }	// snad se stihne init
+  If (_GetNumMembersOfClientTeam() == 1)  {  Diary = 4332; }
+Delay(4000);
+SUBTITLES_SetOn(false);
+
+// Nekdo umøel
+OnSignal(0) {}
+Label Loop:
+
+    Block
+       {
+           UKONCOVAC = 1;  
+           Counter = 0;
+           If (_ACTOR_GetState(CZ4_APumperz_01) == 1) 	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Corners_01) ==1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Corners_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Corners_03) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Grouper_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Grouper_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Grouper_03) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Guard_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Guard_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Chatter_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Chatter_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Chodnik_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_MGM_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Platoon_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Platoon_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Platoon_03) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Platoon_04) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Platoon_05) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Platoon_06) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Plazzars_01) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Plazzars_02) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Plazzars_03) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Quickman_01) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Runner_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Runner_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Runner_03) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Runner_04) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Sklepers_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Sklepers_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Sklepers_03) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Sniper_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_03) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_04) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_05) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_06) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_07) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Statkar_08) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Streeters_01) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Streeters_02) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Streeters_03) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Streeters_04) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Vata_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Vata_02) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Vata_03) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Vata_04) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Potok_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Stodola_01) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_Cleric) == 1)		{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_HajzlNaPude) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+           If (_ACTOR_GetState(CZ4_HajzlVeSkladu) == 1)	{ UKONCOVAC = 0; } else {counter = counter + 1;}
+  }
+  PrintfNumber("Vyhodnocení smrtí - mrtvo: ", Counter);
+  If (counter > 48 ) { SaveGameValue(16, 99); }
+  If (UKONCOVAC == 0 ) {Goto TheEnd;}
+
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(21990002);
+  Delay(4000);
+
+  IF (( !_IsTeamMemberDead()) and (_SPGetGameType()!=2)) {SetObjectiveStatus(4, 1);}  // nepov. vsichni prezily
+  
+  If (BD == 1) { diary = diary + 2;  }	// 4333 or 4334
+  AddDiaryText(diary);
+
+  SUBTITLES_SetOn(false);
+  SetObjectiveStatus(1,1);
+	
+// barely
+OnSignal(1)
+{
+  SetObjectiveStatus(2,1);
+  BD = 1;
+  PlayMusic(36);
+}
+
+goto TheEnd;
+
+
+Label TheEnd:

@@ -1,0 +1,28 @@
+// zeleznicar_speech - speech dummy for zeleznicar
+Frame zele;
+	FRM_FindFrame(zele, "zeleznicar");
+// -------------------------------------------------------------------------------------------------------------
+Whenever player(_PlayerInRange(20))
+OnSignal(1)
+{
+	GoTo spievaj;
+}
+
+OnSignal(2)
+{
+	FRM_MorphSpeech(zele, 0, 0, 0);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Label spievaj:
+	FRM_MorphSpeechDelayed(zele, 18993844, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993845, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993846, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993847, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993848, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993849, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993850, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993851, 3, 20);
+	FRM_MorphSpeechDelayed(zele, 18993852, 3, 20);
+
+Label end:

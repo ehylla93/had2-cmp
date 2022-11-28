@@ -1,0 +1,14 @@
+Frame ridic;
+	FRM_FindFrame(ridic, "ge_5");
+Frame soldier;
+	FRM_FindFrame(soldier, "ge_11");
+
+
+
+Whenever player(_PlayerInRange(40))
+	{
+	
+	SendSignal(ridic, 1);
+	SendSignal(soldier, 1);
+
+	}

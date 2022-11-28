@@ -1,0 +1,10 @@
+Whenever PIR (_PlayerInRange(3))
+	{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(21990030);
+            SetObjectiveStatus(3,1);
+            PlayMusic(36);
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	}
+SetWheneverTime(PIR, 150);

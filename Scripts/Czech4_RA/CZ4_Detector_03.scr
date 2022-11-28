@@ -1,0 +1,14 @@
+Frame CZ4_Quickman_01;	FRM_FindFrame(CZ4_Quickman_01,"CZ4_Quickman_01");
+Frame CZ4_Plazzars_01;	FRM_FindFrame(CZ4_Plazzars_01,"CZ4_Plazzars_01");
+Frame CZ4_Plazzars_02;	FRM_FindFrame(CZ4_Plazzars_02,"CZ4_Plazzars_02");
+Frame CZ4_Plazzars_03;	FRM_FindFrame(CZ4_Plazzars_03,"CZ4_Plazzars_03");
+
+
+Whenever PIR (_PlayerInRange(10))
+	{
+	SendSignal(CZ4_Quickman_01, 3);
+	SendSignal(CZ4_Plazzars_01, 3);
+	SendSignal(CZ4_Plazzars_02, 3);
+	SendSignal(CZ4_Plazzars_03, 3);
+	printf("DETECTOR_03 - >> QUICKMAN AND PLAZZARS AND CORNERS -4- ");
+	}

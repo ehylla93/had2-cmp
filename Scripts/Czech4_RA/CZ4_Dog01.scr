@@ -1,0 +1,3 @@
+Frame CZ4_Runner_03;		FRM_FindFrame(CZ4_Runner_03, "CZ4_Runner_03");
+DOG_SetOwner(CZ4_Runner_03);
+DOG_SETAIMODE_Aggressive();

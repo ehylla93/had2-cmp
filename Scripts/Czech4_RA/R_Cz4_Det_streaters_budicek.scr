@@ -1,0 +1,13 @@
+frame S1;		FRM_FindFrame(S1, "CZ4_Streeters_01");
+frame S2;		FRM_FindFrame(S2, "Cz4_Streeters_02");
+frame S3;		FRM_FindFrame(S3, "Cz4_Streeters_03");
+frame S4;		FRM_FindFrame(S4, "Cz4_Streeters_04");
+
+
+Whenever AKTIVACE ( _PlayerInRange(35) )
+{
+  SendSignal(S1, 10);
+  SendSignal(S2, 10);
+  SendSignal(S3, 10);
+  SendSignal(S4, 10);
+}

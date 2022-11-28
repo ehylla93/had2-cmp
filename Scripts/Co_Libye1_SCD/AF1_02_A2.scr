@@ -1,0 +1,8 @@
+//dummy for NPC1
+
+Frame NPC1;	FRM_FindFrame(NPC1, "NPC1");
+
+Whenever objective(_PlayerInRange(1))	
+{
+	SendSignal(NPC1, 2);
+}

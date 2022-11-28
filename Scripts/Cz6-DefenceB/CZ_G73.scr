@@ -1,0 +1,133 @@
+// Pantr1 (Ridic Panteru 1 - La_tiger_3)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame p1;		FRM_FindFrame(p1,"Pantr2");
+Frame p2;		FRM_FindFrame(p2,"Pantr3");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Frame t1;		FRM_FindFrame(t1,"La_tiger_2");
+
+Frame obj1;		FRM_FindFrame(obj1,"obj1");
+
+Frame s1;		FRM_FindFrame(s1,"CZ_G82");
+Frame s2;		FRM_FindFrame(s2,"CZ_G83");
+Frame s3;		FRM_FindFrame(s3,"CZ_G84");
+Frame s4;		FRM_FindFrame(s4,"CZ_G85");
+Frame s5;		FRM_FindFrame(s5,"CZ_G86");
+Frame s6;		FRM_FindFrame(s6,"CZ_G87");
+Frame s7;		FRM_FindFrame(s7,"CZ_G88");
+Frame s8;		FRM_FindFrame(s8,"CZ_G89");
+Frame s9;		FRM_FindFrame(s9,"CZ_G90");
+Frame s10;		FRM_FindFrame(s10,"CZ_G91");
+Frame s11;		FRM_FindFrame(s11,"CZ_G92");
+Frame s12;		FRM_FindFrame(s12,"CZ_G93");
+Frame s13;		FRM_FindFrame(s13,"CZ_G94");
+Frame s14;		FRM_FindFrame(s14,"CZ_G95");
+Frame s15;		FRM_FindFrame(s15,"CZ_G96");
+Frame s16;		FRM_FindFrame(s16,"CZ_G97");
+Frame s17;		FRM_FindFrame(s17,"CZ_G98");
+Frame s18;		FRM_FindFrame(s18,"CZ_G99");
+
+Integer pechota;
+	pechota=0;
+}
+
+//--------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+
+SendSignal(obj1, 3);
+
+If(pechota==0)
+{
+SendSignal(s1, 1);
+SendSignal(s2, 1);
+SendSignal(s3, 1);
+SendSignal(s4, 1);
+Delay(6000);
+SendSignal(s5, 1);
+SendSignal(s6, 1);
+SendSignal(s7, 1);
+SendSignal(s8, 1);
+Delay(6000);
+SendSignal(s9, 1);
+SendSignal(s10, 1);
+SendSignal(s11, 1);
+SendSignal(s12, 1);
+Delay(6000);
+SendSignal(s13, 1);
+SendSignal(s14, 1);
+SendSignal(s15, 1);
+SendSignal(s16, 1);
+Delay(6000);
+SendSignal(s17, 1);
+SendSignal(s18, 1);
+}
+
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Tiger_Destroyed (_Actor_GetState(t1)==0)
+{
+SendSignal(s1, 1);
+SendSignal(s2, 1);
+SendSignal(s3, 1);
+SendSignal(s4, 1);
+Delay(6000);
+SendSignal(s5, 1);
+SendSignal(s6, 1);
+SendSignal(s7, 1);
+SendSignal(s8, 1);
+Delay(6000);
+SendSignal(s9, 1);
+SendSignal(s10, 1);
+SendSignal(s11, 1);
+SendSignal(s12, 1);
+Delay(60000);
+SendSignal(s13, 1);
+SendSignal(s14, 1);
+SendSignal(s15, 1);
+SendSignal(s16, 1);
+Delay(6000);
+SendSignal(s17, 1);
+SendSignal(s18, 1);
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("La_tiger_3" , true, 0);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+Delay(1000);
+HUMAN_Drive("C5_kubel_tele", 30);
+HUMAN_Drive("", 30);
+
+pechota=pechota+1;
+
+goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(10);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

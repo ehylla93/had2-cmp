@@ -1,0 +1,121 @@
+// R_Cz2_Ger31 help for ger 18 bezi do wyklenku
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+
+Frame cum;		FRM_FindFrame(cum,"ger31cum");
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(652, false);	
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+block
+{
+		aievent=_GetAlarmType();
+//	printf("Ger18 alarmed OK");
+	PrintfNumber("Ger18 dostal alarm cislo ", aievent);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETMODE_Crouch();
+}
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))
+	{
+	HUMAN_SetAnim("",600,600,0);
+	HUMAN_TurnAtNearestPlayer();
+	EndScript();
+	}
+	If(((aievent==2) OR (aievent==256)) OR (aievent==16))
+	{
+	delay(500);
+	SetAlarmType(274,0);
+	HUMAN_SetAlarm(false);
+	HUMAN_SetAnim("%%kuca",600,600,0);
+	delay (1800);
+	SetAlarmType(274,1);
+	goto end;
+
+	}
+ 	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+	
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_SignalReceived(1))
+{
+	SetWhenever(playerxx, 0);
+	HUMAN_SETEVENTS(0);
+
+	delay (3000);
+	HUMAN_Suspend(false);
+	HUMAN_Move("ger31_1");
+	HUMAN_TurnAt(cum);
+	HUMAN_SetAnim("%%kuca",600,600,0);
+	//delay (3085);
+	delay (1800);
+	HUMAN_SETEVENTS(1);
+
+	SetAlarmType(652, false);
+
+
+	GoTo end;
+}
+
+
+Whenever playerxx(_PlayerInRange(19))
+{
+	HUMAN_SETEVENTS(0);
+	SetWhenever(player, 0);
+	HUMAN_Suspend(false);
+	HUMAN_Move("ger31_1");
+	HUMAN_TurnAt(cum);
+	HUMAN_SetAnim("%%kuca",600,600,0);
+	//delay (3085);
+	delay (1800);
+	HUMAN_SETEVENTS(1);
+
+	SetAlarmType(652, false);
+
+
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+Label end:
+

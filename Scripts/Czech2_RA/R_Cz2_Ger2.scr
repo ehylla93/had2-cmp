@@ -1,0 +1,103 @@
+// R_Cz2_Ger2 - soldier boarding Flak
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(652, false);	// reaguje na blizku strelbu, strelbu, explozie, vidim, zranenie a friendly fire
+HUMAN_SETMODE_Walk();
+frame cum;		FRM_FindFrame(cum,"ger_2cum1");
+Frame ger4;
+	FRM_FindFrame(ger4, "Ger_4");
+	SaveGameValue(1, 1);	
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	block
+{
+	DisableSignals(1);
+	SetWhenever(sulin,0);
+
+
+		aievent=_GetAlarmType();
+		PrintfNumber("ger_2 alarm",aievent);
+}
+	HUMAN_SetAnim("",50, 50, false);
+	HUMAN_TurnAtNearestPlayer();
+
+	EndScript();
+
+}
+
+OnAlarmDone()
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023,1);
+	SetAlarmType(652, false);
+
+	HUMAN_SETMODE_Crouch();
+
+                          
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SaveGameValue(1, 0);	
+EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("%%medik1", 200, 600, true);
+GoTo end;
+
+Whenever sulin(_SignalReceived(1))
+{
+	HUMAN_SetAnim("",800,300, false);
+	delay (5000);
+	HUMAN_Move("ger2_1");
+	HUMAN_SETMODE_Crouch();
+	delay (500);
+	HUMAN_LookAround(1);
+	delay(5000);
+	HUMAN_Move("ger2_2");
+	HUMAN_SETMODE_Crouch();
+	delay (500);
+	HUMAN_LookAround(1);
+	delay(5000);
+	HUMAN_Move("ger2_3");
+	HUMAN_SETMODE_Crouch();
+	delay (500);
+	HUMAN_LookAround(1);
+	delay(5000);
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("ger2_4");
+	HUMAN_Move("ger2_5");
+	HUMAN_Move("ger2_6");
+	HUMAN_Move("ger2_7");
+label chod:
+	HUMAN_MoveRandomRadius(20);
+	delay (2000);
+goto chod;
+
+}
+label end:

@@ -1,0 +1,19 @@
+
+frame me;	FRM_GetMyFrame(me);
+
+
+HUMAN_SetAnim("%%umrel1", 1, 1, 1);
+delay (5000);
+HUMAN_KillEx(me, 2);
+HUMAN_Suspend(1);
+goto end;
+
+Whenever xxx(_PlayerInRange(13))
+{
+HUMAN_Suspend(0);
+EndScript();
+}
+
+label end:
+
+

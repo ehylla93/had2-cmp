@@ -1,0 +1,61 @@
+Frame svetlo4;	FRM_FindFrame(svetlo4, "railroad lamp_4");
+Frame lens8;		FRM_FindFrame(lens8, "l_ndrlamp8.lenz");
+Frame prsk4;		FRM_FindFrame(prsk4, "prsk4");
+Frame lm1;		FRM_FindFrame(lm1, "e_rascal.rascale");
+Frame lm2;		FRM_FindFrame(lm2, "Object123");
+Frame lm3;		FRM_FindFrame(lm3, "Object122");
+
+OnSignal(1)
+{
+	Block	{	FRM_SetOn(svetlo4, 0);	FRM_SetOn(lens8, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);
+			FRM_SetLightMap(lm3, 1);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo4, 1);	FRM_SetOn(lens8, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);
+			FRM_SetLightMap(lm3, 0);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo4, 0);	FRM_SetOn(lens8, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);
+			FRM_SetLightMap(lm3, 1);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo4, 1);	FRM_SetOn(lens8, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);
+			FRM_SetLightMap(lm3, 0);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo4, 0);	FRM_SetOn(lens8, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);
+			FRM_SetLightMap(lm3, 1);					}
+	Delay(300);
+	Block	{	FRM_SetOn(svetlo4, 1);	FRM_SetOn(lens8, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);
+			FRM_SetLightMap(lm3, 0);					}
+	Block	{	FRM_SetOn(svetlo4, 0);	FRM_SetOn(lens8, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);
+			FRM_SetLightMap(lm3, 1);					}
+	Block	{	FRM_SetOn(svetlo4, 1);	FRM_SetOn(lens8, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);
+			FRM_SetLightMap(lm3, 0);					}
+	Block	{	FRM_SetOn(svetlo4, 0);	FRM_SetOn(lens8, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);
+			FRM_SetLightMap(lm3, 1);					}
+	Block	{	FRM_SetOn(svetlo4, 1);	FRM_SetOn(lens8, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);
+			FRM_SetLightMap(lm3, 0);					}
+	Block	{	FRM_SetOn(svetlo4, 0);	FRM_SetOn(lens8, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);
+			FRM_SetLightMap(lm3, 1);					}
+
+	FRM_CreateParticle(62, prsk4);
+}

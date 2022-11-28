@@ -1,0 +1,13 @@
+frame sound1;		frm_findframe(sound1,"S_tunel1");
+frame sound2;		frm_findframe(sound2,"S_tunel2");
+
+integer rnd;	
+integer rnd_pause;
+
+label loop:
+rnd= _randomint(2) +1;
+rnd_pause= _randomint(17000) +17000;
+if (rnd==1) {FRM_SetOn(sound1,true);}
+if (rnd==2) {FRM_SetOn(sound2,true);} 
+delay(rnd_pause);
+goto loop;

@@ -1,0 +1,34 @@
+//civil detect
+FRAME speaking;		FRM_FindFrame(speaking, "speak"); //speaking sound
+FRAME civil;		FRM_FindFrame(civil, "civil3");
+FRAME nullfinal;	FRM_FindFrame(nullfinal, "objectives");
+
+block
+{
+  FRAME this;		FRM_GetMyFrame(this);
+  
+  FRM_SwitchFaceTexture(civil, "e_f068"); 
+  INTEGER civcomplete	= 0;
+  INTEGER civdead = 0;
+}
+
+OnSignal(1)
+{
+  civdead = 1;
+  SetWhenever (arrive,0);
+  DisableSignals(1);
+  DisableWhenevers(1);
+EndScript();
+}
+
+Whenever arrive ((_PlayerInRange(2) ))
+{
+	if ((!civcomplete) and (civdead==0))
+	{
+		civcomplete = 1;
+		FRM_SetOn(speaking, 1);
+		Delay(11000);
+		SendSignal(nullfinal, 2);
+	EndScript();
+	}
+}

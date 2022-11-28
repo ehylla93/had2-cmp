@@ -541,7 +541,55 @@
 <OBJECTIVE allied_text="15501" axis_text="15501" value="03"/>
 <OBJECTIVE allied_text="8105"  axis_text="8105"  value="03"/>
 </MAP>
-<MAP  name="Li1(Supercharge)"  dir="Co_Libye1_SC2" desc="17821">
+<MAP name="Li(Supercharge)Day" dir="Co_Libye1_SCD"> 
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="15"/>
+<ITEM item_id="6" item_num="1" ammo_num="15"/>
+<ITEM item_id="7" item_num="1" ammo_num="15"/>
+<ITEM item_id="9" item_num="1"/>
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="14" item_num="1" ammo_num="15"/>		
+<ITEM item_id="19" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="23" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="15"/>
+<ITEM item_id="39" item_num="1" ammo_num="5"/>
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="54" item_num="5"/>
+<ITEM item_id="56" item_num="1"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="60" item_num="1"/>
+<ITEM item_id="62" item_num="5"/>
+<ITEM item_id="66" item_num="3"/>
+<ITEM item_id="70" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="114" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="0" ammo_num="1"/>		
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>		
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="228" item_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+<ITEM item_id="266" item_num="1" ammo_num="1"/>
+<ITEM item_id="267" item_num="1" ammo_num="1"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="6165" axis_text="6165" value="03"/>
+<OBJECTIVE allied_text="15518" axis_text="15518" value="03"/>
+<OBJECTIVE allied_text="15514" axis_text="15514" value="03"/>
+<OBJECTIVE allied_text="4675" axis_text="4675" value="03"/>
+<OBJECTIVE allied_text="15515" axis_text="15515" value="03"/>
+<OBJECTIVE allied_text="15556" axis_text="15556" value="03"/>
+<OBJECTIVE allied_text="15533" axis_text="15533" value="03"/>
+</MAP>
+<MAP  name="Li1(Supercharge)Night"  dir="Co_Libye1_SC2" desc="17821">
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="10"/>
 <ITEM item_id="2" item_num="1" ammo_num="10"/>
@@ -1078,6 +1126,46 @@
 <OBJECTIVE allied_text="15554" axis_text="15554" value="03"/>
 <OBJECTIVE allied_text="15556" axis_text="15556" value="03"/>
 <OBJECTIVE allied_text="15557" axis_text="15557" value="03"/>
+</MAP>
+<MAP name="Sicily3" dir="co_Sicily3_LH"> 
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="12"/>
+<ITEM item_id="6" item_num="1" ammo_num="10"/>
+<ITEM item_id="7" item_num="1" ammo_num="12"/>
+<ITEM item_id="9" item_num="1"/>
+<ITEM item_id="10" item_num="1" ammo_num="10"/>
+<ITEM item_id="11" item_num="1" ammo_num="10"/>
+<ITEM item_id="14" item_num="1" ammo_num="10"/>
+<ITEM item_id="15" item_num="1" ammo_num="10"/>
+<ITEM item_id="17" item_num="1" ammo_num="10"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="10"/>
+<ITEM item_id="29" item_num="1" ammo_num="10"/>
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="54" item_num="3"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="2"/>
+<ITEM item_id="70" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="115" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="0" ammo_num="1"/>
+<ITEM item_id="121" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="231" item_num="1"/>
+<ITEM item_id="261" item_num="1" ammo_num="8"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="6163" axis_text="6163" value="03"/>
+<OBJECTIVE allied_text="6164" axis_text="6164" value="03"/>
+<OBJECTIVE allied_text="6165" axis_text="6165" value="03"/>
+<OBJECTIVE allied_text="15553" axis_text="15553" value="03"/>
+<OBJECTIVE allied_text="15533" axis_text="15533" value="03"/>
 </MAP>
 <MAP  name="Si1(NightAttack)"  dir="Sicily1_NA">
 <ALLOWEDITEMS  version="0.1">
@@ -5073,6 +5161,74 @@
 <OBJECTIVE allied_text="15515" axis_text="15515" value="03"/>
 <OBJECTIVE allied_text="8161"  axis_text="8161"  value="03"/>
 </MAP>
+<MAP name="Cz1(Red_Army)" dir="Czech1_RAn">
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="6" item_num="1" ammo_num="10"/>   
+<ITEM item_id="7" item_num="1" ammo_num="10"/>
+<ITEM item_id="9" item_num="1"/>
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="10"/>  
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="54" item_num="5"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="59" item_num="1"/>
+<ITEM item_id="62" item_num="4"/>
+<ITEM item_id="70" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>   
+<ITEM item_id="123" item_num="1" ammo_num="1"/> 
+<ITEM item_id="124" item_num="1" ammo_num="1"/>  
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>              
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="6181" axis_text="6181" value="03"/>
+<OBJECTIVE allied_text="6182" axis_text="6182" value="03"/>
+<OBJECTIVE allied_text="6183" axis_text="6183" value="03"/>
+</MAP>
+<MAP  name="Cz2(Red_Army)"  dir="Czech2_RA">
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>    
+<ITEM item_id="2" item_num="1" ammo_num="10"/>  
+<ITEM item_id="6" item_num="1" ammo_num="7"/>   
+<ITEM item_id="7" item_num="1" ammo_num="10"/>   
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="17" item_num="1" ammo_num="7"/>  
+<ITEM item_id="20" item_num="1" ammo_num="15"/>  
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>    
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="10"/>   
+<ITEM item_id="53" item_num="1"/>                                 
+<ITEM item_id="54" item_num="5"/>                                 
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="59" item_num="1"/>                                 
+<ITEM item_id="62" item_num="10"/>
+<ITEM item_id="70" item_num="1"/>                               
+<ITEM item_id="99" item_num="1"/>                           
+<ITEM item_id="101" item_num="1"/>   
+<ITEM item_id="118" item_num="1" ammo_num="1"/>   
+<ITEM item_id="123" item_num="1" ammo_num="1"/>     
+<ITEM item_id="124" item_num="1" ammo_num="1"/>      
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>                 
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="6191" axis_text="6191" value="03"/>
+<OBJECTIVE allied_text="6192" axis_text="6192" value="03"/>
+<OBJECTIVE allied_text="6193" axis_text="6193" value="03"/>
+<OBJECTIVE allied_text="6194" axis_text="6193" value="03"/>
+<OBJECTIVE allied_text="6195" axis_text="6193" value="03"/>            
+</MAP>
 <MAP  name="Cz3(Lumbermill)"  dir="Czech3bco" desc="10400">
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="10"/>
@@ -5461,6 +5617,81 @@
 <OBJECTIVE allied_text="4727"  axis_text="4727"  value="03"/>
 <OBJECTIVE allied_text="6033"  axis_text="6033"  value="03"/>
 </MAP>
+<MAP name="Cz4(Red_Army)" dir="Czech4_RA">
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>    
+<ITEM item_id="2" item_num="1" ammo_num="10"/>  
+<ITEM item_id="6" item_num="1" ammo_num="7"/>   
+<ITEM item_id="7" item_num="1" ammo_num="10"/>   
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="17" item_num="1" ammo_num="7"/>  
+<ITEM item_id="20" item_num="1" ammo_num="15"/>  
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>    
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="10"/>   
+<ITEM item_id="53" item_num="1"/>                                 
+<ITEM item_id="54" item_num="5"/>                                 
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="59" item_num="1"/>                                 
+<ITEM item_id="62" item_num="4"/>
+<ITEM item_id="70" item_num="1"/>                               
+<ITEM item_id="99" item_num="1"/>                           
+<ITEM item_id="101" item_num="1"/>   
+<ITEM item_id="118" item_num="1" ammo_num="1"/>   
+<ITEM item_id="123" item_num="1" ammo_num="1"/>     
+<ITEM item_id="124" item_num="1" ammo_num="1"/>      
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="4725" axis_text="4725" value="03"/>
+</MAP>
+<MAP name="Cz4(Semper_Fidelis)" dir="CZ4_Semper_Fidelis">
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="6" item_num="1" ammo_num="10"/>
+<ITEM item_id="7" item_num="1" ammo_num="10"/>
+<ITEM item_id="10" item_num="1" ammo_num="20"/>
+<ITEM item_id="11" item_num="1" ammo_num="20"/>
+<ITEM item_id="14" item_num="1" ammo_num="15"/>
+<ITEM item_id="15" item_num="1" ammo_num="15"/>
+<ITEM item_id="17" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="25"/>
+<ITEM item_id="21" item_num="1" ammo_num="20"/>
+<ITEM item_id="22" item_num="1" ammo_num="20"/>
+<ITEM item_id="28" item_num="1" ammo_num="18"/>
+<ITEM item_id="29" item_num="1" ammo_num="15"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="2"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="129" item_num="1" ammo_num="1"/>
+<ITEM item_id="137" item_num="1" ammo_num="1"/>
+<ITEM item_id="138" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="0" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="0"/>
+<ITEM item_id="169" item_num="1" ammo_num="0"/>
+<ITEM item_id="229" item_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>          
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="17065" axis_text="17065" value="03" />
+<OBJECTIVE allied_text="17066" axis_text="17066" value="03" />
+<OBJECTIVE allied_text="15556" axis_text="15556" value="03" />
+<OBJECTIVE allied_text="15523" axis_text="15523" value="03" />
+<OBJECTIVE allied_text="6300"  axis_text="6300"  value="03" />
+<OBJECTIVE allied_text="15584" axis_text="15584" value="03" />
+<OBJECTIVE allied_text="17006" axis_text="17006" value="03" />
+<OBJECTIVE allied_text="15519" axis_text="15519" value="03"/>
+</MAP>
 <MAP  name="Cz5(Village)"  dir="Take_OverN">
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="10"/>
@@ -5579,6 +5810,50 @@
 <OBJECTIVE allied_text="6182" axis_text="6182" value="03"/>
 <OBJECTIVE allied_text="6300" axis_text="6300" value="03"/>	
 </MAP>
+<MAP name="Cz5(Semper_Fidelis)" dir="CZ5_Semper_Fidelis">
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="6" item_num="1" ammo_num="10"/>
+<ITEM item_id="7" item_num="1" ammo_num="10"/>
+<ITEM item_id="10" item_num="1" ammo_num="20"/>
+<ITEM item_id="11" item_num="1" ammo_num="20"/>
+<ITEM item_id="14" item_num="1" ammo_num="15"/>
+<ITEM item_id="15" item_num="1" ammo_num="15"/>
+<ITEM item_id="17" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="25"/>
+<ITEM item_id="21" item_num="1" ammo_num="20"/>
+<ITEM item_id="22" item_num="1" ammo_num="20"/>
+<ITEM item_id="28" item_num="1" ammo_num="18"/>
+<ITEM item_id="29" item_num="1" ammo_num="15"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="3"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="129" item_num="1" ammo_num="1"/>
+<ITEM item_id="137" item_num="1" ammo_num="1"/>
+<ITEM item_id="138" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="0" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="0"/>
+<ITEM item_id="169" item_num="1" ammo_num="0"/>
+<ITEM item_id="229" item_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>          
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="17065" axis_text="17065" value="03" />
+<OBJECTIVE allied_text="17066" axis_text="17066" value="03" />
+<OBJECTIVE allied_text="15556" axis_text="15556" value="03" />
+<OBJECTIVE allied_text="15523" axis_text="15523" value="03" />
+<OBJECTIVE allied_text="6300"  axis_text="6300"  value="03" />
+<OBJECTIVE allied_text="15584" axis_text="15584" value="03" />
+<OBJECTIVE allied_text="17006" axis_text="17006" value="03" />
+<OBJECTIVE allied_text="15519" axis_text="15519" value="03"/> 
+</MAP>
 <MAP  name="Cz6(Bunker)"  dir="CZB" desc="10440">
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="10"/>
@@ -5692,6 +5967,56 @@
 <OBJECTIVE allied_text="15572" axis_text="15572" value="03"/>
 <OBJECTIVE allied_text="15524" axis_text="15524" value="03"/>
 </MAP>
+<MAP name="Cz6(Defence)B" dir="Cz6-DefenceB" desc="10440">	
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="20" ammo_num="10"/>	Enfield .38
+<ITEM item_id="2" item_num="20" ammo_num="10"/>	Colt 1911
+<ITEM item_id="6" item_num="1" ammo_num="100" />
+<ITEM item_id="7" item_num="1" ammo_num="100" />
+<ITEM item_id="8" item_num="1" ammo_num="100" />
+<ITEM item_id="9" item_num="1" />
+<ITEM item_id="10" item_num="1" ammo_num="100" />
+<ITEM item_id="11" item_num="1" ammo_num="100" />
+<ITEM item_id="14" item_num="1" ammo_num="100" />
+<ITEM item_id="15" item_num="1" ammo_num="100" />
+<ITEM item_id="17" item_num="1" ammo_num="100" />
+<ITEM item_id="20" item_num="1" ammo_num="100" />
+<ITEM item_id="21" item_num="1" ammo_num="100" />
+<ITEM item_id="22" item_num="1" ammo_num="100" />
+<ITEM item_id="23" item_num="1" ammo_num="100" />
+<ITEM item_id="24" item_num="1" ammo_num="100" />
+<ITEM item_id="25" item_num="1" ammo_num="100" />
+<ITEM item_id="28" item_num="1" ammo_num="100" />
+<ITEM item_id="29" item_num="1" ammo_num="100" />
+<ITEM item_id="31" item_num="1" ammo_num="100" />
+<ITEM item_id="39" item_num="1" ammo_num="10" />
+<ITEM item_id="53" item_num="4" />
+<ITEM item_id="54" item_num="10" />
+<ITEM item_id="57" item_num="1" />
+<ITEM item_id="60" item_num="10" />
+<ITEM item_id="62" item_num="10" />
+<ITEM item_id="66" item_num="5" />
+<ITEM item_id="70" item_num="2" />
+<ITEM item_id="71" item_num="2" />
+<ITEM item_id="99" item_num="1" />
+<ITEM item_id="101" item_num="1"/> 
+<ITEM item_id="115" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="159" item_num="1" ammo_num="1"/>
+<ITEM item_id="160" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="261" item_num="1" />
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="6201" axis_text="6201" value="03" />
+<OBJECTIVE allied_text="15535" axis_text="15535" value="03" />
+</MAP>
+
 <MAP  name="Cz6(Iron_Swarm)"  dir="Cze6_1">
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="10"/>
@@ -6040,6 +6365,48 @@
 <ITEM item_id="263" item_num="1" ammo_num="15"/>
 </ALLOWEDITEMS>
 <ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE  allied_text="15560"  axis_text="15560"  value="03"/>
+</MAP>
+<MAP  name="HDD(Italy2)"  dir="Italy2">
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="15"/>
+<ITEM item_id="2" item_num="1" ammo_num="15"/>
+<ITEM item_id="6" item_num="1" ammo_num="15"/>
+<ITEM item_id="7" item_num="1" ammo_num="15"/>
+<ITEM item_id="9" item_num="1"/>
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="14" item_num="1" ammo_num="15"/>
+<ITEM item_id="15" item_num="1" ammo_num="15"/>
+<ITEM item_id="17" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="15"/>
+<ITEM item_id="39" item_num="1" ammo_num="15"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="54" item_num="5"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="60" item_num="5"/>
+<ITEM item_id="62" item_num="5"/>
+<ITEM item_id="68" item_num="4"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="115" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="222" item_num="1"/>
+<ITEM item_id="228" item_num="1"/>
+<ITEM item_id="261" item_num="1" ammo_num="15"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE  allied_text="4525"  axis_text="4525"  value="03"/>
+<OBJECTIVE  allied_text="15503"  axis_text="15503"  value="03"/>
 <OBJECTIVE  allied_text="15560"  axis_text="15560"  value="03"/>
 </MAP>
 

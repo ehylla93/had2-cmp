@@ -1,0 +1,93 @@
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+integer AIEvent;
+integer KONECNA;
+
+
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(2);
+SetAlarmType(1023, false);
+HUMAN_Suspend(true);
+goto wait;
+
+
+OnSignal(1)
+	{
+	HUMAN_Suspend(False);
+	HUMAN_SetOptimized(1);
+	SetAlarmType(1, true);
+	SetAlarmType(2, true);
+	SetAlarmType(16, true);
+	SetAlarmType(32, true);
+	SetAlarmType(64, true);
+	HUMAN_WeaponOnArm(true);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_SETMODE_Crouch();
+	HUMAN_Move("Assassin_03");
+	HUMAN_Move("Pred_Statkem_02");
+	}
+
+OnAlarm()
+	{
+	HUMAN_Stop();
+            Block
+              {     
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Statkar 2: ", AIEvent);
+	  HUMAN_SETSIGHTRANGE(85);
+  	  HUMAN_SETHEARRANGE(90);
+	  HUMAN_SETMODE_Crouch();
+	  HUMAN_SETAIMODE_Defensive();
+   	  }
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	  SetAlarmType(1024, True);
+	  HUMAN_SETSIGHTRANGE(50);
+  	  HUMAN_SETHEARRANGE(60);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+              If ( _LoadGameValue(16) > 0) { goto TheEnd; }
+	  HUMAN_Move("Assassin_03");
+	  HUMAN_SETAIMODE_Zombie();
+	}
+
+
+OnDeath()
+	{
+	SendSignal(CZ4_OD, 0);
+	EndScript();
+	}
+
+
+Label TheEnd:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Statkar_02");
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+  Delay (10000);
+Goto TheEnd;
+
+label wait:

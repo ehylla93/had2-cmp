@@ -1,0 +1,107 @@
+// posila1b
+
+Block
+{
+Frame posila1b;
+	FRM_FindFrame(posila1b,"posila1b");
+Frame sloup;
+	FRM_FindFrame(sloup,"l_ndrlamp12");
+Frame skladnik;
+	FRM_FindFrame(skladnik, "posila_sklad02");
+Frame me;
+	FRM_GetMyFrame(me);
+
+SetAlarmType(12, false);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(50);
+FRM_SwitchFaceTexture(me, "e_f059");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from Box101
+{
+	EnableSignal(1, false);
+	HUMAN_Suspend(false);
+	GoTo move;
+}
+
+OnSignal(4)	// received from objectives2
+{
+	printf("posila1b: UNSUSPEND");
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_1
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 100, 100, false);
+	DisableSignals(true);
+	HUMAN_SETMODE_Guard();
+	HUMAN_LookAround(3);
+	}
+	GoTo hlidka2;
+}
+
+Label move:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("s1");
+	Delay(1000);
+	HUMAN_TurnAt(sloup);
+
+Label hlidka:
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%nudazed1", 500, 500,true);
+	GoTo loop;
+
+Label loop:
+	Integer noha=_RandomInt(4);
+	Delay(10000);
+	If(noha==1)
+	{
+		HUMAN_SetAnim("%%nudazed4", 500, 500,false);
+		Delay(3000);
+		GoTo hlidka;
+	}
+	GoTo loop;
+
+Label hlidka2:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila1b_01");
+	Delay(1000);
+	HUMAN_Move("posila1b_02");
+	Delay(1000);
+	GoTo hlidka2;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 500, 100, false);
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETMODE_Run();
+	HUMAN_SETSIGHTRANGE(70);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_LookAround(4);
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+	SendSignal(skladnik, 1);
+	EndScript();
+}
+
+Label end:

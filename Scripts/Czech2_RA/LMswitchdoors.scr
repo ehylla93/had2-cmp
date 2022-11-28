@@ -1,0 +1,29 @@
+block
+{
+
+frame ger24;		FRM_FindFrame(ger24,"ger_24");
+frame ger25;		FRM_FindFrame(ger25,"ger_25");
+
+Frame LMswitch;		FRM_FindFrame(LMswitch, "tunel07");
+
+
+
+
+}
+
+integer Door;
+	Door = 0;
+
+OnUse()
+  {
+     
+block
+{
+	SendSignal(LMswitch,3);
+	SendSignal(ger24,3);
+	SendSignal(ger24,3);
+}
+  }
+
+
+

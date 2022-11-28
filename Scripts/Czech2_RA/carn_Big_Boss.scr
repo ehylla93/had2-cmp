@@ -1,0 +1,69 @@
+// R_Cz2_Big_Boss - Freiberg
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+frame me;	FRM_GetMyFrame(me);
+Frame obj;	FRM_FindFrame(obj,"objectives");
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+
+FRM_SwitchFaceTexture(me, "e_f023");
+DisableSignals(1);
+SetAlarmType(652, false);
+}
+HUMAN_Suspend(0);
+delay (2000);
+HUMAN_Suspend(1);
+
+goto end;
+// -------------------------------------------------------------------------------------------------------------
+
+
+	
+Whenever jedem(_PlayerInRange(15))
+{
+HUMAN_Suspend(0);
+SetAlarmType(1023,1);
+SetAlarmType(652, false);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnAlarm()
+{
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(652, false);
+goto end;
+}
+
+
+OnDeath()
+{
+
+
+EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+
+
+
+
+label end:

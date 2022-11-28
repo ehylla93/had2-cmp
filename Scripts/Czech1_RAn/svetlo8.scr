@@ -1,0 +1,106 @@
+// la_svetlo_8.Mesh01 (+svetlo3)
+Block
+{
+Frame svetlo8;
+	FRM_FindFrame(svetlo8, "la_svetlo_8.Rectangle01");
+Frame svetlo3;
+	FRM_FindFrame(svetlo3, "la_svetlo_3.Rectangle01");
+Frame light1;
+	FRM_FindFrame(light1, "inner lamp omni_6");
+Frame light2;
+	FRM_FindFrame(light2, "inner lamp omni_7");
+Frame light3;
+	FRM_FindFrame(light3, "omni help_5");
+Frame light4;
+	FRM_FindFrame(light4, "omni help_6");
+Frame light5;
+	FRM_FindFrame(light5, "omni help_7");
+Integer zapnute;
+	zapnute=1;
+}
+
+OnHit()
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo8, false);
+	SendSignal(svetlo3, 1);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(light2, false);
+	FRM_SetOn(light3, false);
+	FRM_SetOn(light4, false);
+	FRM_SetOn(light5, false);
+	FRM_SetGroupLightMap("nadrazi7", 1);
+	}
+	GoTo end;
+}
+
+OnSignal(1)	// received from vypinac02, 03, 04
+{
+	If(zapnute==1)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo8, false);
+		FRM_SetOn(svetlo3, false);
+		FRM_SetOn(light1, false);
+		FRM_SetOn(light2, false);
+		FRM_SetOn(light3, false);
+		FRM_SetOn(light4, false);
+		FRM_SetOn(light5, false);
+		FRM_SetGroupLightMap("nadrazi7", 1);
+			zapnute=0;
+		}
+		GoTo end;
+	}
+	If(zapnute==0)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo8, true);
+		FRM_SetOn(svetlo3, true);
+		FRM_SetOn(light1, true);
+		FRM_SetOn(light2, true);
+		FRM_SetOn(light3, true);
+		FRM_SetOn(light4, true);
+		FRM_SetOn(light5, true);
+		FRM_SetGroupLightMap("nadrazi7", 0);
+			zapnute=1;
+		}
+		GoTo end;
+	}
+}
+
+OnSignal(2)	// received from svetlo3
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo8, false);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(light2, false);
+	FRM_SetOn(light3, false);
+	FRM_SetOn(light4, false);
+	FRM_SetOn(light5, false);
+	FRM_SetGroupLightMap("nadrazi7", 1);
+	}
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo8, false);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(light2, false);
+	FRM_SetOn(light3, false);
+	FRM_SetOn(light4, false);
+	FRM_SetOn(light5, false);
+	FRM_SetGroupLightMap("nadrazi7", 1);
+	}
+}
+
+Label end:

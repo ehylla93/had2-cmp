@@ -1,0 +1,206 @@
+// R_Cz2_Ger4 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+// Variables definition
+Integer aievent;
+	aievent=0;
+Integer delayx;
+integer x;	x=0;
+integer rev;	rev=0;
+Frame ger1;
+	FRM_FindFrame(ger1, "Ger_");
+Frame ger5;
+	FRM_FindFrame(ger5, "Ger_5");
+Frame ger7;
+	FRM_FindFrame(ger7, "Ger_7");
+
+Frame me;	FRM_GetMyFrame(me);
+
+
+
+Frame kecac;		FRM_FindFrame(kecac,"ger4kecac");
+Frame cum;		FRM_FindFrame(cum,"ger4cum");
+
+Frame cum1;		FRM_FindFrame(cum1,"la_lokoroz_");
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+//	printf("Ger4 alarmed OK");
+	PrintfNumber("Ger4  alarm cislo ", aievent);
+	SendSignal(ger5, 1);
+	SendSignal(ger1, 1);
+	SendSignal(kecac, 1);
+	SetWhenever(alarm, false);
+	HUMAN_SETSIGHTRANGE(50);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	}
+	HUMAN_SETMODE_StandFast();
+	HUMAN_SetAnim("", 50, 50, false);
+	
+
+	If((((aievent==2) OR (aievent==16)) OR (aievent==128)) OR (aievent==256))
+
+	{
+		SetAlarmType(402,0);
+if (x==0)
+{
+
+	HUMAN_SetAlarm(0);	
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("Ger_4_01");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAt(cum1);
+	x=1;
+}
+	HUMAN_SetAlarm(0);
+	HUMAN_TurnAtNearestPlayer();
+	
+	delay (900);
+	SetAlarmType(402,1);
+	goto end;
+	}
+
+
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	DisableSignals(0);
+	SetAlarmType(1023,1);
+	SetAlarmType(524, false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SetAlarm(0);
+	}
+HUMAN_TurnAt(cum1);
+	HUMAN_SETMODE_Crouch();
+	goto end;
+}
+
+
+OnDeath()
+{
+	SendSignal(ger7,1);
+	SendSignal(kecac, 1);
+DisableSignals(1);
+EndScript();
+}
+Whenever alarm(_SignalReceived(1))	// received from ger4, ger5
+{
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+
+Whenever akce(_SignalReceived(2))
+{
+HUMAN_SetAnim("", 500,500, 0);
+delay (600);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("ger4_04");
+HUMAN_TurnAt(ger5);
+Sendsignal (ger5,3);
+goto end;
+}
+
+Whenever akce1(_SignalReceived(3))
+{
+HUMAN_TurnAt(ger5);
+FRM_MorphSpeech(me, 19993837, 6, 28);
+HUMAN_SetAnim("%%mluvi5", 300, 300, true);
+delay (1914);
+HUMAN_SetAnim("%%mluvi3", 300, 300, true);
+delay (828);
+HUMAN_SetAnim("%%mluvi1", 300, 300, true);
+delay (300);
+HUMAN_SetAnim("", 600, 600, 0);
+SendSignal (ger5,4);
+goto end;
+}
+
+Whenever akce2(_SignalReceived(4))
+{
+delay (300);
+rev=1;
+goto spraw;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Walk();
+Delay(5000);
+
+Label spraw:
+HUMAN_Move("ger4_02");
+if (rev==1)	{	FRM_MorphSpeech(me, 19993838, 6, 28);	}
+HUMAN_TurnAt(cum);
+
+delay (200);
+if (_RandomInt(2)==0)
+{
+HUMAN_SETMODE_Crouch();
+delay(200);
+HUMAN_SetAnim("%%manipulzbran", 500, 500, 1);
+}
+Else
+{
+HUMAN_SetAnim("%%hledamkulomet", 500, 500, 1);
+}
+delayx=10000+_RandomInt(15000);
+delay (delayx);
+HUMAN_SetAnim("", 500,500, 0);
+delay (600);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("ger4_03");
+HUMAN_TurnAt(cum);
+
+delay (200);
+
+if (rev==1)	{	FRM_MorphSpeech(me, 19993839, 6, 28);
+			rev=0;						}
+
+if (_RandomInt(2)==0)
+{
+HUMAN_SETMODE_Crouch();
+delay(200);
+HUMAN_SetAnim("%%manipulzbran", 500, 500, 1);
+}
+Else
+{
+HUMAN_SetAnim("%%hledamkulomet", 500, 500, 1);
+}
+delayx=10000+_RandomInt(15000);
+delay (delayx);
+HUMAN_SetAnim("", 500,500, 0);
+delay (600);
+HUMAN_SETMODE_Stand();
+GoTo spraw;
+
+
+Label end:

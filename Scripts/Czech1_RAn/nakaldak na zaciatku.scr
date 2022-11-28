@@ -1,0 +1,149 @@
+// ridic nakladaku
+
+Block
+{
+Frame zavora;
+	FRM_FindFrame(zavora, "zavora1.Cylinder01");
+Frame cetnik;
+	FRM_FindFrame(cetnik, "cetnik_");
+Frame cetnik2;
+	FRM_FindFrame(cetnik2, "cetnik01");
+Frame cetnik3;
+	FRM_FindFrame(cetnik3, "cetnik3");
+Frame cetnik4;
+	FRM_FindFrame(cetnik4, "cetnik4");
+Frame vozidlo;
+	FRM_FindFrame(vozidlo, "blitz1");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Zombie();
+FRM_SwitchFaceTexture(me, "e_f055");
+SetAlarmType(684, false);
+}
+
+HUMAN_BoardVehicle("blitz1", true, 0);
+
+Label k_zavore:
+	Delay(12000);
+	HUMAN_Drive("zatacka", 40);
+	HUMAN_Drive("zatacka2", 30);
+	HUMAN_Drive("kontrola", 20);
+	HUMAN_Drive("pokus", 15);
+	HUMAN_Drive("", 40);
+	SendSignal(cetnik2, 2);
+
+Label kontrola:
+	Delay(1000);
+	GoTo kontrola;
+
+OnSignal(1)	// received from cetnik01
+{
+	printf("ridic nakladaku: dostal som signal 1 od cetnik 01 idem k zavore");
+	GoTo kontrola_done;
+}
+
+OnSignal(2)	// received from cetnik_
+{
+	GoTo cetnik_killed;
+}
+
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(true);
+	DisableAlarms(true);
+	DisableWhenevers(true);
+	HUMAN_SETEVENTS(false);
+	}
+	printf("ridic nakladaku alarm - disable signals");
+	HUMAN_BoardVehicle("blitz1", false, 0);
+	printf("boardvehicle false");
+	HUMAN_SETMODE_Run();
+	printf("setmode run");
+	GoTo utek;
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ridic_uprch");
+	HUMAN_Suspend(true);
+	GoTo end;
+}
+
+OnDeath()
+{
+	PlayMusic(34);
+	EndScript();
+}
+
+Label utek:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ridic_uprch0");
+	HUMAN_Move("ridic_uprch");
+	printf("human_move");
+	Delay(3000);
+	printf("delay 3000");
+	HUMAN_Suspend(true);
+	printf("suspend");
+	GoTo end;
+
+Label kontrola_done:
+	HUMAN_Drive("cross", 50);
+	printf("ridic nakladaku: som pred zavorou");
+	// ted jsme pred zavorou
+
+Label wait:
+	If(_ACTOR_GetState(zavora)==0)
+	{
+		GoTo DriveOut;
+	}
+	Delay(500);
+	GoTo wait;
+
+Label DriveOut:
+	printf("ridic nakladaku: idem dopice");
+	HUMAN_Drive("end", 30);
+	FRM_SetOn(vozidlo, false);
+	printf("ridic nakladaku: a som v kunde - koniec");
+	HUMAN_Suspend(true);
+	GoTo end;
+
+Label cetnik_killed:
+	HUMAN_Drive("cross", 50);
+	printf("ridic nakladaku: som pred zavorou");
+	// ted jsme pred zavorou
+
+Label wait2:
+	If(_ACTOR_GetState(zavora)==0)
+	{
+		printf("ridic nakladaku: idem dopice");
+		HUMAN_Drive("end", 25);
+		printf("ridic nakladaku: a som v kunde - koniec");
+		HUMAN_Suspend(true);
+		GoTo end;
+	}
+	Delay(1000);
+
+	Block
+	{
+		HUMAN_BoardVehicle("blitz1", false, 0);
+		HUMAN_SETMODE_Run();
+	}
+
+	HUMAN_Move("bonz1");
+	HUMAN_Move("bonz2");
+	HUMAN_Move("bonz3");
+	Delay(1500);
+	HUMAN_TurnAt(cetnik);
+	Block
+	{
+		SendSignal(cetnik3, 1);
+		SendSignal(cetnik4, 1);
+	}
+	HUMAN_ACTIVITY_Point(cetnik);
+
+Label end:

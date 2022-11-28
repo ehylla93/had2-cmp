@@ -1,0 +1,44 @@
+// la_svetlo_4.Mesh01 (+svetlo9)
+Block
+{
+Frame svetlo4;
+	FRM_FindFrame(svetlo4, "la_svetlo_4.Rectangle01");
+Frame svetlo9;
+	FRM_FindFrame(svetlo9, "la_svetlo_9.Rectangle01");
+Frame light;
+	FRM_FindFrame(light, "inner lamp omni_8");
+}
+
+OnHit()
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo4, false);
+	SendSignal(svetlo9, 2);
+	}
+	GoTo end;
+}
+
+OnSignal(1)	// received from svetlo9
+{
+	Block
+	{
+	FRM_SetOn(svetlo4, false);
+	FRM_SetOn(light, false);
+	DisableSignals(true);
+	}
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	Block
+	{
+	FRM_SetOn(svetlo4, false);
+	FRM_SetOn(light, false);
+	DisableSignals(true);
+	}
+}
+
+Label end:

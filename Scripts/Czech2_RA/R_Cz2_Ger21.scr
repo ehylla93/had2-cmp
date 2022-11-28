@@ -1,0 +1,68 @@
+// R_Cz2_Ger21 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+Frame freiberg;
+	FRM_FindFrame(freiberg, "Big_Boss");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(908, false);	// reaguje na blizku strelbu, strelbu, explozie, vidim a zranenie
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+		aievent=_GetAlarmType();
+//	printf("Ger21 alarmed OK");
+//	PrintfNumber("Ger21 dostal alarm cislo ", aievent);
+	HUMAN_SETMODE_Run();
+
+	
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(908, false);
+	SetAlarmType(115, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(15))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	SendSignal(freiberg, 1);
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+Label end:

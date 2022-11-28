@@ -1,0 +1,142 @@
+// R_Cz2_Ger7 - soldier waiting for player to shoot him
+
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+// Variables definition
+Integer aievent;
+	aievent=0;
+Integer counter;
+	counter=0;
+integer x;	x=0;
+
+Frame ger8;
+	FRM_FindFrame(ger8, "Ger_8");
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(652, false);	// reaguje na blizku strelbu, strelbu, explozie, vidim a zranenie a friendlyf
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+//	printf("Ger7 alarmed OK");
+	PrintfNumber("Ger7 dostal alarm cislo ", aievent);
+	SendSignal(ger8, 1);
+	}
+	
+	HUMAN_ACTIVITY_Smoke(0);
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64)){	EndScript();  }
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+{	
+	SetAlarmType(274, false);
+
+if (x==0)
+{
+	HUMAN_SETMODE_Silence();
+
+	HUMAN_SetAlarm(false);
+	HUMAN_Move("Ger_7_01");
+	x=1;
+}
+	HUMAN_SetAlarm(false);	
+	HUMAN_TurnAtNearestPlayer();
+	delay (900);
+	SetAlarmType(274, true);
+	goto end;
+}
+	
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+
+OnSignal(1)
+{						// received from Ger_, Ger_4, Ger_5
+		counter=counter+1;
+
+	If(counter==2)
+	{					// minimalne dvaja uz zdechli
+		SetWhenever(player,0);
+
+		HUMAN_Suspend(false);
+		GoTo end;
+	}
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(4))
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("Ger_7_01");
+	x=1;
+	HUMAN_Move("ger7_2");
+	HUMAN_Move("ger7_3");
+	HUMAN_Move("ger7_4");
+HUMAN_SetAnim("%%turnleft",500,500,0);
+delay(2101);
+HUMAN_SetAnim("%%turnright",500,500,0);
+delay(2800);
+HUMAN_SetAnim("",500,500,0);
+
+	HUMAN_Move("ger7_5");
+	HUMAN_Move("ger7_6");
+HUMAN_SetAnim("%%turnleft",500,500,0);
+delay(2101);
+HUMAN_SetAnim("%%turnright",500,500,0);
+delay(2800);
+HUMAN_SetAnim("",500,500,0);
+	HUMAN_Move("ger7_7");
+HUMAN_SetAnim("%%turnleft",500,500,0);
+delay(2101);
+HUMAN_SetAnim("%%turnright",500,500,0);
+delay(2800);
+HUMAN_SetAnim("",500,500,0);
+	
+
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+
+Label aie1:
+Label aie32:
+Label aie64:
+	EndScript();
+
+	
+
+Label end:

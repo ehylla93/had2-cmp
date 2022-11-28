@@ -1,0 +1,204 @@
+// R_Cz2_objectives - objectives for Czech2
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+integer plnum;
+
+integer aed;	aed=0;
+integer fr;	fr=0;
+SetObjectiveStatus(1, 0);
+SetObjectiveStatus(6, 0);
+}
+GOTO END;
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever obj(_SignalReceived(1))
+{
+if (aed==1)
+{
+goto test;
+}
+	CSC_FadeIn(100);
+block
+{
+fr=1;
+SetObjectiveStatus(1, 1);
+}
+	printf("Freiberg captured");
+
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(19993804);	
+	Delay(5000);
+	SUBTITLES_SetOn(0);
+
+
+
+
+goto end;
+
+
+}
+
+ Whenever deti(_SignalReceived(19))
+ 	{
+printf ("signal od mrtvoleru");
+if (fr==1)
+{
+goto test;
+}
+
+block
+{
+aed=1;
+SetObjectiveStatus(6, 1);
+}
+   SUBTITLES_SetOn(1);
+   SUBTITLES_SetText(21990002);
+   Delay(4000);
+   SUBTITLES_SetOn(0);
+
+
+goto end;
+}
+
+
+
+
+label test:
+
+Integer type;
+type=_SPGetGameType();
+
+if (type <> 2)
+
+{
+
+  If((_IsTeamMemberDead())==0)
+{
+SetObjectiveStatus(5, 0);				//Nekdo z tymu chcipl
+SetObjectiveStatus(5, 1);
+}
+}
+
+AddDiaryText(39);
+
+if (plnum>1)
+{
+
+Printf("pridawam diary text pro tym");
+AddDiaryText(4301);
+}
+
+else
+
+{
+
+Printf("pridawam diary text pro jednoho");
+AddDiaryText(4302);
+}
+
+
+if (_IsInInventory(239)==1)
+{
+//doklady
+if (plnum>1)
+{
+
+Printf("pridawam diary text pro tym");
+AddDiaryText(4304);
+}
+
+else
+
+{
+
+Printf("pridawam diary text pro jednoho");
+AddDiaryText(4306);
+}
+	
+
+}
+
+if (_IsInInventory(26)==1)
+{
+//doklady
+if (plnum>1)
+{
+
+Printf("pridawam diary text pro tym");
+AddDiaryText(4303);
+}
+
+else
+
+{
+
+Printf("pridawam diary text pro jednoho");
+AddDiaryText(4305);
+}
+}
+
+	CSC_FadeIn(100);
+SetObjectiveStatus(6, 1);
+SetObjectiveStatus(1, 1);
+	GoTo end;
+
+
+//---------------------------------------------------------------
+
+Whenever det(_SignalReceived(3))
+{
+	printf("Freid_death");
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(19993803);	// doplnit v textaci
+	Delay(5000);
+	SetObjectiveStatus(2, 3);
+	GoTo end;
+}
+
+
+Whenever bed(_SignalReceived(4))
+{
+	//bedna
+	SetObjectiveStatus(3, 0);
+	SetObjectiveStatus(3, 1);
+	goto end;
+}
+
+OnSignal(5)
+{
+	//doklady
+	SetObjectiveStatus(4, 0);
+	SetObjectiveStatus(4, 1);
+	goto end;
+}
+
+OnSignal(6)
+{
+	//doklady pryc
+	SetObjectiveStatus(4, 4);
+	goto end;
+}
+
+
+
+// -------------------------------------------------------------------------------------------------------------
+OnCutscene(1)
+{
+goto end;
+}
+
+OnCutsceneDone(1)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(20994001);		//kill all
+Delay(4000);
+plnum=_GetNumMembersOfClientTeam()		//kolik je playeru
+SUBTITLES_SetText(19993801);
+Delay(4000);
+	SUBTITLES_SetOn(false);
+
+}
+
+Label end:

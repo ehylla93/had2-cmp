@@ -1,0 +1,16 @@
+frame ge33;	FRM_FindFrame(ge33,"ger_33");
+frame ge34;	FRM_FindFrame(ge34,"ger_34");
+frame ge35;	FRM_FindFrame(ge35,"ger_35");
+frame ge36;	FRM_FindFrame(ge36,"ger_36");
+frame ge37;	FRM_FindFrame(ge37,"ger_37");
+Whenever kuuurwaa(_PlayerInRange(5))
+{
+SendSignal(ge33,1);
+SendSignal(ge34,1);
+SendSignal(ge35,1);
+SendSignal(ge36,1);
+SendSignal(ge37,1);
+
+}
+
+SetWheneverTime(kuuurwaa, 100);

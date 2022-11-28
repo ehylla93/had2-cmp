@@ -1,0 +1,12 @@
+Frame pla1;		FRM_FindFrame(pla1, "CZ4_Plazzars_01");
+Frame pla2;		FRM_FindFrame(pla2, "CZ4_Plazzars_02");
+Frame pla3;		FRM_FindFrame(pla3, "CZ4_Plazzars_03");
+Frame qui;		FRM_FindFrame(qui, "CZ4_Quickman_01");
+
+Whenever PIR (_PlayerInRange(20))
+	{
+	SendSignal(pla1, 16);
+	SendSignal(pla2, 16);
+	SendSignal(pla3, 16);
+	SendSignal(qui, 16);
+	}

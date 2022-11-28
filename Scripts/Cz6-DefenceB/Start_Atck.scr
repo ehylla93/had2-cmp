@@ -1,0 +1,40 @@
+// Detektor Hrace
+// --------------------------------------------------
+
+Block
+{
+Frame p1;		FRM_FindFrame(p1,"Pante1");
+Frame p2;		FRM_FindFrame(p2,"Tank01");
+Frame lt1;		FRM_FindFrame(lt1,"Lt3501");
+Frame lt2;		FRM_FindFrame(lt2,"Lt3502");
+
+Integer start;
+	start=0;
+}
+
+//---------------------------------------------------
+
+
+Delay(40000);
+
+If(start==0)
+{
+SendSignal(p1, 1);
+SendSignal(p2, 12);
+SendSignal(lt1, 1);
+SendSignal(lt2, 1);
+DisableWhenevers(true);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(170))
+{
+SendSignal(p1, 1);
+SendSignal(p2, 12);
+SendSignal(lt1, 1);
+SendSignal(lt2, 1);
+start=start+1;
+goto END;
+}
+
+Label END:

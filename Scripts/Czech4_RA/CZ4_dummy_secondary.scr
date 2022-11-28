@@ -1,0 +1,13 @@
+Frame OBJ;		FRM_FindFrame(OBJ, "CZ4_OD");
+
+OnSignal(1)
+	{
+	If ( ((_LoadGameValue(21)==99) AND (_LoadGameValue(22)==99)) And (_LoadGameValue(23)==99))
+		{
+		SUBTITLES_SetOn(True);
+		SUBTITLES_SetText(21990003);
+                        SendSignal(OBJ, 1);		// signal pro OBJ, ze se ma nastavit OBJ2 na success
+		Delay(5000);
+		SUBTITLES_SetOn(false);
+		}
+	}

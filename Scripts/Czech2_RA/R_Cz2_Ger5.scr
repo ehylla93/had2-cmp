@@ -1,0 +1,248 @@
+// R_Cz2_Ger5 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+Frame ger1;
+	FRM_FindFrame(ger1, "Ger_");
+Frame ger4;
+	FRM_FindFrame(ger4, "Ger_4");
+Frame ger7;
+	FRM_FindFrame(ger7, "Ger_7");
+
+Frame me;	FRM_GetMyFrame(me);
+Frame bedna;		FRM_FindFrame(bedna,"e_gerbsml_42");
+Frame cum;		FRM_FindFrame(cum,"ge05cum1");
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu 
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+	PrintfNumber("ger_5 alarm", aievent);
+	SendSignal(ger4, 1);
+	SendSignal(ger1, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SETSIGHTRANGE(50);
+	}
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_WeaponOnArm(true);
+
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{
+		SetAlarmType(274,0);
+		HUMAN_SETMODE_Crouch();
+		HUMAN_TurnAtNearestPlayer();
+		HUMAN_SetSniper(1,2);
+		HUMAN_SetAlarm(false);
+		delay (900);
+		SetAlarmType(274,1);
+	goto end;
+
+	}
+
+	
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, false);
+	SetAlarmType(499, true);
+	HUMAN_SETMODE_Walk();
+	}
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+
+
+OnDeath()
+{
+	DisableSignals(1);
+	SendSignal(ger7,1);
+	EndScript();
+}
+
+
+Whenever alarm(_SignalReceived(1))	// received from ger4, ger_
+{
+	HUMAN_SetAnim("", 50, 50, false);
+
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+Whenever akce(_SignalReceived(2))
+{
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+HUMAN_Move("ger5_01");
+HUMAN_TurnAt(ger1);
+SendSignal (ger1,2);
+delay (2000);
+HUMAN_SetAnim("%%kecy1", 300, 300, true);
+delay (6000);
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+HUMAN_Move("ger5_02");
+SendSignal (ger4,2);
+HUMAN_TurnAt(ger4);
+goto end;
+}
+
+Whenever akce1(_SignalReceived(3))
+{
+HUMAN_TurnAt(ger4);
+HUMAN_SetAnim("%%mluvi4", 300, 300, true);
+FRM_MorphSpeechDelayed(me, 19993836, 6, 28);
+
+HUMAN_SetAnim("", 300, 300, 0);
+SendSignal (ger4,3);
+goto end;
+}
+
+Whenever akce2(_SignalReceived(4))
+{
+
+FRM_MorphSpeech(me, 19993840, 6, 28);
+HUMAN_SetAnim("%%mluvi5", 300, 300, true);
+delay (1714);
+HUMAN_SetAnim("%%mluvi4", 300, 300, true);
+delay (900);
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+SendSignal (ger4,4);
+HUMAN_Move("ger5_03");
+HUMAN_TurnAt(bedna);
+HUMAN_SetAnim("%%divase", 300, 300, true);
+delay (1500);
+HUMAN_SetAnim("%%rozcilujese", 500, 500, true);
+//na co nam sou mp44
+FRM_MorphSpeechDelayed(me, 19993834, 6, 28);
+
+FRM_MorphSpeechDelayed(me, 19993835, 6, 28);
+
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+HUMAN_Move("ger5_02");
+HUMAN_TurnAt(ger4);
+
+HUMAN_SetAnim("%%rozcilujese", 500, 500, true);
+FRM_MorphSpeechDelayed(me, 19993832, 6, 28);
+
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+HUMAN_Move("ger5_03");
+SendSignal (ger1,3);
+HUMAN_TurnAt(ger1);
+delay (400);
+HUMAN_SetAnim("%%mluvi5", 300, 300, true);
+FRM_MorphSpeechDelayed(me, 19993842, 6, 28);
+
+HUMAN_SetAnim("", 300, 300, 0);
+
+SendSignal (ger1,4);
+delay (200);
+HUMAN_TurnAt(bedna);
+HUMAN_SetAnim("%%divase", 300, 300, true);
+delay (3000);
+HUMAN_SetAnim("", 300, 300, 0);
+delay (500);
+HUMAN_Move("ger5_05");
+HUMAN_TurnAt(cum);
+delay (300);
+HUMAN_SetAnim("%%hledam1", 500, 500, true);
+goto end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Walk();
+
+label dokola:
+if (_RandomInt(3)==0)
+{
+HUMAN_Move("ger5_03");
+HUMAN_TurnAt(bedna);
+if (_RandomInt(2)==0)
+{
+HUMAN_SetAnim("%%divase", 300, 300, true);
+delay (9000);
+HUMAN_SetAnim("", 300, 300, 0);
+}
+Else
+{
+HUMAN_SetAnim("%%manipulzbran", 300, 300, true);
+delay (6000);
+HUMAN_SetAnim("", 300, 300, 0);
+}
+}
+
+HUMAN_Move("ger5_01");
+HUMAN_TurnAt(ger1);
+FRM_MorphSpeech(me,19993812,4,40);
+HUMAN_SetAnim("%%rozhovor1", 500, 500, true);
+delay (8000);
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_TurnAt(bedna);
+delay (400);
+HUMAN_SetAnim("%%rozcilujese", 500, 500, true);
+delay (2000);
+HUMAN_SetAnim("", 300, 300, 0);
+
+HUMAN_Move("ger5_02");
+HUMAN_TurnAt(ger4);
+if (_RandomInt(2)==0)
+{
+FRM_MorphSpeech(me,19993812,4,40);
+HUMAN_SetAnim("%%rozcilujese", 500, 500, true);
+delay (8000);
+HUMAN_SetAnim("", 300, 300, 0);
+}
+Else
+{
+HUMAN_SetAnim("%%rozhovor1", 500, 500, true);
+delay (6000);
+HUMAN_SetAnim("", 300, 300, 0);
+}
+
+
+if (_RandomInt(3)==0)
+{
+//do wagonu
+
+HUMAN_Move("ger5_04");
+delay (30000);
+}
+
+goto dokola;
+GoTo end;
+
+
+
+
+Label end:

@@ -1,0 +1,35 @@
+// Ge_7
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame sit;
+	FRM_FindFrame(sit, "zz3");
+FRM_SwitchFaceTexture(me, "e_f024");
+}
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from detektor v domku
+{
+	HUMAN_Suspend(false);
+	Delay(1000);
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_ACTIVITY_Sit(sit);
+	Delay(2000);
+	HUMAN_SetAnim("%%ozralstul", 500, 100, true);
+}
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_SETMODE_Stand();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+}

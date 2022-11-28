@@ -1,0 +1,10 @@
+// Objective - CZ Defence
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetObjectiveStatus(1, 0);     // Ubran bunkr
+SetObjectiveStatus(2, 4);	// Zaber kampu
+}
+
+Label END:

@@ -1,0 +1,29 @@
+Frame obj;	FRM_FindFrame(obj, "objectives");
+SetupTacticalMode(0);
+Frame boss;	FRM_FindFrame(boss, "big_boss");
+
+
+integer mrd;	mrd=(_SPGetGameType());
+		//mrd=3;
+
+
+if ((mrd==3) or (mrd==7))
+{
+
+block
+{
+ScriptAssign(obj,"objectives_carn.scr");
+
+
+
+}
+goto end;
+}
+
+ScriptAssign(obj,"R_Cz2_objectives.scr");
+
+
+
+
+
+label end:

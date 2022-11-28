@@ -1,0 +1,23 @@
+// Suspended soldier  #12
+HUMAN_SetOptimized(2);
+frame sit;		FRM_FindFrame(sit, "dummy_ger12_sit");
+frame MyFRM;		FRM_GetMyFrame(MyFRM);
+HUMAN_Suspend(1);
+goto end;
+
+Whenever suk(_PlayerInRange(20))
+{
+HUMAN_Suspend(0);
+delay(1000);
+//HUMAN_SETMODE_Lie();
+HUMAN_SetAnim("%%mrtvolak",10,10,1);
+delay (1000);
+
+
+HUMAN_KillEx(MyFRM, 2);
+Endscript();
+}
+
+
+
+label end:

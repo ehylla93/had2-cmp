@@ -1,0 +1,32 @@
+//	Obj 4 explosives
+
+Block
+{
+Frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+Frame N1;		FRM_FindFrame(N1, "naloz1");
+Frame N2;		FRM_FindFrame(N2, "naloz2");
+Frame N3;		FRM_FindFrame(N3, "naloz3");
+Frame N4;		FRM_FindFrame(N4, "naloz4");
+Frame N5;		FRM_FindFrame(N5, "naloz5");
+Frame N6;		FRM_FindFrame(N6, "naloz6");
+//Printf("explo script");
+//SetObjectiveStatus(4, 0);	// Remove explosives 
+}
+
+Whenever Defused ( (((((_ACTOR_GetState(N1)==3) and (_ACTOR_GetState(N2)==3)) and (_ACTOR_GetState(N3)==3)) and (_ACTOR_GetState(N4)==3)) and (_ACTOR_GetState(N5)==3)) and (_ACTOR_GetState(N6)==3)  )
+{
+
+//Printf("disarmed");
+//SUBTITLES_SetOn(1);
+//SUBTITLES_SetText(56999906);	// "OBJECTIVE ACCOMPLISHED: BRIDGE CLEARED OF EXPLOSIVES"
+Delay(4000);
+//SetObjectiveStatus(4, 1);
+//SUBTITLES_SetOn(0);
+SendSignal(OBJ, 6);
+
+  EndScript();
+}
+
+// ---------------------------------------------
+
+Label end:

@@ -1,0 +1,220 @@
+// Obj 4 - Eliminate all snipers
+// -----------------------------------------------
+
+Block
+{ 
+	Frame S01;		FRM_FindFrame(S01, "AF1_05");
+	Frame S02;		FRM_FindFrame(S02, "AF1_07");
+	Frame S03;		FRM_FindFrame(S03, "AF1_09");
+	Frame S04;		FRM_FindFrame(S04, "AF1_10");
+	Frame S05;		FRM_FindFrame(S05, "AF1_11");
+	Frame S06;		FRM_FindFrame(S06, "AF1_50");
+	Frame S07;		FRM_FindFrame(S07, "AF1_51");
+	Frame S08;		FRM_FindFrame(S08, "AF1_52");
+	Frame S09;		FRM_FindFrame(S09, "AF1_53");
+	Frame S10;		FRM_FindFrame(S10, "AF1_54");
+	Frame S11;		FRM_FindFrame(S11, "wall02");
+	Frame S12;		FRM_FindFrame(S12, "wall03");
+	Frame S13;		FRM_FindFrame(S13, "Add_10");
+	Frame S14;		FRM_FindFrame(S14, "Add_11");
+	Frame S15;		FRM_FindFrame(S15, "Add_12");
+	Frame S16;		FRM_FindFrame(S16, "Add_13");
+	Frame S17;		FRM_FindFrame(S17, "Add_16");
+	Frame S18;		FRM_FindFrame(S18, "Add_17");
+
+	Frame S19;		FRM_FindFrame(S19, "wall04");
+	Frame S20;		FRM_FindFrame(S20, "wall05");
+	Frame S21;		FRM_FindFrame(S21, "wall06");
+
+	Frame S22;		FRM_FindFrame(S22, "Bdd_27");
+	Frame S23;		FRM_FindFrame(S23, "Bdd_29");
+	Frame S24;		FRM_FindFrame(S24, "Bdd_30");
+
+	Frame S25;		FRM_FindFrame(S25, "Bdd_31");
+	Frame S26;		FRM_FindFrame(S26, "Bdd_32");
+	Frame S27;		FRM_FindFrame(S27, "Bdd_33");
+
+	Frame S28;		FRM_FindFrame(S28, "wall01");
+	Frame S29;		FRM_FindFrame(S29, "Bdd_28");
+	Frame S30;		FRM_FindFrame(S30, "Add_8");
+
+
+	Frame Obj8;		FRM_FindFrame(Obj8, "obj8");
+
+	Integer Sniper_Count;	Sniper_Count = 0;
+
+	SetObjectiveStatus(4, 0);
+	//printf("sniper script");
+}
+
+
+Whenever Snipers_Killed1 (((_Actor_GetState(S01) == 0) And (_Actor_GetState(S02) == 0)) And (_Actor_GetState(S03) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed2 (((_Actor_GetState(S04) == 0) And (_Actor_GetState(S05) == 0)) And (_Actor_GetState(S06) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed3 (((_Actor_GetState(S07) == 0) And (_Actor_GetState(S08) == 0)) And (_Actor_GetState(S09) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed4 (((_Actor_GetState(S10) == 0) And (_Actor_GetState(S11) == 0)) And (_Actor_GetState(S12) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed5 (((_Actor_GetState(S13) == 0) And (_Actor_GetState(S14) == 0)) And (_Actor_GetState(S15) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed6 (((_Actor_GetState(S16) == 0) And (_Actor_GetState(S17) == 0)) And (_Actor_GetState(S18) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed7 (((_Actor_GetState(S19) == 0) And (_Actor_GetState(S20) == 0)) And (_Actor_GetState(S21) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed8 (((_Actor_GetState(S22) == 0) And (_Actor_GetState(S23) == 0)) And (_Actor_GetState(S24) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed9 (((_Actor_GetState(S25) == 0) And (_Actor_GetState(S26) == 0)) And (_Actor_GetState(S27) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed10 (((_Actor_GetState(S28) == 0) And (_Actor_GetState(S29) == 0)) And (_Actor_GetState(S30) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 10)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(4, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+

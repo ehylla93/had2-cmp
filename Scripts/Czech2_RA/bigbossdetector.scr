@@ -1,0 +1,20 @@
+frame Big_Boss;	FRM_FindFrame(Big_Boss,"Big_Boss");
+frame cut2;		FRM_FindFrame(cut2,"cut2");			
+
+
+Whenever plajr(_PlayerInRange(1))
+{
+delay (100);
+if (_ACTOR_GetState(Big_Boss)==0)
+{
+goto end;
+}
+
+CSC_RunCutscene(2);
+
+}
+
+
+SetWheneverTime(plajr, 100);
+
+label end:

@@ -1,0 +1,15 @@
+Frame bos;	FRM_FindFrame(bos,"big_boss");
+
+
+Whenever(_SignalReceived(1))
+{
+//od dveri vagonu
+
+delay(3000);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeech(bos,19993810,4,10);
+delay(4000);
+FRM_MorphSpeech(bos,19993811,4,10);
+delay(4000);
+SUBTITLES_SetOn(0);
+}

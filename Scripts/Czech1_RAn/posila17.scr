@@ -1,0 +1,38 @@
+// posila17
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+
+FRM_SwitchFaceTexture(me, "e_f024");
+}
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from suspend detektor2 whenever player in range 45
+{
+	Block
+	{
+	DisableSignals(true);
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_SETSIGHTRANGE(15);
+	}
+	HUMAN_SetAnim("%%nudazed1", 200, 200, true);
+	HUMAN_SetOptimized(2);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Crouch();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+}

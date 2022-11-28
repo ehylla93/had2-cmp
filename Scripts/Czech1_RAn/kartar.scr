@@ -1,0 +1,40 @@
+// Ge_4
+
+Block
+{
+Frame zidla2;
+	FRM_FindFrame(zidla2,"zz2");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(true);
+FRM_SwitchFaceTexture(me, "e_f052");
+}
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from detektor v domku whenever player in range 3
+{
+	HUMAN_Suspend(false);
+	Delay(1000);
+	HUMAN_SETSIGHTRANGE(5);
+	HUMAN_ACTIVITY_Sit(zidla2);
+	HUMAN_SetAnim("%%sedimtak", 200, 200, true);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Stand();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("zz2");
+	HUMAN_SetOptimized(2);
+}

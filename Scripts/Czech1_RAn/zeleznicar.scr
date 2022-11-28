@@ -1,0 +1,128 @@
+// zeleznicar
+
+Block
+{
+Frame vyhybka1;
+	FRM_FindFrame(vyhybka1, "vyhybka01");
+Frame vyhybka2;
+	FRM_FindFrame(vyhybka2, "vyhybka02");
+Frame vyhybka3;
+	FRM_FindFrame(vyhybka3, "vyhybka03");
+Frame dvere;
+	FRM_FindFrame(dvere, "railsta423");
+Frame me;
+	FRM_GetMyFrame(me);
+Frame st;
+	FRM_FindFrame(st, "stetec");
+Frame st_v;
+	FRM_FindFrame(st_v, "stetec.la_stetka");
+Frame pl;
+	FRM_FindFrame(pl, "plechovka");
+Frame pl_v;
+	FRM_FindFrame(pl_v, "plechovka.pixla");
+Frame speech;
+	FRM_FindFrame(speech, "zeleznicar_speech");
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+FRM_SwitchFaceTexture(me, "e_f057");
+SetAlarmType(684, false);
+
+Frame ruka;
+FRM_FindFrame(ruka, "zeleznicar.hw1");
+Frame ruka2;
+FRM_FindFrame(ruka2, "zeleznicar.hw2");
+FRM_TeleportNearFrame(st, ruka, true);
+FRM_TeleportNearFrame(pl, ruka2, true);
+}
+FRM_FindFrame(ruka, "");
+FRM_FindFrame(ruka2, "");
+HUMAN_Suspend(true);
+
+OnAlarm()
+{
+	SetActorState(dvere, 0);
+	HUMAN_Stop();
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_CreatePhysicalObject(st_v, 1, true, false);
+	FRM_CreatePhysicalObject(pl_v, 3, true, false);
+	FRM_SetOn(st, false);
+	FRM_SetOn(pl, false);
+	}
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetAnim("%%panika", 300, 300, false);
+	Delay(7000);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("zele_01");
+	HUMAN_Move("zele_02");
+	HUMAN_Move("zele_03");
+	CheckpointJoin("zele_03", "zele_04");
+	HUMAN_Move("zele_04");
+	CheckpointSeparate("zele_03", "zele_04");
+	HUMAN_Move("zele_05");
+	HUMAN_Suspend(true);
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETEVENTS(false);
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("zele_03");
+	CheckpointJoin("zele_03", "zele_04");
+	HUMAN_Move("zele_04");
+	CheckpointSeparate("zele_03", "zele_04");
+	HUMAN_Move("zele_05");
+	HUMAN_Suspend(true);
+}
+
+OnDeath()
+{
+	SetActorState(dvere, 0);
+	PlayMusic(34);
+	EndScript();
+}
+
+Whenever player(_PlayerInRange(40))
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("schodyvyh");
+	SendSignal(speech, 1);
+	SetActorState(dvere, 0);
+	HUMAN_Move("vyhybka1");
+	HUMAN_Move("v1");
+	HUMAN_TurnAt(vyhybka1);
+	Delay(1000);
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%maze", 500, 500, false);
+	Delay(15000);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("v2");
+	HUMAN_TurnAt(vyhybka2);
+	Delay(1000);
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%maze", 500, 500, false);
+	Delay(15000);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("k1");
+	HUMAN_Move("k2");
+	HUMAN_Move("v3");
+	HUMAN_TurnAt(vyhybka3);
+	Delay(1000);
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%maze", 500, 500, false);
+	Delay(15000);
+	HUMAN_SetOptimized(1);
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("k2");
+	HUMAN_Move("vyhybka3");
+	HUMAN_Move("schodyvyh");
+	HUMAN_Move("vyhyb_door");
+	SetActorState(dvere, 0);
+	HUMAN_Suspend(true);
+}

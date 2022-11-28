@@ -1,0 +1,40 @@
+OnCutscene(1)
+{
+
+HUMAN_SETMODE_Silence();
+
+
+Delay(9000);
+
+HUMAN_Move("en1");
+HUMAN_Stop();
+Delay(500);
+HUMAN_SETMODE_Crouch();
+
+
+
+
+
+}
+
+
+
+OnCutsceneDone(1)
+{
+
+Frame player1;
+FRM_GetMyFrame(player1);
+Frame mrtvola;
+FRM_FindFrame(mrtvola, "Ger_1");
+
+FRM_TeleportNearCheckpoint(player1,"en1","Ger1_1");
+HUMAN_TurnAt(mrtvola);
+
+HUMAN_SETMODE_Crouch();
+
+
+EndScript();
+
+
+}
+

@@ -1,0 +1,34 @@
+// Lt3502
+// --------------------------------------------------
+
+Block
+{
+Frame p1;		FRM_FindFrame(p1,"Pante1");
+Frame p2;		FRM_FindFrame(p2,"Tank01");
+
+
+Integer jel;
+	jel=0;
+}
+
+//---------------------------------------------------
+
+OnUse()
+{
+
+If(jel==0)
+{
+Delay(5000);
+SendSignal(p1, 1);
+SendSignal(p2, 12);
+}
+goto END;
+}
+
+OnSignal(1)
+{
+jel=jel+1;
+goto END;
+}
+
+Label END:

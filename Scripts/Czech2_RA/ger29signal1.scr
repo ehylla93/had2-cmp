@@ -1,0 +1,13 @@
+Frame ger29;		FRM_FindFrame(ger29,"ger_29");
+
+
+
+Whenever curak(_PlayerInRange(1))
+{
+SendSignal(ger29,1);
+
+}
+
+SetWheneverTime(curak, 100);
+
+label end:

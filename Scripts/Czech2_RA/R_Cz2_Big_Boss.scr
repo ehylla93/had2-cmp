@@ -1,0 +1,70 @@
+// R_Cz2_Big_Boss - Freiberg
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+frame me;	FRM_GetMyFrame(me);
+Frame obj;	FRM_FindFrame(obj,"objectives");
+Frame cum;	FRM_FindFrame(cum, "bosscum");
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(1023, false);	// nereaguje na nic
+HUMAN_SetOptimized(2);
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f023");
+	
+HUMAN_Suspend(1);
+goto end;
+
+
+Whenever lif(_PlayerInRange(20))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%zajatec",500,500,1);
+goto end;
+}
+
+OnDeath()
+{
+PlayMusic(34);
+FRM_MorphSpeech(me, 0,0,0);
+SendSignal(obj,3);
+goto end;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnCutscene(2)
+{
+
+delay (16000);
+
+Whenever xxx(_SignalReceived(19))
+{
+
+Printf("big kokot dostal signal");
+HUMAN_SetAnim("",300,300,0);
+delay (300);
+HUMAN_TurnAt(cum);
+HUMAN_SetAnim("%%svazovanej",500,300,0);
+delay (1642);
+HUMAN_SetAnim("%%svazanej",300,500,1);
+
+}
+}
+
+OnCutsceneDone(2)
+{
+HUMAN_TurnAt(cum);
+HUMAN_SetAnim("!svazanej",10,10,1);
+}
+
+label end:

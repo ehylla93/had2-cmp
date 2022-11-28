@@ -1,0 +1,7 @@
+Frame player3;
+
+
+OnUse()
+{
+	ScriptAssign(player3, "startscriptengl3");
+}

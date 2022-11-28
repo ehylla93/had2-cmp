@@ -1,0 +1,85 @@
+// R_Cz2_Ger11 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(918, false);	// reaguje na blizku strelbu,  zvuky,  vidim a zranenie
+HUMAN_SetOptimized(2);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+//	printf("Ger11 alarmed OK");
+//	PrintfNumber("Ger11 dostal alarm cislo ", aievent);
+	HUMAN_SETMODE_Run();
+
+	
+	If(aievent==8)							{	GoTo aie8;	}
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))	
+	{	
+	EndScript();
+	}
+
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(918, false);
+	SetAlarmType(105, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_PlayerInRange(10))
+{
+	HUMAN_Suspend(false);
+	SetWhenever(ger9, false);
+	GoTo end;
+}
+
+Whenever ger9(_SignalReceived(1))	// received from Ger_9
+{
+	HUMAN_Suspend(false);
+	SetWhenever(player, false);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+Label aie8:
+	printf("Ger11 Wer ist dort?");
+	HUMAN_SetAlarm(false);
+	GoTo end;
+
+Label end:

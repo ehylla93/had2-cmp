@@ -1,0 +1,105 @@
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+Frame see;			FRM_FindFrame(see, "CZ4_Chodnik_01");
+Frame dg;			FRM_FindFrame(dg, "dummy_d1coord");
+integer AIEvent;
+integer KONECNA;
+
+OnDeath()
+	{
+	SendSignal(CZ4_OD, 0);
+	SendSignal(dg, 1);
+	EndScript();
+	}
+
+HUMAN_SetOptimized(2);
+SetAlarmType(1023, true);
+HUMAN_SetAnim("%%nuda", 300, 300, True);
+
+// signal 10 je od dummy_d1coord ze ma jit trucovat
+OnSignal(10)
+	{
+	HUMAN_SetAnim("", 150, 150, False);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("truc1");
+	HUMAN_Move("truc2");
+	HUMAN_TurnAt(see);
+	Delay(2000);
+	HUMAN_ACTIVITY_Smoke(true);
+	}
+
+// Gesta u rozhovoru
+OnSignal(5)
+{
+HUMAN_SetAnim("%%kecy1", 300, 300, True);		Delay(13400);	// 1
+HUMAN_SetAnim("%%rozhovor", 300, 300, True);		Delay(3400);	// 2
+HUMAN_SetAnim("%%kecy1", 300, 300, True);		Delay(5400);	// 1
+HUMAN_SetAnim("%%rozhovor", 300, 300, True);		Delay(2400);	// 2
+HUMAN_SetAnim("%%kecy2", 300, 300, True);		Delay(6900);	// 1
+HUMAN_SetAnim("%%rozhovor", 300, 300, True);		Delay(6400);	// 2
+HUMAN_SetAnim("%%kroutihlav", 300, 300, True);		Delay(4400);	// 1
+HUMAN_SetAnim("%%rozhovor", 300, 300, True);		Delay(2400);	// 2
+HUMAN_SetAnim("%%rozhovor3", 300, 300, True);		Delay(7900);	// 1
+HUMAN_SetAnim("%%divase", 300, 300, False);		Delay(5900);	// 2
+HUMAN_SetAnim("%%rozcilujese", 300, 300, False);	Delay(11400);	// 1
+HUMAN_SetAnim("%%kroutihlav", 300, 300, True);		Delay(2400);	// 2
+HUMAN_SetAnim("%%rozcilujese", 300, 300, False);	Delay(4400);	// 1
+HUMAN_SetAnim("%%kroutihlav", 300, 300, True);		Delay(2400);	// 2
+HUMAN_SetAnim("%%rozcilujese", 300, 300, False);	Delay(2400);	// 1
+HUMAN_SetAnim("%%kroutihlav", 300, 300, True);		Delay(1700);	// 2
+}
+
+OnAlarm()
+	{
+            Block
+              {     
+	  DisableSignals(True);
+	  SendSignal(dg, 1);
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Chatter 1: ", AIEvent);
+	  SUBTITLES_SetOn(false);
+	  HUMAN_SETAIMODE_Aggressive();
+	  HUMAN_SETMODE_Run();
+              }
+            HUMAN_SetAnim("", 150, 150, False);
+            HUMAN_Stop();
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	HUMAN_SETMODE_Stand();
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+    	  DisableSignals(False);
+	  SetAlarmType(511, True);
+	  SetAlarmType(512, False);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+	}
+
+Label TheEnd:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Chatter_01");
+       DisableSignals(True);
+       HUMAN_SetAnim("", 250, 250, False);
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+  Delay (10000);
+Goto TheEnd;
+
+label wait:

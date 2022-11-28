@@ -1,0 +1,146 @@
+// cetnik_
+
+Block
+{
+Frame auto;
+	FRM_FindFrame(auto, "blitz1");
+Frame ridic;
+	FRM_FindFrame(ridic, "ridic nakladaku");
+Frame cetnik2;
+	FRM_FindFrame(cetnik2, "cetnik01");
+Frame speech;
+	FRM_FindFrame(speech, "speech1");
+Frame lampa;
+	FRM_FindFrame(lampa, "l_ndrlamp3");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer kur;
+	kur=0;
+Integer wait;
+	wait=0;
+Integer smoking_time;
+	smoking_time=0;
+Integer aievent;
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f054");
+}
+
+Label hlidka:
+	HUMAN_SETSIGHTRANGE(28);
+	HUMAN_TurnAt(cetnik2);
+	Integer kecani=_RandomInt(3);
+	If(kecani==0)
+	{
+		HUMAN_SetAnim("%%kecy3", 500, 1500, false);
+		Delay(12000);
+	}
+	kur=_RandomInt(8) + 1;
+	If(kur==1)
+	{
+		Gosub cigaro;
+	}
+	Delay(2000);
+	GoTo hlidka;
+
+OnSignal(1)	// received from detektorauta
+{
+	Block
+	{
+	HUMAN_SetAnim("", 500, 1500, false);
+	HUMAN_SETSIGHTRANGE(15);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_Move("auto_okynko");
+	HUMAN_TurnAt(auto);
+	HUMAN_ACTIVITY_Point(auto);
+	HUMAN_SETSIGHTRANGE(15);
+	Delay(1000);
+	HUMAN_TurnAt(ridic);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(2)	// received from cetnik01
+{
+	HUMAN_SetOptimized(1);
+            HUMAN_Move("straze1");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(3)	// received from cetnik01
+{
+	HUMAN_TurnAt(cetnik2);
+	Delay(100);
+	GoTo hlidka;
+}
+
+OnSignal(4)	// received from speech1
+{
+	HUMAN_Stop();
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_1
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 100, 100, false);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_TurnAt(lampa);
+	GoTo end;
+}
+
+Label cigaro:
+	wait =_RandomInt(200) + 50;
+	Delay(wait);
+	HUMAN_ACTIVITY_Smoke(true);
+	smoking_time=_RandomInt(50000) + 150000;
+	Delay(smoking_time);
+	HUMAN_ACTIVITY_Smoke(false);
+	wait =_RandomInt(100) + 50;
+	Delay(wait);
+	Return;
+
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	printfnumber("Cetnik2: Alarm na ", aievent);
+
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_ACTIVITY_Smoke(false);
+	HUMAN_SETMODE_Lie();
+
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	DisableSignals(true);
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	DisableSignals(false);
+	HUMAN_WeaponOnArm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("straze1");
+	GoTo hlidka;
+}
+
+OnDeath()
+{
+	SendSignal(speech, 2);
+	SendSignal(ridic, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Label end:

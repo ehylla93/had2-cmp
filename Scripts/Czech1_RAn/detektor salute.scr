@@ -1,0 +1,13 @@
+Frame  salute;  
+	FRM_FindFrame(salute,"lokotka");
+Frame  zavorar;  
+	FRM_FindFrame(zavorar,"vechtr");
+
+
+Whenever machine_in_range(_FrameInRange(salute)<4)
+{Printf("Salutuj");
+SendSignal(zavorar, 3);
+Delay(5000);
+SetWhenever(machine_in_range, true);
+
+}

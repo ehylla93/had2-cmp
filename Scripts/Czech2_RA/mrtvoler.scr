@@ -1,0 +1,55 @@
+block
+{
+
+Integer ge2;
+
+Frame boss;	FRM_FindFrame(boss, "big_boss");
+
+frame obj;	FRM_FindFrame(obj,"objectives");
+integer x;
+
+}
+
+goto end;
+
+
+Whenever test(_SignalReceived(1))
+{
+goto check;
+}
+
+
+
+
+Whenever normal(_SignalReceived(2))
+{
+DisableSignals(1);
+goto end;
+}
+
+Label check:
+x=_GetCountOfCarnageEnemies();
+
+
+
+
+
+
+
+
+PrintfNumber("mrtvoler", x);
+
+if (x==0)
+{
+SendSignal (obj,19);
+goto end;
+}
+delay (1500);
+goto check;
+
+
+
+
+
+
+label end:

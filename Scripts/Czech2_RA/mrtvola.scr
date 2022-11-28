@@ -1,0 +1,13 @@
+// dead soldier
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Frame me;	FRM_GetMyFrame(me);
+HUMAN_SETEVENTS(0);
+HUMAN_Kill(me);
+
+
+OnDeath()
+{
+EndScript();
+}
+

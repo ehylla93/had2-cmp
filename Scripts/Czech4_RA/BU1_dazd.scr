@@ -1,0 +1,52 @@
+// BU1_dazd
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Integer count;
+	count=2000;
+Integer speed;
+	speed=20000;
+Integer repeat;
+	repeat=0;
+
+EnableSignal(1, false);	// ALPHA VERSION
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)	// received from BU1_village
+{
+	printf("### prestava prsat ###");
+	GoTo stop;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+Block
+{
+WEATHER_SetCount(2000);
+WEATHER_SetColorOut(41, 48, 44, 00);
+WEATHER_SetColorIn(37, 37, 37, 128);
+WEATHER_SetSpeed(20000);
+WEATHER_SetSize(1200, 40);
+WEATHER_SetOn(1);
+}
+GoTo end;
+
+Label stop:
+Block
+{
+	count=count-20;
+	speed=speed-10;
+	repeat=repeat+1;
+}
+	If(repeat==100)
+	{
+		WEATHER_SetOn(0);
+		GoTo end;
+	}
+Block
+{
+	WEATHER_SetCount(count);
+	WEATHER_SetSpeed(speed);
+}
+	Delay(25);
+	GoTo stop;
+
+Label end:

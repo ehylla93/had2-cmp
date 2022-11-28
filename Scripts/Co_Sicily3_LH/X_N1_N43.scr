@@ -1,0 +1,70 @@
+//////////
+
+// N43 - gunner at Flak01
+// ---------------------------
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+Frame me;
+	FRM_GetMyFrame(me);
+
+Frame see;	FRM_FindFrame(see, "dummy_see5");
+
+Frame airdefense;	FRM_FindFrame(airdefense, "objective_airdefense");
+}
+// ----------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// ---------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+		aievent=_GetAlarmType();
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+
+OnDeath()
+{
+printf("N43 Flak01 dead");
+SendSignal(airdefense, 1);
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// ---------------------------
+// Starting pose
+HUMAN_SETAIMODE_Zombie();
+//FRM_SwitchFaceTexture(me, "e_f090");
+HUMAN_SETSIGHTRANGE(55);
+HUMAN_SETHEARRANGE(40);
+HUMAN_BoardVehicle("Flak01", true, 0);
+HUMAN_TurnAt(see);
+GoTo end;
+
+Label end:

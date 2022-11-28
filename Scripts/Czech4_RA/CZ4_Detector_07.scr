@@ -1,0 +1,11 @@
+Frame CZ4_Sklepers_01;	FRM_FindFrame(CZ4_Sklepers_01, "CZ4_Sklepers_01");
+Frame CZ4_Sklepers_02;	FRM_FindFrame(CZ4_Sklepers_02, "CZ4_Sklepers_02");
+Frame CZ4_Sklepers_03;	FRM_FindFrame(CZ4_Sklepers_03, "CZ4_Sklepers_03");
+
+Whenever PIR (_PlayerInRange(25))
+	{
+	SendSignal(CZ4_Sklepers_01, 7);
+	SendSignal(CZ4_Sklepers_02, 7);
+	SendSignal(CZ4_Sklepers_03, 7);
+	Printf("DETECTOR_07 - >> SKLEPERS -7-");
+	}

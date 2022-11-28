@@ -1,0 +1,11 @@
+Frame CZ4_Platoon_01;	FRM_FindFrame(CZ4_Platoon_01, "CZ4_Platoon_01");
+Frame CZ4_Platoon_02;	FRM_FindFrame(CZ4_Platoon_02, "CZ4_Platoon_02");
+Frame CZ4_Platoon_03;	FRM_FindFrame(CZ4_Platoon_03, "CZ4_Platoon_03");
+Frame CZ4_Platoon_04;	FRM_FindFrame(CZ4_Platoon_04, "CZ4_Platoon_04");
+Frame CZ4_Platoon_05;	FRM_FindFrame(CZ4_Platoon_05, "CZ4_Platoon_05");
+Frame CZ4_Platoon_06;	FRM_FindFrame(CZ4_Platoon_06, "CZ4_Platoon_06");
+
+Whenever PIR (_PlayerInRange(15))
+	{
+	Printf("Detector_05 ->> nic se nedeje");
+	}

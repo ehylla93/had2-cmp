@@ -1,0 +1,102 @@
+// PIANISTA
+
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+Frame sit;			FRM_FindFrame(sit, "dummy_pianosit");
+Frame zvuk;			FRM_FindFrame(zvuk, "l_4piano_");
+Frame zvuk2;			FRM_FindFrame(zvuk2, "S_piano_far");
+integer AIEvent;
+integer KONECNA;
+
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+SetAlarmType(1023, false);
+FRM_SetOn(zvuk, false);		// inicializace
+FRM_SetOn(zvuk2, false);		// inicializace
+HUMAN_Suspend(true);
+goto wait;
+
+Whenever AKTIVACE ( _PlayerInRange(40); )
+{
+  Block
+    {
+       HUMAN_Suspend(false);
+       HUMAN_ACTIVITY_Sit(sit);
+       FRM_SetOn(zvuk, true);
+       FRM_SetOn(zvuk2, true);
+       HUMAN_SetAnim("%%piano", 200, 200, 1);
+    }
+}
+Whenever AKTIVACE2 ( _PlayerInRange(30); )
+{
+  SetAlarmType(883, true);   // -128 - 4 - 8 = 1023 - 140 = 883
+}
+
+
+OnAlarm()
+	{
+	HUMAN_SetAnim("", 200, 200, 0);
+            Block
+              {
+                 FRM_SetOn(zvuk, false);
+                 FRM_SetOn(zvuk2, false);
+              }
+            Delay(200);
+            FRM_SetOn(zvuk, false);
+            FRM_SetOn(zvuk2, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_SETMODE_Stand();
+	HUMAN_TurnAtNearestPlayer();
+            Block
+              {     
+              DisableSignals(True);
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Platoon 4: ", AIEvent);
+	  HUMAN_SETAIMODE_Aggressive();
+              }
+            HUMAN_Stop();
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+              DisableSignals(False);
+	  SetAlarmType(1023, True);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+	}
+
+OnDeath()
+{
+  SendSignal(CZ4_OD, 0);
+  FRM_SetOn(zvuk, false);
+  FRM_SetOn(zvuk2, false);
+  EndScript();
+}
+
+Label TheEnd:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Platoon_04");
+       HUMAN_SetAnim("", 250, 250, False);
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+  Delay (10000);
+Goto TheEnd;
+
+label wait:

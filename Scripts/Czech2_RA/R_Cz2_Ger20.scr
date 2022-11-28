@@ -1,0 +1,72 @@
+// R_Cz2_Ger20 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+// Variables definition
+Integer aievent;
+	aievent=0;
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(974, false);	// reaguje na blizku strelbu, vidim a zranenie
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+block
+{
+		aievent=_GetAlarmType();
+	PrintfNumber("Ger20 dostal alarm cislo ", aievent);
+}
+
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(974, false);
+	SetAlarmType(49, true);
+
+}
+	GoTo end;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+
+
+
+Whenever range(_PlayerInRange(50))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetSniper(1,1);
+
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+Label end:

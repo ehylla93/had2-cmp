@@ -1,0 +1,16 @@
+// i2_fbarrel_9
+// -------------------------------------------------------------------------------------------------------------
+
+	Frame fbar_9;
+	FRM_FindFrame(fbar_9, "fbarrel_9");
+	
+OnDeath()
+{
+  	FRM_CreateParticle(53, fbar_9);
+	MakeExplosion(fbar_9, 9000000, 15000);
+	SetActorState(fbar_9, 0);
+	
+EndScript();
+}
+
+

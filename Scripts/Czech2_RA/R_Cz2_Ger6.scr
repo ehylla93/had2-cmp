@@ -1,0 +1,129 @@
+// R_Cz2_Ger6 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+// Variables definition
+Integer aievent;
+	aievent=0;
+frame me;	FRM_GetMyFrame(me);
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(652, false);	// reaguje na blizku strelbu, strelbu,  explozie, vidi.frendlyfirem a zranenie
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+block
+{
+	DisableSignals(1);
+		aievent=_GetAlarmType();
+	printf("Ger6 alarmed OK");
+	PrintfNumber("Ger6 dostal alarm cislo ", aievent);
+	SetWhenever(dvere2,0);
+	SetWhenever(dvere1,0);
+
+
+	
+
+}
+
+	
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))
+{
+	EndScript();
+}
+
+
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+{
+	SetAlarmType(274,0);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SetAlarm(false);
+	HUMAN_Move("ger6_01");
+	SetAlarmType(274,1);
+label look:
+	HUMAN_LookAround(1);
+	delay (5000);
+	goto look;
+
+}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, true);
+	SetAlarmType(652, false);
+	SetAlarmType(123, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+
+Whenever player(_PlayerInRange(12))
+{
+	SetWhenever(funguj,0);
+	HUMAN_Suspend(false);
+		GoTo end;
+}
+
+Whenever funguj(_SignalReceived(3))		//od ger_
+{
+	SetWhenever(player,0);
+
+	HUMAN_Suspend(false);
+		GoTo end;
+}
+
+
+Whenever dvere1(_SignalReceived(1))
+{
+SetWhenever(dvere2,0);
+
+FRM_TeleportNearCheckpoint(me,"ger6_03","ger6_03_d");
+HUMAN_SETMODE_Silence();
+HUMAN_Move("ger6_02");
+goto end;
+}
+Whenever dvere2(_SignalReceived(2))
+{
+SetWhenever(dvere1,0);
+
+FRM_TeleportNearCheckpoint(me,"ger6_02","ger6_02_d");
+HUMAN_SETMODE_Silence();
+HUMAN_Move("ger6_03");
+goto end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+
+
+Label end:

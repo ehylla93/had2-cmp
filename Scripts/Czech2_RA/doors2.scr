@@ -1,0 +1,15 @@
+//Dvere 2 u gumaka
+
+
+Frame LMswitch;		FRM_FindFrame(LMswitch, "tunel07");
+Frame bigkec;		FRM_FindFrame(bigkec,"bigboskecac");
+
+OnUse()
+{
+//SendSignal(bigkec,1);
+SendSignal(LMswitch,2);
+
+}
+
+
+

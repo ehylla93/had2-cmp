@@ -1,0 +1,12 @@
+Frame CZ4_Runner_01;		FRM_FindFrame(CZ4_Runner_01, "CZ4_Runner_01");
+Frame CZ4_Runner_02;		FRM_FindFrame(CZ4_Runner_02, "CZ4_Runner_02");
+Frame CZ4_Runner_03;		FRM_FindFrame(CZ4_Runner_03, "CZ4_Runner_03");
+Frame CZ4_Runner_04;		FRM_FindFrame(CZ4_Runner_04, "CZ4_Runner_04");
+
+Whenever PIR (_PlayerInRange(60))
+	{
+	SendSignal (CZ4_Runner_01, 18);
+	SendSignal (CZ4_Runner_02, 18);
+	SendSignal (CZ4_Runner_03, 18);
+	SendSignal (CZ4_Runner_04, 18);
+	}

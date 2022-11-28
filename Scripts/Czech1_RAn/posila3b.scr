@@ -1,0 +1,51 @@
+// posila3b
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+
+SetAlarmType(12, false);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(50);
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Whenever signal(_SignalReceived(1))	// received from Box101
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%nudazed1", 200, 200, true);
+	GoTo end;
+}
+
+Label hlidka:
+	Delay(2000);
+	HUMAN_LookAround(2);
+	Delay(2000);
+	HUMAN_LookAround(1);
+	Delay(1000);
+	GoTo hlidka;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 200, 200, false);
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(70);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo hlidka;	
+}
+
+Label end:

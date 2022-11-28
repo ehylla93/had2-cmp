@@ -1,0 +1,103 @@
+// R_Cz2_Ger3 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent;
+	aievent=0;
+
+integer a;	a=0;
+
+Frame cum1;		FRM_FindFrame(cum1,"ger3cum1");
+Frame cum2;		FRM_FindFrame(cum2,"ger3cum2");
+Frame cum3;		FRM_FindFrame(cum3,"ger3cum3");
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+		aievent=_GetAlarmType();
+//	printf("Ger3 alarmed OK");
+	PrintfNumber("Ger3 dostal alarm cislo ", aievent);
+	HUMAN_SETMODE_Run();
+	HUMAN_TurnAtNearestPlayer();
+
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))	{	GoTo aie2;	}
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))	{	EndScript();	}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+	SetAlarmType(371, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+OnDeath()
+{
+EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+label hledej:
+
+HUMAN_Move("ger3_02");
+HUMAN_TurnAt(cum1);
+HUMAN_SETMODE_Crouch();
+Delay(8000);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("ger3_03");
+HUMAN_TurnAt(cum2);
+HUMAN_SETMODE_Crouch();
+Delay(8000);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("ger3_04");
+HUMAN_TurnAt(cum3);
+HUMAN_SETMODE_Crouch();
+Delay(8000);
+HUMAN_SETMODE_Stand();
+GoTo hledej;
+
+
+
+Label aie2:
+{
+SetAlarmType(274,0);
+	if (a==0)
+{
+	HUMAN_SETMODE_Silence();
+	HUMAN_SETMODE_StandFast();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_Stop();
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(0);
+	delay (300);
+	HUMAN_Move("ger3_1");
+	HUMAN_SETMODE_Crouch();
+	a=1;
+}
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(0);
+	delay (900);
+	SetAlarmType(274,1);
+}
+
+Label end:

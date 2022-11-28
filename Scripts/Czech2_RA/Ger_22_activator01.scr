@@ -1,0 +1,12 @@
+// Ger_22_activator01 - activator for Ger_22, now for Freiberg
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Frame freiberg;
+	FRM_FindFrame(freiberg, "Big_Boss");
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(4))
+{
+	SendSignal(freiberg, 1);
+}
+SetWheneverTime(player, 100);

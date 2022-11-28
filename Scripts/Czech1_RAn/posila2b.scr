@@ -1,0 +1,99 @@
+// posila2b
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame objekt;
+	FRM_FindFrame(objekt, "Box103");
+Frame dvere;
+	FRM_FindFrame(dvere, "la_Cz1_transf_.Dverka01");
+Frame transf;
+	FRM_FindFrame(transf, "la_Cz1_transf_");
+Integer trafo;
+	trafo=0;
+
+SetAlarmType(12, false);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(50);
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Whenever signal(_SignalReceived(1))	// received from Box101
+{
+HUMAN_Suspend(false);
+GoTo move;
+}
+
+OnSignal(2)	// received from Ge_13
+{
+	HUMAN_SetAnim("%%kroutihlav", 100, 100, false);
+	Delay(4700);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("skladnik2_07");
+	HUMAN_Move("mechanik_01");
+	trafo=_ACTOR_GetState(dvere);
+	If(trafo==0)	{	SetActorState(dvere, 1);	}
+	Delay(500);
+	HUMAN_TurnAt(transf);
+	HUMAN_SetOptimized(2);
+}
+
+Label cyklus:
+	HUMAN_SetAnim("%%kroutihlav", 200, 200, false);
+	Delay(4700);
+	HUMAN_SetAnim("!manipul1", 200, 500, false);
+	Delay(6300);
+	HUMAN_SetAnim("%%duma", 500, 500, false);
+	Delay(3800);
+	HUMAN_SetAnim("!manipul1", 200, 500, false);
+	Delay(6300);
+	HUMAN_SetAnim("%%kope1", 200, 200, false);
+	Delay(5000);
+	GoTo cyklus;
+
+OnSignal(31)	// received from transformator_1 or transformator_2
+{
+	EnableSignal(31, false);
+	HUMAN_Stop();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila2b_02");
+	HUMAN_TurnAt(objekt);
+	HUMAN_SetOptimized(2);
+	HUMAN_LookAround(4);
+	GoTo end;
+}
+
+Label move:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila2b_02");
+	HUMAN_Move("posila2b_01");
+	GoTo move;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 100, 100, false);
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETMODE_Run();
+	HUMAN_SETSIGHTRANGE(70);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila2b_02");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+Label end:

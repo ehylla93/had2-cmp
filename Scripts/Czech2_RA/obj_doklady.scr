@@ -1,0 +1,42 @@
+SetWhenever(ne,0);
+frame obj;	FRM_FindFrame(obj,"objectives");
+integer a;	a=0;
+goto end;
+
+
+Whenever jo(_IsInInventory(239))
+{
+SetWhenever(ne,1);
+SendSignal (obj,5);
+if (a==0)
+{
+  a=1;
+  SUBTITLES_SetOn(1);
+  SUBTITLES_SetText(19993807); 		
+  Delay(4000);
+  SUBTITLES_SetOn(0);
+}
+printf("UKOL1 SPLNEN MAS DOKUMENTY");
+goto end;
+}
+
+
+
+
+
+Whenever ne(!_IsInInventory(239))
+{
+SetWhenever(jo,1);
+SendSignal (obj,6);
+  //SUBTITLES_SetOn(1);
+  //SUBTITLES_SetText(19993808); 		
+  //Delay(4000);
+  //SUBTITLES_SetOn(0);
+printf("UKOL1 NESPLNEN ");
+goto end;
+}
+
+
+
+
+label end:

@@ -1,0 +1,68 @@
+block
+{
+frame ruka;	//FRM_FindFrame(ruka, "ger_40.hw2");
+frame granat;	FRM_FindFrame(granat,"granat");
+frame me;	FRM_GetMyFrame(me);
+integer pal;		pal=0;
+integer d;
+SetAlarmType(749, 0);
+}
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749, 0);
+
+
+//---------------------------------------------------------
+
+OnAlarm()
+{
+pal=1;
+printf ("granat do ruky");
+block
+{
+FRM_FindFrame(ruka, "ger_40.hw2");
+FRM_TeleportNearFrame(granat, ruka, 1);
+FRM_FindFrame(ruka, "");
+}
+SetAlarmType(1023, 0);
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnAlarmDone()
+{
+goto end;
+}
+
+
+
+
+Whenever blik(_PlayerInRange(33))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%umiram", 200, 200,1);
+goto end;
+}
+
+
+Whenever zdeech(_PlayerInRange(6))
+{
+HUMAN_SETEVENTS(0);
+d=(_RandomInt(4000)+4000);
+delay (d);
+
+HUMAN_SetAnim("%%umirampo", 200, 200, 0);
+delay (1260);
+if (pal==1)
+{
+SendSignal (granat,1);
+}
+HUMAN_SetAnim("%%umirampoP", 200, 200, 1);
+
+DisableWhenevers(1);
+HUMAN_KillEx(me, 2);
+EndScript();
+}
+
+label end:

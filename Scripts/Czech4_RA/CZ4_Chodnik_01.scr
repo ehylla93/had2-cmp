@@ -1,0 +1,73 @@
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+integer AIEvent;
+integer KONECNA;
+
+OnDeath()
+	{
+	SendSignal(CZ4_OD, 0);
+	EndScript();
+	}
+
+
+SetAlarmType(1023, true);
+
+Label gu:
+  If ( _LoadGameValue(16) > 0 ) { goto X; }
+	HUMAN_SetOptimized(1);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Guard();
+	HUMAN_WeaponOnArm(false);
+	HUMAN_Move("CZ4_Chodnik_02");
+	Delay(500);
+	HUMAN_Move("Chodniknext");
+	Delay(500);
+
+label X:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Chodnik_01");
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+
+GoTo gu;
+
+OnAlarm()
+	{
+            Block
+              {     
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Codnik 1: ", AIEvent);
+	  HUMAN_SETAIMODE_Defensive();
+              }
+            HUMAN_Stop();
+	HUMAN_SetSniper(1,5);
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	  SetAlarmType(511, True);
+	  SetAlarmType(512, False);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+	  HUMAN_SETAIMODE_Zombie();
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+	HUMAN_WeaponOnArm(true);
+	GoTo gu;
+	}
+
+label wait:

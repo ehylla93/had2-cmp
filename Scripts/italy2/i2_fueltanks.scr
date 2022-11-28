@@ -1,0 +1,11 @@
+// fueltanks
+block{
+  FRAME organizer;		FRM_FindFrame(organizer, "fuel_detect");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+  SendSignal(organizer, 1);
+}

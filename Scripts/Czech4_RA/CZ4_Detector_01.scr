@@ -1,0 +1,17 @@
+Frame CZ4_Runner_01;		FRM_FindFrame(CZ4_Runner_01, "CZ4_Runner_01");
+Frame CZ4_Runner_02;		FRM_FindFrame(CZ4_Runner_02, "CZ4_Runner_02");
+Frame CZ4_Runner_03;		FRM_FindFrame(CZ4_Runner_03, "CZ4_Runner_03");
+Frame CZ4_Statkar_01;		FRM_FindFrame(CZ4_Statkar_01, "CZ4_Statkar_01");
+Frame CZ4_Statkar_02;		FRM_FindFrame(CZ4_Statkar_02, "CZ4_Statkar_02");
+Frame CZ4_Sniper_01;		FRM_FindFrame(CZ4_Sniper_01, "CZ4_Sniper_01");
+
+Whenever PIR (_PlayerInRange(10))
+	{
+	SendSignal(CZ4_Runner_01, 1);
+	SendSignal(CZ4_Runner_02, 1);
+	SendSignal(CZ4_Runner_03, 1);
+	SendSignal(CZ4_Statkar_01, 1);
+	SendSignal(CZ4_Statkar_02, 1);
+	SendSignal(CZ4_Sniper_01, 1);
+	Printf("DETECTOR_01 ->> Runners AND Statkari AND Sniper_01");   
+	}

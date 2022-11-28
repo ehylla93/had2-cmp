@@ -1,0 +1,20 @@
+Frame CZ4_Platoon_06;	FRM_FindFrame(CZ4_Platoon_06, "CZ4_Platoon_06");
+Frame CZ4_Platoon_07;	FRM_FindFrame(CZ4_Platoon_07, "CZ4_Platoon_07");
+Frame CZ4_Platoon_08;	FRM_FindFrame(CZ4_Platoon_08, "CZ4_Platoon_08");
+Frame CZ4_Platoon_09;	FRM_FindFrame(CZ4_Platoon_09, "CZ4_Platoon_09");
+
+Integer Platoon_counter;
+Platoon_counter = 0;
+
+OnSignal(10)
+	{
+	Platoon_counter = Platoon_counter + 1;
+	}
+
+If (Platoon_counter >2)
+	{
+	SendSignal(CZ4_Platoon_06, 7);
+	SendSignal(CZ4_Platoon_07, 7);
+	SendSignal(CZ4_Platoon_08, 7);
+	SendSignal(CZ4_Platoon_09, 7);
+	}

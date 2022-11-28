@@ -1,0 +1,121 @@
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+integer AIEvent;
+integer KONECNA;
+
+
+HUMAN_SETMODE_Walk();
+
+HUMAN_Suspend(true);
+SetAlarmType(1023, false);
+goto wait;
+
+OnSignal(7)
+	{
+	Delay(1000);
+	HUMAN_Suspend(false);
+	SetAlarmType(1023, true);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_SETMODE_Crouch();
+	HUMAN_Move("ind");
+	HUMAN_SETAIMODE_Aggressive();
+	}
+
+OnSignal(8)
+	{
+	Delay(1500);
+	HUMAN_Suspend(false);
+	SetAlarmType(1, true);
+	SetAlarmType(2, true);
+	SetAlarmType(16, true);
+	SetAlarmType(32, true);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_SETMODE_Crouch();
+	HUMAN_Move("sklep");
+	HUMAN_Move("sklep2");
+	HUMAN_SETAIMODE_Defensive();
+	}
+
+OnSignal(11)
+	{
+	HUMAN_Suspend(false);
+	SetAlarmType(373, true);	// 1+2+16+32+64+256
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_SETMODE_Crouch();
+//	HUMAN_Move("???");		// DOPLNIT AZ PO PREDELAVCE CHCKP.
+	HUMAN_SETAIMODE_Defensive();
+	}
+
+OnAlarm()
+	{
+	HUMAN_Stop();
+            Block
+              {     
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Sklepers 2: ", AIEvent);
+  	  HUMAN_SETMODE_Run();
+	  HUMAN_SETMODE_Crouch();
+              HUMAN_SETSIGHTRANGE(70);
+              HUMAN_SETHEARRANGE(80);
+	  HUMAN_SETAIMODE_Defensive();              
+   	  }
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	EndScript();
+	}
+
+	
+OnAlarmDone()
+	{
+	  SetAlarmType(511, True);
+	  SetAlarmType(512, False);
+              HUMAN_SETSIGHTRANGE(60);
+              HUMAN_SETHEARRANGE(70);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+	}
+
+OnDeath()
+	{
+	SendSignal(CZ4_OD, 0);
+	EndScript();
+	}
+
+Label TheEnd:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Sklepers_02");
+       DisableSignals(true);
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+  Delay (10000);
+Goto TheEnd;
+
+label wait:

@@ -1,0 +1,55 @@
+// Pante1 (Ridic Panteru 2 - La_tiger_6)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Frame p1;		FRM_FindFrame(p1,"Pante2");
+Frame p2;		FRM_FindFrame(p2,"Pante3");
+}
+
+//--------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("La_tiger_6" , true, 0);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+HUMAN_Drive("C5_kubel_tele", 60);
+Delay(50000);
+HUMAN_Drive("C5_isu_tele", 15);
+HUMAN_Drive("", 15);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(10);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

@@ -1,0 +1,109 @@
+// Ge_13
+
+Block
+{
+Frame vojak;
+	FRM_FindFrame(vojak, "ge_12");
+Frame speech;
+	FRM_FindFrame(speech, "speech4");
+Frame velitel;
+	FRM_FindFrame(velitel, "velitel v aute");
+Frame mechanik;
+	FRM_FindFrame(mechanik, "posila2b");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer pause;
+	pause=0;
+
+SetAlarmType(8, false);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+FRM_SwitchFaceTexture(me, "e_f024");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor2
+{
+	HUMAN_Suspend(false);
+	GoTo keci;
+}
+
+OnSignal(2)	// received from velitel v aute
+{
+	HUMAN_TurnAt(velitel);
+	GoTo end;
+}
+
+OnSignal(3)	// received from velitel v aute
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_13_01");
+	HUMAN_Move("Ge_13_02");
+	HUMAN_Move("Ge_13_03");
+	HUMAN_Move("Ge_13_04");
+	HUMAN_SetAnim("%%mluvi4", 200, 200, false);
+	Delay(2000);
+	SendSignal(mechanik, 1);
+	HUMAN_Move("Ge_13_01");
+	HUMAN_TurnAt(vojak);
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	HUMAN_Stop();
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SetAnim("", 100, 100, false);
+	GoTo end;
+}
+
+Label keci:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ge_13");
+	HUMAN_TurnAt(vojak);
+
+Label opret:
+	HUMAN_SetOptimized(2);
+	HUMAN_SETSIGHTRANGE(40);
+	HUMAN_SetAnim("%%nudazed1", 500, 1500, true);
+	pause =_RandomInt(20000) + 60000;
+	Delay(pause);
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SetAnim("%%nudazed2", 500, 1500, true);
+	pause =_RandomInt(20000) + 60000;
+	Delay(pause);
+	HUMAN_SetAnim("", 100, 100, false);
+	Delay(10000);
+	GoTo opret;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	SetAlarmType(256, false);
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SETSIGHTRANGE(50);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETMODE_Stand();
+	HUMAN_WeaponOnArm(false);
+	GoTo keci;
+}
+
+OnDeath()
+{
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Label end:

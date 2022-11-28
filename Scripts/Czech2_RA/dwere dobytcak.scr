@@ -1,0 +1,10 @@
+frame ger24;		FRM_FindFrame(ger24,"ger_24");
+frame ger25;		FRM_FindFrame(ger25,"ger_25");
+
+
+OnUse()
+{
+SendSignal(ger24,3);
+SendSignal(ger24,3);
+}
+

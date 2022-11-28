@@ -1,0 +1,13 @@
+Frame CZ4_Vata_01;		FRM_FindFrame(CZ4_Vata_01, "CZ4_Vata_01");
+Frame CZ4_Vata_02;		FRM_FindFrame(CZ4_Vata_02, "CZ4_Vata_02");
+Frame CZ4_Vata_03;		FRM_FindFrame(CZ4_Vata_03, "CZ4_Vata_03");
+Frame CZ4_Vata_04;		FRM_FindFrame(CZ4_Vata_04, "CZ4_Vata_04");
+
+Whenever PIR (_PlayerInRange(25))
+	{
+	SendSignal(CZ4_Vata_01, 10);
+	SendSignal(CZ4_Vata_02, 10);
+	SendSignal(CZ4_Vata_03, 10);
+	SendSignal(CZ4_Vata_04, 10);
+	Printf("DETECTOR 10 ->> VATA - 10 -");
+	}

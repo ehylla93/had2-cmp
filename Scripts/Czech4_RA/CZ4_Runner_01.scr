@@ -1,0 +1,108 @@
+Frame CZ4_OD;		FRM_FindFrame(CZ4_OD, "CZ4_OD");
+integer AIEvent;
+integer KONECNA;
+
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Aggressive();
+SetAlarmType(1023, false);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(true);
+goto wait;
+
+
+OnSignal(1)
+	{
+	HUMAN_SetOptimized(1);
+	HUMAN_Suspend(false);
+            SetAlarmType(1023, true);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_Move("Palpost_Run2");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETAIMODE_Defensive();
+	DisableSignals(True);
+	}
+
+OnSignal(2)
+	{
+	HUMAN_Suspend(false);
+            SetAlarmType(1023, true);
+	HUMAN_SetOptimized(1);
+            If ( _LoadGameValue(15)==0 ) 
+                 { 
+                   HUMAN_SETMODE_Walk();
+                  } else { 
+                   HUMAN_SETMODE_Run();
+                 }
+	HUMAN_Move("Bruner_3");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETAIMODE_Defensive();
+	DisableSignals(True);
+	}
+
+OnSignal(18)
+	{
+	HUMAN_Suspend(false);
+	SetAlarmType(1023, true);
+	DisableSignals(True);
+	}
+
+OnAlarm()
+	{
+	DisableSignals(True);
+            Block
+              {     
+	  AIEvent =_GetAlarmType(); 
+	  PrintfNumber("AIE Runner 1: ", AIEvent);
+	  HUMAN_SETSIGHTRANGE(75);
+	  HUMAN_SETHEARRANGE(80);
+              }
+ 	HUMAN_Stop();
+            If ((AIEvent == 256) OR (AIEvent == 2)) { SaveGameValue(15, 99);}
+            If ((AIEvent == 1) OR (AIEvent == 16)) { SaveGameValue(15, 99);}
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+ 	  DisableSignals(False);
+              SetAlarmType(1023, true);
+	  HUMAN_SetAlarm(False);
+	  HUMAN_SetOptimized(1);
+              If ((AIEvent == 32) OR (AIEvent == 64)) { SaveGameValue(15, 99);}
+	}
+
+OnDeath()
+	{
+	SendSignal(CZ4_OD, 0);
+	EndScript();
+	}
+
+Label TheEnd:
+  KONECNA = _LoadGameValue(16);
+  If ( KONECNA > 0 )
+    {
+       Printf("BRUTALNI MAGORINA --- Runner_01");
+       DisableSignals(true);
+       If ( _LoadGameValue(15) == 99 ) { HUMAN_SETMODE_Run(); } else { HUMAN_SETMODE_Walk(); }
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETAIMODE_Aggressive();
+       KONECNA = KONECNA + 1;
+       If ( KONECNA == 105 ) { KONECNA = 100; }
+       SaveGameValue(16, KONECNA);
+       If (KONECNA == 100)  { HUMAN_Move("TheEnd_1"); }
+       If (KONECNA == 101)  { HUMAN_Move("TheEnd_2"); }
+       If (KONECNA == 102)  { HUMAN_Move("TheEnd_3"); }
+       If (KONECNA == 103)  { HUMAN_Move("TheEnd_4"); }
+       If (KONECNA == 104)  { HUMAN_Move("TheEnd_5"); }
+       goto wait;
+    }
+  Delay (10000);
+Goto TheEnd;	
+
+label wait:

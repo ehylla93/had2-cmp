@@ -1,0 +1,12 @@
+// Freiberg_attack02 - activator for Freiberg to shoot
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Frame freiberg;
+	FRM_FindFrame(freiberg, "Big_Boss");
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(freiberg, 4);
+}
+// -------------------------------------------------------------------------------------------------------------

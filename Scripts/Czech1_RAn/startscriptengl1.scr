@@ -1,0 +1,104 @@
+Block
+{
+Frame player1;
+Frame start1;
+Frame duplicated_player;
+Frame ruka;
+Frame knife;
+Integer gametype;
+	gametype=0;
+}
+
+gametype=_SPGetGameType();
+If((gametype==3) OR (gametype==7))
+{
+	HUMAN_SETMODE_Silence();
+	HUMAN_SETMODE_Lie();
+	EndScript();
+}
+
+OnCutscene(1)
+{
+
+
+
+
+
+	Block
+	
+	{
+		FRM_FindFrame(start1,"CUTsas1_start");
+	
+		FRM_GetMyFrame(player1);
+		CSC_DuplicateHuman(player1, duplicated_player,"_PLAYER_cuts_sasik1");
+		FRM_TeleportNearFrame(duplicated_player, start1, true);
+		CSC_FreeHands(duplicated_player);
+		
+		FRM_FindChildFrame(ruka, "hw1", duplicated_player);
+		FRM_FindFrame(knife,"CUTknife");
+		
+	
+		CSC_FreeHands(duplicated_player);
+		FRM_TeleportNearFrame(knife, ruka, true);	//////////link noza
+		
+		FRM_SetOn(player1, false);
+	
+		
+	}
+
+Delay(3900);
+
+FRM_SetAnimation(duplicated_player, "%%C1_sasnuz1.I3D",true);
+
+Delay(39400);
+
+FRM_SetAnimation(duplicated_player, "%%C1_sasnuz2.I3D",true);
+
+
+
+
+}
+
+
+
+OnCutsceneDone(1)
+{
+
+	Block
+	{
+
+
+	FRM_SetAnimation(duplicated_player, "",true);
+	CSC_ReleaseHuman(duplicated_player);
+	FRM_FindFrame(duplicated_player, "");
+	FRM_FindFrame(ruka, "");
+	FRM_SetOn(player1, true);
+
+
+
+	}
+
+
+HUMAN_SETMODE_Silence();
+
+HUMAN_SETMODE_Lie();
+
+EndScript();
+
+
+}
+
+OnCutscene(2)
+{
+HUMAN_Suspend(true);
+
+}
+
+OnCutsceneDone(2)
+{
+HUMAN_Suspend(false);
+
+
+// EndScript(); - sem nedavat endscript, player uz nie je na skriptu
+}
+

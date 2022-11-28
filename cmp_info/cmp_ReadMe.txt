@@ -108,7 +108,8 @@ MAPS
 	  Li1(Dherna)
 	  Li1(Sidi_Badullah)		by miamidos
 	  Li1(Hells_Gate)		by Sqdn. Ldr. Ted Striker
-	  Li1(Supercharge)		by Sqdn. Ldr. Ted Striker
+	  Li1(SuperCharge)Day		by Sqdn. Ldr. Ted Striker
+	  Li1(Supercharge)Night		by Sqdn. Ldr. Ted Striker
 	  Li1(PrisonBreak)		by Stern
 	  Libya2b			by Sqdn. Ldr. Ted Striker
 	  Li2(Tiger_Tomb)		by Sqdn. Ldr. Ted Striker
@@ -128,6 +129,7 @@ MAPS
 	  Si2(Delivery2)		by Sqdn. Ldr. Ted Striker
 	  Si2(Mafia_Deal)		by Lars
 	  Sicily2R			by Sqdn. Ldr. Ted Striker
+	  Sicily3			by Sqdn. Ldr. Ted Striker
 
 	***BURGUNDY*** (#5)
 	  Bg1(Broken_Arrow)		by Zdenda
@@ -169,6 +171,8 @@ MAPS
 	  Czech6			reconverted from SP by BetterYouThanMe
 	  Cz1(Train)
 	  Cz1(Trebissky)		by Zdenda
+	  Cz1(Red_Army)			unknown
+	  Cz2(Red_Army)			unknown
 	  Cz3(Lumbermill)		by Zdenda
 	  Cz3(Lumbermill)2		by Zdenda
 	  Cz3(Ostwind)			by Sqdn. Ldr. Ted Striker
@@ -178,11 +182,15 @@ MAPS
 	  Cz4(Resistance)		by Black Akres
 	  Cz4(Ambush)			by Joel
 	  Cz4(Trapped)			by GS Hawk
+	  Cz4(Red_Army)			unknown
+	  Cz4(Semper_Fidelis)		by Stern
 	  Cz5(Village)N			by Zdenda
 	  Cz5(Resistance)		by Black Akres
 	  Cz5(Trapped)			by GS Hawk
+	  Cz5(Semper_Fidelis)		by Stern
 	  Cz6(Bunker)
 	  Cz6(Defence)			by Zdenda
+	  Cz6(Defence)B			by Sqdn. Ldr. Ted Striker
 	  Cz6(Final-Assault)		by Zdenda
 	  Cz6(Iron_Swarm)		by Zdenda
 
@@ -255,6 +263,7 @@ MAPS
 
 	***HDD*** (#1)
 	  Italy1			by culticaxe
+          Italy2			by culticaxe
 
 ---------------------------------------------
  #127 Maps

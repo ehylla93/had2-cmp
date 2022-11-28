@@ -1,0 +1,110 @@
+//cutscena 2
+
+
+
+
+OnCutscene(2)
+{
+CSC_FadeOut(300);
+delay (300);
+block
+{
+
+integer plnum;
+plnum=_GetNumMembersOfClientTeam();
+
+Frame bos;	FRM_FindFrame(bos,"big_boss");
+Frame obj;	FRM_FindFrame(obj,"objectives");
+
+Frame cam1;		FRM_FindFrame(cam1, "cut2cam1");
+Frame cam2;		FRM_FindFrame(cam2, "cut2cam2");
+
+frame cut2teleport1;	FRM_FindFrame(cut2teleport1, "cut2teleport1");
+frame cut2teleport2;	FRM_FindFrame(cut2teleport2, "cut2teleport2");
+Frame me;		FRM_GetMyFrame(me);
+
+frame player0;
+frame player1;
+frame player2;
+frame player3;
+
+Frame duplicated_player0;
+
+//CSC_GetPlayerNum(0,player0);
+
+FRM_GetNearestPlayer(me, player0);
+
+
+CSC_DuplicateHuman(player0,duplicated_player0,"_PLAYER_cuts_sasik0");
+CSC_FreeHands(duplicated_player0);
+FRM_TeleportNearFrame(duplicated_player0, cut2teleport2, true);
+
+FRM_SetOn(player0, 0);
+FRM_SetActiveCamera(cam1);
+}
+FRM_SetAnimation(duplicated_player0, "!static02new", 1);
+CSC_FadeIn(200);
+Delay (200);
+
+
+
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(bos,19993810,4,10);
+Delay (200);
+FRM_MorphSpeechDelayed(bos,19993811,4,10);
+Delay (200);
+FRM_MorphSpeechDelayed(bos,19993813,4,10);
+Delay (200);
+FRM_MorphSpeechDelayed(bos,19993814,4,10);
+Delay (200);
+FRM_MorphSpeechDelayed(bos,19993815,4,10);
+
+SUBTITLES_SetOn(0);
+
+
+CSC_FadeOut(100);
+Delay (100);
+
+FRM_TeleportNearFrame(duplicated_player0, cut2teleport1, true);
+FRM_SetActiveCamera(cam2);
+
+CSC_FadeIn(100);
+Delay (100);
+
+SendSignal (bos,19);
+
+delay (1900);
+
+FRM_SetAnimation(duplicated_player0, "!svazuje1", 1);
+
+
+delay (6000);
+
+CSC_FadeOut(300);
+Delay (300);
+CSC_EndCutscene();
+
+}
+
+
+
+OnCutsceneDone(2)
+{
+PlayMusic(36);
+	Block
+	{
+
+	FRM_TeleportNearFrameBack(duplicated_player0);
+	FRM_SetAnimation(duplicated_player0, "",1);
+	FRM_ResetAnimation(duplicated_player0,  1);
+	CSC_ReleaseHuman(duplicated_player0);
+	FRM_FindFrame(duplicated_player0, "");
+	FRM_SetOn(player0, true);
+
+	
+
+	}
+SendSignal(obj,1);
+}
+
+

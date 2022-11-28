@@ -1,0 +1,43 @@
+// Pako 2
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame cil;		FRM_FindFrame(cil,"CZD_LJ");
+Frame p3;		FRM_FindFrame(p3,"Paker3");
+}
+
+//--------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Delay(20000);
+SendSignal(p3, 1);
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("Pak_02" , true, 0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_Attack(cil, 99999999999);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

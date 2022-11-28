@@ -1,0 +1,110 @@
+// R_Cz2_Ger27 bezi na pomoc ger 9
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+// Variables definition
+Integer aievent;
+	aievent=0;
+integer x;
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+SetAlarmType(908, false);	// reaguje na blizku strelbu, strelbu, explozie, vidim a zranenie
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+block
+{
+		DisableSignals(1);
+		aievent=_GetAlarmType();
+//	printf("Ger14 alarmed OK");
+	PrintfNumber("Ger27  alarm cislo ", aievent);
+	HUMAN_SETMODE_Run();
+}
+
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))	{	EndScript();	}
+
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{	
+	SetAlarmType(274,0);
+if (x==0)
+{
+	
+	HUMAN_SetAlarm(false);	
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+	delay (900);
+	HUMAN_Move("ger27_02");
+	x=1;
+}
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	delay (900);
+	SetAlarmType(274,1);
+	goto end;
+	}
+
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(908, false);
+	SetAlarmType(115, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_PlayerInRange(25))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever kokot(_SignalReceived(1))	//od ger9
+{
+SetAlarmType(18, false);
+HUMAN_SetAlarm(false);
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ger27_01");
+HUMAN_Move("ger27_02");
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(18, true);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+GoTo end;
+
+
+
+
+Label end:
