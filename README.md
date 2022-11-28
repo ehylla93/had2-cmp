@@ -1,6 +1,6 @@
 ---------------------------------------------
 Coop Map Package (CMP) v2.0 compiled by =RpR=
-published on 24/07/2021
+published on 28/11/2022
 
 ---------------------------------------------
 ABOUT
