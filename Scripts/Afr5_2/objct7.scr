@@ -1,0 +1,42 @@
+// Obj 7 - Find the Radio station
+// -----------------------------------------------
+
+Block
+{
+	Frame Obj8;		FRM_FindFrame(Obj8, "obj8");
+
+	Integer ObjCount;		ObjCount = 0;
+	
+	SetWhenever(Player_Close, 0);
+}
+
+
+OnSignal(1)
+{
+ObjCount = ObjCount + 1;
+}
+
+
+Whenever Obj7_Active (ObjCount > 3)
+{
+	SetObjectiveStatus(7, 0);
+	Delay(5000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(04990802);
+	Delay(3000);
+	SetWhenever(Player_Close, 1);
+	SUBTITLES_SetOn(0);
+}
+
+
+Whenever Player_Close (_MP_IsTeamMemberInRange(1, 5))
+{
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(04990811);
+	SetObjectiveStatus(8, 0);
+	SendSignal(Obj8, 1);
+	Delay(2200);
+	SetObjectiveStatus(7, 1);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}

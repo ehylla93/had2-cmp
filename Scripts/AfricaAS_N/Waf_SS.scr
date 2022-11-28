@@ -1,0 +1,29 @@
+// Members of the SS
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S01;		FRM_FindFrame(S01,"SS1_01");
+Frame S02;		FRM_FindFrame(S02,"SS1_02");
+Frame S03;		FRM_FindFrame(S03,"SS1_03");
+Frame S04;		FRM_FindFrame(S04,"SS2_01");
+Frame S05;		FRM_FindFrame(S05,"SS2_02");
+Frame S06;		FRM_FindFrame(S06,"SS2_03");
+Frame S07;		FRM_FindFrame(S07,"SS3_01");
+Frame S08;		FRM_FindFrame(S08,"SS3_02");
+
+Integer SS;
+	SS=_RandomInt(3);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Start (_SignalReceived(1))
+{
+If(SS==0){SendSignal(S01, 1);SendSignal(S04, 1);}
+If(SS==1){SendSignal(S02, 1);SendSignal(S05, 1);}
+If(SS==2){SendSignal(S03, 1);SendSignal(S06, 1);}
+
+SendSignal(S07, 1);
+SendSignal(S08, 1);
+EndScript();
+}

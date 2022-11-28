@@ -1,0 +1,104 @@
+// Posadka Jeepu - keca s hracem
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Jeep;		FRM_FindFrame(Jeep,"Jeep1");
+Frame ridic;		FRM_FindFrame(ridic,"Brit01");
+Frame kec2;		FRM_FindFrame(kec2,"Brit03");
+Frame me;		FRM_GetMyFrame(me);
+
+Frame N1;		FRM_FindFrame(N1,"BK_G01");
+Frame N2;		FRM_FindFrame(N2,"BK_G02");
+Frame N3;		FRM_FindFrame(N3,"BK_G03");
+Frame N4;		FRM_FindFrame(N4,"BK_G04");
+Frame N5;		FRM_FindFrame(N5,"BK_G05");
+Frame N6;		FRM_FindFrame(N6,"BK_G06");
+Frame N7;		FRM_FindFrame(N7,"BK_G07");
+Frame N8;		FRM_FindFrame(N8,"BK_G08");
+
+Frame cp1;		FRM_FindFrame(cp1,"BritCum");
+Frame cp2;		FRM_FindFrame(cp2,"BritSchuzka");
+Frame Dopredu;		FRM_FindFrame(Dopredu,"Britcum");
+Frame kill;		FRM_FindFrame(kill,"Ally_Detect");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(kill, 5);
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Jeep1",  true, 1);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_BoardVehicle("Jeep1",  false, 1);
+Delay(1000);
+HUMAN_SetAnim("%%protahovaniD1", 800,800,1);
+Delay(10000);
+HUMAN_SetAnim("", 800,800,1);
+HUMAN_SETMODE_Guard();
+HUMAN_MoveToFrame(cp1, 15);
+HUMAN_SetAnim("%%turnright",200,200,1);
+Delay(3700);
+HUMAN_SetAnim("",200,200,1);
+Delay(1000);
+HUMAN_MoveToFrame(cp2, 1);
+HUMAN_TurnAt(ridic);
+Delay(500);
+goto END;
+}
+
+OnSignal(10)
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(Dopredu);
+HUMAN_WeaponUp(1);
+goto end;
+}
+
+OnSignal(11)
+{
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90000982, 5, 30);  // Yes sir !!
+Delay(300);
+HUMAN_Attack(Dopredu, 3000);
+Delay(2000);
+HUMAN_Attack(N4, 4000);
+HUMAN_Attack(N3, 7000);
+HUMAN_Attack(N2, 4000);
+Delay(2000);
+goto end;
+}
+
+OnSignal(16)
+{
+Delay(200);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(0);
+HUMAN_TurnAt(Jeep);
+HUMAN_MoveToFrame(Jeep, 1);
+HUMAN_BoardVehicle("Jeep1",  1, 1);
+goto end;
+}
+
+OnSignal(3)
+{
+HUMAN_BoardVehicle("Jeep1",  0, 1);
+Delay(500);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto END;
+}
+
+//------------------------------------------------------------------------------------
+
+Label END:

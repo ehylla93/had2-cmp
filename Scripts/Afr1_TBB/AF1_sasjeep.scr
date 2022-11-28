@@ -1,0 +1,12 @@
+// CarFuelsetting Hakl1n
+//---------------------------------
+block
+{
+Frame Hakl1n;	FRM_FindFrame(Hakl1n,"Hakl1n");
+}
+
+//---------------------------------
+
+Car_SetFuel(Hakl1n, 0);
+
+EndScript();

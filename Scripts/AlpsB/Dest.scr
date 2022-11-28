@@ -1,0 +1,104 @@
+// Weather
+// ------------------------------------------
+
+Block
+{
+WEATHER_SetCount(0);
+WEATHER_SetColorOut(41, 48, 44, 00);
+WEATHER_SetColorIn(37, 37, 37, 128);
+WEATHER_SetOn(1);
+WEATHER_SetSpeed(26000);
+WEATHER_SetSize(700, 12);
+WEATHER_SetCount(0);
+
+// DETERMINANTS OF RAIN
+
+Integer count;		// RAIN DENSITY, AT BEGINNING MUST = 0 !!!
+	count = 0;
+Integer countLimit;	// RAIN DENSITY LIMIT
+
+Integer rainDrz;	// HOW LONG WILL RAIN LAST
+
+Integer rainIncrease;	// HOW FAST RAIN INCREASES/DECREASES
+
+Integer RainD;		// RAIN YES/NO - ON/OFF
+}
+goto WeatherSelect;
+
+// ------------------------------------------
+
+Label WeatherSelect:
+RainD = _RandomInt(1);
+
+If(RainD == 1)
+{
+countLimit = _RandomInt(9000);
+rainIncrease = _RandomInt(40);
+rainDrz = _RandomInt(300000);
+
+If (((countLimit > 0) And (rainDrz > 0)) And (rainIncrease > 0))
+{
+goto Prsi;
+}
+}
+
+Delay(rainDrz);
+goto WeatherSelect;
+
+// -------------------------------------------------------------------------
+
+Label Prsi:
+
+Block
+{
+Delay(rainIncrease);
+count=count+1;
+WEATHER_SetCount(count);
+}
+
+If(count == countLimit)
+{
+Delay(rainDrz);
+goto WeatherSelectB;
+}
+
+goto Prsi;
+
+// -------------------------------------------------------------------------
+
+Label WeatherSelectB:
+
+countLimit = 0;
+rainIncrease = _RandomInt(30);
+rainDrz = _RandomInt(300000);
+
+If ((rainDrz > 0) And (rainIncrease > 0))
+{
+goto PrsiB;
+}
+
+Delay(rainDrz);
+goto WeatherSelectB;
+
+// -------------------------------------------------------------------------
+
+Label PrsiB:
+
+countLimit = 0;
+
+Block
+{
+Delay(rainIncrease);
+count=count-1;
+WEATHER_SetCount(count);
+
+If(count == countLimit)
+{
+Delay(rainDrz);
+goto WeatherSelect;
+}
+goto PrsiB;
+}
+
+
+Label END:

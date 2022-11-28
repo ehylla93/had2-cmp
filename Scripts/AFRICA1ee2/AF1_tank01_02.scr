@@ -1,0 +1,31 @@
+// AF1_tank01_02
+// -------------------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------------------
+
+  
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  goto END;
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+//  HUMAN_SetOptimized(false);
+  HUMAN_BoardVehicle("panzer01", false, 1);
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_BoardVehicle("panzer01", true, 1);
+goto END;
+
+Label END:

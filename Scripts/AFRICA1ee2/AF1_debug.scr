@@ -1,0 +1,116 @@
+// AF1_ schwade AF1_13, 14
+// -------------------------------------------------------------------------------------------------------------
+
+SaveGameValue(190, 2);
+
+FRAME af13;				FRM_FindFrame(af13, "AF1_13");
+FRAME af14;				FRM_FindFrame(af14, "AF1_14");
+
+Integer talk;
+	talk =_RandomInt(3);
+
+INTEGER v_min				= 8;		// min hear distance
+INTEGER v_max				= 30;		// max hear distance
+INTEGER v_del				= 200;		// same person speech delay
+
+
+Whenever begin_chat (_LoadGameValue(190) == 1){
+  printf("BEGIN TALK BETWEEN MECHS");
+  SUBTITLES_SetOn(false);
+  goto talk;
+}
+
+Label talk:
+If(talk == 0){  goto schwadeloop;}
+If(talk == 1){  goto schwade2;}
+If(talk == 2){  goto schwade3;}
+
+
+  Label schwadeloop:
+  FRM_MorphSpeechDelayed(af14, 07991589, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991590, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af14, 07991591, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991592, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af14, 07991593, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991595, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af14, 07991596, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 07991597, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af14, 07991598, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991599, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991600, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991601, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 07991602, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991603, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991604, v_min, v_max);
+  SUBTITLES_SetOn(false);
+  Delay(9500);
+  goto schwadeloop;
+
+Label schwade2:
+  FRM_MorphSpeechDelayed(af13, 14992867, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 14992868, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 14992869, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 14992870, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 14992871, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 14992872, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 14992873, v_min, v_max);
+  SUBTITLES_SetOn(false);
+  Delay(9500);
+  goto schwade2;
+
+
+Label schwade3:
+  FRM_MorphSpeechDelayed(af14, 07991568, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991569, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af14, 07991570, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991571, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af14, 07991572, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991573, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 07991574, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af14, 07991575, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 07991576, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991577, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991578, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991579, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af13, 07991580, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991581, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991582, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991583, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991584, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991585, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991586, v_min, v_max);
+  FRM_MorphSpeechDelayed(af13, 07991587, v_min, v_max);
+  FRM_MorphSpeechDelayed(af14, 07991588, v_min, v_max);
+  SUBTITLES_SetOn(false);
+  Delay(9500);
+
+  goto schwade3;
+
+
+
+Whenever end_chat (_LoadGameValue(190) == 0){
+  block
+  {
+    FRM_MorphSpeech(af13, 0, 0, 0);
+    FRM_MorphSpeech(af14, 0, 0, 0);
+    SUBTITLES_SetOn(false);
+  }
+  EndScript();
+}
+
+Label END:

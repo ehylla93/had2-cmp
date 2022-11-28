@@ -1,0 +1,229 @@
+// AL_G141 - Alarm Striker
+// ------------------------------------------------
+
+Block
+{
+	Frame Cp01;		FRM_FindFrame(Cp01, "01_G04");
+	Frame Cp02;		FRM_FindFrame(Cp02, "02_Ju87_02");
+	Frame Cp03;		FRM_FindFrame(Cp03, "03_Bf109_04");
+	Frame Cp04;		FRM_FindFrame(Cp04, "04_Flak");
+	Frame Cp05;		FRM_FindFrame(Cp05, "04_Bomb_01");
+	Frame Cp06;		FRM_FindFrame(Cp06, "06_Bomb_03");
+	Frame Cp07;		FRM_FindFrame(Cp07, "07_Opel");
+	Frame Cp08;		FRM_FindFrame(Cp08, "08_Kubel");
+	Frame Cp09;		FRM_FindFrame(Cp09, "08_G94");
+	Frame Cp10;		FRM_FindFrame(Cp10, "09_G100");
+	Frame Cp11;		FRM_FindFrame(Cp11, "09_Radio");
+	Frame Cp12;		FRM_FindFrame(Cp12, "09_Mapa02");
+	Frame Cp13;		FRM_FindFrame(Cp13, "09_G116");
+	Frame Cp14;		FRM_FindFrame(Cp14, "11_G131");
+	Frame Cp15;		FRM_FindFrame(Cp15, "10_G128");
+	
+	Frame B01;		FRM_FindFrame(B01, "04_Bomb_01");
+	Frame B02;		FRM_FindFrame(B02, "04_Bomb_02");
+	Frame B03;		FRM_FindFrame(B03, "06_Bomb_01");
+	Frame B04;		FRM_FindFrame(B04, "06_Bomb_02");
+	Frame B05;		FRM_FindFrame(B05, "06_Bomb_03");
+	Frame B06;		FRM_FindFrame(B06, "06_Bomb_04");
+	Frame me;		FRM_GetMyFrame(me);
+
+	SetAlarmType(1,0); // blizka strelba
+	SetAlarmType(2,0); // slysim strelbu
+	SetAlarmType(4,1); // kroky
+	SetAlarmType(8,1); // zvuky by use
+	SetAlarmType(16,0); // exploze
+	SetAlarmType(32,1); // vidi
+	SetAlarmType(64,1); // jsem zranen
+	SetAlarmType(128,1); // zeskriptu
+	SetAlarmType(256,0); // pratelska strelba
+	SetAlarmType(512,0); // vidim flakotu
+
+	FRM_SwitchFaceTexture(me,"e_f010");
+
+	Integer AIEvent;
+	Integer AIStyle;
+	Integer Start;		Start = 0;
+	Integer CpSelect;
+
+	HUMAN_SETSIGHTRANGE(200);
+	HUMAN_SETHEARRANGE(100);
+	HUMAN_SetOptimized(1);
+	HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_WeaponUp(1);
+	HUMAN_SETSIGHTRANGE(270);
+	HUMAN_SETHEARRANGE(150);
+	AIEvent = _GetAlarmType();
+	AIStyle = _RandomInt(2);
+
+	If((((AIEvent == 1) OR (AIEvent == 2)) OR (AIEvent == 16)) OR (AIEvent == 256))
+	{
+		If(AIStyle == 0)
+		{
+			HUMAN_SETMODE_Lie();
+			HUMAN_SETMODE_Walk();
+			HUMAN_SETAIMODE_Zombie();
+		}
+
+		Else
+		{
+			HUMAN_SETMODE_Crouch();
+			HUMAN_SETMODE_Run();
+			HUMAN_SETAIMODE_Aggressive();
+		}
+	}
+
+	If(((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 512))
+	{
+		If(AIStyle == 0)
+		{
+			HUMAN_SETMODE_Stand();
+			HUMAN_SETMODE_Run();
+			HUMAN_SETAIMODE_Aggressive();
+		}
+
+		Else
+		{
+			HUMAN_SETMODE_Crouch();
+			HUMAN_SETMODE_Walk();
+			HUMAN_SETAIMODE_Defensive();
+		}
+	}
+
+	If((AIEvent == 32) OR (AIEvent == 64))
+	{
+		If(AIStyle == 0)
+		{
+			HUMAN_SETMODE_Lie();
+			HUMAN_SETMODE_Silence();
+			HUMAN_SETAIMODE_Zombie();
+		}
+
+		Else
+		{
+			HUMAN_SETMODE_Crouch();
+			HUMAN_SETMODE_Run();
+			HUMAN_SETAIMODE_Defensive();
+		}
+	}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETHEARRANGE(200);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETMODE_Run();
+	goto Patrol;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+	Start = 1;
+	HUMAN_Suspend(0);
+	HUMAN_SETMODE_Run();
+	HUMAN_WeaponUp(1);
+	goto Patrol;
+}
+
+
+Label Patrol:
+
+If(Start == 1)
+{
+	CpSelect = _RandomInt(15);
+
+	If(CpSelect == 0)
+	{
+		HUMAN_MoveToFrame(Cp01, 5);
+	}
+	
+	If(CpSelect == 1)
+	{
+		HUMAN_MoveToFrame(Cp02, 5);
+	}
+	
+	If(CpSelect == 2)
+	{
+		HUMAN_MoveToFrame(Cp03, 5);
+	}
+	
+	If(CpSelect == 3)
+	{
+		HUMAN_MoveToFrame(Cp04, 5);
+	}
+	
+	If(CpSelect == 4)
+	{
+		HUMAN_MoveToFrame(Cp05, 15);
+	}
+	
+	If(CpSelect == 5)
+	{
+		HUMAN_MoveToFrame(Cp06, 5);
+		SetActorState(B06, 0);
+	}
+	
+	If(CpSelect == 6)
+	{
+		HUMAN_MoveToFrame(Cp07, 5);
+	}
+	
+	If(CpSelect == 7)
+	{
+		HUMAN_MoveToFrame(Cp08, 5);
+	}
+	
+	If(CpSelect == 8)
+	{
+		HUMAN_MoveToFrame(Cp09, 5);
+	}
+	
+	If(CpSelect == 9)
+	{
+		HUMAN_MoveToFrame(Cp10, 5);
+	}
+	
+	If(CpSelect == 10)
+	{
+		HUMAN_MoveToFrame(Cp11, 5);
+	}
+	
+	If(CpSelect == 11)
+	{
+		HUMAN_MoveToFrame(Cp12, 5);
+	}
+	
+	If(CpSelect == 12)
+	{
+		HUMAN_MoveToFrame(Cp13, 5);
+	}
+	
+	If(CpSelect == 13)
+	{
+		HUMAN_MoveToFrame(Cp14, 5);
+	}
+	
+	If(CpSelect == 14)
+	{
+		HUMAN_MoveToFrame(Cp15, 5);
+	}
+
+}
+goto Patrol;
+
+
+Label END:

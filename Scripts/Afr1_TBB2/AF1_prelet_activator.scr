@@ -1,0 +1,17 @@
+// AF1_prelet_activator - macchi(es) flight activator
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  FRAME organizer;				FRM_FindFrame(organizer, "dummy_prelet_organizer");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever hracvdosahu (_PlayerInRange(30)){
+  SendSignal(organizer, 1);
+  Delay(10000);
+//  SetWhenever(hracvdosahu, true);
+}
+
+Label END:

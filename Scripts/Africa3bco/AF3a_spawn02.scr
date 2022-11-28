@@ -1,0 +1,5 @@
+FRAME player02;
+
+OnUse(){
+  ScriptAssign(player02, "AF3a_player02");
+}

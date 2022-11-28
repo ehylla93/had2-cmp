@@ -1,0 +1,91 @@
+// Alarmer od chaty
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame cp1;		FRM_FindFrame(cp1,"Hunt01");
+Frame cp2;		FRM_FindFrame(cp2,"Z1_G05");
+Frame cp3;		FRM_FindFrame(cp3,"Z1_G19");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer bezim;
+	bezim = _RandomInt(3);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1){
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+
+If(bezim == 0)
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+Delay(200);
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp1, 1);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+}
+
+If(bezim == 1)
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+Delay(200);
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp2, 1);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+}
+
+If(bezim == 2)
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+Delay(200);
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp1, 1);
+HUMAN_SetSniper(1, 5);
+}
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

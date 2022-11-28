@@ -1,0 +1,35 @@
+// Obj 3 - Destroy the planes
+// -------------------------------------
+
+Block
+{
+Frame L01;	FRM_FindFrame(L01,"02_Ju87_01");
+Frame L02;	FRM_FindFrame(L02,"02_Ju87_02");
+Frame L03;	FRM_FindFrame(L03,"02_Ju87_03");
+
+Frame L04;	FRM_FindFrame(L04,"03_Bf109_01");
+Frame L05;	FRM_FindFrame(L05,"03_Bf109_02");
+Frame L06;	FRM_FindFrame(L06,"03_Bf109_03");
+Frame L07;	FRM_FindFrame(L07,"03_Bf109_04");
+Frame L08;	FRM_FindFrame(L08,"03_Bf109_05");
+Frame L09;	FRM_FindFrame(L09,"03_Bf109_06");
+Frame L10;	FRM_FindFrame(L10,"03_Bf109_07");
+Frame L11;	FRM_FindFrame(L11,"03_Bf109_08");
+Frame L12;	FRM_FindFrame(L12,"04_Bf109_09");
+
+SetObjectiveStatus(3, 0);
+}
+
+// -------------------------------------
+
+Whenever Planes_Destroyed ((((((((((((_Actor_GetState(L01) == 0) And (_Actor_GetState(L02) == 0 )) And (_Actor_GetState(L03) == 0 )) And (_Actor_GetState(L04) == 0 )) And (_Actor_GetState(L05) == 0 )) And (_Actor_GetState(L06) == 0 )) And (_Actor_GetState(L07) == 0 )) And (_Actor_GetState(L08) == 0 )) And (_Actor_GetState(L09) == 0 )) And (_Actor_GetState(L10) == 0 )) And (_Actor_GetState(L11) == 0 )) And (_Actor_GetState(L12) == 0 ))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(09991912);
+Delay(3500);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+

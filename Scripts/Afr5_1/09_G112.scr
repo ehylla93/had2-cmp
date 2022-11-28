@@ -1,0 +1,66 @@
+// 09_G112 - Planning room guard
+// -----------------------------------------------------
+
+Block
+{
+Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f017");
+
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(20);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+SendSignal(Reinf, 5);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(265);
+HUMAN_SETHEARRANGE(80);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETHEARRANGE(180);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label END:

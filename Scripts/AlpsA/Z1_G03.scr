@@ -1,0 +1,58 @@
+// Nemec reze drivi
+//--------------------------------------------------------------------------
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame hand;	//FRM_FindFrame(hand,"Z1_G03.hw1");
+Frame sekyra;	FRM_FindFrame(sekyra,"Pila2");
+Frame odhod;	FRM_FindFrame(odhod,"Dest");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+		
+//-------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 100, 100, 1);
+FRM_TeleportNearFrame(sekyra,odhod,1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(100);
+Block
+{
+FRM_FindFrame(hand,"Z1_G03.hw1");
+FRM_TeleportNearFrame(sekyra,hand,1);
+FRM_FindFrame(hand,"");
+}
+HUMAN_SetAnim("%%rezudrevo1",10,10,1);
+goto end;
+
+Label end:

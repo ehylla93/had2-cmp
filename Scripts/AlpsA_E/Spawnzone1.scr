@@ -1,0 +1,36 @@
+// Spawnzone 1 - Western Machinegun Position
+//----------------------------------------------
+Block
+{
+Frame Airdrop;		FRM_FindFrame(Airdrop,"Ammoboxy");
+Frame V1;			FRM_FindFrame(V1,"Z1_G12");
+Frame Spawn2;		FRM_FindFrame(Spawn2,"Spawnzone2");
+Frame Opel;			FRM_FindFrame(Opel,"Opel_01");
+Frame Obj1;			FRM_FindFrame(Obj1,"obj1");
+}
+//----------------------------------------------
+
+Whenever Player (_PlayerInRange(20))
+{
+Sendsignal(Airdrop, 1);
+MP_EnableSpawnZone("zone1", 2);
+MP_EnableSpawnZone("zone3", 1);
+SendSignal(Obj1, 2);
+SendSignal(Spawn2, 6);
+Delay(350000);
+SendSignal(V1, 1);
+EndScript();
+}
+
+Whenever TurnOn (_SignalReceived(2))
+{
+SetWhenever(Player, 1);
+goto END;
+}
+
+//---------------------------------------------
+
+SetWhenever(Player, 0);
+goto END;
+
+Label END:

@@ -1,0 +1,85 @@
+// Tank 2 (La_tiger_2) Kanoner
+// ----------------------------------------------------------------
+
+Block
+{
+Frame Cum1;	FRM_FindFrame(Cum1,"Cp_S1G06_Relax");
+Frame Cum2;	FRM_FindFrame(Cum2,"Weaponbox1");
+Frame Cum3;	FRM_FindFrame(Cum3,"Cp_Oasis_02");
+Frame Cum4;	FRM_FindFrame(Cum4,"T1_Cum2");
+Frame Cum5;	FRM_FindFrame(Cum5,"T2_Cum1");
+Frame Cum6;	FRM_FindFrame(Cum6,"Cp_Oasis_01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+}
+
+//-----------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto TurnAt;
+}
+
+OnSignal(2)
+{
+HUMAN_TurnAt(Cum1);
+Delay(10000);
+HUMAN_TurnAt(Cum1);
+goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_TurnAt(Cum6);
+Delay(6000);
+HUMAN_TurnAt(Cum3);
+Delay(6000);
+HUMAN_TurnAt(Cum5);
+goto TurnAt;
+}
+
+Whenever Reinf (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(180);
+HUMAN_BoardVehicle("La_tiger_2", 1, 2);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+goto END;
+}
+
+//-----------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label TurnAt:
+HUMAN_TurnAt(Cum4);
+Delay(7500);
+HUMAN_TurnAt(Cum5);
+Delay(6000);
+goto TurnAt;
+
+
+Label END:

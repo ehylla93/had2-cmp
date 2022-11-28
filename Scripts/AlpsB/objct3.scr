@@ -1,0 +1,96 @@
+// Obj 3 , Contact the Allied Forces
+//----------------------------------------------------
+
+Block
+{
+Frame obj2;	FRM_FindFrame(obj2,"obj2");
+Frame obj9;	FRM_FindFrame(obj9,"obj9");
+Frame obj10;	FRM_FindFrame(obj10,"obj10");
+
+SetWhenever(Failed, 0);
+}
+//-----------------------------------------------------
+
+Whenever Player (_PlayerInRange(20))
+{
+SUBTITLES_SetOn(1);
+SetObjectiveStatus(4, 0);
+SUBTITLES_SetText(55999912);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetText(17993404);
+Delay(4000);
+SUBTITLES_SetText(52999704);
+Delay(4000);
+SUBTITLES_SetOn(0);
+SetWhenever(Failed, 1);
+goto END;
+}
+
+Whenever Failed (!_PlayerInRange(60))
+{
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(5, 4);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+SetObjectiveStatus(8, 4);
+SetObjectiveStatus(9, 4);
+SetObjectiveStatus(10, 4);
+SetObjectiveStatus(11, 4);
+SetObjectiveStatus(12, 4);
+Delay(500);
+SetObjectiveStatus(4, 2);
+goto END;
+}
+
+Whenever Dokecali (_SignalReceived(1))
+{
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(5, 0);
+SendSignal(obj2, 1);
+Delay(200);
+SetObjectiveStatus(4, 1);
+goto END;
+}
+
+Whenever Trucky_Jedou (_SignalReceived(2))
+{
+SetWhenever(Failed, 0);
+SUBTITLES_SetOn(1);
+SetObjectiveStatus(9, 0);
+SUBTITLES_SetText(12992404); // New objective : find what the trucks are transporting
+Delay(4000);
+SUBTITLES_SetText(19993801);
+Delay(4000);
+SUBTITLES_SetText(52999704);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Whenever Trucky_Nejedou (_SignalReceived(3))
+{
+SetWhenever(Failed, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993801);
+Delay(4000);
+SetObjectiveStatus(9, 4);
+SUBTITLES_SetOn(0);
+SendSignal(obj10, 3);
+SendSignal(obj9, 2);
+goto END;
+}
+
+Whenever Reinf_OK (_SignalReceived(4))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993408);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label END:

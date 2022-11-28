@@ -1,0 +1,93 @@
+// AF1_27
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME frm;				FRM_FindFrame(frm, "af1_dummy1");
+  FRAME frm1;				FRM_FindFrame(frm1, "af1_dummy2");
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever inrange(_PlayerInRange(250)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 400, 400, false);
+  block{
+    HUMAN_Stop();
+    SetWhenever(inrange, false);
+    HUMAN_SETMODE_Run();
+///    HUMAN_SETSIGHTRANGE(150);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("27: ", Atype);
+  }
+
+  if(Atype != 2){
+    SetAlarmType(347, false);
+    SetAlarmType(99, true);
+    HUMAN_SetAlarm(false);
+    printf("26: before move to alarm");
+    HUMAN_MoveToAlarm();
+    printf("26: after move to alarm");
+    SetAlarmType(1023, true);
+    goto END;
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  block{
+    
+///    HUMAN_SETSIGHTRANGE(80);
+    HUMAN_SetOptimized(true);
+    HUMAN_SetAlarm(false);
+    SetAlarmType(1023, true);
+  }
+  goto START;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SETSIGHTRANGE(1000);
+  HUMAN_SETHEARRANGE(550);
+  HUMAN_SETMODE_Run();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(false); // changed
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetAnim("%%sedimL4", 200, 200, true);
+  goto END;
+
+Label START:
+// doplniiiiit
+goto END;
+goto START;
+
+Label END:

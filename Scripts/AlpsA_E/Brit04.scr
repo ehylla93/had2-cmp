@@ -1,0 +1,107 @@
+// Posadka jeepu i kecac
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame Jeep;		FRM_FindFrame(Jeep,"Jeep1");
+Frame ridic;		FRM_FindFrame(ridic,"Brit01");
+Frame cp1;		FRM_FindFrame(cp1,"SkalSit2");
+Frame Dopredu;		FRM_FindFrame(Dopredu,"Britcum");
+
+Frame N1;		FRM_FindFrame(N1,"BK_G01");
+Frame N2;		FRM_FindFrame(N2,"BK_G02");
+Frame N3;		FRM_FindFrame(N3,"BK_G03");
+Frame N4;		FRM_FindFrame(N4,"BK_G04");
+Frame N5;		FRM_FindFrame(N5,"BK_G05");
+Frame N6;		FRM_FindFrame(N6,"BK_G06");
+Frame N7;		FRM_FindFrame(N7,"BK_G07");
+Frame N8;		FRM_FindFrame(N8,"BK_G08");
+Frame kill;		FRM_FindFrame(kill,"Ally_Detect");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(kill, 5);
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Jeep1",  1, 3);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_BoardVehicle("Jeep1",  0, 3);
+HUMAN_SetAnim("%%protahovaniD1", 800,800,1);
+Delay(8000);
+HUMAN_SetAnim("", 800,800,1);
+HUMAN_SETMODE_Walk();
+HUMAN_MoveToFrame(cp1, 0);
+HUMAN_SETMODE_Guard();
+Delay(200);
+HUMAN_TurnAt(Jeep);
+Delay(500);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%sedimL4", 100, 100, 1);
+goto end;
+}
+
+OnSignal(3)
+{
+HUMAN_BoardVehicle("Jeep1",  0, 3);
+Delay(500);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+
+OnSignal(10)
+{
+HUMAN_SetAnim("", 100, 100, 1);
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Dopredu, 23);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAt(Dopredu);
+HUMAN_WeaponUp(1);
+goto end;
+}
+
+OnSignal(11)
+{
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90000237, 5, 30);  // Yes sir !!
+Delay(800);
+HUMAN_Attack(Dopredu, 1000);
+FRM_MorphSpeechDelayed(me, 90000571, 5, 30);  // Get him !!
+HUMAN_Attack(N4, 3000);
+HUMAN_Attack(N6, 3000);
+HUMAN_Attack(N8, 10000);
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 90000237, 5, 30);  // Yes sir !!
+goto end;
+}
+
+OnSignal(16)
+{
+Delay(200);
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(0);
+HUMAN_TurnAt(Jeep);
+HUMAN_MoveToFrame(Jeep, 1);
+HUMAN_BoardVehicle("Jeep1",  1, 3);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

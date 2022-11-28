@@ -1,0 +1,94 @@
+// AF1_prelet - macchi(es) flying over the airport
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME macchi01;				FRM_FindFrame(macchi01, "la_macchi_fly_01");
+  FRAME macchi02;				FRM_FindFrame(macchi02, "la_macchi_fly_02");
+  FRAME macchicut;				FRM_FindFrame(macchicut, "la_macchi_cut");
+  FRAME blur01;				FRM_FindFrame(blur01, "la_macchi_fly_01.bluur");
+  FRAME blur02;				FRM_FindFrame(blur02, "la_macchi_fly_02.bluur");
+  FRAME blurcut;				FRM_FindFrame(blurcut, "la_macchi_cut.bluur");
+  INTEGER active_prelet 			= 1;
+
+  FRAME tycl;					FRM_FindFrame(tycl, "la_macchi_cut.ltycpodvozek");
+  FRAME tycr;					FRM_FindFrame(tycl, "la_macchi_cut.rtycpodvozek");
+  FRAME kolor;					FRM_FindFrame(kolor, "la_macchi_cut.whr00");
+  FRAME kolol ;				FRM_FindFrame(kolol, "la_macchi_cut.whl00");
+  FRAME podvl;				FRM_FindFrame(podvl, "la_macchi_cut.lpodvozek");
+  FRAME podvr;				FRM_FindFrame(podvr, "la_macchi_cut.rpodvozek");
+
+  FRAME snd1;					FRM_FindFrame(snd1, "s_letadlo1");
+  FRAME snd2;					FRM_FindFrame(snd2, "s_letadlo2");
+
+  FRM_SetOn(snd1, false);
+  FRM_SetOn(snd2, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+goto END;
+
+OnCutscene(1){
+  FRM_SetOn(tycl, true);
+  FRM_SetOn(tycr, true);
+  FRM_SetOn(kolor, true);
+  FRM_SetOn(kolol, true);
+  FRM_SetOn(podvl, true);
+  FRM_SetOn(podvr, true);
+  goto END;
+}
+
+OnCutsceneDone(1){
+  FRM_SetOn(tycl, false);
+  FRM_SetOn(tycr, false);
+  FRM_SetOn(kolor, false);
+  FRM_SetOn(kolol, false);
+  FRM_SetOn(podvl, false);
+  FRM_SetOn(podvr, false);
+  goto END;
+}
+
+Whenever nasignal (_SignalReceived(1)){
+  printf("prelet letadylek activovan :)");
+ 
+  if(active_prelet == 2){
+    printf("second flyover activated");
+    SendSignal(blur01, 1);
+    SendSignal(blur02, 1);
+//    SendSignal(macchi01, 1);
+    FRM_SetOn(macchi01, true);
+    FRM_SetOn(snd1, true);
+    FRM_WatchTrack(macchi01, "prelet02_01");
+    
+
+    Delay(400);
+//    SendSignal(macchi02, 1);
+    FRM_SetOn(macchi02, true);
+    FRM_SetOn(snd2, true);
+    FRM_WatchTrack(macchi02, "prelet02_02"); 
+    active_prelet = 3;
+    FRM_SetOn(macchi01, false);
+    FRM_SetOn(macchi02, false);
+    FRM_SetOn(snd1, false);
+    FRM_SetOn(snd2, false);
+  }
+
+  if(active_prelet == 1){
+    printf("first flyover activated");
+    SendSignal(blurcut, 1);
+    FRM_SetOn(macchi02, true);
+    FRM_SetOn(snd2, true);
+    FRM_SoundAdjustDoppler(snd2, 1, 170, 1);
+    FRM_WatchTrack(macchi02, "prelet01");
+    PlaySound(1, 8);
+    active_prelet = 2;
+  }
+  
+  Delay(60000);
+  SetWhenever(nasignal, true);  
+  FRM_SetOn(snd1, false);
+  FRM_SetOn(snd2, false);
+  goto END;
+}
+
+Label END:

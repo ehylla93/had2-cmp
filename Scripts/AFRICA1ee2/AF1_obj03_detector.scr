@@ -1,0 +1,25 @@
+// AF1_cut10_detector - detector on door
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER a			= 0;
+  INTEGER b			= 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever rejnz (_PlayerInRange(10)){
+  a = _GetObjectiveStatus(1, 3, 1, 1);
+  b = _GetObjectiveStatus(1, 3, 1, 2);
+  printfnumber("obj1: ", a);
+  printfnumber("obj2: ", b);
+  SetWheneverTime(rejnz, 2000);
+  SetWhenever(rejnz, true);
+}
+
+
+Whenever splneno (((_AllPlayersInRange(10)) AND (_GetObjectiveStatus(1, 3, 1, 1) == 1)) AND (_GetObjectiveStatus(1, 3, 1, 2) == 1)){
+  SetObjectiveStatus(3, 1);
+}
+
+// -------------------------------------------------------------------------------------------------------------

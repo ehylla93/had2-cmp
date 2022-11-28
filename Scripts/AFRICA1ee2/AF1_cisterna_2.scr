@@ -1,0 +1,32 @@
+// AF1_cisterna_2 - explosion of cistern
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  FRAME cisterny_organizer;	FRM_FindFrame(cisterny_organizer, "dummy_cisterny_organizer");
+  FRAME this;      		FRM_GetMyFrame(this);
+  FRAME exp;			FRM_FindFrame(exp, "w_explosive_01");
+  FRAME exp_place;		FRM_FindFrame(exp_place, "m_nadrz2.EXPL00");
+  INTEGER pindex;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  block
+  {
+    MakeExplosion(exp_place, 3000000, 15000);		// odremovat
+    SaveGameValue(2, 0);
+    SendSignal(cisterny_organizer, 1);
+    FRM_SetOn(exp, false);
+  }
+
+  FRM_CreateIndexedParticle(95, this, pindex);
+  Delay(6000);
+  FRM_FinishIndexedParticle(pindex);
+
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+

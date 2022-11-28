@@ -1,0 +1,38 @@
+// Obj 10 , Prevent the trucks passsing through the canyon
+//-----------------------------------------------
+
+Block
+{
+Frame Opel;	FRM_FindFrame(Opel,"Opel_02");
+Frame Krupp;	FRM_FindFrame(Krupp,"Opel_03");
+
+SetWhenever(Trucks_Destroyed, 0);
+}
+//-----------------------------------------------
+
+Whenever Trucks_Destroyed((_Actor_GetState(Opel)==0) And (_Actor_GetState(Krupp)==0))
+{
+SetObjectiveStatus(10, 1);
+EndScript();
+}
+
+Whenever Ujeli(_SignalReceived(2))
+{
+SetObjectiveStatus(10, 2);
+Delay(60000);
+SetObjectiveStatus(10, 4);
+EndScript();
+}
+
+Whenever Jedou (_SignalReceived(1))
+{
+SetWhenever(Trucks_Destroyed, 1);
+}
+
+Whenever Nejedou (_SignalReceived(3))
+{
+SetObjectiveStatus(10, 4);
+Delay(500);
+DisableSignals(1);
+EndScript();
+}

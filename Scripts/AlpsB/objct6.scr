@@ -1,0 +1,16 @@
+// Obj 6 , Find the codings - CANCELED
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Player (_PlayerInRange(1000))
+{
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993801);
+Delay(4000);
+SUBTITLES_SetText(17993404);
+Delay(4000);
+SUBTITLES_SetText(53999701);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

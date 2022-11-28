@@ -1,0 +1,148 @@
+// Posadka jeepu 2
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame Jeep1;		FRM_FindFrame(Jeep1,"Jeep1");
+Frame Jeep2;		FRM_FindFrame(Jeep2,"Jeep2");
+Frame Dopredu;		FRM_FindFrame(Dopredu,"Britcum");
+Frame Schuzka;		FRM_FindFrame(Schuzka,"BritSchuzka");
+Frame Brit1;		FRM_FindFrame(Brit1,"Brit01");
+Frame Player;
+
+Frame N1;		FRM_FindFrame(N1,"BK_G01");
+Frame N2;		FRM_FindFrame(N2,"BK_G02");
+Frame N3;		FRM_FindFrame(N3,"BK_G03");
+Frame N4;		FRM_FindFrame(N4,"BK_G04");
+Frame N5;		FRM_FindFrame(N5,"BK_G05");
+Frame N6;		FRM_FindFrame(N6,"BK_G06");
+Frame N7;		FRM_FindFrame(N7,"BK_G07");
+Frame N8;		FRM_FindFrame(N8,"BK_G08");
+
+Frame Snipers;		FRM_FindFrame(Snipers,"SniperSelector3");
+Frame kill;		FRM_FindFrame(kill,"Ally_Detect");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(kill, 5);
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Jeep2",  true, 1);
+goto END;
+}
+
+OnSignal(2)
+{
+Delay(2000);
+HUMAN_BoardVehicle("Jeep2",  0, 1);
+Delay(1000);
+HUMAN_MoveFromFrame(Jeep2, 6);
+HUMAN_TurnAt(jeep2);
+HUMAN_SETMODE_Crouch();
+Delay(200);
+HUMAN_SetAnim("%%sedimL2", 500, 500, 1);
+goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_BoardVehicle("Jeep2",  0, 1);
+Delay(500);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto END;
+}
+
+OnSignal(10)
+{
+HUMAN_SetAnim("", 500, 500, 1);
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveToFrame(Dopredu, 23);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAt(Dopredu);
+HUMAN_WeaponUp(1);
+goto end;
+}
+
+OnSignal(11)
+{
+Delay(1200);
+HUMAN_Attack(Dopredu, 6000);
+FRM_MorphSpeechDelayed(me, 90000710, 5, 30);  // Got one!!
+HUMAN_Attack(N1, 6000);
+HUMAN_Attack(N4, 2000);
+HUMAN_Attack(N7, 6000);
+goto end;
+}
+
+
+
+// **** TADY ZACINA KONVERZACE S HRACEM ****
+
+OnSignal(16)
+{
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(0);
+HUMAN_MoveToFrame(Schuzka, 0);
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+OnSignal(20)
+{
+FRM_GetNearestPlayer(me, Player);
+FRM_MorphSpeechDelayed(Player, 00990064, 5, 30); // At last ....
+Delay(400);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 00990124, 5, 30); 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 00990125, 5, 30); 
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 00990131, 5, 30); 
+Delay(200);
+FRM_GetNearestPlayer(me, Player);
+FRM_MorphSpeechDelayed(Player, 00990139, 5, 30); 
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(Brit1, 00990161, 5, 30); 
+Delay(500);
+FRM_MorphSpeechDelayed(Brit1, 00990163, 5, 30); 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 13992734, 5, 30); 
+Delay(1000);
+HUMAN_TurnAtNearestPlayer();
+Delay(500);
+FRM_MorphSpeechDelayed(me, 13992735, 5, 30); 
+Delay(200);
+FRM_MorphSpeechDelayed(Player, 90000241, 5, 30);
+Delay(500);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(Brit1, 13022731, 5, 30);
+Delay(1000);
+SendSignal(Brit1, 18);
+HUMAN_TurnAt(Jeep2);
+HUMAN_MoveToFrame(Jeep2, 1);
+HUMAN_BoardVehicle("Jeep2",  1, 1);
+Delay(30000);
+SendSignal(Snipers, 1);
+Goto END;
+}
+
+// **** TADY KONCI KONVERZACE S HRACEM ****
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

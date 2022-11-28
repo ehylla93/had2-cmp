@@ -1,0 +1,82 @@
+// AF1_odletletadla - odlet pobocnika Hanse Schummana
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  SaveGameValue(80, 0);
+
+  FRAME this;			FRM_GetMyFrame(this);
+
+  FRAME letadlo;		FRM_FindFrame(letadlo, "#MchEscape_");
+  FRAME damac;		FRM_FindFrame(damac, "mchescaped");
+
+  FRAME listy;			FRM_FindFrame(listy, "#mchescape_.listy");
+  FRAME dummy;		FRM_FindFrame(dummy, "dummy_detect_end_animation");
+  FRAME letcnt;		FRM_FindFrame(letcnt, "dummy_letcnt");
+  FRAME exp;			FRM_FindFrame(exp, "w_explosive_13");
+  FRAME snd_organizer;	FRM_FindFrame(snd_organizer, "snd_odlet_org");
+  FRAME pobocnik;		FRM_FindFrame(pobocnik, "AF1_pobocnik");
+  FRAME exp_particle;		FRM_FindFrame(exp_particle, "dummy_explozeee");
+  FRAME pryc;			FRM_FindFrame(pryc, "dummy_letadlo_pryc");
+  SaveGameValue(42, false);
+FRAME blur;			FRM_FindFrame(blur, "#mchescape_.bluur");
+FRM_SetOn(blur, false);
+}
+
+
+Delay(1000);
+INTEGER num_players		= _GetNumMembersOfClientTeam();
+
+// -------------------------------------------------------------------------------------------------------------
+ 
+OnDeath(){
+  block
+  {
+    SendSignal(snd_organizer, 2);
+    SendSignal(pryc, 2);
+	
+    FRM_CreateParticle(53, exp_particle);
+    FRM_SetOn(exp, false);
+    SaveGameValue(42, true);
+    SendSignal(letcnt, 1);
+    MakeExplosion(exp_particle, 2000000, 25000);
+    FRM_StopAnimation(this, 1);
+    FRM_StopAnimation(damac, 1);
+//    FRM_SetAnimation(this, "", 1);
+//    FRM_SetAnimation(damac, "", 1);
+    HUMAN_Kill(pobocnik);
+  }
+  if(num_players == 1)
+  {
+    AddDiaryText(4117);
+  }
+  else
+  {
+    AddDiaryText(4114);
+  }  EndScript();
+  goto END;
+}
+
+Whenever dummyinrange (_FrameInRange(dummy) < 20){
+    printf("LETADLO JE V HAJI!!!!!!!!!!! tj odletelo pryc ;)");
+
+    FRM_SetAnimation(this, "", 1);
+    FRM_SetAnimation(damac, "", 1);
+    FRM_SetOn(this, false);
+    EndScript();
+}
+
+OnSignal(30){
+  printf("LETADLO DOSTALO SIG 30 a to nevim co to znamena");
+  FRM_StopAnimation(this, 1);
+  FRM_StopAnimation(damac, 1);
+//  FRM_SetAnimation(this, "", 1);
+//  FRM_SetAnimation(damac, "", 1);
+  FRM_SetOn(this, false);
+  EndScript();
+}
+
+SetWheneverTime(dummyinrange, 200);
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

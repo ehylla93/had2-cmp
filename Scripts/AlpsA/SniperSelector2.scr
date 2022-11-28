@@ -1,0 +1,34 @@
+// Vybira Snipry kteri budou hlidat Oblast za skalou 3/5
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"ZSnip5");
+Frame S2;	FRM_FindFrame(S2,"ZSnip6");
+Frame S3;	FRM_FindFrame(S3,"ZSnip7");
+Frame S4;	FRM_FindFrame(S4,"ZSnip8");
+Frame S5;	FRM_FindFrame(S5,"ZSnip9");
+
+Integer SnipVyber;
+	SnipVyber =_RandomInt(4);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(3000);
+goto Vybiram;
+
+Label Vybiram:
+If(SnipVyber == 0){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S5, 1);}
+
+If(SnipVyber == 1){  SendSignal(S1, 1);SendSignal(S3, 1);SendSignal(S4, 1);}
+
+If(SnipVyber == 2){  SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);}
+
+If(SnipVyber == 3){  SendSignal(S2, 1);SendSignal(S4, 1);SendSignal(S5, 1);}
+
+If(SnipVyber == 4){  SendSignal(S1, 1);SendSignal(S4, 1);SendSignal(S5, 1);}
+
+Goto END;
+
+Label END:

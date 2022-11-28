@@ -1,0 +1,66 @@
+// T1, Tiger driver
+// ---------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  INTEGER firstalarm				= 0;
+
+
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// ---------------------------
+
+OnDeath(){
+Delay(500);
+printf("Tiger_1: dead");  
+    EndScript();
+}
+
+Whenever player(_PlayerInRange(240))
+{
+printf("Tiger driver activated");
+//  HUMAN_Drive("tank01_01", 30);
+  HUMAN_Drive("tank01_02", 30);
+  HUMAN_Drive("",0);
+}
+
+
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    
+    firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+//  HUMAN_DriveNearPlayer(20);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+  goto END;
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// --------------------------
+
+  HUMAN_SETSIGHTRANGE(500);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("La_tiger_1",  true, 0);
+goto END;
+
+Label END:

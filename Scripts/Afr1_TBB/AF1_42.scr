@@ -1,0 +1,76 @@
+// AF1_42 (14)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME look;				FRM_FindFrame(look, "m_palma19");
+  FRAME af41;				FRM_FindFrame(af41, "AF1_41");
+  INTEGER Atype			= 0; 
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(af41, 10);
+  printf("14: dead");
+  EndScript();
+}
+
+OnSignal(10){
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  HUMAN_SetMode_Stand();
+  HUMAN_TurnAtNearestPlayer();
+  goto END; 
+}
+
+Whenever player(_PlayerInRange(100)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  block{
+    SetWhenever(player, false);
+    HUMAN_Suspend(false);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+    printfnumber("14: ", Atype);
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_WeaponOnArm(true);
+Label ALARM_DONE_LOOP:
+  HUMAN_Move("AF1_10_06");  Delay(300);
+  HUMAN_Move("AF1_10_10");  Delay(300);
+goto ALARM_DONE_LOOP;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetAnim("%%sedimL4", 100, 100, true);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+
+goto END;
+
+Label END:

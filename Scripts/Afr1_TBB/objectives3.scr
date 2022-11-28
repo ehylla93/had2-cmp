@@ -1,0 +1,144 @@
+// Obj 3 - kill enemy around the runway
+//---------------------------------------------------------------------------------
+
+Block
+{
+  
+  Frame Of1;	FRM_FindFrame(Of1, "AF1_19"); 
+  Frame Of2;	FRM_FindFrame(Of2, "AF1_20"); 
+  Frame Of3;	FRM_FindFrame(Of3, "AF1_21"); 
+  Frame Of4;	FRM_FindFrame(Of4, "AF1_22"); 
+  Frame Of5;	FRM_FindFrame(Of5, "AF1_25"); 
+  Frame Of6;	FRM_FindFrame(Of6, "AF1_30"); 
+  Frame Of7;	FRM_FindFrame(Of7, "AF1_33"); 
+  Frame Of8;	FRM_FindFrame(Of8, "AF1_35"); 
+  Frame Of9;	FRM_FindFrame(Of9, "AF1_38");
+  Frame Of10;	FRM_FindFrame(Of10, "AF1_50");
+  Frame Of11;	FRM_FindFrame(Of11, "AF1_54");  
+  Frame Of12;	FRM_FindFrame(Of12, "AF1_pobocnik"); 
+  Frame Of13;	FRM_FindFrame(Of13, "AF1_cge_posila_01"); 
+  Frame Of14;	FRM_FindFrame(Of14, "AF1_43"); 
+  Frame Of15;	FRM_FindFrame(Of15, "AF1_51"); 
+  Frame Of16;	FRM_FindFrame(Of16, "AF1_40"); 
+  Frame Of17;	FRM_FindFrame(Of17, "AF1_42"); 
+  Frame Of18;	FRM_FindFrame(Of18, "AF1_45"); 
+  Frame Of19;	FRM_FindFrame(Of19, "AF1_44");
+  Frame Of20;	FRM_FindFrame(Of20, "AF1_58");
+  Frame Of21;	FRM_FindFrame(Of21, "AF1_59");
+  Frame Of22;	FRM_FindFrame(Of22, "AF1_tank01_01");
+  Frame Of23;	FRM_FindFrame(Of23, "AF1_29");
+  Frame Of24;	FRM_FindFrame(Of24, "AF1_52");    
+
+SetObjectiveStatus(3, 0);  
+
+Integer officer;
+	officer=0;
+
+}
+
+Whenever Oficers1 (( (_Actor_GetState(Of1)==0) And (_Actor_GetState(Of2)==0) ) And (_Actor_GetState(Of3)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+
+Whenever Oficers2 (( (_Actor_GetState(Of4)==0) And (_Actor_GetState(Of5)==0) ) And (_Actor_GetState(Of6)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers3 (( (_Actor_GetState(Of7)==0) And (_Actor_GetState(Of8)==0) ) And (_Actor_GetState(Of9)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers4 (( (_Actor_GetState(Of10)==0) And (_Actor_GetState(Of11)==0) ) And (_Actor_GetState(Of12)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers5 (( (_Actor_GetState(Of13)==0) And (_Actor_GetState(Of14)==0) ) And (_Actor_GetState(Of15)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers6 (( (_Actor_GetState(Of16)==0) And (_Actor_GetState(Of17)==0) ) And (_Actor_GetState(Of18)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers7 (( (_Actor_GetState(Of19)==0) And (_Actor_GetState(Of20)==0) ) And (_Actor_GetState(Of21)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+Whenever Oficers8 (( (_Actor_GetState(Of22)==0) And (_Actor_GetState(Of23)==0) ) And (_Actor_GetState(Of24)==0) ) 
+{
+officer=officer+1;
+
+If(officer==8)
+{
+PlayMusic(6);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+}
+GoTo end;
+}
+
+Label end:

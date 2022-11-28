@@ -1,0 +1,30 @@
+// AF1_snd_odlet
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME snd1;			FRM_FindFrame(snd1, "S_air_start");
+  FRAME snd2;			FRM_FindFrame(snd2, "S_air_roll");
+  FRAME snd3;			FRM_FindFrame(snd3, "S_air_let");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+  FRM_SetOn(snd1, true);
+  Delay(6000);
+  FRM_SetOn(snd2, true);
+  Delay(16000);
+  FRM_SetOn(snd3, true);
+  Delay(30000);
+  FRM_SetOn(snd1, false);
+  FRM_SetOn(snd2, false);
+  FRM_SetOn(snd3, false);
+}
+
+OnSignal(2)
+{
+  FRM_SetOn(snd1, false);
+  FRM_SetOn(snd2, false);
+  FRM_SetOn(snd3, false);
+}

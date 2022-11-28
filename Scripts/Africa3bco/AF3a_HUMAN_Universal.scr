@@ -1,0 +1,9 @@
+FRAME this;		FRM_GetMyFrame(this);
+
+HUMAN_Suspend(true);
+HUMAN_Kill(this);
+
+OnDeath()
+{
+  EndScript();
+}

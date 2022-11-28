@@ -1,0 +1,44 @@
+// Alarmer na Zacatku mapy - na Alarm pribehnou dalsi
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;		FRM_FindFrame(S1,"Z_Al01");
+Frame S2;		FRM_FindFrame(S2,"Z_Al02");
+Frame S3;		FRM_FindFrame(S3,"Z_Al03");
+Frame S4;		FRM_FindFrame(S4,"Z_Al04");
+Frame S5;		FRM_FindFrame(S5,"Z_Al05");
+Frame S6;		FRM_FindFrame(S6,"Z_Al06");
+Frame S7;		FRM_FindFrame(S7,"Z_Al07");
+Frame S8;		FRM_FindFrame(S8,"Z_Al08");
+
+Integer AlarmerVyber;
+	AlarmerVyber = _RandomInt(3);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Alarm (_SignalReceived(1))
+{
+Delay(30000);
+If(AlarmerVyber == 0){  SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);}
+  // Od skalky
+If(AlarmerVyber == 1){  SendSignal(S4, 1);SendSignal(S5, 1);SendSignal(S6, 1);}
+  // Od Potoka
+If(AlarmerVyber == 2){  SendSignal(S7, 1);SendSignal(S8, 1);}
+                    // Od potoka od skalky
+If(AlarmerVyber == 3)
+{  
+SendSignal(S1, 1);
+SendSignal(S2, 1);
+SendSignal(S3, 1);
+SendSignal(S4, 1);
+SendSignal(S5, 1);  // A tak jsme se nasrali vsichni... lol
+SendSignal(S6, 1);
+SendSignal(S7, 1);
+SendSignal(S8, 1);
+}
+EndScript();
+}
+
+
+

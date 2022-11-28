@@ -1,0 +1,151 @@
+// 05_G45 - In the Underground ammo storage
+// -----------------------------------------------------
+
+Block
+{
+Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f045");
+
+Integer AIEvent;
+Integer AIStyle;
+
+HUMAN_SETSIGHTRANGE(110);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+SendSignal(Reinf, 3);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETSIGHTRANGE(265);
+HUMAN_SETHEARRANGE(80);
+AIEvent = _GetAlarmType();
+AIStyle = _RandomInt(2);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+
+If(AIStyle == 0)
+{
+HUMAN_SETMODE_Stand();
+}
+
+Else
+{
+HUMAN_SETMODE_Crouch();
+}
+}
+
+If((AIEvent == 4) OR (AIEvent == 8))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+
+If(AIStyle == 0)
+{
+HUMAN_SETMODE_Stand();
+}
+
+Else
+{
+HUMAN_SETMODE_Crouch();
+}
+}
+
+If(AIEvent == 32)
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+}
+
+If(AIEvent == 64)
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+HUMAN_SETMODE_Run();
+}
+
+If(AIEvent == 256)
+{
+HUMAN_SETMODE_Walk();
+
+If(AIStyle == 0)
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+}
+
+Else
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+}
+}
+
+If(AIEvent == 512)
+{
+HUMAN_SETMODE_Silence();
+HUMAN_SETMODE_Crouch();
+
+If(AIStyle == 0)
+{
+HUMAN_SETAIMODE_Defensive();
+}
+
+Else
+{
+HUMAN_SETAIMODE_Zombie();
+}
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETHEARRANGE(180);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 20))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%nudazed3", 1000, 1000, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

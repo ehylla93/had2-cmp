@@ -1,0 +1,35 @@
+// Reinforcement 
+
+Block
+{
+ 
+
+Frame C1;	FRM_FindFrame(C1,"AF2_92");
+Frame C2;	FRM_FindFrame(C2,"AF2_117");
+Frame C3;	FRM_FindFrame(C3,"AF2_123");
+Frame C4;	FRM_FindFrame(C4,"AF2_129");
+Frame C5;	FRM_FindFrame(C5,"AF2_146");
+Frame C6;	FRM_FindFrame(C6,"AF2_147");
+Frame C7;	FRM_FindFrame(C7,"AF2_149");
+Frame C8;	FRM_FindFrame(C8,"AF2_150");
+ 
+
+ 
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+ 
+
+Whenever Reinforcement (_SignalReceived(1))
+{
+SendSignal(C1, 1);SendSignal(C2, 1);SendSignal(C3, 1);SendSignal(C4, 1);SendSignal(C5, 1);
+SendSignal(C6, 1);SendSignal(C7, 1);SendSignal(C8, 1);
+goto END;
+}
+
+
+Label END:
+
+

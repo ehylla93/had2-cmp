@@ -1,0 +1,38 @@
+// Obj 2 - Destroy all enemy Planes
+// -------------------------------------
+
+Block
+{
+Frame L01;	FRM_FindFrame(L01,"la_ju");
+Frame L02;	FRM_FindFrame(L02,"la_macchi01");
+Frame L03;	FRM_FindFrame(L03,"la_macchi02");
+Frame L04;	FRM_FindFrame(L04,"la_macchi03");
+Frame L05;	FRM_FindFrame(L05,"la_macchi04");
+Frame L06;	FRM_FindFrame(L06,"la_macchi05");
+Frame L07;	FRM_FindFrame(L07,"la_macchi06");
+Frame L08;	FRM_FindFrame(L08,"la_macchi07");
+Frame L09;	FRM_FindFrame(L09,"la_macchi08");
+Frame L10;	FRM_FindFrame(L10,"la_macchi09");
+Frame L11;	FRM_FindFrame(L11,"la_macchi10");
+
+SetObjectiveStatus(2, 4);
+}
+
+Whenever obj1 (_SignalReceived(1))
+{
+SetObjectiveStatus(2, 0);
+goto END;
+}
+Whenever Planes_Destroyed (((((((((((_Actor_GetState(L01) == 0) And (_Actor_GetState(L02) == 0 )) And (_Actor_GetState(L03) == 0 )) And (_Actor_GetState(L04) == 0 )) And (_Actor_GetState(L05) == 0 )) And (_Actor_GetState(L06) == 0 )) And (_Actor_GetState(L07) == 0 )) And (_Actor_GetState(L08) == 0 )) And (_Actor_GetState(L09) == 0 )) And (_Actor_GetState(L10) == 0 )) And (_Actor_GetState(L11) == 0 )) 
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(09991912);
+Delay(3500);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+goto end;
+}
+
+
+
+Label end:

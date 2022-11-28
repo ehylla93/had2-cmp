@@ -1,0 +1,25 @@
+block{
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME letcnt;		FRM_FindFrame(letcnt, "dummy_letcnt");
+  FRAME hadice;		FRM_FindFrame(hadice, "m_af1_hadice_");
+  FRAME nadrz;		FRM_FindFrame(nadrz, "m_nadrz");
+  INTEGER exploded		= 0;
+}
+
+OnSignal(10){
+  HUMAN_Kill(this);
+}
+
+OnDeath(){
+  block{
+    exploded = 1;
+    FRM_CreateParticle(53, this);
+    FRM_SetOn(hadice, false);
+    PlaySound(6, 2);
+    MakeExplosion(this, 1500000, 8000);		// odremovat
+  }
+  SendSignal(letcnt, 1);
+  MakeExplosion(nadrz, 150000, 8000);		// odremovat
+//  SendSignal(nadrz, 2);
+  EndScript();
+}

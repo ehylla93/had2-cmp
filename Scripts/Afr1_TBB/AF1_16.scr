@@ -1,0 +1,71 @@
+// Jeep2, enemy driver
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  INTEGER firstalarm				= 0;
+
+  FRAME posadka1;				FRM_FindFrame(posadka1, "AF1_17");
+  FRAME posadka2;				FRM_FindFrame(posadka2, "AF1_18");
+  FRAME uder2;				FRM_FindFrame(uder2, "AF1_13");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("tank2 driver: death");
+  SendSignal(uder2, 8);
+  EndScript();
+}
+
+OnSignal(5)
+{
+  HUMAN_DriveNearPlayer(48);
+  HUMAN_SETSIGHTRANGE(10000);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  SendSignal(posadka1, 1);
+  SendSignal(posadka2, 1);
+  goto END;
+}
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    HUMAN_DriveNearPlayer(48);
+    SendSignal(posadka1, 1);
+    SendSignal(posadka2, 1);
+    firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+  HUMAN_DriveNearPlayer(48);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+  goto END;
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("la_Jeepsas_02",  true, 0);
+goto END;
+
+Label END:

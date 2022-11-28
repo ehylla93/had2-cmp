@@ -1,0 +1,74 @@
+// Africa(Oasis) Objectives - OBJ4 (DOCUMENTS)
+// -----------------------------------------------------------
+// 1) Use Radio
+// 2) Defend the Oasis - Cancelled
+// 3) Destroy the enemy Tank
+// 4) Find Documents
+// 5) Znicte pancejrova vozidla
+// 6) Zabijte Nepritele
+// -----------------------------------------------------------
+
+Block
+{
+Frame H1g1;	FRM_FindFrame(H1g1,"A5_G50");
+Frame H1g2;	FRM_FindFrame(H1g2,"A5_G51");
+Frame H1g3;	FRM_FindFrame(H1g3,"A5_G52");
+Frame H1g4;	FRM_FindFrame(H1g4,"A5_G53");
+Frame H1g5;	FRM_FindFrame(H1g5,"A5_G54");
+Frame H1g6;	FRM_FindFrame(H1g6,"A5_G55");
+Frame Documents;
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+
+SetObjectiveStatus(4, 0);
+goto END;
+}
+
+// ------------------------------------
+
+Whenever ALARM (_SignalReceived(1))
+{
+SendSignal(H1g1, 1);
+SendSignal(H1g2, 1);
+SendSignal(H1g3, 1);
+SendSignal(H1g4, 1);
+SendSignal(H1g5, 1);
+SendSignal(H1g6, 1);
+goto END;
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(14992804);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);
+Delay(3500);
+SetObjectiveStatus(4, 0);
+SUBTITLES_SetOn(0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Label END:

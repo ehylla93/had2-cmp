@@ -1,0 +1,176 @@
+// Tank 2 (La_tiger_2) Ridic
+// ----------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba  - shooting close by
+SetAlarmType(2,1); //slysim strelbu  - shooting
+SetAlarmType(4,0); //kroky         - hear steps
+SetAlarmType(8,0); //zvuky by use  - sounds by "use"
+SetAlarmType(16,0); //exploze  - explosion (does not work in MP)
+SetAlarmType(32,0); //vidi     - see
+SetAlarmType(64,1); //jsem zranen      - gets injured
+SetAlarmType(128,1); //zeskriptu       - from script
+SetAlarmType(256,1); //pratelska strelba - friendly fire
+SetAlarmType(512,0); //vidim flakotu  - see a dead body
+
+Integer Jedu;
+}
+
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_DriveNearPlayer(80);
+Jedu = _RandomInt(3);
+
+If(Jedu == 0)
+{
+goto Trasa0;
+}
+
+If(Jedu == 1)
+{
+goto Trasa1;
+}
+
+If(Jedu == 2)
+{
+goto Trasa2;
+}
+}
+
+Whenever Player (_PlayerInRange(1000))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_2", 1, 0);
+Jedu = _RandomInt(3);
+
+If(Jedu == 0)
+{
+goto Trasa0;
+}
+
+If(Jedu == 1)
+{
+goto Trasa1;
+}
+
+If(Jedu == 2)
+{
+goto Trasa2;
+}
+}
+
+OnSignal(2)
+{
+HUMAN_Drive("tank02_al02", 80);
+HUMAN_Drive("tank02_01", 20);
+goto END;
+}
+
+OnSignal(3)
+{
+Jedu = _RandomInt(3);
+
+If(Jedu == 0)
+{
+goto Trasa0;
+}
+
+If(Jedu == 1)
+{
+goto Trasa1;
+}
+
+If(Jedu == 2)
+{
+goto Trasa2;
+}
+}
+
+//-----------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+Label Trasa0:
+HUMAN_Drive("o1_act1_03", 70);
+HUMAN_SetAlarm(0);
+HUMAN_Drive("tank02_01", 15);
+HUMAN_Drive("tank01_al01", 15);
+HUMAN_Drive("o1_act1_02", 20);
+Jedu = _RandomInt(3);
+
+If(Jedu == 0)
+{
+goto Trasa0;
+}
+
+If(Jedu == 1)
+{
+goto Trasa1;
+}
+
+If(Jedu == 2)
+{
+goto Trasa2;
+}
+
+Label Trasa1:
+HUMAN_Drive("o1_act1_03", 70);
+HUMAN_SetAlarm(0);
+HUMAN_Drive("o1_act1_02", 15);
+HUMAN_Drive("o1_act1_03", 15);
+HUMAN_Drive("o1_act1_04", 15);
+HUMAN_Drive("o2_act1_04", 15);
+HUMAN_Drive("o2_act1_03", 15);
+HUMAN_Drive("o1_act1_04", 15);
+Jedu = _RandomInt(3);
+
+If(Jedu == 0)
+{
+goto Trasa0;
+}
+
+If(Jedu == 1)
+{
+goto Trasa1;
+}
+
+If(Jedu == 2)
+{
+goto Trasa2;
+}
+
+
+Label Trasa2:
+HUMAN_Drive("o1_act1_03", 70);
+HUMAN_SetAlarm(0);
+HUMAN_Drive("o1_act1_02", 15);
+HUMAN_Drive("tank01_01", 25);
+HUMAN_Drive("tank01_al01", 20);
+Jedu = _RandomInt(3);
+
+If(Jedu == 0)
+{
+goto Trasa0;
+}
+
+If(Jedu == 1)
+{
+goto Trasa1;
+}
+
+If(Jedu == 2)
+{
+goto Trasa2;
+}
+
+
+Label END:

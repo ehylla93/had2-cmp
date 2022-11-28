@@ -1,0 +1,29 @@
+// Player Detector at Fuel Tanks 
+// ----------------------------------------
+
+Block
+{
+Frame Bomb1;		FRM_FindFrame(Bomb1, "04_Bomb_01");
+Frame Bomb2;		FRM_FindFrame(Bomb2, "04_Bomb_02");
+
+Frame PD_Z06;		FRM_FindFrame(PD_Z06, "06_Player_Detect");
+Frame me;			FRM_GetMyFrame(me);
+Frame Get_Player;
+}
+
+// ----------------------------------------
+
+Whenever Ftanks_Planted ((_Actor_GetState(Bomb1) == 1) And (_Actor_GetState(Bomb2) == 1))
+{
+SendSignal(PD_Z06, 1);
+EndScript();
+}
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 30))
+{
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990432, 5, 30);
+Delay(500);
+SendSignal(Bomb1, 1);
+SendSignal(Bomb2, 1);
+}

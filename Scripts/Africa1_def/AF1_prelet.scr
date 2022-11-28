@@ -1,0 +1,93 @@
+// AF1_prelet 
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame obj1;	FRM_FindFrame(obj1,"obj1");
+Frame af1_10;
+	FRM_FindFrame(af1_10, "AF1_10");
+Frame af1_11;
+	FRM_FindFrame(af1_11, "AF1_11");
+	Frame af1_12;
+	FRM_FindFrame(af1_12, "AF1_12");
+Frame af1_13;
+	FRM_FindFrame(af1_13, "AF1_13");
+	Frame af1_14;
+	FRM_FindFrame(af1_14, "AF1_14");
+Frame af1_15;
+	FRM_FindFrame(af1_15, "AF1_15");
+Frame af1_30;
+	FRM_FindFrame(af1_30, "AF1_30");
+	Frame af1_31;
+	FRM_FindFrame(af1_31, "AF1_31");
+Frame af1_32;
+	FRM_FindFrame(af1_32, "AF1_32");
+Frame af1_33;
+	FRM_FindFrame(af1_33, "AF1_33");
+	Frame af1_34;
+	FRM_FindFrame(af1_34, "AF1_34");
+	Frame af1_35;
+	FRM_FindFrame(af1_35, "AF1_35");
+	Frame af1_36;
+	FRM_FindFrame(af1_36, "AF1_36");
+Frame af1_37;
+	FRM_FindFrame(af1_37, "AF1_37");
+Frame af1_38;
+	FRM_FindFrame(af1_38, "AF1_38");
+Frame af1_39;
+	FRM_FindFrame(af1_39, "AF1_39");
+Frame af1_40;
+	FRM_FindFrame(af1_40, "AF1_40");
+Frame af1_41;
+	FRM_FindFrame(af1_41, "AF1_41");
+Frame af1_42;
+	FRM_FindFrame(af1_42, "AF1_42");
+	Frame af1_43;
+	FRM_FindFrame(af1_43, "AF1_43");
+Frame af1_44;
+	FRM_FindFrame(af1_44, "AF1_44");
+Frame af1_45;
+	FRM_FindFrame(af1_45, "AF1_45");
+	Frame af1_46;
+	FRM_FindFrame(af1_46, "AF1_46");
+	Frame af1_47;
+	FRM_FindFrame(af1_47, "AF1_47");
+}
+// -------------------------------------------------------------------------------------------------------------
+//  
+Whenever AF1_prelet (_SignalReceived(1))
+{
+	Block
+	{
+	SendSignal(af1_10, 1);
+	SendSignal(af1_11, 1);
+	SendSignal(af1_12, 1);
+	SendSignal(af1_13, 1);
+	SendSignal(af1_14, 1);
+	SendSignal(af1_15, 1);
+	SendSignal(af1_30, 1);
+	SendSignal(af1_31, 1);
+	SendSignal(af1_32, 1);
+	SendSignal(af1_33, 1);
+	SendSignal(af1_34, 1);
+	SendSignal(af1_35, 1);
+	SendSignal(af1_36, 1);
+	SendSignal(af1_37, 1);
+	SendSignal(af1_38, 1);
+	SendSignal(af1_39, 1);
+	SendSignal(af1_40, 1);
+	SendSignal(af1_41, 1);
+	SendSignal(af1_42, 1);
+	SendSignal(af1_43, 1);
+	SendSignal(af1_44, 1);
+	SendSignal(af1_45, 1);
+	SendSignal(af1_46, 1);
+	SendSignal(af1_47, 1);
+	 
+	}
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose

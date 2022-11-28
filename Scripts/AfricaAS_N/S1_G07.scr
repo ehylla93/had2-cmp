@@ -1,0 +1,99 @@
+// Straz u Brany 3A
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1,"Cp_Brana1");
+Frame Cp2;		FRM_FindFrame(Cp2,"Cp_Brana_LevyKryt");
+Frame Cp3;		FRM_FindFrame(Cp3,"Cp_Brana3");
+Frame Brana;		FRM_FindFrame(Brana,"Brana2");
+Frame Opel;		FRM_FindFrame(Opel,"Opel_01");
+Frame Bomba;		FRM_FindFrame(Bomba,"Bomb_01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+integer AIEvent;
+
+Integer Defence;
+	Defence = _RandomInt(2);
+
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f026");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+AIEvent =_GetAlarmType();
+
+If ((((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==4)) OR (AIEvent==256))
+{
+
+HUMAN_SETAIMODE_Defensive();
+
+If(Defence==0)
+{
+HUMAN_MoveToFrame(Opel, 2);
+}
+If(Defence==1)
+{
+HUMAN_MoveToFrame(Opel, 8);
+}
+If(Defence==2)
+{
+HUMAN_MoveToFrame(Brana, 10);
+}
+HUMAN_TurnAt(Bomba);
+HUMAN_WeaponUp(1);
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))  // Od Generatoru
+{
+HUMAN_Suspend(0);
+goto END;
+}
+
+Whenever Palim (_SignalReceived(2))  // Od Detectoru Bomby
+{
+HUMAN_Attack(Bomba, 7000);
+HUMAN_SETAIMODE_Aggressive();
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(200);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

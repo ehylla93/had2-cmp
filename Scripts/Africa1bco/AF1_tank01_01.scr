@@ -1,0 +1,74 @@
+// T1, 1
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  INTEGER firstalarm				= 0;
+
+  FRAME posadka1;				FRM_FindFrame(posadka1, "AF1_tank01_03");
+  FRAME posadka2;				FRM_FindFrame(posadka2, "AF1_tank01_02");
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("panzer01",  true, 0);
+  HUMAN_Drive("tank01_01", 50);
+  HUMAN_Drive("tank01_02", 50);
+  HUMAN_SETSIGHTRANGE(10000);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  goto END;
+}
+
+OnDeath(){
+  printf("tank2 driver: death");
+  EndScript();
+}
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    HUMAN_DriveNearPlayer(20);
+    SendSignal(posadka1, 1);
+    SendSignal(posadka2, 1);
+    firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+  HUMAN_DriveNearPlayer(20);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+  goto END;
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_Drive("tank01_01", 50);
+  HUMAN_Drive("tank01_02", 50);
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("La_tiger_7",  true, 0);
+goto END;
+
+Label END:

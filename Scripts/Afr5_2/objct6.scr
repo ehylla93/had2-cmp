@@ -1,0 +1,112 @@
+// Obj 6 - Aquire the Code Tables
+// ------------------------------------
+
+Block
+{
+	Frame Documents;
+
+	Frame Of01;		FRM_FindFrame(Of01, "03_G34");
+	Frame Of02;		FRM_FindFrame(Of02, "03_G29");
+	Frame Of03;		FRM_FindFrame(Of03, "08_G92");
+	Frame Of04;		FRM_FindFrame(Of04, "09_G122");
+	Frame Of05;		FRM_FindFrame(Of05, "09_G109");
+	Frame Of06;		FRM_FindFrame(Of06, "07_G77");
+	Frame Obj7;		FRM_FindFrame(Obj7, "obj7");
+
+	Integer CTables;	CTables = _RandomInt(6);
+
+	SetWhenever(Lost, 0);
+	SetWhenever(Found2, 0);
+	SetWhenever(Found, 0);
+
+	If(CTables == 0)
+	{
+		HUMAN_RemoveItemsFromStore(Of02, 280);
+		HUMAN_RemoveItemsFromStore(Of03, 280);
+		HUMAN_RemoveItemsFromStore(Of04, 280);
+		HUMAN_RemoveItemsFromStore(Of05, 280);
+		HUMAN_RemoveItemsFromStore(Of06, 280);
+	}
+
+	If(CTables == 1)
+	{
+		HUMAN_RemoveItemsFromStore(Of01, 280);
+		HUMAN_RemoveItemsFromStore(Of03, 280);
+		HUMAN_RemoveItemsFromStore(Of04, 280);
+		HUMAN_RemoveItemsFromStore(Of05, 280);
+		HUMAN_RemoveItemsFromStore(Of06, 280);
+	}
+
+	If(CTables == 2)
+	{
+		HUMAN_RemoveItemsFromStore(Of01, 280);
+		HUMAN_RemoveItemsFromStore(Of02, 280);
+		HUMAN_RemoveItemsFromStore(Of04, 280);
+		HUMAN_RemoveItemsFromStore(Of05, 280);
+		HUMAN_RemoveItemsFromStore(Of06, 280);
+	}
+
+	If(CTables == 3)
+	{
+		HUMAN_RemoveItemsFromStore(Of01, 280);
+		HUMAN_RemoveItemsFromStore(Of02, 280);
+		HUMAN_RemoveItemsFromStore(Of03, 280);
+		HUMAN_RemoveItemsFromStore(Of05, 280);
+		HUMAN_RemoveItemsFromStore(Of06, 280);
+	}
+
+	If(CTables == 4)
+	{
+		HUMAN_RemoveItemsFromStore(Of01, 280);
+		HUMAN_RemoveItemsFromStore(Of02, 280);
+		HUMAN_RemoveItemsFromStore(Of03, 280);
+		HUMAN_RemoveItemsFromStore(Of04, 280);
+		HUMAN_RemoveItemsFromStore(Of06, 280);
+	}
+	
+	If(CTables == 5)
+	{
+		HUMAN_RemoveItemsFromStore(Of01, 280);
+		HUMAN_RemoveItemsFromStore(Of02, 280);
+		HUMAN_RemoveItemsFromStore(Of03, 280);
+		HUMAN_RemoveItemsFromStore(Of04, 280);
+		HUMAN_RemoveItemsFromStore(Of05, 280);
+	}
+}
+
+Whenever Active (_SignalReceived(7))
+{
+	SetObjectiveStatus(6, 0);
+	SetWhenever(Found, 1);
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 280, Documents))
+{
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(59999802);
+	SendSignal(Obj7, 1);
+	Delay(3500);
+	SetObjectiveStatus(6, 1);
+	SUBTITLES_SetOn(0);
+	SetWhenever(Lost, 1);
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 280, Documents))
+{
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(04990880);
+	Delay(3500);
+	SetObjectiveStatus(6, 0);
+	SUBTITLES_SetOn(0);
+	SetWhenever(Found2, 1);
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 280, Documents))
+{
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(04990826);
+	Delay(3500);
+	SetObjectiveStatus(6, 1);
+	SUBTITLES_SetOn(0);
+	SetWhenever(Lost, 1);
+}

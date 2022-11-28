@@ -1,0 +1,114 @@
+// AF1_ee
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME m01;			FRM_FindFrame(m01, "AF1_21");
+FRAME jeep;			FRM_FindFrame(jeep, "la_Jeepsas_01");
+FRAME fire_portal;		FRM_FindFrame(fire_portal, "dummy_fire_portal");
+FRAME ee1;			FRM_FindFrame(ee1, "ee_01");
+FRAME ee2;			FRM_FindFrame(ee2, "ee_02");
+FRAME ee3;			FRM_FindFrame(ee3, "ee_03");
+FRAME lh_ee1;		
+FRAME rh_ee1;		
+FRAME lh_ee2;		
+FRAME rh_ee2;		
+FRAME lh_ee3;		
+FRAME rh_ee3;		
+FRAME barel1;		FRM_FindFrame(barel1, "m_barel_L29");
+FRAME barel2;		FRM_FindFrame(barel2, "m_barel_L28");
+FRAME camera_ee;		FRM_FindFrame(camera_ee, "camera_ee");
+FRAME camera_old;
+FRAME dummy_shake;	FRM_FindFrame(dummy_shake, "dummy_c_shake");
+
+FRAME armor01;		FRM_FindFrame(armor01, "la_RedArmor_01");
+FRAME armor02;		FRM_FindFrame(armor02, "la_RedArmor_02");
+FRAME armor03;		FRM_FindFrame(armor03, "la_RedArmor_03");
+FRM_SetOn(armor01, false);
+FRM_SetOn(armor02, false);
+FRM_SetOn(armor03, false);
+
+INTEGER fp;
+
+INTEGER mrtvi_panaci		= 0;
+INTEGER panaci_tady		= 0;
+INTEGER jeep_tuhej		= 0;
+INTEGER jeep_tady		= 0;
+
+Whenever mrtvolaci (!_ACTOR_GetState(m01))
+{
+  printf("ee_panaci tuzi");
+  mrtvi_panaci = 1;
+}
+
+Whenever mrtvolaci_here (_FrameInRange(m01) < 2)
+{
+  printf("ee_panaci shromazdeni");
+  panaci_tady = 1;
+}
+
+Whenever jp (!_ACTOR_GetState(jeep))
+{
+  printf("ee_panaci shromazdeni");
+  jeep_tuhej = 1;
+}
+
+Whenever jp_here (_FrameInRange(jeep) < 0.05)
+{
+  printf("ee_panaci shromazdeni");
+  jeep_tady = 1;
+}
+
+Whenever player(_PlayerInRange(5))
+{
+  goto ACTIVATED;
+}
+
+goto End;
+//Delay(20000);
+
+Label ACTIVATED:
+  printf("ee_activated");
+  FRM_GetActiveCamera(camera_old);
+  CSC_FadeOut(100);
+  FRM_SetActiveCamera(camera_ee);
+  CSC_FadeIn(100);
+  FRM_CreateIndexedParticle(115, fire_portal, fp);
+  PlaySound(12, 8); 
+  block
+  {
+    FRM_FindFrame(lh_ee1, "ee_01.wt");
+    FRM_FindFrame(rh_ee1, "ee_01.wt1");
+    FRM_FindFrame(lh_ee2, "ee_02.wt");
+    FRM_FindFrame(rh_ee2, "ee_02.wt1");
+    FRM_FindFrame(lh_ee3, "ee_03.wt");
+    FRM_FindFrame(rh_ee3, "ee_03.wt1");
+    SendSignal(dummy_shake, 0);
+    SendSignal(ee1, 1);
+    SendSignal(ee2, 1);
+    SendSignal(ee3, 1);
+    FRM_SetOn(armor01, true);
+    FRM_SetOn(armor02, true);
+    FRM_SetOn(armor03, true);
+    FRM_CreateParticle(25, lh_ee1);
+    FRM_CreateParticle(25, rh_ee1);
+    FRM_CreateParticle(25, lh_ee2);
+    FRM_CreateParticle(25, rh_ee2);
+    FRM_CreateParticle(25, lh_ee3);
+    FRM_CreateParticle(25, rh_ee3);
+    FRM_FindFrame(lh_ee1, "");
+    FRM_FindFrame(rh_ee1, "");
+    FRM_FindFrame(lh_ee2, "");
+    FRM_FindFrame(rh_ee2, "");
+    FRM_FindFrame(lh_ee3, "");
+    FRM_FindFrame(rh_ee3, "");
+    FRM_CreateParticle(96, barel1);
+    FRM_CreateParticle(96, barel2);
+  }
+  Delay(5000);
+  CSC_FadeOut(100);
+  FRM_SetActiveCamera(camera_old);
+  CSC_FadeIn(100);
+  FRM_FindFrame(camera_old, "");
+  Delay(10000);
+  FRM_FinishIndexedParticle(fp);
+
+Label END:

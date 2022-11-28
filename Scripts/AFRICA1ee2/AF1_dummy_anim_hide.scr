@@ -1,0 +1,18 @@
+// AF1_dummy_anim_hide - hide aircraft at the end
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME letadlo;			FRM_FindFrame(letadlo, "dummy_let_anim");		// letadlo pobocnika schummana
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever detect (_FrameInRange(letadlo) < 10){
+  printf("DUMAC JE NINY V RANGI 10 METRU");
+  SendSignal(letadlo, 30);
+  EndScript();
+}
+
+SetWheneverTime(detect, 300);
+
+// -------------------------------------------------------------------------------------------------------------

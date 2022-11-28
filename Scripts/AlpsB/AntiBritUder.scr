@@ -1,0 +1,70 @@
+// Prepadeni Britu Nemci , Briti musi zvitezit !!!
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame N1;		FRM_FindFrame(N1,"BK_G01");
+Frame N2;		FRM_FindFrame(N2,"BK_G02");
+Frame N3;		FRM_FindFrame(N3,"BK_G03");
+Frame N4;		FRM_FindFrame(N4,"BK_G04");
+Frame N5;		FRM_FindFrame(N5,"BK_G05");
+Frame N6;		FRM_FindFrame(N6,"BK_G06");
+Frame N7;		FRM_FindFrame(N7,"BK_G07");
+Frame N8;		FRM_FindFrame(N8,"BK_G08");
+
+Frame B1;		FRM_FindFrame(B1,"Brit01");
+Frame B2;		FRM_FindFrame(B2,"Brit02");
+Frame B3;		FRM_FindFrame(B3,"Brit03");
+Frame B4;		FRM_FindFrame(B4,"Brit04");
+Frame B5;		FRM_FindFrame(B5,"Brit05");
+Frame B6;		FRM_FindFrame(B6,"Brit06");
+Frame B7;		FRM_FindFrame(B7,"Brit07");
+Frame B8;		FRM_FindFrame(B8,"Brit08");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Vybihame(_SignalReceived(1))
+{
+SendSignal(N1, 1);
+SendSignal(N2, 1);
+Delay(2000);
+SendSignal(N3, 1);
+Delay(100);
+SendSignal(N1, 2);
+Delay(500);
+SendSignal(N4, 1);
+Delay(800);
+SendSignal(B1, 1);
+Delay(400);
+SendSignal(N3, 2);
+Delay(1500);
+SendSignal(N5, 1);
+SendSignal(N6, 1);
+Delay(800);
+SendSignal(N7, 1);
+SendSignal(N8, 1);
+Delay(800);
+SendSignal(N5, 2);
+SendSignal(N6, 2);
+Delay(1000);
+SendSignal(N7, 2);
+SendSignal(N8, 2);
+goto END;
+}
+
+OnSignal(5)
+{
+Delay(12000);
+SendSignal(B5, 16);
+Delay(200);
+SendSignal(B2, 16);
+Delay(4000);
+SendSignal(B4, 16); // takze tady uz by meli byt Briti 8, 7, 5, 4, 3 a 2 nasedly v jeepech. Zbyva tedy Brit 1 a Brit 6.
+SendSignal(B1, 16);
+SendSignal(B6, 16);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

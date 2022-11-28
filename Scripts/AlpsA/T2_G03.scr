@@ -1,0 +1,58 @@
+// Kanoner Panzeru (La_tiger_2)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto TurnAt;
+}
+
+Whenever jedem (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_2", 1, 2);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETSIGHTRANGE(150);
+goto END;
+}
+
+OnSignal(3)
+{
+goto TurnAt;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label TurnAt:
+HUMAN_TurnAtNearestPlayer();
+Delay(2000);
+HUMAN_TurnAtNearestPlayer();
+Delay(2000);
+goto TurnAt;
+
+Label END:

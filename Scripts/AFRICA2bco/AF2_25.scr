@@ -1,0 +1,71 @@
+// La_tiger_ driver
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  INTEGER firstalarm				= 0;
+
+  FRAME posadka1;				FRM_FindFrame(posadka1, "AF1_37");
+  FRAME posadka2;				FRM_FindFrame(posadka2, "AF1_38");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("tank driver: death");
+  EndScript();
+}
+
+OnSignal(1)	// received from AF2_24_A1
+{
+HUMAN_DriveNearPlayer(25);
+SendSignal(posadka1, 1);
+SendSignal(posadka2, 1);
+SetAlarmType(1023, true);
+SetAlarmType(768, true);
+HUMAN_SETSIGHTRANGE(400);
+HUMAN_SETHEARRANGE(300);
+goto END;
+}
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    HUMAN_DriveNearPlayer(25);
+    SendSignal(posadka1, 1);
+    SendSignal(posadka2, 1);
+    firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+  HUMAN_DriveNearPlayer(25);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+  goto END;
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(300);
+  HUMAN_SETHEARRANGE(300);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("Tank5",  true, 0);
+goto END;
+
+Label END:

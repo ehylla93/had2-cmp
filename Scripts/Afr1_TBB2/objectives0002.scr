@@ -1,0 +1,97 @@
+// Obj 2 - Destroy all enemy Fuel Tanks
+// -------------------------------------
+
+Block
+{
+Frame m_nadrz;	FRM_FindFrame(m_nadrz,"m_nadrz");
+Integer IntP01;		IntP01=1;
+Frame m_nadrz2;	FRM_FindFrame(m_nadrz2,"m_nadrz2");
+Integer IntP02;		IntP02=1;
+Frame m_nadrz3;	FRM_FindFrame(m_nadrz3,"m_nadrz3");
+Integer IntP03;		IntP03=1;
+Frame m_nadrz4;	FRM_FindFrame(m_nadrz4,"m_nadrz4");
+Integer IntP04;		IntP04=1;
+Frame m_nadrz5;	FRM_FindFrame(m_nadrz5,"m_nadrz5");
+Integer IntP05;		IntP05=1;
+
+
+Integer Actor_Eliminated;	Actor_Eliminated = 0;
+
+SetObjectiveStatus(2, 0);
+}
+
+// -------------------------------------
+
+Delay(500);
+goto Ftankkill;
+
+Label Ftankkill:
+
+Block
+{
+
+If(IntP01 == 1)
+{
+
+If(_Actor_GetState(m_nadrz)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP01=0;	
+}	
+}
+
+If(IntP02 == 1)
+{
+
+If(_Actor_GetState(m_nadrz2)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP02=0;	
+}	
+}
+
+If(IntP03 == 1)
+{
+
+If(_Actor_GetState(m_nadrz3)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP03=0;	
+}	
+}
+
+If(IntP04 == 1)
+{
+
+If(_Actor_GetState(m_nadrz4)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP04=0;	
+}	
+}
+
+If(IntP05 == 1)
+{
+
+If(_Actor_GetState(m_nadrz5)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP05=0;	
+}	
+}
+
+
+}
+
+If(Actor_Eliminated == 5)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05011015);
+SetObjectiveStatus(2, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Delay(2500);
+goto Ftankkill;

@@ -1,0 +1,81 @@
+// AF1_19
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME sleep;			FRM_FindFrame(sleep, "af1_dummy18");
+  INTEGER Atpos			= 0;
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("19: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(20)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_Suspend(false);
+    SetWhenever(player, false);
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(100);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("19: ", Atype);
+  }
+
+  if((((!atpos) AND (Atype != 32)) AND (Atype !=64)) AND (Atype != 1) ){
+    HUMAN_SetMODE_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_Move("AF1_19_alert");
+    atpos = 1;
+    goto END;
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(768, false);		// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SETMODE_Walk();
+  Delay(1000);
+//Label LOOP:
+//  HUMAN_Move("AF1_18_02");
+//  HUMAN_Move("AF1_19_01");
+//  HUMAN_Move("AF1_19_02");
+//  HUMAN_Move("AF1_18_03");
+//goto LOOP;
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_Suspend(true);
+  HUMAN_SetEvents(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetMODE_Crouch();
+  HUMAN_WeaponOnArm(true);
+
+Label END:
