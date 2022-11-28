@@ -1,8 +1,0 @@
-frame me;	FRM_FindFrame(me,"k_opelNA_");
-
-Onsignal (1)
-{
-FRM_SetAnimation(me,"%%sklopka.i3d",7);
-delay (510);
-FRM_SetAnimation(me,"",7);
-}

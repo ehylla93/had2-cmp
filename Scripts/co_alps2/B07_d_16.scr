@@ -1,9 +1,0 @@
-
-frame door;		FRM_FindFrame(door, "B07_d_16");
-
-Whenever nlok(_ACTOR_GetState(door)==1)
-{
-DOOR_Lock(door,0);
-}
-
-SetWheneverTime(nlok, 1000);

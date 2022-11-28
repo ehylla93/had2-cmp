@@ -1,5 +1,0 @@
-FRAME	doktor;		  	FRM_FindFrame(doktor, "AF3a_doktor");
-FRAME af19;			FRM_FindFrame(af19, "AF3a_19");
-
-Whenever inrange (_PlayerInRange(20)){
-}

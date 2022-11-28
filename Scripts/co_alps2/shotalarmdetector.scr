@@ -1,7 +1,0 @@
-
-Frame shotalarm;		FRM_FindFrame(shotalarm,"shotalarm");
-
-Whenever go(_PlayerInRange(4))
-{
-SendSignal (shotalarm,2);
-}

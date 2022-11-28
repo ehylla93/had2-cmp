@@ -1,7 +1,0 @@
-
-frame OBJ;		FRM_FindFrame(OBJ, "dummy_objectives");
-
-Whenever FAIL ( _PlayerInRange(70))
-{
-  SendSignal(OBJ, 25);
-}

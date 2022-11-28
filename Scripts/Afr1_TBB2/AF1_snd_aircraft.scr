@@ -1,4 +1,0 @@
-LABEL LOOP:
-  PlaySound(1, 8);
-  Delay(4000);
-goto LOOP;

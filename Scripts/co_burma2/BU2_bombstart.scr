@@ -1,7 +1,0 @@
-
-OnSignal(1)	// received from Allied 01
-{
-	AddPauseSound("a_b2gras_");
-	AddPauseSound("a_tgrass_");
-	PlaySound(6, 9);
-}

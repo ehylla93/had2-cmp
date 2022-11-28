@@ -1,6 +1,0 @@
-Frame af20;	FRM_FindFrame(af20, "AF1_20");
-
-Whenever activate(_PlayerInRange(3))
-{
-	SendSignal(af20, 1);
-}

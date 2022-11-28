@@ -1,8 +1,0 @@
-//Spawn1 (Enemy side)
-Block
-{
-Frame detect;	FRM_FindFrame (detect,"zone1");
-}
-goto end;
-
-label end:

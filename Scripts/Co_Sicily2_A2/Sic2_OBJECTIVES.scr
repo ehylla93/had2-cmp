@@ -1,6 +1,0 @@
-Block
-  {
-    SetObjectiveStatus(1, 0);	// INPROGRES - start initialization
-    SetObjectiveStatus(2, 0);	// INPROGRES - start initialization
-    SetObjectiveStatus(3, 0);	// INPROGRES - start initialization
-  }

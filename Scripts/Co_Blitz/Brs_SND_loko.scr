@@ -1,9 +1,0 @@
-frame sound;		frm_findframe(sound,"S_lokotka2");
-
-integer rnd_pause;
-
-label loop:
-rnd_pause= _randomint(45000) + 45000;
-delay(rnd_pause);
-FRM_SetOn(sound, true);
-goto loop; 

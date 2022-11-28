@@ -1,9 +1,0 @@
-
-Block {
-frame ci3;	FRM_FindFrame (ci3,"ci_03");
-}
-
-Whenever kokot(_SignalReceived(1))
-{
-FRM_MorphSpeech(ci3, 14992840, 10, 40);
-}

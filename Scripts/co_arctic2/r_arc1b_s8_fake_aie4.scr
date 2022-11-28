@@ -1,9 +1,0 @@
-
-Block {
-frame S8;		FRM_FindFrame(S8, "Static_8");
-}
-
-Whenever FUCKE (_PlayerInRange(3))
-{
-  SendSignal(S8, 9);
-}
