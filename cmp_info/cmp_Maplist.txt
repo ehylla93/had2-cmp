@@ -541,7 +541,7 @@
 <OBJECTIVE allied_text="15501" axis_text="15501" value="03"/>
 <OBJECTIVE allied_text="8105"  axis_text="8105"  value="03"/>
 </MAP>
-<MAP name="Li(Supercharge)Day" dir="Co_Libye1_SCD"> 
+<MAP name="Li1(Supercharge)Day" dir="Co_Libye1_SCD"> 
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="10"/>
 <ITEM item_id="2" item_num="1" ammo_num="15"/>
