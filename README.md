@@ -263,7 +263,7 @@ MAPS
 
 	***HDD*** (#1)
 	  Italy1			by culticaxe
-          Italy2			by culticaxe
+	  Italy2			by culticaxe
 
 ---------------------------------------------
  #127 Maps
