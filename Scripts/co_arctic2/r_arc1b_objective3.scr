@@ -1,0 +1,136 @@
+// MAIN for OBJ
+// objective 3 info and changing for mission Arctic1B
+
+//  OBJ 1 - Photograph
+//  OBJ 2 - Survey the complex
+//  OBJ 3 - Return to the surface
+//  OBJ 4 - Place the explosives
+//  OBJ 5 - (optional) Go unoticed by the patrols (savevalue ... 5)
+//  OBJ 6 - (optional) all explosives  (savevalue ... 6)
+
+Block 
+{
+SetObjectiveStatus(1, 0);	// Photograph
+SetObjectiveStatus(2, 0);	// Survey the complex
+SetObjectiveStatus(3, 0);	// Place the explosives
+//SetObjectiveStatus(4, 0);	// Return to the surface
+
+integer counter = 0;
+integer OBJ1 = 0;
+integer OBJ2 = 0;
+integer OBJ3 = 0;
+integer OBJ4 = 0;
+integer OBJ5 = 0;
+integer OBJ6 = 0;
+integer gv=1;
+
+frame BUM;		FRM_FindFrame(BUM, "dummy_objective5");
+frame text;		FRM_FindFrame(text, "text");
+
+SetWhenever (OBJ_3, false);
+}
+
+goto END;
+
+OnSignal(8)
+// Search Complex - OBJ2
+{
+OBJ2 = 1;
+If ((OBJ1 == 1) AND (OBJ4 == 1))
+{
+SetObjectiveStatus(4, 0);
+SendSignal(text, 7);
+SetObjectiveStatus(2, 1);
+Delay(4000);
+SendSignal(text, 5);
+SetWhenever (OBJ_3, true);
+goto END;
+}
+Else {
+//OBJ2 = 1;
+SetObjectiveStatus(2, 1);
+SendSignal(text, 7);
+goto END;
+}
+}
+
+OnSignal(7)
+// Photograph related - OBJ1
+{
+OBJ1 = 1;
+If ((OBJ2 == 1) AND (OBJ4 == 1))
+{
+SetObjectiveStatus(4, 0);
+SendSignal(text, 5);
+SetObjectiveStatus(1, 1);		// Succes  
+SetWhenever (OBJ_3, true);
+goto END;
+}
+Else {
+//OBJ1 = 1;
+SetObjectiveStatus(1, 1);
+goto END;
+}
+}
+
+OnSignal(12)
+// Place explosives - OBJ4
+{
+OBJ4 = 1;
+goto Odskok;
+}
+
+OnSignal(13)
+// Explosives removed - OBJ4
+{
+OBJ4 = 2;
+goto Odskok1;
+}
+
+label Odskok:
+If (((OBJ1 == 1) AND (OBJ2 == 1)) AND (OBJ4 == 1))       
+{
+SetObjectiveStatus(4, 0);
+SetObjectiveStatus(3, 1);
+SendSignal(text, 5);
+SetWhenever (OBJ_3, true);
+goto END;
+}
+Else {
+SetObjectiveStatus(3, 1);
+goto END;
+}
+
+label Odskok1:
+SetWhenever (OBJ_3, false);
+block {
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 2);
+SetObjectiveStatus(4, 4);
+}
+goto END;
+
+
+// Return on surface - OBJ3
+Whenever OBJ_3 (_MP_AllTeamMembersAreInRange(1, 5))
+{
+SendSignal(BUM, 17);
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(02990407);  //"OBJECTIVE ACCOMPLISHED: REJOINED THE SQUAD ON THE SURFACE."
+Delay(4000);
+SUBTITLES_SetOn(False);
+gv=_LoadGameValue(88);
+if(gv==0)
+{
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(02990450); 	//"OPTIONAL OBJECTIVE COMPLETED: REMAINED UNDETECTED."
+Delay(4000);
+SetObjectiveStatus(5, 0);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(False);
+}
+SetObjectiveStatus(4, 1);
+EndScript();
+}
+  
+Label END:

@@ -1,0 +1,26 @@
+Frame ovl;		FRM_FindFrame(ovl,"ovladacblockeru");
+SetWhenever(player,0);
+goto end;
+
+
+Whenever activate(_SignalReceived(1))
+{
+SetWhenever(player,1);
+goto end;
+}
+
+
+Whenever player(_PlayerInRange(30))
+{
+SendSignal (ovl,4);
+goto end;
+}
+
+
+
+
+
+
+
+
+Label end:

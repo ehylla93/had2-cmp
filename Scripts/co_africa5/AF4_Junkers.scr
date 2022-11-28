@@ -1,0 +1,27 @@
+// AF5_ju88 - junkers
+// -----------------------------------------------------------------------------------------------------------------
+
+Block {
+FRAME schumann;			FRM_FindFrame(schumann, "AF4_23");
+FRAME assasin;			FRM_FindFrame(assasin, "AF4_31");
+}
+
+// -----------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(10992003);		//"OBJECTIVE FAILED: JUNKERS DESTROYED."
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(1, 3);	
+	EndScript();
+}
+
+Whenever PIR (_FrameInRange(schumann) < 30) {
+			SendSignal(assasin, 20);
+			goto end;
+		}
+
+// -----------------------------------------------------------------------------------------------------------------
+
+Label end:

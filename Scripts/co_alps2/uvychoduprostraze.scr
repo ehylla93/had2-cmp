@@ -1,0 +1,28 @@
+// Trigger for soldiers at the gate
+
+Block {
+SetWhenever (sutu2,0);
+Frame al_15;		FRM_FindFrame(al_15,"al2_15");
+Frame al_16;		FRM_FindFrame(al_16,"al2_16");
+}
+
+Whenever sutu(_PlayerInRange(4))
+{
+SendSignal (al_15,6);
+SendSignal (al_16,6);
+goto end;
+}
+
+Whenever sutu2(_PlayerInRange(4))
+{
+SendSignal (al_15,7);
+SendSignal (al_16,7);
+delay(500);
+}
+
+OnSignal(5)
+{
+SetWhenever(sutu2, 1);
+}
+
+label end:

@@ -1,0 +1,36 @@
+frame me;	FRM_GetMyFrame(me);
+integer x;
+Frame z2_flak1;	FRM_FindFrame(z2_flak1, "z2_flak1");
+Frame z2_flak2;	FRM_FindFrame(z2_flak2, "z2_flak2");
+Frame z2_ven1;	FRM_FindFrame(z2_ven1, "z2_ven1");
+Frame z2_ven2;	FRM_FindFrame(z2_ven2, "z2_ven2");
+Frame z2_ven3;	FRM_FindFrame(z2_ven3, "z2_ven3");
+Frame z2_ven4;	FRM_FindFrame(z2_ven4, "z2_ven4");
+Frame z2_ven5;	FRM_FindFrame(z2_ven5, "z2_ven5");
+Frame z2_zed1;	FRM_FindFrame(z2_zed1, "z2_zed1");
+Frame z2_domek2;	FRM_FindFrame(z2_domek2, "z2_domek2");
+Frame z2_agresor1;	FRM_FindFrame(z2_agresor1, "z2_agresor1");
+Frame z4_venkur;	FRM_FindFrame(z4_venkur, "z4_venkur");
+
+
+
+
+
+Whenever go(_ACTOR_GetState(me)<>4)
+{
+DOOR_Lock(me, 0);
+sendsignal (z2_flak1,1);
+sendsignal (z2_flak2,1);
+sendsignal (z2_ven1,1);
+sendsignal (z2_ven2,1);
+sendsignal (z2_ven3,1);
+sendsignal (z2_ven4,1);
+sendsignal (z2_ven5,1);
+sendsignal (z2_zed1,1);
+sendsignal (z2_domek2,1);
+Sendsignal (z2_agresor1,1);
+Sendsignal (z4_venkur,1);
+}
+
+
+SetWheneverTime(go,100);

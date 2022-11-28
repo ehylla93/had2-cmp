@@ -1,0 +1,18 @@
+//OBJ5 - succ
+Block
+{
+Frame officer;	FRM_FindFrame(officer, "C5_G38");
+//Frame obj; FRM_FindFrame(obj, "AF2_obj");
+Frame texty;
+	FRM_FindFrame(texty, "AF2_texty");
+SetObjectiveStatus(5, 0);
+}
+
+
+Whenever officerdead ( _Actor_GetState(officer)==0 )
+{
+	SetObjectiveStatus(5, 1);
+	SendSignal(texty, 9);
+	
+	EndScript();
+}

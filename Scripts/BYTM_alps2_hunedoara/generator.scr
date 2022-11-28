@@ -1,0 +1,61 @@
+// Generator
+// ----------------------------------------
+
+Block
+{
+Frame sound1;	FRM_FindFrame(sound1, "S_alarm_fake");
+Frame sound2;	FRM_FindFrame(sound2, "l_vent_2");
+Frame sound3;	FRM_FindFrame(sound3, "l_tety_2");
+Frame reinf;	FRM_FindFrame(reinf, "Reinforcements");
+Frame gen;		FRM_FindFrame(gen, "gen_alarm");
+Frame gen2;		FRM_FindFrame(gen2, "gen_alarm_2");
+Integer switch;
+switch=0;
+}
+
+// ----------------------------------------
+
+OnUse()
+{
+	If(switch==0)
+	{
+		SendSignal(reinf, 1);
+		SendSignal(gen, 1);
+		SendSignal(gen2, 1);
+		switch=1;
+		FRM_SetOn(sound1, 1);
+		goto END;
+	}
+	If(switch==1)
+	{
+		switch=0;
+		FRM_SetOn(sound1, 0);
+		goto END;
+	}
+}
+
+OnSignal(1)		//received from E05, E22, E19, E20 ... (ALARMER)
+{
+	If(switch==0)
+	{
+		Delay(1000);
+		FRM_SetOn(sound1, 1);
+		SendSignal(gen, 1);
+		SendSignal(gen2, 1);
+		SendSignal(reinf, 1);
+		switch=1;
+		goto END;
+	}
+	Else
+	{
+		goto END;
+	}
+}
+	
+// ----------------------------------------
+
+FRM_SetOn(sound1, 0);
+
+// ----------------------------------------
+
+Label END:

@@ -1,0 +1,55 @@
+// b_E05 - MG42_2
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 1);
+
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(40);
+
+Integer a=0;
+
+HUMAN_SETAIMODE_Defensive();
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+if(a==0)
+{
+a=1;
+HUMAN_SetMode_Run();
+HUMAN_Move("MG42_2_exit");
+}
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_Move("MG42_2_exit");
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+}
+
+// ------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

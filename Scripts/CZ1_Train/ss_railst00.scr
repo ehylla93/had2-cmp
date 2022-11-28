@@ -1,0 +1,78 @@
+// ss_railst00
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Integer wait;
+	wait=0;
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f043");
+HUMAN_SETSIGHTRANGE(7);
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Whenever player(_PlayerInRange(20))
+{
+	HUMAN_Suspend(false);
+	GoTo hlidka;
+}
+
+OnSignal(1)	// received from Ge27b_
+{
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ss_railst00_04");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(2)	// received from Ge27b_
+{
+	HUMAN_SETMODE_Guard();
+	GoTo hlidka;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ss_railst00_03");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+Label hlidka:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ss_railst00_01");
+	HUMAN_SetOptimized(2);
+	wait=_RandomInt(5000)+15000;
+	Delay(wait);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ss_railst00_02");
+	HUMAN_SetOptimized(2);
+	wait=_RandomInt(5000)+15000;
+	Delay(wait);
+	GoTo hlidka;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SETSIGHTRANGE(20);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("ss_railst00_03");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+Label end:

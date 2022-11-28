@@ -1,0 +1,4 @@
+// 06_A02 dead allied soldier
+
+Frame this;		FRM_GetMyFrame(this);
+HUMAN_Kill(this);

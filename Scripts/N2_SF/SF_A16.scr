@@ -1,0 +1,118 @@
+// Cpl. Arthur Muncie - Posadka US Haklu 1 
+// -------------------------------------------
+
+Block
+{
+Frame Cum;	FRM_FindFrame(Cum,"Ally_pal03");
+Frame Bez;	FRM_FindFrame(Bez,"US_Hakl1");
+
+Frame C1;	FRM_FindFrame(C1,"MG2");
+Frame C2;	FRM_FindFrame(C2,"Ally_pal03");
+Frame C3;	FRM_FindFrame(C3,"Ally_pal02");
+
+Frame T1;	FRM_FindFrame(T1,"MG2_02");
+Frame T2;	FRM_FindFrame(T2,"MG2_03");
+Frame T3;	FRM_FindFrame(T3,"BR_G10");
+Frame T4;	FRM_FindFrame(T4,"BR_G11");
+Frame T5;	FRM_FindFrame(T5,"BR_G12");
+
+Integer VyberCil;	VyberCil=0;
+}
+
+// --------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("US_Hakl1", 1, 4);
+goto END;
+}
+
+Whenever Vysedam (_SignalReceived(2))
+{
+HUMAN_BoardVehicle("US_Hakl1", 0, 4);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_TurnAt(Cum);
+HUMAN_WeaponUp(1);
+Delay(3000);
+HUMAN_MoveFromFrame(Bez, 4);
+HUMAN_TurnAt(Cum);
+HUMAN_WeaponUp(1);
+HUMAN_Attack(C1, 6000);
+Delay(2000);
+HUMAN_Attack(C2, 2000);
+HUMAN_Attack(C3, 4000);
+goto Palba;
+}
+
+Whenever Suspend (_SignalReceived(9))
+{
+HUMAN_Stop();
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Palba:
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(T1)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T1);
+Delay(200);
+HUMAN_Attack(T1, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(T2)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T2);
+Delay(200);
+HUMAN_Attack(T2, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(T3)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T3);
+Delay(200);
+HUMAN_Attack(T3, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(T4)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T4);
+Delay(200);
+HUMAN_Attack(T4, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(T5)==0){VyberCil=_RandomInt(4);Goto Palba;}
+
+HUMAN_TurnAt(T5);
+Delay(200);
+HUMAN_Attack(T5, 3000);
+VyberCil=_RandomInt(5);
+}
+
+goto Palba;
+
+Label END:

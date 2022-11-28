@@ -1,0 +1,125 @@
+// Tento magor bude pochodovat po pile jako hlidka
+//// This is swamill guard 
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+integer AIEvent;
+integer b;	b=0;
+
+  frame kuk_right;		FRM_FindFrame(kuk_right, "transfer4");
+  frame kuk_left;		FRM_FindFrame(kuk_left, "transfer5");
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f056");
+
+
+ HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Guard();
+
+}
+
+
+//------------------------------------------------------------------------------------
+
+
+
+label HP1:
+
+  HUMAN_Move("Dog_0106");
+goto HP_rand;
+
+label HP2:
+
+  HUMAN_Move("HP2_5");  	
+
+goto HP_rand;
+
+
+label HP3:
+  HUMAN_Move("Dog_0103");
+
+goto HP_rand;
+
+
+label HP4:
+  HUMAN_Move("HP2_6");
+
+goto HP_rand;
+
+
+label HP_rand:
+
+	HUMAN_SetAnim("%%turnleft",200,200,0);
+	Delay(2800);
+	HUMAN_SetAnim("%%turnright",200,200,0);
+	Delay(3700);
+
+  integer pom;
+  pom=_RandomInt(4);
+  if (pom==0) {goto HP1;}
+  if (pom==1) {goto HP2;}  
+  if (pom==2) {goto HP3;}  
+  if (pom==3) {goto HP4;}
+
+goto HP_rand;
+
+OnAlarm()
+{
+block
+{
+  DisableSignals(1);
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Hlidka u Pily: ", AIEvent);
+}
+HUMAN_SetAnim("",50,50,0);
+HUMAN_WeaponOnArm(1);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (b==0)
+{
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+ HUMAN_Move("Dog_0104");
+b=1;
+
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(0);
+  goto HP_rand;
+}
+
+OnDeath()
+{
+  SendSignal(reinfo, 0);
+DisableSignals(1);
+  Printf("pila_hlidka is DEAD!!!");
+  EndScript();
+}
+
+
+
+label end:

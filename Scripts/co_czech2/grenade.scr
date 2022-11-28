@@ -1,0 +1,11 @@
+
+Block {
+frame me;	FRM_GetMyFrame(me);
+}
+
+Whenever fuck(_SignalReceived(1))
+{
+delay (2000);
+SetActorState(me, 1);
+FRM_SetOn(me, 0);
+}

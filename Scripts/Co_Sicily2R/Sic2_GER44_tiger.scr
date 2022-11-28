@@ -1,0 +1,35 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Osadka Tigra (strelec z machinegunu) Ger44 - strili si kam AI urci, ve scriptu me nezajima
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Block
+{
+  HUMAN_SetOptimized(2);
+  SetAlarmType(1023, False); 
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator treti vlny
+Onsignal(1)		// aktivace 
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Tiger", true, 1);	
+  SetAlarmType(1023, True); 
+} 
+
+OnAlarm()  
+  {
+    Printf("machinguner Tigra presel do AI");      
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+  SetAlarmType(1023, True); 
+} 
+
+label TheEnd:

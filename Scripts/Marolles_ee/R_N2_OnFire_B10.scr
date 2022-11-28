@@ -1,0 +1,23 @@
+
+Frame 	A1;		FRM_FindFrame(A1, "Ally_1");
+Frame 	A2;		FRM_FindFrame(A2, "Ally_2");
+Frame 	A3;		FRM_FindFrame(A3, "Ally_3");
+Frame 	A4;		FRM_FindFrame(A4, "Ally_4");
+Frame 	A5;		FRM_FindFrame(A5, "Ally_5");
+
+Frame Blue;		FRM_FindFrame(Blue, "Blue_10");
+
+integer RND;
+
+Whenever YES ( _FrameInRange(Blue)<4 )
+{
+  RND = _RandomInt(2);
+  If (RND == 0) { SendSignal(A5, 10); }
+  RND = _RandomInt(2);
+  If (RND == 0) { SendSignal(A1, 10); }
+  RND = _RandomInt(2);
+  If (RND == 0) { SendSignal(A2, 10); }
+  RND = _RandomInt(2);
+  If (RND == 0) { SendSignal(A4, 24); } //!
+}
+

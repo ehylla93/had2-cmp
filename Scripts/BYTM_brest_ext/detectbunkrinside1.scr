@@ -1,0 +1,18 @@
+Frame zb_mechanik1;	FRM_FindFrame (zb_mechanik1,"zb_mechanik1");
+Frame zb_mechanik2;	FRM_FindFrame (zb_mechanik2,"zb_mechanik2");
+Frame zb_dok2_1;	FRM_FindFrame (zb_dok2_1,"zb_dok2_1");
+Frame detectbkecaci1;	FRM_FindFrame (detectbkecaci1,"detectbkecaci1");
+
+
+Whenever je(_PlayerInRange(6))
+{
+
+SendSignal (zb_mechanik1,1);
+SendSignal (zb_mechanik2,1);
+SendSignal (zb_dok2_1,1);
+SendSignal (detectbkecaci1,1);
+
+}
+
+
+SetWheneverTime(je, 300);

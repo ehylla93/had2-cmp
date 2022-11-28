@@ -1,0 +1,23 @@
+// Obj 4 - Capture Freiburg
+//------------------------------------
+
+Block
+{
+Frame F1;	FRM_FindFrame(F1, "FBG_01"); 
+
+
+SetObjectiveStatus(4, 0);
+}
+
+//------------------------------------
+
+Whenever Freiberg_Captured (_Actor_GetState(F1)==0)  
+{
+
+SetObjectiveStatus(4, 1);
+GoTo end;
+}
+
+//--------------------------------------------------------
+
+Label end:

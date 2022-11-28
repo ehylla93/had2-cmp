@@ -1,0 +1,39 @@
+// Alarm switch script
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Integer alarm;
+	alarm=0;
+Frame distro;
+	FRM_FindFrame(distro, "Alarmdistro");
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnUse()
+{
+	If(alarm==0)
+	{
+		SendSignal(distro, 1);		// signal na zapnutie alarmu
+		alarm=1;			// alarm sa zapol
+		GoTo end;
+	}
+
+	If(alarm==1)
+	{
+		SendSignal(distro, 2);		// signal na vypnutie alarmu
+		alarm=0;			// alarm sa vypol
+		GoTo end;
+	}
+}
+
+OnSignal(1)	// alarm sa zapol
+{
+	alarm=1;
+	GoTo end;
+}
+
+OnSignal(2)	// alarm sa vypol
+{
+	alarm=0;
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Label end:

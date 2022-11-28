@@ -1,0 +1,32 @@
+// BU2_Type97_04 - machinegun
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+block {
+Frame r37;		FRM_FindFrame(r37, "BU2_R37");
+Frame r38;		FRM_FindFrame(r38, "BU2_R38");
+Frame r39;		FRM_FindFrame(r39, "BU2_R39");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnUse()
+{
+	SendSignal(r37, 1);
+	SendSignal(r38, 1);
+	SendSignal(r39, 1);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(r37, 2);
+	SendSignal(r38, 2);
+	SendSignal(r39, 2);
+	GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

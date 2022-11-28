@@ -1,0 +1,68 @@
+// 05_SdKfz251
+// ----------------------------------------
+
+Block
+{
+Frame soldier1;		FRM_FindFrame(soldier1, "05_SdKfz251_01_01");
+Frame soldier2;		FRM_FindFrame(soldier2, "05_SdKfz251_01_02");
+Frame soldier3;		FRM_FindFrame(soldier3, "05_SdKfz251_01_03");
+Frame soldier4;		FRM_FindFrame(soldier4, "05_SdKfz251_01_04");
+Frame soldier5;		FRM_FindFrame(soldier5, "05_SdKfz251_01_05");
+Frame soldier6;		FRM_FindFrame(soldier6, "05_SdKfz251_01_06");
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+Frame pz3;			FRM_FindFrame(pz3, "05_pzIII_01");
+SetWhenever("Player_To_Close", 0);
+}
+FRM_SetOn(MyFRM, 0);
+goto end;
+
+// ----------------------------------------
+
+// received from reinf4_2
+OnSignal(1)
+{
+FRM_SetOn(MyFRM, 1);
+SendSignal(soldier2, 1);
+SendSignal(soldier3, 1);
+SendSignal(soldier4, 1);
+SendSignal(soldier5, 1);
+SendSignal(soldier6, 1);
+Delay(500);
+SendSignal(soldier1, 1);
+goto end;
+}
+
+OnSignal(2)   
+{
+goto GetOut;
+}
+
+Whenever "Player_To_Close" ((_MP_IsTeamMemberInRange(1, 10)) or (_FrameInRange(pz3) < 6))
+{
+printf("Player To Close (pz3, SdKfZ)");
+goto GetOut;
+}
+
+OnSignal(3)
+{
+SetWheneverTime("Player_To_Close", 3000);
+SetWhenever("Player_To_Close", 1);
+goto end;
+}
+
+Label GetOut:
+	DisableWhenevers(1);
+	DisableSignals(1);
+	SendSignal(soldier1, 2);
+	Delay(500);
+	SendSignal(soldier6, 2);
+	SendSignal(soldier4, 2);
+	Delay(900); 
+	SendSignal(soldier3, 2);
+	SendSignal(soldier2, 2);
+	Delay(1200); 
+	SendSignal(soldier5, 2);
+
+// ----------------------------------------
+
+Label end:

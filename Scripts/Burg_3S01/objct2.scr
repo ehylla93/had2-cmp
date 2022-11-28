@@ -1,0 +1,25 @@
+// Obj 2 - Destroy all enemy tanks
+// -------------------------------------
+
+Block
+{
+Frame T1;		FRM_FindFrame(T1,"B02_Panzer_01");
+Frame T2;		FRM_FindFrame(T2,"B02_Panzer_02");
+Frame T3;		FRM_FindFrame(T3,"SF_Panther_01");
+Frame T4;		FRM_FindFrame(T4,"SF_Tiger_01");
+Frame Sps;			FRM_FindFrame(Sps, "Spawnzones");
+
+SetObjectiveStatus(2, 0);
+}
+
+Whenever Tanks_Destroyed ((((_Actor_GetState(T1) == 0) And (_Actor_GetState(T2) == 0)) And (_Actor_GetState(T3) == 0)) And (_Actor_GetState(T4) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999802);
+SendSignal(Sps, 1);
+Delay(3500);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

@@ -1,0 +1,9 @@
+// subtitles bridge secured
+
+Onsignal(21)	// from SAS6
+{
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(56999905);
+Delay(3000);
+SUBTITLES_SetOn(false);
+}

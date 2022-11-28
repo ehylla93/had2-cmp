@@ -1,0 +1,669 @@
+0; ***** TABLE DESCRIPTION *****
+
+1183	"Munitions : pistolet de détresse"
+6701	"P08 avec silencieux"
+6702	"Pistolet de détresse "
+6703	"G43"
+6704	"MAS MLE 36"
+6705	"Panzerschreck"
+6706	"Guérillero"
+6707	"Guérillero"
+6708	"Uniforme d'officier italien"
+6709	"Uniforme italien"
+6710	"SAS blessé"
+6711	"SAS blessé"
+6712	"Soldat allemand"
+6713	"Résistant français"
+6714	"Résistant français"
+6715	"Résistant français"
+6716	"Civil"
+6717	"Tables de codes"
+6730	"Munitions : Panzerschreck"
+6731	"Munitions : G43"
+6732	"Munitions : MAS MLE 36"
+6733	"PAK 40"
+6734	"Casque italien"
+6735	"Casquette d'officier italien"
+6736	"Position de l'émetteur"
+6737	"Epave de bombardier"
+6738	"Cargaison"
+6739	"Fenêtre"
+6740	"Balise"
+6741	"Placer balise"
+6742	"Turban pour civil"
+6743	"Retenez votre souffle"
+6744	"Time remaining:"
+6745	"Limite points:"
+
+7209	"Ordres tactiques"
+; messages
+7290	"Oui !"
+7291	"Non !"
+7292 	"Ennemi en vue !"
+7293	"Des véhicules !"
+7294	"J'ai besoin de renforts !"
+7295	"J'ai besoin d'un transport !"
+7296	"Un médecin !"
+7297	"Tireur d'élite !"
+
+
+;Alps 3_zone
+8750	"ZONE 1 : AXE"
+8751	"ZONE 2"
+8752	"ZONE 3"
+8753	"ZONE 4"
+8754	"ZONE 5 : ALLIES"
+
+
+16100    "Prison libyenne"
+16101    "Chargement de la cargaison"
+16102    "Le calme avant la tempête"
+16103    "Rencontre avec le traître"
+16104    "Arrivée au chantier naval"
+16105    "Artillerie côtière"
+16106    "Sabre Squadron - Fin"
+
+;Alps3_obj 
+
+15001	"Franchissez la gorge avec le char endommagé."
+15002	"Empêchez l'ennemi de franchir la gorge."
+15003	"Détruisez le barrage routier sur le pont."
+15004	"Traversez le pont."
+
+15010	"Empêchez l'ennemi de traverser le pont."
+15011	"Empêchez l'ennemi de détruire le barrage routier."
+15012	"Détruisez le Hakel n°1."
+15013	"Détruisez le Hakel n°2."
+
+;Ardeny1_objective
+15020	"Détruisez le canon de 170 mm à l'est."
+15021	"Détruisez le canon de 170 mm au centre."
+15022	"Détruisez le canon de 170 mm à l'ouest."
+
+15030	"Défendez le canon de 170 mm à l'est."
+15031	"Défendez le canon de 170 mm au centre."
+15032	"Défendez le canon de 170 mm à l'ouest."
+
+
+; Normandy 4 description of the zones
+15300	"ZONE 1 : AXE"
+15301	"ZONE 2"
+15302	"ZONE 3"
+15303	"ZONE 4"
+15304	"ZONE 5 : ALLIES"
+
+
+
+;******** OBJECTIVES *******
+;******** SP OBJECT. + carnage *******
+;France - Brest
+
+15500	"Minez les sous-marins à quai."
+15501	"Rassemblez-vous à l'endroit prévu."
+15502	"Eliminez tous les ennemis."
+15503	"Placez des explosifs sur les réservoirs de carburant."
+15504	"Placez des explosifs sur les générateurs."
+15505	"Tous les membres de l'unité doivent survivre."
+15506	"Placez l'émetteur dans un endroit approprié."
+
+;Africa 1
+15509	"Eliminez un tireur d'élite."
+15510	"Libérez les prisonniers."
+15511	"Escortez les prisonniers jusqu'à l'unité du LRDG."
+15512	"Sortez de la ville pendant la relève des sentinelles."
+15513	"Eliminez tous les ennemis."
+15514	"Détruisez l'émetteur radio ennemi."
+15515	"Endommagez les véhicules de ravitaillement allemands."
+15516	"Tous les membres de l'unité doivent survivre."
+15517	"Assurez-vous que les prisonniers arrivent en sécurité dans le centre-ville."
+15518	"Tuez tous les officiers ennemis."
+15519	"Photographiez les plans de déploiement des unités ennemies."
+
+;Africa 2
+15520	"Frayez-vous un chemin vers l'autre côté de la gorge."
+15521	"Rassemblez-vous à l'endroit prévu avec un véhicule."
+15522	"Eliminez tous les ennemis."
+15523	"Provoquez le plus de dégâts possibles aux véhicules ennemis."
+15524	"Tous les membres de l'unité doivent survivre."
+
+;Africa 3
+15530	"Détruisez l'épave du Liberator."
+15531	"Détruisez la seconde partie du matériel."
+15532	"Rassemblez-vous à l'endroit prévu avec un véhicule en état de marche."
+15533	"Eliminez tous les ennemis."
+15534	"Tous les membres de l'unité doivent survivre."
+15535	"Emparez-vous du poste de contrôle allemand."
+15536	"Tenez le poste de contrôle pendant 3 minutes."
+15537	"Détruisez le tank Tiger enterré."
+15538	"Tuez le commandant de la garnison allemande."
+15539	"Détruisez les fûts de carburant."
+
+
+;Sicily - battery
+15540	"Détruisez le canon n°1."
+15541	"Détruisez le canon n°2."
+15542	"Détruisez le canon n°3."
+15543	"Evacuez le secteur."
+15544	"Eliminez tous les ennemis."
+15545	"Détruisez le dépôt de munitions."
+15546	"Détruisez les défenses antiaériennes (Flak 88)."
+15547	"Détruisez les canons PaK 40."
+15548	"Détruisez les réserves de carburant."
+
+;Sicily - bridge
+15550	"Sécurisez le pont."
+15551	"Détruisez le pont."
+15552	"Eliminez tous les ennemis."
+15553	"Retirez les explosifs du pont."
+15554	"Défendez le pont."
+15555	"Tous les membres de l'unité doivent survivre."
+15556	"Détruisez tous les chars ennemis."
+15557	"Le pont doit rester intact."
+15558	"Rejoignez les autres soldats des SAS."
+
+;Burgundy - ammo
+15560	"Rassemblez-vous à l'endroit prévu."
+15561	"Détruisez le dépôt de munitions."
+15562	"Détruisez le dépôt de carburant."
+15563	"Prenez contact avec les résistants à l'endroit prévu."
+15564	"Eliminez tous les ennemis."
+15565	"Tous les membres de l'unité doivent survivre."
+15566	"Infiltrez la zone de l'entrepôt sans alerter l'ennemi."
+15567	"Placez les explosifs dans la zone de l'entrepôt sans alerter l'ennemi."
+
+;Burgundy - farm
+15570	"Tuez l'officier de la Gestapo."
+15571	"Capturez le collabo français."
+15572	"Eliminez tous les ennemis et nettoyez le secteur."
+15573	"Ne laissez personne s'enfuir."
+15574	"Eliminez tous les ennemis."
+15575	"Le groupe doit se rassembler près du collabo capturé."
+15576	"Obtenez la liste des collaborateurs."
+15577	"Tous les membres de l'unité doivent survivre."
+
+;Burgundy - rescue
+15580	"Sauvez le soldat des SAS et localisez les autres."
+15581	"Libérez le commandant des SAS."
+15582	"Sauvez le reste de l'unité des SAS."
+15583	"Eliminez tous les ennemis."
+15584	"Endommagez l'émetteur radio."
+15585	"Obtenez les tables de codes."
+15586	"Libérez tous les prisonniers."
+15587	"Tous les membres de l'unité doivent survivre."
+15588	"Sauvez le plus de prisonniers possible."
+15600	"Fouillez les cadavres des soldats ennemis pour trouver une clé."
+
+15650	"Temps mission :"
+;****** campaign names ******
+
+16000	"OPERATION AMMOBOX"
+16001	"OPERATION HEAT"
+16002	"OPERATION HUSKY"
+16003	"OPERATION HOUNDSMITH"
+
+
+;****** mission names *******
+
+16010	"OP. AMMOBOX - LES GROS POISSONS"
+16011	"OP. HEAT - LA PETITE SOURIS"
+16012	"OP. HEAT - LA MORSURE DU SERPENT"
+16013	"OP. HEAT - UNE CIBLE FACILE"
+16014	"OP. HUSKY - CHATAIGNE"
+16015	"OP. HUSKY - PONTE GRANDE"
+16016	"OP. HOUNDSMITH - COUP DOUBLE"
+16017	"OP. HOUNDSMITH - LAME DE RASOIR"
+16018	"OP. HOUNDSMITH - ANGES GARDIENS"
+
+
+
+
+;****** MISSION INFO *******
+
+17001	"Opération Ammobox - Les gros poissons"
+17002	"Brest - 20 avril 1942 – 04h50"
+17003	"Nous devons mettre fin aux opérations meurtrières des sous-marins allemands. Nous allons pénétrer dans la base pour placer des explosifs sur tous les sous-marins qui sont à quai. L'effectif de la base est au complet, vous devrez donc opérer avec la plus grande prudence. Une fois la mission accomplie, nous nous rassemblerons sur la zone d'évacuation."
+17004	"Objectifs de mission :"
+17005	"	- Minez les sous-marins à quai."
+17006	"	- Placez l'émetteur."
+17007	"	- Rassemblez-vous à l'endroit prévu."
+17008	""
+17009	""
+
+
+17011	"Opération Heat - La petite souris"
+17012	"Darnis Zarine - 11 octobre 1942 – 05h11"
+17013	"Les Allemands ont emmené l'équipage du bombardier récemment abattu dans le centre-ville pour l'interroger. Il n'y a que des soldats ennemis dans la ville. Nous allons devoir nous frayer un chemin à la force des armes, c'est notre seule chance de parvenir jusqu'à la prison et de libérer les hommes avant qu'ils ne craquent pendant leur interrogatoire." 
+17014	"Objectifs de mission :"
+17015	"	- Libérez les prisonniers."
+17016	"	- Escortez les prisonniers jusqu'à l'unité du LRDG."
+17017	"	- Sortez de la ville pendant la relève des sentinelles."
+17018	""
+17019	""
+
+
+17021	"Opération Heat - La morsure du serpent"
+17022	"Gorge près de Ain Mara - 11 octobre 1942 – 12h24"
+17023	"Devant nous, une gorge est occupée par des unités allemandes engagées sur le front. Elles se regroupent à cet endroit avant de repartir au combat. Nous devons faire en sorte que ces unités ne puissent pas reprendre leurs opérations sur le front."
+17024	"Objectifs de mission :"
+17025	"	- Traversez la gorge."
+17026	"	- Rassemblez-vous à l'endroit prévu avec un véhicule."
+17027	""
+17028	""
+17029	""
+
+
+
+17031	"Opération Heat - Une cible facile"
+17032	"Désert près de Ain Mara - 11 octobre 1942 – 17h30"
+17033	"Nous sommes à proximité d'un Liberator qui a été contraint d'atterrir d'urgence. Nous devons trouver l'épave de l'avion et détruire tout le matériel qui est à bord, il ne doit pas tomber aux mains des experts allemands."
+17034	"Objectifs de mission :"
+17035	"	- Détruisez l'épave du Liberator."
+17036	"	- Détruisez la seconde partie du matériel."
+17037	"	- Rassemblez-vous à l'endroit prévu avec un véhicule."
+17038	""
+17039	""
+
+
+
+17041	"Opération Husky - Châtaigne"
+17042	"Côte de la baie de Syracuse - 9 juillet 1943 – 21h23"
+17043	"Notre unité participe aux préparatifs du débarquement et à la destruction des forces côtières ennemies. Nous devons détruire trois de leurs canons et nous rassembler dans la zone d'évacuation."
+17044	"Objectifs de mission :"
+
+17045	"	- Détruisez le canon n°1"
+17046	"	- Détruisez le canon n°2"
+17047	"	- Détruisez le canon n°3"
+17048	"	- Rassemblez-vous à l'endroit prévu."
+17049	""
+
+
+17051	"Opération Husky - Ponte Grande"
+17052	"Ponte Grande - 11 juillet 1943 – 10h15"
+17053	"Ce pont traverse une gorge infranchissable et permet à l'ennemi d'acheminer des renforts. Nous devons nous frayer un chemin pour le traverser et le détruire."
+17054	"Objectifs de mission :"
+17055	"	- Rejoignez les autres soldats des SAS."
+17056	""
+17057	""
+17058	""
+17059	""
+
+
+
+17061	"Opération Houndsmith - Coup double"
+17062	"Forêt près de Champagne - 4 juillet 1944 – 05h13"
+17063	"Une fois au sol, nous nous rassemblerons à l'endroit prévu. Ensemble, nous essaierons de faire sauter les dépôts de munitions et de carburant des Allemands. Nous rejoindrons ensuite les résistants français."
+17064	"Objectifs de mission :"
+17065	"	- Rassemblez-vous à l'endroit prévu."
+17066	"	- Détruisez le dépôt de munitions."
+17067	"	- Prenez contact avec les résistants à l'endroit prévu."
+17068	""
+17069	""
+
+
+
+17071	"Opération Houndsmith - Lame de rasoir"
+17072	"Ferme près de Champagne - 6 juillet 1944 – 16h10"
+17073	"Notre tâche consiste à éliminer l'officier de la Gestapo qui va diriger l'interrogatoire de nos compagnons capturés. Il doit rencontrer un collaborateur français dans une ferme. Nous allons capturer le collabo et le livrer aux résistants français. Tous les Allemands doivent être éliminés, il ne doit y avoir aucun témoin de cette opération."
+17074	"Objectifs de mission :"
+17075	"	- Eliminez l'officier de la Gestapo."
+17076	"	- Capturez le collabo français."
+17077	"	- Eliminez tous les ennemis et nettoyez le secteur."
+17078	"	- Ne laissez personne s'enfuir."
+17079	""
+
+
+
+17081	"Opération Houndsmith - Anges gardiens"
+17082	"Forêt près de Champagne - 7 juillet 1944 - 20:04"
+17083	"De nombreux compagnons des SAS ont été capturés pendant cette opération. Notre mission consiste à tous les libérer des Allemands."
+17084	"Objectifs de mission :"
+17085	"	- Sauvez le soldat des SAS et localisez les autres."
+17086	"	- Libérez le commandant des SAS."
+17087	"	- Sauvez le plus d'hommes des SAS possible."
+17088	""
+17089	""
+	
+
+
+; ***** NPC NAMES ****
+17500	""
+17501	""
+17502	""
+17503	""
+17504	""
+17505	""
+17506	""
+17507	""
+17508	""
+17509	""
+17510	""
+17511	""
+17512	""
+17513	""
+17514	""
+17515	""
+
+; ***** DIARY ENTRIES *****
+; ***** BREST - LONEWOLF*****
+
+17600	"Je n'aime pas du tout l'endroit dans lequel je suis arrivé. D'un côté il y a les énormes quais de maintenance des sous-marins, de l'autre la caserne allemande. Il y a des dizaines de patrouilles, des projecteurs, des clôtures de barbelés et des hommes postés partout. Au début, je pensais qu'il était impossible d'atteindre les quais, mais j'ai tout de même réussi et j'ai placé des explosifs sur tous les sous-marins qui étaient à quai. J'ai réglé les minuteurs pour me laisser le temps de franchir les positions les mieux défendues de la base avant l'explosion des charges. Si elles avaient explosé plus tôt, les Allemands auraient passé la zone au peigne fin et mes chances de leur échapper auraient été très minces. En souvenir, je leur ai laissé le matériel de navigation pour les bombardiers et des dépôts de carburant en flammes. J'espère que ça leur a fait plaisir."
+17601	""
+17602	""
+17603	""
+17604	""
+
+; ***** BREST - SEVERAL PLAYERS *****
+
+17605	"L'endroit dans lequel nous sommes arrivés n'a rien d'agréable. D'un côté il y a les énormes quais de maintenance des sous-marins, de l'autre la caserne allemande. Il y a des dizaines de patrouilles, des projecteurs, des clôtures de barbelés et des hommes postés partout. Au début, nous pensions qu'il était impossible d'atteindre les quais, mais nous avons tout de même réussi et placé des explosifs sur tous les sous-marins qui étaient à quai. On a réglé les minuteurs pour nous laisser le temps de franchir les positions les mieux défendues de la base avant l'explosion des charges. Si elles avaient explosé plus tôt, les Allemands auraient passé la zone au peigne fin et nos chances de leur échapper auraient été très minces. En souvenir, nous leur avons laissé le matériel de navigation pour les bombardiers et des dépôts de carburant en flammes. Ils apprécieront sûrement."
+17606	""
+17607	""
+17608	""
+17609	""
+
+
+; ***** LIBYA 1 - LONEWOLF *****
+
+17610	"Je ne suis pas en Afrique depuis longtemps, mais je n'ai pas le temps de m'ennuyer. En dehors des opérations fréquentes, des patrouilles et du redéploiement incessant du camp, j'ai toujours quelque chose à faire. Il faut maintenir notre matériel et nos armes en bon état de marche, et dans ces conditions, ce n'est pas facile."
+17611	"Un jour, un rapport nous a annoncé qu'un B-24 Liberator américain venait d'être abattu au-dessus du désert. J'ai été chargé de localiser et de libérer les membres de l'équipage du bombardier, retenus prisonniers à Darnis-Zarine avant de les remettre à mes amis du Long Range Desert Group qui attendaient près de la ville. Je suis entré par l'une des portes dans les remparts de la ville et j'ai progressé dans les rues pour atteindre la prison. J'y ai trouvé deux Américains qui étaient ravis de me voir ! Mais l'heure n'était pas aux discussions et nous avons rejoint sans tarder les hommes du LRDG qui nous attendaient déjà, près des remparts."
+17612	""
+17613	""
+17614	""
+
+; ***** LIBYA 1 - SEVERAL PLAYERS *****
+17615	"Nous ne sommes pas en Afrique depuis longtemps, mais on n'a pas le temps de s'ennuyer. En dehors des opérations fréquentes, des patrouilles et du redéploiement incessant du camp, on a toujours quelque chose à faire. Il faut maintenir notre matériel et nos armes en bon état de marche, et dans ces conditions, ce n'est pas facile."
+17616	"Un jour, un rapport nous a annoncé qu'un B-24 Liberator américain venait d'être abattu au-dessus du désert. On a été chargés de localiser et de libérer les membres de l'équipage du bombardier, retenus prisonnier à Darnis-Zarine avant de les remettre à nos amis du Long Range Desert Group qui attendaient près de la ville. Nous sommes entrés par l'une des portes dans les remparts de la ville et on a progressé dans les rues pour atteindre la prison. Nous y avons trouvé deux Américains qui étaient ravis de nous voir ! Mais l'heure n'était pas aux discussions et on a rejoint sans tarder les hommes du LRDG qui nous attendaient déjà, près des remparts."
+17617	""
+17618	""
+17619	""
+
+
+; ***** LIBYA 2 - LONEWOLF *****
+17620	"Mon voyage m'a ensuite mené de la ville vers la gorge à travers un désert qui n'avait rien de désertique, comme j'ai pu très vite m'en rendre compte. En chemin, je suis tombé sur plusieurs groupes d'Allemands en mouvement et j'ai décidé de faire halte dans un endroit d'où je ne pourrais pas les rater. Je n'avais pas de temps à perdre, le seul moyen d'avancer était de me frayer un chemin à la force des armes. Je mentirais si je vous disais que ce fut facile."
+17621	""
+17622	""
+17623	""
+17624	""
+
+
+; ***** LIBYA 2 - SEVERAL PLAYERS *****
+17625	"Notre voyage nous a ensuite menés de la ville vers la gorge à travers un désert qui n'avait rien de désertique, comme nous avons pu très vite nous en rendre compte. En chemin, nous sommes tombés sur plusieurs groupes d'Allemands en mouvement et on a décidé de faire halte dans un endroit d'où nous ne pourrions pas les rater. On n'avait pas de temps à perdre, le seul moyen d'avancer était de se frayer un chemin à la force des armes. Ce serait mentir que de dire que ce fut facile."
+17626	""
+17627	""
+17628	""
+17629	""
+
+
+; ***** LIBYA 3 - LONEWOLF *****
+17630	"J'ai enfin atteint la zone dans laquelle le Liberator doit se trouver... Malheureusement, les Allemands sont arrivés avant moi. Non seulement ils contrôlent toute la zone autour de l'épave et patrouillent sans cesse, mais ils ont réussi à démonter certains éléments du Liberator, qu'ils ont entreposés dans les ruines de l'ancienne ville. Evidemment, les Allemands ont bouclé la ville avec des patrouilles. Et comme si ça ne suffisait pas, quand j'ai fait sauter le matériel récupéré à bord du Liberator, l'explosion a alerté une unité ennemie qui a bloqué la route menant à la côte. J'ai malgré tout réussi à m'échapper de la zone pour remonter la route au nord vers le point d'évacuation."
+17631	""
+17632	""
+17633	""
+17634	""
+
+; ***** LIBYA 3 - SEVERAL PLAYERS *****
+
+17635	"Nous avons enfin atteint la zone dans laquelle le Liberator doit se trouver... Malheureusement, les Allemands sont arrivés avant nous. Non seulement ils contrôlent toute la zone autour de l'épave et patrouillent sans cesse, mais ils ont réussi à démonter certains éléments du Liberator, qu'ils ont entreposés dans les ruines de l'ancienne ville. Evidemment, les Allemands ont bouclé la ville avec des patrouilles. Et comme si ça ne suffisait pas, quand nous avons fait sauter le matériel pris à bord du Liberator, l'explosion a alerté une unité ennemie qui a bloqué la route menant à la côte. On a malgré tout réussi à s'échapper de la zone pour remonter la route au nord vers le point d'évacuation."
+17636	""
+17637	""
+17638	""
+17639	""
+
+; ***** SICILY 1 - LONEWOLF *****
+
+17640	"Les Alliés se préparent à débarquer en Sicile. Comme ils veulent minimiser les pertes en mer, ils ont chargé plusieurs unités d'endommager ou de détruire l'armement des batteries côtières. Il y a trois canons de gros calibre et des défenses antiaériennes dans mon secteur. Comme toujours lorsqu'on opère sur la côte, j'ai dû affronter une garnison conséquente sur place."
+17641	""
+17642	""
+17643	""
+17644	""
+
+; ***** SICILY 1 - SEVERAL PLAYERS *****
+
+17645	"Les Alliés se préparent à débarquer en Sicile. Comme ils veulent minimiser les pertes en mer, ils ont chargé plusieurs unités d'endommager ou de détruire l'armement des batteries côtières. Il y a trois canons de gros calibre et des défenses antiaériennes dans notre secteur. Comme toujours lorsqu'on opère sur la côte, nous avons dû affronter une garnison conséquente sur place."
+17646	""
+17647	""
+17648	""
+17649	""
+
+; ***** SICILY 2 - LONEWOLF *****
+
+17650	"Au départ, ma mission consistait à détruire le pont traversant la gorge. Cependant, lorsque je suis arrivé au point de rendez-vous avec les autres soldats, l'un d'entre eux m'a appris que tous les autres ponts des environs avaient été détruits. Il fallait donc préserver ce dernier pont à tout prix et les rôles ont été inversés. Quand nous tentions de traverser le pont, nous étions repoussés par le feu nourri des Italiens, qui ont même essayé de faire sauter les charges explosives sur les piliers. Ils recevaient sans arrêt des renforts et on s'est dit qu'il devait y en avoir un sacré paquet, mais nous avons pu les repousser et nous avons désamorcé les explosifs. Nos hommes ont subi de lourdes pertes dans cette opération et beaucoup y ont laissé leur peau. J'espère au moins qu'ils ne seront pas morts pour rien et qu'ils n'auront pas sacrifié leur vie en vain."
+17651	""
+17652	""
+17653	""
+17654	""
+
+; ***** SICILY 2 - SEVERAL PLAYERS *****
+
+17655	"Au départ, notre mission consistait à détruire le pont traversant la gorge. Cependant, une fois arrivés au point de rendez-vous avec les autres soldats, l'un d'entre eux nous a appris que tous les autres ponts des environs avaient été détruits. Il fallait donc préserver ce dernier pont à tout prix et les rôles ont été inversés. Quand on tentait de traverser le pont, on était repoussés par le feu nourri des Italiens, qui ont même essayé de faire sauter les charges explosives sur les piliers. Ils recevaient sans arrêt des renforts et on s'est dit qu'il devait y en avoir un sacré paquet, mais nous avons pu les repousser et nous avons désamorcé les explosifs. Nos hommes ont subi de lourdes pertes dans cette opération et beaucoup y ont laissé leur peau. Espérons au moins qu'ils ne seront pas morts pour rien et qu'ils n'auront pas sacrifié leur vie en vain."
+17656	""
+17657	""
+17658	""
+17659	""
+
+; ***** BURGUNDY 1 - LONEWOLF *****
+
+17660	"Plusieurs dizaines de soldats des SAS ont atterri dans les environs du village de Champagne. Leur mission consistait à saboter les opérations en territoire ennemi. La localisation du dépôt de munitions allemand n'a pas posé de problème. En revanche, j'ai eu beaucoup plus de mal à pénétrer dans le complexe et à placer les explosifs au bon endroit. Le bruit de l'explosion a porté jusqu'aux forêts des environs, indiquant aux résistants qu'il était l'heure de se retrouver à l'endroit prévu pour décider de la suite des opérations."
+17661	""
+17662	""
+17663	""
+17664	""
+
+; ***** BURGUNDY 1 - SEVERAL PLAYERS *****
+
+17665	"Plusieurs dizaines de soldats des SAS ont atterri dans les environs du village de Champagne. Leur mission consistait à saboter les opérations en territoire ennemi. La localisation du dépôt de munitions allemand n'a pas posé de problème. En revanche, on a eu beaucoup plus de mal à pénétrer dans le complexe et à placer les explosifs au bon endroit. Le bruit de l'explosion a porté jusqu'aux forêts des environs, indiquant aux résistants qu'il était l'heure de se retrouver à l'endroit prévu pour décider de la suite des opérations."
+17666	""
+17667	""
+17668	""
+17669	""
+
+; ***** BURGUNDY 2 - LONEWOLF *****
+
+17670	"La situation se complique. Les résistants m'ont demandé de les aider à localiser et à capturer le collaborateur français. Cet homme, un certain Mourier, fournissait des informations à la Gestapo, dénonçait les sympathisants des Alliés, sabotait certaines opérations et écoutait la radio des Alliés. Les résistants voulaient donc sa tête sur un plateau d'argent, et ce n'est pas étonnant. Mourier a rencontré un officier de la Gestapo dans une ferme. Ce dernier était en route pour l'interrogatoire de nos compagnons des SAS prisonniers. J'étais déjà en position près de la ferme. J'ai pénétré dans les lieux après leur rendez-vous, tué les gardes et capturé Mourier. Je l'ai ensuite remis à la résistance. Aucun tribunal ne lui fera mieux justice que les résistants."
+17671	""
+17672	""
+17673	""
+17674	""
+
+; ***** BURGUNDY 2 - SEVERAL PLAYERS *****
+
+17675	"La situation se complique. Les résistants nous ont demandé de les aider à localiser et à capturer le collaborateur français. Cet homme, un certain Mourier, fournissait des informations à la Gestapo, dénonçait les sympathisants des Alliés, sabotait certaines opérations et écoutait la radio des Alliés. Les résistants voulaient donc sa tête sur un plateau d'argent, et ce n'est pas étonnant. Mourier a rencontré un officier de la Gestapo dans une ferme. Ce dernier était en route pour l'interrogatoire de nos compagnons des SAS prisonniers. Nous étions déjà en position près de la ferme. On a pénétré dans les lieux après leur rendez-vous, tué les gardes et capturé Mourier. Nous l'avons ensuite remis à la résistance. Aucun tribunal ne lui fera mieux justice que les résistants."
+17676	""
+17677	""
+17678	""
+17679	""
+
+; ***** BURGUNDY 3 - LONEWOLF *****
+
+17680	"J'ai gagné un temps précieux en tuant l'officier de la Gestapo et j'ai pu atteindre le camp des SAS, qui était caché dans la forêt. Pourtant, les Allemands l'avaient déjà découvert et avaient capturé tous ceux qu'ils n'avaient pas déjà tués. Mes amis étaient retenus prisonniers dans le camp afin de subir un interrogatoire, il n'y avait donc pas de temps à perdre. J'ai tiré une fusée de détresse : c'était le signal pour que les résistants fassent sauter les réserves de carburant, attirant ainsi l'attention de l'ennemi. J'ai foncé pour trouver les prisonniers tout en éliminant les gardes. Je ne voulais pas qu'ils puissent m'attaquer par derrière au mauvais moment."
+17681	""
+17682	""
+17683	""
+17684	""
+
+; ***** BURGUNDY 3 - SEVERAL PLAYERS *****
+
+17685	"Nous avons gagné un temps précieux en tuant l'officier de la Gestapo et on a pu atteindre le camp des SAS, qui était caché dans la forêt. Pourtant, les Allemands l'avaient déjà découvert et avaient capturé tous ceux qu'ils n'avaient pas déjà tués. Nos amis étaient retenus prisonniers dans le camp afin de subir un interrogatoire, il n'y avait donc pas de temps à perdre. On a tiré une fusée de détresse : c'était le signal pour que les résistants fassent sauter les réserves de carburant, attirant ainsi l'attention de l'ennemi. On a foncé pour trouver les prisonniers tout en éliminant les gardes. On ne voulait pas qu'ils puissent nous attaquer par derrière au mauvais moment."
+17686	""
+17687	""
+17688	""
+17689	""
+
+; ****************************
+; ***** CAMPAIGN SCREENS *****
+; ****************************
+
+; LOFOTS
+17750	"Les îles Lofoten, à 1350 kilomètres au nord de la base navale britannique de Scapa Flow, ont été occupées par les Allemands pendant la Seconde Guerre mondiale. A première vue, elles ne semblaient pas avoir une grande importance stratégique, mais elles constituèrent une précieuse source de matières premières pour le Reich pendant la guerre. Rien d'étonnant à ce qu'elles fussent la cible de l'une des premières missions des unités spéciales, dont la mission était d'endommager les bâtiments industriels et d'établir le contact avec la résistance locale."
+
+; AFRICA
+17751	"C'est en Afrique du Nord que le capitaine David Stirling fonda l'unité des SAS (Special Air Service). Après quelques échecs lors des premières opérations, cette unité accumula les succès. Elle balayait les bases aériennes allemandes, détruisant des dizaines d'avions au sol et de bâtiments, semant le chaos et la panique dans les rangs de l'armée allemande, qui ne pouvait jamais vraiment savoir si elle pouvait continuer à avancer en toute sécurité."
+
+; NORWAY
+17752	"A la fin de l'année 1941, le nouveau cuirassé allemand Tirpitz (sistership du Bismarck) devint une réelle menace pour les convois arctiques et les forces navales alliées, qui devaient déployer leurs navires pour traquer le cuirassé. Il se cachait dans les fjords norvégiens et il était impossible pour les navires de guerre britanniques de l'attaquer. Même l'intervention de bombardiers se solda par un échec. Ce n'est qu'en septembre 1943 que des sous-marins de poche de Type X de la marine anglaise parvinrent à pénétrer dans l'Altenfjord et à placer des explosifs sur la coque du navire, provoquant des dégâts importants dans la salle des machines."
+
+; BURMA
+17753	"La coopération des pays de l'Axe était bien sûr politique, mais aussi commerciale et industrielle. La Birmanie était une zone stratégique de premier ordre pour les deux camps. En effet, les vivres, les pièces détachées et le matériel à destination des unités japonaises transitaient par la Birmanie. En mars 1944, des unités spéciales se posèrent sous le feu des armes lourdes ennemies. Elles durent s'adapter à un nouveau type de combat. Les soldats britanniques, préparés à tout sauf à l'humidité insupportable et une chaleur de 40 degrés à l'ombre, affrontèrent pour la première fois les Japonais dans la jungle près de la chaîne de l'Arakan Yoma, à la frontière de la Birmanie et du Bengale." 
+
+; ALPS
+17754	"Les Alpes autrichiennes ne furent pas le théâtre des plus féroces combats en Europe. Néanmoins, de tels endroits jouèrent un rôle tout aussi important pour les unités opérant derrière les lignes ennemies, notamment les agents secrets. Dans le plan des nazis, cette chaîne de montagnes devait servir de rempart et de dernier refuge en cas de défaite du Reich. Certains éléments ont depuis confirmé que les Allemands avaient effectivement préparé leur retraite dans les Alpes. On a ainsi retrouvé au fond du lac Toplitz des faux billets en livres sterling et des pièces détachées de fusées V1 et V2."
+
+; NORMANDY
+17755	"Le débarquement de Normandie fut le résultat de deux années intensives d'entraînement, de préparation et de planification. Comme toujours, les unités spéciales des Alliés furent les premières à atteindre les côtes françaises et ne s'arrêtèrent qu'après 83 jours d'une campagne épuisante. Elles s'acquittèrent de nombreuses missions, même les plus suicidaires, et accomplirent leur devoir avec courage et honneur. Dix-sept heures après le début du Jour J, les Alliés avaient débarqué 132.750 hommes et 6.000 chars sur les côtes normandes. Le succès de l'opération Overlord fut le prélude aux événements qui allaient suivre sur le front de l'Ouest."
+
+; BREST
+17756	"Au début de l'année 1942, le moral des civils britanniques fut mis à rude épreuve. Ils durent puiser dans leurs réserves pour maintenir l'économie nationale et soutenir l'effort de guerre. La survie des unités militaires dispersées en Europe, en Asie et en Afrique dépendait d'eux. La Grande-Bretagne subissait de lourdes pertes en mer. Les convois qui transportaient les munitions, les vivres et les médicaments étaient systématiquement coulés par les U-boot de l'amiral Dönitz. Les Alliés ne disposaient pas encore d'une arme ou d'une tactique efficace contre la menace sous-marine. Cependant, un plan fut élaboré, prévoyant qu'une unité spécialement entraînée se poserait à proximité des quais ennemis pour y placer des explosifs et ainsi détruire les installations allemandes."
+
+; LIBYA
+17757	"C'est sur les champs de bataille d'Afrique du Nord que les unités des SAS saisirent l'opportunité de coopérer avec d'autres unités de soutien pendant leurs opérations, dont celle du LRDG (Long Range Desert Group). Cette unité disposait de ses propres véhicules (certains étant spécialement adaptés) et pouvait transporter les soldats des SAS loin derrière les lignes ennemies. Ces derniers pouvaient aussi compter sur le LRDG pour les ramener rapidement et en sécurité vers leur base."
+
+; SICILY
+17758	"Le besoin d'étendre la ligne de front conduisit les Alliés à préparer un débarquement en territoire italien, plus exactement en Sicile. L'opération reçut le nom de code Husky et se déroula le 10 juillet 1943. Elle fut précédée et suivie d'opérations de sabotage dont l'objectif était d'endommager les installations ennemies afin de couper leurs voies de ravitaillement et leurs communications. L'opération "Châtaigne" faisait partie de cette invasion alliée. Deux groupes des SAS furent largués au nord de la Sicile et y participèrent. Leur mission consistait à couper toutes les communications entre la Sicile et l'Italie."
+
+; BURGUNDY
+17759	"144 hommes de diverses unités spéciales furent largués derrière la ligne de front en territoire ennemi, près de la ville de Dijon. L'opération portait le nom de code "Houndsmith". La missions des SAS était de semer la panique derrière les lignes ennemies, de détruire les dépôts d'armes et de munitions, de couper les liaisons ferroviaires, de capturer des officiers allemands et les personnes influentes qui coopéraient avec le Reich."
+
+; TUTORIAL
+17760 "L'entraînement des SAS est l'une des expériences les plus éprouvantes qui soit. Seuls quelques rares prétendants parviennent à le terminer et à surmonter l'extrême pression mentale et physique. Les autres sont renvoyés dans leurs unités. En plus de la formation de parachutiste, l'instruction de base comprend des exercices de tir intensifs, un entraînement à la survie et le développement général de toutes les aptitudes d'un soldat."
+
+
+; ***** LOADING SCREENS *****
+
+; AMMOBOX - DEADFISH
+17801	"La flotte des U-boot allemands est la bête noire de l'amirauté alliée. La chasse aux sous-marins en haute mer s'est soldée par un échec. Les bombardements des quais ont entraîné trop de pertes et ont été inefficaces. C'est le moment de faire appel à l'infanterie... mais pas n'importe laquelle. Nous devons agir vite et sans accroc. Les quais des sous-marins et leurs environs ne sont qu'une vaste base allemande."
+
+; HEAT - MOUSE IN THE HOUSE
+17802	"Nous sommes aux portes de la ville de Darnis-Zarine, également appelée Derna. Elle est occupée par des unités allemandes qui ont capturé l'équipage du bombardier abattu. Nous devons pénétrer dans la prison discrètement ou par la force, récupérer nos compagnons et sortir ensemble de la ville. Une unité du LRDG nous attendra dehors."
+
+; HEAT - SNAKEBITE
+17803	"La gorge près de Darnis-Zarine est le plus court chemin entre le point de départ de notre mission et la position du Liberator. Des combats acharnés ont déjà opposé ici-même les Alliés à l'Afrikakorps. Malheureusement, il y a encore des unités allemandes dans le secteur qui nous empêchent de traverser leurs lignes et nous devons passer à tout prix."
+
+; HEAT - SITTING DUCK
+17804	"A l'endroit où nous sommes, la gorge s'ouvre progressivement sur le désert. L'épave de l'avion que nous devons détruire est quelque part dans les environs. Le secteur devrait être calme, mais les Allemands ont l'habitude d'envoyer des experts pour démonter et examiner les appareils abattus. Il faut donc nous préparer au pire. On verra bien..."
+
+; HUSKY - CHESTNUT
+17805	"Nous constituons ici l'avant-garde de la force principale des Alliés et notre objectif est d'infliger le plus de dégâts possibles en un minimum de temps à l'artillerie côtière ennemie. Les Allemands ont de nombreux canons pointés sur la baie. Nous tenterons de neutraliser ceux qui présentent une menace pour les navires alliés faisant route vers les plages du débarquement."
+
+; HUSKY - PONTE GRANDE
+17806	"Nous suivons le plan établi. Il consiste en partie à détruire un des nombreux ponts qui franchissent la gorge longue de plusieurs kilomètres. Ce pont est assez solide pour permettre le passage des blindés allemands : ce n'est pas le moment d'avoir en plus leurs panzers sur le dos. Le seul moyen de les en empêcher, c'est de le faire sauter."
+
+; HOUNDSMITH - DOUBLE ACTION
+17807	"Notre unité et de nombreuses autres ont été dispersées lors du parachutage au-dessus de la zone d'opérations. Il faudra du temps à chaque groupe pour rejoindre sa position et accomplir sa mission. Notre unité est dans le même cas : nous devons nous diriger vers le dépôt de munitions, qui est très bien gardé, et le faire sauter, si possible avec ses gardes."
+
+; HOUNDSMITH - RAZOR BLADE
+17808	"L'officier de la Gestapo et le collaborateur français doivent se rencontrer dans une ferme près du village de Champagne. Nous avons appris auprès des habitants que cet officier doit également mener l'interrogatoire de nos compagnons prisonniers avant de les faire exécuter. Il est loin de se douter que l'exécution à laquelle il pense prendra une tout autre tournure."
+
+; HOUNDSMITH - GUARDIAN ANGELS
+17809	"Nous sommes près de l'ancien camp secret des SAS qui a subi l'assaut des unités allemandes, et où des soldats des SAS ont été capturés. Ils sont prisonniers dans les bâtiments du camp en attendant leur interrogatoire et leur exécution. Si nous ne parvenons pas à les libérer, nous connaîtrons l'un de nos plus cuisants échecs."
+
+; **** LOADING SCREENS FOR CO-OPERATIVE *****
+
+17820	"La flotte des U-boot allemands est la bête noire de l'amirauté alliée. La chasse aux sous-marins en haute mer s'est soldée par un échec. Les bombardements des quais ont entraîné trop de pertes et ont été inefficaces. C'est le moment de faire appel à l'infanterie... mais pas n'importe laquelle. Nous devons agir vite et sans accroc. Les quais des sous-marins et leurs environs ne sont qu'une vaste base allemande."
+
+17821	"Nous sommes aux portes de la ville de Darnis-Zarine, également appelée Derna. Elle est occupée par des unités allemandes qui ont capturé l'équipage du bombardier abattu. Nous devons pénétrer dans la prison discrètement ou par la force, récupérer nos compagnons et les protéger jusqu'à ce qu'ils soient en lieu sûr."
+
+17822	"La gorge près de Darnis-Zarine est le plus court chemin entre le point de départ de notre mission et la position du Liberator abattu. Des combats acharnés ont déjà opposé ici-même les Alliés à l'Afrikakorps. Malheureusement, des unités allemandes sont restées dans le secteur et se regroupent en attendant des renforts. Elles peuvent être détruites ou tenir jusqu'à l'arrivée des renforts ennemis, cela ne dépend que de nous."
+
+17823	"A l'endroit où nous sommes, la gorge s'ouvre progressivement sur le désert. L'épave de l'avion que nous devons détruire est quelque part dans les environs. Le secteur devrait être calme, mais les Allemands ont l'habitude d'envoyer des experts pour démonter et examiner les appareils abattus. Il faut donc nous préparer au pire. On verra bien..."
+
+17824	"Nous constituons ici l'avant-garde de la force principale des Alliés et notre objectif est d'infliger le plus de dégâts possibles en un minimum de temps à l'artillerie côtière ennemie. Les Allemands ont de nombreux canons pointés sur la baie. Nous tenterons de neutraliser ceux qui présentent une menace pour les navires alliés faisant route vers les plages du débarquement."
+
+17825	"Nous suivons le plan établi. Il consiste en partie à détruire un des nombreux ponts qui franchissent la gorge longue de plusieurs kilomètres. Ce pont est assez solide pour permettre le passage des blindés allemands : ce n'est pas le moment d'avoir en plus leurs panzers sur le dos. Le seul moyen de les en empêcher, c'est de le faire sauter."
+
+17826	"Notre unité et de nombreuses autres ont été dispersées lors du parachutage au-dessus de la zone d'opérations. Il faudra du temps à chaque groupe pour rejoindre sa position et accomplir sa mission. Notre unité est dans le même cas : nous devons nous diriger vers le dépôt de munitions, qui est très bien gardé, et le faire sauter, si possible avec ses gardes."
+
+17827	"L'officier de la Gestapo et le collaborateur français doivent se rencontrer dans une ferme près du village de Champagne. Nous avons appris auprès des habitants que cet officier doit également mener l'interrogatoire de nos compagnons prisonniers avant de les faire exécuter. Il est loin de se douter que l'exécution à laquelle il pense prendra une tout autre tournure."
+
+17828	"Nous sommes près de l'ancien camp secret des SAS qui a subi l'assaut des unités allemandes, et où des soldats des SAS ont été capturés. Ils sont prisonniers dans les bâtiments du camp en attendant leur interrogatoire et leur exécution. Si nous ne parvenons pas à les libérer, nous connaîtrons l'un de nos plus cuisants échecs."
+
+17850 "CAMPAGNE ACHEVEE"
+
+17851 "THIS IS JUST A TEST TEXT WHICH IN THE FINAL SCENE WILL INCLUDE INFORMATION ABOUT THE HISTORICAL BACKGROUND OF THE SPECIFIC CAMPAIGN. TEST TEST, TRALALA."
+
+
+
+
+;[20000 - 21000] reserved for menu
+
+20001    "COOPERATION"
+20002    "SCORES COOPERATION"
+ 
+; MULTI-PLAYER MENU
+20100    "FAVORIS"
+20101    "LISTE COMPLETE"
+
+20102    "AJOUTER AUX FAVORIS"
+20103    "EFFACER DES FAVORIS"
+
+; CREATE SERVER MENU
+20200    "DANS L'ORDRE"
+20201    "PERSONNALISE 1"
+20202    "PERSONNALISE 2"
+20203    "PERSONNALISE 3"
+20204    "PERSONNALISE 4"
+
+20205    " LISTE CARTES PERSO"
+20206    "LISTE CARTES"
+
+20210    "DIFFICULTE"
+20211    "VIES EQUIPE"
+20212    "AUTORISER VISEUR"
+20213    "NOMBRE REAPPARITIONS"
+20214    "REAPPARITION AU DEPART"
+
+; co-operative DIFFICULTY
+20220    "FACILE"
+20221    "NORMAL"
+20222    "DUR"
+20223    "TRES DUR"
+
+; IN-GAME MENU - PLAYER SCREEN
+20300    "STATUT JOUEUR"
+
+
+; SERVERGAMEINFO MENU
+20501    "Facile"
+20502    "Normal"
+20503    "Dur"
+20504    "Très dur"
+
+20510    "Difficulté"
+20511    "Vies équipe"
+20512    "Vies"
+
+20513    "Autoriser viseur"
+20514    "Autoriser véhicules"
+20515    "Inverser dégâts"
+
+20520	 "Equip. Axe"
+20521	 "Equip. Alliés"
+20301	"en préparation pour le jeu"
+20302	"en attente de réapparition"
+20303	"en cours de jeu"
+
+20310	"Plus de vies – passage en mode spectateur"
+20311	"Tour en cours – passage en mode spectateur"          
+20312 	"Attente de réapparition – passage en mode spectateur"          
+20313	"Invulnérabilité après réapparition" 
+
+
+
+; SINGLE PLAYER MENU
+20400	"H&D2 Original"
+20401	"H&D2 Sabre Squadron"
+
+
+; CUSTOM EDITS
+
+; ***** LOADING SCREENS *****
+; BURMA2 KINGSLAYER
+17901	"Our position is north of a japanese bunker complex. First we have to capture and destroy the bunker, then fight our way down the hill and elimiate every resistance."
+; BURMA1 KEYGUARD
+17902	"To fulfill the objectives you need to find keys first so you can unlock the bunker doors. The positions of the keys are marked on the map."
+; LIBYA3 JAILBREAK
+17903	"We got captured by the local german forces. Fortunately a british spy let us know to unlock the prison door in an unobserved moment. We cannot blow his cover therefore he can't help us any further. We have to fight our way to the control post south-west of our position and radio for pickup. Hopefully we make it out of here alive.."
+
+
+; ***** OBJECTIVES *****
+21004	"Make your way to the weapons store."
+21005	"Defend the area around the checkpoint."
+21006	"Use the radio at the checkpoint to call for pickup."

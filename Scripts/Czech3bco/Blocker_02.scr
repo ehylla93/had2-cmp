@@ -1,0 +1,182 @@
+// stoji keca..na priblizeni hrace de na obchuzku do lesa. 
+//na alarm pri kecani de na roh a hlida..pri obchuzce cupne a hlida
+
+
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+HUMAN_SetOptimized(2);
+
+Frame ovl;		FRM_FindFrame(ovl,"ovladacblockeru");
+Frame cum;		FRM_FindFrame(cum,"blocker2cum");
+Frame bl1;		FRM_FindFrame (bl1,"blocker_01");
+ frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+frame vstart;		FRM_FindFrame(vstart,"vybihac2_starter");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f024");
+
+Integer aievent;
+Integer mluv;
+Integer delka;
+integer alarmpos;	alarmpos=0;		//0-po alarmu vali na roh 1-klekne hlida
+HUMAN_SETMODE_Guard();
+
+}
+
+
+
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+HUMAN_SetOptimized(1);
+aievent=(_GetAlarmType());
+PrintfNumber("blocker2 alarm c:",aievent);
+SendSignal (ovl,6);
+}
+
+
+HUMAN_SetAnim("",50,50,0);
+
+HUMAN_WeaponOnArm(1);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+HUMAN_Stop();
+SetAlarmType(274,0);
+if (alarmpos==0)
+{
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("blocker2_roh");
+alarmpos=1;
+
+}
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+
+
+	EndScript();
+	}
+
+
+
+OnAlarmDone()
+	{
+	HUMAN_SetOptimized(1);
+	HUMAN_SetAlarm(0);
+	SetAlarmType(140,0);
+	HUMAN_SETMODE_Silence();
+	HUMAN_Move("blocker2_roh");
+	HUMAN_TurnAt(cum);
+	HUMAN_SETMODE_Crouch();
+
+	goto end;
+	
+	}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+SendSignal (vstart,1);
+EndScript();
+}
+
+
+Whenever unsuspend(_SignalReceived(7))
+{
+HUMAN_Suspend(0);
+goto end;
+}
+
+OnSignal (1)
+{
+mluv=_RandomInt(5);
+delka=( 5000+_RandomInt(5000));
+if (mluv==0) {	HUMAN_SetAnim("%%rozhovor", 300, 300, 1);	}
+if (mluv==1) {	HUMAN_SetAnim("%%rozhovor1", 300, 300, 1);	}
+if (mluv==2) {	HUMAN_SetAnim("%%rozhovor2", 300, 300, 1);	}
+if (mluv==3) {	HUMAN_SetAnim("%%rozhovor3", 300, 300, 1);	}
+if (mluv==4) {	HUMAN_SetAnim("%%rozhovor4", 300, 300, 1);	}
+delay (delka);
+HUMAN_SetAnim("", 300, 300, 0);
+SendSignal (ovl,3);		//domluvil sem
+goto end;
+}
+
+OnSignal (3)
+{
+HUMAN_SETMODE_Walk();
+HUMAN_Move("blocker2_01");
+			HUMAN_SetAnim("%%turnleft",200,200,0);
+			Delay(2800);
+			HUMAN_SetAnim("%%turnright",200,200,0);
+			Delay(3700);
+			HUMAN_SetAnim("",200,200,0);
+HUMAN_Move("blocker2_02");
+HUMAN_TurnAt(bl1);
+SendSignal (ovl,2);		//dosel sem
+goto end;
+}
+
+
+Whenever obchuzka(_SignalReceived(2))
+{
+// du na obchuzku
+DisableSignals(1);
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_ACTIVITY_Smoke(0);
+label chod:
+HUMAN_Move("blocker2_03");
+alarmpos=1;
+HUMAN_Move("blocker2_04");
+HUMAN_Move("blocker2_05");
+HUMAN_Move("blocker2_07");
+			HUMAN_SetAnim("%%turnleft",200,200,0);
+			Delay(2800);
+			HUMAN_SetAnim("%%turnright",200,200,0);
+			Delay(3700);
+			HUMAN_SetAnim("",200,200,0);
+HUMAN_Move("blocker2_08");
+HUMAN_Move("blocker2_09");
+HUMAN_Move("blocker2_10");
+HUMAN_Move("blocker2_11");
+goto chod;
+}
+
+
+
+
+label end:

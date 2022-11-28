@@ -1,0 +1,111 @@
+// N50 - soldier going to another soldier and check explosives
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame n23;	FRM_FindFrame(n23, "N23");
+Frame speech;	FRM_FindFrame(speech, "N23_N50_speech");
+Frame look01;	FRM_FindFrame(look01, "N50_look01");
+Frame look02;	FRM_FindFrame(look02, "N50_look02");
+Integer flus;	flus=0;
+	
+SetAlarmType(144, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	SendSignal(speech, 2);
+	EndScript();
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever player1(_SignalReceived(1))	// received from N50_A1, A2, A3
+{
+	HUMAN_Suspend(false);
+	GoTo path1;
+}
+
+Whenever player2(_SignalReceived(2))	// received from N50_A4, A5, A6, A7
+{
+	HUMAN_Suspend(false);
+	GoTo path2;
+}
+
+OnSignal(3)	// received from N23_N50_speech
+{
+	GoTo kontrola;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f026");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path1:
+	HUMAN_Move("N50_1");
+	HUMAN_Move("N50_2");
+	HUMAN_Move("N50_3");
+	HUMAN_Move("N50_4");
+	HUMAN_Move("N50_5");
+	GoTo rozhovor;
+
+Label path2:
+	HUMAN_Move("N50_1");
+	HUMAN_Move("N50_6");
+	HUMAN_Move("N50_7");
+	HUMAN_Move("N50_8");
+	HUMAN_Move("N50_9");
+	GoTo rozhovor;
+
+Label rozhovor:
+	SendSignal(n23, 3);
+	HUMAN_TurnAt(n23);
+	SendSignal(speech, 1);
+	GoTo end;
+
+Label kontrola:
+	HUMAN_Move("N50_10");
+	HUMAN_TurnAt(look01);
+	HUMAN_SetAnim("%%divase", 200, 200, false);
+	Delay(6000);
+	HUMAN_Move("N50_11");
+	HUMAN_TurnAt(look02);
+	HUMAN_SetAnim("%%kroutihlav", 200, 200, false);
+	Delay(4800);
+	HUMAN_SETMODE_Guard();
+
+Label path3:
+	HUMAN_Move("N50_10");
+	Delay(1000);
+	HUMAN_Move("N50_11");
+	Delay(1000);
+		flus=_RandomInt(3);
+	If(flus==1)
+	{
+		HUMAN_SetAnim("%%flus1", 300, 300, false);
+		Delay(3500);
+	}
+	GoTo path3;
+
+Label end:

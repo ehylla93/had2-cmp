@@ -1,0 +1,166 @@
+//coop only
+
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+
+
+integer suspend;
+Integer endx;		endx=0;
+integer aievent;
+integer a;
+
+frame detect1;		FRM_FindFrame (detect1,"detect_pisalekin");
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f042");
+}
+
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+suspend=0;
+SetAlarmType(371,1);	
+HUMAN_SetAnim("%%panbrada", 500,500,1);
+SetAlarmType(4,1);	
+}
+
+
+
+
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(375,1);
+aievent=(_GetAlarmType());
+PrintfNumber("ven_pisalek alrm:",aievent);
+
+}
+
+
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	block
+	{
+	HUMAN_SetAnim("", 100, 100, 0);
+	endx=1;
+	}
+	EndScript();
+	}
+
+
+if (suspend==1)
+	{
+	SetAlarmType(278,0);
+	suspend=0;
+	//dokud neni hrac v zone tak nic
+label cekej:
+
+if (_LoadGameValue(1)==0)
+	
+	{
+	
+	delay (1000);
+	goto cekej;
+	}
+
+	suspend=0;
+	HUMAN_Suspend(0);
+	delay (500);
+	SetAlarmType(278,1);
+	endx=1;
+	EndScript();
+	}
+
+if (aievent==4)
+{
+if (_PlayerInBox(detect1)==0)
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+}
+
+block
+{
+HUMAN_SetAnim("", 100, 100, 0);
+endx=1;
+}
+
+EndScript();
+
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarmDone()
+{
+
+
+
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+
+
+
+label end:

@@ -1,0 +1,64 @@
+// Truck Driver
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame T1;		FRM_FindFrame(T1,"T1_E01");
+Frame T2;		FRM_FindFrame(T2,"TR_F01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_BoardVehicle("La_OpelE_1", 0, 0);
+SendSignal(T2, 2);
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(1)
+{
+SendSignal(T1, 1);
+SendSignal(T2, 1);
+Delay(20000);
+HUMAN_DriveNearPlayer(20);
+goto END;
+}
+
+Whenever Getout (_PlayerInRange(30))
+{
+HUMAN_BoardVehicle("La_OpelE_1", 0, 0);
+SendSignal(T2, 2);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(40);  
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_BoardVehicle("La_OpelE_1", 1, 0);
+
+goto END;
+
+Label END:

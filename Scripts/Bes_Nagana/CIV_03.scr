@@ -1,0 +1,107 @@
+// CIV_03 - CIVIL DONA QUE FUMA
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame objectives;	FRM_FindFrame(objectives, "objectives");
+Frame GSS_02;	FRM_FindFrame(GSS_02, "GSS_02");
+Frame COTXE1;	FRM_FindFrame(COTXE1, "COTXE1");
+Frame GTR1;	FRM_FindFrame(GTR1, "GTR1");
+Frame OFI_05;	FRM_FindFrame(OFI_05, "OFI_05");
+Frame MOTO;	FRM_FindFrame(MOTO, "MOTO");
+Frame GZZ6;	FRM_FindFrame(GZZ6, "GZZ6");
+
+
+SetAlarmType(1,0); //Close shooting (si ferit, ataca)
+SetAlarmType(2,0); //Hear shooting
+SetAlarmType(4,0); //steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,0); //explozion
+SetAlarmType(32,0); //see
+SetAlarmType(64,0); //I´m wounded
+SetAlarmType(128,0); //from script
+SetAlarmType(256,0); //Friendly fire
+SetAlarmType(512,0); //I see a dead body
+
+
+//FRM_SwitchFaceTexture(me,"e_f0w1");
+
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+HUMAN_SETMODE_Stand();
+}
+goto END;
+
+
+// ----------------------------------------
+
+
+OnSignal(15)	// received from ss DOCS
+{
+HUMAN_SETMODE_Walk();
+HUMAN_Move("MAGATZEM0");
+HUMAN_SetAnim("%%af1_stojiceka", 1000, 1000, 1);
+HUMAN_Suspend(0);
+}
+goto END;
+
+
+
+Whenever player(_PlayerInRange(2))
+{
+SendSignal(GSS_02, 2);
+//FRM_GetNearestPlayer(me, get_player);
+//FRM_MorphSpeech(get_player, 15993086, 5, 20); //Acquitania	#
+delay (1000);
+HUMAN_SetAnim("!salutovani", 500, 500, 0);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(me, 15993090,5,20);	//"Let's go, what are you waiting for?"
+SUBTITLES_SetOn(0);
+HUMAN_SETMODE_Walk();
+HUMAN_Move("PUNT_PRESONETA");
+SendSignal(MOTO, 16);
+SendSignal(GTR1, 18);
+SendSignal(COTXE1, 19);
+SendSignal(OFI_05, 17);
+SendSignal(GZZ6, 15);
+HUMAN_TurnAtNearestPlayer();
+Delay(60000);
+HUMAN_Move("PUNT_OBRI");
+FRM_TeleportNearCheckpoint(me, "PUNT_AMAGA", "PUNT_OFI1B");
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("%%af1_stojiceka", 1000, 1000, 1);
+HUMAN_Suspend(0);
+GoTo end;
+}
+
+
+OnDeath(){
+SendSignal(objectives, 6);
+	PlayMusic(34);
+		goto end;
+}
+
+OnAlarm(){
+HUMAN_DropObject();
+HUMAN_SETSIGHTRANGE(325);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetAnim("", 1000, 1000, 0);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+goto END;
+}
+
+
+
+HUMAN_Suspend(true);  
+
+
+
+
+Label END:

@@ -1,0 +1,22 @@
+//----------------------objective4----------------------
+// Eliminate the Gestapo officer.
+//--------------------------------------------
+block
+{
+Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame E1;		FRM_FindFrame(E1,"EOF1");
+}
+goto end;
+
+Whenever Officer (_Actor_GetState(E1)==0)
+{
+Delay(4000);
+//SetObjectiveStatus(4, 1);
+SendSignal(txt, 1);
+Delay(3000);
+SendSignal(obj, 4);
+goto end;
+}
+
+label end:

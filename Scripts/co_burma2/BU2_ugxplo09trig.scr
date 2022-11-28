@@ -1,0 +1,15 @@
+// BU2_ugxplo09trig - underground explosion effect trigger
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Frame ugxplo09;
+	FRM_FindFrame(ugxplo09, "ugxplo09");
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(2))
+{
+	SendSignal(ugxplo09, 1);
+	Delay(120000);
+	SetWhenever(player, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+Label end:

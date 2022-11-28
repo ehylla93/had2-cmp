@@ -1,0 +1,57 @@
+// Trebisky (Ci_)
+
+Block
+{
+Frame objectives;	FRM_FindFrame(objectives, "objectives");
+Frame zidla;		FRM_FindFrame(zidla,"treb_zidla");
+Frame chat;			FRM_FindFrame(chat,"trebisky_chat");
+Frame myframe;		FRM_GetMyFrame(myframe);
+
+SetWhenever(PIR, false);
+
+Integer b=0;
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+Whenever player(_SignalReceived(1))
+{
+	SetWhenever(player, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_Suspend(false);
+	HUMAN_ACTIVITY_Sit(zidla);
+	HUMAN_SetAnim("%%mlacenej", 100,100, true);
+	goto end;
+}
+
+Whenever PIR(_PlayerInRange(2))
+{
+SetWhenever(PIR, false);
+SendSignal(chat, 1);
+goto end;
+}
+
+OnDeath()
+{
+	DisableSignals(1);
+	DisableWhenevers(1);
+	Delay(100);
+	if(b==0) { SendSignal(objectives, 3); }
+	goto end;
+}
+
+OnSignal(2)
+{
+	SetWhenever(PIR, true);
+	goto end;
+}
+
+OnSignal(3)
+{
+	b=1;
+	HUMAN_Kill(myframe);
+	goto end;
+}
+
+Label end:

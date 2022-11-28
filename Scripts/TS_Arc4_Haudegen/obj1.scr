@@ -1,0 +1,95 @@
+// Obj 5 - Aquire the Documents.
+// ------------------------------------
+
+Block
+{
+Frame obj6;		FRM_FindFrame(obj6, "obj6"); //gather extract point
+
+Frame B02;		    FRM_FindFrame(B02, "B02");
+
+Frame A4_T2;		    FRM_FindFrame(A4_T2, "A4_T2");
+Frame A4_T22;	        FRM_FindFrame(A4_T22, "A4_T22");
+Frame A4_T20;		    FRM_FindFrame(A4_T20, "A4_T20");
+Frame A4_T21;		    FRM_FindFrame(A4_T21, "A4_T21");
+Frame A4_T23;		    FRM_FindFrame(A4_T23, "A4_T23");
+Frame A4_T15;		FRM_FindFrame(A4_T15,"A4_T15");
+Frame A4_R1509;		FRM_FindFrame(A4_R1509,"A4_R1509");
+Frame A4_R1510;		FRM_FindFrame(A4_R1510,"A4_R1510");
+Frame A4_R1511;		FRM_FindFrame(A4_R1511,"A4_R1511");
+Frame A4_R1512;		FRM_FindFrame(A4_R1512,"A4_R1512");
+Frame sniph1;		FRM_FindFrame(sniph1,"sniper_hill1");
+
+Frame Documents;
+}
+//SetObjectiveStatus(5, 4);
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+SetWhenever(Found, 1);
+
+goto END;
+
+// ------------------------------------
+
+OnSignal(4)	//weapon store destroyed
+{
+Delay(1500);
+SetObjectiveStatus(5, 0);
+//goto END;
+}
+
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(14992804);
+Delay(3500);
+SUBTITLES_SetOn(1);
+SetObjectiveStatus(5, 1);
+SetWhenever(Lost, 1);
+
+SendSignal(B02, 1);
+ SendSignal(A4_T2, 1);
+ SendSignal(A4_T21, 1);
+ SendSignal(A4_T22, 1);
+ SendSignal(A4_T23, 1);
+ SendSignal(A4_T20, 1);
+ SendSignal(A4_T15, 1);
+ SendSignal(A4_R1509, 1);
+ SendSignal(A4_R1510, 1);
+ SendSignal(A4_R1511, 1);
+ SendSignal(A4_R1512, 1);
+ SendSignal(sniph1, 1);
+SendSignal(obj6, 2);
+
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);
+Delay(3500);
+SUBTITLES_SetOn(1);
+SetObjectiveStatus(5, 0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);
+Delay(3500);
+SUBTITLES_SetOn(1);
+SetObjectiveStatus(5, 1);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+
+
+
+// ------------------------------------
+
+Label END:

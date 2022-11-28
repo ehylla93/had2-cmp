@@ -1,0 +1,31 @@
+// AL2_15_A1 - activator for AL2_15, AL2_16, AL2_17 and after alarm activator
+// for AL2_13
+
+Block
+{
+Frame al2_02;	FRM_FindFrame(al2_02, "AL2_02");
+Frame al2_15;	FRM_FindFrame(al2_15, "AL2_15");
+Frame al2_16;	FRM_FindFrame(al2_16, "AL2_16");
+Frame al2_17;	FRM_FindFrame(al2_17, "AL2_17");
+
+SetWhenever(player, false);
+}
+
+Whenever alarm(_SignalReceived(1))	// received from AL2_alarm
+{
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(2))
+{
+	Block
+	{
+	SendSignal(al2_15, 1);
+	SendSignal(al2_16, 1);
+	SendSignal(al2_17, 1);
+	}
+	GoTo end;
+}
+
+Label end:

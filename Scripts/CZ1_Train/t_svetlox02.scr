@@ -1,0 +1,47 @@
+//domcek vedla nadrazia
+Frame svetlox02;	FRM_FindFrame(svetlox02, "rail house lamp_2");
+Frame lensx02;	FRM_FindFrame(lensx02, "e_raslmp_3.Rectangle01");
+Frame lm1;		FRM_FindFrame(lm1, "prstan58");
+Frame lm2;		FRM_FindFrame(lm2, "prstan60");
+
+OnSignal(1)
+{
+	Block	{	FRM_SetOn(svetlox02, 0);	FRM_SetOn(lensx02, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox02, 1);	FRM_SetOn(lensx02, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox02, 0);	FRM_SetOn(lensx02, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox02, 1);	FRM_SetOn(lensx02, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox02, 0);	FRM_SetOn(lensx02, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);					}
+	Delay(300);
+	Block	{	FRM_SetOn(svetlox02, 1);	FRM_SetOn(lensx02, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);					}
+	Block	{	FRM_SetOn(svetlox02, 0);	FRM_SetOn(lensx02, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);					}
+	Block	{	FRM_SetOn(svetlox02, 1);	FRM_SetOn(lensx02, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);					}
+	Block	{	FRM_SetOn(svetlox02, 0);	FRM_SetOn(lensx02, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);					}
+	Block	{	FRM_SetOn(svetlox02, 1);	FRM_SetOn(lensx02, 1);
+			FRM_SetLightMap(lm1, 0);
+			FRM_SetLightMap(lm2, 0);					}
+	Block	{	FRM_SetOn(svetlox02, 0);	FRM_SetOn(lensx02, 0);
+			FRM_SetLightMap(lm1, 1);
+			FRM_SetLightMap(lm2, 1);					}
+}

@@ -1,0 +1,58 @@
+// SF_G33 - Vojak v dome (troska)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Support;		FRM_FindFrame(Support ,"SF_G34");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Delay(5000);
+SendSignal(Support, 1);
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SetSniper(1, 5);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(60))
+{
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(65);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(0);
+HUMAN_WeaponUp(1);
+goto End;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

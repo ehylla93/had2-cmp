@@ -1,0 +1,85 @@
+// AF2_zone3enable - 30 meters
+// ---------------------------
+// Variables definition
+Block
+{
+Frame add_12;
+	FRM_FindFrame(add_12, "Add_12");
+Frame add_13;
+	FRM_FindFrame(add_13, "Add_13");
+Frame add_14;
+	FRM_FindFrame(add_14, "Add_14");
+
+Frame af2_18;
+	FRM_FindFrame(af2_18, "AF2_18");
+Frame af2_19;
+	FRM_FindFrame(af2_19, "AF2_19");
+Frame af2_20;
+	FRM_FindFrame(af2_20, "AF2_20");
+
+Frame af2_61;
+	FRM_FindFrame(af2_61, "AF2_61");
+Frame af2_62;
+	FRM_FindFrame(af2_62, "AF2_62");
+Frame af2_63;
+	FRM_FindFrame(af2_63, "AF2_63");
+Frame af2_64;
+	FRM_FindFrame(af2_64, "AF2_64");
+
+Frame af2_66;
+	FRM_FindFrame(af2_66, "AF2_66");
+Frame af2_67;
+	FRM_FindFrame(af2_67, "AF2_67");
+Frame af2_68;
+	FRM_FindFrame(af2_68, "AF2_68");
+Frame af2_69;
+	FRM_FindFrame(af2_69, "AF2_69");
+Frame af2_70;
+	FRM_FindFrame(af2_70, "AF2_70");
+Frame af2_71;
+	FRM_FindFrame(af2_71, "AF2_71");
+Frame af2_72;
+	FRM_FindFrame(af2_72, "AF2_72");
+Frame af2_89;
+	FRM_FindFrame(af2_89, "AF2_89");
+Frame af2_90;
+	FRM_FindFrame(af2_90, "AF2_90");
+Frame af2_91;
+	FRM_FindFrame(af2_91, "AF2_91");
+
+Frame bf2_07;
+	FRM_FindFrame(bf2_07, "BF2_07");
+Frame bf2_10;
+	FRM_FindFrame(bf2_10, "BF2_10");
+Frame bf2_11;
+	FRM_FindFrame(bf2_11, "BF2_11");
+
+Frame texty;
+	FRM_FindFrame(texty, "AF2_texty");
+//printf("zone3 script working");
+}
+// ---------------------------
+// Whenever keywords and signals
+Whenever enable(_PlayerInRange(30) AND (_ACTOR_GetState(af2_18)==0) AND 
+
+(_ACTOR_GetState(af2_61)==0) AND
+(_ACTOR_GetState(af2_62)==0) AND (_ACTOR_GetState(af2_63)==0) AND
+(_ACTOR_GetState(af2_64)==0) AND 
+(_ACTOR_GetState(af2_66)==0) AND
+(_ACTOR_GetState(af2_67)==0) AND (_ACTOR_GetState(af2_68)==0) AND
+(_ACTOR_GetState(af2_69)==0) AND (_ACTOR_GetState(af2_70)==0) AND
+(_ACTOR_GetState(af2_71)==0) AND (_ACTOR_GetState(af2_72)==0) AND
+(_ACTOR_GetState(af2_89)==0) AND (_ACTOR_GetState(af2_90)==0) AND
+(_ACTOR_GetState(af2_91)==0) AND (_ACTOR_GetState(bf2_07)==0) AND
+(_ACTOR_GetState(bf2_10)==0) AND 
+(_ACTOR_GetState(bf2_11)==0) AND 
+(_ACTOR_GetState(add_12)==0) AND
+(_ACTOR_GetState(add_13)==0) AND (_ACTOR_GetState(add_14)==0) AND
+
+(_ACTOR_GetState(af2_19)==0) AND (_ACTOR_GetState(af2_20)==0))
+{
+	MP_EnableSpawnZone("zone3", 1);
+	SendSignal(texty, 7);
+}
+// --------------------------
+// Starting pose

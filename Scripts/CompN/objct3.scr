@@ -1,0 +1,41 @@
+// Obj 3 - znic vsechny nadrze
+//----------------------------------------------
+
+Block
+{
+  Frame t1;		FRM_FindFrame(t1, "m_nadrz_");
+  Frame t2;		FRM_FindFrame(t2, "m_nadrz_2");
+  Frame t3;		FRM_FindFrame(t3, "m_nadrz_3");
+  Frame t4;		FRM_FindFrame(t4, "m_nadrz_4");
+  Frame t5;		FRM_FindFrame(t5, "m_nadrz_5");
+
+Frame plachta;		FRM_FindFrame(plachta, "Opel_01.Box15");
+Frame opel;		FRM_FindFrame(opel, "Opel_01");
+
+SetObjectiveStatus(3, 0);
+}
+
+Whenever All_Fuel_Tanks_Destroyed (((((_Actor_GetState(t1)==0) And (_Actor_GetState(t2)==0) ) And (_Actor_GetState(t3)==0) ) And (_Actor_GetState(t4)==0) ) And (_Actor_GetState(t5)==0) )
+{	
+SetObjectiveStatus(3, 1);
+EndScript();
+}
+
+Whenever Opel_Destroyed (_Actor_GetState(opel)==0) 
+{	
+Block
+{
+FRM_SetOn(plachta, 0);
+}
+goto end;
+}
+
+//--------------------------------------------------------
+
+Block
+{
+FRM_SetOn(plachta, 0);
+}
+goto end;
+
+Label end:

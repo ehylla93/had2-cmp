@@ -1,0 +1,54 @@
+// 03_E04
+// ----------------------------------------
+
+Block
+{
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+HUMAN_SETSIGHTRANGE(140);
+HUMAN_SETHEARRANGE(100);
+FRM_SwitchFaceTexture(MyFRM, "e_f051");
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("03_E04 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+Whenever Spawn (_PlayerInRange(150))
+{
+Integer AImode = _RandomInt(99);
+if(AImode > 75) { HUMAN_SETAIMODE_Aggressive(); }
+else {
+	if(AImode < 20) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+	}
+printf("03_E04 spawns");
+HUMAN_SetAnim("%%spac1", 600, 600, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

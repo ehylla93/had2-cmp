@@ -1,0 +1,270 @@
+Block
+ {
+    integer place = 0;	
+    integer starter = 0;	// urcuje, jestli se obj3 spusti tady, nebo v Ally2
+    integer sender;	// posilac vlny BLUE
+    integer B_num = 0;
+    integer wait;
+
+    Frame MQ4;		Frm_FindFrame(MQ4, "MQ4");
+    Frame OBJ;		Frm_FindFrame(OBJ, "objectives");
+    Frame ODPOCET;	Frm_FindFrame(ODPOCET, "Dummy_odpocet");
+    Frame InBank;	Frm_FindFrame(InBank , "dummy_cover_enterence");
+    Frame GerTank;	Frm_FindFrame(GerTank, "GerTank_driver");
+    Frame Global1;	Frm_FindFrame(Global1, "dummy_OnFire_Global1");
+    Frame Global2;	Frm_FindFrame(Global2, "dummy_OnFire_Global2");
+
+    Frame W1_1;		Frm_FindFrame(W1_1, "Wave1_1");
+    //*//Frame W1_2;		Frm_FindFrame(W1_2, "Wave1_2");
+    Frame W1_3;		Frm_FindFrame(W1_3, "Wave1_3");
+    //*//Frame W1_4;		Frm_FindFrame(W1_4, "Wave1_4");
+    Frame W1_5;		Frm_FindFrame(W1_5, "Wave1_5");
+
+    Frame Blue1;		Frm_FindFrame(Blue1, "Blue_1");		integer B1 = 0;
+    Frame Blue2;		Frm_FindFrame(Blue2, "Blue_2");		integer B2 = 0;
+    Frame Blue3;		Frm_FindFrame(Blue3, "Blue_3");		integer B3 = 0;
+    Frame Blue4;		Frm_FindFrame(Blue4, "Blue_4");		integer B4 = 0;
+    Frame Blue5;		Frm_FindFrame(Blue5, "Blue_5");		integer B5 = 0;
+    Frame Blue6;		Frm_FindFrame(Blue6, "Blue_6");		integer B6 = 0;
+    Frame Blue7;		Frm_FindFrame(Blue7, "Blue_7");		integer B7 = 0;
+    Frame Blue8;		Frm_FindFrame(Blue8, "Blue_8");		integer B8 = 0;
+    Frame Blue9;		Frm_FindFrame(Blue9, "Blue_9");		integer B9 = 0;
+    Frame Blue10;		Frm_FindFrame(Blue10, "Blue_10");		integer B10 = 0;
+    Frame Blue11;		Frm_FindFrame(Blue11, "Blue_11");		integer B11 = 0;
+//*//    Frame Blue12;		Frm_FindFrame(Blue12, "Blue_12");		integer B12 = 0;
+    Frame Blue13;		Frm_FindFrame(Blue13, "Blue_13");		integer B13 = 0;
+    Frame Blue14;		Frm_FindFrame(Blue14, "Blue_14");		integer B14 = 0;
+    Frame Blue15;		Frm_FindFrame(Blue15, "Blue_15");		integer B15 = 0;
+//*//    Frame Blue16;		Frm_FindFrame(Blue16, "Blue_16");		integer B16 = 0;
+    Frame Blue17;		Frm_FindFrame(Blue17, "Blue_17");		integer B17 = 0;
+  }
+
+Block
+{
+  SetWhenever(B1w, false);
+  SetWhenever(B2w, false);
+  SetWhenever(B3w, false);
+  SetWhenever(B4w, false);
+  SetWhenever(B5w, false);
+  SetWhenever(B6w, false);
+  SetWhenever(B7w, false);
+  SetWhenever(B8w, false);
+  SetWhenever(B9w, false);
+  SetWhenever(B10w, false);
+  SetWhenever(B11w, false);
+  //*//SetWhenever(B12w, false);
+  SetWhenever(B13w, false);
+  SetWhenever(B14w, false);
+  SetWhenever(B15w, false);
+  //*//SetWhenever(B16w, false);
+  SetWhenever(B17w, false);
+}
+
+
+Goto TheEnd;
+
+
+// z obj 2 senderu (scr ALLY 2 START)
+Whenever posily (_SignalReceived(1) )  
+{
+  Block
+    {
+       SendSignal(W1_1, 1);
+       //*//SendSignal(W1_2, 1);
+       //*//SendSignal(W1_4, 1);
+       SendSignal(W1_3, 1);
+       SendSignal(W1_5, 1);
+    }
+}
+
+Place = 1;
+Printf("A de se na to ............");
+SendSignal( ODPOCET , 7);	// zacina pomale ostrelovani namesti
+SendSignal( MQ4, 1);		// skupina MQ4 vyráží na track MQ3
+Delay(35000);
+label P1:
+Delay(10000);
+SendSignal(GerTank, 1);	//  Ger Tiger aktivovan
+
+Place = 2;
+Label P2:
+If (starter == 1) 
+  {
+    SendSignal(OBJ, 5);
+    Printf("OBJ 4 spousten pres -pojistku-  kontaktujte RH !!!!!!!!!!!!! !!!!!!!!!!!!! !!!!!!!!!!!!");
+  }
+
+Block
+{
+  SetWhenever(B1w, true);
+  SetWhenever(B2w, true);
+  SetWhenever(B3w, true);
+  SetWhenever(B4w, true);
+  SetWhenever(B5w, true);
+  SetWhenever(B6w, true);
+  SetWhenever(B7w, true);
+  SetWhenever(B8w, true);
+  SetWhenever(B9w, true);
+  SetWhenever(B10w, true);
+  SetWhenever(B11w, true);
+  //*//SetWhenever(B12w, true);
+  SetWhenever(B13w, true);
+  SetWhenever(B14w, true);
+  SetWhenever(B15w, true);
+  //*//SetWhenever(B16w, true);
+  SetWhenever(B17w, true);
+  SendSignal(Global1, 1);	// Zapnuti wheneveruuuuuu
+  SendSignal(Global2, 1);	// Zapnuti wheneveruuuuuu
+}
+
+Place = 3;
+label P3:		// postupne probouzeni vlny BLUE
+  wait = _RandomInt(5000) + 3000;
+  sender = _RandomInt(17) +1;
+  delay(3000);
+Whenever B1w ((sender == 1) AND (B1 == 0)) 
+    { 
+       B1 = 1;	
+       SendSignal(Blue1, 10);
+       Delay(wait);
+       B_num = B_num + 1;
+    } 
+Whenever B2w ((sender == 2) AND (B2 == 0)) 
+   {
+      B2 = 1;
+      SendSignal(Blue2, 10);
+      Delay(wait);
+      B_num = B_num+1;
+    } 
+Whenever B3w ((sender == 3) AND (B3 == 0)) 
+    {
+       B3 = 1;
+       SendSignal(Blue3, 10);
+       Delay(wait);
+       B_num = B_num+1;
+     }
+Whenever B4w ((sender == 4) AND (B4 == 0)) 
+    {
+       B4 = 1;
+       SendSignal(Blue4, 10);
+       Delay(wait);
+       B_num = B_num+1;
+     }
+Whenever B5w ((sender == 5) AND (B5 == 0)) 
+    {
+       B5 = 1;
+       SendSignal(Blue5, 10);
+       Delay(wait);
+       B_num = B_num+1;
+     }
+Whenever B6w ((sender == 6) AND (B6 == 0)) 
+     {
+        B6 = 1;
+        SendSignal(Blue6, 10);
+        Delay(wait);
+        B_num = B_num+1;
+     }
+Whenever B7w ((sender == 7) AND (B7 == 0)) 
+     {
+        B7 = 1;
+        SendSignal(Blue7, 10);
+        Delay(wait);
+        B_num = B_num+1;
+      }
+Whenever B8w ((sender == 8) AND (B8 == 0)) 
+      {
+         B8 = 1;
+         SendSignal(Blue8, 10);
+         Delay(wait);
+         B_num = B_num+1;
+      }
+Whenever B9w ((sender == 9) AND (B9 == 0)) 
+     { B9 = 1;	
+       SendSignal(Blue9, 10); 
+       Delay(wait); 
+       B_num = B_num+1;
+      }
+Whenever B10w ((sender == 10) AND (B10 == 0)) 
+      {
+         B_num = B_num+1;
+         B10 = 1;
+if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) )  { goto P3;}
+         SendSignal(Blue10, 10);
+         Delay(wait);
+      }
+Whenever B11w ((sender == 11) AND (B11 == 0))
+      {
+          B11 = 1;
+          SendSignal(Blue11, 10);
+          Delay(wait);
+          B_num = B_num+1;
+      }
+//*//Whenever B12w ((sender == 12) AND (B12 == 0)) 
+//*//     { 
+//*//        B12 = 1;
+//*//        SendSignal(Blue12, 10);
+//*//        Delay(wait); 
+//*//        B_num = B_num+1;
+//*//      }
+Whenever B13w ((sender == 13) AND (B13 == 0)) 
+     {
+        B13 = 1;
+        SendSignal(Blue13, 10);
+        Delay(wait);
+        B_num = B_num+1;
+      }
+Whenever B14w ((sender == 14) AND (B14 == 0))
+     {
+        B14 = 1;
+        SendSignal(Blue14, 10);
+        Delay(wait);
+        B_num = B_num+1;
+     } 
+Whenever B15w ((sender == 15) AND (B15 == 0)) 
+    {
+       B15 = 1;
+       SendSignal(Blue15, 10);
+       Delay(wait);
+       B_num = B_num+1;
+     } 
+//*//Whenever B16w ((sender == 16) AND (B16 == 0))
+//*//    {
+//*//       B16 = 1;
+//*//       SendSignal(Blue16, 10);
+//*//       Delay(wait);
+//*//       B_num = B_num+1;
+//*//     } 
+Whenever B17w ((sender == 17) AND (B17 == 0)) 
+     { 
+       B17 = 1;
+       SendSignal(Blue17, 10);
+       Delay(wait);
+       B_num = B_num+1;
+     }
+ //*//17
+  If (B_num == 15) 
+   {
+     if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) )  { SendSignal(Blue10, 10); }
+     Goto TheEnd;
+   }
+goto P3;
+
+OnSignal(30) 		// od ally2 na onDeath
+{
+  starter = 1;
+  If (place == 1) 
+    {
+        Delay(22000);
+        Goto P1;
+     }
+  If (place == 2) 
+    {
+        Goto P2;
+     }
+  If (place == 3) 
+    {
+        Goto P3;
+     }
+}
+
+label TheEnd:

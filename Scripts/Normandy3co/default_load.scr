@@ -1,0 +1,47 @@
+// Default load
+// -------------------------------------------------
+
+Block {
+Frame sherman;		FRM_FindFrame(sherman, "Runne9");
+Frame Amike1;		FRM_FindFrame(Amike1, "Amike1");
+Frame Amike2;		FRM_FindFrame(Amike2, "Amike2");
+Frame Amike3;		FRM_FindFrame(Amike3, "Amike3");
+Frame Amike4;		FRM_FindFrame(Amike4, "Amike4");
+Frame Amike5;		FRM_FindFrame(Amike5, "Amike5");
+Frame Amike6;		FRM_FindFrame(Amike6, "Amike6");
+Frame Amike9;		FRM_FindFrame(Amike9, "Amike9");
+
+Integer a;
+SaveGameValue(99, 0);		// Global Alarm
+SaveGameValue(1, 0);
+SaveGameValue(2, 0);
+SaveGameValue(3, 0);
+SaveGameValue(4, 0);
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+SetWhenever(Spawn, 0);
+// SaveGameValue(99, 1);		// To disable alarms un-comment this line
+a = _LoadGameValue(99);
+printfnumber("Global Alarm Off: ", a);
+Block {
+SendSignal(sherman, 1);SendSignal(Amike1, 2);SendSignal(Amike2, 2);
+SendSignal(Amike3, 2);SendSignal(Amike4, 2);SendSignal(Amike5, 2);
+SendSignal(Amike6, 2);SendSignal(Amike9, 2);
+}
+Delay(7000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999702);
+Delay(4000);
+SUBTITLES_SetText(56999701);
+Delay(4000);
+SUBTITLES_SetText(59999903);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+// -------------------------------------------------
+
+Label END:

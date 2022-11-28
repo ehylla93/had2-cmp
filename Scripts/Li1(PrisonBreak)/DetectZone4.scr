@@ -1,0 +1,37 @@
+// ----------------------Zone4----------------------
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone4");
+Frame EP17;			FRM_FindFrame(EP17,"EP17");
+Frame EP18;			FRM_FindFrame(EP18,"EP18");
+Frame EP19;			FRM_FindFrame(EP19,"EP19");
+Frame EP24;			FRM_FindFrame(EP24,"EP24");
+Frame EG24;			FRM_FindFrame(EG24,"EG24");
+Frame EG25;			FRM_FindFrame(EG25,"EG25");
+Frame EG26;			FRM_FindFrame(EG26,"EG26");
+Frame EG27;			FRM_FindFrame(EG27,"EG27");
+Frame EG28;			FRM_FindFrame(EG28,"EG28");
+Frame ET21;			FRM_FindFrame(ET21,"ET21");
+Frame ET22;			FRM_FindFrame(ET22,"ET22");
+Frame ET24;			FRM_FindFrame(ET24,"ET24");
+}
+goto end;
+
+Whenever Yes(_PlayerInBox(detect))
+{
+printf ("Player in zone 4");
+sendsignal (EP17,1);
+sendsignal (EP18,1);
+sendsignal (EP19,1);
+sendsignal (EP24,1);
+sendsignal (EG24,1);
+sendsignal (EG25,1);
+sendsignal (EG26,1);
+sendsignal (EG27,1);
+sendsignal (EG28,1);
+sendsignal (ET21,1);
+sendsignal (ET22,1);
+sendsignal (ET24,1);
+goto end;
+}
+label end:

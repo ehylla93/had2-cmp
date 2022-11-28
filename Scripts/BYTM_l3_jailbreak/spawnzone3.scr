@@ -1,0 +1,40 @@
+// Spawnzone 3
+// ----------------------------------------
+
+Block
+{
+Frame flag;		FRM_FindFrame(flag, "d_zone2_flag");
+
+SetWhenever(No, 0);
+SetWhenever(Yes, 0);
+}
+
+// ----------------------------------------
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+SetWhenever(No, 1);
+}
+
+// ----------------------------------------
+
+Whenever Yes ((_PlayerInRange(15)) and (!_EnemyInRange(flag, 35)))
+{
+SetWhenever(Yes, 0);
+MP_EnableSpawnZone("zone2", 2);
+MP_EnableSpawnZone("zone3", 1);
+SetWhenever(No, 1);
+}
+
+Whenever No (_EnemyInRange(flag, 35))
+{
+SetWhenever(No, 0);
+MP_EnableSpawnZone("zone2", 1);
+MP_EnableSpawnZone("zone3", 2);
+SetWhenever(Yes, 1);
+}
+
+// ----------------------------------------
+
+Label end:

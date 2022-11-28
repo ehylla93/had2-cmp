@@ -1,0 +1,56 @@
+
+integer  AIEvent;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red14_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Whenever unsuspend ( _PlayerInRange(20);)
+{						
+  HUMAN_Suspend(False);			
+}						
+
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETMODE_Silence();
+  HUMAN_Move("Red14_1");					//  pøebíhaè
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_SETAIMODE_Aggressive();
+       HUMAN_SetOptimized(2);
+       HUMAN_Stop();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SETMODE_Walk();
+    }
+  HUMAN_Move("Red14_2");				
+  HUMAN_TurnAt(turn);
+  Delay(500);
+  HUMAN_WeaponOnArm(True);
+  Delay(500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  HUMAN_Stop();
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 14: ", AIEvent);
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);		  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

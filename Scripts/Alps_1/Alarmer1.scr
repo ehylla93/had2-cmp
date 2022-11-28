@@ -1,0 +1,113 @@
+// TURNING OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame G01;	FRM_FindFrame(G01,"01_G01");
+Frame G02;	FRM_FindFrame(G02,"01_G02");
+Frame G03;	FRM_FindFrame(G03,"01_G03");
+Frame G04;	FRM_FindFrame(G04,"01_G04");
+Frame G05;	FRM_FindFrame(G05,"01_G05");
+Frame G06;	FRM_FindFrame(G06,"01_G06");
+Frame G07;	FRM_FindFrame(G07,"01_G07");
+Frame G08;	FRM_FindFrame(G08,"01_G08");
+Frame G09;	FRM_FindFrame(G09,"01_G09");
+Frame G10;	FRM_FindFrame(G10,"01_G10");
+
+Frame G11;	FRM_FindFrame(G11,"01_G11");
+Frame G12;	FRM_FindFrame(G12,"01_G12");
+Frame G13;	FRM_FindFrame(G13,"01_G13");
+Frame G14;	FRM_FindFrame(G14,"01_G14");
+Frame G15;	FRM_FindFrame(G15,"01_G15");
+Frame G16;	FRM_FindFrame(G16,"01_G16");
+Frame G17;	FRM_FindFrame(G17,"01_G17");
+Frame G18;	FRM_FindFrame(G18,"01_G18");
+Frame G19;	FRM_FindFrame(G19,"01_G19");
+Frame G20;	FRM_FindFrame(G20,"01_G20");
+
+Frame G21;	FRM_FindFrame(G21,"01_G21");
+Frame G22;	FRM_FindFrame(G22,"01_G22");
+Frame G23;	FRM_FindFrame(G23,"01_G23");
+Frame G24;	FRM_FindFrame(G24,"01_G24");
+Frame G25;	FRM_FindFrame(G25,"01_G25");
+Frame G26;	FRM_FindFrame(G26,"01_G26");
+Frame G27;	FRM_FindFrame(G27,"01_G27");
+Frame G28;	FRM_FindFrame(G28,"01_G28");
+Frame G29;	FRM_FindFrame(G29,"01_G29");
+Frame G30;	FRM_FindFrame(G30,"01_G30");
+
+Frame G31;	FRM_FindFrame(G31,"01_G31");
+Frame G32;	FRM_FindFrame(G32,"01_G32");
+Frame G33;	FRM_FindFrame(G33,"01_G33");
+Frame G34;	FRM_FindFrame(G34,"01_G34");
+Frame G35;	FRM_FindFrame(G35,"01_G35");
+Frame G36;	FRM_FindFrame(G36,"01_G36");
+Frame G37;	FRM_FindFrame(G37,"01_G37");
+Frame G38;	FRM_FindFrame(G38,"01_G38");
+Frame G39;	FRM_FindFrame(G39,"01_G39");
+Frame G40;	FRM_FindFrame(G40,"01_G40");
+
+Frame G41;	FRM_FindFrame(G41,"01_G41");
+Frame G42;	FRM_FindFrame(G42,"01_G42");
+Frame G43;	FRM_FindFrame(G43,"01_G43");
+Frame G44;	FRM_FindFrame(G44,"01_G44");
+Frame G45;	FRM_FindFrame(G45,"01_G45");
+Frame G46;	FRM_FindFrame(G46,"01_G46");
+Frame G47;	FRM_FindFrame(G47,"01_G47");
+Frame G48;	FRM_FindFrame(G48,"01_G48");
+Frame G49;	FRM_FindFrame(G49,"01_G49");
+Frame G50;	FRM_FindFrame(G50,"01_G50");
+
+Frame G51;	FRM_FindFrame(G51,"01_G51");
+Frame G52;	FRM_FindFrame(G52,"01_G52");
+Frame G53;	FRM_FindFrame(G53,"01_G53");
+Frame G54;	FRM_FindFrame(G54,"01_G54");
+Frame G55;	FRM_FindFrame(G55,"01_G55");
+Frame G56;	FRM_FindFrame(G56,"01_G56");
+Frame G57;	FRM_FindFrame(G57,"01_G57");
+Frame G58;	FRM_FindFrame(G58,"01_G58");
+Frame G59;	FRM_FindFrame(G59,"01_G59");
+Frame G60;	FRM_FindFrame(G60,"01_G60");
+
+Frame G61;	FRM_FindFrame(G61,"01_G61");
+Frame G62;	FRM_FindFrame(G62,"01_G62");
+Frame G63;	FRM_FindFrame(G63,"01_G63");
+Frame G64;	FRM_FindFrame(G64,"01_G64");
+Frame G65;	FRM_FindFrame(G65,"01_G65");
+Frame G66;	FRM_FindFrame(G66,"01_G66");
+Frame G67;	FRM_FindFrame(G67,"01_G67");
+Frame G68;	FRM_FindFrame(G68,"01_G68");
+Frame G69;	FRM_FindFrame(G69,"01_G69");
+Frame G70;	FRM_FindFrame(G70,"01_G70");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(G01, 5);SendSignal(G02, 5);SendSignal(G03, 5);
+SendSignal(G04, 5);SendSignal(G05, 5);SendSignal(G06, 5);
+SendSignal(G07, 5);SendSignal(G08, 5);SendSignal(G09, 5);
+SendSignal(G10, 5);SendSignal(G11, 5);SendSignal(G12, 5);
+SendSignal(G13, 5);SendSignal(G14, 5);SendSignal(G15, 5);
+SendSignal(G16, 5);SendSignal(G17, 5);SendSignal(G18, 5);
+SendSignal(G19, 5);SendSignal(G20, 5);SendSignal(G21, 5);
+SendSignal(G22, 5);SendSignal(G23, 5);SendSignal(G24, 5);
+SendSignal(G25, 5);SendSignal(G26, 5);SendSignal(G27, 5);
+SendSignal(G28, 5);SendSignal(G29, 5);SendSignal(G30, 5);
+SendSignal(G31, 5);SendSignal(G32, 5);SendSignal(G33, 5);
+SendSignal(G34, 5);SendSignal(G35, 5);SendSignal(G36, 5);
+SendSignal(G37, 5);SendSignal(G38, 5);SendSignal(G39, 5);
+SendSignal(G40, 5);SendSignal(G41, 5);SendSignal(G42, 5);
+SendSignal(G43, 5);SendSignal(G44, 5);SendSignal(G45, 5);
+SendSignal(G46, 5);SendSignal(G47, 5);SendSignal(G48, 5);
+SendSignal(G49, 5);SendSignal(G50, 5);SendSignal(G51, 5);
+SendSignal(G52, 5);SendSignal(G53, 5);SendSignal(G54, 5);
+SendSignal(G55, 5);SendSignal(G56, 5);SendSignal(G57, 5);
+SendSignal(G58, 5);SendSignal(G59, 5);SendSignal(G60, 5);
+SendSignal(G61, 5);SendSignal(G62, 5);SendSignal(G63, 5);
+SendSignal(G64, 5);SendSignal(G65, 5);SendSignal(G66, 5);
+SendSignal(G67, 5);SendSignal(G68, 5);SendSignal(G69, 5);
+SendSignal(G70, 5);
+EndScript();
+}

@@ -1,0 +1,21 @@
+// AF2_dummy_alert01 - sending guards when alarm occured
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME en01;			FRM_FindFrame(en01, "AF2_01");		// first group soldier
+  FRAME en02;			FRM_FindFrame(en02, "AF2_02");		// first group soldier
+  FRAME en05;			FRM_FindFrame(en05, "AF2_05");		// first group soldier
+  FRAME en06;			FRM_FindFrame(en06, "AF2_06");		// first group soldier
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever globalalarm (_SignalReceived(1)){
+  printf("group 1 - G.L.O.B.A.L.   A.L.E.R.T.");
+  SendSignal(en01, 20);
+  SendSignal(en02, 20);
+  SendSignal(en05, 20);
+  SendSignal(en06, 20);
+}
+
+// -------------------------------------------------------------------------------------------------------------

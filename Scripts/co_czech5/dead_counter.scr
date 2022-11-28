@@ -1,0 +1,89 @@
+block
+{
+Frame E01;	FRM_FindFrame(E01,"GE_1");
+Frame E02;	FRM_FindFrame(E02,"GE_2");
+Frame E03;	FRM_FindFrame(E03,"GE_3");
+Frame E04;	FRM_FindFrame(E04,"GE_4");
+Frame E05;	FRM_FindFrame(E05,"GE_5");
+Frame E06;	FRM_FindFrame(E06,"GE_6");
+Frame E07;	FRM_FindFrame(E07,"GE_7");
+Frame E08;	FRM_FindFrame(E08,"GE_8");
+Frame E09;	FRM_FindFrame(E09,"GE_9");
+Frame E10;	FRM_FindFrame(E10,"GE_10");
+Frame E11;	FRM_FindFrame(E11,"GE_11");
+Frame E12;	FRM_FindFrame(E12,"GE_12");
+Frame E13;	FRM_FindFrame(E13,"GE_13");
+Frame E14;	FRM_FindFrame(E14,"GE_14");
+Frame E15;	FRM_FindFrame(E15,"GE_15");
+Frame E16;	FRM_FindFrame(E16,"GE_16");
+Frame E17;	FRM_FindFrame(E17,"GE_17");
+Frame E18;	FRM_FindFrame(E18,"GE_18");
+Frame E19;	FRM_FindFrame(E19,"GE_19");
+Frame E20;	FRM_FindFrame(E20,"GE_20");
+Frame E21;	FRM_FindFrame(E21,"GE_21");
+Frame E22;	FRM_FindFrame(E22,"GE_22");
+Frame E23;	FRM_FindFrame(E23,"GE_23");
+Frame E24;	FRM_FindFrame(E24,"GE_24");
+Frame E25;	FRM_FindFrame(E25,"GE_26");
+Frame E26;	FRM_FindFrame(E26,"GE_27");
+Frame E27;	FRM_FindFrame(E27,"GE_T1");
+Frame E28;	FRM_FindFrame(E28,"GE_T2");
+
+Frame obj;		FRM_FindFrame(obj,"dummy_objectives");
+
+Integer x; 	x=29;
+}
+
+Label check:
+x=29;
+
+block
+{
+if (_ACTOR_GetState(E01)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E02)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E03)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E04)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E05)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E06)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E07)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E08)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E09)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E10)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(E10)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E11)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E12)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E13)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E14)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E15)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E16)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E17)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E18)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E19)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E20)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(E21)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E22)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E23)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E24)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E25)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E26)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E27)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E28)==0)	{	x=x-1;	}
+}
+
+if (x==0)
+{
+SendSignal (obj,1);
+EndScript();
+}
+else {
+delay (5000);
+goto check;
+}
+
+Label end:

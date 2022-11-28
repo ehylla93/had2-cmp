@@ -1,0 +1,8 @@
+// X_N1_N50_A1 - activator
+Frame n50;
+	FRM_FindFrame(n50, "N50");
+
+Whenever player(_PlayerInRange(2))
+{
+	SendSignal(n50, 1);
+}

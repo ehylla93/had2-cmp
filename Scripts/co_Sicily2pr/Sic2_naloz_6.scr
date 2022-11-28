@@ -1,0 +1,22 @@
+// suspend dummy after explosion
+// -----------------------------
+
+Block
+{
+
+Frame Opel3_ex1;		FRM_FindFrame (Opel3_ex1,"Opel3_ex1");
+
+Frame Opel3_ex1_d;	FRM_FindFrame (Opel3_ex1_d,"Opel3_ex1_d");
+
+}
+
+// ---------------------------
+
+
+Whenever Stav ( _ACTOR_GetState(Opel3_ex1) == 2 )
+{
+  Delay(1000);
+  FRM_SetOn(Opel3_ex1_d, false);
+  EndScript();
+}
+

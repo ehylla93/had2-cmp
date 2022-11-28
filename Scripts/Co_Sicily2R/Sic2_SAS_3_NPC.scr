@@ -1,0 +1,86 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	SAS3 potencionalni NPC spojenec - budto se prida, nebo se tvari ze bojuje a casem umira nebo je ranen 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+frame MyFRM;		FRM_GetMyFrame(MyFRM);
+frame Target_1;	FRM_FindFrame(Target_1, "Target3_1");
+frame Target_2;	FRM_FindFrame(Target_2, "Target3_2");
+integer RND_time;	RND_time = 5000;
+integer RND_raneny;	RND_raneny = 0;
+integer TMP = 1;
+integer vopruznik = 0;		
+
+HUMAN_Suspend(True);
+Goto TheEnd;
+
+Whenever Resume ( _PlayerInRange(70); )	
+{
+  HUMAN_Suspend(False);
+  //HUMAN_BoardVehicle("w_mg42Crouch_1", true, 0);
+}
+goto Akce;
+
+Whenever NPCecko ( _PlayerInRange(2) )
+{
+  FRM_MorphSpeech(MyFRM,  56990055, 1, 30);
+}
+
+
+Label Akce:
+  RND_raneny = _RandomInt(20);
+  RND_time = _RandomInt(5000) + 4000;
+  Delay(RND_time);
+  If (RND_raneny == 10) { goto Ran_me; }
+  If ( _LoadGameValue(99) == 99) {goto Akce;}
+  if ( _PlayerInRange(3) ) { vopruznik = 1} else { vopruznik = 0}
+  If ( vopruznik == 0) 
+     { 
+        HUMAN_WeaponOnArm(false);
+        HUMAN_Move("kulasek");
+        HUMAN_BoardVehicle("w_mg42Crouch_1", true, 0); 
+      } else {
+        Printf("MOVE na vopruznika ..............");
+        HUMAN_WeaponOnArm(true);
+        HUMAN_Move("vopruznik");
+     }
+  If ( _LoadGameValue(99) == 0) {HUMAN_IllFire(Target_1, 2000);}
+  Delay(2000);
+  HUMAN_BoardVehicle("", 0, 0);
+  If ( vopruznik == 0)  {    HUMAN_WeaponOnArm(false);  }
+  HUMAN_SETMODE_Crouch();
+  Delay(3000);
+
+  if ( _PlayerInRange(3) ) { vopruznik = 1} else { vopruznik = 0}
+  If ( vopruznik == 0) 
+     { 
+        HUMAN_WeaponOnArm(false);
+        HUMAN_Move("kulasek");
+        HUMAN_BoardVehicle("w_mg42Crouch_1", true, 0); 
+        If ( _LoadGameValue(99) == 0) {HUMAN_IllFire(Target_2, 1500);}
+      } else {
+        Printf("MOVE na vopruznika ..............");
+        HUMAN_WeaponOnArm(true);
+        HUMAN_Move("vopruznik");
+        If ( _LoadGameValue(99) == 0) {HUMAN_IllFire(Target_1, 2000);}
+     }
+  Delay(2000);
+  HUMAN_BoardVehicle("", 0, 0);
+goto akce;
+
+Label Ran_me:
+    SetWhenever(NPCecko, False);
+    HUMAN_BoardVehicle("", 0, 0);
+    HUMAN_WeaponOnArm(false);
+    HUMAN_SetAnim("%%zranenej4", 200, 200, true); 	
+    Printf("NPC 3 ...... fligna");
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  EndScript();
+}
+
+Label TheEnd: 

@@ -1,0 +1,12 @@
+// Player near complex (road), activating tank2
+
+Frame tanks;	FRM_Findframe(tanks, "n_tanks");
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+Whenever PIB (_PlayerInBox(MyFRM))
+{
+SetWhenever(PIB, false);
+printf("tank2 activated");
+SendSignal(tanks, 1);
+EndScript();
+}

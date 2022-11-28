@@ -1,0 +1,115 @@
+// Captain
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+frame stul;	FRM_FindFrame(stul,"k_shodstulnv_");
+frame atak;	FRM_FindFrame(atak,"strilej");
+frame leo;	FRM_FindFrame(leo,"k_leo_");
+Frame pryc;	FRM_FindFrame(pryc, "n1_ter02");
+Frame ruka;
+Frame sit;	FRM_FindFrame(sit, "sit");
+
+integer b=0;
+
+HUMAN_SETSIGHTRANGE(16);
+
+SetAlarmType(1023,false);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+}
+
+HUMAN_WeaponOnArm(0);
+HUMAN_Suspend(true);
+
+goto end;
+
+//-------------------------------------------------------------------------------------------------
+
+Whenever A (_PlayerInRange(25))
+{
+HUMAN_Suspend(false);
+goto end;
+}
+
+Whenever aktiv(_SignalReceived(1))
+{
+FRM_TeleportNearCheckpoint(me, "gg1", "gg2");
+SetAlarmType(390,1);
+HUMAN_SETHEARRANGE(7);
+HUMAN_SetSniper(1, 1);
+goto hlidej;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+DisableSignals(1);
+if (b==0)
+{
+block
+{
+b=1;
+SendSignal(stul,1);
+FRM_TeleportNearFrame(leo, pryc,0);
+}
+HUMAN_SETMODE_StandFast();
+delay(50);
+HUMAN_SetAnim("%%shodstul1",100,100,0);
+delay (876);
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+DisableSignals(0);
+SetAlarmType(1023,0);
+SetAlarmType(390,1);
+HUMAN_SetAlarm(0);
+}
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+FRM_TeleportNearFrame(leo, pryc,0);
+EndScript();
+}
+
+Whenever kokot(_SignalReceived(22))			//Sirena on
+{
+SetWhenever(aktiv,0);
+HUMAN_SetSniper(1, 1);
+HUMAN_SETMODE_Crouch();
+SetAlarmType(390,1);	
+SendSignal(stul,1);
+delay(50);
+HUMAN_SetAnim("%%shodstul1",100,100,0);
+delay (876);
+HUMAN_WeaponOnArm(1);
+goto end;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+goto end;
+}
+
+label hlidej:
+block
+{
+FRM_FindFrame(ruka,"small10.hw1");
+FRM_TeleportNearFrame(leo, ruka, 1);
+FRM_FindFrame(ruka,"");
+}
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%predstul",100,100,1);
+
+label end:

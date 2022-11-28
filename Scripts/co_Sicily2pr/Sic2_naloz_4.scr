@@ -1,0 +1,22 @@
+// suspend dummy after explosion
+// -----------------------------
+
+Block
+{
+
+Frame la_Jeepsas_1_ex;	FRM_FindFrame (la_Jeepsas_1_ex,"la_Jeepsas_1_ex");
+
+Frame la_Jeepsas_1_ex_d;	FRM_FindFrame (la_Jeepsas_1_ex_d,"la_Jeepsas_1_ex_d");
+
+}
+
+// ---------------------------
+
+
+Whenever Stav ( _ACTOR_GetState(la_Jeepsas_1_ex) == 2 )
+{
+  Delay(1000);
+  FRM_SetOn(la_Jeepsas_1_ex_d, false);
+  EndScript();
+}
+

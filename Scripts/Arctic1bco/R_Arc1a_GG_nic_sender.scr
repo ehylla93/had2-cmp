@@ -1,0 +1,6 @@
+frame GG;		FRM_FindFrame(GG, "Gate_Guard");
+
+Whenever Send (_PlayerInRange(8);)
+{
+  SendSignal(GG, 5);
+}

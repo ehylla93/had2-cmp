@@ -1,0 +1,23 @@
+// C5_player_teleporter - final render
+
+Block
+{
+Frame r16;		FRM_FindFrame(r16, "C5_R16");
+Frame r17;		FRM_FindFrame(r17, "C5_R17");
+Frame r18;		FRM_FindFrame(r18, "C5_R18");
+Frame panther;	FRM_FindFrame(panther, "la_panther_");
+}
+
+OnSignal(1)	// received from C5_objective
+{
+	MakeExplosion(panther, 10000000, 5000);
+	PlayMusic(35);
+	Delay(10000);
+	Block
+	{
+	SendSignal(r16, 2);		//russian officer
+	SendSignal(r17, 2);		//ISU152 driver
+	SendSignal(r18, 2);
+	}
+	EndScript();
+}

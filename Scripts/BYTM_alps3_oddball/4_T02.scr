@@ -1,0 +1,76 @@
+// 4_T02
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 1);
+
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(70);
+
+Frame T1;		FRM_FindFrame(T1, "4_T01");
+Frame T3;		FRM_FindFrame(T3, "4_T03");
+Frame tank1;	FRM_FindFrame(tank1, "tank1");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+Integer AIEvent;
+Integer a=0;
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 500, 0);
+AIEvent = _GetAlarmType();
+if((a==0) and (_LoadGameValue(10)==0))
+{
+SetAlarmType(1023, 0);
+SendSignal(T1, 2);
+SendSignal(T3, 2);
+a=1;
+HUMAN_SETMODE_Run();
+HUMAN_Move("tank1_enter");
+HUMAN_BoardVehicle("tank1", 1, 2);
+SetAlarmType(1023, 1);
+}
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+}
+
+OnSignal(2)
+{
+EnableSignal(2, 0);
+a=1;
+SetAlarmType(1023, 0);
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("tank1_enter");
+HUMAN_BoardVehicle("tank1", 1, 2);
+SetAlarmType(1023, 1);
+}
+
+// ------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

@@ -1,0 +1,127 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Defensive();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(60);
+
+integer a;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+frame cum1;		FRM_FindFrame(cum1, "pipe_tower13");
+Frame zx_agres6;	FRM_FindFrame(zx_agres6,"zx_agres6");
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f057");
+
+
+
+}
+
+integer mrd;	mrd=(_SPGetGameType());
+
+if ((mrd==3) or (mrd==7))
+
+{
+DisableWhenevers(1);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+
+
+
+
+HUMAN_Suspend(1);
+
+
+goto end;
+
+
+Whenever du(_SignalReceived(1))
+{
+//z2agres1
+
+HUMAN_Suspend(0);
+block
+{
+sendSignal (zx_agres6,1);
+SetAlarmType(1023,0);
+SetAlarmType(97,1);		//slysim strelbu
+}
+delay (3000);
+HUMAN_SETMODE_Run();
+HUMAN_Move("zxagres5_1");
+SetAlarmType(375,1);
+HUMAN_TurnAt(cum1);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+//-------------------------------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+
+if (_LoadGameValue(7)==0)
+{
+
+HUMAN_SetAlarm(0);
+goto end;
+}
+EndScript();
+
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("zxagres5_1");
+HUMAN_TurnAt(cum1);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+
+
+OnDeath()
+{
+EndScript();
+goto end;
+}
+
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:
+
+
+
+

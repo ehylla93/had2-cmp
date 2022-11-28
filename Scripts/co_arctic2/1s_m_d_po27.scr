@@ -1,0 +1,17 @@
+
+Block {
+frame D1;		FRM_FindFrame(D1, "m_d_po26");
+frame D2;		FRM_FindFrame(D2, "m_d_po27");
+}
+
+OnUse()
+{
+  frame p1s97;	FRM_FindFrame(p1s97,"p1s97");	//---------MUST BE IN HERE-----------
+  SendSignal(p1s97,1);
+  Block
+     {
+        FRM_SetLightMap(D1, 5);
+        FRM_SetLightMap(D2, 5);
+     }
+}
+

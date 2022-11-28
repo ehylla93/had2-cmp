@@ -1,0 +1,27 @@
+// BU1_barel_03z - destroyed barel script
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame barelz;
+	FRM_GetMyFrame(barelz);
+Frame barel_03;
+	FRM_FindFrame(barel_03, "BU1_barel_03");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever destroy(_SignalReceived(1))	// received from BU1_barelx
+{
+	FRM_CreateParticle(20, barelz);
+	MakeExplosion(barelz, 800000, 15000);
+	Block
+	{
+	FRM_SetOn(barelz, true);
+	FRM_SetOn(barel_03, false);
+	}
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+FRM_SetOn(barelz, false);
+
+Label end:

@@ -1,0 +1,99 @@
+// AF2_posily_01 - rescue team
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME sd02;			FRM_FindFRAME(sd02, "SdKfZ1_02");
+  FRAME sd03;			FRM_FindFRAME(sd03, "SdKfZ1_03");
+  FRAME sd04;			FRM_FindFRAME(sd04, "SdKfZ1_04");
+  FRAME sd05;			FRM_FindFRAME(sd05, "SdKfZ1_05");
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, false);
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+HUMAN_SETEVENTS(true);
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1){
+  goto ACTIVATE;
+}
+
+OnDeath(){
+  SendSignal(sd02, 2);
+  SendSignal(sd03, 2);
+  SendSignal(sd04, 2);
+  SendSignal(sd05, 2);
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    HUMAN_Stop();
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+  }
+
+  if(Atype == 32){
+    HUMAN_Drive("", 0);
+    HUMAN_BoardVehicle("SdKfZ_1", 0, 0);
+  SendSignal(sd02, 2);
+  SendSignal(sd03, 2);
+  SendSignal(sd04, 2);
+  SendSignal(sd05, 2);
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SETMODE_Guard();
+  gosub SETALARM;
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("SdKfZ_1", 1, 0);
+  Delay(1000);
+  HUMAN_Drive("AF2_car01", 20);
+  HUMAN_Drive("AF2_car02", 20);
+  //HUMAN_Drive("AF2_car03", 20);
+  //HUMAN_DriveNearPlayer(30);
+  HUMAN_Drive("", 0);
+  HUMAN_BoardVehicle("SdKfZ_1", 0, 0);
+  HUMAN_SetOptimized(1);
+  SendSignal(sd02, 2);
+  SendSignal(sd03, 2);
+  SendSignal(sd04, 2);
+  SendSignal(sd05, 2);
+  HUMAN_SetMODE_Crouch();
+  gosub SETALARM;
+  HUMAN_Move("p01_01");
+  goto END;
+
+Label ACTIVITY:
+goto END;
+
+Label SETALARM:
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+return;
+
+Label END:

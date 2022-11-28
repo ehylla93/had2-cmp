@@ -1,0 +1,51 @@
+// Obj 4 - Gather near the SAS jeep
+// ----------------------------------------------
+
+Block
+{
+Frame Pilot;	FRM_FindFrame(Pilot, "Allied Pilot");
+Frame Ally1;	FRM_FindFrame(Ally1, "Sgt. Siegfried Hirsch");
+Frame Ally2;	FRM_FindFrame(Ally2, "SSgt. Gregory Dean");
+Frame SASJeep;	FRM_FindFrame(SASJeep, "Jeep");
+
+SetWhenever(Gathered, 0);
+SetWhenever(Player, 0);
+}
+
+Whenever Gathered ((_FrameInRange(Pilot) < 15) And (_FrameInRange(SASJeep) < 15))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(13992733);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Player (_PlayerInRange(35))
+{
+SetWhenever(Gathered, 1);
+Delay(12000);
+SendSignal(Ally1, 1);
+SendSignal(Ally2, 1);
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Player, 1);
+}
+
+Whenever Fail ((_Actor_GetState(Ally1) == 0) OR (_Actor_GetState(Ally2) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(06011203);
+Delay(3500);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(4, 2);
+SetObjectiveStatus(3, 2);
+SUBTITLES_SetOn(0);
+EndScript();
+}

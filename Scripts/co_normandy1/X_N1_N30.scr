@@ -1,0 +1,95 @@
+// N30 - guard on the fortification
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;	aievent=0;
+Frame me;	FRM_GetMyFrame(me);
+	
+SetAlarmType(16, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(120);
+	aievent=_GetAlarmType();
+	}
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+	EndScript();
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_SETMODE_Stand();
+	GoTo path;
+}
+
+Whenever near (_PlayerInRange(35))
+{
+	SetWhenever(near2, false);
+	HUMAN_Suspend(false);
+	GoTo path;
+}
+
+Whenever near2(_SignalReceived(2))	// received from N26-30A, NXX_A1, NXX_A4
+{
+	SetWhenever(near, false);
+	HUMAN_Suspend(false);
+	GoTo path;
+}
+
+Whenever activ(_SignalReceived(10))	// received from NXY_A1, NXY_A2
+{
+	SetWhenever(near, true);
+	SetWhenever(near2, true);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+SetWhenever(near, false);
+SetWhenever(near2, false);
+FRM_SwitchFaceTexture(me, "e_f059");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_Move("N30_1");
+	Delay(1000);
+	HUMAN_Move("N30_2");
+	Delay(1000);
+	HUMAN_Move("N30_3");
+	Delay(1000);
+	HUMAN_Move("N30_4");
+	Delay(1000);
+
+Label end:

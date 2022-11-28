@@ -1,0 +1,15 @@
+// Bomb on Kannon 17b
+//-----------------------------------------
+
+Block 
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Kanon;	FRM_FindFrame(Kanon,"Kanon17b");
+}
+//-----------------------------------------
+
+Whenever BUM (_Actor_GetState(me)==2)
+{
+SetActorState(Kanon, 2);
+EndScript();
+}

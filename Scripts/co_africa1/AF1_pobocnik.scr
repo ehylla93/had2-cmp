@@ -1,0 +1,88 @@
+// AF1_pobocnik - Pilot (now Flak soldier)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+FRAME this;			FRM_GetMyFrame(this);
+FRAME af20;			FRM_FindFrame(af20, "af1_20");
+FRAME flak;			FRM_FindFrame(flak, "la_OpelFuj");
+
+INTEGER first		= 0;
+INTEGER rnd 		= 0;
+INTEGER after		= 0;
+
+SetAlarmType(1023, false);
+SetAlarmType(768, false);
+SetAlarmType(1,1);
+}
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_Suspend(true);
+HUMAN_SetEvents(true);
+goto END;
+  
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+  EndScript();
+}
+
+OnSignal(21){
+ SendSignal(af20, 20);
+  goto ALARM;
+}
+
+Whenever inrange (_PlayerInRange(150)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+SendSignal(af20, 20);
+HUMAN_Suspend(false);
+HUMAN_SETSIGHTRANGE(200);
+
+if (first==0)
+{
+  first=1;
+  SetAlarmType(1023, false);
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_MoveToFrame(flak, 4);
+  HUMAN_BoardVehicle("la_OpelFuj",  1, 2);
+  SetAlarmType(1023, true);
+  HUMAN_TurnAtNearestPlayer();
+}
+else {
+EndScript();
+}
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ALARM:
+  first=1;
+  SetAlarmType(1023, false);
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_MoveToFrame(flak, 4);
+  HUMAN_BoardVehicle("la_OpelFuj",  1, 2);
+  SetAlarmType(1023, true);
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_TurnAt(af20);
+goto END;
+
+Label END:

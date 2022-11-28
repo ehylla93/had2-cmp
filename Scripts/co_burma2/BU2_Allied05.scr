@@ -1,0 +1,319 @@
+// BU2_Allied05 - allied soldier, shooting at BU2_R03, R05, R24, R07, R06, R11, R13 - moving right flank
+// player in range 15 - shoot and continue to next checkpoint
+// player in range 16-40 stop and shoot
+// player in range > 41 - go and die somewhere
+
+//allied 6 and allied 5
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame al06;	FRM_FindFrame(al06, "BU2_Allied06");
+Frame r03;	FRM_FindFrame(r03, "BU2_R03");
+Frame r05;	FRM_FindFrame(r05, "BU2_R05");
+Frame r24;	FRM_FindFrame(r24, "BU2_R24");
+Frame r07;	FRM_FindFrame(r07, "BU2_R07");
+Frame r06;	FRM_FindFrame(r06, "BU2_R06");
+Frame r11;	FRM_FindFrame(r11, "BU2_R11");
+Frame r13;	FRM_FindFrame(r13, "BU2_R13");
+Frame shoot01;	FRM_FindFrame(shoot01, "BU2_A04_shoot01");
+Frame me;	FRM_GetMyFrame(me);
+Integer path;	path=0;
+Integer r03live;	r03live=0;
+Integer r05live;	r05live=0;
+Integer r24live;	r24live=0;
+Integer r07live;	r07live=0;
+Integer r06live;	r06live=0;
+Integer r11live;	r11live=0;
+Integer r13live;	r13live=0;
+SetWhenever(player, false);
+SetWhenever(player2, false);
+
+DisableWhenevers(true);
+
+HUMAN_SETEVENTS(false);
+FRM_SwitchFaceTexture(me, "e_f059");
+
+SetAlarmType(1023, false);
+}
+
+HUMAN_SETMODE_Run();
+
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(1)
+{
+Delay(5000);
+DisableWhenevers(false);
+SetWhenever(player, false);
+SetWhenever(player2, false);
+goto beh;
+}
+
+Whenever player(_PlayerInRange(15))	// in range 15
+{
+	HUMAN_WeaponOnArm(0);
+	Delay(500);
+	HUMAN_SetAnim("%%gogostoj", 200, 200, false);
+	Delay(2300);
+	HUMAN_WeaponOnArm(1);
+	Delay(500);
+	HUMAN_SETMODE_Stand();
+	SetWhenever(player2, true);
+	SetWhenever(player3, true);
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+}
+
+Whenever player2((!_PlayerInRange(16)) AND (_PlayerInRange(40)))	// in range 16-40
+{
+	HUMAN_Stop();
+	HUMAN_TurnAt(shoot01);
+	HUMAN_SETMODE_Crouch();
+	SetWhenever(player, true);
+	SetWhenever(player3, true);
+	GoTo shoot;
+}
+
+Whenever player3(!_PlayerInRange(41))	// in range 40+
+{
+	HUMAN_SETMODE_Stand();
+	SetWhenever(player, true);
+	SetWhenever(player2, true);
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+}
+
+Whenever bu2_r03(_FrameInRange(r03)<30)
+{
+	SendSignal(r03, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r03);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r03;
+}
+
+Whenever bu2_r05(_FrameInRange(r05)<30)
+{
+	SendSignal(r05, 1);
+	HUMAN_Stop();
+	PlaySound(9, 116);
+	SendSignal(al06, 6);
+	HUMAN_TurnAt(r05);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r05;
+}
+
+Whenever bu2_r24(_FrameInRange(r24)<30)
+{
+	SendSignal(r24, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r24);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r24;
+}
+
+Whenever bu2_r07(_FrameInRange(r07)<30)
+{
+	SendSignal(r07, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r07);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r07;
+}
+
+Whenever bu2_r06(_FrameInRange(r06)<30)
+{
+	SendSignal(r06, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r06);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r06;
+}
+
+Whenever bu2_r11(_FrameInRange(r11)<30)
+{
+	SendSignal(r11, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r11);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r11;
+}
+
+Whenever bu2_r13(_FrameInRange(r13)<30)
+{
+	SendSignal(r13, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r13);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r13;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Label beh:
+	Delay(4000);
+	SendSignal(al06, 1);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A05_01");
+		path=2;
+	GoTo shootonce;
+Label continue2:
+	SendSignal(al06, 3);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A05_02");
+	SetWhenever(player2, true);
+		path=3;
+	GoTo shootonce;
+Label continue3:
+	SendSignal(al06, 4);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A05_03");
+		path=4;
+	GoTo shootonce;
+Label continue4:
+	SendSignal(al06, 5);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A05_04");
+		path=5;
+	GoTo shootonce;
+Label continue5:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A05_05");
+	HUMAN_Kill(me);
+	GoTo end;
+
+Label shoot:
+	HUMAN_Attack(shoot01, 3000);
+	Delay(2000);
+	GoTo shoot;
+
+Label shootonce:
+	SendSignal(al06, 2);
+	HUMAN_TurnAt(shoot01);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetOptimized(2);
+	HUMAN_Attack(shoot01, 3000);
+	PlaySound(9, 105);
+	Delay(2000);
+	HUMAN_SETMODE_Stand();
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label meet_r03:
+	HUMAN_SetOptimized(2);
+		r03live=_ACTOR_GetState(r03);
+	If(r03live==1)
+	{
+		HUMAN_Attack(r03, 2000);
+		Delay(500);
+		GoTo meet_r03;
+	}
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label meet_r05:
+	HUMAN_SetOptimized(2);
+		r05live=_ACTOR_GetState(r05);
+	If(r05live==1)
+	{
+		HUMAN_Attack(r05, 2000);
+		Delay(500);
+		GoTo meet_r05;
+	}
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label meet_r24:
+	HUMAN_SetOptimized(2);
+		r24live=_ACTOR_GetState(r24);
+	If(r24live==1)
+	{
+		HUMAN_Attack(r24, 2000);
+		Delay(500);
+		GoTo meet_r24;
+	}
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label meet_r07:
+	HUMAN_SetOptimized(2);
+		r07live=_ACTOR_GetState(r07);
+	If(r07live==1)
+	{
+		HUMAN_Attack(r07, 2000);
+		Delay(500);
+		GoTo meet_r07;
+	}
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label meet_r06:
+	HUMAN_SetOptimized(2);
+		r06live=_ACTOR_GetState(r06);
+	If(r06live==1)
+	{
+		HUMAN_Attack(r06, 2000);
+		Delay(500);
+		GoTo meet_r06;
+	}
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label meet_r11:
+	HUMAN_SetOptimized(2);
+		r11live=_ACTOR_GetState(r11);
+	If(r11live==1)
+	{
+		HUMAN_Attack(r11, 2000);
+		Delay(500);
+		GoTo meet_r11;
+	}
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label meet_r13:
+	HUMAN_SetOptimized(2);
+		r13live=_ACTOR_GetState(r13);
+	If(r13live==1)
+	{
+		HUMAN_Attack(r13, 2000);
+		Delay(500);
+		GoTo meet_r13;
+	}
+	If(path==2)	{	GoTo continue2;	}
+	If(path==3)	{	GoTo continue3;	}
+	If(path==4)	{	GoTo continue4;	}
+	If(path==5)	{	GoTo continue5;	}
+	GoTo continue2;
+
+Label end:

@@ -1,0 +1,20 @@
+////-------------prepinani lightmap od dveri m_dv_m08------------------------
+//---------------define variable----------------------------------------------------------
+
+Block {
+frame m_dv_m08;		FRM_GetMyFrame(m_dv_m08);
+integer door;	door=0;
+}
+
+//----------------main script---------------------------------------------------------------
+
+OnUse()
+{
+	Delay(800);
+
+	If     (door==1)		{door=0}
+	Else			{door=1}
+
+	FRM_SetGroupLightMap("1s_m_dv_m08",door);
+}
+

@@ -1,0 +1,71 @@
+delay(4500);
+
+integer AIEvent;
+integer OnCar = 0;
+frame car;		FRM_FindFrame(car, "Hakl");
+
+SetAlarmType(1023, False);
+
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(True);
+
+Onsignal(1)		// Nastup
+{
+  HUMAN_Suspend(False);
+  Printf("nastupuju do HAKLU");
+  HUMAN_BoardVehicle("Hakl" , True, 0);
+  OnCar = 1;
+  Delay(100);		// !nechat!
+  SendSignal(car, 1);
+  goto TheEnd;
+}
+
+OnSignal(10)		// Odjezd
+{
+  HUMAN_Drive("Hakl_1", 12);
+  HUMAN_Drive("Hakl_2", 20);
+  HUMAN_Drive("Hakl_3", 27);
+  HUMAN_Drive("Hakl_4", 22);
+  HUMAN_Drive("Hakl_5", 17);
+  HUMAN_Drive("", 0);
+  SetAlarmType(119, True);  // - 512 - 256 - 128 - 8
+  delay(250) ;
+  SendSignal(car, 2);
+printf("Signal - OK");
+}
+
+OnSignal(2)		// vystup
+{
+  delay(750);
+  HUMAN_BoardVehicle("" , False, 0);
+//////////  HUMAN_Move("");
+//////////  HUMAN_TurnAt();
+}
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Druha vlna - 1: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_Suspend(False);	
+    }
+  If (OnCar == 1) 	{  HUMAN_BoardVehicle("" , False, 0); }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+/////////  HUMAN_Move("");
+///////////  HUMAN_TurnAt(); 
+  HUMAN_SETMODE_Crouch();
+}
+
+Label TheEnd:

@@ -1,0 +1,55 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	SAS4 potencionalni NPC spojenec - budto se prida, nebo se tvari ze bojuje a casem umira nebo je ranen 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+frame MyFRM;		FRM_GetMyFrame(MyFRM);
+frame Target_1;	FRM_FindFrame(Target_1, "Target4_1");
+frame Target_2;	FRM_FindFrame(Target_2, "Target4_2");
+frame turn;		FRM_FindFrame(turn, "dummy_NPC4_end_turn");
+
+integer RND_time;	RND_time = 5000;
+integer RND_raneny;	RND_raneny = 0;
+integer TMP = 1;
+
+HUMAN_Suspend(True);
+Delay(3000);
+HUMAN_Suspend(False); // velka dohlednost a hrac ho muze videt par sec. po startu
+HUMAN_BoardVehicle("w_mg42Crouch_2", true, 0);
+goto AKCE;
+
+Whenever NPCecko ( _PlayerInRange(2) )
+{
+  FRM_MorphSpeech(MyFRM,  56990054, 1, 30);
+}
+
+Label Akce:
+  RND_raneny = _RandomInt(20);
+  RND_time = _RandomInt(5000) + 4000;
+  Delay(RND_time);
+  If ( _LoadGameValue(99) == 0) {HUMAN_IllFire(Target_1, 1500);}
+  Delay(2000);
+  If ( _LoadGameValue(99) == 0) {HUMAN_IllFire(Target_2, 1500);}
+  Delay(2000);
+  ////////////////////////// upravit rusovou strelbu, nebo zapnout AI na strelbu (jestli to pude) ....
+  If (RND_raneny == 10) { goto Ran_me; }
+goto akce;
+Label Ran_me:
+    HUMAN_BoardVehicle("", 0, 0);
+    HUMAN_Move("NPC4_end");   
+    HUMAN_TurnAt(turn);
+    SetWhenever(NPCecko, False);
+    HUMAN_WeaponOnArm(false);
+    Printf("NPC 4 ...... fligna");
+    HUMAN_SetAnim("%%zranenej3", 200, 200, true); 	
+
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  EndScript();
+}
+
+Label TheEnd: 

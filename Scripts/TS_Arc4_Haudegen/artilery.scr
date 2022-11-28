@@ -1,0 +1,28 @@
+//cannon activator
+//-----------------
+
+
+Block
+{
+Frame R12;		FRM_FindFrame(R12,"C5_R12");
+//Frame R13;		FRM_FindFrame(R13,"C5_R13");
+
+integer y;
+}
+
+
+label arty:
+if (((_MP_IsTeamMemberInRange(1, 25))  ) and (y==0)){
+
+SendSignal ( R12, 1 );	// go to attack
+//SendSignal ( R13, 2 );	// go to attack
+
+    
+Delay(10000);
+     
+y=0;
+//EndScript( );
+}
+
+
+goto arty;

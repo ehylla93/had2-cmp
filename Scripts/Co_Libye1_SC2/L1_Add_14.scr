@@ -1,0 +1,56 @@
+// RPG street 
+
+Block
+{
+  integer  AIEvent;
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+Whenever XXX ( _PlayerInRange(60) )
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+     SetAlarmType(1023, True);		
+   }
+goto TheEnd;	
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Walk();
+    }
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" --- ADD 14 --- ma alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SetSniper(true, 25);
+    }
+  EndScript();  
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEnd:

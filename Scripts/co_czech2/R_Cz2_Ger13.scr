@@ -1,0 +1,80 @@
+// R_Cz2_Ger13 - soldier standing on top of 4th carriage
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;	aievent=0;
+Frame ger16;	FRM_FindFrame(ger16, "Ger_16");
+Frame ger28;	FRM_FindFrame(ger28, "Ger_28");
+
+SetAlarmType(652, false);
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetSniper(1, 2);
+
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	Block
+	{
+	aievent=_GetAlarmType();
+	SendSignal(ger16, 1);
+	}
+	
+If(((aievent==1) OR (aievent==32)) OR (aievent==64))	
+	{
+	block
+	{
+	EndScript();
+	}
+	}
+If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{
+	SetAlarmType(274,0);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	delay (500);
+	SetAlarmType(274,1);
+	goto end;
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(652, false);
+}
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+SendSignal(ger28,1);
+EndScript();
+}
+
+Whenever player(_PlayerInRange(40))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

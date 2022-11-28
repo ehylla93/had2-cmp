@@ -1,0 +1,27 @@
+//----------------------objective3----------------------
+// Destroy all enemy tanks.
+//--------------------------------------------
+block
+{
+Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame veh15;	FRM_FindFrame(veh15,"Tiger_1");
+Frame veh16;	FRM_FindFrame(veh16,"Tiger_2");
+Frame veh17;	FRM_FindFrame(veh17,"Tiger_3");
+Frame veh18;	FRM_FindFrame(veh18,"Tiger_4");
+Frame veh19;	FRM_FindFrame(veh19,"Tiger_5");
+Frame veh20;	FRM_FindFrame(veh20,"Tiger_6");
+}
+goto end;
+
+Whenever Tigers ((((((_Actor_GetState(veh15)==0) and (_Actor_GetState(veh16)==0)) and (_Actor_GetState(veh17)==0)) and (_Actor_GetState(veh18)==0)) and (_Actor_GetState(veh19)==0)) and (_Actor_GetState(veh20)==0))
+{
+Delay(3000);
+//SetObjectiveStatus(3, 1);
+SendSignal(txt, 1);
+Delay(3000);
+SendSignal(obj, 3);
+goto end;
+}
+
+label end:

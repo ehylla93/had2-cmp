@@ -1,0 +1,89 @@
+
+integer mrd;	mrd=(_SPGetGameType());
+
+if ((mrd==3) or (mrd==7))
+
+{
+HUMAN_Suspend(1);
+goto end;
+}
+
+
+Frame cum;		FRM_FindFrame(cum, "vez3cum1");
+Frame cum2;		FRM_FindFrame(cum2, "vez3cum2");
+Frame cum3;		FRM_FindFrame(cum3, "vez3cum3");
+HUMAN_SETMODE_Guard();
+
+
+SetAlarmType(1023,1);
+SetAlarmType(371,1);
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(180);
+
+
+
+
+
+label chodim:
+
+
+HUMAN_Move("vez3_1");
+HUMAN_TurnAt(cum);
+delay(20000);
+
+
+HUMAN_Move("vez3_2");
+HUMAN_TurnAt(cum2);
+delay(20000);
+
+HUMAN_Move("vez3_3");
+HUMAN_TurnAt(cum3);
+delay(20000);
+
+
+
+
+
+goto chodim;
+
+
+OnAlarm()
+{
+HUMAN_SetSniper(1, 20);
+HUMAN_SETSIGHTRANGE(40);
+EndScript();
+}
+
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(371,1);
+}
+HUMAN_SETMODE_Stand();
+goto chodim;
+}
+
+
+OnDeath()
+{
+EndScript();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+label end:

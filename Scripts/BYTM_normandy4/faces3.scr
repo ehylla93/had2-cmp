@@ -1,0 +1,64 @@
+// faces3 - Reinforcements
+// -------------------------------------------------------------------------------------------------------------
+
+EndScript();
+
+INTEGER german_faces_count	= 13;
+INTEGER rnd_german = 10;
+FRAME act;	FRM_FindFrame(act, "");
+
+FRM_FindFrame(act, "R1_E01"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R1_E02"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R1_E03"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R1_E04"); gosub GERMAN_FACE; 
+FRM_FindFrame(act, "R1_E05"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R1_E06"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R1_E07"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R1_E08"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R1_E09"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E01"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E02"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E03"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E04"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E05"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E01"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E02"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E03"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E04"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E05"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E06"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E07"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E08"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E09"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R2_E10"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R3_E01"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R3_E02"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R3_E03"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R3_E04"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R3_E05"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R3_E06"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R4_E01"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R4_E02"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R4_E03"); gosub GERMAN_FACE;
+FRM_FindFrame(act, "R4_E04"); gosub GERMAN_FACE;
+printf("faces3 assigned");
+EndScript();
+
+LABEL GERMAN_FACE:
+rnd_german =_ RandomInt(13);
+  if(rnd_german == 0){  FRM_SwitchFaceTexture(act, "e_f021"); }
+  if(rnd_german == 1){  FRM_SwitchFaceTexture(act, "e_f024"); }
+  if(rnd_german == 2){  FRM_SwitchFaceTexture(act, "e_f039"); }
+  if(rnd_german == 3){  FRM_SwitchFaceTexture(act, "e_f042"); }
+  if(rnd_german == 4){  FRM_SwitchFaceTexture(act, "e_f043"); }
+  if(rnd_german == 5){  FRM_SwitchFaceTexture(act, "e_f045"); }
+  if(rnd_german == 7){  FRM_SwitchFaceTexture(act, "e_f052"); }
+  if(rnd_german == 8){  FRM_SwitchFaceTexture(act, "e_f053"); }
+  if(rnd_german == 9){  FRM_SwitchFaceTexture(act, "e_f054"); }
+  if(rnd_german == 10){  FRM_SwitchFaceTexture(act, "e_f055"); }
+  if(rnd_german == 11){  FRM_SwitchFaceTexture(act, "e_f056"); }
+  if(rnd_german == 12){  FRM_SwitchFaceTexture(act, "e_f057"); }
+  if(rnd_german == 13){  FRM_SwitchFaceTexture(act, "e_f059"); }
+  rnd_german = rnd_german + 1;
+  if(rnd_german == german_faces_count){ rnd_german = 0; }
+return;

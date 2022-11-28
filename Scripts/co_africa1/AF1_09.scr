@@ -1,0 +1,157 @@
+// AF1_09 - meeting - at blackboard
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME point;				FRM_FindFrame(point, "af1_dummy7");
+  FRAME af07;				FRM_FindFrame(af07, "af1_07");
+  FRAME af08;				FRM_FindFrame(af08, "af1_08");
+  INTEGER rndtime	= 0;
+  INTEGER Atype		= 0;
+  INTEGER atpos		= 0; 
+  INTEGER rnd		= 0;
+ 
+  SetAlarmType(1023, true);
+}
+
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END2;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  goto ALERT;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(270)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  SetWhenever(player, false);
+  block{
+    SaveGameValue(89, 0);
+    SendSignal(af07, 10);
+    SendSignal(af08, 10);
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+    Atype = _GetAlarmType();
+  }
+  if((Atype == 256) OR (Atype == 512)){
+    SetAlarmType(256, false);
+    SetAlarmType(512, false);
+    goto ALERT;
+  }
+  SendSignal(dummyalert, 1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1){
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SETAIMODE_Zombie();			// mel by byt Defensive ale nesmi se pohybovat
+  HUMAN_SETMODE_Stand();
+
+Label START:
+  gosub RND_ACTION;
+  Delay(200);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_TurnAt(af08);
+  GoSub RND_ACTION;
+  HUMAN_TurnAt(point);
+  Delay(300);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_TurnAt(af08);
+  GoSub RND_ACTION;
+goto START2;
+
+Label START2:
+  HUMAN_TurnAt(point);
+  Delay(3000);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_ACTIVITY_Point(point);
+  HUMAN_TurnAt(af08);
+  Delay(2000);
+  HUMAN_TurnAt(point);
+  Delay(3000);
+  HUMAN_ACTIVITY_Point(point);
+  Delay(1000);
+  HUMAN_TurnAt(af08);
+  Delay(3000);
+  //SendSignal(af07, 1);
+goto START;
+
+Label RND_ACTION:
+  rnd = _RandomInt(5);
+  rndtime = _RandomInt(3000) + 5000;
+  if(rnd == 0){
+    HUMAN_SetAnim("%%kecy1", 200, 200, false);
+    Delay(rndtime);
+   }
+  if(rnd == 1){
+    HUMAN_SetAnim("%%kecy2", 200, 200, false);
+    Delay(rndtime);
+  }
+  if(rnd == 2){
+    HUMAN_SetAnim("%%kecy3", 200, 200, false);
+    Delay(rndtime);
+  }
+  if(rnd == 3){
+    HUMAN_SetAnim("%%tabule", 200, 200, false);
+    Delay(6600);
+  }
+  if(rnd == 4){
+    HUMAN_SetAnim("%%tabule1", 200, 200, false);
+    Delay(4600);
+  }
+  HUMAN_SetAnim("", 200, 200, false);
+  Delay(200);
+return;
+
+Label ALERT:
+    if(!atpos){
+      HUMAN_SetAnim("", 100, 100, false);
+      Delay(100);
+      HUMAN_SetMODE_Crouch();
+      HUMAN_SETMODE_Run();
+      HUMAN_Move("AF1_09_alarm");
+      HUMAN_TurnAt(af07);
+      HUMAN_WeaponOnArm(true);
+      atpos = 1;
+  }
+  HUMAN_SetAlarm(false);
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(300);
+goto END;
+
+Label END2:

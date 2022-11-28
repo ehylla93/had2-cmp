@@ -1,0 +1,23 @@
+// Kecy mezi SF_G03, SF_G04 a SF_G05 na ulici
+//------------------------------------------------
+
+Block
+{
+Frame G11;	FRM_FindFrame(G11, "E1_G41");
+Frame G12;	FRM_FindFrame(G12, "E1_G42");
+Frame G13;	FRM_FindFrame(G13, "E1_G43");
+}
+
+Whenever Aktivace (_SignalReceived(1))
+{
+Delay(15000);
+goto Kecam;
+}
+Whenever Alarm (_SignalReceived(2))
+{
+goto END;
+}
+
+//------------------------------------------------
+
+Label END:

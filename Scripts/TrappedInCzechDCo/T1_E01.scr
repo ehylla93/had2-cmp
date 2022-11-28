@@ -1,0 +1,62 @@
+// Runner
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame G5;		FRM_FindFrame(G5,"AllyG5");
+Frame G4;		FRM_FindFrame(G4,"AllyG4");
+Frame T2;		FRM_FindFrame(T2,"TR_F01");
+Frame D1;		FRM_FindFrame(D1,"AllyD1");
+Frame D2;		FRM_FindFrame(D2,"AllyD2");
+Frame D3;		FRM_FindFrame(D3,"AllyD3");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(G5, 1);
+SendSignal(G4, 1);
+SendSignal(T2, 1);
+SendSignal(D1, 1);
+SendSignal(D2, 1);
+SendSignal(D3, 1);
+HUMAN_Drive("",0);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(1)
+{
+Delay(1000);
+HUMAN_DriveNearPlayer(30);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_BoardVehicle("La_tiger_1", 1, 0);
+
+goto END;
+
+Label END:

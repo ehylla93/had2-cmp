@@ -1,0 +1,153 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(40);
+
+integer a;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+
+
+frame detect1;		FRM_FindFrame (detect1,"detectzbagres1");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f055");
+
+}
+
+integer mrd;	mrd=(_SPGetGameType());
+
+if ((mrd==3) or (mrd==7))
+
+{
+DisableWhenevers(1);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+PrintfNumber("zbagres1 alarm c:",aievent);
+}
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	endx=1;
+	EndScript();
+	}
+
+
+
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+if (suspend==1)
+	{
+	
+	//dokud neni hrac v zone nebo je moc blizko tak nic
+
+
+if ((_LoadGameValue(8)==0) or (_PlayerInBox(detect1)==1))
+	
+	{
+	
+	delay (1000);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+	suspend=0;
+	HUMAN_Suspend(0);
+	SetAlarmType(1015,1);
+
+	}
+}
+
+endx=1;
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Silence();
+HUMAN_WeaponUp(1);
+}
+
+label bloud:
+
+HUMAN_MoveRandomRadius(50);
+HUMAN_SetAnim("%%kouka", 300, 300,0);
+delay (5000);
+HUMAN_SetAnim("", 300, 300, 0);
+goto bloud;
+
+
+OnDeath()
+{
+EndScript();
+goto end;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+
+label end:
+
+
+
+

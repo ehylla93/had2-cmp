@@ -1,0 +1,15 @@
+
+Block {
+frame ge30;	FRM_FindFrame (ge30,"ge_30");
+frame ge43;	FRM_FindFrame (ge43,"ge_43");
+}
+
+OnSignal(1)
+{
+FRM_MorphSpeech(ge30, 14992828,0,100);		//"Alarm!"
+}
+
+OnSignal(2)
+{
+FRM_MorphSpeech(ge43, 14992828,0,100);		//"Alarm!"
+}

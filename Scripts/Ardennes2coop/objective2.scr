@@ -1,0 +1,27 @@
+//----------------------objective2----------------------
+// Kill the snipers.
+//--------------------------------------------
+block
+{
+Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame E1;		FRM_FindFrame(E1,"ES01");
+Frame E2;		FRM_FindFrame(E2,"ES02");
+Frame E3;		FRM_FindFrame(E3,"ES03");
+Frame E4;		FRM_FindFrame(E4,"ES04");
+Frame E5;		FRM_FindFrame(E5,"ES05");
+}
+goto end;
+
+Whenever Snipers (((((_Actor_GetState(E1)==0) and (_Actor_GetState(E2)==0)) and (_Actor_GetState(E3)==0)) and (_Actor_GetState(E4)==0)) and (_Actor_GetState(E5)==0))
+{
+Delay(1000);
+//SetObjectiveStatus(2, 1);
+SendSignal(txt, 1);
+Delay(3000);
+SendSignal(obj, 2);
+goto end;
+}
+
+label end:
+

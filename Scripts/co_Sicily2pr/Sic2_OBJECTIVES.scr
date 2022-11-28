@@ -1,0 +1,16 @@
+Block
+  {
+    SetObjectiveStatus(1, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(2, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(3, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(4, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(5, 0);	// INPROGRES - start initialization
+  }
+
+Delay(10000);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(56999901);
+Delay(4000);
+SUBTITLES_SetOn(false);
+
+Label end:

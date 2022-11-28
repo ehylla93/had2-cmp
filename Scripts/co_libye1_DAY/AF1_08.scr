@@ -1,0 +1,92 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame la_OpelFAf_1;		FRM_FindFrame(la_OpelFAf_1,"la_OpelFAf_1");
+Frame la_ammo_3;		FRM_FindFrame(la_ammo_3,"la_ammo_3");
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_WeaponUp(1);
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_WeaponOnArm(0);
+HUMAN_MoveToFrame(la_OpelFAf_1, 7);
+HUMAN_MoveToFrame(la_ammo_3, 0);
+GoTo activity;
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_WeaponOnArm(0);
+HUMAN_MoveToFrame(la_OpelFAf_1, 7);
+HUMAN_MoveToFrame(la_ammo_3, 0);
+GoTo activity;
+//^DefaultLoad
+goto END;
+
+Label activity:
+HUMAN_MoveToFrame(la_OpelFAf_1, 1);
+HUMAN_SetAnim("%%studmapu", 1000, 1000, 1);
+Delay(10000);
+HUMAN_SetAnim("%%poplachN", 1000, 1000, 1);
+HUMAN_SetAnim("%%poplach", 1000, 1000, 1);
+HUMAN_SetAnim("!salutovani", 500, 500, 1);
+Delay(2000);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+Delay(8000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Guard();
+HUMAN_MoveToFrame(la_ammo_3, 0);
+HUMAN_SetAnim("!salutovani", 500, 500, 1);
+Delay(4000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(la_OpelFAf_1, 1);
+HUMAN_TurnAt(la_OpelFAf_1);
+	GoTo activity;
+Label END:

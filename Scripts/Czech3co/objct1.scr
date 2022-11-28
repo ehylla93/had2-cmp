@@ -1,0 +1,22 @@
+// Obj 1 - zabij dustojniky
+//------------------------------------
+
+Block
+{
+Frame Of1;	FRM_FindFrame(Of1, "C3_G35"); 
+Frame Of2;	FRM_FindFrame(Of2, "C3_G38"); 
+Frame Of3;	FRM_FindFrame(Of3, "C3_G40"); 
+
+SetObjectiveStatus(1, 0);
+}
+
+//------------------------------------
+
+Whenever Officers_Killed (((_Actor_GetState(Of1)==0) And (_Actor_GetState(Of2)==0) ) And (_Actor_GetState(Of3)==0) ) 
+{
+SetObjectiveStatus(1, 1);
+GoTo end;
+}
+
+
+Label end:

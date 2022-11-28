@@ -1,0 +1,15 @@
+
+Block {
+frame AS1;	FRM_FindFrame(AS1, "AntiSniper_1");
+frame AS2;	FRM_FindFrame(AS2, "AntiSniper_2");
+frame AS3;	FRM_FindFrame(AS3, "AntiSniper_3");
+}
+
+Whenever XXX (_PlayerInRange(10))
+{
+  Sendsignal(AS1, 10);
+  Sendsignal(AS2, 10);
+  Sendsignal(AS3, 10);
+  Delay(25000);
+  FRAME_SETAIMODE_Aggressive(AS3);
+}

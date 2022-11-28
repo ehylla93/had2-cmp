@@ -1,0 +1,15 @@
+// A1_objective
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetObjectiveStatus(1, 0);     // Capture the German control post - ok
+SetObjectiveStatus(2, 4);     // Find documents containing the research results - ok
+SetObjectiveStatus(3, 4);     // Destroy all enemy tanks - ok
+SetObjectiveStatus(4, 4);     // Rescue the SAS commander - ok
+SetObjectiveStatus(5, 4);     // Rescue the rest of the SAS unit - ok
+}
+
+//-------------------------------------------------------------------------------------
+
+Label end:

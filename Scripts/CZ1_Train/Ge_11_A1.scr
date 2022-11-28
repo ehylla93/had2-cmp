@@ -1,0 +1,8 @@
+// Ge_11_A1 - activator trigger
+Frame ge11;
+	FRM_FindFrame(ge11, "Ge_11");
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(ge11, 1);
+}

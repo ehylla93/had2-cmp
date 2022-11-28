@@ -1,0 +1,21 @@
+// Escape Truck
+// ------------------------------------------------------------
+
+Block
+{
+Frame TruckDriver;		FRM_FindFrame(TruckDriver,"Sgt. Siegfried Hirsch");
+
+Integer Obj_Count;
+		Obj_Count = 0;
+}
+
+OnSignal(1)
+{
+Obj_Count = Obj_Count + 1;
+}
+
+Whenever Boarded (Obj_Count > 1)
+{
+SendSignal(TruckDriver, 2);
+EndScript();
+}

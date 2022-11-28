@@ -1,0 +1,37 @@
+// Tank T1_J02
+// ----------------------------------------
+
+SetAlarmType(128,0);
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("T1_J02 dead");
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 90))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_1",  1, 1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

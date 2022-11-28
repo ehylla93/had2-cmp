@@ -1,0 +1,120 @@
+// Ge_5
+
+Block
+{
+Frame nakladak;	FRM_FindFrame(nakladak,"La_OpelE_");
+Frame look01;	FRM_FindFrame(look01, "zabradli_look01");
+Frame vojak;	FRM_FindFrame(vojak,"ge_11");
+Frame speech;	FRM_FindFrame(speech, "speech3");
+Frame me;		FRM_GetMyFrame(me);
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f059");
+
+Integer incar=0;
+
+Car_setFuel(nakladak,0);
+}
+
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from transfer2.betonek, la_vagon32
+{
+	EnableSignal(1, false);
+	HUMAN_Suspend(false);
+	HUMAN_SETSIGHTRANGE(20);
+	GoTo cuvanie;
+}
+
+OnSignal(4)	// received from objectives2
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_1
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 200, 200, false);
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	DisableSignals(true);
+	}
+	HUMAN_LookAround(2);
+	HUMAN_SETMODE_Guard();
+	GoTo hlidka;
+}
+
+Label hlidka:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_5_01");
+	Delay(2000);
+	HUMAN_Move("Ge_5_02");
+	Delay(2000);
+	GoTo hlidka;
+
+Label poflakovani:
+	HUMAN_Move("zabradli");
+	HUMAN_TurnAt(look01);
+	HUMAN_SetAnim("%%zabradli1", 500, 500, true);
+	SendSignal(speech, 1);
+	GoTo end;
+
+Label cuvanie:
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetAnim("", 500, 1500, false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("board");
+	HUMAN_TurnAt(nakladak);
+	Delay(1000);
+	HUMAN_BoardVehicle("La_OpelE_", true, 0);
+	incar=1;
+	Delay(5000);
+	HUMAN_BoardVehicle("La_OpelE_", false, 0);
+	incar=0;
+	HUMAN_SetAnim("%%rozcilujese", 1000, 1000, 0);
+	Delay(5000);
+	GoTo poflakovani;
+
+OnAlarm()
+{
+if(incar==1)
+{
+HUMAN_BoardVehicle("La_OpelE_", false, 0);
+}
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 50, 50, false);
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SETSIGHTRANGE(60);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETAIMODE_Defensive();
+	goto end;
+}
+
+OnDeath()
+{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label end:

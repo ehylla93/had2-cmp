@@ -1,0 +1,110 @@
+// AF1_08 - meeting - sits on bench
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME sit1;				FRM_FindFrame(sit1, "af1_dummy6");
+  FRAME af09;				FRM_FindFrame(af09, "af1_09");
+  FRAME af07;				FRM_FindFrame(af07, "af1_07");
+  INTEGER atpos			= 0;  
+  INTEGER Atype			= 0;
+  INTEGER rnd			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+  HUMAN_SetAIMode_Zombie();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  goto ALERT;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(270)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  SetWhenever(player, false);
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SaveGameValue(89, 0);
+    DisableSignals(true);
+    HUMAN_SetMODE_Stand();
+    HUMAN_SETMODE_Run();
+    SendSignal(af07, 10);
+    SendSignal(af09, 10);
+    HUMAN_SETSIGHTRANGE(300);
+    HUMAN_Suspend(false);
+    Atype = _GetAlarmType();
+  }
+
+  if((Atype == 256) OR (Atype == 512)){
+    SetAlarmType(256, false);
+    SetAlarmType(512, false);
+    goto ALERT;
+  }
+
+  SendSignal(dummyalert, 1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+  HUMAN_SETSIGHTRANGE(200);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1){
+  delay(3000);
+  SendSignal(af09, 1);
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_ACTIVITY_Sit(sit1);
+Label RND_ACTION:
+  rnd =_RandomInt(2);
+  if(rnd == 0){HUMAN_SetAnim("%%sedim1", 800, 800, false); }
+  if(rnd == 1){HUMAN_SetAnim("%%sedim3", 800, 800, false); }
+  rnd = _RandomInt(3000) + 5000;
+  Delay(rnd);
+goto RND_ACTION;
+
+Label ALERT:
+  if(!atpos){
+    HUMAN_SetAnim("", 100, 100, false);
+    block{
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+      HUMAN_SETMODE_Crouch();
+    }
+    HUMAN_SetSniper(true, 1);
+    HUMAN_Move("af1_08_alarm");
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_WeaponOnArm(true);
+    atpos = 1;
+  }
+  HUMAN_SetAlarm(false);
+
+Label END:

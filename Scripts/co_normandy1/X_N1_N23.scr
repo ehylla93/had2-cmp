@@ -1,0 +1,105 @@
+// N23 - guarding at the inner cannons
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;	aievent=0;
+Integer setalarm;	setalarm=0;
+Frame me;		FRM_GetMyFrame(me);
+Frame look01;	FRM_FindFrame(look01, "N23_look01");
+Frame speech;	FRM_FindFrame(speech, "N23_N50_speech");
+Frame n50;		FRM_FindFrame(n50, "N50");
+	
+SetAlarmType(16, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	aievent=_GetAlarmType();
+	SendSignal(speech, 2);
+	}
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_WeaponOnArm(1);
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+	EndScript();
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	SetWhenever(alarm, true);
+	}
+	HUMAN_SETMODE_Stand();
+	If(setalarm==1)	{ GoTo alarmed; }
+	GoTo end;
+}
+
+Whenever activate(_SignalReceived(1))	// received from N23_A1, N23_A2, N23_A3, N23_A4
+{
+	HUMAN_Suspend(false);
+	If(setalarm==1)	{ GoTo alarmed; }
+	GoTo path;
+}
+
+Whenever alarm(_SignalReceived(2))	// received from Alarm01 or Alarm08
+{
+	setalarm=1;
+	GoTo end;
+}
+
+OnSignal(3)	// received from N50
+{
+	HUMAN_Suspend(false);
+	HUMAN_TurnAt(n50);
+	GoTo end;
+}
+
+OnSignal(4)	// received from N23_N50_speech
+{
+	GoTo path;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+FRM_SwitchFaceTexture(me, "e_f051");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_TurnAt(look01);
+	HUMAN_SetAnim("%%lenin", 500, 500, true);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+Label alarmed:
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+Label end:

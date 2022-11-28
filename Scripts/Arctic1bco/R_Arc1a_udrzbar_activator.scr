@@ -1,0 +1,14 @@
+
+frame FRM;		FRM_FindFrame(FRM, "udrzbar");
+
+
+// Stacolo by i 2m, ale at stihne zaujmout random pozici
+  Whenever A (_PlayerInRange(15);)
+{					
+  SendSignal(FRM, 1);
+}					
+
+OnUse()
+{
+  SendSignal(FRM, 2);
+}

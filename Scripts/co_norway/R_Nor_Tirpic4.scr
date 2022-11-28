@@ -1,0 +1,107 @@
+// Tirpic guard number 4
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(259,1);	// 256 + 2 + 1
+
+frame see_pause;	FRM_FindFrame(see_pause, "dummy_see1");
+frame OBJ;			FRM_FindFrame(OBJ, "objectives");
+frame alarm;		FRM_findframe(alarm,"alarmer");
+frame tar;			FRM_FindFrame(tar, "tirpic_target");
+
+integer aievent=0;
+integer counter=1;
+integer pause=0;
+integer binocs=0;
+
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+OnAlarm()
+{
+HUMAN_SetAnim("",200,200,0);
+HUMAN_WeaponOnArm(true);
+aievent=(_GetAlarmType());
+	if(aievent==32)
+	{
+	Delay(1000);
+	SendSignal(alarm, 1);
+	HUMAN_Attack(tar, 6000);
+	EndScript();
+	}
+SendSignal(alarm, 1);
+EndScript();
+}
+
+OnAlarmDone()
+{
+  goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever a (_PlayerInRange(250))
+{
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  DisableSignals(1);
+  goto impish_way;
+}
+
+Whenever alarm(_SignalReceived(10))
+{
+DisableSignals(1);
+HUMAN_Stop();
+HUMAN_SetAnim("",200,200,0);
+HUMAN_WeaponOnArm(1);
+Frame maly;
+FRM_FindFrame(maly, "Mesh09");
+HUMAN_TurnAt(maly);
+goto end;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+goto end;
+}
+
+label impish_way:
+  label back1:
+    counter=1;
+    HUMAN_Move("T4_1");
+	gosub look;
+  label back2:
+    counter=2;
+    HUMAN_Move("T4_2");
+	gosub look;
+goto impish_way;
+
+label look:
+binocs=_RandomInt(3);
+if(binocs==0)
+{
+  HUMAN_TurnAt(see_pause);
+  HUMAN_SetAnim("%%dalekohled",400,400,1);
+  HUMAN_SETSIGHTRANGE(200);
+  SetAlarmType(32,1);
+  pause = _RandomInt(10000) + 20000;
+  delay(pause);
+  HUMAN_SetAnim("",400,400,0);
+  HUMAN_SETSIGHTRANGE(100);
+  SetAlarmType(32,0);
+}
+Return;
+
+label end:

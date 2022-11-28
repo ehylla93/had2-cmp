@@ -1,0 +1,50 @@
+Frame venek1;	FRM_FindFrame (venek1,"venek1");
+Frame venek2;	FRM_FindFrame (venek2,"venek2");
+Frame venek3;	FRM_FindFrame (venek3,"venek3");
+Frame venek4;	FRM_FindFrame (venek4,"venek4");
+Frame detect;		FRM_FindFrame (detect,"detect_venek1");
+Frame z2_flak1;	FRM_FindFrame(z2_flak1, "z2_flak1");
+Frame z2_flak2;	FRM_FindFrame(z2_flak2, "z2_flak2");
+Frame z2_ven1;	FRM_FindFrame(z2_ven1, "z2_ven1");
+Frame z2_ven2;	FRM_FindFrame(z2_ven2, "z2_ven2");
+Frame z2_ven3;	FRM_FindFrame(z2_ven3, "z2_ven3");
+Frame z2_ven4;	FRM_FindFrame(z2_ven4, "z2_ven4");
+Frame z2_ven5;	FRM_FindFrame(z2_ven5, "z2_ven5");
+Frame z2_zed1;	FRM_FindFrame(z2_zed1, "z2_zed1");
+Frame z2_domek2;	FRM_FindFrame(z2_domek2, "z2_domek2");
+Frame z2_agresor1;	FRM_FindFrame(z2_agresor1, "z2_agresor1");
+Frame z4_venkur;	FRM_FindFrame(z4_venkur, "z4_venkur");
+Frame z3_ven4;	FRM_FindFrame(z3_ven4, "z3_ven4");
+Frame z3_ven5;	FRM_FindFrame(z3_ven5, "z3_ven5");
+
+Frame ven_klicnik;	FRM_FindFrame (ven_klicnik,"ven_klicnik");
+
+
+
+Whenever je(_PlayerInBox(detect))
+{
+
+printf ("signal venek");
+printf ("signal ven_klicnik");
+SendSignal (ven_klicnik,1);
+SendSignal (ven_klicnik,2);
+SendSignal (venek1,1);
+SendSignal (venek2,1);
+SendSignal (venek3,1);
+SendSignal (venek4,1);
+sendsignal (z2_flak1,1);
+sendsignal (z2_flak2,1);
+sendsignal (z2_ven1,1);
+sendsignal (z2_ven2,1);
+sendsignal (z2_ven3,1);
+sendsignal (z2_ven4,1);
+sendsignal (z2_ven5,1);
+sendsignal (z2_zed1,1);
+sendsignal (z2_domek2,1);
+Sendsignal (z2_agresor1,1);
+Sendsignal (z4_venkur,1);
+Sendsignal (z3_ven4,1);
+Sendsignal (z3_ven5,1);
+
+
+}

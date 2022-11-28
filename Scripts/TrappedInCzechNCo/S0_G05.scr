@@ -1,0 +1,83 @@
+// West MG Troop 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame Cp1;	FRM_FindFrame(Cp1,"MG6");
+Frame Cp2;	FRM_FindFrame(Cp2,"La_tiger_3");
+
+Frame H1;	FRM_FindFrame(H1,"S0_H01");
+Frame H2;	FRM_FindFrame(H2,"S0_H02");
+Frame H3;	FRM_FindFrame(H3,"S0_H03");
+Frame H4;	FRM_FindFrame(H4,"S0_H04");
+Frame H5;	FRM_FindFrame(H5,"S0_H05");
+Frame H6;	FRM_FindFrame(H6,"S0_H06");
+Frame H7;	FRM_FindFrame(H7,"CZ_S01");
+Frame H8;	FRM_FindFrame(H8,"CZ_S02");
+Frame H9;	FRM_FindFrame(H9,"CZ_S03");
+Frame H10;	FRM_FindFrame(H10,"CZ_S04");
+Frame H11;	FRM_FindFrame(H11,"CZ_S05");
+Frame H12;	FRM_FindFrame(H12,"CZ_S06");
+Frame H13;	FRM_FindFrame(H13,"CZ_S07");
+Frame H14;	FRM_FindFrame(H14,"CZ_S08");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f044");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(H1, 1);
+SendSignal(H2, 1);
+SendSignal(H3, 1);
+SendSignal(H4, 1);
+SendSignal(H5, 1);
+SendSignal(H6, 1);
+SendSignal(H7, 1);
+SendSignal(H8, 1);
+SendSignal(H9, 1);
+SendSignal(H10, 1);
+SendSignal(H11, 1);
+SendSignal(H12, 1);
+SendSignal(H13, 1);
+SendSignal(H14, 1);
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+// ------------------------------------------------------------------------------------------------------------- 
+
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(90);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+goto Patrol;
+
+Label Patrol:
+HUMAN_SETMODE_Guard();
+HUMAN_MoveToFrame(cp1, 3);
+HUMAN_MoveToFrame(cp2, 3);
+goto Patrol;
+
+Label END:

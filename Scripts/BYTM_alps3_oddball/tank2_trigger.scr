@@ -1,0 +1,24 @@
+
+Frame sound1;	FRM_FindFrame(sound1, "S_tank2_radio");
+integer trigger = 0;
+
+FRM_SetOn(sound1, 0);
+
+OnUse()
+{
+  If (trigger == 1)
+    {
+        FRM_SetOn(sound1, false);
+        trigger = 0; 
+      }else{
+        FRM_SetOn(sound1, True);
+        trigger = 1;
+    }
+}
+
+//received from objective1
+OnSignal(1)
+{
+FRM_SetOn(sound1, false);
+EndScript();
+}

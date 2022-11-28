@@ -1,0 +1,112 @@
+// Ge_6
+
+Block
+{
+Frame lampa;
+	FRM_FindFrame(lampa, "l_ndrlamp8.lamp");
+Frame vagon;
+	FRM_FindFrame(vagon, "la_vagon11");
+Frame skladnik;
+	FRM_FindFrame(skladnik, "posila_sklad01");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer wait;
+	wait=0;
+Integer smoking_time;
+	smoking_time=0;
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(45);
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from l_bedny_3.bedny09
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+}
+
+Label hlidka:
+	HUMAN_Move("h1");
+	HUMAN_Move("h2");
+	HUMAN_Move("h3");
+	HUMAN_Move("h4");
+	Integer rndwait=_RandomInt(3);
+	If(rndwait==0)
+	{
+		HUMAN_TurnAt(lampa);
+		HUMAN_SetOptimized(2);
+		HUMAN_SetAnim("%%nudazed2", 1000, 3000,false);
+		Delay(11000);
+		HUMAN_SetOptimized(1);
+	}
+	HUMAN_Move("h5");
+	HUMAN_Move("h6");
+	Integer rndsmoke=_RandomInt(4);
+	If(rndsmoke==0)
+	{
+		Gosub smoke;
+	}
+	HUMAN_Move("h7");
+	GoTo hlidka;
+
+Label smoke:
+	HUMAN_SetOptimized(2);
+	wait =_RandomInt(200) + 50;
+	Delay(wait);
+	HUMAN_ACTIVITY_Smoke(true);
+	smoking_time=_RandomInt(10000) + 100000;
+	Delay(smoking_time);
+	HUMAN_ACTIVITY_Smoke(false);
+	wait =_RandomInt(100) + 50;
+	Delay(wait);
+	HUMAN_SetOptimized(1);
+	Return;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_ACTIVITY_Smoke(false);
+
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(65);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	DisableSignals(true);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("h1");
+	GoTo hlidka;
+}
+
+OnDeath()
+{
+	SendSignal(skladnik, 1);
+	EndScript();
+}
+
+Label end:

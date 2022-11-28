@@ -1,0 +1,84 @@
+// pobìží od vraku k protìjší stìnì
+
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red27_turn");		
+Frame Target1; 	FRM_FindFrame(Target1, "dummy_Red27_target1");
+Frame Target2; 	FRM_FindFrame(Target2, "dummy_Red27_target2");
+Frame Target3; 	FRM_FindFrame(Target3, "dummy_Red27_target3");
+
+SetAlarmType(1023, False);
+SetAlarmType(32, True);
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(6)
+{
+  HUMAN_Suspend(False);
+  goto TheEnd;	
+}
+
+Whenever Fire1 ( _SignalReceived(11); )	
+{			
+  Printf("27 ------------------- Target 1");
+  HUMAN_Move("Red27_1");			
+  HUMAN_TurnAt(Target1);
+  HUMAN_Attack(Target1, 1500);
+  goto Home;
+}						
+Whenever Fire2 ( _SignalReceived(12); )	
+{			
+  Printf("27 ------------------- Target 2");
+  HUMAN_Move("Red27_1");			
+  HUMAN_TurnAt(Target2);
+  HUMAN_Attack(Target2, 1500);
+  goto Home;
+}						
+Whenever Fire3 ( _SignalReceived(13); )	
+{		
+  Printf("27 ------------------- Target 3");
+  HUMAN_Move("Red27_1");			
+  HUMAN_TurnAt(Target3);	
+  HUMAN_Attack(Target3, 1500);
+  goto Home;
+}						
+
+Label Home:
+  Block
+    {
+       SetWhenever(Fire1, False);
+       SetWhenever(Fire2, False);
+       SetWhenever(Fire3, False);
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red27_2");					// bacha na skripnuti ve dverich !!!!!!!!!!!!!!!
+  SetAlarmType(375, true);		// 256 + 64 + 32 + 16 + 4 + 2 + 1
+  HUMAN_TurnAt(turn);
+  HUMAN_SETMODE_lie();
+  Delay(500);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 27: ", AIEvent);
+      HUMAN_Stop();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(648, False);	  
+  HUMAN_SetAlarm(False);
+  goto Home;
+}
+
+Label TheEND:

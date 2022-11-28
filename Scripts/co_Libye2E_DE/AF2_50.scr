@@ -1,0 +1,83 @@
+// AF2_50 - driver tank2
+// -------------------------------------------
+// Variables definition
+Block
+{
+Frame tank;
+	FRM_FindFrame(tank, "Tank2");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer Arcade;
+	Arcade =_RandomInt(2);
+}
+// -----------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// ----------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetEvents(false);
+	SetAlarmType(1023, false);
+	
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_01_A1
+{
+	HUMAN_Suspend(false);
+	GoTo move;
+}
+
+OnDeath()
+{
+	printf("Tank2 driver: dead");
+	EndScript();
+}
+// -----------------------------------------
+// Starting pose
+HUMAN_BoardVehicle("Tank2", true, 0);
+FRM_SwitchFaceTexture(me, "e_f051");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label move:
+If(Arcade == 0){  Car_SetFuel(tank, 0); printf("Tank2 no fuel"); }
+If(Arcade == 1){  
+Delay(6000);
+printf("Tank2 drive to _02");
+HUMAN_Drive("Tank2_01", 10);
+HUMAN_Drive("Tank2_02", 10);
+HUMAN_Drive("", 0);
+}
+If(Arcade == 2){  
+Delay(6000);
+printf("Tank2 drive to _05");
+HUMAN_Drive("Tank2_01", 10);
+HUMAN_Drive("Tank2_02", 10);
+HUMAN_Drive("Tank2_03", 10);
+HUMAN_Drive("Tank2_04", 10);
+HUMAN_Drive("Tank2_05", 10);
+HUMAN_Drive("", 0);
+}
+
+GoTo end;
+
+
+
+Label end:

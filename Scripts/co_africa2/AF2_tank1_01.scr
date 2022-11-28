@@ -1,0 +1,53 @@
+// AF1_tank01_01 - tank01 driver
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  
+frame ta2;		frm_findframe(ta2,"AF2_tank1_02");
+frame ta3;		frm_findframe(ta3,"AF2_tank1_03");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+  
+OnAlarm(){
+  HUMAN_Stop();  
+  Delay(100);
+  HUMAN_DriveNearPlayer(12);
+  Delay(100);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnAlarmDone(){
+  goto END;
+}
+
+Whenever nadosah (_PlayerInRange(200)){
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(2);
+  SendSignal(ta2, 1);
+  SendSignal(ta3, 1);
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_BoardVehicle("Panzer01", true, 0);
+goto END;
+
+Label END:

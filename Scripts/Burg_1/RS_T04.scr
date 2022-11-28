@@ -1,0 +1,62 @@
+// RS_T04 - Tank 2 - Tiger
+// ------------------------------------------------
+
+Block
+{
+SetAlarmType(1023,0);
+
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn1 (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Tiger_01", 1, 0);
+HUMAN_Drive("bmv1", 10);
+Delay(1000);
+HUMAN_Drive("", 0);
+goto END;
+}
+
+Whenever Spawn2 (_SignalReceived(2))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Tiger_01", 1, 0);
+HUMAN_Drive("bmv1", 10);
+Delay(1000);
+HUMAN_Drive("", 0);
+Delay(15000);
+HUMAN_Drive("gumkar1", 12);
+HUMAN_Drive("", 0);
+goto END;
+}
+
+Whenever Spawn3 (_SignalReceived(3))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Tiger_01", 1, 0);
+HUMAN_Drive("bmv1", 80);
+HUMAN_Drive("gumkar1", 40);
+HUMAN_Drive("haklx", 80);
+Delay(3000);
+HUMAN_Drive("haklx", 15);
+Delay(2000);
+HUMAN_Drive("", 0);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

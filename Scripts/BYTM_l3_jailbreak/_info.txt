@@ -1,0 +1,32 @@
+// Info text file
+// ----------------------------------------
+
+// Game Values
+// ----------------------------------------
+gv1: 	is set to 1 if alarm is raised in the village
+gv2: 	is set to 1 if alarm is raised at buried tiger tank
+gv99:	as usual this value turns on/off the global alarm (setup_alarm.scr)
+gv98:	let soldiers spawn in area 5 (setup_spawn.scr)
+gv6:	decides why way vehicles take
+gv7:	pz3 which way
+gv8:	Objective 4 (obj4.scr)
+
+// Crates
+// ----------------------------------------
+05_box_1:		Axis weapons
+05_box_11:		small medic kits
+05_box_12:		german grenade
+ammo crates:	05_box_8, 9, 10
+05_box_13:		Allied guns (SMGs)
+05_box_14:		Allied guns (Rifles)
+05_box_15:		Allied helmets/hats
+05_box_16:		Axis helmets/hats
+cp_crate_1:		crate at checkpoint (tnt, sticky bomb)
+ammo_crate_2:	crate at area 4 (buried tiger tank)
+cp_crate_2:		Allied guns (SMGs)
+cp_crate_3:		Allied guns (Rifles)
+cp_crate_4:		Ammo
+
+// Spawn Type at zone5
+// ----------------------------------------
+_PlayerInRange:		05_E13, 05_E15, 05_E16, 05_E21, 05_E22

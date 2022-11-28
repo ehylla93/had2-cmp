@@ -1,0 +1,13 @@
+
+Block {
+frame S1;	FRM_FindFrame(S1, "dummy_sound_UBanky_1");
+frame S2;	FRM_FindFrame(S2, "dummy_sound_UBanky_2");
+}
+
+Whenever "Near" (_PlayerInRange(20))
+{
+  SendSignal(S1, 2);
+  SendSignal(S2, 2);
+}
+
+SetWheneverTime("Near", 1000);

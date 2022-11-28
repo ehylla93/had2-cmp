@@ -1,0 +1,87 @@
+// BR_G15 - kulometcik Tigra (La_tiger_1)
+// -------------------------------------------
+
+Block
+{
+Frame Cil1;	FRM_FindFrame(Cil1,"Ger_pal01");
+Frame Cil2;	FRM_FindFrame(Cil2,"Ger_pal02");
+Frame Cil3;	FRM_FindFrame(Cil3,"Ger_pal03");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+// -------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_SETSIGHTRANGE(69);
+HUMAN_SETHEARRANGE(60);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_1", 1, 1);
+HUMAN_SetOptimized(2);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_TurnAt(Cil2);
+HUMAN_Attack(Cil2, 1500);
+HUMAN_Attack(Cil1, 1500);
+HUMAN_Attack(Cil3, 1500);
+Delay(4000);
+HUMAN_Attack(Cil2, 1500);
+HUMAN_Attack(Cil1, 1500);
+HUMAN_Attack(Cil3, 1500);
+HUMAN_SETAIMODE_Aggressive();
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+Goto END;
+}
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

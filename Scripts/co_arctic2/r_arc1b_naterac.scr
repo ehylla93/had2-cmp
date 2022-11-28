@@ -1,0 +1,104 @@
+
+Block {
+frame See;				FRM_FindFrame(See, "dummy_naterac_see"); 
+frame alarm;			FRM_FindFrame(alarm, "dummy_GlobalAlarm");	
+frame ruka;				FRM_FindFrame(ruka, ""); 
+frame stetka;			FRM_FindFrame(stetka, "stetka"); 
+frame stetka_vizual;	FRM_FindFrame(stetka_vizual, "stetka.la_stetka"); 
+integer AIEvent;
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(2);
+SetAlarmType(1023, True);	
+
+SetWhenever(Usni, False);
+SetWhenever(Budicek, False);
+}
+
+HUMAN_Suspend(true);
+goto TheEnd;
+
+Whenever ACTIVE  ((_PlayerInRange(20) ) and (_LoadGameValue(74) == 1))	
+{
+   HUMAN_Suspend(false);
+}
+
+label start:
+block
+  {
+  FRM_FindFrame(ruka, "naterac.HW1");
+  FRM_TeleportNearFrame(stetka, ruka, true);
+  FRM_FindFrame(ruka, "");
+  }
+  HUMAN_SetAnim("%%naterac", 400, 400, true);
+  SetWhenever(Usni, true);
+
+Whenever FAKE_ALARM ( ( _SignalReceived(10) ) and (_LoadGameValue(5) == 99) )
+{
+  HUMAN_SetAnim("", 200, 200, False);
+  HUMAN_Move("Naterac_FAKE");
+  HUMAN_LookAround(4);
+  Delay(15000);
+  HUMAN_LookAround(0);
+  delay(500);
+  HUMAN_Move("Naterac_FAKE2");		
+  HUMAN_SetAnim("%%naterac", 400, 400, true);
+  SetWhenever(FAKE_ALARM, True);
+}
+
+Whenever Usni ( _LoadGameValue(74) == 2 )
+{
+  HUMAN_Stop();
+  HUMAN_Suspend(True);
+  SetWhenever(Budicek, true);
+  Goto TheEnd;
+}
+Whenever Budicek ( (_LoadGameValue(74) == 1) and (_PlayerInRange(20)) )
+{
+  HUMAN_Suspend(False);
+  HUMAN_SetAnim("%%naterac", 400, 400, true);
+  SetWhenever(Usni, true);
+  If (_LoadGameValue(5) == 0) { goto Start; } 
+}
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      DisableWhenevers(True);
+    }
+  HUMAN_SetAnim("", 300, 300, true);
+block
+  {
+  FRM_FindFrame(ruka, "naterac.HW1");
+  FRM_TeleportNearFrame(stetka, ruka, false);
+  FRM_FindFrame(ruka, "");
+  }
+  FRM_CreatePhysicalObject(stetka_vizual, 1, false, false);
+  FRM_SetOn(stetka, False);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  If ( ((AIEvent != 4) AND (AIEvent != 8)) and (AIEvent != 128) )  
+    { SendSignal(alarm , 1); }
+   HUMAN_Move("Naterac_DeAlarm");
+   HUMAN_TurnAt(see);
+   DisableWhenevers(False);
+   HUMAN_SETMODE_Crouch();
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+label TheEnd:

@@ -1,0 +1,15 @@
+//Scripted explosion of the SdKfZ
+
+Block {
+frame me;	FRM_FindFrame(me, "hakl");
+Frame emit;	FRM_FindFrame(emit,"hakl.stojan");
+}
+
+Whenever bum(_SignalReceived(1))
+//received from ge_12
+{
+delay (8000);
+FRM_CreateParticle(41, emit);
+MakeExplosion(me, 50000000,3000);
+PlaySound(6, 0);
+}

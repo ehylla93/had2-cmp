@@ -1,0 +1,49 @@
+// Obj 2 - Photograph German tactical plans
+// -------------------------------------------------
+
+Block
+{
+Frame Plan1;	FRM_FindFrame(Plan1,"06_Mapa01");
+Frame Plan2;	FRM_FindFrame(Plan2,"06_Mapa02");
+Frame Plan3;	FRM_FindFrame(Plan3,"06_Mapa03");
+Frame Obj7;		FRM_FindFrame(Obj7,"obj7");
+
+Integer gv1 = 0;
+Integer gv3 = 0;
+Integer gv4 = 0;
+
+SetObjectiveStatus(2, 0);
+}
+goto end;
+
+Whenever Plans_Photographed (((_Actor_GetState(Plan1) == 1) And (_Actor_GetState(Plan2) == 1)) And (_Actor_GetState(Plan3) == 1))
+{
+SetWhenever(Plans_Photographed, 0);
+}
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999716);
+Delay(4000);
+SUBTITLES_SetOn(0);
+
+gv1 =_LoadGameValue(1);
+printfnumber("GameValue1: ", gv1);
+if(gv1==1)
+{
+	gv3 =_LoadGameValue(3);
+	printfnumber("GameValue3: ", gv3);
+	if(gv3==1)
+	{
+		gv4 =_LoadGameValue(4);
+		printfnumber("GameValue1: ", gv4);
+		if(gv4==1)
+		{
+		SetObjectiveStatus(7, 0); SendSignal(Obj7, 1);
+		}
+	}
+}
+SetObjectiveStatus(2, 1);
+SaveGameValue(2, 1);
+EndScript();
+
+Label end:

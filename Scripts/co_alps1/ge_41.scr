@@ -1,0 +1,100 @@
+//lala
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,0);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+
+frame cum;		FRM_FindFrame (cum,"ge40cum");
+Frame ge40;		FRM_FIndFrame (ge40,"ge_40");
+SaveGameValue(3, 0);
+}
+
+HUMAN_Suspend(1);
+
+goto end;
+
+//--------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+SendSignal(ge40, 1);
+aievent=(_GetAlarmType());
+}
+
+If (aievent==512)
+{
+	SetAlarmType(512,0);
+	HUMAN_SetAlarm(0);
+	HUMAN_MoveToAlarm();
+	goto LOOK;
+}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+goto dojdi;
+}
+
+OnDeath()
+{
+SaveGameValue(3, 0);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))			
+{
+HUMAN_Suspend(0);
+HUMAN_Move("ge41_01");
+SetAlarmType(512,1);
+goto dojdi;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+label dojdi:
+HUMAN_Move("ge41_02");
+HUMAN_SETMODE_Crouch();
+SetAlarmType(258,1);
+HUMAN_TurnAt(cum);
+goto end;
+
+label LOOK:
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAnim("%%rozhlizeni1", 1000, 1000, 1);
+//HUMAN_SetAnim("%%divase", 1000, 1000, 1);
+//HUMAN_SetAnim("!strazny01", 1000, 1000, 1);
+//HUMAN_SetAnim("!strazny02", 1000, 1000, 1);
+//HUMAN_SetAnim("!strazny03", 1000, 1000, 1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+label end:

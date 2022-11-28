@@ -1,0 +1,26 @@
+Block
+{
+    Frame   soldier1;                        FRM_FindFrame ( soldier1,     "VILLAGE_REINFO_1" ); 
+    Frame   soldier2;                        FRM_FindFrame ( soldier2,     "VILLAGE_REINFO_2" ); 
+    Frame   soldier3;                        FRM_FindFrame ( soldier3,     "VILLAGE_REINFO_3" ); 
+    Frame   panzer_driver;	    FRM_FindFrame( panzer_driver, "Panzer_driver"  );
+}
+
+// -----------------------------------------------------------------------
+//OBJ5 - PLAYER SE BLIZI K ZBYTKU VYBAVENI LIBERATORU
+// -----------------------------------------------------------------------
+Whenever "InRange" ( _PlayerInRange( 60 ) )
+{     
+      SendSignal( panzer_driver, 1 );	
+
+      SendSignal( soldier1, 1 );	
+      Delay(1000);
+      SendSignal( soldier2, 1 );	
+      Delay(1000);
+      SendSignal( soldier3, 1 );	
+      GoTo End;
+}
+SetWheneverTime( "InRange",  1000 );
+
+
+Label End:

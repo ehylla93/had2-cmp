@@ -1,0 +1,32 @@
+// BU2_reinf - reinforcement
+
+Block {
+Frame rf1;			FRM_FindFrame(rf1, "BU2_R31");
+Frame rf2;			FRM_FindFrame(rf2, "BU2_R32");
+Frame rf3;			FRM_FindFrame(rf3, "BU2_R33");
+Frame rf4;			FRM_FindFrame(rf4, "BU2_R34");
+Frame rf5;			FRM_FindFrame(rf5, "BU2_R35");
+Frame rf6;			FRM_FindFrame(rf6, "BU2_R36");
+Frame rf7;			FRM_FindFrame(rf7, "BU2_R37");
+Frame rf8;			FRM_FindFrame(rf8, "BU2_R38");
+Frame rf9;			FRM_FindFrame(rf9, "BU2_R39");
+}
+
+Whenever reinf(_SignalReceived(1))	// received from BU2_objective
+{
+SetWhenever(reinf, false);
+Block {
+	SendSignal(rf1, 3);
+	SendSignal(rf2, 3);
+	SendSignal(rf3, 3);
+	SendSignal(rf4, 3);
+	SendSignal(rf5, 3);
+	SendSignal(rf6, 3);
+	SendSignal(rf7, 3);
+	SendSignal(rf8, 3);
+	SendSignal(rf9, 3);
+}
+goto end;
+}
+
+Label end:

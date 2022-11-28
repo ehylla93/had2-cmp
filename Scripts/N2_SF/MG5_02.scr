@@ -1,0 +1,63 @@
+// Magor 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame posila;		FRM_FindFrame(posila,"MG5_03");
+Frame MG;		FRM_FindFrame(MG,"MG5");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Delay(40000);
+SendSignal(posila, 1);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Aggressive();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(69);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(MG, 1);
+HUMAN_BoardVehicle("MG5", 1, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

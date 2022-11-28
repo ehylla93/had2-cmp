@@ -1,0 +1,167 @@
+// Alarms signal distributor script
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+//Alarm switches
+
+Block
+{
+Frame aswitch01;
+	FRM_FindFrame(aswitch01, "la_N_alarm_");
+Frame aswitch02;
+	FRM_FindFrame(aswitch02, "la_N_alarm_2");
+Frame aswitch03;
+	FRM_FindFrame(aswitch03, "la_N_alarm_3");
+Frame aswitch04;
+	FRM_FindFrame(aswitch04, "la_N_alarm_4");
+Frame aswitch05;
+	FRM_FindFrame(aswitch05, "la_N_alarm_5");
+Frame aswitch06;
+	FRM_FindFrame(aswitch06, "la_N_alarm_6");
+Frame aswitch07;
+	FRM_FindFrame(aswitch07, "la_N_alarm_7");
+Frame aswitch08;
+	FRM_FindFrame(aswitch08, "la_N_alarm_8");
+Frame aswitch09;
+	FRM_FindFrame(aswitch09, "la_N_alarm_9");
+Frame aswitch10;
+	FRM_FindFrame(aswitch10, "la_N_alarm_10");
+Frame aswitch11;
+	FRM_FindFrame(aswitch11, "la_N_alarm_11");
+Frame aswitch12;
+	FRM_FindFrame(aswitch12, "la_N_alarm_12");
+}
+
+//Alarm sounds
+
+Block
+{
+Frame asound01;
+	FRM_FindFrame(asound01, "l_nalrm_");
+Frame asound02;
+	FRM_FindFrame(asound02, "l_nalrm_2");
+Frame asound03;
+	FRM_FindFrame(asound03, "l_nalrm_3");
+Frame asound04;
+	FRM_FindFrame(asound04, "l_nalrm_4");
+Frame asound05;
+	FRM_FindFrame(asound05, "l_nalrm_5");
+Frame asound06;
+	FRM_FindFrame(asound06, "l_nalrm_6");
+Frame asound07;
+	FRM_FindFrame(asound07, "l_nalrm_7");
+Frame asound08;
+	FRM_FindFrame(asound08, "l_nalrm_8");
+Frame asound09;
+	FRM_FindFrame(asound09, "l_nalrm_9");
+Frame asound10;
+	FRM_FindFrame(asound10, "l_nalrm_10");
+Frame asound11;
+	FRM_FindFrame(asound11, "l_nalrm_11");
+Frame asound12;
+	FRM_FindFrame(asound12, "l_nalrm_12");
+Frame asound13;
+	FRM_FindFrame(asound13, "l_nalrm_13");
+Frame asound14;
+	FRM_FindFrame(asound14, "l_nalrm_14");
+Frame asound15;
+	FRM_FindFrame(asound15, "l_nalrm_15");
+Frame asound16;
+	FRM_FindFrame(asound16, "l_nalrm_16");
+Frame asound17;
+	FRM_FindFrame(asound17, "l_nalrm_17");
+Frame asound18;
+	FRM_FindFrame(asound18, "l_nalrm_18");
+}
+
+Integer alarm;
+	alarm=0;
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(1)
+{
+	alarm=1;
+	Block
+	{
+	SendSignal(aswitch01, 1);
+	SendSignal(aswitch02, 1);
+	SendSignal(aswitch03, 1);
+	SendSignal(aswitch04, 1);
+	SendSignal(aswitch05, 1);
+	SendSignal(aswitch06, 1);
+	SendSignal(aswitch07, 1);
+	SendSignal(aswitch08, 1);
+	SendSignal(aswitch09, 1);
+	SendSignal(aswitch10, 1);
+	SendSignal(aswitch11, 1);
+	SendSignal(aswitch12, 1);
+	}
+	Block
+	{
+	SendSignal(asound01, 1);
+	SendSignal(asound02, 1);
+	SendSignal(asound03, 1);
+	SendSignal(asound04, 1);
+	SendSignal(asound05, 1);
+	SendSignal(asound06, 1);
+	SendSignal(asound07, 1);
+	SendSignal(asound08, 1);
+	SendSignal(asound09, 1);
+	SendSignal(asound10, 1);
+	SendSignal(asound11, 1);
+	SendSignal(asound12, 1);
+	SendSignal(asound13, 1);
+	SendSignal(asound14, 1);
+	SendSignal(asound15, 1);
+	SendSignal(asound16, 1);
+	SendSignal(asound17, 1);
+	SendSignal(asound18, 1);
+	}
+	GoTo end;
+}
+
+OnSignal(2)
+{
+	alarm=0;
+	Block
+	{
+	SendSignal(aswitch01, 2);
+	SendSignal(aswitch02, 2);
+	SendSignal(aswitch03, 2);
+	SendSignal(aswitch04, 2);
+	SendSignal(aswitch05, 2);
+	SendSignal(aswitch06, 2);
+	SendSignal(aswitch07, 2);
+	SendSignal(aswitch08, 2);
+	SendSignal(aswitch09, 2);
+	SendSignal(aswitch10, 2);
+	SendSignal(aswitch11, 2);
+	SendSignal(aswitch12, 2);
+	}
+
+	Block
+	{
+	SendSignal(asound01, 2);
+	SendSignal(asound02, 2);
+	SendSignal(asound03, 2);
+	SendSignal(asound04, 2);
+	SendSignal(asound05, 2);
+	SendSignal(asound06, 2);
+	SendSignal(asound07, 2);
+	SendSignal(asound08, 2);
+	SendSignal(asound09, 2);
+	SendSignal(asound10, 2);
+	SendSignal(asound11, 2);
+	SendSignal(asound12, 2);
+	SendSignal(asound13, 2);
+	SendSignal(asound14, 2);
+	SendSignal(asound15, 2);
+	SendSignal(asound16, 2);
+	SendSignal(asound17, 2);
+	SendSignal(asound18, 2);
+	}
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Label end:

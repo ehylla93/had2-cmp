@@ -1,0 +1,69 @@
+// T2_G03 - Reinforcement Panzer(S03_Tiger_01) Kanoner
+// ------------------------------------------------------
+
+Block
+{
+Frame Cp;		FRM_FindFrame(Cp, "SF_G10");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_Suspend(1);
+}
+goto END;
+
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+
+If(!_PlayerInRange(70))
+{
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETAIMODE_Defensive();
+}
+
+Else
+{
+HUMAN_SETAIMODE_Aggressive();
+}
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("S03_Tiger_01", 1, 2);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETSIGHTRANGE(130);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(2);
+HUMAN_TurnAt(Cp);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label END:

@@ -1,0 +1,7 @@
+
+Frame af22;	FRM_FindFrame(af22, "AF1_22");
+
+Whenever activate(_PlayerInRange(3))
+{
+	SendSignal(af22, 1);
+}

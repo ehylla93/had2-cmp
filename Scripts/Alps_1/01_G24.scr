@@ -1,0 +1,67 @@
+// 01_G24 - MG Gunner
+// ----------------------------------------
+
+Block
+{
+Frame Mg;		FRM_FindFrame(Mg, "A1_Mg42_01");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f024");
+
+HUMAN_SETSIGHTRANGE(115);
+HUMAN_SETHEARRANGE(70);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 1);
+FRM_MorphSpeech(me, 90002012, 10, 50);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_MoveToFrame(Mg, 1);
+HUMAN_BoardVehicle("A1_Mg42_01", 1, 0);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 35))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%SedimL", 1500, 1500, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

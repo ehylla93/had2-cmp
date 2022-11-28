@@ -1,0 +1,39 @@
+// Obj 6 - Aquire the Katana Sword
+// ----------------------------------
+
+Block
+{
+Frame Sword;
+Frame T1;			FRM_FindFrame(T1,"06_T01");
+Frame T2;			FRM_FindFrame(T2,"06_T02");
+Frame T3;			FRM_FindFrame(T3,"06_T03");
+Frame T4;			FRM_FindFrame(T4,"06_T04");
+
+Frame this;			FRM_GetMyFrame(this);
+Frame Get_Player;
+
+SetObjectiveStatus(6, 4);
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 248, Sword))
+{
+SetWhenever(Found, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(12992419);
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(6, 1);
+Delay(500);
+FRM_GetNearestPlayer(this, Get_Player);
+FRM_MorphSpeech(Get_Player, 13022721, 5, 30);
+Delay(500);
+SendSignal(T1, 1);
+SendSignal(T2, 1);
+SendSignal(T3, 1);
+SendSignal(T4, 1);
+EndScript();
+}
+
+// ----------------------------------
+
+Label END:

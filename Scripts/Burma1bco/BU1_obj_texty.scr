@@ -1,0 +1,13 @@
+// BU1_obj_texty - objective texts
+
+OnSignal(8)	// most zniceny
+{
+	SUBTITLES_SetOn(true);
+	printf("You have destroyed the transport bridge");
+	SUBTITLES_SetText(12992417);
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+Label end:

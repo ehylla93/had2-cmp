@@ -1,0 +1,49 @@
+// posila11b
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Integer gametype;
+	gametype=0;
+
+FRM_SwitchFaceTexture(me, "e_f059");
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETMODE_Run();
+}
+gametype=_SPGetGameType();
+If(gametype==2)
+{
+	DisableSignals(true);
+	DisableWhenevers(true);
+}
+
+HUMAN_Suspend(true);
+
+Whenever signal(_SignalReceived(1))	// received from posila11
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila11_01");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_Move("posila11_02");
+	HUMAN_SetOptimized(2);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SETSIGHTRANGE(80);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila11_02");
+	HUMAN_SetOptimized(2);
+}

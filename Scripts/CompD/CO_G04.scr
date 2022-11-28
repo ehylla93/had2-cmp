@@ -1,0 +1,85 @@
+// U Vchodu do podzemi
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+integer AIEvent;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 500, 1);
+AIEvent =_GetAlarmType();
+
+If (((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+If ((AIEvent==4) OR (AIEvent==256))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+HUMAN_SetSniper(1, 5);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto Aktivita;
+}
+
+Whenever Player (_PlayerInRange(45)){
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETHEARRANGE(38);
+HUMAN_SETSIGHTRANGE(41);
+goto Aktivita;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Aktivita:
+HUMAN_SetAnim("%%nuda", 500, 500, 1);
+Delay(15000);
+HUMAN_SetAnim("", 500, 500, 1);
+Delay(3000);
+HUMAN_SetAnim("%%protahovani", 500, 500, 1);
+Delay(6000);
+HUMAN_SetAnim("%%kopkamen1", 500, 500, 1);
+Delay(2000);
+HUMAN_SetAnim("%%kopkamen", 500, 500, 1);
+Delay(2000);
+HUMAN_SetAnim("%%divase", 500, 500, 1);
+Delay(5000);
+HUMAN_SetAnim("", 500, 500, 1);
+Delay(10000);
+goto Aktivita;
+
+Label END:

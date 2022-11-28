@@ -1,0 +1,56 @@
+
+block {
+Frame Vedec1;	FRM_FindFrame(Vedec1, "Static_14");
+Frame Vedec2;	FRM_FindFrame(Vedec2, "Static_1");
+}
+
+OnSignal(1)
+{
+  FRM_MorphSpeechDelayed(Vedec1, 02990461, 7, 30);
+  Delay(13);	
+  FRM_MorphSpeechDelayed(Vedec1, 02990462, 7, 30); 
+  Delay(21);
+  FRM_MorphSpeechDelayed(Vedec2, 02990463, 7, 30);
+  Delay(44);
+  FRM_MorphSpeechDelayed(Vedec1, 02990464, 7, 30);
+  Delay(43);
+  FRM_MorphSpeechDelayed(Vedec1, 02990465, 7, 30);
+  Delay(57);
+  FRM_MorphSpeechDelayed(Vedec1, 02990466, 7, 30);
+  Delay(38);
+  FRM_MorphSpeechDelayed(Vedec2, 02990467, 7, 30);
+  Delay(35);
+  FRM_MorphSpeechDelayed(Vedec2, 02990468, 7, 30);
+  Delay(53);
+  FRM_MorphSpeechDelayed(Vedec1, 02990469, 7, 30);
+  Delay(33);
+  FRM_MorphSpeechDelayed(Vedec1, 02990470, 7, 30);
+  Delay(36);
+  FRM_MorphSpeechDelayed(Vedec2, 02990471, 7, 30);
+  Delay(53);
+  FRM_MorphSpeechDelayed(Vedec2, 02990472, 7, 30);
+  Delay(19);
+  FRM_MorphSpeechDelayed(Vedec1, 02990473, 7, 30);
+  Delay(18);
+  FRM_MorphSpeechDelayed(Vedec1, 02990474, 7, 30);
+  Delay(22);
+  FRM_MorphSpeech(Vedec1, 02990475, 7, 30);
+  Delay(3700);	
+  FRM_MorphSpeechDelayed(Vedec2, 02990476, 7, 30);
+  Delay(33);
+  FRM_MorphSpeechDelayed(Vedec1, 02990477, 7, 30);
+  Delay(15);
+  FRM_MorphSpeechDelayed(Vedec2, 02990478, 7, 30);
+  Delay(14);
+  FRM_MorphSpeechDelayed(Vedec1, 02990479, 7, 30);
+  Delay(10);
+  SendSignal(vedec1, 20);
+  SendSignal(vedec2, 20);
+}
+
+OnSignal(2)
+{
+  FRM_MorphSpeech(Vedec1, 0, 0, 0);
+  FRM_MorphSpeech(Vedec2, 0, 0, 0);
+  EndScript();
+}

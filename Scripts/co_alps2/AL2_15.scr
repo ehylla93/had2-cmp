@@ -1,0 +1,174 @@
+// AL2_15 - soldier - Guard at main gate
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+block
+{
+Integer aievent = 0;
+Integer a;
+Integer b;
+integer c = 0;
+Frame cum;		FRM_FindFrame(cum,"al2_15_cum");
+Frame tar;		Frm_FindFrame(tar,"gate_shootat");
+Frame ubrany;	Frm_FindFrame(ubrany,"u vychodu pro straze");
+Frame me;		FRM_GetMyFrame(me);
+
+Frame morph;	FRM_FindFrame(morph, "AL215kecac");
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_WeaponOnArm(0);
+
+HUMAN_SETSIGHTRANGE(15);
+
+HUMAN_SetOptimized(2);
+Frame shotalarm;	FRM_FindFrame (shotalarm,"shotalarm");
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+block
+{
+	HUMAN_SETSIGHTRANGE(40);
+	DisableSignals(1);
+	aievent=_GetAlarmType();
+	HUMAN_SETSIGHTRANGE(30);
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+	SendSignal (shotalarm,1);
+}
+	HUMAN_SetAnim("",50,50,0);		
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo mode2;
+}
+
+Whenever alarmed(_SignalReceived(1))	// received from AL2_15_A1 - AL2_15_A8
+{
+	DisableSignals(1);
+	GoTo mode2;
+}
+
+Whenever odbrany(_SignalReceived(6))
+{
+	HUMAN_SetAnim("",100,100,0);
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("al2_15_03");
+	HUMAN_TurnAtNearestPlayer();
+	SendSignal (morph,1);
+	delay (7000);
+	SendSignal(ubrany,5);
+	delay(200);
+	HUMAN_SETMODE_Guard();
+	goto guard;
+}
+
+Whenever odbrany2(_SignalReceived(7))
+{
+	HUMAN_SetAnim("",100,100,0);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("al2_15_03");
+	SendSignal (morph,2);
+	delay (3000);
+	SendSignal (morph,3);
+	HUMAN_Attack(tar, 4000);
+	SetAlarmType(1011, true);	
+	goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+label guard:
+a=(_RandomInt(6));
+If(a==0)
+{
+	If((_RandomInt(2))==0)
+	{
+	HUMAN_Move("al2_15_nuda");
+	HUMAN_TurnAt(cum);
+	HUMAN_SetAnim("%%nudazed3",600,600,1);
+	b=(3000+(_RandomInt(3000)));
+	delay (b);
+	HUMAN_SetAnim("%%nudazed4",600,600,1);
+	b=(3000+(_RandomInt(3000)));
+	delay (b);
+	HUMAN_SetAnim("%%nudazed3",600,600,1);
+	b=(3000+(_RandomInt(3000)));
+	delay (b);
+	HUMAN_SetAnim("%%nudazed4",600,600,1);
+	b=(3000+(_RandomInt(3000)));
+	delay (b);
+	HUMAN_SetAnim("",600,600,0);
+	HUMAN_SETMODE_Guard();
+	}
+	goto guard;
+}
+
+If(a==1)
+{
+HUMAN_Move("al2_15_01");
+delay (500);
+goto guard;
+}
+
+If(a==2)
+{
+HUMAN_Move("al2_15_02");
+delay (500);
+goto guard;
+}
+
+If(a==3)
+{
+HUMAN_Move("al2_15_03");
+delay (500);
+goto guard;
+}
+
+If(a==4)
+{
+HUMAN_Move("al2_15_04");
+delay (500);
+goto guard;
+}
+
+If(a==5)
+{
+	If((_RandomInt(4))==0)
+	{
+	HUMAN_SetAnim("%%kopkamen1",300,300,1);
+	delay (4028);
+	HUMAN_SetAnim("",100,100,0);
+	}
+	goto guard;
+}
+
+Label mode2:			// after alarm
+	SetAlarmType(1011, true);
+	HUMAN_Move("al2_15_03");
+	HUMAN_TurnAt(cum);
+	HUMAN_WeaponOnArm(1);
+GoTo end;
+
+Label end:

@@ -1,0 +1,52 @@
+// boatgun3, guerilla back seat
+// ---------------------------
+
+
+block{
+  frame AF2_1;	FRM_FindFrame(AF2_1, "AF2_01");
+  frame AF2_3;	FRM_FindFrame(AF2_3, "AF2_03");
+  frame AF2_4;	FRM_FindFrame(AF2_4, "AF2_04");
+  //SetAlarmType(1023, true);
+  //SetAlarmType(768, true);
+}
+
+// --------------------------
+
+OnDeath()
+{
+	PlayMusic(34);
+	Delay(3500);
+	SetObjectiveStatus(1, 4);	// optional
+	SetObjectiveStatus(2, 4);	// optional
+	SetObjectiveStatus(3, 2);	// civilians
+	goto END;
+}
+
+
+
+OnSignal(2)	// received from AF2_B02
+{
+	HUMAN_BoardVehicle("la_BoatGun_3",  false, 1);
+	Delay(700);
+	HUMAN_SetMODE_Crouch();
+	Delay(10000);
+  	HUMAN_Attack(AF2_4, 3000);
+  	HUMAN_Attack(AF2_1, 3000);
+  	HUMAN_Attack(AF2_3, 3000);
+  	HUMAN_Attack(AF2_4, 3000);
+  	HUMAN_Attack(AF2_1, 3000);
+  	HUMAN_Attack(AF2_3, 3000);
+	goto END;
+}
+
+
+
+// ---------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("la_BoatGun_3",  true, 1);
+goto END;
+
+Label END:

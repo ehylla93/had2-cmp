@@ -1,0 +1,15 @@
+frame sound1;		frm_findframe(sound1,"S_sypek_m05");
+frame sound2;		frm_findframe(sound2,"S_sypek_m06");
+frame sound3;		frm_findframe(sound3,"S_sypek_m12");
+
+integer rnd;	
+integer rnd_pause;
+
+label loop:
+rnd= _randomint(3) ;
+rnd_pause= _randomint(13000) +3500;
+if (rnd==1) {FRM_SetOn(sound1,true);}
+if (rnd==2) {FRM_SetOn(sound2,true);} 
+if (rnd==0) {FRM_SetOn(sound3,true);} 
+delay(rnd_pause);
+goto loop;

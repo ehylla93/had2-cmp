@@ -1,0 +1,58 @@
+// AF2_straz01 - guarding at the begining of 1. part
+// -------------------------------------------------------------------------------------------------------------
+
+INTEGER rnd				= 0;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  block{
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(false);
+    HUMAN_SETSIGHTRANGE(200);
+  }
+  HUMAN_SETMODE_StandFast();
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Guard();
+  HUMAN_SetOptimized(true); 
+  goto ACTIVITY;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Guard();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+goto ACTIVITY;
+
+Label ACTIVITY: 
+  gosub LOOKAROUND;
+goto ACTIVITY;
+
+Label LOOKAROUND:
+  rnd = _RandomInt(2);
+  if(rnd == 1){
+    HUMAN_WeaponOnArm(0);
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(rnd);
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(rnd);
+	HUMAN_WeaponOnArm(1);
+  }
+return;
+
+Label END:

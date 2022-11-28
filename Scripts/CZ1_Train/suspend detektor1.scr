@@ -1,0 +1,25 @@
+Whenever player(_PlayerInRange(75) )
+{	
+	Block
+	{	
+	Frame soldier1;
+	FRM_FindFrame(soldier1, "Ge_9");
+	Frame soldier2;
+	FRM_FindFrame(soldier2, "posila v aute2");
+	Frame soldier3;
+	FRM_FindFrame(soldier3, "posila v aute1");
+	Frame soldier4;
+	FRM_FindFrame(soldier4, "velitel v aute");
+	Frame soldier5;
+	FRM_FindFrame(soldier5, "ridic_z_mesta");
+
+SendSignal(soldier1, 1);
+SendSignal(soldier2, 1);	
+SendSignal(soldier3, 1);
+SendSignal(soldier4, 1);
+SendSignal(soldier5, 1);
+
+}
+
+
+}

@@ -1,0 +1,9 @@
+
+Block {
+frame SendTo;		FRM_FindFrame(SendTo, "dummy_obj_prolez");
+}
+
+Whenever NEAR (_PlayerInRange(2))
+{
+  SendSignal(SendTo, 20);
+}

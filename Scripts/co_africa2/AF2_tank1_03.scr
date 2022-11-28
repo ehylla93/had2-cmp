@@ -1,0 +1,52 @@
+// AF1_tank01_03
+// -------------------------------------------------------------------------------------------------------------
+
+Block {
+SetAlarmType(1023, true);
+
+INTEGER gt	= _RandomInt(4);
+if (gt==0)
+{
+gt=3;
+}
+INTEGER value	= 100;
+INTEGER see_val	= value + (70 * (gt));
+INTEGER hear_val	= value + (70 * (gt));
+HUMAN_SETSIGHTRANGE(see_val);
+HUMAN_SETHEARRANGE(hear_val);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  goto END;
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(false);
+  //HUMAN_BoardVehicle("Panzer01", false, 2);
+  //HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_BoardVehicle("Panzer01", true, 2);
+  HUMAN_Suspend(true);
+  HUMAN_SetOptimized(2);
+goto END;
+
+Label END:

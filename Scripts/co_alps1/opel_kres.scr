@@ -1,0 +1,13 @@
+//Dummy inside sector of Opel
+
+Block {
+frame me;	FRM_GetMyFrame(me);
+}
+
+Whenever bum(_SignalReceived(1))
+{
+delay (2000);
+FRM_CreateParticle(41, me);
+MakeExplosion(me, 50000000,6000);
+PlaySound(6, 0);
+}

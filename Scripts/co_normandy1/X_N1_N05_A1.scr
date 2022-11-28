@@ -1,0 +1,10 @@
+// N05_A1 - activator
+
+Block {
+Frame N05;	FRM_FindFrame(N05, "N05");
+}
+
+Whenever activate(_PlayerInRange(3))
+{
+	SendSignal(N05, 2);
+}

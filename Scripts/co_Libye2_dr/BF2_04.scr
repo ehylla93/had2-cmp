@@ -1,0 +1,52 @@
+// BF2_04 - la_shermanAf_2 captured M3 Lee (0, Main gun)
+
+// Variables definition
+
+block{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame Lee;	FRM_FindFrame(Lee, "la_shermanAf_2");
+}
+
+// --------------------------------------------------------
+
+// Whenever keywords and signals
+
+OnSignal(1)	// received from AF2_36_A1 - A3 
+{
+	HUMAN_Suspend(false);
+//	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnAlarm()
+{
+HUMAN_TurnAtNearestPlayer();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+
+OnDeath()
+{
+	EndScript();
+}
+//-------------------------------------
+// Starting pose
+
+HUMAN_SETSIGHTRANGE(700);
+HUMAN_SETHEARRANGE(350);
+HUMAN_SETAIMODE_Zombie();
+SetAlarmType(1023, true);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("la_shermanAf_2", true, 0);	
+FRM_SwitchFaceTexture(me, "e_f054");
+Car_SetFuel(Lee, 0);
+HUMAN_Suspend(true);
+
+Label end:

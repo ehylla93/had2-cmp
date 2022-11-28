@@ -1,0 +1,55 @@
+
+integer  AIEvent;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame turn;		FRM_FindFrame(turn, "dummy_Red2_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(1)
+{						
+  HUMAN_Suspend(False);	
+  HUMAN_SetSniper(True, 6);		
+}						
+goto TheEnd;				
+
+Whenever X ( _PlayerInRange(15); )
+{
+  goto DeAlarm;
+}
+
+label DeAlarm:
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Red2_1");	
+  HUMAN_TurnAt(turn);
+  Delay(1500);
+  HUMAN_WeaponOnArm(False);
+  Delay(2500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 2: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	 	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

@@ -1,0 +1,113 @@
+// SF_G64 - Reinf by Halftruck
+// ------------------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1, "SF_G07");
+Frame Hakl;		FRM_FindFrame(Hakl, "Hakl_02");
+Frame P1;		FRM_FindFrame(P1, "SF_G65");
+Frame P2;		FRM_FindFrame(P2, "SF_G66");
+Frame P3;		FRM_FindFrame(P3, "SF_G67");
+Frame P4;		FRM_FindFrame(P4, "SF_G68");
+Frame P5;		FRM_FindFrame(P5, "SF_G69");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1023,0);
+
+FRM_SwitchFaceTexture(me,"e_f064");
+
+Integer AIEvent;
+Integer RideSelect;
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+
+AIEvent = _RandomInt(1000);
+
+If(AIEvent > 700)
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+}
+
+If((AIEvent > 100) And (AIEvent < 701))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+}
+
+If(AIEvent < 101)
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+}
+
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Hakl_02", 1, 0);
+RideSelect = _RandomInt(2);
+
+If(RideSelect == 0)
+{
+HUMAN_Drive("Panzer2_end3", 40);
+Delay(3000);
+}
+
+Else
+{
+HUMAN_Drive("Panzer2_end5", 40);
+Delay(3000);
+}
+
+Delay(500);
+HUMAN_Drive("", 0);
+Delay(1000);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+SendSignal(P4, 2);
+SendSignal(P5, 2);
+Delay(500);
+HUMAN_BoardVehicle("Hakl_02", 0, 0);
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(150);
+SetAlarmType(255,1);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Hakl, 10);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Cp1, 2);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

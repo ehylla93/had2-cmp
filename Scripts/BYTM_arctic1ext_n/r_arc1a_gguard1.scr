@@ -1,0 +1,77 @@
+// Gate1
+
+Block
+{
+frame cc;		FRM_FindFrame(cc, "dummy_OBJ1_sender");
+frame sgv5;		FRM_FindFrame(sgv5, "m_dv_t01");
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+integer AIEvent;	AIEvent = 99;
+SetAlarmType(1023, True); 
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Guard();
+HUMAN_SETMODE_Stand();
+}
+
+HUMAN_Suspend(True);
+Goto theEnd;
+  
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Alarm Gate1:", AIEvent);
+  
+If((AIEvent == 1) OR (AIEvent == 2) OR (AIEvent == 16) OR (AIEvent == 32) OR (AIEvent == 64) OR (AIEvent == 256) OR (AIEvent == 512))
+{
+	if(_LoadGameValue(5)==0)
+	{
+	FRM_MorphSpeech(MyFRM, 14992829, 15, 35);	//"Alarm!"
+	SendSignal(sgv5, 1);
+	}
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(1023, True);
+HUMAN_SETMODE_Silence();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_Move("GGuard1_END");
+HUMAN_SetOptimized(2);
+Goto TheEnd;
+}
+
+OnDeath()
+{
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+Sendsignal(cc, 30);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever A (_PlayerInRange(107))
+{
+HUMAN_Suspend(False);
+}
+
+label loop:
+HUMAN_Move("GGuard1_1");
+Delay(500);
+HUMAN_Move("GGuard1_2");
+Delay(500);
+goto Loop;
+
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label TheEnd:

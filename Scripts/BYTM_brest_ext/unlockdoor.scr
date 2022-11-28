@@ -1,0 +1,6 @@
+frame me;	FRM_GetMyFrame(me);
+
+OnUse()
+{
+DOOR_Lock(me, 0);
+}

@@ -1,0 +1,146 @@
+//ESUB2 Sub Guard
+// ----------------------Block----------------------
+Block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rnd2;
+integer rndpause;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(95);
+HUMAN_SETHEARRANGE(65);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+goto end;
+}
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+Block
+{
+AIEvent = _GetAlarmType();
+If(AIEvent == 1)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive(); 
+}
+If(AIEvent == 2)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Aggressive(); 
+HUMAN_SETMODE_Silence();
+}
+If(AIEvent == 4)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 8)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 16)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 32)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper( 1, 90 );
+HUMAN_SETAIMODE_Aggressive(); 
+}
+If(AIEvent == 64)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Aggressive(); 
+}
+If(AIEvent == 128)
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 256)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 512)
+{
+HUMAN_Stop();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+}
+}
+EndScript();
+}
+// ----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+//printf ("Alarm done");
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETAIMODE_Defensive();
+goto alrmdone;
+}
+label alrmdone:
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveRandomRadius(15);
+delay(2000);
+HUMAN_MoveRandomRadius(10);
+delay(5500);
+HUMAN_MoveRandomRadius(15);
+delay(3500);
+HUMAN_MoveRandomRadius(10);
+delay(1000);
+HUMAN_MoveRandomRadius(15);
+goto alrmdone;
+// ----------------------OnDeath----------------------
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+// ----------------------END----------------------
+Label END:

@@ -1,0 +1,51 @@
+
+Frame me;	FRM_GetMyFrame(me);
+//FRAME this;			FRM_GetMyFrame(this);
+//FRM_SwitchFaceTexture(this, "e_f099");
+integer  AIEvent = 0; 
+
+OnAlarm()
+{
+  Block
+  {
+    AIEvent =_GetAlarmType(); 
+    PrintfNumber("Vojak  --31--  jde do AI, alarm: ", AIEvent); 
+    HUMAN_SetOptimized(false);
+  } 
+  EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(true);
+	GoTo activity;
+}
+
+OnDeath()
+{
+  Delay(850);
+  FRM_MorphSpeechDelayed(me, 90009999, 18, 38); 
+  Printf("mrtvola ... ---31--- ");
+  EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received from AF1_31_A1, A2, A3, A4, A5, A6
+{
+//	HUMAN_Suspend(false);
+	GoTo activity;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(true);
+//HUMAN_Suspend(true);
+GoTo end;
+
+Label activity:
+	HUMAN_Move("AF1_31_01");
+	HUMAN_Move("AF1_31_02");
+	GoTo activity;
+
+Label end:

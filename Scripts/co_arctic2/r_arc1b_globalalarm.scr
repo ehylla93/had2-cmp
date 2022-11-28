@@ -1,0 +1,233 @@
+
+Block
+{
+Frame Reinfo1;	FRM_FindFrame(Reinfo1, "Reinforcement_1");
+Frame Reinfo2;	FRM_FindFrame(Reinfo2, "Reinforcement_2");
+Frame Reinfo3;	FRM_FindFrame(Reinfo3, "Reinforcement_3");
+Frame Reinfo5;	FRM_FindFrame(Reinfo5, "Reinforcement_5");
+Frame Reinfo6;	FRM_FindFrame(Reinfo6, "Reinforcement_6");
+Frame Reinfo7;	FRM_FindFrame(Reinfo7, "Reinforcement_7");
+Frame Reinfo8;	FRM_FindFrame(Reinfo8, "Reinforcement_8");
+
+Frame OBJ3;		FRM_FindFrame(OBJ3, "objectives");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+Frame blik1;	FRM_FindFrame(blik1 , "m_svetp01.qqqc_flare");
+Frame blik2;	FRM_FindFrame(blik2 , "m_svetp02.qqqc_flare");
+Frame blik3;	FRM_FindFrame(blik3 , "m_svetp03.qqqc_flare");
+Frame blik4;	FRM_FindFrame(blik4 , "m_svetp04.qqqc_flare");
+Frame blik5;	FRM_FindFrame(blik5 , "m_svetp06.qqqc_flare");
+Frame blik6;	FRM_FindFrame(blik6 , "m_svetp08.qqqc_flare");
+Frame blik7;	FRM_FindFrame(blik7 , "m_svetp100.qqqc_flare");
+Frame blik8;	FRM_FindFrame(blik8 , "m_svetp11.qqqc_flare");
+Frame blik9;	FRM_FindFrame(blik9 , "m_svetp12.qqqc_flare");
+Frame blik10;	FRM_FindFrame(blik10 , "m_svetp14.qqqc_flare");
+Frame blik11;	FRM_FindFrame(blik11 , "m_svetp15.qqqc_flare");
+Frame blik12;	FRM_FindFrame(blik12 , "m_svetp_11.qqqc_flare");
+Frame blik13;	FRM_FindFrame(blik13 , "m_svetp_2.qqqc_flare");
+Frame blik14;	FRM_FindFrame(blik14 , "m_svetp00.qqqc_flare");
+Frame blik15;	FRM_FindFrame(blik15 , "m_svetp_.qqqc_flare");
+Frame blik16;	FRM_FindFrame(blik16 , "m_svetp_10.qqqc_flare");
+Frame blik17;	FRM_FindFrame(blik17 , "m_svetp_9.qqqc_flare");
+Frame blik18;	FRM_FindFrame(blik18 , "m_svetp_7.qqqc_flare");
+Frame blik19;	FRM_FindFrame(blik19 , "m_svetp.qqqc_flare");
+Frame blik20;	FRM_FindFrame(blik20 , "m_svetp_3.qqqc_flare");
+Frame blik21;	FRM_FindFrame(blik21 , "m_svetp_4.qqqc_flare");
+Frame blik22;	FRM_FindFrame(blik22 , "m_svetp_5.qqqc_flare");
+Frame blik23;	FRM_FindFrame(blik23 , "m_svetp_6.qqqc_flare");
+Frame blik24;	FRM_FindFrame(blik24 , "m_svetp_8.qqqc_flare");	
+Frame blik25;	FRM_FindFrame(blik25 , "m_svetp09.qqqc_flare");	
+
+Frame bzz1;		FRM_FindFrame(bzz1, "S_alarm1");
+Frame bzz2;		FRM_FindFrame(bzz2, "S_alarm2");
+Frame bzz3;		FRM_FindFrame(bzz3, "S_alarm3");
+Frame bzz4;		FRM_FindFrame(bzz4, "S_alarm4");
+Frame bzz6;		FRM_FindFrame(bzz6, "S_alarm6");
+Frame bzz7;		FRM_FindFrame(bzz7, "S_alarm7");
+Frame bzz8;		FRM_FindFrame(bzz8, "S_alarm8");
+Frame bzz9;		FRM_FindFrame(bzz9, "S_alarm9");
+Frame bzz10;	FRM_FindFrame(bzz10, "S_alarm10");
+Frame bzz11;	FRM_FindFrame(bzz11, "S_alarm11");
+Frame bzz12;	FRM_FindFrame(bzz12, "S_alarm12");
+Frame bzz13;	FRM_FindFrame(bzz13, "S_alarm13");
+Frame bzz14;	FRM_FindFrame(bzz14, "S_alarm14");
+Frame bzz15;	FRM_FindFrame(bzz15, "S_alarm15");
+Frame bzz16;	FRM_FindFrame(bzz16, "S_alarm16");
+Frame bzz17;	FRM_FindFrame(bzz17, "S_alarm17");
+Frame bzz18;	FRM_FindFrame(bzz18, "S_alarm18");
+Frame bzz19;	FRM_FindFrame(bzz19, "S_alarm19");
+Frame bzz20;	FRM_FindFrame(bzz20, "S_alarm20");
+Frame bzz21;	FRM_FindFrame(bzz21, "S_alarm21");
+Frame bzz22;	FRM_FindFrame(bzz22, "S_alarm22");
+Frame bzz23;	FRM_FindFrame(bzz23, "S_alarm23");
+Frame bzz24;	FRM_FindFrame(bzz24, "S_alarm24");
+Frame bzz25;	FRM_FindFrame(bzz25, "S_alarm25");
+Frame bzz26;	FRM_FindFrame(bzz26, "S_alarm26");
+Frame bzz27;	FRM_FindFrame(bzz27, "S_alarm27");
+Frame bzz28;	FRM_FindFrame(bzz28, "S_alarm28");
+
+integer  aktual = 0;
+SaveGameValue(88, 0);
+}
+
+Block
+{
+FRM_SetOn(bzz1, False);      FRM_SetOn(bzz2, False);      FRM_SetOn(bzz3, False);
+FRM_SetOn(bzz4, False);      FRM_SetOn(bzz6, False);      FRM_SetOn(bzz7, False);
+FRM_SetOn(bzz8, False);      FRM_SetOn(bzz9, False);      FRM_SetOn(bzz10, False);
+FRM_SetOn(bzz11, False);     FRM_SetOn(bzz12, False);     FRM_SetOn(bzz13, False);
+FRM_SetOn(bzz14, False);     FRM_SetOn(bzz15, False);     FRM_SetOn(bzz16, False);
+FRM_SetOn(bzz17, False);     FRM_SetOn(bzz18, False);     FRM_SetOn(bzz19, False);
+FRM_SetOn(bzz20, False);     FRM_SetOn(bzz21, False);     FRM_SetOn(bzz22, False);
+FRM_SetOn(bzz23, False);     FRM_SetOn(bzz24, False);     FRM_SetOn(bzz25, False);
+FRM_SetOn(bzz26, False);     FRM_SetOn(bzz27, False);     FRM_SetOn(bzz28, False);
+FRM_SetOn(blik1, False);      FRM_SetOn(blik2, False);      FRM_SetOn(blik3, False);
+FRM_SetOn(blik4, False);      FRM_SetOn(blik5, False);      FRM_SetOn(blik6, False);
+FRM_SetOn(blik7, False);      FRM_SetOn(blik8, False);      FRM_SetOn(blik9, False);
+FRM_SetOn(blik10, False);     FRM_SetOn(blik11, False);     FRM_SetOn(blik12, False);
+FRM_SetOn(blik13, False);     FRM_SetOn(blik14, False);     FRM_SetOn(blik15, False);
+FRM_SetOn(blik16, False);     FRM_SetOn(blik17, False);     FRM_SetOn(blik18, False);
+FRM_SetOn(blik19, False);     FRM_SetOn(blik20, False);     FRM_SetOn(blik21, False);
+FRM_SetOn(blik22, False);     FRM_SetOn(blik23, False);     FRM_SetOn(blik24, False);
+FRM_SetOn(blik25, False);
+}
+
+OnSignal(1)
+{
+SaveGameValue(88, 1);
+  Block
+  {
+    SendSignal(Reinfo1, 1);
+    SendSignal(Reinfo2, 1);
+    SendSignal(Reinfo3, 1);
+    SendSignal(Reinfo5, 1);
+    SendSignal(Reinfo6, 1);
+    SendSignal(Reinfo7, 1);
+    SendSignal(Reinfo8, 1);
+  }
+  If (aktual == 0) { SendSignal(MyFRM, 2);}
+  Goto TheEnd;
+}
+
+OnSignal(2)
+{
+  If (aktual == 0)
+    {
+     Block
+       {
+       FRM_SetOn(bzz1, True);
+       FRM_SetOn(bzz2, True);
+       FRM_SetOn(bzz3, True);
+       FRM_SetOn(bzz4, True);
+       FRM_SetOn(bzz6, True);
+       FRM_SetOn(bzz7, True);
+       FRM_SetOn(bzz8, True);
+       FRM_SetOn(bzz9, True);
+       FRM_SetOn(bzz10, True);
+       FRM_SetOn(bzz11, True);
+       FRM_SetOn(bzz12, True);
+       FRM_SetOn(bzz13, True);
+       FRM_SetOn(bzz14, True);
+       FRM_SetOn(bzz15, True);
+       FRM_SetOn(bzz16, True);
+       FRM_SetOn(bzz17, True);
+       FRM_SetOn(bzz18, True);
+       FRM_SetOn(bzz19, True);
+       FRM_SetOn(bzz20, True);
+       FRM_SetOn(bzz21, True);
+       FRM_SetOn(bzz22, True);
+       FRM_SetOn(bzz23, True);
+       FRM_SetOn(bzz24, True);
+       FRM_SetOn(bzz25, True);
+       FRM_SetOn(bzz26, True);
+       FRM_SetOn(bzz27, True);
+       FRM_SetOn(bzz28, True);
+       aktual = 1;
+       FRM_SetOn(blik1, True);
+       FRM_SetOn(blik2, True);
+       FRM_SetOn(blik3, True);
+       FRM_SetOn(blik4, True);
+       FRM_SetOn(blik5, True);
+       FRM_SetOn(blik6, True);
+       FRM_SetOn(blik7, True);
+       FRM_SetOn(blik8, True);
+       FRM_SetOn(blik9, True);
+       FRM_SetOn(blik10, True);
+       FRM_SetOn(blik11, True);
+       FRM_SetOn(blik12, True);
+       FRM_SetOn(blik13, True);
+       FRM_SetOn(blik14, True);
+       FRM_SetOn(blik15, True);
+       FRM_SetOn(blik16, True);
+       FRM_SetOn(blik17, True);
+       FRM_SetOn(blik18, True);
+       FRM_SetOn(blik19, True);
+       FRM_SetOn(blik20, True);
+       FRM_SetOn(blik21, True);
+       FRM_SetOn(blik22, True);
+       FRM_SetOn(blik23, True);
+       FRM_SetOn(blik24, True);
+       FRM_SetOn(blik25, True);
+       }
+       If (aktual == 1) { SendSignal(MyFRM, 1);}
+     } else {
+     Block
+       {
+       FRM_SetOn(bzz1, False);
+       FRM_SetOn(bzz2, False);
+       FRM_SetOn(bzz3, False);
+       FRM_SetOn(bzz4, False);
+       FRM_SetOn(bzz6, False);
+       FRM_SetOn(bzz7, False);
+       FRM_SetOn(bzz8, False);
+       FRM_SetOn(bzz9, False);
+       FRM_SetOn(bzz10, False);
+       FRM_SetOn(bzz11, False);
+       FRM_SetOn(bzz12, False);
+       FRM_SetOn(bzz13, False);
+       FRM_SetOn(bzz14, False);
+       FRM_SetOn(bzz15, False);
+       FRM_SetOn(bzz16, False);
+       FRM_SetOn(bzz17, False);
+       FRM_SetOn(bzz18, False);
+       FRM_SetOn(bzz19, False);
+       FRM_SetOn(bzz20, False);
+       FRM_SetOn(bzz21, False);
+       FRM_SetOn(bzz22, False);
+       FRM_SetOn(bzz23, False);
+       FRM_SetOn(bzz24, False);
+       FRM_SetOn(bzz25, False);
+       FRM_SetOn(bzz26, False);
+       FRM_SetOn(bzz27, False);
+       FRM_SetOn(bzz28, False);
+       aktual = 0;
+       FRM_SetOn(blik1, False);
+       FRM_SetOn(blik2, False);
+       FRM_SetOn(blik3, False);
+       FRM_SetOn(blik4, False);
+       FRM_SetOn(blik5, False);
+       FRM_SetOn(blik6, False);
+       FRM_SetOn(blik7, False);
+       FRM_SetOn(blik8, False);
+       FRM_SetOn(blik9, False);
+       FRM_SetOn(blik10, False);
+       FRM_SetOn(blik11, False);
+       FRM_SetOn(blik12, False);
+       FRM_SetOn(blik13, False);
+       FRM_SetOn(blik14, False);
+       FRM_SetOn(blik15, False);
+       FRM_SetOn(blik16, False);
+       FRM_SetOn(blik17, False);
+       FRM_SetOn(blik18, False);
+       FRM_SetOn(blik19, False);
+       FRM_SetOn(blik20, False);
+       FRM_SetOn(blik21, False);
+       FRM_SetOn(blik22, False);
+       FRM_SetOn(blik23, False);
+       FRM_SetOn(blik24, False);
+       FRM_SetOn(blik25, False);
+       }
+   }
+}
+
+Label TheEnd:

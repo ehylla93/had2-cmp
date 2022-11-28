@@ -1,0 +1,50 @@
+
+integer  AIEvent;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red13_turn");
+
+SetAlarmType(520, False);	
+
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(1)
+{						
+  HUMAN_Suspend(False);
+HUMAN_SetSniper(True, 4);			
+}						
+
+label DeAlarm:
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Red13_1");				
+  HUMAN_TurnAt(turn);					
+  Delay(1500);
+  HUMAN_WeaponOnArm(True);
+  Delay(2500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 13: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	 
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

@@ -1,0 +1,41 @@
+// objective - assemble in bunker
+
+Block {
+Frame obj;		FRM_FindFrame(obj, "C5_objective");
+Frame spawn3;	FRM_FindFrame(spawn3, "spawnzone3");
+
+SetWhenever(Player_Bunker, false);
+
+MP_EnableSpawnZone("zone2", 2);
+}
+
+Whenever Player_Bunker (_MP_AllTeamMembersAreInRange(1, 8))
+{
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(23994607);	//"OBJECTIVE ACCOMPLISHED: SOLDIERS ASSEMBLED IN THE BUNKER."
+Delay(4000);
+SUBTITLES_SetOn(false);
+Block {
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(2, 1);
+SendSignal(obj, 8);				//start russian attack
+}
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(23994603);	//"NEW OBJECTIVE: RESIST THE RUSSIAN ATTACK."
+Delay(4000);
+SUBTITLES_SetOn(false);
+EndScript();
+}
+
+OnSignal(1)
+{
+Block {
+SetWhenever(Player_Bunker, true);
+MP_EnableSpawnZone("zone1", 2);
+SendSignal(spawn3, 1);
+MP_EnableSpawnZone("zone2", 1);
+}
+goto end;
+}
+
+Label end:

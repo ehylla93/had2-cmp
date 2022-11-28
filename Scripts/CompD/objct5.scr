@@ -1,0 +1,34 @@
+// Obj 2 - najdi kodovaci tabulky + new spawnzone
+// ------------------------------------
+
+Block
+{
+Frame Documents;
+
+SetObjectiveStatus(4, 0);
+SetObjectiveStatus(5, 0);
+
+MP_EnableSpawnZone("zone1", 1);
+}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 280, Documents))
+{
+SetObjectiveStatus(5, 1);
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(02010415);
+Delay(4000);
+SUBTITLES_SetText(04010806);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Label End:

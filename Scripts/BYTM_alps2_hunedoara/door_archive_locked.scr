@@ -1,0 +1,16 @@
+// door_archive_locked - B07_d_16
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Get_Player;
+}
+
+Whenever PlayerNear (_MP_IsTeamMemberInRange(1, 2))
+{
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 90000196, 3, 9);
+Delay(2000);
+EndScript();
+}

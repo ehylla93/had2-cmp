@@ -1,0 +1,5 @@
+// 03_A01
+// ----------------------------------------
+
+Frame this;		FRM_GetMyFrame(this);
+HUMAN_Kill(this);

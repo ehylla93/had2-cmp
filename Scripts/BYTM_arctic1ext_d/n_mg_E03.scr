@@ -1,0 +1,72 @@
+//n_mg_E03 - behind stack of wood
+
+Block
+{
+integer aievent;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame sgv6;		FRM_FindFrame(sgv6, "n_sgv6");
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+}
+
+HUMAN_Suspend(1);
+goto TheEnd;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+	Block
+	{
+	aievent =_GetAlarmType(); 
+	PrintfNumber("mg_E03: ", aievent);
+	HUMAN_Stop();
+	}
+	if(((aievent==2) or (aievent==256)) and (_LoadGameValue(6)==0))
+	{
+	SendSignal(sgv6, 1);
+	}
+HUMAN_SetAnim("", 200, 200, False);	
+EndScript();
+}
+
+OnDeath()
+{
+Endscript();
+}
+
+OnAlarmDone()
+{
+  Block
+    {
+       HUMAN_SetAlarm(False);
+       HUMAN_SETMODE_Run();
+       HUMAN_SetOptimized(1);
+       HUMAN_SETMODE_Stand();
+    }
+  HUMAN_Move("AutiBad_DeAlarm");
+  Label loop:
+     HUMAN_TurnAtNearestPlayer();
+     Delay(7500);
+  Goto loop;
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever PIR (_PlayerInRange(75))
+{
+SetWhenever(PIR , False);
+HUMAN_Suspend(False);
+HUMAN_SetAnim("%%sedimL", 400, 400, 1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Label TheEnd:

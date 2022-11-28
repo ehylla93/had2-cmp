@@ -1,0 +1,65 @@
+// alp2_E14 - Behind locked door near spawn
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1,1);		//Close Shooting
+SetAlarmType(2,1);		//Enemy Shots
+SetAlarmType(4,1);		//Hear Steps
+SetAlarmType(8,1);		//Action Sounds
+SetAlarmType(16,1);		//Explosions
+SetAlarmType(32,1);		//Sighted
+SetAlarmType(64,1);		//Is Injured
+SetAlarmType(128,0);	//From Script
+SetAlarmType(256,1);	//Friendly Shots
+SetAlarmType(512,1);	//Sight Corpse
+
+Frame me;		FRM_GetMyFrame(me);
+
+HUMAN_SETAIMODE_Zombie();
+
+HUMAN_SetAnim("%%hledam1", 1000, 1000, 1);
+
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+}
+
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+FRM_MorphSpeechDelayed(me, 90001172, 3, 20);	//"What was that?"
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)		//received from alp2_E20
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("AL2_03_08");
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

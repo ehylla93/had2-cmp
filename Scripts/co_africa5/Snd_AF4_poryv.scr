@@ -1,0 +1,10 @@
+frame sound;		frm_findframe(sound,"S_poryv");
+
+integer rnd_pause;
+
+label loop:
+rnd_pause= _randomint(18000) + 18000;
+delay(rnd_pause);
+FRM_SetOn(sound, true);
+goto loop;
+

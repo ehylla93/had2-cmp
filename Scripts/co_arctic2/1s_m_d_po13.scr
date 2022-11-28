@@ -1,0 +1,7 @@
+////-------------vysilac signalu 1 od dveri m_d_po13---------------------------------------------------------------------------
+
+OnUse()
+ {
+    frame p1s40;	FRM_FindFrame(p1s40,"p1s40");	//---------MUST BE IN HERE---------------
+    SendSignal(p1s40,2);
+ }

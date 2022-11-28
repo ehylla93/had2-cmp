@@ -1,0 +1,37 @@
+// Capt. Miroslav Sigmund
+// ---------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+FRM_SwitchFaceTexture(me,"e_f009");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_PlayerInRange(15))
+{
+HUMAN_Suspend(0);
+DisableAlarms(1);
+goto Anim;
+}
+
+// ---------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Anim:
+HUMAN_SetAnim("%%maze", 1000, 1000, 1);
+Delay(10000);
+HUMAN_SetAnim("%%studmapu", 1000, 1000, 1);
+Delay(35000);
+goto Anim;
+
+
+Label END:

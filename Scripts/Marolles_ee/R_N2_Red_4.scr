@@ -1,0 +1,62 @@
+Block
+{
+   integer  AIEvent;
+   integer RND = 0;
+   Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+   Frame turn;		FRM_FindFrame(turn, "dummy_Red4_turn");	
+
+   SetAlarmType(524, False);	// 4+8+512
+}
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(2)
+{						
+  HUMAN_Suspend(False);			
+}			
+
+HUMAN_SETMODE_Silence();
+
+////////////// OnSignal - hod + zapni SetAlarmType(nahore je vypnout) 			
+////////////// OnSignal - zapni SetAlarmType (šli jinak)
+
+label DeAlarm:
+  RND = _RandomInt(2);
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Stand();
+  If (RND == 0)  
+    {
+        HUMAN_Move("Red4_1");					
+    } else {
+        HUMAN_Move("Red4_2");				
+    }
+  HUMAN_TurnAt(turn);				
+  Delay(1500);
+  HUMAN_WeaponOnArm(False);
+  Delay(2500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 4: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  goto DeAlarm;
+}
+
+Label TheEND:

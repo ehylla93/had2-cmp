@@ -1,0 +1,24 @@
+// Obj 4 - Destroy the Fuel Supplies
+// -----------------------------------------
+
+Block
+{
+Frame F1;	FRM_FindFrame(F1,"Fuel_Supply1");
+Frame F2;	FRM_FindFrame(F2,"Fuel_Supply2");
+Frame Obj6;	FRM_FindFrame(Obj6,"obj4");
+
+SetObjectiveStatus(4, 0);
+}
+
+// -----------------------------------------
+
+Whenever Heavy_Equipment_Destroyed ((_Actor_GetState(F1)==0) And (_Actor_GetState(F2)==0))
+{
+SendSignal(Obj6, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05011015);
+SetObjectiveStatus(4, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

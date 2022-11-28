@@ -1,0 +1,15 @@
+Frame  this;                         FRM_FindFrame( this, "zone2" );
+Frame  tiger;                        FRM_FindFrame( tiger, "tiger"  );
+Frame   obj3_explosive;     FRM_FindFrame( obj3_explosive, "w_explosive_1"  );
+
+
+
+// -----------------------------------------------------------------------
+//OBSAZENI ZONY 5
+// -----------------------------------------------------------------------
+Whenever "Zona2" ( (( _ACTOR_GetState( obj3_explosive ) == 2 ) and _PlayerInRange( 10 )) and (not _EnemyInRange( this, 25 )) )
+{
+      MP_EnableSpawnZone("zone2", 1);
+      EndScript();
+}
+SetWheneverTime( "Zona2",  3000 );

@@ -1,0 +1,369 @@
+// Spawnzone 2 // Obj 1 
+// ----------------------------------------------
+
+Block
+{
+// ** DELA **
+
+Frame C1;	FRM_FindFrame(C1,"Ka_G01");
+Frame C2;	FRM_FindFrame(C2,"Kb_G01");
+Frame C3;	FRM_FindFrame(C3,"Kc_G01");
+Frame C4;	FRM_FindFrame(C4,"Kd_G01");
+Frame C5;	FRM_FindFrame(C5,"Ke_G01");
+Frame C6;	FRM_FindFrame(C6,"Kf_G01");
+
+// ** TANKY **
+
+Frame T1;	FRM_FindFrame(T1,"La_tiger_1");
+	Integer Tank1;	Tank1=1;
+Frame T2;	FRM_FindFrame(T2,"La_tiger_2");
+	Integer Tank2;	Tank2=1;
+Frame T3;	FRM_FindFrame(T3,"La_tiger_3");
+	Integer Tank3;	Tank3=1;
+
+// ** VOJACI **
+
+Frame S01;	FRM_FindFrame(S01,"D1_G01");
+	Integer So01;	So01=1;
+Frame S02;	FRM_FindFrame(S02,"D1_G02");
+	Integer So02;	So02=1;
+Frame S03;	FRM_FindFrame(S03,"D1_G03");
+	Integer So03;	So03=1;
+Frame S04;	FRM_FindFrame(S04,"D1_G04");
+	Integer So04;	So04=1;
+Frame S05;	FRM_FindFrame(S05,"D1_G05");
+	Integer So05;	So05=1;
+Frame S06;	FRM_FindFrame(S06,"D1_G06");
+	Integer So06;	So06=1;
+Frame S07;	FRM_FindFrame(S07,"D1_G07");
+	Integer So07;	So07=1;
+Frame S08;	FRM_FindFrame(S08,"D1_G08");
+	Integer So08;	So08=1;
+Frame S09;	FRM_FindFrame(S09,"D1_G09");
+	Integer So09;	So09=1;
+Frame S10;	FRM_FindFrame(S10,"D1_G10");
+	Integer So10;	So10=1;
+Frame S11;	FRM_FindFrame(S11,"D1_G11");
+	Integer So11;	So11=1;
+Frame S12;	FRM_FindFrame(S12,"D1_G12");
+	Integer So12;	So12=1;
+Frame S13;	FRM_FindFrame(S13,"D1_G13");
+	Integer So13;	So13=1;
+Frame S14;	FRM_FindFrame(S14,"D1_G14");
+	Integer So14;	So14=1;
+Frame S15;	FRM_FindFrame(S15,"D1_G15");
+	Integer So15;	So15=1;
+Frame S16;	FRM_FindFrame(S16,"D1_G16");
+	Integer So16;	So16=1;
+Frame S17;	FRM_FindFrame(S17,"D1_G17");
+	Integer So17;	So17=1;
+Frame S18;	FRM_FindFrame(S18,"D1_G18");
+	Integer So18;	So18=1;
+Frame S19;	FRM_FindFrame(S19,"A1_G01");
+	Integer So19;	So19=1;
+Frame S20;	FRM_FindFrame(S20,"Mg1_G1");
+	Integer So20;	So20=1;
+Frame S21;	FRM_FindFrame(S21,"Mg5_G1");
+	Integer So21;	So21=1;
+Frame S22;	FRM_FindFrame(S22,"B1_G01");
+	Integer So22;	So22=1;
+Frame S23;	FRM_FindFrame(S23,"B1_G02");
+	Integer So23;	So23=1;
+
+Frame Obj6;	FRM_FindFrame(Obj6,"obj4");
+
+Integer pocitac;	pocitac=0;
+
+SetObjectiveStatus(1, 0);
+}
+
+// ----------------------------------------------
+
+goto Front;
+
+Label Front:
+
+Block
+{
+If(So01 == 1)
+{
+
+If(_Actor_GetState(S01)==0)
+{	
+pocitac=pocitac+1;
+So01=0;	
+}	
+}
+
+If(So02 == 1)
+{
+
+If(_Actor_GetState(S02)==0)
+{
+pocitac=pocitac+1;
+So02=0;
+}
+}
+
+If(So03 == 1)
+{
+
+If(_Actor_GetState(S03)==0)
+{
+pocitac=pocitac+1;
+So03=0;
+}
+}
+
+If(So04 == 1)
+{
+
+If(_Actor_GetState(S04)==0)
+{
+pocitac=pocitac+1;
+So04=0;
+}
+}
+
+If(So05 == 1)
+{
+
+If(_Actor_GetState(S05)==0)
+{
+pocitac=pocitac+1;
+So05=0;
+}
+}
+
+If(So06 == 1)
+{
+
+If(_Actor_GetState(S06)==0)
+{
+pocitac=pocitac+1;
+So06=0;
+}
+}
+
+If(So07 == 1)
+{
+
+If(_Actor_GetState(S07)==0)
+{
+pocitac=pocitac+1;
+So07=0;
+}
+}
+
+If(So08 == 1)
+{
+
+If(_Actor_GetState(S08)==0)
+{
+pocitac=pocitac+1;
+So08=0;
+}
+}
+
+If(So09 == 1)
+{
+
+If(_Actor_GetState(S09)==0)
+{
+pocitac=pocitac+1;
+So09=0;
+}
+}
+
+If(So10 == 1)
+{
+
+If(_Actor_GetState(S10)==0)
+{
+pocitac=pocitac+1;
+So10=0;
+}
+}
+
+If(So11 == 1)
+{
+
+If(_Actor_GetState(S11)==0)
+{
+pocitac=pocitac+1;
+So11=0;
+}
+}
+
+If(So12 == 1)
+{
+
+If(_Actor_GetState(S12)==0)
+{
+pocitac=pocitac+1;
+So12=0;
+}
+}
+
+If(So13 == 1)
+{
+
+If(_Actor_GetState(S13)==0)
+{
+pocitac=pocitac+1;
+So13=0;
+}
+}
+
+If(So14 == 1)
+{
+
+If(_Actor_GetState(S14)==0)
+{
+pocitac=pocitac+1;
+So14=0;
+}
+}
+
+If(So15 == 1)
+{
+
+If(_Actor_GetState(S15)==0)
+{
+pocitac=pocitac+1;
+So15=0;
+}
+}
+
+If(So16 == 1)
+{
+
+If(_Actor_GetState(S16)==0)
+{
+pocitac=pocitac+1;
+So16=0;
+}
+}
+
+If(So17 == 1)
+{
+
+If(_Actor_GetState(S17)==0)
+{
+pocitac=pocitac+1;
+So17=0;
+}
+}
+
+If(So18 == 1)
+{
+
+If(_Actor_GetState(S18)==0)
+{
+pocitac=pocitac+1;
+So18=0;
+}
+}
+
+If(So19 == 1)
+{
+
+If(_Actor_GetState(S19)==0)
+{
+pocitac=pocitac+1;
+So19=0;
+}
+}
+
+If(So20 == 1)
+{
+
+If(_Actor_GetState(S20)==0)
+{
+pocitac=pocitac+1;
+So20=0;
+}
+}
+
+If(So21 == 1)
+{
+
+If(_Actor_GetState(S21)==0)
+{
+pocitac=pocitac+1;
+So21=0;
+}
+}
+
+If(So22 == 1)
+{
+
+If(_Actor_GetState(S22)==0)
+{
+pocitac=pocitac+1;
+So22=0;
+}
+}
+
+If(So23 == 1)
+{
+
+If(_Actor_GetState(S23)==0)
+{
+pocitac=pocitac+1;
+So23=0;
+}
+}
+
+If(Tank1 == 1)
+{
+
+If(_Actor_GetState(T1)==0)
+{
+pocitac=pocitac+1;
+Tank1=0;
+}
+}
+
+If(Tank2 == 1)
+{
+
+If(_Actor_GetState(T2)==0)
+{
+pocitac=pocitac+1;
+Tank2=0;
+}
+}
+
+If(Tank3 == 1)
+{
+
+If(_Actor_GetState(T3)==0)
+{
+pocitac=pocitac+1;
+Tank3=0;
+}
+}
+
+}
+
+
+If(pocitac > 23)
+{
+Delay(1000);
+SendSignal(Obj6, 1);
+MP_EnableSpawnZone("zone3", 1);
+MP_EnableSpawnZone("zone1", 2);
+SetObjectiveStatus(1, 1);
+Delay(12000);
+SendSignal(C1, 2);
+SendSignal(C2, 2);
+SendSignal(C3, 2);
+SendSignal(C4, 2);
+SendSignal(C5, 2);
+SendSignal(C6, 2);
+EndScript();
+}
+
+Delay(1000);
+goto Front;

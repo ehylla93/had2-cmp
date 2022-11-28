@@ -1,0 +1,28 @@
+// Obj 3 - Destroy fuel tanks
+// ------------------------------
+
+Block
+{
+Frame T1;	FRM_FindFrame(T1,"FTank_01");
+Frame T2;	FRM_FindFrame(T2,"FTank_02");
+Frame T3;	FRM_FindFrame(T3,"FTank_03");
+Frame T4;	FRM_FindFrame(T4,"FTank_04");
+
+SetObjectiveStatus(3, 0);
+}
+
+// ------------------------------------
+
+ 
+Whenever FTanks_Destroyed ((((_Actor_GetState(T1)==0) And (_Actor_GetState(T2)==0)) And (_Actor_GetState(T3)==0)) And (_Actor_GetState(T4)==0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05011015);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Label END:

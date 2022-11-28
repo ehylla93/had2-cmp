@@ -1,0 +1,33 @@
+
+Block {
+frame MyFRM;		FRM_GetMyFrame(MyFRM);
+frame KONCOVKA;		FRM_FindFrame(KONCOVKA, "dummy_MQ1_End");
+frame SOUND;		FRM_FindFrame(SOUND, "MQ2-sound");
+
+FRM_SetOn(SOUND, False);
+}
+
+Whenever Player_In (_MP_IsTeamMemberInRange(1, 1000))
+{
+Delay(15000);
+Delay(10000);
+FRM_WatchTrack(MyFRM, "MQ1");
+FRM_SetOn(SOUND, True);
+}
+
+Whenever TO_JE_KONEC ( _FrameInRange(KONCOVKA)<15 )
+{
+  FRM_SetOn(MyFRM, False);
+  FRM_SetOn(SOUND, False);
+  delay(1500);
+  EndScript();
+}
+
+OnSignal(2)
+{
+  DisableWhenevers(1);
+  DisableSignals(1);
+  EndScript();
+}
+
+Label end:

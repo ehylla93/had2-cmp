@@ -1,0 +1,58 @@
+// pobìží od vraku k protìjší stìnì
+
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red28_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_SETEVENTS(false);
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Whenever near ( _PlayerInRange(10); )
+{			
+  HUMAN_SETEVENTS(true);
+  goto TheEnd;
+}
+
+Onsignal(7)
+{
+  HUMAN_Suspend(False);
+}
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Aggressive();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red28_1");		
+  HUMAN_TurnAt(turn);
+  Delay(500);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 28: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

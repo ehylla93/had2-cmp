@@ -1,0 +1,91 @@
+//ge_33 - sitting on bench
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Guard();
+
+frame sit;		Frm_FindFrame(sit,"ge33sit");
+frame cum;		Frm_FindFrame(cum,"ge33cum");
+Frame kecac;	Frm_FindFrame(kecac,"ge33kecac");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+HUMAN_SetAnim("",100,100,0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+SendSignal(kecac,2);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))			
+{
+HUMAN_Suspend(0);
+goto move;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+Label move:
+HUMAN_SetAnim("",300,300,0);
+HUMAN_SETMODE_Stand();
+SendSignal(kecac,1);
+Delay (2000);
+HUMAN_Move("ge33_01");
+HUMAN_Move("ge33_02");
+HUMAN_Move("ge33_03");
+HUMAN_Move("ge33_04");
+HUMAN_Move("ge33_05");
+HUMAN_Move("ge33_06");
+HUMAN_Move("ge33_07");
+Delay(500);
+HUMAN_WeaponOnArm(0);
+Delay(1000);
+HUMAN_SetAnim("%%turnleft",500,500,0);
+delay(2101);
+HUMAN_SetAnim("%%turnright",500,500,0);
+delay(2800);
+HUMAN_SetAnim("",500,500,0);
+HUMAN_Move("ge33_06");
+HUMAN_Move("ge33_05");
+HUMAN_Move("ge33_02");
+HUMAN_Move("ge33_01");
+HUMAN_TurnAt(cum);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedimtak",500,500,1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+label end:

@@ -1,0 +1,98 @@
+// AF3a_24 - soldier sleeping in house near the main gate
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME sit;				FRM_FindFrame(sit, "dummy_24_sit");
+  INTEGER alarmcnt	= 0;
+  INTEGER Atype		= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever near (_PlayerInRange(40)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableWhenevers(true);
+    SetWhenever(near, false);
+    alarmcnt = alarmcnt + 1;
+    HUMAN_Stop();
+    HUMAN_SetMODE_Stand();
+    HUMAN_Suspend(false);
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+  }
+  HUMAN_ACTIVITY_Smoke(false);
+
+  if(((Atype != 1) AND (Atype != 32)) AND (Atype == 64)){
+    if(alarmcnt < 2){
+      HUMAN_SETMODE_Run();
+      HUMAN_Move("AF3a_24_alert");
+      HUMAN_SetAIMODE_Zombie();
+      HUMAN_SETMODE_Crouch();
+      HUMAN_SetAlarm(false);
+      SetAlarmType(768, false);					// disable see corpse, friendly fire
+    }    
+    else{
+      HUMAN_SetMODE_Run();
+      HUMAN_SetAlarm(false);
+      HUMAN_MoveToAlarm();
+    goto END;
+    }
+  }
+EndScript();
+}
+
+OnAlarmDone(){ 
+  block{
+    SetAlarmType(1023, true);					// enable all alarms
+    SetAlarmType(768, false);					// 512, 256
+    HUMAN_SETSIGHTRANGE(80);
+    HUMAN_SetOptimized(1);
+    HUMAN_SetAlarm(false);
+    HUMAN_SETMODE_Stand();
+    HUMAN_WeaponOnArm(false);
+  }
+  HUMAN_ACTIVITY_Smoke(true);
+//  HUMAN_Move("AF3a_24_sit");
+//  HUMAN_ACTIVITY_Sit(sit);
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_Move("AF3a_24_01");
+  HUMAN_Suspend(true);
+  HUMAN_SetEvents(true);
+goto END2;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+goto END;
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(500);
+goto END;
+
+Label END2:

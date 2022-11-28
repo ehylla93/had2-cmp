@@ -1,0 +1,34 @@
+// Ridic Panzeru (La_Tiger_1) - nemel by alarmovat
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Aktivace (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_1", 1, 0);
+Delay(500);
+HUMAN_Drive("hakl_001",80);
+HUMAN_Drive("hakl_01",70);
+HUMAN_Drive("hakl_02",60);
+HUMAN_Drive("hakl_03",50);
+HUMAN_Drive("hakl_04",40);
+HUMAN_Drive("hakl_05",40);
+HUMAN_Drive("hakl_06",40);
+HUMAN_Drive("hakl_09",40);
+HUMAN_Drive("hakl_07",40);
+HUMAN_Drive("hakl_08",15);
+HUMAN_Drive("hakl_10",15);
+HUMAN_Drive("hakl_08",15);
+HUMAN_Drive("hakl_07",20);
+HUMAN_Drive("hakl_09",20);
+HUMAN_Drive("", 0);
+HUMAN_Stop();
+goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

@@ -1,0 +1,90 @@
+//AL2_36 - Officer who walks into archive when documents been taken
+
+block
+{
+SetAlarmType(1,1);		//Close shooting
+SetAlarmType(2,0);		//Enemy shots
+SetAlarmType(4,0);		//Hear steps
+SetAlarmType(8,0);		//Action sound
+SetAlarmType(16,0);		//Explosions
+SetAlarmType(32,1);		//Sighted
+SetAlarmType(64,1);		//Is injured
+SetAlarmType(128,0);	//From script
+SetAlarmType(256,0);	//Friendly shots
+SetAlarmType(512,0);	//Sights Corpse
+
+Frame alarm;	FRM_FindFrame(alarm, "AL2_alarm");
+
+integer delayx;
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Walk();
+SetWhenever("vidime", 0);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+// ------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+	DisableWhenevers(1);
+	SendSignal(alarm, 6);
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(926,0);
+HUMAN_SetAlarm(0);
+goto mode2;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+DisableWhenevers(1);
+delayx =(5000+_RandomInt(10000));
+delay (delayx);
+SendSignal(alarm, 6);
+EndScript();
+}
+
+Whenever "vidime"(_PlayerInRange(2))
+{
+HUMAN_Stop();
+goto tyy;
+}
+
+Whenever intoarchive(_SignalReceived(2))	//received from dokumenty
+{
+block
+{
+	SetWhenever("vidime", 1);
+	HUMAN_Suspend(false);
+}
+	HUMAN_Move("AL2_03_07");
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+// ------------------------------------------------------------------------------------------
+
+label tyy:
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+goto tyy;
+
+Label mode2:			// after alarm
+	HUMAN_Move("AL2_03_05");
+	HUMAN_Move("AL2_03_06");
+	HUMAN_Move("AL2_03_07");
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+
+Label end:
+SetWheneverTime("vidime", 2000);

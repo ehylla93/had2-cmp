@@ -1,0 +1,60 @@
+Block
+{
+Frame Dzone7;		FRM_FindFrame(Dzone7, "Dzone7");
+Frame me;		FRM_GetMyFrame(me);
+Frame klika;		FRM_FindFrame(klika,"klika");
+Frame D8_G01;		FRM_FindFrame(D8_G01,"D8_G01");
+Frame D8_G02;		FRM_FindFrame(D8_G02,"D8_G02");
+Frame D8_G03;		FRM_FindFrame(D8_G03,"D8_G03");
+Frame D8_G04;		FRM_FindFrame(D8_G04,"D8_G04");
+
+Frame jerome;		FRM_FindFrame(jerome,"jerome");
+Frame D6_G01;		FRM_FindFrame(D6_G01,"D6_G01");
+Frame D6_G02;		FRM_FindFrame(D6_G02,"D6_G02");
+Frame D6_G03;		FRM_FindFrame(D6_G03,"D6_G03");
+Frame D6_G04;		FRM_FindFrame(D6_G04,"D6_G04");
+
+Frame D7_G01;		FRM_FindFrame(D7_G01,"D7_G01");
+Frame D7_G02;		FRM_FindFrame(D7_G02,"D7_G02");
+Frame D7_G03;		FRM_FindFrame(D7_G03,"D7_G03");
+Frame D7_G04;		FRM_FindFrame(D7_G04,"D7_G04");
+Frame D7_G05;		FRM_FindFrame(D7_G05,"D7_G05");
+Frame D7_G06;		FRM_FindFrame(D7_G06,"D7_G06");
+
+
+
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+
+
+
+
+
+
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:

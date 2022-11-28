@@ -1,0 +1,72 @@
+// T1, 1
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype			= 0;
+  INTEGER rnd			= 0;
+  INTEGER firstalarm	= 0;
+
+  FRAME posadka1;			FRM_FindFrame(posadka1, "C5_G02");
+  FRAME posadka2;			FRM_FindFrame(posadka2, "C5_G03");
+  FRAME help;				FRM_FindFrame(help, "C5_G08");
+  Frame help2;		        FRM_FindFrame(help2,"hakle1");
+  Frame help3;		        FRM_FindFrame(help3,"hakla1");
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(help, 1);
+  SendSignal(help2, 1);
+  Delay(1000);
+  SendSignal(help3, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    HUMAN_DriveNearPlayer(40);
+    SendSignal(posadka1, 1);
+    SendSignal(posadka2, 1);
+    SendSignal(help2, 1);
+    Delay(1000);
+    SendSignal(help3, 1);
+   firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+  HUMAN_DriveNearPlayer(40);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+    SendSignal(posadka1, 1);
+    SendSignal(posadka2, 1);
+    SendSignal(help2, 1);
+    Delay(1000);
+    SendSignal(help3, 1);
+goto END;
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("La_tiger_1",  true, 0);
+goto END;
+
+Label END:

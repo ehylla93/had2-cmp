@@ -1,0 +1,170 @@
+//na alarm vybehne  a vali na roh hlidat
+//w CARNAGE INAKTIW
+
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+
+integer aievent;
+integer a;	a=0;
+integer b;	b=0;
+Integer sus;	sus=0;
+
+
+Frame vybihac_kontrol;	Frm_FindFrame(vybihac_kontrol,"vybihac_kontrol");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f054");
+
+HUMAN_SETMODE_Run();
+
+integer mrd;	mrd=(_SPGetGameType());
+}
+
+if ((mrd==3) or (mrd==7))
+{
+DisableSignals(1);
+}
+
+HUMAN_Suspend(1);
+
+goto end;
+
+//-------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+block
+{
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+aievent=(_GetAlarmType());
+PrintfNumber("vybihac2 alarm c:",aievent);
+DisableSignals(1);
+}
+
+
+
+
+if (sus==0)
+	{
+	if (_PlayerInRange(13)==1)	
+	{
+	delay (4000);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	if (_LoadGameValue(2)==1)
+	{
+	HUMAN_SETEVENTS(0);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	HUMAN_Suspend(0);
+	block
+	{
+	SendSignal (vybihac_kontrol,2);
+	sus=1;
+	}
+	}
+
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (a==0)
+{
+
+HUMAN_SetAlarm(0);
+HUMAN_Move("vybihac2_1");
+a=1;
+HUMAN_SETMODE_Crouch();
+
+HUMAN_TurnAtNearestPlayer();
+delay (900);
+SetAlarmType(274,1);
+
+}
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay (900);
+
+label slid:
+
+HUMAN_MoveRandomRadius(8);
+HUMAN_LookAround(1);
+SetAlarmType(274,1);
+delay (5000);
+goto slid;
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+label bzt:
+HUMAN_MoveRandomRadius(10);
+HUMAN_LookAround(1);
+delay (5000);
+goto bzt;
+
+goto end;
+
+}
+
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever slys(_SignalReceived(2))
+{
+//blockeri chcipli
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+}
+
+Whenever vyp(_SignalReceived(1))
+{
+HUMAN_SETEVENTS(0);
+DisableSignals(1);
+goto end;
+}
+
+Label dojdi:
+HUMAN_Move("vybihac1_1");
+HUMAN_SETMODE_Crouch();
+SetAlarmType(274,1);
+HUMAN_SetAlarm(0);
+a=1;
+
+Label end:

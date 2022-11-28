@@ -1,0 +1,45 @@
+// Sgt. Siegfried Hirsch - Jeep Driver
+// ---------------------------------------------
+
+Block
+{
+Frame Ally2;	FRM_FindFrame(Ally2, "SSgt. Gregory Dean");
+Frame Pilot;	FRM_FindFrame(Pilot, "Allied Pilot");
+Frame me;		FRM_GetMyFrame(me);
+
+FRM_SwitchFaceTexture(me,"e_f004");
+SetWhenever(Ally2Go, 0);
+
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ---------------------------------------------
+
+Whenever Coming_In (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Jeep", 1, 0);
+HUMAN_Drive("hakl_10", 80);
+Delay(3500);
+HUMAN_Drive("cutop2", 30);
+HUMAN_Drive("", 30);
+SetWhenever(Ally2Go, 1);
+goto END;
+}
+
+
+Whenever Ally2Go (_FrameInRange(Pilot) < 10)
+{
+SendSignal(Ally2, 2);
+goto END;
+}
+
+Whenever Coming_Out (_SignalReceived(2))
+{
+HUMAN_Drive("hakl_11", 60);
+HUMAN_Drive("", 60);
+goto END;
+}
+
+Label END:

@@ -1,0 +1,95 @@
+//  assigns random faces
+Block
+{
+INTEGER german_faces_count	= 14;
+
+INTEGER rnd_german	= _RandomInt(german_faces_count);
+FRAME FRM;	FRM_FindFrame(FRM, "");
+}
+
+FRM_FindFrame(FRM, "Rebel");		FRM_SwitchFaceTexture(FRM, "e_f066");
+FRM_FindFrame(FRM, "Undereground_guard_1");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Undereground_guard_2");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_mg_E04");			gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_mg_E01");			gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Gate_Guard");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Gate_Inquisitor");	gosub GERMAN_FACE;
+
+FRM_FindFrame(FRM, "see_sea_1");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "see_sea_2");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "mole_guard");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "walker_guard_1");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "walker_guard_2");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "walker_guard_3");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "walker_guard_4");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_mg_E02");			gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Plane_guard_1");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Plane_guard_2");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Roof_walker");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "udrzbar");			gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "metar");			gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Plane_guard_3");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Plane_guard_4");	gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "Trafo_Guard");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "TreeGuard_1");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "TreeGuard_2");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "TreeGuard_3");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_mg_E03");			gosub GERMAN_FACE;
+
+FRM_FindFrame(FRM, "n_E01");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E02");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E03");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E04");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E05");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E06");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E07");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E08");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E09");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E10");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E11");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E12");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E13");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_E14");		gosub GERMAN_FACE;
+
+FRM_FindFrame(FRM, "n_R01");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R02");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R03");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R04");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R05");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R06");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R07");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R08");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R09");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R10");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R11");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R12");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R13");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R14");		gosub GERMAN_FACE;
+FRM_FindFrame(FRM, "n_R15");		gosub GERMAN_FACE;
+
+Printf("Faces assigned");
+
+EndScript();
+
+
+LABEL GERMAN_FACE:
+Block
+{
+  if(rnd_german == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f021"); }
+  if(rnd_german == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f059"); }
+  if(rnd_german == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f024"); }
+  if(rnd_german == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f039"); }
+  if(rnd_german == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f042"); }
+  if(rnd_german == 5)	{  FRM_SwitchFaceTexture(FRM, "e_f043"); }
+  if(rnd_german == 6)	{  FRM_SwitchFaceTexture(FRM, "e_f045"); }
+  if(rnd_german == 7)	{  FRM_SwitchFaceTexture(FRM, "e_f051"); }
+  if(rnd_german == 8)	{  FRM_SwitchFaceTexture(FRM, "e_f052"); }
+  if(rnd_german == 9)	{  FRM_SwitchFaceTexture(FRM, "e_f053"); }
+  if(rnd_german == 10){  FRM_SwitchFaceTexture(FRM, "e_f054"); }
+  if(rnd_german == 11){  FRM_SwitchFaceTexture(FRM, "e_f055"); }
+  if(rnd_german == 12){  FRM_SwitchFaceTexture(FRM, "e_f056"); }
+  if(rnd_german == 13){  FRM_SwitchFaceTexture(FRM, "e_f057"); }
+  rnd_german = rnd_german + 1;
+  if(rnd_german == german_faces_count){ rnd_german = 0; }
+}
+return;

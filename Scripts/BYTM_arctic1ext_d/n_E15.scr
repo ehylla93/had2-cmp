@@ -1,0 +1,91 @@
+//n_E15
+//fire place
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+
+integer AIEvent;
+integer spawn;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame cc;		FRM_FindFrame(cc, "dummy_OBJ1_sender");
+frame sgv5;		FRM_FindFrame(sgv5, "m_dv_t01");
+SaveGameValue(13, 1);
+}
+
+HUMAN_Suspend(1);
+HUMAN_SetOptimized(1);
+spawn = _RandomInt(2);
+if(spawn==0)
+{ SetWhenever(PIR, false); SaveGameValue(13, 0); printf("E15 inactive"); }
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+AIEvent = _GetAlarmType();
+PrintfNumber("E15 alarm:",aievent);
+}
+If((AIEvent == 1) OR (AIEvent == 2) OR (AIEvent == 16) OR (AIEvent == 32) OR (AIEvent == 64) OR (AIEvent == 256) OR (AIEvent == 512))
+{
+	if(_LoadGameValue(5)==0)
+	{
+	FRM_MorphSpeech(MyFRM, 14992831, 15, 35);	//"Alarm!"
+	SendSignal(sgv5, 1);
+	}
+}
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+SendSignal(cc, 1);
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(80))
+{
+HUMAN_SetAnim("%%zahrivase", 10, 400, 1);	//warm himself
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

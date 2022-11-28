@@ -1,0 +1,75 @@
+// cheminer allier
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+
+
+
+Frame Detector_30;	FRM_FindFrame(Detector_30,"Detector_30");
+
+
+
+
+SetWhenever(Players811, 1);
+//^Block
+//Detector_34
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+Whenever Players811 (_MP_AllTeamMembersAreInRange(1,1000))
+{
+
+
+goto chodim;
+}
+
+label chodim:
+
+    FRM_CreateParticle(083, Detector_30);   // cheminer allier
+	Delay(10000);
+goto chodim1;
+
+
+label chodim1:	
+
+    Delay(10000);
+goto chodim;
+
+
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+//  FRM_CreateIndexedParticle(95, Frame(me), komin28);
+//^DefaultLoad
+goto END;
+
+Label END:

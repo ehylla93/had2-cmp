@@ -1,0 +1,61 @@
+// ne_tiger_E01 - Position: COMMANDER
+
+block
+{
+SetAlarmType(128,0);
+
+integer aievent;
+
+SetWhenever(PIR, 0);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+PrintfNumber("ne_tiger_E01 COMMANDER alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+SetWhenever(PIR, 0);
+printf("ne_tiger_E01 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("ne_tiger",  1, 3);
+SetWhenever(PIR, 1);
+}
+
+Whenever PIR (_PlayerInRange(12))
+{
+HUMAN_BoardVehicle("ne_tiger",  0, 3);
+HUMAN_MoveToAlarm();
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//------------------------------------------------------------------------------------------
+
+label end:

@@ -1,0 +1,106 @@
+// D1_G60 - D1 Zone Guard
+// ------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f055");
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 160))
+{
+HUMAN_Suspend(0);
+goto Watch;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label Watch:
+HUMAN_SetAnim("%%turnleft", 1000, 1000, 1);
+Delay(3200);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%dalekohled", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+Delay(20000);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 1);
+Delay(6500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%dalekohled", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+Delay(20000);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+Delay(4000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+Delay(2500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+goto Watch;
+
+
+Label END:

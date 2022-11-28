@@ -1,0 +1,38 @@
+// Speech script of Ci1 (Jozef Gabcik)
+
+Block {
+Frame ci1;		Frm_FindFrame (ci1,"Jozef Gabcik");
+SetWhenever(player,0);
+SetWhenever(player1,0);
+}
+
+Whenever player(_PlayerInRange(3))
+{
+FRM_MorphSpeech(ci1,20994052,5,40);
+delay (2000);
+SetWhenever(player1,1);
+goto end;
+}
+
+Whenever player1(!_PlayerInRange(3))
+{
+delay (10000);
+SetWhenever(player,1);
+goto end;
+}
+
+Whenever alarm(_SignalReceived(1))
+{
+SetWhenever(player,1);
+SetWhenever(player1,1);
+goto end;
+}
+
+Whenever death(_SignalReceived(2))
+{
+FRM_MorphSpeech(ci1,0,0,0);
+DisableWhenevers(1);
+goto end;
+}
+
+label end:

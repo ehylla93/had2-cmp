@@ -1,0 +1,47 @@
+block
+{
+Frame expl1;	FRM_FindFrame(expl1, "explgen");
+Frame expl2;	FRM_FindFrame(expl2, "explgen2");
+SaveGameValue(11,0);
+SetWhenever(ne,0);
+integer jeb;	jeb=0;
+}
+
+
+
+
+Whenever jo((_ACTOR_GetState(expl1)==1) and (_ACTOR_GetState(expl2)==1))
+{
+block
+{
+printf ("generatory zaminovany");
+SaveGameValue(12,1);
+SetObjectiveStatus(5, 0);
+SetObjectiveStatus(5, 1);
+SetWhenever(ne,1);
+}
+if (jeb==0)
+{
+jeb=1;
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999802);
+delay (5000);
+SUBTITLES_SetOn(0);
+}
+goto end;
+}
+
+
+Whenever ne((_ACTOR_GetState(expl1)==0) or (_ACTOR_GetState(expl2)==0))
+{
+block
+{
+printf ("generatory  NEE");
+SaveGameValue(12,0);
+SetWhenever(jo,1);
+SetObjectiveStatus(5, 4);
+}
+goto end;
+}
+
+label end:

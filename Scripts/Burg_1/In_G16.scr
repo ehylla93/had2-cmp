@@ -1,0 +1,101 @@
+// In_G16 - Chatter
+// ------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f016");
+
+Integer AIEvent;
+
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(30);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+FRM_MorphSpeech(me, 90004043, 10, 50);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(80);
+
+AIEvent = _GetAlarmType();
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+}
+
+If(((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 64) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_SETHEARRANGE(120);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+}
+
+If((((((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32)) OR (AIEvent == 64)) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+}
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 25))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%kecy2", 1000, 1000, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+
+Label END:

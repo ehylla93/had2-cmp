@@ -1,0 +1,200 @@
+// 01_G10 - Watches activity at the cottage
+// ----------------------------------------
+
+Block
+{
+Frame G01;		FRM_FindFrame(G01, "01_G01");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f010");
+
+Integer AIEvent;
+Integer AIStyle;
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 0, 0, 1);
+AIEvent = _GetAlarmType();
+AIStyle = _RandomInt(3);
+
+If (((AIEvent == 1) OR (AIEvent == 2)) OR (AIEvent == 256))
+{
+
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+}
+
+If ((AIEvent == 4) OR (AIEvent == 8))
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Silence();
+}
+
+If (AIEvent == 32)
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Lie();
+}
+
+If (AIEvent == 64)
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(G01, 20);
+HUMAN_SETMODE_Lie();
+}
+
+If (AIEvent == 512)
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Lie();
+HUMAN_SETMODE_Silence();
+}
+
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(80);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 100))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Guard();
+goto AnimLoop;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label AnimLoop:
+Delay(5000);
+HUMAN_SetAnim("%%nuda", 2000, 2000, 1);
+Delay(6500);
+HUMAN_SetAnim("%%kopkamen1", 2000, 2000, 1);
+Delay(2000);
+HUMAN_SetAnim("", 500, 500, 1);
+Delay(1000);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+Delay(4000);
+HUMAN_SetAnim("%%turnright", 2000, 2000, 1);
+Delay(2500);
+HUMAN_SetAnim("%(koureniB", 500, 500, 1);
+Delay(6500);
+HUMAN_SetAnim("", 500, 500, 1);
+Delay(1000);
+HUMAN_SetAnim("%%turnleft", 2000, 2000, 1);
+Delay(3200);
+HUMAN_SetAnim("%%nuda", 2000, 2000, 1);
+Delay(6000);
+HUMAN_SetAnim("%(koureni5", 500, 500, 1);
+Delay(3000);
+HUMAN_SetAnim("", 500, 500, 1);
+goto AnimLoop;
+
+
+Label END:

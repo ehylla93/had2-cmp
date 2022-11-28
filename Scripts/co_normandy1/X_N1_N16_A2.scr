@@ -1,0 +1,10 @@
+// N16_A2 - activator on door
+
+Block {
+Frame N16;	FRM_FindFrame(N16, "N16");
+}
+	
+OnUse()
+{
+	SendSignal(N16, 3);
+}

@@ -1,0 +1,10 @@
+// BU1_N02_chcije - pissing script
+Frame me;	FRM_GetMyFrame(me);
+Integer moc;
+
+OnSignal(1)	// received from BU1_N02
+{
+	FRM_CreateIndexedParticle(21, me, moc);
+	Delay(10000);
+	FRM_DestroyIndexedParticle(moc);
+}

@@ -1,0 +1,71 @@
+//n_T01
+//driver tank_1
+
+block
+{
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(90);
+SetAlarmType(1023, false);
+integer aievent;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame T2;		FRM_FindFrame(T2,"n_T02");
+SetWhenever(Unboard, false);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("T01 alarm:",aievent);
+}
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+OnSignal(1)
+{
+EnableSignal(1, false);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("n_tank_1", 1, 0);
+printf("tank1 incoming");
+HUMAN_Drive("tank1_1", 30);
+HUMAN_Drive("", 0);
+SendSignal(T2, 2);
+SetWhenever(Unboard, true);
+}
+
+Whenever Unboard (_PlayerInRange(8))
+{
+HUMAN_BoardVehicle("n_tank_1", 0, 0);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeech(MyFRM, 90003007, 10, 30);	//"Die!"
+SetAlarmType(1023, true);
+}
+
+label end:

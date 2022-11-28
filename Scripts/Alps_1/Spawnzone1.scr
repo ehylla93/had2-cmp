@@ -1,0 +1,32 @@
+// Spawnzone 1
+//----------------------------------------------
+
+Block
+{
+Frame G01;		FRM_FindFrame(G01,"01_G29");
+Frame G02;		FRM_FindFrame(G02,"01_G30");
+Frame G03;		FRM_FindFrame(G03,"01_G31");
+Frame G04;		FRM_FindFrame(G04,"01_G32");
+Frame G05;		FRM_FindFrame(G05,"01_G33");
+Frame G06;		FRM_FindFrame(G06,"01_G34");
+
+SetWhenever(Back, 0);
+}
+
+//----------------------------------------------
+
+Whenever Spawn_TurnOn ((((((_Actor_GetState(G01) == 0) And (_Actor_GetState(G02) == 0)) And (_Actor_GetState(G03) == 0)) And (_Actor_GetState(G04) == 0)) And (_Actor_GetState(G05) == 0)) And (_Actor_GetState(G06) == 0))
+{
+MP_EnableSpawnZone("zone5", 1);
+}
+
+Whenever Back (_PlayerInRange(30))
+{
+MP_EnableSpawnZone("zone5", 1);
+EndScript();
+}
+
+Whenever TurnBack (_SignalReceived(1))
+{
+SetWhenever(Back, 1);
+}

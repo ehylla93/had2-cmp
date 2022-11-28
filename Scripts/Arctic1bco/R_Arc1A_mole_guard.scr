@@ -1,0 +1,74 @@
+// guarded mole
+
+Block
+  {
+     integer AIEvent;	AIEvent = 99;
+     frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+     SetAlarmType(1023, True);	
+     SetAlarmType(268, False);		// 4 + 8 + 256 = False
+  }
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;						
+  Whenever A (_PlayerInRange(101);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+
+label DeAlarm:
+label loop:
+  HUMAN_Move("Mole_1");
+  delay(2500);
+  HUMAN_Move("Mole_2");
+  // HUMAN_ACTIVITY_SpotRight(800);
+  // HUMAN_ACTIVITY_SpotLeft(800);
+  delay(750);
+goto loop;
+
+OnAlarm()
+{
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("AIE Mole guard: ", AIEvent);
+  HUMAN_Stop();
+  If (AIEvent == 1) {goto AIE_1;}	// blizka strelba
+  If (AIEvent == 2) {goto AIE_2;}	// strelba
+  If (AIEvent == 16) {goto AIE_16;}	// exploze
+  If (AIEvent == 32) {goto AIE_32;}	// vidim
+  If (AIEvent == 64) {goto AIE_64;}	// zraneni
+  GOTO miss;
+Label AIE_16:		// exploze
+  goto DeAlarm;
+Label AIE_1:		// blizka strelba
+Label AIE_2:		// strelba
+Label AIE_32:		// vidim
+Label AIE_64:		// zraneni
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+label miss:
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  Goto DeAlarm;
+}
+
+OnDeath()
+{
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+Label TheEnd:

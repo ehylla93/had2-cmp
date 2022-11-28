@@ -1,0 +1,151 @@
+// chauffeur
+Block
+{
+SetAlarmType(1,0);
+SetAlarmType(2,0);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,0);
+SetAlarmType(64,0);
+SetAlarmType(128,1);   //zeskriptu
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+    FRAME this;			FRM_GetMyFrame(this);
+    FRM_SwitchFaceTexture(this, "e_f080");
+
+Frame GE_14;		FRM_FindFrame(GE_14,"GE_14");
+Frame GE_15;		FRM_FindFrame(GE_15,"GE_15");
+Frame GE_16;		FRM_FindFrame(GE_16,"GE_16");
+Frame GE_17;		FRM_FindFrame(GE_17,"GE_17");
+Frame GE_18;		FRM_FindFrame(GE_18,"GE_18");
+
+HUMAN_Suspend(true);
+Integer AIEvent;
+Frame la_Bedford_1;		FRM_FindFrame(la_Bedford_1,"la_Bedford_1");
+
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+goto END;
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(80);
+
+AIEvent = _RandomInt(1000);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+}
+
+If(((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_Reload();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 64) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+}
+
+EndScript();
+}
+
+
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SETHEARRANGE(80);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+}
+
+If((((((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32)) OR (AIEvent == 64)) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+}
+goto chodim;
+}
+
+
+
+OnSignal(10)
+{
+HUMAN_Suspend(false);
+SendSignal(GE_14, 1);
+SendSignal(GE_15, 1);
+SendSignal(GE_16, 1);
+SendSignal(GE_17, 1);
+SendSignal(GE_18, 1);
+Delay(1000);
+HUMAN_BoardVehicle("la_Bedford_1",  1, 0);
+delay(1000);
+HUMAN_Drive("A20",25);
+Delay(1000);
+HUMAN_Drive("B5",25);
+Delay(1000);
+HUMAN_Drive("B10",25);
+Delay(1000);
+HUMAN_Drive("B15",25);
+Delay(1000);
+HUMAN_Drive("Bx2x3",25);
+Delay(1000);
+HUMAN_Drive("Bx2x5",25);
+Delay(1000);
+HUMAN_Drive("", 0);
+delay(1000);
+HUMAN_BoardVehicle("la_Bedford_1",  0, 0);
+Car_SetFuel(la_Bedford_1,0);
+delay(1000);
+SetAlarmType(1023,1);
+SetAlarmType(1015,1);
+HUMAN_TurnAtNearestPlayer();
+//^allier1
+}
+goto END;
+
+
+label chodim:
+Delay(1000);
+HUMAN_Move("GE_128");
+Delay(1000);
+HUMAN_Move("GE_129a");
+goto chodim1;
+
+label chodim1:
+HUMAN_SETMODE_Walk();
+Delay(1000);
+HUMAN_Move("Ge32_5");
+Delay(1000);
+HUMAN_Move("GE_22_2"); 
+goto chodim1;
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+//^DefaultLoad
+
+
+Label END:

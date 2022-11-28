@@ -1,0 +1,122 @@
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+integer a;	a=0;
+integer x;	x=0;
+
+Frame ge27;		Frm_FindFrame (ge27,"ge_27");
+Frame ge28;		Frm_FindFrame (ge28,"ge_28");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+}
+if (x==1)
+{
+x=0;
+goto pomoc;
+}
+
+if (aievent==512)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+PlaySound(9,48);
+SendSignal (ge27,6);
+SendSignal (ge28,6);
+SetAlarmType(512,0);
+HUMAN_SetAlarm(0);
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(140,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+
+Whenever bez(_SignalReceived(1))	//detector_forge26
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(140,0);
+HUMAN_Move("ge26_01");
+HUMAN_Move("ge26_02");
+HUMAN_Move("ge26_03");		
+HUMAN_Move("ge26_04");
+goto end;
+}
+
+Whenever alarm(_SignalReceived(2))
+{
+block
+{
+a=1;
+x=1;
+SetWhenever(bez,0);
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(652,0);
+goto end;
+}
+
+label pomoc:
+SetAlarmType(274,0);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ge26_01");
+HUMAN_Move("ge26_02");
+HUMAN_Move("ge26_03");		
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("ge26_04");
+SetAlarmType(274,1);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+//-------------------------------------------------------------------------
+
+label end:

@@ -1,0 +1,17 @@
+// Obj 5 - Kill the traitor
+//---------------------------------------------
+
+Block
+{
+Frame Tr;	FRM_FindFrame(Tr, "C3_G38");
+
+SetObjectiveStatus(5, 0);
+}
+
+Whenever Traitor_Dead (_Actor_GetState(Tr)==0) 
+{
+SetObjectiveStatus(5, 1);
+GoTo end;
+}
+
+Label end:

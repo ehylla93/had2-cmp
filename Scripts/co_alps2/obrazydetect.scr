@@ -1,0 +1,27 @@
+
+Block {
+SetWhenever(njejetu, 0);
+SaveGameValue(14, 0);
+}
+
+Whenever jetu(_PlayerInRange(1))
+{
+block
+{
+SaveGameValue(14, 1);
+SetWhenever(njejetu, 1);
+}
+goto end;
+}
+
+Whenever njejetu(!_PlayerInRange(1))
+{
+block
+{
+SaveGameValue(14, 0);
+SetWhenever(jetu, 1);
+}
+goto end;
+}
+
+label end:

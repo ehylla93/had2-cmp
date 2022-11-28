@@ -1,0 +1,161 @@
+// Enemy Reinforcements
+// --------------------------------------
+
+Block
+{
+Frame Post1;	FRM_FindFrame(Post1, "01_G24");
+Frame Post3a;	FRM_FindFrame(Post3a, "01_G60");
+Frame Post3b;	FRM_FindFrame(Post3b, "01_G67");
+
+Frame Truck1;	FRM_FindFrame(Truck1, "01_G70");
+Frame Truck2;	FRM_FindFrame(Truck2, "01_G75");
+
+Frame Panzer;	FRM_FindFrame(Panzer, "T1_G81");
+Frame Tiger;	FRM_FindFrame(Tiger, "T2_G84");
+
+SetWhenever(ReinfOn, 0);
+SetWhenever(Post3_Down, 0);
+
+Integer Select;
+Integer Timer;
+}
+goto END;
+
+// ----------------------------------------
+
+Whenever Post1_Down (_Actor_GetState(Post1) == 0)
+{
+	Select = _RandomInt(4);
+	Timer = _RandomInt(3);
+	SetWhenever(Post3_Down, 1);
+	
+	If(Select == 0)
+	{
+	SendSignal(Panzer, 1);
+	}
+	
+	If(Select == 1)
+	{
+	Delay(50000);
+	SendSignal(Panzer, 1);
+	}
+	
+	If(Select == 2)
+	{
+	Delay(80000);
+	SendSignal(Panzer, 1);
+	}
+	
+	If(Select == 3)
+	{
+	Delay(120000);
+	SendSignal(Panzer, 1);
+	}
+	
+	Delay(20000);
+	
+If(Timer == 0)
+{
+	If(Select == 0)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 1);
+	}
+	
+	If(Select == 1)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 2);
+	}
+	
+	If(Select == 2)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 3);
+	}
+	
+	If(Select == 3)
+	{
+	SetWhenever(ReinfOn, 1);
+	}
+}
+
+If(Timer == 1)
+{
+	Delay(300000);
+	If(Select == 0)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 1);
+	}
+	
+	If(Select == 1)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 2);
+	}
+	
+	If(Select == 2)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 3);
+	}
+	
+	If(Select == 3)
+	{
+	SetWhenever(ReinfOn, 1);
+	}
+}
+
+If(Timer == 2)
+{
+	Delay(800000);
+	If(Select == 0)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 1);
+	}
+	
+	If(Select == 1)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 2);
+	}
+	
+	If(Select == 2)
+	{
+	SendSignal(Truck1, 1);
+	Delay(1500);
+	SendSignal(Truck2, 3);
+	}
+	
+	If(Select == 3)
+	{
+	SetWhenever(ReinfOn, 1);
+	}
+}
+}
+
+Whenever ReinfOn (_SignalReceived(1))
+{
+	SendSignal(Truck1, 4);
+	Delay(1500);
+	SendSignal(Truck2, 4);
+}
+
+Whenever Post3_Down (((_Actor_GetState(Post3a) == 0) OR (_Actor_GetState(Post3b))) OR (_PlayerInRange(70)))
+{
+SendSignal(Tiger, 1);
+SendSignal(Panzer, 1);
+SetWhenever(ReinfOn, 1);
+}
+
+Label END:

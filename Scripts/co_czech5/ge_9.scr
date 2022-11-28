@@ -1,0 +1,38 @@
+//North at the southern side of the street
+
+Frame count;	FRM_FindFrame(count, "dead_counter");
+Frame car;		FRM_FindFrame(car, "la_OpelE_4");
+
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+HUMAN_WeaponOnArm(False);
+
+OnAlarm()
+	{
+	HUMAN_SetAnim("", 0, 0, 0);
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETAIMODE_Aggressive();
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("GE_9");
+	HUMAN_TurnAt(car);
+	HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+	}
+	
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+	
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}

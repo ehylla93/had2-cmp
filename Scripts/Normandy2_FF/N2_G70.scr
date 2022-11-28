@@ -1,0 +1,70 @@
+// Kecac 2
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever player (_PlayerInRange(40))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("%%kecy1", 500, 1500, 1);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Stop();
+HUMAN_SetAnim("", 500, 1500, 1);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETAIMODE_Zombie();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

@@ -1,0 +1,76 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	AddOkno 1 - otevira si Random okno ....
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  integer AIEvent;
+  integer RND = 0;
+  frame turn;		FRM_FindFrame(turn, "dummy_AddOkno1_see");
+  frame Dvere1;	FRM_FindFrame(Dvere1, "okenice_p_07");
+  frame Dvere2;	FRM_FindFrame(Dvere2, "okenice_p_08");
+  frame Dvere3;	FRM_FindFrame(Dvere3, "okenice_p_09");
+  frame Dvere4;	FRM_FindFrame(Dvere4, "okenice_p_10");
+  frame JeTu;		FRM_FindFrame(JeTu, "dummy_detektor_okno1");
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+
+
+Whenever AKTIVACE ( _PlayerInBox(JeTu) )
+{
+  PrintfNumber("OOOKKKNNNOOO 111111111  .....", RND);
+  If (RND != 3) { goto TheEnd;}
+  HUMAN_Suspend(False);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Defensive();
+  RND = _RandomInt(2);
+  If (RND == 1) 
+  {
+    HUMAN_Move("AddOkno1_1");
+    SetActorState(Dvere1, 1);
+    SetActorState(Dvere2, 1);
+  } else {
+    HUMAN_Move("AddOkno1_2");
+    SetActorState(Dvere3, 1);
+    SetActorState(Dvere4, 1);
+  }
+  SetAlarmType(1023, True);	
+  Goto TheEnd;
+}
+SetWheneverTime(AKTIVACE, 10000);
+
+
+OnAlarm()
+{
+  Block
+   {     
+     DisableWhenevers(true);
+     AIEvent =_GetAlarmType(); 
+     PrintfNumber(" --- AddOkno 1 --- ma alarm: ", AIEvent);	
+   }
+  HUMAN_SetSniper(true, 5);
+  EndScript();
+}
+
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Stand();
+//  HUMAN_TurnAt(turn); 	// NE!
+  HUMAN_TurnAt(JeTu); 	// ale sem!
+  Goto TotalEnd;
+}
+
+label TheEnd:
+  RND = _RandomInt(3) +1;
+  Delay(10000);
+  SetWhenever(AKTIVACE, True);
+
+label TotalEnd:

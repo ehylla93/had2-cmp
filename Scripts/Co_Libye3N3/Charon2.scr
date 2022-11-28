@@ -1,0 +1,42 @@
+Frame JEEP_2;		FRM_FindFrame(JEEP_2,"JEEP_2");
+
+// JED PRO SASIKY
+EnableSignal( 1, true );
+OnSignal( 1 )
+{
+     EnableSignal( 1, false );
+	FRM_TeleportNearCheckpoint(JEEP_2, "CON", "CON_");
+	delay (12000);
+     Human_Suspend( false );
+     HUMAN_BoardVehicle( "JEEP_2",  1, 0 );
+     HUMAN_Drive(  "Charon0" ,  75 );
+     HUMAN_Drive(  "Charon1" ,  50 );
+     HUMAN_Drive(  "Charon2" ,  20 );
+     HUMAN_Drive("",0);
+    // SendSignal( hakl, 2 );
+     GoTo End;
+}
+
+
+// JED SE SASIKY ZPET
+EnableSignal( 2, true );
+OnSignal( 2 )
+{
+     EnableSignal( 2, false );
+     HUMAN_Drive(  "Charon_FINAL" ,  75 );
+     HUMAN_Drive("",0);
+     GoTo End;
+}
+
+Block
+{
+     SetAlarmType( 1023, false );
+}
+HUMAN_Suspend(true);  
+
+// ----------------------------------------------------------------------------------------------------
+Label End:
+
+
+
+ 

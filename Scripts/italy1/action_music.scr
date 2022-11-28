@@ -1,0 +1,10 @@
+FRAME this;		FRM_GetMyFrame(this);
+Frame sound3;	FRM_FindFrame(sound3, "svon001"); //music as ambient sound
+
+FRM_SetOn(sound3, 0);
+
+Whenever player (_PlayerInRange(15))
+{
+  FRM_SetOn(sound3, 1);
+EndScript();
+}

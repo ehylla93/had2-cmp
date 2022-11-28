@@ -1,0 +1,22 @@
+
+Block {
+frame Driver;		FRM_FindFrame(Driver, "Car_1");
+frame Car_2;		FRM_FindFrame(Car_2, "Car_2");
+frame Car_3;		FRM_FindFrame(Car_3, "Car_3");
+frame Car_4;		FRM_FindFrame(Car_4, "Car_4");
+frame Car_5;		FRM_FindFrame(Car_5, "Car_5");
+frame Car_6;		FRM_FindFrame(Car_6, "Car_6");
+}
+
+OnHit()
+{
+  Block
+    {
+       SendSignal(Driver, 4);
+       SendSignal(Car_2, 4);
+       SendSignal(Car_3, 4);
+       SendSignal(Car_4, 4);
+       SendSignal(Car_5, 4);
+       SendSignal(Car_6, 4);
+    }
+}

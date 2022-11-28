@@ -1,0 +1,10 @@
+Frame zlesa1;		FRM_FindFrame(zlesa1,"zlesa1");
+
+
+Whenever Detector_02(_PlayerInRange(40))
+{
+	
+	SendSignal(zlesa1,1);
+
+}
+

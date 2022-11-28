@@ -1,0 +1,123 @@
+// C5_G10 - German Panther tank crew member - Cannon
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;		FRM_GetMyFrame(me);
+Frame g05;		FRM_FindFrame(g05, "C5_G05");
+Frame g08;		FRM_FindFrame(g08, "C5_G08");
+Frame g09;		FRM_FindFrame(g09, "C5_G09");
+Frame speech;	FRM_FindFrame(speech, "C5_G09_G10_speech");
+Frame obj;		FRM_FindFrame(obj, "la_panther_");
+Integer first=0;
+
+FRM_SwitchFaceTexture(me, "e_f053");
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(2);
+}
+
+goto loop;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	if(first==0)
+	{
+	first=1;
+	SetWhenever(alarmed, false);
+	goto mount;
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from C5_G05
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_TurnAt(g05);
+	HUMAN_SetAnim("!salutovani", 500, 500, 0);
+	Delay(2500);
+	HUMAN_SetAnim("", 500, 500, 0);
+	GoTo end;
+}
+
+OnSignal(2)	// received from C5_G05
+{
+	GoTo kecy;
+}
+
+OnSignal(3)	// received from C5_G05
+{
+	HUMAN_SetAnim("!salutovani", 500, 500, 0);
+	Delay(2500);
+	HUMAN_SetAnim("", 500, 500, 0);
+	Delay(1000);
+	SendSignal(g09, 3);
+	HUMAN_TurnAt(g09);
+	GoTo loop;
+}
+
+Whenever alarmed (_SignalReceived(4))
+{
+SetWhenever(alarmed, false);
+first=1;
+goto mount;
+}
+
+OnDeath()
+{
+	SendSignal(speech, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label loop:
+	Delay(4000);
+	HUMAN_SetAnim("%%rozhovor", 200, 500, false);
+	Delay(7300);
+	HUMAN_SetAnim("%%rozhovor3", 200, 500, false);
+	Delay(11600);
+	Delay(5000);
+	HUMAN_SetAnim("%%rozhovor", 200, 500, false);
+	Delay(5400);
+	HUMAN_SetAnim("%%kecy1", 200, 500, false);
+	Delay(8600);
+GoTo loop;
+
+Label kecy:
+	HUMAN_SetAnim("%%rozhovor2", 500, 500, false);
+	Delay(10900);
+	SendSignal(g05, 3);
+GoTo end;
+
+Label mount:
+	SetAlarmType(1023, false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Run();
+	HUMAN_MoveToFrame(obj, 5);
+	HUMAN_BoardVehicle("la_panther_", 1, 2);
+	SendSignal(g08, 6);
+	SendSignal(obj, 1);
+	HUMAN_SETSIGHTRANGE(250);
+	SetAlarmType(1023, true);
+EndScript();
+
+Label end:

@@ -1,0 +1,54 @@
+// poterne_E04
+
+block
+{
+SetAlarmType(128,0);
+
+Frame talk;		FRM_FindFrame(talk, "talk_poterne_E04");
+Frame me;		FRM_GetMyFrame(me);
+Integer alarm;
+integer aievent;
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("poterne_E04 alarm:",aievent);
+HUMAN_SetAnim("", 200, 200, 0);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+SendSignal(talk, 2);
+printf("poterne_E04 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+SendSignal(talk, 1);
+alarm=_LoadGameValue(15);	//check poterne_E01
+if(alarm==0) { HUMAN_SETMODE_Silence(); }
+else { HUMAN_SETMODE_Run(); }
+HUMAN_Move("poterne_exit");
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

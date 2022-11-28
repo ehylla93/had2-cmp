@@ -1,0 +1,32 @@
+// Tank 1 Crue
+// ----------------------------------------------------------------
+
+Block
+{
+HUMAN_BoardVehicle("Tank3", 1, 1);
+SetAlarmType(1023,1);
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(90);
+HUMAN_SetOptimized(2);
+}
+goto END;
+
+//-----------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+
+Label END:

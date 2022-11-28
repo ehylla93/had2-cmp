@@ -1,0 +1,175 @@
+// Countdown of dead enemies for Respawn No. 4
+// -------------------------------------------------------
+
+Block
+{
+Frame SpZone;	FRM_FindFrame(SpZone,"Spawnzones");
+
+Frame S01;		FRM_FindFrame(S01,"F1_G69");
+Integer Sn1;		Sn1 = 1;
+Frame S02;		FRM_FindFrame(S02,"F1_G70");
+Integer Sn2;		Sn2 = 1;
+Frame S03;		FRM_FindFrame(S03,"F1_G71");
+Integer Sn3;		Sn3 = 1;
+Frame S04;		FRM_FindFrame(S04,"F1_G81");
+Integer Sn4;		Sn4 = 1;
+Frame S05;		FRM_FindFrame(S05,"F1_G82");
+Integer Sn5;		Sn5 = 1;
+Frame S06;		FRM_FindFrame(S06,"F1_G74");
+Integer Sn6;		Sn6 = 1;
+Frame S07;		FRM_FindFrame(S07,"F1_G75");
+Integer Sn7;		Sn7 = 1;
+Frame S08;		FRM_FindFrame(S08,"F1_G76");
+Integer Sn8;		Sn8 = 1;
+Frame S09;		FRM_FindFrame(S09,"F1_G77");
+Integer Sn9;		Sn9 = 1;
+
+Frame S10;		FRM_FindFrame(S10,"F1_G78");
+Integer Sn10;		Sn10 = 1;
+Frame S11;		FRM_FindFrame(S11,"F1_G79");
+Integer Sn11;		Sn11 = 1;
+Frame S12;		FRM_FindFrame(S12,"F1_G80");
+Integer Sn12;		Sn12 = 1;
+
+Integer pocitac;
+	pocitac=0;
+}
+
+
+Label Enemy_Countdown:
+
+Block
+{
+If(Sn1 == 1)
+{
+
+If(_Actor_GetState(S01)==0)
+{	
+pocitac=pocitac+1;		
+Sn1=0;	
+}	
+}
+
+If(Sn2 == 1)
+{
+
+If(_Actor_GetState(S02)==0)
+{
+pocitac=pocitac+1;
+Sn2=0;
+}
+}
+
+If(Sn3 == 1)
+{
+
+If(_Actor_GetState(S03)==0)
+{
+pocitac=pocitac+1;
+Sn3=0;
+}
+}
+
+If(Sn4 == 1)
+{
+
+If(_Actor_GetState(S04)==0)
+{
+pocitac=pocitac+1;
+Sn4=0;
+}
+}
+
+If(Sn5 == 1)
+{
+
+If(_Actor_GetState(S05)==0)
+{
+pocitac=pocitac+1;Sn5=0;
+}
+}
+
+If(Sn6 == 1)
+{
+
+If(_Actor_GetState(S06)==0)
+{
+pocitac=pocitac+1;
+Sn6=0;
+}
+}
+
+If(Sn7 == 1)
+{
+
+If(_Actor_GetState(S07)==0)
+{
+pocitac=pocitac+1;
+Sn7=0;
+}
+}
+
+If(Sn8 == 1)
+{
+
+If(_Actor_GetState(S08)==0)
+{
+pocitac=pocitac+1;
+Sn8=0;
+}
+}
+
+If(Sn9 == 1)
+{
+
+If(_Actor_GetState(S09)==0)
+{
+pocitac=pocitac+1;
+Sn9=0;
+}
+}
+
+If(Sn10 == 1)
+{
+
+If(_Actor_GetState(S10)==0)
+{
+pocitac=pocitac+1;
+Sn10=0;
+}
+}
+
+If(Sn11 == 1)
+{
+
+If(_Actor_GetState(S11)==0)
+{
+pocitac=pocitac+1;
+Sn11=0;
+}
+}
+
+If(Sn12 == 1)
+{
+
+If(_Actor_GetState(S12)==0)
+{
+pocitac=pocitac+1;
+Sn12=0;
+}
+}
+
+}
+
+If (pocitac > 8)
+{
+Delay(1000);
+SendSignal(SpZone, 4);
+pocitac=0;
+EndScript();
+}
+
+goto Enemy_Countdown;
+
+
+Label End:

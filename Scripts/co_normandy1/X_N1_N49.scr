@@ -1,0 +1,90 @@
+// N49 - soldier at the cannons going up, binoculars
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame look01;
+	FRM_FindFrame(look01, "N49_look01");
+Frame kanon01;
+	FRM_FindFrame(kanon01, "la_N_kanon_.Ucpavka01");
+Frame kanon02;
+	FRM_FindFrame(kanon02, "la_N_kanon_6.Ucpavka01");
+	
+SetAlarmType(144, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 300, 300, 0);
+	EndScript();
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever signal(_SignalReceived(1))	// received from N49_A1, A2
+{
+	SetWhenever(signal2, false);
+	HUMAN_Suspend(false);
+	GoTo action;
+}
+
+Whenever signal2(_SignalReceived(2))	// received from N49_A3, A4
+{
+	SetWhenever(signal, false);
+	HUMAN_Suspend(false);
+	GoTo action2;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f025");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label action:
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("N49_1");
+	HUMAN_Move("N49_2");
+	HUMAN_Move("N49_3");
+	Delay(300);
+	HUMAN_TurnAt(look01);
+	Delay(300);
+	HUMAN_SetAnim("%%dalekohled", 300, 300, true);
+	Delay(30000);
+	HUMAN_SetAnim("", 300, 300, 0);
+	Delay(2000);
+Label action2:
+	HUMAN_Move("N49_4");
+	Delay(300);
+	HUMAN_TurnAt(kanon01);
+	Delay(1000);
+	HUMAN_Move("N49_5");
+	Delay(300);
+	HUMAN_TurnAt(kanon02);
+	Delay(1000);
+	HUMAN_Move("N49_4");
+	GoTo action;
+
+Label end:

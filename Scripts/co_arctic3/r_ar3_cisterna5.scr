@@ -1,0 +1,16 @@
+
+Frame MyFRM;      		FRM_GetMyFrame(MyFRM);
+Frame BUUUM;      		FRM_FindFrame(BUUUM, "m_nadrz_5.EXPL00");
+
+If ( _LoadGameValue(105) == 1 ) 
+  {
+      SetActorState(MyFrm, 1); 
+      EndScript();
+   }
+
+OnDeath()
+{
+  FRM_CreateParticle(53, MyFRM);			//aktor
+  MakeExplosion(BUUUM, 2000000, 10000);
+  EndScript();
+}

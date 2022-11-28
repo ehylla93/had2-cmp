@@ -1,0 +1,70 @@
+  integer  AIEvent;
+  integer first = 0;
+
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+
+SetAlarmType(8, False);	// zvuky OnUse
+
+HUMAN_Suspend(True);	
+HUMAN_SETEVENTS(True);	
+
+Whenever SGN ( _SignalReceived(10) )
+{
+  SetWhenever(Near, false);
+  HUMAN_Suspend(False);
+  HUMAN_SETMODE_Crouch();
+}
+Whenever Near ( _PlayerInRange(20); )
+{
+  SetWhenever(SGN, false);
+  HUMAN_Suspend(False);
+  HUMAN_SETMODE_Crouch();
+}
+		
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      DisableWhenevers(True);
+      DisableSignals(True);
+      HUMAN_Suspend(False);
+      AIEvent =_GetAlarmType();
+      PrintfNumber("AntiSnniper 1: ", AIEvent);
+      HUMAN_SETMODE_Run();
+      HUMAN_SETSIGHTRANGE(150);
+      HUMAN_SETHEARRANGE(180);
+    }
+  If (first == 0) 
+    {
+       HUMAN_SETMODE_Run();
+       HUMAN_Move("AntiS2_1");
+       first = 1;
+       HUMAN_SetAlarm(False);
+       goto TheEnd;
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Run();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("AntiS3_DeAlarm");
+  goto TheEnd;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

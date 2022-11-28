@@ -1,0 +1,10 @@
+// AL2_agent_A1 - activator for AL2_Agent
+
+Block {
+Frame agent;	FRM_FindFrame(agent, "AL2_Agent");
+}
+
+Whenever player(_PlayerInRange(4))
+{
+SendSignal(agent, 1);
+}

@@ -1,0 +1,57 @@
+// Driver Panzer_IIIA it
+// ---------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+}
+// ---------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+	HUMAN_SetEvents(false);
+	SetAlarmType(1023, false);
+	GoTo move;
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+
+// ---------------------------
+
+HUMAN_BoardVehicle("Panzer_IIIA", true, 0); 
+goto END;
+
+Label move:
+	Delay(20000);
+//	HUMAN_Drive("Tank02", 12);
+//	HUMAN_Drive("Tank01", 12);
+	HUMAN_Drive("Jeep04", 12); // Jeep00
+	HUMAN_Drive("Jeep06", 12); // Jeep02
+	HUMAN_Drive("", 0);
+//	HUMAN_Drive("Jeep02", 12);
+//	HUMAN_Drive("Jeep03", 12);
+//	HUMAN_Drive("Jeep04", 12);
+//	HUMAN_Drive("Jeep05", 12);
+//	HUMAN_Drive("Jeep06", 12);
+//	HUMAN_Drive("Jeep07", 12);
+
+	GoTo end;
+
+Label END:

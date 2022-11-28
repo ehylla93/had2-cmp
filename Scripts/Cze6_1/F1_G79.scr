@@ -1,0 +1,69 @@
+// F1_G79 - F1 zone guard (Inside Bunker)
+// ----------------------------------------
+
+Block
+{
+Frame HodSem;	FRM_FindFrame(HodSem, "HodG_G79");
+Frame Officer;	FRM_FindFrame(Officer, "F1_G80");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f069");
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+FRM_MorphSpeech(me, 90004038, 20, 50);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+Whenever Spawn (_Actor_GetState(Officer)==0)
+{
+Delay(200);
+HUMAN_Suspend(0);
+HUMAN_SETMODE_StandFast();
+FRM_MorphSpeech(me, 90004022, 20, 50);
+HUMAN_Attack(HodSem, 2000);
+FRM_MorphSpeech(me, 90004029, 20, 50);
+HUMAN_SETMODE_Lie();
+HUMAN_WeaponOnArm(1);
+Delay(4500);
+FRM_MorphSpeech(me, 90004023, 20, 50);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(80);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label END:

@@ -1,0 +1,18 @@
+
+Frame zb_dok4_2;	FRM_FindFrame (zb_dok4_2,"zb_dok4_2");
+Frame zb_dok4_3;	FRM_FindFrame (zb_dok4_3,"zb_dok4_3");
+Frame zb_dok4_4;	FRM_FindFrame (zb_dok4_4,"zb_dok4_4");
+Frame zb_dok4_5;	FRM_FindFrame (zb_dok4_5,"zb_dok4_5");
+Frame O2;			FRM_FindFrame (O2,"n_O02");
+Frame E31;			FRM_FindFrame (E31,"n_E31");
+
+Whenever je(_PlayerInRange(10))
+{
+printf("Signal O2, E31");
+SendSignal (O2,1);
+SendSignal (E31,1);
+SendSignal (zb_dok4_2,1);
+SendSignal (zb_dok4_3,1);
+SendSignal (zb_dok4_4,1);
+SendSignal (zb_dok4_5,1);
+}

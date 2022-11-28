@@ -1,0 +1,69 @@
+// T2, 1
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  INTEGER firstalarm				= 0;
+
+  Frame t3;		FRM_FindFrame(t3,"C5_G08");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  delay (15000);
+  SendSignal(t3, 2);
+  EndScript();
+}
+
+OnAlarm(){
+  if(!firstalarm)
+  {
+    HUMAN_DriveNearPlayer(30);
+    firstalarm = 1;
+  }
+//  HUMAN_Stop();  
+  HUMAN_DriveNearPlayer(30);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, true);
+    HUMAN_SetAlarm(false);
+  }
+  goto END;
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(145)){
+ delay (5000);
+goto ACTIVATE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_Suspend(true);
+  goto END;
+
+Label ACTIVATE:
+  
+  HUMAN_Suspend(false);
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("panzer2e",  true, 0);
+  HUMAN_Drive("BMW_1",50);
+  HUMAN_Drive("BMW_2",50);
+  HUMAN_DriveNearPlayer(20);
+  goto END;
+
+
+Label END:

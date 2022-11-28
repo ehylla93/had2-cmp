@@ -1,0 +1,26 @@
+// this is counter of corpse and sender of enemy reinforcement
+frame OBJ;		FRM_FindFrame(OBJ, "e_ktable3" );
+Frame Mrtvoler;		FRM_FindFrame (Mrtvoler,"Mrtvoler");	//kontroluje jestli vsichni chcipli
+integer counter;		counter = 0;
+
+
+
+// vyhodnoceni ze dalsi umrel
+OnSignal(0)
+{
+  counter = counter + 1;
+  PrintfNumber("Mrtvolek je :", counter);
+  If (counter>18)
+	{
+	//SUBTITLES_SetOn(true);	
+	//SUBTITLES_SetText(20994003);
+	//Delay(4000);
+	//SUBTITLES_SetOn(false);
+	//SendSignal(OBJ,7);
+printf("Reinfo posila signal");
+	SendSignal (Mrtvoler,1);
+	}
+
+}
+
+

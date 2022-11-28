@@ -1,0 +1,11 @@
+
+Block {
+frame Naterac;		FRM_FindFrame(Naterac, "Naterac");
+}
+
+Whenever A ( _PlayerInRange(3) )
+{
+  SendSignal(Naterac, 10);
+  Delay(45000);
+  SetWhenever(A, True);
+}

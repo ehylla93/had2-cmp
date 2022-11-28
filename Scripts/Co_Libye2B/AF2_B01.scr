@@ -1,0 +1,53 @@
+// Jeep2, guerilla driver
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  frame AF2_1;	FRM_FindFrame(AF2_1, "AF2_01");
+  frame AF2_3;	FRM_FindFrame(AF2_3, "AF2_03");
+  frame AF2_4;	FRM_FindFrame(AF2_4, "AF2_04");
+  //SetAlarmType(1023, true);
+  //SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+	PlayMusic(34);
+	Delay(3500);
+	SetObjectiveStatus(1, 4);	// optional
+	SetObjectiveStatus(2, 4);	// optional
+	SetObjectiveStatus(3, 2);	// civilians
+	EndScript();
+}
+
+
+Whenever inrange ( _PlayerInRange(100))
+{
+  Delay(12000);
+  HUMAN_Drive("", 0);
+  HUMAN_BoardVehicle("Jeep2",  false, 0);
+  HUMAN_SetMODE_Crouch();
+  Delay(43000);
+  HUMAN_Attack(AF2_4, 3000);
+  HUMAN_Attack(AF2_1, 3000);
+  HUMAN_Attack(AF2_3, 3000);
+  HUMAN_Attack(AF2_4, 3000);
+  HUMAN_Attack(AF2_1, 3000);
+  HUMAN_Attack(AF2_3, 3000);
+ // SetAlarmType(1023, true);
+ // SetAlarmType(768, true);
+  goto END;
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("Jeep2",  true, 0);
+goto END;
+
+Label END:

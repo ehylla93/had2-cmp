@@ -1,0 +1,14 @@
+// OBJECTIVE Survey the underground complex
+
+block {
+integer counter = 1;
+frame OBJ3;			FRM_FindFrame(OBJ3, "dummy_KRVEPROLITI");
+}
+
+OnSignal(20)
+{
+  If (counter == 28) { SendSignal(Obj3, 8); EndScript(); }
+  Else {
+  counter = counter + 1;
+  }
+}

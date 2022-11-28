@@ -1,0 +1,24 @@
+// 05_radio
+
+Frame MyFRM;			FRM_GetMyFrame(MyFRM);
+Frame radio;			FRM_FindFrame(radio, "radio_spark");
+Frame Get_Player;
+
+Whenever PIR (_MP_IsTeamMemberInRange(1, 2))
+{
+printf("Radio damaged. Search for another! ADD SUBTITLE!");
+FRM_GetNearestPlayer(MyFRM, Get_Player);
+FRM_MorphSpeechDelayed(Get_Player, 07021450, 5, 30);		// "Damn it!"	27001012
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001013);	// "RADIO UNUSABLE. SEARCH FOR ANOTHER!"
+Delay(4000);
+SUBTITLES_SetOn(0);
+}
+
+Label loop:
+FRM_CreateParticle(72, radio);
+Delay(2500);
+goto loop;
+
+Label end:

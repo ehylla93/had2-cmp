@@ -1,0 +1,104 @@
+// AF3b_tankista01 Tiger01 Driver
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  SetAlarmType(1023, 0);
+  FRAME organizer;		FRM_FindFrame(organizer, "dummy_organizer");
+  FRAME T03;		FRM_FindFrame(T03, "AF3b_tank01_03");
+  INTEGER atpos = 0;
+  Integer speed;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//  SendSignal(organizer, 1);
+  EndScript();
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+  goto ACTIVITY1;
+}
+
+OnSignal(2){
+  HUMAN_Suspend(false);
+  goto ACTIVITY2;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_BoardVehicle("Tiger01", true, 0);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(false);
+goto END;
+
+Label ACTIVITY1:
+printf("tank1 activtiy1");
+speed = 30;
+goto DRIVE;
+
+Label ACTIVITY2:
+printf("tank1 activtiy2");
+speed = 15;
+
+Label DRIVE:
+integer a = _RandomInt(5);
+printfnumber("Integer a tank1: ", a);
+
+if(a==0)
+{
+HUMAN_Drive("tank01_01", speed);
+HUMAN_Drive("tank01_02", speed);
+HUMAN_Drive("o2_act1_03", speed);
+}
+
+if(a==1)
+{
+HUMAN_Drive("tank01_01", speed);
+HUMAN_Drive("tank01_02", speed);
+HUMAN_Drive("tank01_03", speed);
+HUMAN_Drive("tank01_03b", speed);
+}
+
+if(a==2)
+{
+HUMAN_Drive("tank01_01", speed);
+HUMAN_Drive("tank01_02", speed);
+HUMAN_Drive("tank01_03", speed);
+HUMAN_Drive("tank01_04", speed);
+HUMAN_Drive("tank01_04b", speed);
+}
+
+if(a==3)
+{
+HUMAN_Drive("tank01_07", speed);
+HUMAN_Drive("tank01_06", speed);
+HUMAN_Drive("tank01_05", speed);
+HUMAN_Drive("tank01_04b", speed);
+}
+
+if(a==4)
+{
+HUMAN_Drive("tank01_07", speed);
+HUMAN_Drive("tank01_06", speed);
+HUMAN_Drive("tank01_05", speed);
+HUMAN_Drive("tank01_04", speed);
+HUMAN_Drive("tank01_03b", speed);
+}
+
+SendSignal(T03, 2);
+HUMAN_Drive("", 0);
+
+
+Label END:

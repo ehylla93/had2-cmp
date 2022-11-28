@@ -1,0 +1,39 @@
+//Group of fuel tanks
+
+block
+{
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+integer ftd1;
+integer ftd2;
+integer ftd3;
+integer ftd4;
+
+SetObjectiveStatus(7, 4);
+}
+
+goto end;
+
+OnSignal(1)
+{
+
+}
+
+Label check:
+Block {
+ftd1=_LoadGameValue(101);
+ftd2=_LoadGameValue(102);
+ftd3=_LoadGameValue(103);
+ftd4=_LoadGameValue(104);
+}
+if((ftd1==1) and (ftd2==1) and (ftd3==1) and (ftd4==1))
+{
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(15993010);	//"OBJECTIVE COMPLETED"
+Delay(5000);
+SUBTITLES_SetOn(False);
+SetObjectiveStatus(7, 0);
+SetObjectiveStatus(7, 1);
+EndScript();
+}
+
+label end:

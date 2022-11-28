@@ -1,0 +1,49 @@
+block
+{
+Frame detect;		FRM_FindFrame (detect,"DetectZone6");
+Frame EG10;			FRM_FindFrame(EG10, "EG10");
+Frame EG14;			FRM_FindFrame(EG14, "EG14");
+Frame EH5;			FRM_FindFrame(EH5, "EH05");
+Frame EH6;			FRM_FindFrame(EH6, "EH06");
+Frame EH12;			FRM_FindFrame(EH12, "EH12");
+Frame EH17;			FRM_FindFrame(EH17, "EH17");
+Frame EG50;		FRM_FindFrame(EG50, "EG50");
+Frame EG51;		FRM_FindFrame(EG51, "EG51");
+Frame EG52;		FRM_FindFrame(EG52, "EG52");
+Frame EG53;		FRM_FindFrame(EG53, "EG53");
+Frame EG54;		FRM_FindFrame(EG54, "EG54");
+Frame EG55;		FRM_FindFrame(EG55, "EG55");
+Frame ET1;		FRM_FindFrame(ET1, "ET1");
+Frame ET2;		FRM_FindFrame(ET2, "ET2");
+Frame ET3;		FRM_FindFrame(ET3, "ET3");
+Frame EG56;		FRM_FindFrame(EG56, "EG56");
+Frame EG57;		FRM_FindFrame(EG57, "EG57");
+Frame EG60;		FRM_FindFrame(EG60, "EG60");
+}
+Whenever Yes(_PlayerInBox(detect))
+{
+sendsignal (EG10,1);
+sendsignal (EG14,1);
+sendsignal (EH5,1);
+delay(500);
+sendsignal (EH6,1);
+sendsignal (EH12,1);
+sendsignal (EH17,1);
+delay(500);
+sendsignal(EG50,1);
+sendsignal(EG51,1);
+sendsignal(EG52,1);
+sendsignal(EG57,1);
+delay(500);
+sendsignal(EG53,1);
+sendsignal(EG54,1);
+sendsignal(EG55,1);
+delay(500);
+sendsignal(ET1,1);
+sendsignal(ET2,1);
+sendsignal(ET3,1);
+sendsignal(EG56,1);
+sendsignal(EG60,1);
+goto end;
+}
+label end:

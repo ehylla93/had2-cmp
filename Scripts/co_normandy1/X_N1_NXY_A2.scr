@@ -1,0 +1,42 @@
+// NXY_A2 - activator
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition 4-8, 21
+Block
+{
+Frame N04;
+	FRM_FindFrame(N04, "N04");
+Frame N05;
+	FRM_FindFrame(N05, "N05");
+Frame N06;
+	FRM_FindFrame(N06, "N06");
+Frame N07;
+	FRM_FindFrame(N07, "N07");
+Frame N08;
+	FRM_FindFrame(N08, "N08");
+Frame N21;
+	FRM_FindFrame(N21, "N21");
+Frame N26;
+	FRM_FindFrame(N26, "N26");
+Frame N30;
+	FRM_FindFrame(N30, "N30");
+Frame N41;
+	FRM_FindFrame(N41, "N41");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever activate(_PlayerInRange(3))
+{
+	Block
+	{
+		SendSignal(N04, 10);
+		SendSignal(N05, 10);
+		SendSignal(N06, 10);
+		SendSignal(N07, 10);
+		SendSignal(N08, 10);
+		SendSignal(N21, 10);
+		SendSignal(N26, 10);
+		SendSignal(N30, 10);
+		SendSignal(N41, 2);
+	}
+}
+// -------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,118 @@
+//AL2_32 - Patrols east (downstairs)
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+
+Integer a;	a=0;
+integer aievent;
+
+frame dvere;		FRM_FindFrame(dvere,"B14_ch_29");
+Frame shotalarm;	FRM_FindFrame (shotalarm,"shotalarm");
+}
+
+HUMAN_SETMODE_Guard();
+
+label metem:
+HUMAN_Move("al232_01");
+HUMAN_Move("al232_09");
+goto metem;
+
+//-------------------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+SetWhenever(alarm,0);
+}
+HUMAN_SetAnim("",500,500,0);
+HUMAN_WeaponOnArm(1);
+	if (((aievent==2) or (aievent==16)) or (aievent==256))
+	{
+	block
+	{
+	SendSignal (shotalarm,1);
+	SetAlarmType(274,0);
+	}
+		if (a==0)
+		{
+		a=1;
+		HUMAN_Stop();
+		HUMAN_SETMODE_Stand();
+		HUMAN_SETMODE_Run();
+		HUMAN_Move("al232_02");
+		HUMAN_TurnAt(dvere);
+		HUMAN_SETMODE_Crouch();
+		SetAlarmType(12,1);
+		HUMAN_SetAlarm(0);
+		delay (500);
+		SetAlarmType(274,1);
+		}
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(0);
+	delay (900);
+	goto end;
+	}
+
+	if((aievent==8) or (aievent==4))
+	{
+	SetAlarmType(4,0);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(0);
+	delay (900);
+	SetAlarmType(4,1);
+	goto end;
+	}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(914,0);
+}
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+Whenever alarm(_SignalReceived(3))
+{
+SetAlarmType(274,0);
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Run();
+HUMAN_Move("al232_02");
+a=1;
+SetAlarmType(274,1);
+HUMAN_TurnAt(dvere);
+HUMAN_SETMODE_Crouch();
+block
+{
+a=1;
+SetAlarmType(12,1);
+}
+goto end;
+}
+
+//-------------------------------------------------------------------------------------------------------------
+
+label end:

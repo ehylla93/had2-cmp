@@ -1,0 +1,38 @@
+// BU1_14_15_speech - speech dummy for BU1_14, BU1_15
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame bu1_14;
+	FRM_FindFrame(bu1_14, "BU1_14");
+Frame bu1_15;
+	FRM_FindFrame(bu1_15, "BU1_15");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)	// signal received from BU1_14
+{
+	GoTo rozhovor;
+}
+
+OnSignal(2)	// received from BU1_14, BU1_15 on death or on alarm
+{
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(bu1_14, 12992424, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_15, 12992425, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_14, 12992426, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_14, 12992427, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_15, 12992428, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_14, 12992429, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_14, 12992430, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_14, 12992431, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_15, 12992432, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_15, 12992433, 3, 20);
+	GoTo end;
+
+Label end:

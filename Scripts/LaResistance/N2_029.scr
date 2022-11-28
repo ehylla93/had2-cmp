@@ -1,0 +1,63 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+
+FRM_SwitchFaceTexture(me,"e_f072");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Stand();
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//*CustomSection
+
+Label SpeechLoop:
+HUMAN_SetAnim("%%mluvi5", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(me, 01990247, 5, 30);
+Delay(800);
+FRM_MorphSpeechDelayed(me, 01990248, 5, 30);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(5000);
+//*SpeechLoop
+goto SpeechLoop;
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SetAnim("%%mluvi5", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+HUMAN_WeaponOnArm(0);
+//*DefaultLoad
+goto SpeechLoop;
+
+Label END:

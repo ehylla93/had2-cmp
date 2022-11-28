@@ -1,0 +1,22 @@
+// AL2_18_A1 - activator for AL2_18
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame al2_18;	FRM_FindFrame(al2_18, "AL2_18");
+SetWhenever(player, false);
+}
+
+Whenever alarm(_SignalReceived(1))	// received from AL2_alarm
+{
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(2))
+{
+	SendSignal(al2_18, 1);
+	GoTo end;
+}
+
+Label end:

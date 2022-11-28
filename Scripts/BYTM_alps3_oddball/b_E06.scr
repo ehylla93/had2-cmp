@@ -1,0 +1,80 @@
+// b_E06 - at PAK2
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 1);
+
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(40);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame PaK2;		FRM_FindFrame(PaK2, "PaK_2");
+
+Integer AIEvent;
+Integer a=0;
+
+HUMAN_SETAIMODE_Defensive();
+SetWhenever(PIR, false);
+
+// 1 	Close Shooting
+// 2 	Enemy shots
+// 4 	Hear steps (not working for clients)
+// 8 	Action sound (not working for clients)
+// 16 	Explosions (not working for clients)
+// 32 	Sighted
+// 64	is injured
+// 128	From script - don't know how it works
+// 256	Friendly shots
+// 512	Sights corpse
+
+// 1,2,32,64,256=355
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+AIEvent =_GetAlarmType();
+
+If ((AIEvent == 1) AND (AIEvent == 2) and (AIEvent == 32) and (AIEvent == 64) and (AIEvent == 256) and (a==0))
+{
+a=1;
+HUMAN_MoveToFrame(PaK2, 1);
+HUMAN_BoardVehicle("PaK_2", 1, 0);
+HUMAN_SetSniper(1, 80);
+SetWhenever(PIR, true);
+}
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+}
+
+// ------------------------------------
+
+Whenever PIR (_PlayerInRange(25))
+{
+if(a==1) { HUMAN_BoardVehicle("PaK_2", 0, 0); }
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

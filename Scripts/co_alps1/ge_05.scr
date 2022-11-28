@@ -1,0 +1,193 @@
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+//SetAlarmType(1023,0);
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+integer a;	a=8;
+integer b;	b=0;
+integer x;	x=0;
+integer ci01;	ci01=0;
+integer ci02;	ci02=0;
+
+frame c1;	Frm_FindFrame(c1,"ci_01");	
+ frame c2;	Frm_FindFrame(c2,"ci_02");
+frame c3;	Frm_FindFrame(c3,"ci_03");
+frame sit;	Frm_FindFrame(sit,"ge04sit");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+if (b==0)
+{
+b=1;
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+goto end;
+}
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+}
+goto poalarmu;
+}
+
+OnDeath()
+{
+If (Ci01==1)	{	SendSignal (c1,6);	}
+If (Ci02==1)	{	SendSignal (c2,8);	}
+SaveGameValue(25, 0);
+DisableSignals(1);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+SaveGameValue(25, 1);
+HUMAN_SETEVENTS(1);
+HUMAN_SetOptimized(1);
+SetAlarmType(12,0);
+ci01=1;
+HUMAN_Move("ge05_01");
+label dokola:
+HUMAN_Move("ge05_02");
+ci01=0;
+HUMAN_Move("ge05_03");
+ci02=1;
+HUMAN_Move("ge05_04");
+HUMAN_Move("ge05_05");
+HUMAN_Move("ge05_06");
+ci02=0;
+HUMAN_Move("ge05_07");
+gosub SMOKE;
+goto dokola;	
+}
+
+Whenever alarm(_SignalReceived(9))
+{
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+label poalarmu:
+HUMAN_SETMODE_Silence();
+
+if (a==8)	{ goto 8; }
+if (a==9)	{ goto 9; }
+if (a==10)	{ goto 10; }
+if (a==11)	{ goto 11; }
+if (a==12)	{ goto 12; }
+if (a==13)	{ goto 13; }
+if (a==14)	{ goto 14; }
+if (a==15)	{ goto 15; }
+if (a==16)	{ goto 16; }
+if (a==17)	{ goto 17; }
+goto end;
+
+label 8:
+HUMAN_Move("ge05_08");
+a=9;
+label 9:
+HUMAN_Move("ge05_09");
+
+x=_RandomInt(2);
+if(x==0)
+{
+a=10;
+label 10:
+HUMAN_Move("ge05_10");
+}
+Else
+{
+a=11;
+label 11:
+HUMAN_Move("ge05_11");
+}
+
+a=12;
+label 12:
+HUMAN_Move("ge05_12");
+a=13;
+label 13:
+HUMAN_Move("ge05_13");
+a=14;
+label 14:
+HUMAN_Move("ge05_14");
+a=15;
+label 15:
+HUMAN_Move("ge05_15");
+HUMAN_SETMODE_Walk();
+a=16;
+label 16:
+HUMAN_Move("ge05_16");
+a=17;
+label 17:
+HUMAN_Move("ge05_17");
+HUMAN_SETMODE_Crouch();
+goto end;
+
+Label SMOKE:
+Delay(4500);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 0);		//(Looking Through Pockets Then Lights Fag)
+Delay(10000);
+HUMAN_SetAnim("%%cumvoda", 1000, 1000, 0);
+Delay(5000);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 0);		//(Brings Hand Up To Smoke)
+Delay(10000);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 0);		//(Brings Hand Up To Smoke)
+Delay(10000);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 0);		//(Brings Hand Up To Smoke)
+Delay(10000);
+Return;
+
+label end:

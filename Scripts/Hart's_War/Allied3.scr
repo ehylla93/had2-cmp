@@ -1,0 +1,91 @@
+// BU2_A_Sherman02 - allied soldier, at the tank machinegun
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame Sherman;  FRM_FindFrame(Sherman, "Sherman");
+
+Frame r01; FRM_FindFrame(r01, "GE_1");
+Frame r18; FRM_FindFrame(r18, "GE_2");
+Frame r23; FRM_FindFrame(r23, "GE_3");
+Frame r27; FRM_FindFrame(r27, "GE_4");
+Frame r30; FRM_FindFrame(r30, "renfor5");
+
+Integer r01live;
+	r01live=0;
+Integer r18live;
+	r18live=0;
+Integer r23live;
+	r23live=0;
+Integer r27live;
+	r27live=0;
+Integer r30live;
+	r30live=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+HUMAN_SETEVENTS(false);
+SetAlarmType(1023, false);
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever bu2_01(_FrameInRange(r01)<30)
+{
+	SendSignal(r01, 1);
+	r01live=_ACTOR_GetState(r01);
+	{
+		HUMAN_Attack(r01, 5000);
+		GoTo end;
+	}
+	GoTo end;
+}
+
+Whenever bu2_18(_FrameInRange(r18)<30)
+{
+	SendSignal(r18, 1);
+	r18live=_ACTOR_GetState(r18);
+	{
+		printf("Sherman02: ATTACKING");
+		HUMAN_Attack(r18, 5000);
+		GoTo end;
+	}
+	GoTo end;
+}
+
+Whenever bu2_23(_FrameInRange(r23)<30)
+{
+	SendSignal(r23, 1);
+	r23live=_ACTOR_GetState(r23);
+	{
+		printf("Sherman02: ATTACKING");
+		HUMAN_Attack(r23, 5000);
+		GoTo end;
+	}
+	GoTo end;
+}
+
+Whenever bu2_27(_FrameInRange(r27)<30)
+{
+	SendSignal(r27, 1);
+	r27live=_ACTOR_GetState(r27);
+	{
+		HUMAN_Attack(r27, 5000);
+		GoTo end;
+	}
+	GoTo end;
+}
+
+Whenever bu2_30(_FrameInRange(r30)<30)
+{
+	SendSignal(r30, 1);
+	r30live=_ACTOR_GetState(r30);
+	{
+		printf("Sherman02: ATTACKING");
+		HUMAN_Attack(r30, 5000);
+		GoTo end;
+	}
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_BoardVehicle("Sherman", true, 1);
+
+Label end:

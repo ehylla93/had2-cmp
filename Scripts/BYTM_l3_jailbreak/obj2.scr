@@ -1,0 +1,42 @@
+// Objective 2 - Go unnoticed by the patrols
+// ------------------------------------
+
+Frame s_fail;	FRM_FindFrame(s_fail, "fail_obj");
+SetObjectiveStatus(2, 0);
+goto end;
+
+OnSignal(1)
+{
+DisableWhenevers(1);
+DisableSignals(1);
+}
+
+Label Check:
+if(_LoadGameValue(1)==0) {
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(11992209);	// "OBJECTIVE ACCOMPLISHED: NO ALARM RAISED."
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(2, 1);
+}
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(54999603);	// "NEW OBJECTIVE: STORM THE GERMAN CHECKPOINT"
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(1, 1);
+EndScript();
+
+Whenever Fail (_LoadGameValue(1)==1)
+{
+DisableWhenevers(1);
+FRM_SetOn(s_fail, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(00990172);	// "OBJECTIVE FAILED: YOU WERE SPOTTED BY THE GUARDS."
+Delay(3500);
+SetObjectiveStatus(2, 2);
+SUBTITLES_SetOn(0);
+}
+
+Label end:
+SetWheneverTime(Fail, 2000);

@@ -1,0 +1,14 @@
+// Weather script (snowfall)
+
+Block
+{
+	WEATHER_SetCount(1500);
+	WEATHER_SetColorOut( 56, 57, 63, 0 );
+	WEATHER_SetColorIn( 78, 52, 51, 139 );
+	WEATHER_SetSpeed(1200);	// ( == 1.2 m/s )
+	WEATHER_SetSize(200, 200);
+	WEATHER_SetSpace(15, 15);       
+	WEATHER_SetDir(10, -100, -70);
+	WEATHER_SetOn(1);
+	WEATHER_SetMode(1);
+}

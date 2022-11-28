@@ -1,0 +1,17 @@
+// BU1_most_left_detector
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Frame explosive;
+	FRM_FindFrame(explosive, "Explosive_bridge2");
+Frame most;
+	FRM_FindFrame(most, "Most_left");
+Integer state;
+	state=0;
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+// -------------------------------------------------------------------------------------------------------------
+Label getstate:
+	state=_ACTOR_GetState(explosive);
+	Delay(300);
+	If(state==2)	{	SetActorState(most, 1);	}
+	GoTo getstate;

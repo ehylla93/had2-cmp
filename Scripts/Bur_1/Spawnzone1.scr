@@ -1,0 +1,40 @@
+// Spawnzone 1 
+// ----------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"SF_G11");
+Frame S2;	FRM_FindFrame(S2,"SF_G12");
+Frame S3;	FRM_FindFrame(S3,"SF_G07");
+Frame S4;	FRM_FindFrame(S4,"SF_G08");
+Frame S5;	FRM_FindFrame(S5,"SF_G27");
+Frame Opel;	FRM_FindFrame(Opel,"Opel_01");
+Frame Bomb;	FRM_FindFrame(Bomb,"Bomb_Bridge");
+
+Car_SetFuel(Opel, 0);
+SetWhenever(Player, 0);
+}
+
+// ----------------------------------------------
+
+Whenever Player (_MP_IsTeamMemberInRange(1,30))
+{
+SetActorState(Bomb, 0);
+SetObjectiveStatus(3, 0);
+MP_EnableSpawnZone("zone4", 1);
+MP_EnableSpawnZone("zone1", 2);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(12992405);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Clear (((((_Actor_GetState(S1)==0) And (_Actor_GetState(S2)==0)) And (_Actor_GetState(S3)==0)) And (_Actor_GetState(S4)==0)) And (_Actor_GetState(S5)==0))
+{
+SetWhenever(Player, 1);
+goto END;
+}
+
+
+Label END:

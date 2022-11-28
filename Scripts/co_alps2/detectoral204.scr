@@ -1,0 +1,31 @@
+// AL2_04_A1 - activator for soldiers inside or next room with knight's armours
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame al2_04;		FRM_FindFrame(al2_04, "AL2_04");
+Frame al2_33;		FRM_FindFrame(al2_33,"al2_33");
+Frame al2_31;		FRM_FindFrame(al2_31,"al2_31");
+Frame al2_05;		FRM_FindFrame(al2_05,"al2_05");
+
+SetWhenever (alarm,0);
+}
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(al2_04, 1);
+	SendSignal(al2_33, 1);
+	SendSignal(al2_31, 5);
+	SendSignal(al2_05, 1);
+}
+
+Whenever alarm(_PlayerInRange(3))
+{
+	SendSignal(al2_04, 2);
+}
+
+Whenever alarmed(_SignalReceived(3))
+{
+SetWhenever (alarm,1);
+SetWhenever (player,0);
+}

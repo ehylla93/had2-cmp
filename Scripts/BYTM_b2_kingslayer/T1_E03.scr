@@ -1,0 +1,129 @@
+// T1_E03 - Tank_01 - Driver
+// ----------------------------------------
+
+Block
+{
+Frame Tank1;	FRM_FindFrame(Tank1, "Tank_01");
+Frame R1_E03;	FRM_FindFrame(R1_E03, "R1_E03");
+Frame R1_E04;	FRM_FindFrame(R1_E04, "R1_E04");
+Frame T01;	FRM_FindFrame(T01, "T1_E01");
+Frame T02;	FRM_FindFrame(T02, "T1_E02");
+Frame T04;	FRM_FindFrame(T04, "T1_E04");
+
+SetAlarmType(1023, 0);
+Integer Drive;
+Integer a = 0;
+Integer b = 0;
+SaveGameValue(11, 0);
+SaveGameValue(12, 0);
+}
+
+HUMAN_Suspend(1);
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(10);
+HUMAN_SetOptimized(1);
+SetWhenever(PIR, 0);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("T1_E03 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 500, 0);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(False);
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+FRM_TeleportNearCheckpoint(Tank1, "tank1_01", "tank1_02");
+HUMAN_BoardVehicle("Tank_01",  1, 0);
+HUMAN_Suspend(0);
+SendSignal(T01, 1);
+SendSignal(T02, 1);
+SendSignal(T04, 1);
+Drive = _RandomInt(50);
+
+	If (Drive < 25)
+	{
+	SaveGameValue(12, 1);
+	printf("GV12 = 1");
+	goto Drive1;
+	}
+	Else { SaveGameValue(12, 2); printf("GV12 = 2"); goto Drive2; }
+}
+	
+Label Drive1:
+	printf("Drive1");
+	HUMAN_Drive("tank1_02", 15);
+	HUMAN_Drive("tank1_03", 20);
+	SendSignal(R1_E03, 1);
+	SendSignal(R1_E04, 1);
+	HUMAN_Drive("tank1_04", 20);
+	SaveGameValue(11, 1);
+	HUMAN_Drive("", 0);
+	printf("stop Drive1 PIR now");
+	SetWhenever(PIR, 1);
+goto END;
+
+Label Drive2:
+	printf("Drive2");
+	HUMAN_Drive("tank1_02", 15);
+	HUMAN_Drive("tank1_08", 20);
+	FRM_TeleportNearCheckpoint(R1_E03, "R1_01", "");
+	FRM_TeleportNearCheckpoint(R1_E04, "R1_02", "");
+	SendSignal(R1_E03, 1);
+	SendSignal(R1_E04, 1);
+	HUMAN_Drive("tank1_07", 20);
+	SaveGameValue(11, 1);
+	HUMAN_Drive("", 0);
+	printf("stop Drive2 PIR now");
+	SetWhenever(PIR, 1);
+goto END;
+
+Whenever PIR (_MP_IsTeamMemberInRange(1, 20))
+{
+SetWhenever(PIR, 0);
+goto DriveCheck;
+}
+
+Label DriveCheck:
+a = _LoadGameValue(12);
+if(a==1)
+{
+b = _LoadGameValue(11);
+if(b==1) { HUMAN_Drive("tank1_05", 15); SaveGameValue(11, 2); SetWhenever(PIR, 1); }
+if(b==2) { HUMAN_Drive("tank1_06", 20); SaveGameValue(11, 3); SetWhenever(PIR, 1); }
+if(b==3) { HUMAN_Drive("tank1_07", 20); SaveGameValue(11, 4); SetWhenever(PIR, 1); }
+if(b==4) { HUMAN_Drive("tank1_08", 10); SaveGameValue(11, 5); SetWhenever(PIR, 1); }
+if(b==5) { HUMAN_Drive("tank1_03", 15); SaveGameValue(11, 6); SetWhenever(PIR, 1); }
+if(b==6) { HUMAN_Drive("tank1_04", 20); SaveGameValue(11, 1); SetWhenever(PIR, 1); }
+HUMAN_Drive("", 0);
+}
+else {
+b = _LoadGameValue(11);
+if(b==1) { HUMAN_Drive("tank1_06", 20); SaveGameValue(11, 2); SetWhenever(PIR, 1); }
+if(b==2) { HUMAN_Drive("tank1_05", 10); SaveGameValue(11, 3); SetWhenever(PIR, 1); }
+if(b==3) { HUMAN_Drive("tank1_04", 15); SaveGameValue(11, 4); SetWhenever(PIR, 1); }
+if(b==4) { HUMAN_Drive("tank1_03", 20); SaveGameValue(11, 5); SetWhenever(PIR, 1); }
+if(b==5) { HUMAN_Drive("tank1_08", 15); SaveGameValue(11, 6); SetWhenever(PIR, 1); }
+if(b==6) { HUMAN_Drive("tank1_07", 20); SaveGameValue(11, 1); SetWhenever(PIR, 1); }
+HUMAN_Drive("", 0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

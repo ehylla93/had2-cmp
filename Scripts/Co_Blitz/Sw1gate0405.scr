@@ -1,0 +1,54 @@
+// ----------------------Block----------------------
+Block
+{
+frame gate1;		FRM_FIndFrame(gate1,"gate04");
+frame gate2;		FRM_FIndFrame(gate2,"gate05");
+frame Sw;		FRM_FIndFrame(Sw,"Sw2gate0405");
+	DOOR_Lock(gate1, 1);
+	DOOR_Lock(gate2, 1);
+integer locked=1;
+}
+// ----------------------OnSignal----------------------
+OnSignal(1)
+{ 
+locked=1;
+}
+OnSignal(2)
+{ 
+locked=0;
+}
+// ----------------------OnUse----------------------
+OnUse()
+{ 
+if (locked == 1)
+{
+block
+{
+//printf ("open gate");
+	DOOR_Lock(gate1, 0);
+	DOOR_Lock(gate2, 0);
+	SetActorState(gate1,1);
+	SetActorState(gate2,1);
+	SendSignal (Sw,2);
+	locked = 0;
+}
+}
+else
+{
+block
+{
+	SetActorState(gate1,0);
+	SetActorState(gate2,0);
+}
+delay(4000);
+block
+{
+//printf ("bill gates");
+	DOOR_Lock(gate1, 1);
+	DOOR_Lock(gate2, 1);
+	SendSignal (Sw,1);
+	locked = 1;
+}
+}
+}
+// ----------------------End----------------------

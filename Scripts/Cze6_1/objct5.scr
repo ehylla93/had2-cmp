@@ -1,0 +1,63 @@
+// Obj 5 - Prevent the enemy from calling reinforcements
+// ---------------------------------------------------------
+
+Block
+{
+Frame Obj4;		FRM_FindFrame(Obj4,"obj4");
+Frame Obj6;		FRM_FindFrame(Obj6,"obj6");
+Frame Obj7;		FRM_FindFrame(Obj7,"obj7");
+
+Integer Obj_Count;
+		Obj_Count = 0;
+}
+
+Whenever Reinf_Fail (_SignalReceived(1))
+{
+Delay(1500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(06011206);
+Delay(3500);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(0);
+}
+
+OnSignal(2)
+{
+Obj_Count = Obj_Count + 1;
+}
+
+Whenever Obj_Update (Obj_Count > 2)
+{
+SendSignal(Obj4, 1);
+SendSignal(Obj6, 1);
+SendSignal(Obj7, 1);
+
+Delay(5000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999903);
+Delay(2500);
+SUBTITLES_SetOn(0);
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993403);
+Delay(3500);
+SUBTITLES_SetText(58999901);
+Delay(3500);
+SUBTITLES_SetText(23994601);
+Delay(3500);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Start_Mission (_PlayerInRange(1000))
+{
+Delay(14000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999703);
+Delay(3500);
+SUBTITLES_SetText(57999903);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Label END:

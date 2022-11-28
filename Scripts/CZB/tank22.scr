@@ -1,0 +1,41 @@
+// T5, 3
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd				= 0;
+
+  Frame trn;		FRM_FindFrame(trn,"MG42_Stand02");
+  Frame me;		    FRM_GetMyFrame(me);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_TurnAt(trn);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_Suspend(false);
+HUMAN_BoardVehicle("La_tiger_5",  true, 2);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_TurnAt(trn);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

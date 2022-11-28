@@ -1,0 +1,110 @@
+// Sedi u steny a keca (CO_G10)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame kamos;	FRM_FindFrame(kamos,"CO_G10");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+Integer Al;
+	Al=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+
+If(Al==0)
+{
+SendSignal(kamos, 1);
+}
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(kamos, 1);
+Al=Al+1;
+HUMAN_SetAnim("", 100, 100, 1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(false);
+HUMAN_SetAnim("%%sedimL", 100, 100, 1);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(45)){
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetOptimized(1);
+HUMAN_SETHEARRANGE(38);
+HUMAN_SETSIGHTRANGE(41);
+HUMAN_SetAnim("%%sedimL", 100, 100, 1);
+goto kecy;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label kecy:
+FRM_MorphSpeechDelayed(me, 07991515, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991516, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991517, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991518, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991519, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991520, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991521, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991522, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991523, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991524, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991525, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991526, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991527, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991528, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991529, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991530, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991531, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991532, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991533, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 07991534, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 07991535, 5, 30); // 
+Delay(10000);
+goto kecy;
+
+Label END:

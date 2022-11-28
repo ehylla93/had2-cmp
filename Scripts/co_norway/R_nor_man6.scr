@@ -1,0 +1,128 @@
+// Soldier - inside, watching at green board
+
+block
+{
+integer AIEvent;
+
+HUMAN_SETSIGHTRANGE(16);
+
+SetAlarmType(1,0);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+integer x=0;
+
+frame cum;	FRM_FindFrame(cum, "small6cum");
+}
+
+HUMAN_SetOptimized(true);
+HUMAN_Suspend(true);
+goto end;
+
+Whenever A (_PlayerInRange(60))
+{
+SetAlarmType(1023,1);
+SetAlarmType(649,0);
+HUMAN_Suspend(false);
+goto board;
+}
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+AIEvent =_GetAlarmType(); 
+}
+HUMAN_SetAnim("", 100, 100, 0);
+If ((AIEvent==64) or (AIEvent==32))
+{
+block
+{
+x=1;
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETAIMODE_Aggressive();
+}
+EndScript();
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+x=1;
+HUMAN_WeaponOnArm(1);
+SetAlarmType(274,0);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Silence();
+HUMAN_MoveToAlarm();
+SetAlarmType(274,1);
+Delay(2000);
+goto walk; 
+}
+If  (AIEvent==4)
+{
+SetAlarmType(4,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(4,1);
+HUMAN_TurnAt(cum);
+HUMAN_SetAnim("%%lenin",200,200,1);
+goto end;
+}
+HUMAN_SETAIMODE_Aggressive();
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+DisableSignals(0);
+SetAlarmType(1023,0);
+SetAlarmType(368,1);
+HUMAN_SetAlarm(0);
+}
+HUMAN_WeaponOnArm(1);
+goto walk; 
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever kokot(_SignalReceived(22))			//Sirena on
+{
+	HUMAN_SetAnim("", 100, 100, 0);
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETSIGHTRANGE(30);
+	goto walk;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+goto end;
+}
+
+Label board:
+HUMAN_Move("man6_2");
+HUMAN_SetAnim("%%lenin",200,200,1);
+goto end;
+
+label walk:
+HUMAN_SETMODE_Walk();
+HUMAN_Move("man06_x1");
+HUMAN_Move("man06_x2");
+HUMAN_Move("man06_x3");
+goto walk;
+
+label end:

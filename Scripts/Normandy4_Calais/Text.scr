@@ -1,0 +1,57 @@
+//----------------------Text----------------------
+Block
+{
+//Frame me;		FRM_GetMyFrame(me);
+//Frame obj;		FRM_FindFrame(obj,"objectives");
+}
+goto end;
+//--------------------------------------------
+OnSignal(2)
+{
+Delay(3000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993010);  //OBJECTIVE COMPLETED
+Delay(6000);
+SUBTITLES_SetOn(0);
+goto end;
+}
+//--------------------------------------------
+OnSignal(1)
+{
+Delay(3000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993010);  //OBJECTIVE COMPLETED
+Delay(6000);
+SUBTITLES_SetOn(0);
+
+Delay(7000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999902);  //NEW OBJECTIVE: ASSEMBLE AT THE PLANNED LOCATION
+Delay(10000);
+SUBTITLES_SetOn(0);
+//SendSignal(obj, 8);
+goto end;
+}
+//--------------------------------------------
+OnSignal(4)
+{
+Delay(2000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999904);  //OBJECTIVE ACCOMPLISHED: UNIT ASSEMBLED AT THE PLANNED LOCATION	
+Delay(8000);
+SUBTITLES_SetOn(0);
+goto end;
+}
+//--------------------------------------------
+OnSignal(3)
+{
+Delay(2500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);  //NEW RESPAWN ZONE AVAILABLE
+Delay(10000);
+SUBTITLES_SetOn(0);
+goto end;
+}
+//--------------------------------------------
+
+Label end:

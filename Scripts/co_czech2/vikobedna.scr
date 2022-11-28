@@ -1,0 +1,9 @@
+
+Block {
+Frame obj_zbran;	FRM_FindFrame(obj_zbran,"obj_zbran");
+}
+
+OnUse()
+{
+sendsignal (obj_zbran,1);
+}

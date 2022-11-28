@@ -1,0 +1,12 @@
+// obj4 Assemble at the planned location
+
+OnSignal(1)
+{
+Delay(8000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999702);	//NEW OBJECTIVE: ASSEMBLE AT THE PLANNED LOCATION
+delay (5000);
+SUBTITLES_SetOn(0);
+}
+
+Label end:	

@@ -1,0 +1,58 @@
+Block
+{
+Frame objectives;	FRM_FindFrame(objectives, "objectives");
+Frame Tank1;		FRM_FindFrame(Tank1,"TigerAF1");
+Frame Tank2;		FRM_FindFrame(Tank2,"TigerAF2");
+Frame Tank3;		FRM_FindFrame(Tank3,"TigerAF3");
+Frame veh1;			FRM_FindFrame(veh1,"la_hakl_Af1");
+Frame veh2;			FRM_FindFrame(veh2,"la_hakl_Af2");
+Frame veh3;			FRM_FindFrame(veh3,"la_krupp1");
+Frame veh4;			FRM_FindFrame(veh4,"la_citroen");
+Frame veh5;			FRM_FindFrame(veh5,"la_kubelAf_");
+Frame veh6;			FRM_FindFrame(veh6,"la_OpelAfK1");
+Frame veh7;			FRM_FindFrame(veh7,"Opelflak1");
+Frame veh8;			FRM_FindFrame(veh8,"bmw1");
+Integer rnd1;
+Car_SetFuel(Tank1, 0);
+Car_SetFuel(Tank2, 0);
+Car_SetFuel(Tank3, 0);
+Car_SetFuel(veh1, 0);
+Car_SetFuel(veh2, 0);
+Car_SetFuel(veh3, 0);
+Car_SetFuel(veh4, 0);
+Car_SetFuel(veh5, 0);
+Car_SetFuel(veh6, 0);
+Car_SetFuel(veh7, 0);
+Car_SetFuel(veh8, 0);
+}
+//3,4,5,6,8
+
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(Tank1, 100);}
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(Tank2, 100);}
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(Tank3, 100);}
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(veh3, 100);}
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(veh4, 100);}
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(veh5, 100);}
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(veh6, 100);}
+gosub RndFuel;
+	if (rnd1==1) {Car_SetFuel(veh8, 100);}
+printf ("Set Fuel done!");
+goto END;
+Label RndFuel:
+rnd1=(_randomint(3)+1);
+return;
+
+Whenever objdone (((((_Actor_GetState(Tank1)==0) And (_Actor_GetState(Tank2)==0)) And (_Actor_GetState(Tank3)==0)) And (_Actor_GetState(veh1)==0)) And (_Actor_GetState(veh2)==0))
+{
+SendSignal(objectives, 7);
+goto END;
+}
+
+label END:

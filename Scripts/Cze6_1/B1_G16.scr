@@ -1,0 +1,118 @@
+// B1_G16 - Patrol at B1 Krupp Protze
+// ----------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1,"Cp_G16_X");
+Frame Cp2;		FRM_FindFrame(Cp2,"B1_G15");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f066");
+
+Integer AIEvent;
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+
+AIEvent = _GetAlarmType();
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+}
+
+If(((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32))
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+}
+
+If(((AIEvent == 64) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+}
+
+FRM_MorphSpeech(me, 90004027, 10, 80);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_SETHEARRANGE(100);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+}
+
+If((((((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32)) OR (AIEvent == 64)) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+}
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 160))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Guard();
+goto WatchPatrol;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label WatchPatrol:
+HUMAN_MoveToFrame(Cp1, 0);
+Delay(200);
+HUMAN_SetAnim("%%turnleft", 1000, 1000, 1);
+Delay(3500);
+HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+Delay(3200);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(Cp2, 3);
+HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+Delay(3500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(2000);
+goto WatchPatrol;
+
+
+Label END:

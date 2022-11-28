@@ -1,0 +1,46 @@
+// reinf3 - North
+
+block
+{
+frame R01;		FRM_FindFrame(R01, "R3_E01");
+frame R02;		FRM_FindFrame(R02, "R3_E02");
+frame R03;		FRM_FindFrame(R03, "R3_E03");
+frame R04;		FRM_FindFrame(R04, "R3_E04");
+frame R05;		FRM_FindFrame(R05, "R3_E05");
+frame R06;		FRM_FindFrame(R06, "R3_E06");
+frame R07;		FRM_FindFrame(R07, "R3_E07");
+frame R08;		FRM_FindFrame(R08, "R3_E08");
+
+frame S01;		FRM_FindFrame(S01, "R3_S01");
+frame S02;		FRM_FindFrame(S02, "R3_S02");
+
+frame text;		FRM_FindFrame(text, "text_1");
+
+Integer a;
+}
+
+goto end;
+
+OnSignal(1)		//received from bourelly_E11, pension_C01
+{
+EnableSignal(1, 0);
+//SendSignal(text, 1);
+Block {
+SendSignal(R01, 1);SendSignal(R02, 1);SendSignal(R03, 1);SendSignal(R04, 1);
+SendSignal(R05, 1);SendSignal(R06, 1);SendSignal(R07, 1);SendSignal(R08, 1);
+}
+gosub SNIPER;
+EndScript();
+}
+
+Label SNIPER:
+//a = _RandomInt(3);
+//if(a==0) { SendSignal(S01, 1); }
+//if(a==1) { SendSignal(S01, 2); }
+//if(a==2) { SendSignal(S01, 3); }
+a = _RandomInt(2);
+if(a==0) { SendSignal(S02, 1); }
+if(a==1) { SendSignal(S02, 2); }
+Return;
+
+Label end:

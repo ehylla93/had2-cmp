@@ -1,0 +1,40 @@
+Frame retez;
+	FRM_GetMyFrame(retez);
+Frame pike;
+	FRM_FindFrame(pike,"zavora1.Cylinder01");
+
+
+
+
+FRM_SetShifting(retez, 0,false);
+
+
+
+
+Label shifting:
+Block
+{	
+	If(_ACTOR_GetState(pike)==2)
+	{
+		FRM_SetShifting(retez, 1,false);
+	}
+	else
+	{
+		If(_ACTOR_GetState(pike)==3)
+		{
+			FRM_SetShifting(retez, 1,true);
+		}
+		else
+		{
+			FRM_SetShifting(retez, false,true);
+		}
+	}
+
+}
+
+
+
+
+
+
+goto shifting;	

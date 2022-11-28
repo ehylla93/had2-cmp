@@ -1,0 +1,60 @@
+// posila_sklad01
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Integer walkcounter;
+	walkcounter=0;
+
+FRM_SwitchFaceTexture(me, "e_f055");
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Walk();
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Whenever signal(_SignalReceived(1))	// received from Ge_6
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("skladnik1_01");
+	HUMAN_Move("skladnik1_02");
+	HUMAN_Move("skladnik1_03");
+	HUMAN_LookAround(4);
+	GoTo hlidka;
+}
+
+Label hlidka:
+	HUMAN_Move("skladnik1_04");
+	Delay(1000);
+	HUMAN_Move("skladnik1_05");
+	Delay(1000);
+	walkcounter=walkcounter+1;
+	If(walkcounter==20)
+	{
+		HUMAN_SETMODE_Guard();
+		HUMAN_LookAround(3);
+	}
+	GoTo hlidka;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	walkcounter=0;
+	HUMAN_SETMODE_Walk();
+	HUMAN_LookAround(4);
+	HUMAN_SetOptimized(1);
+	}
+	GoTo hlidka;
+}
+
+Label end:

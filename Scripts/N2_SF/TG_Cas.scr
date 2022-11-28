@@ -1,0 +1,32 @@
+// Casovac Tigra (La_tiger_1)
+//-------------------------------------------------------------------
+
+Block
+{
+Frame Ridic;		FRM_FindFrame(Ridic,"BR_G14");
+Frame Kulometcik;	FRM_FindFrame(Kulometcik,"BR_G15");
+Frame Kanoner;		FRM_FindFrame(Kanoner,"BR_G16");
+}
+
+//-------------------------------------------------------------------
+
+Whenever TurnOn (_Signalreceived(1))
+{
+Delay(6500);
+SendSignal(Kanoner, 2);
+Delay(3500);
+SendSignal(Kulometcik, 2);
+Delay(2000);
+SendSignal(Ridic, 2);
+goto END;
+}
+
+Whenever Tiger (_Signalreceived(2))
+{
+Delay(8500);
+SendSignal(Ridic, 3);
+goto END;
+}
+
+
+Label END:

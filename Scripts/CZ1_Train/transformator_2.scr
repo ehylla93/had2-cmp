@@ -1,0 +1,32 @@
+// random valuables spawn
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame gold;		FRM_FindFrame(gold, "the_stolen_gold_boxes");
+Frame aa;	 	FRM_FindFrame(aa, "dummy_LPa");
+Frame bb;	 	FRM_FindFrame(bb, "dummy_LPb");
+Frame cc;	 	FRM_FindFrame(cc, "dummy_LPc");
+Frame dd;	 	FRM_FindFrame(dd, "dummy_LPd");
+Frame ee;	 	FRM_FindFrame(ee, "dummy_LPe");
+
+Integer Arcade;
+	Arcade =_RandomInt(5);
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(2000);
+goto random;
+
+Label random:
+If(Arcade == 0){  FRM_TeleportNearFrame(gold, aa, true);}
+If(Arcade == 1){  FRM_TeleportNearFrame(gold, bb, true);}
+If(Arcade == 2){  FRM_TeleportNearFrame(gold, cc, true);}
+If(Arcade == 3){  FRM_TeleportNearFrame(gold, dd, true);}
+If(Arcade == 4){  FRM_TeleportNearFrame(gold, ee, true);}
+If(Arcade == 5){  FRM_TeleportNearFrame(gold, cc, true);}
+goto END;
+
+Label END:

@@ -1,0 +1,71 @@
+// reinf4_2 - triggers SdKfZ and tiger tank
+// -----------------------------------------------------
+
+
+
+Frame tiger_d;	FRM_FindFrame(tiger_d, "01_tiger_01_01");
+Frame SdKfZ1;	FRM_FindFrame(SdKfZ1, "01_SdKfz251_01");
+Frame SdKfZ2;	FRM_FindFrame(SdKfZ2, "01_SdKfz251_02");
+
+Integer time;
+Integer a;		// Random integer
+Integer b;		// Signal sent to Tiger tank
+Integer c;
+SaveGameValue(6, 0);
+SaveGameValue(7, 0);
+goto end;
+
+// -----------------------------------------------------
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+a = _RandomInt(100);
+if(a<33) { b=1; SaveGameValue(7, 1); }
+	else {
+	if(a>66) { b=2; SaveGameValue(7, 2); }
+	else { b=3; SaveGameValue(7, 3); }
+	}
+printfnumber("R4 tank signal", b);
+a = _RandomInt(100);
+if(a<33) { SaveGameValue(6, 1); c=_LoadGameValue(6); printfnumber("SaveGameValue 6: ", c); goto Setup1; }
+	else {
+	if(a>66) { SaveGameValue(6, 2); c=_LoadGameValue(6); printfnumber("SaveGameValue 6: ", c); goto Setup2; }
+	else { SaveGameValue(6, 3); c=_LoadGameValue(6); printfnumber("SaveGameValue 6: ", c); goto Setup3; }
+	}
+}
+
+Label Setup1:
+printf("R4 setup1");
+SendSignal(tiger_d, b);
+time = _RandomInt(12000) + 30000;
+Delay(time);
+SendSignal(SdKfZ1, 1);
+time = _RandomInt(10000) + 10000;
+Delay(time);
+SendSignal(SdKfZ2, 1);
+EndScript();
+
+Label Setup2:
+printf("R4 setup2");
+SendSignal(SdKfZ1, 1);
+time = _RandomInt(20000) + 5000;
+Delay(time);
+SendSignal(SdKfZ2, 1);
+time = _RandomInt(20000) + 30000;
+Delay(time);
+SendSignal(tiger_d, b);
+EndScript();
+
+Label Setup3:
+printf("R4 setup3");
+SendSignal(tiger_d, b);
+time = _RandomInt(10000) + 15000;
+Delay(time);
+SendSignal(SdKfZ2, 1);
+time = _RandomInt(10000) + 10000;
+Delay(time);
+SendSignal(SdKfZ1, 1);
+EndScript();
+
+Label end:

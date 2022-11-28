@@ -1,0 +1,19 @@
+// BU2_ugxplo09 - underground explosion effect
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame ugxplo09;	FRM_GetMyFrame(ugxplo09);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever detector(_SignalReceived(1))	// received from ugxplo09trig
+{
+	SetActorState(ugxplo09, 1);
+	//MakeExplosion(ugxplo09, 0, 3000);
+	SetWhenever(detector, true);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Label end:

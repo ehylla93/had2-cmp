@@ -1,0 +1,84 @@
+// X_N1_kanon01xplo - cannon explosions
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame uzaver;	FRM_FindFrame(uzaver, "la_N_kanon_10.Ucpavka01");
+Frame N32;		FRM_FindFrame(N32, "N32");
+Frame N31;		FRM_FindFrame(N31, "N31");
+Integer random = 0;
+Frame zvuk1;	FRM_FindFrame(zvuk1, "s_fire_nad1");
+Frame zvuk2;	FRM_FindFrame(zvuk2, "s_mech1");
+Frame zvuk3;	FRM_FindFrame(zvuk3, "s_echo1");
+Frame zvuk4;	FRM_FindFrame(zvuk4, "s_fire_pod1");
+Frame zvuk5;	FRM_FindFrame(zvuk5, "s_fire_int");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(2)	// received from N32 (nabijac)
+{
+	GoTo goN32;
+}
+
+OnSignal(3)	// received from N31 (strelec)
+{
+	GoTo goN31;
+}
+
+OnSignal(4)	// received from N32 (nabijac)
+{
+	FRM_RotateY(uzaver, -130, 130);
+	GoTo end;
+}
+
+OnSignal(5)	// received from N_kanon01obj, N31
+{
+	GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label shoot:
+		random=_RandomInt(15000);
+		random=random+15000;
+	Block
+	{
+	FRM_SetOn(zvuk1, true);
+	FRM_SetOn(zvuk2, true);
+	FRM_SetOn(zvuk3, true);
+	FRM_SetOn(zvuk4, true);
+	FRM_SetOn(zvuk5, true);
+
+	FRM_CreateParticle(80, me);
+	MakeExplosion(me, 0, 10000);
+	}
+	Delay(random);
+	GoTo shoot;
+
+Label goN32:
+	FRM_RotateY(uzaver, 130, 250);	// uzavriet uzaver
+	Delay(1000);
+	SendSignal(N31, 2);
+	GoTo end;
+
+Label goN31:
+	Block
+	{
+	FRM_SetOn(zvuk1, true);
+	FRM_SetOn(zvuk2, true);
+	FRM_SetOn(zvuk3, true);
+	FRM_SetOn(zvuk4, true);
+	FRM_SetOn(zvuk5, true);
+
+	FRM_CreateParticle(80, me);
+	MakeExplosion(me, 0, 10000);
+	}
+	SendSignal(N32, 3);
+	SendSignal(N31, 3);
+	GoTo end;
+
+Label end:

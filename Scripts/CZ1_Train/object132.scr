@@ -1,0 +1,52 @@
+// object132 - lightmap switching
+Integer stav;
+	stav=0;
+Frame me;
+	FRM_GetMyFrame(me);
+
+OnSignal(1)	// received from transformator_1
+{
+	If(stav==0)
+	{
+		FRM_SetLightMap(me, 1);
+		stav=1;
+		GoTo end;
+	}
+	If(stav==3)
+	{
+
+		FRM_SetLightMap(me, 2);
+		stav=2;
+		GoTo end;
+	}
+}
+
+OnSignal(2)	// received from svetlo30
+{
+	If(stav==0)
+	{
+		FRM_SetLightMap(me, 3);
+		stav=3;
+		GoTo end;
+	}
+	If(stav==1)
+	{
+		FRM_SetLightMap(me, 2);
+		stav=2;
+		GoTo end;
+	}
+	If(stav==2)
+	{
+		FRM_SetLightMap(me, 1);
+		stav=1;
+		GoTo end;
+	}
+	If(stav==3)
+	{
+		FRM_SetLightMap(me, 0);
+		stav=0;
+		GoTo end;
+	}
+}
+
+Label end:

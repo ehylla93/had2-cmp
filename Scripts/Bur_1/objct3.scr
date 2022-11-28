@@ -1,0 +1,20 @@
+// Obj 3 - Destroy the Bridge
+// ----------------------------------
+
+Block
+{
+Frame Obj4;	FRM_FindFrame(Obj4,"obj4");
+}
+
+// ----------------------------------
+
+Whenever Bridge_Down (_SignalReceived(1))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(12992417);
+SetObjectiveStatus(3, 1);
+Delay(4000);
+SendSignal(Obj4, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

@@ -1,0 +1,49 @@
+// Jeep1, guerilla gunner
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  frame AF2_1;	FRM_FindFrame(AF2_1, "AF2_01");
+  frame AF2_3;	FRM_FindFrame(AF2_3, "AF2_03");
+  frame AF2_4;	FRM_FindFrame(AF2_4, "AF2_04");
+//  SetAlarmType(1023, true);
+//  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inrange ( _PlayerInRange(100))
+{
+  Delay(16500);
+  HUMAN_BoardVehicle("Jeep1",  false, 1);
+  HUMAN_SetMODE_Crouch();
+  Delay(45000);
+  HUMAN_Attack(AF2_1, 3000);
+  HUMAN_Attack(AF2_3, 3000);
+  HUMAN_Attack(AF2_4, 3000);
+  HUMAN_Attack(AF2_1, 3000);
+  HUMAN_Attack(AF2_3, 3000);
+  HUMAN_Attack(AF2_4, 3000);
+ // SetAlarmType(1023, true);
+ // SetAlarmType(768, true);
+  goto END;
+}
+
+
+OnDeath()
+{
+	PlayMusic(34);
+	Delay(3500);
+	SetObjectiveStatus(1, 4);	// optional
+	SetObjectiveStatus(2, 4);	// optional
+	SetObjectiveStatus(3, 2);	// civilians
+	EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("Jeep1",  true, 1);
+goto END;
+
+Label END:

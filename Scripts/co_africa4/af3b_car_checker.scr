@@ -1,0 +1,39 @@
+// AF3a_car_checker - detects whether some car is usable
+// -------------------------------------------------------------------------------------------------------------
+
+Block {
+FRAME T1;		FRM_FindFrame(T1, "Opel01");
+FRAME T2;		FRM_FindFrame(T2, "La_OpelAf2");
+
+SetWhenever(destroyed1, 0);
+}
+
+Whenever destroyed1 ((_Actor_GetState(T1) == 0) AND (_Actor_GetState(T2) == 0))
+{
+goto PROTECT_DAMAGED_CAR_FAILED;
+}
+
+Whenever destroyed2 (_Actor_GetState(T2) == 0)
+{
+goto PROTECT_DAMAGED_CAR_FAILED;
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+SetWhenever(destroyed2, 0);
+SetWhenever(destroyed1, 1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+goto END;
+
+Label PROTECT_DAMAGED_CAR_FAILED:
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(11992212);	//"Objective failed"
+Delay(4000);
+SUBTITLES_SetOn(false);
+SetObjectiveStatus(2, 3);
+
+Label END:

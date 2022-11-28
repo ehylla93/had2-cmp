@@ -1,0 +1,67 @@
+// Sgt. Siegfried Hirsch - Prisoner (Obj 1)
+// ---------------------------------------------
+
+Block
+{
+Frame Truck1;	FRM_FindFrame(Truck1,"S02_Bedford_01");
+Frame me;		FRM_GetMyFrame(me);
+Frame Player;
+
+Integer Odchazime;
+		Odchazime = 0;
+
+FRM_SwitchFaceTexture(me,"e_f0018");
+
+DisableAlarms(1);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ---------------------------------------------
+
+OnDeath(){
+goto END;
+}
+
+Whenever Player_Is_Close (_PlayerInRange(15))
+{
+HUMAN_Suspend(0);
+Delay(200);
+HUMAN_SetAnim("%%kucasedi", 1000, 1000, 1);
+goto END;
+}
+
+Whenever Player_Is_Rescuing (_SignalReceived(2))
+{
+Delay(3500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(200);
+HUMAN_SETMODE_Run();
+Delay(4800);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Stand();
+Odchazime = 1;
+goto Jdem;
+}
+
+Whenever Boarding_Truck (_FrameInRange(Truck1) < 10)
+{
+HUMAN_MoveToFrame(Truck1, 2);
+HUMAN_BoardVehicle("S02_Bedford_01", 1, 4);
+goto END;
+}
+
+
+Label Jdem:
+If(Odchazime == 1)
+{
+FRM_GetNearestPlayer(me, Player);
+HUMAN_MoveToFrame(Player, 0);
+}
+goto Jdem;
+
+
+Label END:
+

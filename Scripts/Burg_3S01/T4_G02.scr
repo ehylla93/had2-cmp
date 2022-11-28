@@ -1,0 +1,55 @@
+// T4_G02
+// ------------------------------------------------------
+
+Block
+{
+Frame G01;		FRM_FindFrame(G01, "SB_G10");
+
+SetAlarmType(867,0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("SF_Tiger_01", 1, 3);
+}
+
+Whenever Spawn (_Actor_GetState(G01) == 0)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("SF_Tiger_01", 1, 2);
+HUMAN_SETSIGHTRANGE(85);
+HUMAN_SETHEARRANGE(40);
+SetAlarmType(867,1);
+goto END;
+}
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+
+If(!_PlayerInRange(50))
+{
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETAIMODE_Defensive();
+}
+
+Else
+{
+HUMAN_SETAIMODE_Aggressive();
+}
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

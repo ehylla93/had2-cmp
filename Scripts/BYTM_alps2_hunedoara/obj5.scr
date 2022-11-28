@@ -1,0 +1,60 @@
+// Obj 5 - Assemble at the extraction zone
+// ------------------------------------
+
+Block
+{
+Frame Reinf;	FRM_FindFrame(Reinf, "Reinforcements");
+
+Integer Obj_Done;
+	Obj_Done=0;
+}
+
+SetObjectiveStatus(5, 4);
+SetObjectiveStatus(6, 0);
+SetWhenever(Players, 0);
+
+goto END;
+
+// ----------------------------------
+
+Whenever Players (_MP_AllTeamMembersAreInRange(1,4))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993608);		//"OBJECTIVE COMPLETED: SQUAD ASSEMBLED IN THE EXTRACTION ZONE."
+Delay(3500);
+SUBTITLES_SetOn(0);
+Delay(3000);
+SetObjectiveStatus(5, 1);
+SetObjectiveStatus(6, 1);
+EndScript();
+}
+
+OnSignal(2)
+{
+Obj_Done=Obj_Done-1;
+SetObjectiveStatus(5, 4);
+SetWhenever(Players, 0);
+goto END;
+}
+
+OnSignal(1)
+{
+Obj_Done=Obj_Done+1;
+
+If(Obj_Done > 3)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993607);	//"NEW OBJECTIVE: ASSEMBLE YOUR SQUAD IN THE EXTRACTION ZONE."
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(5, 0);
+SetWhenever(Players, 1);
+SendSignal(Reinf, 2);
+}
+
+goto END;
+}
+
+// ----------------------------------
+
+Label END:

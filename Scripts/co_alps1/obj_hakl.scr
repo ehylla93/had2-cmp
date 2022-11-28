@@ -1,0 +1,36 @@
+block
+{
+Frame ge_12;	FRM_FindFrame(ge_12, "ge_12");
+Frame ge_13;	FRM_FindFrame(ge_13, "ge_13");
+Frame ge_14;	FRM_FindFrame(ge_14, "ge_14");
+Frame ge_15;	FRM_FindFrame(ge_15, "ge_15");
+Frame hakl;		FRM_FindFrame(hakl, "hakl");
+frame spawn;	FRM_FindFrame(spawn,"spawnzones");
+
+SaveGameValue(66, 0);
+integer x;
+
+SetObjectiveStatus(5, 4);
+
+SetWhenever(dead, false);
+}
+
+Whenever bzzz(_SignalReceived(1))
+{
+SetWhenever(dead, true);
+}
+
+Whenever dead (((((_ACTOR_GetState(hakl)==0) AND (_ACTOR_GetState(ge_12)==0))
+ AND (_ACTOR_GetState(ge_13)==0)) AND (_ACTOR_GetState(ge_14)==0)) AND (_ACTOR_GetState(ge_15)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(14992886);		//"OPTIONAL OBJECTIVE COMPLETED: GERMAN ARMOURED VEHICLE DESTROYED"			
+SetObjectiveStatus(5, 1);
+delay (4000);
+SUBTITLES_SetOn(0);
+SaveGameValue(66, 1);
+SendSignal(spawn, 1);
+EndScript();
+}
+
+label end:

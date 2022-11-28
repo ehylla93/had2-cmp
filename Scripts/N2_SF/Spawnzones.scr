@@ -1,0 +1,69 @@
+// Spawnzones 
+// ----------------------------------------------
+
+Block
+{
+Frame B01;	FRM_FindFrame(B01,"SSgt. Gregory Dean");
+Frame B02;	FRM_FindFrame(B02,"Sgt. Kevin Turner");
+Frame B03;	FRM_FindFrame(B03,"Sgt. Larry Smith");
+Frame B04;	FRM_FindFrame(B04,"Sgt. Siegfried Hirsch");
+Frame B05;	FRM_FindFrame(B05,"Pte. Andrew Harris");
+Frame B06;	FRM_FindFrame(B06,"Pte. Roger Jenkins");
+Frame B07;	FRM_FindFrame(B07,"Cpl. David Foreman");
+Frame B08;	FRM_FindFrame(B08,"Cpl. Frederick Mallory");
+Frame B09;	FRM_FindFrame(B09,"Cpl. George Burton");
+Frame B10;	FRM_FindFrame(B10,"Cpl. Herbert Bennett");
+Frame B11;	FRM_FindFrame(B11,"Cpl. John Glesby");
+Frame B12;	FRM_FindFrame(B12,"Pte. Patrick Mullholland");
+Frame B13;	FRM_FindFrame(B13,"Cpl. Arthur Muncie");
+Frame B14;	FRM_FindFrame(B14,"Cpl. Daniel O'Sullivan");
+Frame B15;	FRM_FindFrame(B15,"Cpl. Simon Finch");
+Frame B16;	FRM_FindFrame(B16,"Cpl. William Broadhurst");
+Frame B17;	FRM_FindFrame(B17,"Sgt. Julian Cunningham");
+
+SetWhenever(Player, 0);
+}
+
+// -----------------------------------------------
+
+Whenever Mission_Start (_SignalReceived(1))
+{
+MP_EnableSpawnZone("zone5", 1);
+goto End;
+}
+
+Whenever Enable_Respawn (_SignalReceived(2))
+{
+SetWhenever(Player, 1);
+goto END;
+}
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 10))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone3", 1);
+Delay(5000);
+SUBTITLES_SetOn(0);
+SendSignal(B01, 9);
+SendSignal(B02, 9);
+SendSignal(B03, 9);
+SendSignal(B04, 9);
+SendSignal(B05, 9);
+SendSignal(B06, 9);
+SendSignal(B07, 9);
+SendSignal(B08, 9);
+SendSignal(B09, 9);
+SendSignal(B10, 9);
+SendSignal(B11, 9);
+SendSignal(B12, 9);
+SendSignal(B13, 9);
+SendSignal(B14, 9);
+SendSignal(B15, 9);
+SendSignal(B16, 9);
+SendSignal(B17, 9);
+goto End;
+}
+
+
+Label End:

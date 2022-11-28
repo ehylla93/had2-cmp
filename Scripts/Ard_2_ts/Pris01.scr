@@ -1,0 +1,35 @@
+// Prisoner 3
+//---------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+FRM_SwitchFaceTexture(me,"e_f035");
+}
+
+OnDeath(){
+SetObjectiveStatus(5, 2);
+EndScript();
+}
+
+Whenever Player (_PlayerInRange(2))
+{
+HUMAN_SetAnim("", 1000,1000,1);
+Delay(300);
+HUMAN_SETMODE_Stand();
+Delay(200);
+SUBTITLES_SetOn(1);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 17993424, 5, 30);
+goto END;
+}
+
+Delay(500);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%KUCASEDI", 1000,1000,1);
+HUMAN_SetOptimized(1);
+GoTo end;
+
+
+Label end:

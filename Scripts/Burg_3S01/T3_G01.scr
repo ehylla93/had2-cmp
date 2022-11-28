@@ -1,0 +1,32 @@
+// T3_G01
+// ----------------------------------------
+
+Block
+{
+HUMAN_BoardVehicle("SF_Panther_01", 1, 1);
+SetAlarmType(867,1);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(50);
+HUMAN_SetOptimized(2);
+}
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label END:

@@ -1,0 +1,186 @@
+// guarded gate
+Block
+  {
+     frame look;		FRM_FindFrame(look, "m_lampa20");
+     frame see;		FRM_FindFrame(see, "dummy_GG_see");
+     frame see2;	FRM_FindFrame(see2, "tv5okno14");
+     frame see3;	FRM_FindFrame(see3, "seed_m_str1a18318");
+     frame Herman;	FRM_FindFrame(Herman, "Gate_Inquisitor");
+     Frame K2;		FRM_FindFrame(K2, "K2");
+     frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+     frame Auto;		FRM_FindFrame(Auto, "Auti_BAD");
+     frame DabingGG;	FRM_FindFrame(DabingGG, "dummy_Dabing_GG");
+     frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+     integer halo;	halo = 0;
+     integer nic;		nic = 0;
+     integer AIEvent;	AIEvent = 99;
+
+     SetAlarmType(1023, True); 
+
+     HUMAN_SetOptimized(2);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Walk();
+  }
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponOnArm(false);
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;						
+Whenever A (_PlayerInRange(107);)	
+  {						
+    HUMAN_Suspend(False);				
+  }							
+
+    HUMAN_SetAnim("%%lenin", 250, 150, true);
+
+OnSignal(5)
+{
+  nic =1;
+}
+
+label loop:
+  delay(2500);
+  If ( _PlayerInRange(30); )
+    { 
+       If ( (halo == 0) OR ( _FrameInRange(Auto)<50) )
+        {
+// 01990236	Je tam nìkdo?	
+// 01990237	Kdo tam k sakru je?	
+// 01990238	Probuï se Hermanne, nìkdo tady je!	
+// 01990239	Hermanne! Pojï ven! Potøebuju s nìèím pomoci.	
+// 01990240	Promiò kámo, nic to nebylo.	
+// 8000ms
+           Printf("Hlidka u brany GG kecá");
+           SendSignal(dabingGG, 1);
+           HUMAN_SetAnim("", 600, 600, false);
+           HUMAN_SETMODE_Crouch();
+           Delay(2000);
+           HUMAN_TurnAtNearestPlayer();
+           Delay(5000);
+           HUMAN_SETMODE_Stand();
+           Delay(1000);
+           Goto loop2;
+        }
+///////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - START
+// SendSignal(K2, 1); 		// Davam to pryc a ted uz snad nebude nikdo rikat
+// - casem vykopat, stejne by to nefungovalo - uz jsem delal zmeny ktere to rozbouraly
+///////////////////////////////////////////////////////////////////////////////////////////////  KAMERA - KONEC
+     } 
+goto loop;
+
+OnCutScene(2)
+{
+  HUMAN_SETEVENTS(false);
+  HUMAN_SetAnim("", 600, 600, false);
+  Delay(500);
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_WeaponOnArm(true);
+  Delay(1800);
+       Printf("Je tam nekdo?");
+		  SUBTITLES_SetText(01990236);
+//       Printf("Is anybody there?");
+  Delay(2200);  
+       Printf("Tak k sakru kdo je tam?");
+		  SUBTITLES_SetText(01990237);
+//       Printf("Who the hell is there?"); 
+  Delay(1000);  
+  HUMAN_Move("GG_3");
+  HUMAN_WeaponOnArm(false);
+  HUMAN_Move("GG_4");
+  Delay(350);
+  HUMAN_TurnAt(see2);
+  HUMAN_SetAnim("%%tuktuk", 250, 150, false);
+       Printf("Vstavej Hermane, nekdo tady je.");
+		  SUBTITLES_SetText(01990238);
+//       Printf("Wake up Hermann someone is here."); 
+  Delay(350);
+  SendSignal(Herman, 10);  
+  HUMAN_WeaponOnArm(false);
+  Delay(1800);
+  HUMAN_Move("GG_5");
+  Delay(400);
+  HUMAN_SETMODE_Crouch();
+  Delay(1000);
+       Printf("Hermane tak uz vylez a pod mi pomoct.");
+		  SUBTITLES_SetText(01990239);
+//       Printf("Hermann, come out. I need a little help here.");
+  Delay(10000);
+       Printf("Promin, to se mi asi zase neco zdalo.");
+		  SUBTITLES_SetText(01990240);
+//       Printf("Sorry pal, it was nothing.");
+  Delay(1000);
+  HUMAN_SETMODE_Stand();
+  Delay(1000);
+  SendSignal(Herman, 11);  
+  Delay(2500);
+  HUMAN_SETMODE_Guard();
+}
+
+OnAlarm()
+{
+  Block
+    {
+       DisableSignals(True); 
+       SaveGameValue(29, 99);		// skip CSC 3 - roof 
+       SendSignal(dabingGG, 2);
+       HUMAN_SETSIGHTRANGE(45);
+       HUMAN_SETHEARRANGE(54);
+       AIEvent =_GetAlarmType(); 
+       PrintfNumber("AIE Gate G:", AIEvent);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_SetAnim("", 300, 300, false);
+  Delay(300);
+  HUMAN_Stop();
+  If (halo == 0) 
+    {
+       Printf("Hermaaaaaaaan - signal 12.");
+       halo = 1;
+    }
+  SendSignal(Herman, 12);  
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  DisableSignals(False); 
+  SetAlarmType(520, False);	
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("GG_1");
+  Delay(500);
+
+  OnCutSceneDone(2)
+    {
+       HUMAN_SETEVENTS(true);
+       HUMAN_SETAIMODE_Aggressive();
+    } 
+
+Label loop2:
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Guard();
+  HUMAN_Move("GG_2");		
+  Delay(1500);
+  HUMAN_TurnAt(see);
+  Delay(1500);
+  HUMAN_Move("GG_1");	
+  Delay(1500);
+  HUMAN_TurnAt(see);	
+  Delay(1500);
+Goto loop2; 
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  Sendsignal(AllKilled, 30);
+  SendSignal(dabingGG, 2);
+  EndScript();
+}
+
+Label TheEnd:

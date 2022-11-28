@@ -1,0 +1,14 @@
+frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+
+SetWhenever(OBJECTIVE2, False);
+
+OnSignal(1)
+{
+           SetWhenever(OBJECTIVE2, True);
+}
+
+// obj OK
+Whenever OBJECTIVE2 (( _AllPlayersInRange(40) ) and (_PlayerInRange(7) ))
+{
+  SendSignal(OBJ, 10);
+}

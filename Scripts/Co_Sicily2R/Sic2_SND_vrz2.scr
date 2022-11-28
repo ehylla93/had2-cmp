@@ -1,0 +1,20 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	scr. pro zvuk
+//	Vytvoril:		Vrabcak
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+frame sound1;		frm_findframe(sound1,"S_vrz3");
+frame sound2;		frm_findframe(sound2,"S_vrz6");
+
+integer rnd;	
+integer rnd_pause;
+
+label loop:
+  rnd= _randomint(2) +1;
+  rnd_pause= _randomint(18000) +18000;
+  if (rnd==1) {FRM_SetOn(sound1,true);}
+  if (rnd==2) {FRM_SetOn(sound2,true);} 
+  delay(rnd_pause);
+goto loop; 

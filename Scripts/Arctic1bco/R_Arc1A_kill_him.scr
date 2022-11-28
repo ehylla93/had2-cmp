@@ -1,0 +1,19 @@
+frame Albert;		FRM_FindFrame(Albert, "rebel");
+frame killer2;		FRM_FindFrame(killer2, "dummy_Albert_killer2");
+
+
+Onsignal(1)
+{
+  If (_FrameInRange(Albert)<155 )
+   {
+     }else{
+      SendSignal(killer2, 1);  
+   }
+  PlaySound(2, 5);
+  Delay(800);
+  PlaySound(2, 5);
+  HUMAN_Kill(Albert);
+  Delay(500);
+  PlaySound(2, 5);
+  EndScript();
+}

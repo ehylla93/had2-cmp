@@ -1,0 +1,266 @@
+
+  Frame OBJ; 		FRM_FindFrame(OBJ, "objectives");
+  Frame turn1;		FRM_FindFrame(turn1, "dummy_Ally4_turn_1");
+  Frame turn2;		FRM_FindFrame(turn2, "dummy_Ally4_turn_2");
+  Frame illF;		FRM_FindFrame(illF, "dummy_Ally4_turn_2");
+  Frame Target;
+
+  integer RND;
+  integer kdo = 0;
+  integer counter = 0;
+
+  Printf("Ally 4 GO - prirazen");
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(0);
+  SetAlarmType(1023, False);
+  HUMAN_SetAlarm(False);
+  Goto TheEnd;
+
+OnSignal(1)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Wave1_1");
+     }
+  goto IN;
+}
+//*//OnSignal(2)
+//*//{
+//*//  Block
+//*//    {
+//*//       DisableSignals(True);
+//*//       FRM_FindFrame(Target, "Wave1_2");
+//*//     }
+//*//  goto IN;
+//*//}
+OnSignal(3)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Wave1_3");
+     }
+  goto IN;
+}
+//*//OnSignal(4)
+//*//{
+//*//  Block
+//*//    {
+//*//       DisableSignals(True);
+//*//       FRM_FindFrame(Target, "Wave1_4");
+//*//     }
+//*//  goto IN;
+//*//}
+OnSignal(5)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Wave1_5");
+     }
+  goto IN;
+}
+OnSignal(6)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Wave2_1");
+     }
+  goto IN;
+}
+OnSignal(7)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Wave2_2");
+     }
+  goto IN;
+}
+OnSignal(8)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Wave2_3");
+     }
+  goto IN;
+}
+//*//OnSignal(9)
+//*//{
+//*//  Block
+//*//    {
+//*//       DisableSignals(True);
+//*//       FRM_FindFrame(Target, "Wave2_4");
+//*//     }
+//*//  goto IN;
+//*//}
+//*//OnSignal(10)
+//*//{
+//*//  Block
+//*//    {
+//*//       DisableSignals(True);
+//*//       FRM_FindFrame(Target, "Wave2_5");
+//*//     }
+//*//  goto IN;
+//*//}
+OnSignal(11)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Blue_11");
+     }
+  goto IN;
+}
+//*//OnSignal(12)
+//*//{
+//*//  Block
+//*//    {
+//*//       DisableSignals(True);
+//*//       FRM_FindFrame(Target, "Blue_12");
+//*//     }
+//*//  goto IN;
+//*//}
+OnSignal(13)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Blue_13");
+     }
+  goto IN;
+}
+OnSignal(14)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Blue_14");
+     }
+  goto IN;
+}
+OnSignal(15)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Blue_15");
+     }
+  goto IN;
+}
+//*//OnSignal(16)
+//*//{
+//*//  Block
+//*//    {
+//*//       DisableSignals(True);
+//*//       FRM_FindFrame(Target, "Blue_16");
+//*//     }
+//*//  goto IN;
+//*//}
+OnSignal(17)
+{
+  Block
+    {
+       DisableSignals(True);
+       FRM_FindFrame(Target, "Blue_17");
+     }
+  goto IN;
+}
+label IN:
+  HUMAN_Move("Ally4_2");
+  HUMAN_TurnAt(Target);
+  HUMAN_Attack(Target, 2000);
+  DisableSignals(False);
+  HUMAN_Kill(Target);
+  Goto TheEnd;   
+
+OnSignal(20) { FRM_FindFrame(Target, "Blue_5"); }
+OnSignal(21) { FRM_FindFrame(Target, "Blue_7"); }
+OnSignal(22) { FRM_FindFrame(Target, "Blue_8"); }
+OnSignal(23) { FRM_FindFrame(Target, "Blue_9"); }
+OnSignal(24) { FRM_FindFrame(Target, "Blue_10"); }
+OnSignal(25) { FRM_FindFrame(Target, "Blue_17"); }
+OnSignal(26) { FRM_FindFrame(Target, "Blue_3"); }
+OnSignal(27) { FRM_FindFrame(Target, "Blue_4"); }
+
+
+
+  label loop:
+    counter = 0;
+    DisableSignals(True);
+    HUMAN_Move("Ally4_2");
+    HUMAN_TurnAt(turn2);
+    HUMAN_SETMODE_Stand();
+    Delay(500);
+    HUMAN_illFire(illF, 1300);    
+    HUMAN_WeaponUp(false);
+    Delay(500);
+    HUMAN_SetAnim("%%Radek2a", 500, 500, False);
+    Delay(1200);
+    HUMAN_SetAnim("%%Radek2c", 500, 500, True);    
+    SendSignal(Target, 4);	// at Ger opetuje palbu
+  label loop2:
+    Delay(1500);
+    HUMAN_SetAnim("%%Radek2b", 500, 500, False);
+    Delay(999);
+    HUMAN_Attack(Target, 1300);
+    HUMAN_WeaponUp(false);
+    Delay(200);
+    HUMAN_TurnAt(turn2);
+    Delay(300);
+    HUMAN_SetAnim("%%Radek2a", 500, 500, False);
+    Delay(1200);
+    HUMAN_SetAnim("%%Radek2c", 500, 500, True);
+    Delay(800);
+    counter = counter +1;
+    If (counter == 3)
+        {
+            HUMAN_Reload();
+        }
+    Delay(800);
+    If (counter == 3)
+        {
+            HUMAN_SetAnim("%%Radek2b", 500, 500, False);
+            HUMAN_illFire(illF, 1300);
+            Delay(1100);
+            HUMAN_SETMODE_Crouch();
+            HUMAN_Move("Ally4_1");
+            HUMAN_TurnAt(turn1);	 
+            DisableSignals(False);
+            goto TheEnd;
+        }     
+  goto loop2;
+
+
+OnDeath()
+{
+  SendSignal(OBJ, 30);
+  EndScript();
+}
+
+
+Label TheEnd:
+         HUMAN_Move("Ally4_1");
+         HUMAN_TurnAt(turn1);
+         RND = _RandomInt(3) +1;
+         HUMAN_SETMODE_Crouch();
+// rusova strelba
+         Delay(3000);
+         HUMAN_Reload();
+         Delay(10000);
+         HUMAN_Move("Ally4_2");
+           IF (RND == 1) { FRM_FindFrame(Target, "dummy_Red30_turn"); }         //  nejakej dumy co uz sem pouzil jinde
+           IF (RND == 2) { FRM_FindFrame(Target, "dummy_sniper6_turn_2"); }   //  nejakej dumy co uz sem pouzil jinde
+           IF (RND == 3) { FRM_FindFrame(Target, "dummy_sniper6_turn_1"); }   //  nejakej dumy co uz sem pouzil jinde
+         HUMAN_TurnAt(Target);
+         HUMAN_SETMODE_Stand();
+         Delay(300);
+         HUMAN_Attack(Target, 2000);
+         DisableSignals(False);
+         Goto TheEnd;            
+
+
+

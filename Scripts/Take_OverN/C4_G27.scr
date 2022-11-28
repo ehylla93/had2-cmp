@@ -1,0 +1,40 @@
+// C4_G27 - (La_tiger_3) Kanoner
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+// -------------------------------------
+
+HUMAN_SETSIGHTRANGE(130);
+HUMAN_SETHEARRANGE(200);
+HUMAN_BoardVehicle("La_tiger_3", 1, 2);
+goto END;
+
+
+Label END:

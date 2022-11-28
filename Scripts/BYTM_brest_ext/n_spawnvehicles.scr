@@ -1,0 +1,25 @@
+
+Block
+{
+Frame V1;		FRM_FindFrame(V1,"n_opel");
+Frame V2;		FRM_FindFrame(V2,"n_opel2");
+Frame V3;		FRM_FindFrame(V3,"n_opel3");
+Frame V4;		FRM_FindFrame(V4,"n_opel4");
+Frame V5;		FRM_FindFrame(V5,"n_opel5");
+Frame V6;		FRM_FindFrame(V6,"n_opel6");
+
+Frame obj7;		FRM_FindFrame(obj7,"n_objvehicles");
+}
+
+
+Whenever Spawn (_SignalReceived(1))
+{
+SendSignal(obj7, 1);
+FRM_TeleportNearCheckpoint(V1, "vehicle1a", "vehicle1b");
+FRM_TeleportNearCheckpoint(V2, "vehicle2a", "vehicle2b");
+FRM_TeleportNearCheckpoint(V3, "vehicle3a", "vehicle3b");
+FRM_TeleportNearCheckpoint(V4, "vehicle4a", "vehicle4b");
+FRM_TeleportNearCheckpoint(V5, "vehicle5a", "vehicle5b");
+FRM_TeleportNearCheckpoint(V6, "vehicle6a", "vehicle6b");
+printf("Opel trucks spawned");
+}

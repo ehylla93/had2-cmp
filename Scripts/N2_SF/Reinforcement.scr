@@ -1,0 +1,93 @@
+// Allied Reinforcements ( 1x Sherman , 1x US Hakl )
+// ----------------------------------------------------
+
+Block
+{
+Frame Sh1;	FRM_FindFrame(Sh1,"SF_A11");
+Frame Sh2;	FRM_FindFrame(Sh2,"SF_A12");
+Frame Sh3;	FRM_FindFrame(Sh3,"SF_A13");
+
+Frame H1_1;	FRM_FindFrame(H1_1,"Cpl. John Glesby");
+Frame H1_2;	FRM_FindFrame(H1_2,"Pte. Patrick Mullholland");
+Frame H1_3;	FRM_FindFrame(H1_3,"Cpl. Arthur Muncie");
+Frame H1_4;	FRM_FindFrame(H1_4,"Cpl. Daniel O'Sullivan");
+
+Frame H2_1;	FRM_FindFrame(H2_1,"Cpl. Simon Finch");
+Frame H2_2;	FRM_FindFrame(H2_2,"Cpl. William Broadhurst");
+Frame H2_3;	FRM_FindFrame(H2_3,"Sgt. Julian Cunningham");
+
+Frame B1;	FRM_FindFrame(B1,"SSgt. Gregory Dean");
+Frame B2;	FRM_FindFrame(B2,"Sgt. Kevin Turner");
+Frame B3;	FRM_FindFrame(B3,"Sgt. Larry Smith");
+Frame B4;	FRM_FindFrame(B4,"Sgt. Siegfried Hirsch");
+Frame B5;	FRM_FindFrame(B5,"Pte. Andrew Harris");
+Frame B6;	FRM_FindFrame(B6,"Pte. Roger Jenkins");
+Frame B7;	FRM_FindFrame(B7,"Cpl. Frederick Mallory");
+Frame B8;	FRM_FindFrame(B8,"Cpl. George Burton");
+Frame B9;	FRM_FindFrame(B9,"Cpl. Herbert Bennett");
+
+Frame Tiger;	FRM_FindFrame(Tiger,"La_tiger_1");
+Frame Spawn;	FRM_FindFrame(Spawn,"Spawnzones");
+
+SetWhenever(TurnOn, 0);
+SetObjectiveStatus(1, 0);
+}
+
+// ----------------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+Delay(20000);
+SendSignal(Sh1, 1);
+SendSignal(Sh2, 1);
+SendSignal(Sh3, 1);
+Delay(10000);
+SendSignal(H1_1, 1);
+SendSignal(H1_2, 1);
+SendSignal(H1_3, 1);
+SendSignal(H1_4, 1);
+Delay(20000);
+SendSignal(H2_1, 1);
+Delay(1000);
+SendSignal(H2_2, 1);
+Delay(500);
+SendSignal(H2_3, 1);
+Delay(25000);
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993408);
+Delay(4000);
+SetObjectiveStatus(3, 0);
+Delay(500);
+SetObjectiveStatus(1, 1);
+SUBTITLES_SetOn(0);
+SendSignal(Spawn, 2);
+
+SendSignal(B8, 3);
+Delay(2000);
+SendSignal(B7, 3);
+Delay(2000);
+SendSignal(B3, 3);
+Delay(2000);
+SendSignal(B9, 3);
+Delay(2000);
+SendSignal(B5, 3);
+Delay(2000);
+SendSignal(B6, 3);
+Delay(3000);
+SendSignal(B2, 3);
+SendSignal(B1, 3);
+Delay(2000);
+SendSignal(B4, 3);
+goto END;
+}
+
+Whenever Tiger_In (_SignalReceived(2))
+{
+Delay(2000);
+SetWhenever(TurnOn, 1);
+goto END;
+}
+
+
+Label END:

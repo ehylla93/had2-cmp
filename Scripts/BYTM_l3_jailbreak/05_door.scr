@@ -1,0 +1,38 @@
+// Obj 6 - Defend your position
+// ----------------------------------
+
+Frame reinf1;	FRM_FindFrame(reinf1, "reinf1_1");
+Frame reinf2;	FRM_FindFrame(reinf2, "reinf1_2");
+Frame counter;	FRM_FindFrame(counter, "05_town_count");
+Frame trigger4;	FRM_FindFrame(trigger4, "05_trigger_04");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Integer time = 0;
+goto end;
+
+OnSignal(1) {
+printf("R1 timer disabled");
+EndScript();
+}
+
+Whenever DoorOpened (_ACTOR_GetState(MyFRM) == 1)
+{
+DisableWhenevers(1);
+printf("R1 timer activated");
+SendSignal(counter, 1);
+SendSignal(trigger4, 1);
+}
+
+Label timer:
+time = _RandomInt(180000) + 180000;	// min. 3min, max. 6min
+printfnumber("R1 timer: ", time);
+Delay(time);
+
+Block {
+SendSignal(reinf1, 1);
+SendSignal(reinf2, 1);
+printf("R1 triggered by timer");
+SendSignal(counter, 2);
+SendSignal(trigger4, 2);
+}
+
+Label end:

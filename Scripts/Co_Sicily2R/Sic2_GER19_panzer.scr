@@ -1,0 +1,52 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Osadka Panzeru2 (ridic) GER 19 - jede ... 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+frame MyTank;	FRM_FindFrame(MyTank, "Panzer_2");
+
+Block
+{
+  integer RND = 0;
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+FRM_SetOn(Mytank, False);
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator druhe vlny
+Onsignal(1)		
+{
+  FRM_SetOn(Mytank, true);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Panzer_2", true, 0);
+} 
+
+// aktivni cast - jede
+Delay(500);
+HUMAN_Drive("Panzer2_1", 16);
+RND = _RandomInt(5);
+
+     If (RND == 0)  {HUMAN_Drive("Panzer2_end", 13);}
+     If (RND == 1)  {HUMAN_Drive("Panzer2_end2", 13);}
+     If (RND == 2)  {HUMAN_Drive("Panzer2_end3", 13);}
+     If (RND == 3)  {HUMAN_Drive("Panzer2_end4", 13);}
+     If (RND == 4)  {HUMAN_Drive("Panzer2_end5", 13);}
+
+HUMAN_Drive("", 0);
+
+OnAlarm()  
+  {
+    Printf("HLASIT - nemelo by nikdy nastat - ridic Panzeru2 presel do alarmu");      
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+} 
+
+label TheEnd:

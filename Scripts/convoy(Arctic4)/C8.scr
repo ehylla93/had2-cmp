@@ -1,0 +1,73 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	IT 45 - V podzemni ubykaci		*
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		        FRM_FindFrame(turn, "m_a3_mbudka04"); 
+  Frame la_JeepW_01;		FRM_FindFrame(la_JeepW_01,"joel1");
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+Whenever XXX ( _PlayerInRange(550) )
+{
+  HUMAN_Suspend(False);
+  HUMAN_MoveToFrame(la_JeepW_01, 15);
+       HUMAN_SETSIGHTRANGE(300);
+     HUMAN_SETHEARRANGE(300);
+	 HUMAN_SETAIMODE_Defensive();
+}
+Block
+  {
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+     SetAlarmType(1023, True);		
+  }
+  HUMAN_SetAnim("%%obvazovani1", 400, 400, True);
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("it_45_end");	
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  HUMAN_SetAnim("", 100, 100, False);
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" --- 45 --- ma alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

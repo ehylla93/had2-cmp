@@ -1,0 +1,21 @@
+// AF2 - Hide junkers dummy
+// -------------------------------------------------------------------------------------------------------------
+
+Block {
+FRAME junk;				FRM_FindFRAME(junk, "HoriciJunkers");
+FRAME part01;			FRM_FindFRAME(part01, "HoriciJunkers.engine_l00");
+FRAME af2_05;			FRM_FindFRAME(af2_05, "AF2_05");
+FRAME af2_06;			FRM_FindFRAME(af2_06, "AF2_06");
+INTEGER dymzkridla;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever detector(_FRAMEInRange(junk) < 5){
+  printf("NOW HIDING JUNKERS");
+  FRM_FinishIndexedParticle(dymzkridla);  
+  FRM_SetOn(junk, false);
+  SendSignal(af2_05, 2);
+  SendSignal(af2_06, 2);
+}
+// -------------------------------------------------------------------------------------------------------------

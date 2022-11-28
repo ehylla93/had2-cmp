@@ -1,0 +1,87 @@
+// 01_SdKfz251_01_04
+// ----------------------------------------
+
+Block {
+Integer suspended = 1;
+Integer unsuspend_range = 10;
+Integer alarm_sight_range = 180;
+Frame SdKfZ1;	FRM_FindFrame(SdKfZ1, "01_SdKfz251_01");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f042");
+
+SetAlarmType(1023, 0);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnAlarm()
+{
+Block { DisableSignals(1); DisableWhenevers(1); }
+HUMAN_SETSIGHTRANGE(alarm_sight_range);
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(1023, 0);
+Block { DisableSignals(0); DisableWhenevers(0); }
+goto Action;
+}
+
+OnDeath()
+{
+printf("01_SdKfz251_01_04 dead");
+SendSignal(SdKfZ1, 2);
+EndScript();
+}
+
+EnableSignal(1, true);
+// Mount SdKfZ
+OnSignal(1)
+{
+EnableSignal(1, 0);
+Human_Suspend(0);
+HUMAN_BoardVehicle("01_SdKfz251_01", 1, 1);
+goto end;
+}
+
+EnableSignal(2, true);
+// Unmount SdKfZ
+OnSignal(2)
+{
+EnableSignal(2, 0);
+HUMAN_BoardVehicle("01_SdKfz251_01", 0, 1);
+}
+
+Label Action:
+Block 
+{
+SetAlarmType(255, 1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_Stand();
+}
+if((_LoadGameValue(6)==1) or (_LoadGameValue(6)==3))
+{
+HUMAN_Move("sdkfz1_c01");
+HUMAN_Move("sdkfz1_c03");
+}
+if(_LoadGameValue(6)==2)
+{
+HUMAN_Move("sdkfz2_a01");
+}
+
+// ----------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

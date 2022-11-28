@@ -1,0 +1,28 @@
+// Obj 12 , Cause Maximum Damage to Enemy Vehicles
+// -------------------------------------------------
+
+Block
+{
+Frame Bmw1;	FRM_FindFrame(Bmw1,"Bmw1");
+Frame Opel;	FRM_FindFrame(Opel,"Opel_01");
+Frame Panzer1;	FRM_FindFrame(Panzer1,"La_tiger_1");
+Frame Panzer2;	FRM_FindFrame(Panzer2,"La_tiger_2");
+}
+
+// -------------------------------------------------
+
+Whenever Max_damage_caused ((((_Actor_GetState(Bmw1)==0) And (_Actor_GetState(Opel)==0)) And (_Actor_GetState(Panzer1)==0)) And (_Actor_GetState(Panzer2)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999802);
+SetObjectiveStatus(12, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever FAIL (_SignalReceived(3))
+{
+SetObjectiveStatus(12, 2);
+EndScript();
+}

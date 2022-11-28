@@ -1,0 +1,395 @@
+// Obj 1 - Capture the control post
+//------------------------------------
+
+Block
+{
+Frame s01;	FRM_FindFrame(s01, "A1_G01"); 
+Integer v01;			v01 = 1;
+Frame s02;	FRM_FindFrame(s02, "A1_G02");
+Integer v02;			v02 = 1;
+Frame s03;	FRM_FindFrame(s03, "A1_G03"); 
+Integer v03;			v03 = 1;
+Frame s04;	FRM_FindFrame(s04, "A1_G04");
+Integer v04;			v04 = 1;
+Frame s05;	FRM_FindFrame(s05, "A1_G05");
+Integer v05;			v05 = 1; 
+Frame s06;	FRM_FindFrame(s06, "A1_G06");
+Integer v06;			v06 = 1;
+Frame s07;	FRM_FindFrame(s07, "A1_G07"); 
+Integer v07;			v07 = 1;
+Frame s08;	FRM_FindFrame(s08, "A1_G08");
+Integer v08;			v08 = 1;
+Frame s09;	FRM_FindFrame(s09, "A1_G09"); 
+Integer v09;			v09 = 1;
+Frame s10;	FRM_FindFrame(s10, "A1_G10");
+Integer v10;			v10 = 1;
+Frame s11;	FRM_FindFrame(s11, "A1_G11");
+Integer v11;			v11 = 1;
+Frame s12;	FRM_FindFrame(s12, "A1_G12");
+Integer v12;			v12 = 1;
+Frame s13;	FRM_FindFrame(s13, "A1_G13");
+Integer v13;			v13 = 1;
+Frame s14;	FRM_FindFrame(s14, "A1_G14");
+Integer v14;			v14 = 1;
+Frame s15;	FRM_FindFrame(s15, "A1_G15");
+Integer v15;			v15 = 1;
+Frame s16;	FRM_FindFrame(s16, "A1_G16");
+Integer v16;			v16 = 1;
+Frame s17;	FRM_FindFrame(s17, "A1_G17");
+Integer v17;			v17 = 1;
+Frame s18;	FRM_FindFrame(s18, "A1_G18");
+Integer v18;			v18 = 1;
+Frame s19;	FRM_FindFrame(s19, "A1_G19");
+Integer v19;			v19 = 1;
+Frame s20;	FRM_FindFrame(s20, "A1_G20");
+Integer v20;			v20 = 1;
+Frame s21;	FRM_FindFrame(s21, "A1_G21");
+Integer v21;			v21 = 1;
+Frame s22;	FRM_FindFrame(s22, "A1_G22");
+Integer v22;			v22 = 1;
+Frame s23;	FRM_FindFrame(s23, "A1_G27");
+Integer v23;			v23 = 1;
+Frame s24;	FRM_FindFrame(s24, "A1_G28");
+Integer v24;			v24 = 1;
+Frame s25;	FRM_FindFrame(s25, "A1_G29");
+Integer v25;			v25 = 1;
+Frame s26;	FRM_FindFrame(s26, "A1_G30");
+Integer v26;			v26 = 1;
+Frame s27;	FRM_FindFrame(s27, "A1_G31");
+Integer v27;			v27 = 1;
+
+Frame T01;	FRM_FindFrame(T01, "La_tiger_1");
+Frame T02;	FRM_FindFrame(T02, "La_tiger_2");
+
+Frame Am1;	FRM_FindFrame(Am1,"Ammobox1");
+Frame Am2;	FRM_FindFrame(Am2,"Ammobox2");
+Frame W1;	FRM_FindFrame(W1,"Weaponbox1");
+Frame W2;	FRM_FindFrame(W2,"Weaponbox2");
+Frame G1;	FRM_FindFrame(G1,"Grenadebox1");
+Frame G2;	FRM_FindFrame(G2,"Grenadebox2");
+Frame Ai1;	FRM_FindFrame(Ai1,"Aidkitbox1");
+Frame Ai2;	FRM_FindFrame(Ai2,"Aidkitbox2");
+
+
+Integer KillCount;
+	KillCount = 0;
+
+SetObjectiveStatus(1, 0);
+MP_EnableSpawnZone("zone1", 1);
+SetWhenever(Panzers, 0);
+}
+
+// ------------------------------------------------------------
+
+Whenever Panzers ((_Actor_GetState(T01)==0) Or (_Actor_GetState(T02)==0))
+{
+MP_EnableSpawnZone("zone3", 1);
+MP_EnableSpawnZone("zone1", 2);
+SetObjectiveStatus(1, 1);
+Delay(5000);
+SetActorState(Am1, 1);
+Delay(1500);
+SetActorState(W1, 1);
+SetActorState(G2, 1);
+Delay(500);
+SetActorState(W2, 1);
+Delay(200);
+SetActorState(Am2, 1);
+SetActorState(Ai1, 1);
+Delay(1000);
+SetActorState(G1, 1);
+SetActorState(Ai2, 1);
+goto END;
+}
+
+// --------------------------------------------------------------
+
+Delay(500);
+goto Front_Line_Death;
+
+Label Front_Line_Death:
+
+Block
+{
+
+If(v01 == 1)
+{
+
+If(_Actor_GetState(s01)==0)
+{
+KillCount=KillCount+1;
+v01=0;
+}
+}
+
+If(v02 == 1)
+{
+
+If(_Actor_GetState(s02)==0)
+{
+KillCount=KillCount+1;
+v02=0;
+}
+}
+
+If(v03 == 1)
+{
+
+If(_Actor_GetState(s03)==0)
+{
+KillCount=KillCount+1;
+v03=0;
+}
+}
+
+If(v04 == 1)
+{
+
+If(_Actor_GetState(s04)==0)
+{
+KillCount=KillCount+1;
+v04=0;
+}
+}
+
+If(v05 == 1)
+{
+
+If(_Actor_GetState(s05)==0)
+{
+KillCount=KillCount+1;
+v05=0;
+}
+}
+
+If(v06 == 1)
+{
+
+If(_Actor_GetState(s06)==0)
+{
+KillCount=KillCount+1;
+v06=0;
+}
+}
+
+If(v07 == 1)
+{
+
+If(_Actor_GetState(s07)==0)
+{
+KillCount=KillCount+1;
+v07=0;
+}
+}
+
+If(v08 == 1)
+{
+
+If(_Actor_GetState(s08)==0)
+{
+KillCount=KillCount+1;
+v08=0;
+}
+}
+
+If(v09 == 1)
+{
+
+If(_Actor_GetState(s09)==0)
+{
+KillCount=KillCount+1;
+v09=0;
+}
+}
+
+If(v10 == 1)
+{
+
+If(_Actor_GetState(s10)==0)
+{
+KillCount=KillCount+1;
+v10=0;
+}
+}
+
+If(v11 == 1)
+{
+
+If(_Actor_GetState(s11)==0)
+{
+KillCount=KillCount+1;
+v11=0;
+}
+}
+
+If(v12 == 1)
+{
+
+If(_Actor_GetState(s12)==0)
+{
+KillCount=KillCount+1;
+v12=0;
+}
+}
+
+If(v13 == 1)
+{
+
+If(_Actor_GetState(s13)==0)
+{
+KillCount=KillCount+1;
+v13=0;
+}
+}
+
+If(v14 == 1)
+{
+
+If(_Actor_GetState(s14)==0)
+{
+KillCount=KillCount+1;
+v14=0;
+}
+}
+
+If(v15 == 1)
+{
+
+If(_Actor_GetState(s15)==0)
+{
+KillCount=KillCount+1;
+v15=0;
+}
+}
+
+If(v16 == 1)
+{
+
+If(_Actor_GetState(s16)==0)
+{
+KillCount=KillCount+1;
+v16=0;
+}
+}
+
+If(v17 == 1)
+{
+
+If(_Actor_GetState(s17)==0)
+{
+KillCount=KillCount+1;
+v17=0;
+}
+}
+
+If(v18 == 1)
+{
+
+If(_Actor_GetState(s18)==0)
+{
+KillCount=KillCount+1;
+v18=0;
+}
+}
+
+If(v19 == 1)
+{
+
+If(_Actor_GetState(s19)==0)
+{
+KillCount=KillCount+1;
+v19=0;
+}
+}
+
+If(v20 == 1)
+{
+
+If(_Actor_GetState(s20)==0)
+{
+KillCount=KillCount+1;
+v20=0;
+}
+}
+
+If(v21 == 1)
+{
+
+If(_Actor_GetState(s21)==0)
+{
+KillCount=Killcount+1;
+v21=0;
+}
+}
+
+If(v22 == 1)
+{
+
+If(_Actor_GetState(s22)==0)
+{
+KillCount=KillCount+1;
+v22=0;
+}
+}
+
+If(v23 == 1)
+{
+
+If(_Actor_GetState(s23)==0)
+{
+KillCount=KillCount+1;
+v23=0;
+}
+}
+
+If(v24 == 1)
+{
+
+If(_Actor_GetState(s24)==0)
+{
+KillCount=KillCount+1;
+v24=0;
+}
+}
+
+If(v25 == 1)
+{
+
+If(_Actor_GetState(s25)==0)
+{
+KillCount=KillCount+1;
+v25=0;
+}
+}
+
+If(v26 == 1)
+{
+
+If(_Actor_GetState(s26)==0)
+{
+KillCount=KillCount+1;
+v26=0;
+}
+}
+
+If(v27 == 1)
+{
+
+If(_Actor_GetState(s27)==0)
+{
+KillCount=KillCount+1;
+v27=0;
+}
+}
+
+If(KillCount > 22)
+{
+SetWhenever(Panzers, 1);
+goto END;
+}
+}
+
+goto Front_Line_Death;
+
+
+Label end:

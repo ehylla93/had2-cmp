@@ -1,0 +1,69 @@
+// C2_E08
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(128,0);
+
+Frame this;		FRM_GetMyFrame(this);
+Frame Sup1;		FRM_FindFrame(Sup1, "C2_E06");
+Frame Sup2;		FRM_FindFrame(Sup2, "C2_E07");
+Integer Int = _RandomInt(100);
+
+FRM_SwitchFaceTexture(this, "e_f049");
+}
+printfnumber("Int C2_E08:", Int);
+
+	If(Int > 50)
+	{
+	HUMAN_SETAIMODE_Defensive();
+	}
+	If(Int < 25)
+	{
+	HUMAN_SETAIMODE_Aggressive();
+	}
+	Else
+	{
+	HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("C2_E08 dead");
+SendSignal(Sup1, 1);
+SendSignal(Sup2, 1);
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 200, 200, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 20))
+{
+HUMAN_WeaponOnArm(0);
+HUMAN_SetAnim("%%nudazed2", 300, 300, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

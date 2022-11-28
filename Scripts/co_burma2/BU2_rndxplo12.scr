@@ -1,0 +1,21 @@
+// BU2_rndxplo12 - explosion effect
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame rndxplo12;	FRM_FindFrame(rndxplo12, "rndxplo12");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(1)
+{
+If(_PlayerInRange(50))
+{
+	Block
+	{
+		SetActorState(rndxplo12, 1);
+		//MakeExplosion(rndxplo12, 800000, 15000);
+	}
+}
+}

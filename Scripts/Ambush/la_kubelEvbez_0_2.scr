@@ -1,0 +1,151 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(180);
+HUMAN_SetOptimized(1);
+
+integer a;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+
+
+
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f043");
+
+}
+
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(0);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(180);
+HUMAN_SetOptimized(1);
+aievent=(_GetAlarmType());
+PrintfNumber("zxagres8 alarm c:",aievent);
+}
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	endx=1;
+	EndScript();
+	}
+
+
+
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+if (suspend==1)
+	{
+	
+
+
+
+if ((_LoadGameValue(8)==1) or (_LoadGameValue(9)==1))
+
+
+	{
+	
+	delay (1000);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+
+
+	}
+}
+
+endx=1;
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponUp(1);
+goto bloud;
+}
+
+label bloud:
+
+HUMAN_MoveRandomRadius(170);
+HUMAN_SetAnim("%%kouka", 300, 300,0);
+delay (5000);
+HUMAN_SetAnim("", 300, 300, 0);
+goto bloud;
+
+
+OnDeath()
+{
+EndScript();
+goto end;
+}
+
+Whenever me (_PlayerInRange(170))
+{
+	suspend=0;
+	HUMAN_Suspend(0);
+	SetAlarmType(1015,1);
+HUMAN_SETAIMODE_Defensive();
+	goto bloud;
+//^Whenever-me
+}
+
+
+label end:
+
+
+
+	

@@ -1,0 +1,155 @@
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+HUMAN_SETHEARRANGE(76);
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+integer a;	a=0;
+
+frame sit;		Frm_FindFrame(sit,"ge19sit");
+frame cum;		Frm_FindFrame(cum,"ge19cum");
+frame cum1;		Frm_FindFrame(cum1,"ge19cum1");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+HUMAN_SetAnim("",50,50,0);
+block
+{
+SetWhenever(voda,0);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+HUMAN_SETSIGHTRANGE(75);
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+if (a==0)
+{
+block
+{
+SetAlarmType(4,0);
+a=1;
+}
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ge19_02");
+}
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+goto end;
+}
+
+if (aievent==4)
+{
+if (_PlayerInRange(4))
+{
+	HUMAN_SETMODE_StandFast();
+	EndScript();
+}
+SetAlarmType(4,0);
+HUMAN_SETMODE_StandFast();
+HUMAN_Move("ge19_01");
+HUMAN_SetAlarm(0);
+HUMAN_SetAnim("%%cumvoda",300,300,1);
+delay (10000);
+HUMAN_SetAnim("",300,300,1);
+HUMAN_Move("ge19_03");
+HUMAN_TurnAt(cum);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedila1", 500, 500, 1);
+SetAlarmType(4,1);
+goto end;
+}
+
+HUMAN_SETMODE_StandFast();
+SetAlarmType(4,0);
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+HUMAN_SETMODE_Run();
+HUMAN_Move("ge19_01");
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(cum1);
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))			
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(648,0);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedila1", 500, 500, 1);
+goto end;
+}
+
+Whenever voda(_SignalReceived(3))			
+{
+HUMAN_SETMODE_Guard();
+SetAlarmType(4,0);
+delay(3000);
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("%%protahovani",300,300,0);
+delay (4550);
+HUMAN_SetAnim("",300,300,0);
+HUMAN_Move("ge19_02");
+HUMAN_SETMODE_Crouch();
+delay(3000);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("ge19_04");
+HUMAN_Move("ge19_05");
+HUMAN_Move("ge19_06");
+HUMAN_SetAnim("%%nabralvodu",400,400,0);
+delay (4850);
+HUMAN_SetAnim("",400,400,0);
+HUMAN_LookAround(1);
+delay (5000);
+HUMAN_Move("ge19_03");
+HUMAN_TurnAt(cum);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedila1", 500, 500, 1);
+SetAlarmType(4,1);
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+//-------------------------------------------------------------------------
+
+label end:

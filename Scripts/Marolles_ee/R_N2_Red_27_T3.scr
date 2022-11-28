@@ -1,0 +1,8 @@
+
+Frame FRM;		FRM_GetMyFrame(FRM);
+Frame R27;		FRM_FindFrame(R27, "Red_27");
+
+Whenever Range (_PlayerInRange(1);)
+{
+  SendSignal(R27, 13);
+}

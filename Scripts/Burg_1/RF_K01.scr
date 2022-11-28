@@ -1,0 +1,141 @@
+// RF_K01 - Reinf by Kubel
+// ------------------------------------------------
+
+Block
+{
+Frame Kubel;	FRM_FindFrame(Kubel, "Kubel_01");
+Frame P1;		FRM_FindFrame(P1, "RF_K02");
+Frame P2;		FRM_FindFrame(P2, "RF_K03");
+Frame P3;		FRM_FindFrame(P3, "RF_K04");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f063");
+
+Integer AIEvent;
+Integer InCar;
+
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+
+If(InCar == 1)
+{
+HUMAN_Drive("", 80);
+Delay(300);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+Delay(200);
+HUMAN_BoardVehicle("Kubel_01", 0, 0);
+HUMAN_SetOptimized(1);
+SetAlarmType(1023,1);
+HUMAN_SETMODE_Run();
+InCar = 0;
+}
+
+AIEvent = _RandomInt(1000);
+
+If(AIEvent > 700)
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+}
+
+If((AIEvent > 100) And (AIEvent < 701))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+}
+
+If(AIEvent < 101)
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+}
+
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Kubel_01", 1, 0);
+InCar = 1;
+HUMAN_Drive("haklx", 80);
+Delay(500);
+HUMAN_Drive("", 80);
+Delay(500);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+Delay(500);
+HUMAN_BoardVehicle("Kubel_01", 0, 0);
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(150);
+SetAlarmType(1023,1);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Kubel, 20);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever WTF (_SignalReceived(2))
+{
+HUMAN_Drive("", 80);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+HUMAN_BoardVehicle("Kubel_01", 0, 0);
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(150);
+SetAlarmType(1023,1);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Kubel, 20);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+
+Label END:

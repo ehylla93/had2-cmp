@@ -1,0 +1,118 @@
+// Ge_11
+
+Block
+{
+Frame ridic;
+	FRM_FindFrame(ridic, "ge_5");
+Frame speech;
+	FRM_FindFrame(speech, "speech3");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer mluv;
+	mluv=0;
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from transfer2.betonek, la_vagon32
+{
+	EnableSignal(1, false);
+	HUMAN_Suspend(false);
+	Delay(1000);
+	HUMAN_SETSIGHTRANGE(20);
+	HUMAN_TurnAt(ridic);
+}
+
+OnSignal(2)	// received from speech3
+{
+	HUMAN_Stop();
+	GoTo pokecavanie;
+}
+
+OnSignal(3)	// received from Ge_11_A1
+{
+///	EnableSignal(2, false);
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_11_02");
+	HUMAN_Move("Ge_11_03");
+	Delay(1000);
+	HUMAN_Move("Ge_11_02");
+	HUMAN_Move("Ge_11_01");
+	HUMAN_TurnAt(ridic);
+	HUMAN_SetOptimized(2);
+///	EnableSignal(2, true);
+	GoTo end;
+}
+
+OnSignal(4)	// received from objectives2
+{
+	printf("Ge_11: UNSUSPEND");
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Label pokecavanie:
+	mluv=_RandomInt(9)+1;
+	if(mluv==1)	{	HUMAN_SetAnim("%%mluvi", 500, 500, false);	}
+	if(mluv==2)	{	HUMAN_SetAnim("%%mluvi1", 500, 500, false);	}
+	if(mluv==3)	{	HUMAN_SetAnim("%%mluvi2", 500, 500, false);	}
+	if(mluv==4)	{	HUMAN_SetAnim("%%mluvi3", 500, 500, false);	}
+	if(mluv==5)	{	HUMAN_SetAnim("%%mluvi4", 500, 500, false);	}
+	if(mluv==6)	{	HUMAN_SetAnim("%%mluvi5", 500, 500, false);	}
+	if(mluv==7)	{	HUMAN_SetAnim("%%mluvi6", 500, 500, false);	}
+	if(mluv==8)	{	HUMAN_SetAnim("%%mluvi7", 500, 500, false);	}
+	if(mluv==9)	{	HUMAN_SetAnim("%%mluvi8", 500, 500, false);	}
+	Delay(7000);
+	GoTo pokecavanie;
+
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, false);
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	SetAlarmType(12, true);
+	HUMAN_SETSIGHTRANGE(60);
+	DisableSignals(true);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETAIMODE_Defensive();
+	}
+}
+
+OnDeath()
+{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Label end:

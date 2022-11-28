@@ -1,0 +1,42 @@
+// Obj 1 - Eliminate officers
+// -----------------------------------------------
+
+Block
+{ 
+	Frame S01;			FRM_FindFrame(S01, "AF1_20"); 
+	Frame S02;			FRM_FindFrame(S02, "AF1_17"); 
+	Frame S03;			FRM_FindFrame(S03, "AF1_55");
+	Frame S04;			FRM_FindFrame(S04, "AF1_49"); 
+	Frame S05;			FRM_FindFrame(S05, "NPC1"); 
+	Frame S06;			FRM_FindFrame(S06, "NPC2");  
+	
+
+	Integer Sniper_Count;	Sniper_Count = 0;
+
+	SetObjectiveStatus(1, 0);
+}
+
+
+Whenever Snipers_Killed1 (((_Actor_GetState(S01) == 0) And (_Actor_GetState(S02) == 0)) And (_Actor_GetState(S03) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 2)
+	{
+		Delay(4500);
+		SetObjectiveStatus(1, 1);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed2 (((_Actor_GetState(S04) == 0) And (_Actor_GetState(S05) == 0)) And (_Actor_GetState(S06) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 2)
+	{
+		Delay(4500);
+		SetObjectiveStatus(1, 1);
+		EndScript();
+	}
+}

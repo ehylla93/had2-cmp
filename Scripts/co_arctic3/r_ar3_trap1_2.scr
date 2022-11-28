@@ -1,0 +1,103 @@
+// momentalne to je na ... potom predelat !!!!!!!!!!!!!!!!!!
+Block
+  {
+     integer AIEvent;
+     integer pos = 1;
+  
+     HUMAN_SETAIMODE_aggressive();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SETMODE_Walk();
+     HUMAN_SetOptimized(1);
+     SetAlarmType(1023, True);
+     SetAlarmType(256, False);
+  }
+
+  HUMAN_Suspend(true);
+  Goto TheEnd;
+
+
+Whenever Phenix ( _PlayerInRange(65); )
+{
+  HUMAN_Suspend(False);
+  HUMAN_Move("T1_1");
+  pos = 2;
+  Goto TheEnd;
+}
+
+OnSignal(1)
+{
+  SetWhenever(Phenix, false);
+  HUMAN_Suspend(False);
+}
+
+If (pos == 1) { goto L1; }
+If (pos == 2) { goto L2; }
+If (pos == 3) { goto L3; }
+If (pos == 4) { goto L4; }
+
+label L1:
+  HUMAN_SETSIGHTRANGE(40);
+  HUMAN_SETHEARRANGE(50);
+  HUMAN_Move("T2_1");
+  pos = 2;
+  Delay(15000);
+  Goto TheEnd;
+label L2:
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETSIGHTRANGE(42);
+  HUMAN_SETHEARRANGE(55);
+  HUMAN_Move("T2_2");
+  pos = 3;
+  HUMAN_LookAround(3);
+  Delay(5000);
+label L3:
+  HUMAN_SETMODE_Silence();
+  HUMAN_SETSIGHTRANGE(45);
+  HUMAN_SETHEARRANGE(58);
+  HUMAN_Move("T2_3");
+  pos = 4;
+  HUMAN_LookAround(3);
+  Delay(25000);
+label L4:
+  HUMAN_Move("T2_4");
+  Goto TheEnd;
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Trap1 --- 2: ", AIEvent);
+      HUMAN_SETSIGHTRANGE(55);
+      HUMAN_SETHEARRANGE(70);
+    }
+  HUMAN_Stop();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  If (pos == 1) { goto L1; }
+  If (pos == 2) { goto L2; }
+  If (pos == 3) { goto L3; }
+  If (pos == 4) { goto L4; }
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) )  {  SendSignal(OBJ_K, 1); }
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

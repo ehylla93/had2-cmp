@@ -1,0 +1,77 @@
+// Schovanej v baraku a hlida banku se zb26
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame u1;		FRM_FindFrame(u1,"N2_G25");
+Frame u2;		FRM_FindFrame(u2,"N2_G26");
+Frame u3;		FRM_FindFrame(u3,"N2_G27");
+Frame u4;		FRM_FindFrame(u4,"N2_G28");
+Frame u5;		FRM_FindFrame(u5,"N2_G29");
+Frame u6;		FRM_FindFrame(u6,"N2_G30");
+Frame tank;		FRM_FindFrame(tank,"N2_G33");
+Frame hakl;		FRM_FindFrame(hakl,"N2_G36");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(u6, 1);
+Delay(500);
+SendSignal(u5, 1);
+Delay(5000);
+SendSignal(u4, 1);
+SendSignal(u3, 1);
+SendSignal(u2, 1);
+Delay(12000);
+SendSignal(u1, 1);
+SendSignal(tank, 1);
+Delay(15000);
+SendSignal(hakl, 1);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_Stop();
+HUMAN_SetSniper(True, 5);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(40))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Lie();
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Lie();
+Delay(1000);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

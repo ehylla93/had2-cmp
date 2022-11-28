@@ -1,0 +1,30 @@
+// AF1_cisterna_3 - explosion of cistern
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  FRAME cisterny_organizer;	FRM_FindFrame(cisterny_organizer, "dummy_cisterny_organizer");
+  FRAME me;      		FRM_GetMyFrame(me);
+  FRAME exp;			FRM_FindFrame(exp, "w_explosive_04");
+  FRAME exp_place;		FRM_FindFrame(exp_place, "m_nadrz.EXPL00");
+  FRAME letadlo;		FRM_FindFrame(letadlo, "la_macchi09");
+  FRAME hadice;		FRM_FindFrame(hadice, "m_af1_hadice_");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  block
+  {
+    MakeExplosion(exp_place, 3000000, 15000);		// odremovat
+    SaveGameValue(3, 0);
+    SendSignal(cisterny_organizer, 1);
+    FRM_SetOn(exp, false);
+    FRM_SetOn(hadice, false);
+    SetActorState(letadlo, 0);
+  }
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+

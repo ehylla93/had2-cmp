@@ -1,0 +1,156 @@
+// Spawnzones
+// ----------------------------------------------
+
+Block
+{
+Frame S1;			FRM_FindFrame(S1,"SF_G09");
+Integer Sn1;		Sn1 = 1;
+Frame S2;			FRM_FindFrame(S2,"SF_G10");
+Integer Sn2;		Sn2 = 1;
+Frame S3;			FRM_FindFrame(S3,"SF_G11");
+Integer Sn3;		Sn3 = 1;
+Frame S4;			FRM_FindFrame(S4,"SF_G12");
+Integer Sn4;		Sn4 = 1;
+Frame S5;			FRM_FindFrame(S5,"SF_G13");
+Integer Sn5;		Sn5 = 1;
+Frame S6;			FRM_FindFrame(S6,"SF_G14");
+Integer Sn6;		Sn6 = 1;
+Frame S7;			FRM_FindFrame(S7,"SF_G15");
+Integer Sn7;		Sn7 = 1;
+Frame S8;			FRM_FindFrame(S8,"SF_G16");
+Integer Sn8;		Sn8 = 1;
+Frame S9;			FRM_FindFrame(S9,"SF_G17");
+Integer Sn9;		Sn9 = 1;
+Frame S10;			FRM_FindFrame(S10,"SF_G18");
+Integer Sn10;		Sn10 = 1;
+
+Integer pocitac;
+		pocitac = 0;
+		
+MP_EnableSpawnZone("zone2", 1);
+}
+Goto AlarmCount;
+
+
+Label AlarmCount:
+
+Block
+{
+
+If(Sn1 == 1)
+{
+
+If(_Actor_GetState(S1)==0)
+{	
+pocitac=pocitac+1;		
+Sn1=0;	
+}	
+}
+
+If(Sn2 == 1)
+{
+
+If(_Actor_GetState(S2)==0)
+{
+pocitac=pocitac+1;
+Sn2=0;
+}
+}
+
+If(Sn3 == 1)
+{
+
+If(_Actor_GetState(S3)==0)
+{
+pocitac=pocitac+1;
+Sn3=0;
+}
+}
+
+If(Sn4 == 1)
+{
+
+If(_Actor_GetState(S4)==0)
+{
+pocitac=pocitac+1;
+Sn4=0;
+}
+}
+
+If(Sn5 == 1)
+{
+
+If(_Actor_GetState(S5)==0)
+{
+pocitac=pocitac+1;Sn5=0;
+}
+}
+
+If(Sn6 == 1)
+{
+
+If(_Actor_GetState(S6)==0)
+{
+pocitac=pocitac+1;
+Sn6=0;
+}
+}
+
+If(Sn7 == 1)
+{
+
+If(_Actor_GetState(S7)==0)
+{
+pocitac=pocitac+1;
+Sn7=0;
+}
+}
+
+If(Sn8 == 1)
+{
+
+If(_Actor_GetState(S8)==0)
+{
+pocitac=pocitac+1;
+Sn8=0;
+}
+}
+
+If(Sn9 == 1)
+{
+
+If(_Actor_GetState(S9)==0)
+{
+pocitac=pocitac+1;
+Sn9=0;
+}
+}
+
+If(Sn10 == 1)
+{
+
+If(_Actor_GetState(S10)==0)
+{
+pocitac=pocitac+1;
+Sn10=0;
+}
+}
+
+}
+
+If (pocitac > 7)
+{
+Delay(500);
+MP_EnableSpawnZone("zone2", 0);
+MP_EnableSpawnZone("zone3", 1);
+EndScript();
+}
+
+Delay(1000);
+goto AlarmCount;
+
+
+Label END:
+
+
+

@@ -1,0 +1,117 @@
+// AF3b_organizer
+// -------------------------------------------------------------------------------------------------------------
+
+Block {
+FRAME sound;				FRM_FindFrame(sound, "S_invaze");	// tiger driving sound
+FRAME radio;				FRM_FindFrame(radio, "m_prist_a03b_01");
+FRAME af_tankista_01;		FRM_FindFrame(af_tankista_01, "AF3b_tank01_01");
+FRAME af_tankista_04;		FRM_FindFrame(af_tankista_04, "AF3b_tank02_01");
+FRAME af01;					FRM_FindFrame(af01, "AF3b_01");
+FRAME af06;					FRM_FindFrame(af06, "AF3b_06");
+INTEGER deadcnt				= 0;
+INTEGER signal1				= 0;				// signal for vehicle drivers (SdKfZ, Opel)
+INTEGER signal2				= 0;				// signal for infantry
+INTEGER rnd					= 0;
+INTEGER time				= 10000;
+INTEGER setup;
+
+// 1st group
+  FRAME af11;				FRM_FindFrame(af11, "AF3b_11");
+  FRAME af14;				FRM_FindFrame(af14, "AF3b_14");
+  FRAME af17;				FRM_FindFrame(af17, "AF3b_17");
+  FRAME af20;				FRM_FindFrame(af20, "AF3b_20");
+  FRAME af23;				FRM_FindFrame(af23, "AF3b_23");
+  FRAME af31;				FRM_FindFrame(af31, "AF3b_31");
+
+// 2nd group
+  FRAME af12;				FRM_FindFrame(af12, "AF3b_12");
+  FRAME af15;				FRM_FindFrame(af15, "AF3b_15");
+  FRAME af18;				FRM_FindFrame(af18, "AF3b_18");
+  FRAME af21;				FRM_FindFrame(af21, "AF3b_21");
+  FRAME af24;				FRM_FindFrame(af24, "AF3b_24");
+  FRAME af32;				FRM_FindFrame(af32, "AF3b_32");
+
+// 3rd group
+  FRAME af13;				FRM_FindFrame(af13, "AF3b_13");
+  FRAME af16;				FRM_FindFrame(af16, "AF3b_16");
+  FRAME af19;				FRM_FindFrame(af19, "AF3b_19");
+  FRAME af22;				FRM_FindFrame(af22, "AF3b_22");
+  FRAME af25;				FRM_FindFrame(af25, "AF3b_25");
+  FRAME af33;				FRM_FindFrame(af33, "AF3b_33");
+
+// 4th group
+  FRAME af26;				FRM_FindFrame(af26, "AF3b_26");
+// af26 trigger for af27 - af30
+}
+
+setup = _RandomInt(100);
+
+If (setup > 50)
+{
+printf("Setup1 alarm raised (fast)");
+signal1 = 20;
+signal2 = 1;
+time = 30000;
+}
+else {
+printf("Setup2 no alarm (slow)");
+signal1 = 21;
+signal2 = 2;
+time = 20000;
+}
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever radio_used (_ACTOR_GetState(radio) == 2)
+{
+Delay(2000);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+FRM_SetOn(sound, true);
+SendSignal(af01, signal1);					// send signal to Opel1 driver
+Delay(10000);
+SendSignal(af_tankista_04, signal2);		// send signal to Tiger2 driver
+
+Delay(20000);
+SendSignal(af11, signal2);
+SendSignal(af14, signal2);
+SendSignal(af17, signal2);
+SendSignal(af20, signal2);
+SendSignal(af23, signal2);
+SendSignal(af31, signal2);
+
+Delay(time);
+
+SendSignal(af12, signal2);
+SendSignal(af15, signal2);
+SendSignal(af18, signal2);
+SendSignal(af21, signal2);
+SendSignal(af24, signal2);
+SendSignal(af32, signal2);
+
+SendSignal(af26, 1);
+
+Delay(time);
+
+SendSignal(af13, signal2);
+SendSignal(af16, signal2);
+SendSignal(af19, signal2);
+SendSignal(af22, signal2);
+SendSignal(af25, signal2);
+SendSignal(af33, signal2);
+
+Delay(20000);
+SendSignal(af06, signal1);				// send signal to Opel2 driver
+Delay(20000);
+SendSignal(af_tankista_01, signal2);	// send signal to Tiger1 driver
+
+Delay(40000);
+FRM_SetOn(sound, false);
+EndScript();
+
+Label END:

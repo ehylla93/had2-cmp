@@ -1,0 +1,289 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Guard();
+
+HUMAN_SETSIGHTRANGE(35);
+HUMAN_SETHEARRANGE(160);
+
+integer a;		a=1;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+integer k;
+integer d;
+
+frame cum1;		FRM_FindFrame(cum1, "Object268");
+frame cum2;		FRM_FindFrame(cum2, "z3ven3cum2");
+frame puf;		FRM_FindFrame(puf, "venek1puf");
+Frame detect;		FRM_FindFrame(detect, "Zonna4");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f024");
+
+}
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+
+goto end;
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+suspend=0;
+delay (500);
+SetAlarmType(1023,0);	
+SetAlarmType(883,1);		//bez kroku	
+goto kecej;
+}
+
+Whenever chodim(_SignalReceived(2))
+{
+SetAlarmType(4,1);		
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+goto chodim;
+}
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+label chodim:
+
+a=1;
+HUMAN_Move("z4nadrz_05");
+a=2;
+
+
+label 2:
+HUMAN_Move("z4nadrz_06");
+a=1;
+
+
+goto chodim;
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+label rozdel:
+if (a==1)	{ goto chodim; }
+if (a==2)	{ goto 2; }
+
+
+goto end;
+//---------------------------------------------------------------------------------------------------------
+
+label kecej:
+
+
+k=(_RandomInt(3));
+d=(_RandomInt(3000));
+d=(2000+d);
+
+if (k==0)
+{
+HUMAN_SetAnim("%%mluvi3",900,900,1);
+delay (1028);
+goto kecej;
+}
+
+if (k==1)
+{
+HUMAN_SetAnim("%%mluvi4",900,900,1);
+delay (1285);
+goto kecej;
+}
+
+if (k==2)
+{
+HUMAN_SetAnim("%%mluvi5",900,900,0);
+delay (1914);
+goto kecej;
+}
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(512,0);
+SetAlarmType(375,1);
+aievent=(_GetAlarmType());
+PrintfNumber("z4nadrz4 alarm c:",aievent);
+}
+
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	HUMAN_SetAnim("", 90, 90, 0);
+	block
+	{
+	HUMAN_SETSIGHTRANGE(40);
+	endx=1;
+	}
+	EndScript();
+	}
+
+
+if (aievent==4)
+{
+
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+
+HUMAN_Stop();
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+SetAlarmType(4,1);
+if (alarmpos==1)
+	{
+	HUMAN_TurnAt(cum1);
+	goto end;
+	}
+goto rozdel;
+}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+
+
+if (_LoadGameValue(5)==0)
+
+	{
+	//neni w zone
+	if (suspend==1)
+	{
+	block
+	{
+	SetAlarmType(1023,0);
+	SetAlarmType(274,1);		//slysim strelbu
+	DisableWhenevers(0);
+	DisableSignals(0);
+	}
+	}
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+if (suspend==1)
+	{
+		suspend=0;
+		HUMAN_Suspend(0);
+		SetAlarmType(375,1);
+
+	}
+
+
+	if (alarmpos==0)
+	{
+	HUMAN_Stop();
+	HUMAN_SetAnim("",90, 90, 0);
+	SetAlarmType(278,0);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SetAlarm(0);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("z4nadrz_07");
+	block
+	{
+	alarmpos=1;
+	SetAlarmType(278,1);
+	}
+	
+	HUMAN_WeaponUp(1);
+	}
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay (3000);
+SetAlarmType(278,1);				//strelba a kroky
+HUMAN_TurnAt(cum1);
+
+}
+
+
+
+
+if (aievent==512)
+{
+SetAlarmType(512,0);
+HUMAN_Stop();
+endx=1;
+EndScript();
+}
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("z4nadrz_07");
+HUMAN_TurnAt(cum1);
+goto end;
+}
+
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+
+

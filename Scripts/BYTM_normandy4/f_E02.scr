@@ -1,0 +1,68 @@
+// f_E02
+
+block
+{
+SetAlarmType(128,0);
+
+Frame reinf4;	FRM_FindFrame(reinf4, "reinf4");
+
+integer aievent;
+integer a = _RandomInt(4);
+}
+
+if(a==0) { HUMAN_SETAIMODE_Zombie(); }
+if(a==1) { HUMAN_SETAIMODE_Aggressive(); }
+else { HUMAN_SETAIMODE_Defensive(); }
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("f_E02 alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("f_E02 dead");
+SendSignal(reinf4, 1);
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(60))
+{
+if(_LoadGameValue(2)==1)
+{
+SetWhenever(PIR, 0); goto end;
+}
+else { HUMAN_Suspend(0); }
+}
+
+Label TALK:
+a=_RandomInt(7);
+if(a==0) { HUMAN_SetAnim("%%mluvi1", 300, 300, 0); }
+if(a==1) { HUMAN_SetAnim("%%mluvi2", 300, 300, 0); }
+if(a==2) { HUMAN_SetAnim("%%kecy1", 300, 300, 0); }
+if(a==3) { HUMAN_SetAnim("%%kecy2", 300, 300, 0); }
+if(a==4) { HUMAN_SetAnim("%%kecy3", 300, 300, 0); }
+if(a==5) { HUMAN_SetAnim("%%rozhovor", 300, 300, 0); }
+if(a==6) { HUMAN_SetAnim("%%rozhovor2", 300, 300, 0); }
+Delay(7000);
+goto TALK;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

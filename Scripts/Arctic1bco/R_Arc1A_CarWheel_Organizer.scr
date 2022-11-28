@@ -1,0 +1,162 @@
+// organizator a koordinator akci kolem zapadleho auta
+
+__SetupAutoLogging(true, "AUTIBAD.txt");
+
+Block
+{
+  integer Counter = 1;
+
+  Frame Wheel_1;		FRM_FindFrame(Wheel_1, "CarWheel_1");
+  Frame Wheel_2;		FRM_FindFrame(Wheel_2, "CarWheel_2");
+  Frame KoloAutiBad_1;	FRM_FindFrame(KoloAutiBad_1, "Auti_BAD.WHL01");
+  Frame KoloAutiBad_2;	FRM_FindFrame(KoloAutiBad_2, "Auti_BAD.WHR01");
+  Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+  Frame Kola;			FRM_FindFrame(Kola, "kola");
+  Frame AutiBadDriver;	FRM_FindFrame(AutiBadDriver, "AutiBad_Driver");
+  Frame Kanisternik;		FRM_FindFrame(Kanisternik, "Kanisternik");
+  Frame KanisterKorba;	FRM_FindFrame(KanisterKorba, "kanister_korba");
+  Frame EfektL;		FRM_FindFrame(EfektL, "dummy_Efekt_koloL");
+  Frame EfektR;		FRM_FindFrame(EfektR, "dummy_Efekt_koloR");
+  Frame OBJ;			FRM_FindFrame(OBJ, "objectives");
+  Frame turovani;		FRM_FindFrame(turovani, "s_turovani");
+
+// hidnout po explozi auticka
+  Frame B1;			FRM_FindFrame(B1, "Bedna_1");
+  Frame B2;			FRM_FindFrame(B2, "Bedna_2");
+  Frame B3;			FRM_FindFrame(B3, "Bedna_3");
+  Frame B4;			FRM_FindFrame(B4, "Bedna_4");
+  Frame B5;			FRM_FindFrame(B5, "Bedna_5");
+  Frame B6;			FRM_FindFrame(B6, "Bedna_6");
+  Frame B7;			FRM_FindFrame(B7, "Bedna_7");
+  Frame B8;			FRM_FindFrame(B8, "Bedna_8");
+  Frame B9;			FRM_FindFrame(B9, "Bedna_9");
+  Frame plachta;		FRM_FindFrame(plachta, "Auti_BAD.Box15");
+  integer proc_mi_to_sem_leze_dvakrat = 0;			// ???
+  
+  // INICIALIZACE !!!! musi byt aby to po resetu funovalo
+        FRM_SetOn(plachta, True);
+        FRM_SetOn(B1, True);
+        FRM_SetOn(B2, True);
+        FRM_SetOn(B3, True);
+        FRM_SetOn(B4, True);
+        FRM_SetOn(B5, True);
+        FRM_SetOn(B6, True);
+        FRM_SetOn(B7, True);
+        FRM_SetOn(B8, True);
+        FRM_SetOn(B9, True);
+        FRM_SetOn(KanisterKorba, False);
+}
+
+
+  SendSignal(KanisterKorba, 1); 	// hide
+
+///////////////////
+//Delay(10000);
+//SendSignal(MyFrm, 1);
+//////////////////
+
+  Goto TheEnd;
+
+
+OnSignal(1)	// od Alberta pred zrusenou cutsenu - probuzeni
+{
+  SendSignal(AutiBadDriver, 1);
+  SendSignal(Wheel_1, 5);
+  SendSignal(Wheel_2, 5);
+  Delay(2000);
+  SendSignal(MyFRM, 2);
+}
+
+OnSignal(2)
+{
+  SendSignal(Kola , 1);	
+  SendSignal(Wheel_1, 1);
+  SendSignal(Wheel_2, 1);
+  SendSignal(EfektL, 1);
+  SendSignal(EfektR, 1);
+  FRM_SetOn(turovani, true);	  // zvuk motoru 
+  Delay(6000);
+  If (counter == 1) {  SendSignal(KanisterKorba, 2); }	//unhide
+  If (counter == 7) 
+    { 
+       SendSignal(Wheel_1, 2);
+       SendSignal(Wheel_2, 2);
+       goto jedeee;
+     } else {
+       counter = counter + 1;
+     }
+  SendSignal(MyFRM, 2);
+}
+
+
+label jedeee:
+// unhide part of car (wheels)
+  SendSignal(KoloAutiBad_1 , 10);
+  SendSignal(KoloAutiBad_2 , 10);
+  SendSignal(Kola , 10);
+  SendSignal(AutiBadDriver, 10);
+  SendSignal(Wheel_1, 10);
+  SendSignal(Wheel_2, 10);
+
+OnSignal(20)
+{
+  Block
+   {
+      SendSignal(Kola, 10);
+      SendSignal(KoloAutiBad_1 , 10);
+      SendSignal(KoloAutiBad_2 , 10);
+      FRM_SetOn(turovani, false);	  // zvuk motoru 
+      SendSignal(Wheel_1, 2);
+      SendSignal(Wheel_2, 2);
+      SendSignal(EfektR, 2);   
+      SendSignal(EfektL, 2);   
+    }
+}
+
+OnDeath()
+{
+  Block
+  {
+    DisableSignals(True);
+    Printf("AUTO UMRELO !!!");
+  }
+  if ( proc_mi_to_sem_leze_dvakrat > 0) { goto TheEnd; }
+  Printf("AUTO UMRELO !!");
+  Block
+    {
+        Printf("AUTO UMRELO !");
+        proc_mi_to_sem_leze_dvakrat = proc_mi_to_sem_leze_dvakrat +1;
+        SendSignal(Kola, 10);
+        SendSignal(KoloAutiBad_1 , 10);
+        SendSignal(KoloAutiBad_2 , 10);
+        SendSignal(Wheel_1, 2);
+        SendSignal(Wheel_2, 2);
+        SendSignal(OBJ, 5);	// nepovinny OBJ - sejmout auto s nákladem
+        SaveGameValue(30, 99);	// pro cutsc 4 (auto) - má-li se vynechat , nebo pøerušit
+        FRM_CreateParticle(53, MyFRM);
+        FRM_CreateParticle(43, MyFRM);  
+        MakeExplosion(MyFRM, 5000000, 15000); 
+        PlaySound(6, 6);
+// Tady hidnout bedny ! + plachtu
+        FRM_SetOn(plachta, False);
+        FRM_SetOn(B1, False);
+        FRM_SetOn(B2, False);
+        FRM_SetOn(B3, False);
+        FRM_SetOn(B4, False);
+        FRM_SetOn(B5, False);
+        FRM_SetOn(B6, False);
+        FRM_SetOn(B7, False);
+        FRM_SetOn(B8, False);
+        FRM_SetOn(B9, False);
+        FRM_SetOn(KanisterKorba, False);
+    }
+  Printf("AUTO UMRELO");
+  EndScript();
+}
+
+
+OnCutscene(4){}
+OnCutsceneDone(4) {SendSignal(MyFRM, 2);}
+
+label TheEnd:
+  Printf("NA auta SCR. je na TheEnd");

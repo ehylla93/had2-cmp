@@ -1,0 +1,179 @@
+
+// Enemy Reinforcements
+// --------------------------------------
+
+Block
+{
+Frame G01;		FRM_FindFrame(G01,"In_G13");
+Frame G02;		FRM_FindFrame(G02,"In_G03");
+Frame G03;		FRM_FindFrame(G03,"In_G04");
+Frame G04;		FRM_FindFrame(G04,"In_G05");
+Frame G05;		FRM_FindFrame(G05,"In_G08");
+Frame G06;		FRM_FindFrame(G06,"In_G09");
+Frame G07;		FRM_FindFrame(G07,"In_G18");
+Frame G08;		FRM_FindFrame(G08,"In_G41");
+
+Frame R01;		FRM_FindFrame(R01,"RF_G53");
+Frame R02;		FRM_FindFrame(R02,"RF_G54");
+Frame R03;		FRM_FindFrame(R03,"RF_G55");
+Frame R04;		FRM_FindFrame(R04,"RF_G56");
+Frame R05;		FRM_FindFrame(R05,"RF_K01");
+Frame R06;		FRM_FindFrame(R06,"RF_K02");
+Frame R07;		FRM_FindFrame(R07,"RF_K03");
+Frame R08;		FRM_FindFrame(R08,"RF_K04");
+
+Frame R09;		FRM_FindFrame(R09,"RS_H66");
+Frame R10;		FRM_FindFrame(R10,"RS_H67");
+Frame R11;		FRM_FindFrame(R11,"RS_H68");
+Frame R12;		FRM_FindFrame(R12,"RS_H69");
+Frame R13;		FRM_FindFrame(R13,"RS_H70");
+Frame R14;		FRM_FindFrame(R14,"RS_H71");
+
+Frame R15;		FRM_FindFrame(R15,"RS_T01");
+Frame R16;		FRM_FindFrame(R16,"RS_T02");
+Frame R17;		FRM_FindFrame(R17,"RS_T03");
+
+Frame R18;		FRM_FindFrame(R18,"RS_T04");
+Frame R19;		FRM_FindFrame(R19,"RS_T05");
+Frame R20;		FRM_FindFrame(R20,"RS_T06");
+
+Frame R21;		FRM_FindFrame(R21,"RS_G57");
+Frame R22;		FRM_FindFrame(R22,"RS_G58");
+Frame R23;		FRM_FindFrame(R23,"RS_G59");
+Frame R24;		FRM_FindFrame(R24,"RS_G60");
+Frame R25;		FRM_FindFrame(R25,"RS_G61");
+Frame R26;		FRM_FindFrame(R26,"RS_G62");
+Frame R27;		FRM_FindFrame(R27,"RS_G63");
+Frame R28;		FRM_FindFrame(R28,"RS_G64");
+Frame R29;		FRM_FindFrame(R29,"RS_G65");
+
+Frame R30;		FRM_FindFrame(R30,"RS_G72");
+Frame R31;		FRM_FindFrame(R31,"RS_G73");
+Frame R32;		FRM_FindFrame(R32,"RS_G74");
+Frame R33;		FRM_FindFrame(R33,"RS_G75");
+Frame R34;		FRM_FindFrame(R34,"RS_G76");
+
+Frame Spawn;	FRM_FindFrame(Spawn,"Spawnzones");
+Frame Documents;
+
+Integer Killed;
+Integer Select;
+}
+
+
+Whenever Reinf_Incoming ((_Actor_GetState(G08) == 0) OR (_MP_IsItemInTeamInventory(1, 280, Documents)))
+{
+SetObjectiveStatus(4, 0);
+Select = _RandomInt(3);
+
+If(Select == 0)
+{
+Delay(15000);
+SendSignal(Spawn, 1);
+SendSignal(R09,1);SendSignal(R10,1);SendSignal(R11,1);
+SendSignal(R12,1);SendSignal(R13,1);SendSignal(R14,1);
+Delay(10000);
+SendSignal(R15,1);SendSignal(R16,1);SendSignal(R17,1);
+Delay(10000);
+SendSignal(R18,1);SendSignal(R19,1);SendSignal(R20,1);
+Delay(23000);
+SendSignal(R21,1);SendSignal(R22,1);SendSignal(R23,1);
+SendSignal(R24,1);SendSignal(R25,1);SendSignal(R26,1);
+SendSignal(R27,1);SendSignal(R28,1);SendSignal(R29,1);
+SendSignal(R30,1);SendSignal(R31,1);SendSignal(R32,1);
+SendSignal(R33,1);SendSignal(R34,1);
+}
+
+If(Select == 1)
+{
+SendSignal(Spawn, 1);
+SendSignal(R15,2);SendSignal(R16,1);SendSignal(R17,1);
+Delay(10000);
+SendSignal(R09,1);SendSignal(R10,1);SendSignal(R11,1);
+SendSignal(R12,1);SendSignal(R13,1);SendSignal(R14,1);
+Delay(10000);
+SendSignal(R18,2);SendSignal(R19,1);SendSignal(R20,1);
+Delay(23000);
+SendSignal(R21,1);SendSignal(R22,1);SendSignal(R23,1);
+SendSignal(R24,1);SendSignal(R25,1);SendSignal(R26,1);
+SendSignal(R27,1);SendSignal(R28,1);SendSignal(R29,1);
+}
+
+If(Select == 2)
+{
+Delay(35000);
+SendSignal(Spawn, 1);
+SendSignal(R18,3);SendSignal(R19,1);SendSignal(R20,1);
+Delay(10000);
+SendSignal(R15,3);SendSignal(R16,1);SendSignal(R17,1);
+Delay(10000);
+SendSignal(R09,1);SendSignal(R10,1);SendSignal(R11,1);
+SendSignal(R12,1);SendSignal(R13,1);SendSignal(R14,1);
+SendSignal(R21,2);SendSignal(R22,2);SendSignal(R23,2);
+SendSignal(R24,2);SendSignal(R25,2);SendSignal(R26,2);
+SendSignal(R27,2);SendSignal(R28,2);SendSignal(R29,2);
+SendSignal(R30,1);SendSignal(R31,1);SendSignal(R32,1);
+SendSignal(R33,1);SendSignal(R34,1);
+}
+
+EndScript();
+}
+
+
+Label ReinfSelect:
+
+If(_Actor_GetState(G01) == 0)
+{
+Killed = Killed + 1;
+}
+
+If(_Actor_GetState(G02) == 0)
+{
+Killed = Killed + 1;
+}
+
+If(_Actor_GetState(G03) == 0)
+{
+Killed = Killed + 1;
+}
+
+If(_Actor_GetState(G04) == 0)
+{
+Killed = Killed + 1;
+}
+
+If(_Actor_GetState(G05) == 0)
+{
+Killed = Killed + 1;
+}
+
+If(_Actor_GetState(G06) == 0)
+{
+Killed = Killed + 1;
+}
+
+If(_Actor_GetState(G07) == 0)
+{
+Killed = Killed + 1;
+}
+
+If(Killed > 6)
+{
+Delay(7000);
+SendSignal(R05, 1);
+SendSignal(R06, 1);
+SendSignal(R07, 1);
+SendSignal(R08, 1);
+Delay(18000);
+SendSignal(R01, 1);
+SendSignal(R02, 1);
+SendSignal(R03, 1);
+SendSignal(R04, 1);
+goto END;
+}
+
+goto ReinfSelect;
+
+
+
+Label END:

@@ -1,0 +1,60 @@
+// Chodi lesem 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp1;	FRM_FindFrame(Cp1,"Cp_St_01");
+Frame Cp2;	FRM_FindFrame(Cp2,"Cp_St_01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+OnSignal(1){
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(86);
+HUMAN_SETHEARRANGE(86);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Guard();
+goto Patrola;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Patrola:
+HUMAN_MoveToFrame(Cp1, 1);
+HUMAN_MoveToFrame(Cp2, 1);
+goto Patrola;
+
+Label END:

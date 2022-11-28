@@ -1,0 +1,229 @@
+//----------------------Reinf.BodyCount----------------------
+//----------------------Used to re-activate first spawn----------------------
+Block
+{
+Frame R00;	FRM_FindFrame(R00, "ER00");
+Frame R01;	FRM_FindFrame(R01, "ER01");
+Frame R02;	FRM_FindFrame(R02, "ER02");
+Frame R03;	FRM_FindFrame(R03, "ER03");
+Frame R04;	FRM_FindFrame(R04, "ER04");
+Frame R05;	FRM_FindFrame(R05, "ER05");
+Frame R06;	FRM_FindFrame(R06, "ER06");
+Frame R07;	FRM_FindFrame(R07, "ER07");
+Frame R08;	FRM_FindFrame(R08, "ER08");
+Frame R09;	FRM_FindFrame(R09, "ER09");
+Frame R10;	FRM_FindFrame(R10, "ER10");
+Frame R11;	FRM_FindFrame(R11, "ER11");
+Frame R12;	FRM_FindFrame(R12, "ER12");
+Frame R13;	FRM_FindFrame(R13, "ER13");
+Frame R14;	FRM_FindFrame(R14, "ER14");
+Frame R15;	FRM_FindFrame(R15, "ER15");
+Frame R16;	FRM_FindFrame(R16, "ER16");
+Frame R17;	FRM_FindFrame(R17, "ER17");
+Frame R18;	FRM_FindFrame(R18, "ER18");
+Frame R19;	FRM_FindFrame(R19, "ER19");
+Integer count;			count=0;
+Integer a0;				a0=0;
+Integer a1;				a1=0;
+Integer a2;				a2=0;
+Integer a3;				a3=0;
+Integer a4;				a4=0;
+Integer a5;				a5=0;
+Integer a6;				a6=0;
+Integer a7;				a7=0;
+Integer a8;				a8=0;
+Integer a9;				a9=0;
+Integer a10;			a10=0;
+Integer a11;			a11=0;
+Integer a12;			a12=0;
+Integer a13;			a13=0;
+Integer a14;			a14=0;
+Integer a15;			a15=0;
+Integer a16;			a16=0;
+Integer a17;			a17=0;
+Integer a18;			a18=0;
+Integer a19;			a19=0;
+goto END;
+}
+
+OnSignal(1) 
+{
+printf ("Counter active");
+goto loop;
+}
+
+label loop:
+Block
+{
+If(_Actor_GetState(R00)==0)
+{
+If (a0==0)
+{
+count=count+1;
+a0=1;
+}
+}
+If(_Actor_GetState(R01)==0)
+{
+If (a1==0)
+{
+count=count+1;
+a1=1;
+}
+}
+If(_Actor_GetState(R02)==0)
+{
+If (a2==0)
+{
+count=count+1;
+a2=1;
+}
+}
+If(_Actor_GetState(R03)==0)
+{
+If (a3==0)
+{
+count=count+1;
+a3=1;
+}
+}
+If(_Actor_GetState(R04)==0)
+{
+If (a4==0)
+{
+count=count+1;
+a4=1;
+}
+}
+If(_Actor_GetState(R05)==0)
+{
+If (a5==0)
+{
+count=count+1;
+a5=1;
+}
+}
+If(_Actor_GetState(R06)==0)
+{
+If (a6==0)
+{
+count=count+1;
+a6=1;
+}
+}
+If(_Actor_GetState(R07)==0)
+{
+If (a7==0)
+{
+count=count+1;
+a7=1;
+}
+}
+If(_Actor_GetState(R08)==0)
+{
+If (a8==0)
+{
+count=count+1;
+a8=1;
+}
+}
+If(_Actor_GetState(R09)==0)
+{
+If (a9==0)
+{
+count=count+1;
+a9=1;
+}
+}
+If(_Actor_GetState(R10)==0)
+{
+If (a10==0)
+{
+count=count+1;
+a10=1;
+}
+}
+If(_Actor_GetState(R11)==0)
+{
+If (a11==0)
+{
+count=count+1;
+a11=1;
+}
+}
+If(_Actor_GetState(R12)==0)
+{
+If (a12==0)
+{
+count=count+1;
+a12=1;
+}
+}
+If(_Actor_GetState(R13)==0)
+{
+If (a13==0)
+{
+count=count+1;
+a13=1;
+}
+}
+If(_Actor_GetState(R14)==0)
+{
+If (a14==0)
+{
+count=count+1;
+a14=1;
+}
+}
+If(_Actor_GetState(R15)==0)
+{
+If (a15==0)
+{
+count=count+1;
+a15=1;
+}
+}
+If(_Actor_GetState(R16)==0)
+{
+If (a16==0)
+{
+count=count+1;
+a16=1;
+}
+}
+If(_Actor_GetState(R17)==0)
+{
+If (a17==0)
+{
+count=count+1;
+a17=1;
+}
+}
+If(_Actor_GetState(R18)==0)
+{
+If (a18==0)
+{
+count=count+1;
+a18=1;
+}
+}
+If(_Actor_GetState(R19)==0)
+{
+If (a19==0)
+{
+count=count+1;
+a19=1;
+}
+}
+}
+If (count>9)
+{
+Delay(2500);
+printf ("Spawn 1 re-activated");
+MP_EnableSpawnZone("zone1", 1);
+goto END;
+}
+delay(10000);
+goto loop;
+
+label END:

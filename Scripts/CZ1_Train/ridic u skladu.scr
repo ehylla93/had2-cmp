@@ -1,0 +1,110 @@
+// Ge_5 (talks with Ge_11, boards Opel)
+
+Block
+{
+Frame nakladak;
+	FRM_FindFrame(nakladak,"La_OpelE_");
+Frame look01;
+	FRM_FindFrame(look01, "zabradli_look01");
+Frame vojak;
+	FRM_FindFrame(vojak,"ge_11");
+Frame speech;
+	FRM_FindFrame(speech, "speech3");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f059");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from transfer2.betonek, la_vagon32
+{
+	EnableSignal(1, false);
+	HUMAN_Suspend(false);
+	HUMAN_SETSIGHTRANGE(20);
+	GoTo cuvanie;
+}
+
+OnSignal(2)	// received from speech3
+{
+	HUMAN_Stop();
+	GoTo poflakovani;
+}
+
+OnSignal(4)	// received from objectives2
+{
+	printf("Ge_5: UNSUSPEND");
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+
+Label poflakovani:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("zabradli");
+	HUMAN_TurnAt(look01);
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%zabradli1", 500, 500, true);
+	Delay(20000);
+	GoTo poflakovani;
+
+Label cuvanie:
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetAnim("", 500, 1500, false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("board");
+	Delay(1000);
+	HUMAN_TurnAt(nakladak);
+	HUMAN_BoardVehicle("La_OpelE_", true, 0);
+	HUMAN_SetOptimized(2);
+	Delay(10000);
+///	HUMAN_Drive("cuv1", 5);
+///	HUMAN_Drive("cuv3", 5);
+///	Delay(5000);
+	HUMAN_BoardVehicle("La_OpelE_", false, 0);
+	SendSignal(speech, 1);
+	GoTo poflakovani;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 50, 50, false);
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SETSIGHTRANGE(60);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETAIMODE_Defensive();
+}
+
+OnDeath()
+{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Label end:

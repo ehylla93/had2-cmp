@@ -1,0 +1,134 @@
+// Is in smal building near gate (HERMANN)
+
+Block
+  {
+     frame sit;		FRM_FindFrame(sit,"dummy_Herman_sit");
+     frame see;		FRM_FindFrame(see,"tv5okno14");
+     integer counter;	counter = 0;
+     integer AIEvent;	AIEvent = 99;
+     frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+     SetAlarmType(1023, True);
+     SetAlarmType(412, False);	// 4 + 8 + 16 + 128 + 256 = False
+  }
+
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;						
+  Whenever A (_PlayerInRange(100);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+OnCutScene(2) { HUMAN_SETEVENTS(False); }
+OnCutSceneDone(2) { HUMAN_SETEVENTS(True); }
+
+Label Home:
+  HUMAN_Move("Herman_4");
+  HUMAN_TurnAt(see);
+  Delay(1500);
+  HUMAN_ACTIVITY_Sit(sit);
+  goto TheEND;
+
+OnSignal(10) // someone is near
+{
+  HUMAN_SETMODE_StandFast();
+  HUMAN_Move("Herman_1");
+  HUMAN_Move("Herman_2");
+  HUMAN_Move("Herman_3");
+  HUMAN_WeaponOnArm(True);
+  Delay(500);
+  HUMAN_SETMODE_Crouch();
+  Delay(500);
+  Printf("Deje se neco?  Kdo vi co jsi zase videl!");
+//  Printf("What's going on here? You have seen ghosts!");
+  Delay(1500);
+}
+
+OnSignal(11) // someone is near
+{
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  Printf("Uz me s tema svejma srandickama pekne stves!");
+//  Printf("I really hate your stupid jokes!");
+  Delay(2500);
+  HUMAN_WeaponOnArm(False);
+  Delay(200);
+  HUMAN_Move("Herman_2");
+  HUMAN_Move("Herman_1");
+  HUMAN_Move("Herman_4");
+  Delay(500);
+  HUMAN_TurnAt(see);
+  Delay(350);
+  HUMAN_ACTIVITY_Sit(sit);
+}
+
+OnSignal(12) 
+{
+//  DisableAlarms(true);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_WeaponOnArm(False);
+  HUMAN_Move("Herman_3");
+  HUMAN_SETSIGHTRANGE(50); 
+  HUMAN_SETHEARRANGE(60);
+
+//  DisableAlarms(false);
+  label loop:
+    counter = counter + 1;
+    If (counter > 3 ) 
+      {
+          counter = 0;
+          Delay(1500);
+          goto home;
+       }
+    delay(500);
+    HUMAN_SetAnim("%%turnleft", 450, 500, False);                     
+    delay(2300);
+    HUMAN_SetAnim("%%turnright", 450, 500, False);
+    delay(2300);
+  goto loop;
+}
+
+OnAlarm()
+{
+  Block
+    {
+        DisableSignals(true);
+        SaveGameValue(29, 99);		// skip CSC 3 - roof 
+        AIEvent =_GetAlarmType(); 
+        PrintfNumber("AIE Herman: ", AIEvent);
+    }
+  HUMAN_SetAnim("", 150, 150, False);
+  HUMAN_Stop();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Aggressive();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, False);	
+  SetAlarmType(375, True);	
+  HUMAN_SetAlarm(False);
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Herman_4");
+  HUMAN_TurnAt(see);
+  goto TheEnd;
+}
+
+OnDeath()
+{
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+label TheEND:
+
+

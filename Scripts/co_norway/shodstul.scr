@@ -1,0 +1,8 @@
+
+frame chair;	FRM_GetMyFrame(chair);
+
+OnSignal(1)
+{
+SetActorState(chair, 1);
+EndScript();
+}

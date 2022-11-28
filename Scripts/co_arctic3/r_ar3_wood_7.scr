@@ -1,0 +1,73 @@
+// WOOD 7,8,9   a   4,5,6   patøi k sobe
+
+Block
+  {
+     integer AIEvent;
+     frame see;		FRM_FindFrame(see, "dummy_wood7_see");
+     frame Friend1;	FRM_FindFrame(Friend1, "Wood_8");
+     frame Friend2;	FRM_FindFrame(Friend2, "Wood_9");
+  
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SETMODE_Walk();
+     HUMAN_SetOptimized(2);
+     SetAlarmType(1023, False);
+  }
+
+  HUMAN_Suspend(true);
+  Goto TheEnd;
+
+///////////////////////////////////////////////// DOPLNIT poslani sig od obj 
+Whenever Aktivace ( _SignalReceived(1); )	
+{
+Label loop:
+  If ( !_PlayerInRange(25); )
+     {
+         HUMAN_Suspend(False);
+     } else {
+         Delay(2000);
+         goto loop;
+     } 
+}
+
+  SetAlarmType(1023, False);
+  SetAlarmType(511, True);
+  HUMAN_SETMODE_Lie();
+  Goto TheEnd;
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Wood 7: ", AIEvent);
+    }
+  HUMAN_Stop();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, False);
+  SetAlarmType(511, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("Wood7_END"); 
+  HUMAN_TurnAt(see);				
+}
+
+OnDeath()
+{
+  If (_ACTOR_GetState(Friend1)==1) {FRAME_SETAIMODE_Aggressive(Friend1);}
+  If (_ACTOR_GetState(Friend2)==1) {FRAME_SETAIMODE_Aggressive(Friend2);}
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

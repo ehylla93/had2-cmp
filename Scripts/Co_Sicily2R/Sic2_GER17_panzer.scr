@@ -1,0 +1,35 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Osadka Panzeru1 (strelec z machinegunu) Ger17 - strili si kam AI urci, ve scriptu me nezajima
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Block
+{
+  HUMAN_SetOptimized(2);
+  SetAlarmType(1023, False); 
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator druhe vlny
+Onsignal(1)		
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Panzer_1", true, 1);	
+  SetAlarmType(1023, True); 
+} 
+
+OnAlarm()  
+  {
+    Printf("machinguner Panzeru1 presel do AI ... GER17");      
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+  SetAlarmType(1023, True); 
+} 
+
+label TheEnd:

@@ -1,0 +1,28 @@
+// Bomb at Radio Camp
+// ----------------------------------------
+
+Block
+{
+Frame Radio_Bomb;		FRM_FindFrame(Radio_Bomb, "RC_Radio_Bomb");
+Frame Obj1;				FRM_FindFrame(Obj1, "obj1");
+Frame me;				FRM_GetMyFrame(me);
+Frame Get_Player;
+
+SetActorState(Radio_Bomb, 3);
+}
+
+// ----------------------------------------
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 3))
+{
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990433, 5, 30);
+Delay(100);
+SetActorState(Radio_Bomb, 0);
+}
+
+OnDeath()
+{
+SendSignal(Obj1, 1);
+EndScript();
+}

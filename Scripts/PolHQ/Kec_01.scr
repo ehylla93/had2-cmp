@@ -1,0 +1,55 @@
+// Kecy mezi SF_G27 a SF_G28 na ulici
+//------------------------------------------------
+
+Block
+{
+Frame G11;	FRM_FindFrame(G11, "SF_G27");
+Frame G12;	FRM_FindFrame(G12, "SF_G28");
+}
+
+
+
+Whenever Aktivace (_SignalReceived(1))
+{
+goto Kecam;
+}
+
+
+Whenever Alarm (_SignalReceived(2))
+{
+goto END;
+}
+
+//------------------------------------------------
+
+goto END;
+
+Label Kecam:
+Delay(20000);
+FRM_MorphSpeechDelayed(G11, 07991593, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991594, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991595, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991596, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991597, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991598, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991599, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991600, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991601, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991602, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991603, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991604, 5, 30);
+goto Kecam;
+
+
+Label END:

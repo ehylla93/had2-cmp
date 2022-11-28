@@ -1,0 +1,85 @@
+// BU1_obj_02 - Find documents
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame obj;		FRM_FindFrame(obj, "BU1_objectives");
+Frame doc;		FRM_FindFrame(doc, "BU1_doc");
+Frame tnt;		FRM_FindFrame(tnt, "Explosive_village");
+Frame Documents;
+
+Integer obj1complete;	obj1complete=0;
+
+SetWhenever(lost, false);
+SetWhenever(found, false);
+
+SetWhenever(docum2, 0);
+SetWhenever(lost2, 0);
+SetWhenever(found2, 0);
+
+SetActorState(tnt, 3);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever docum(_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+	SetWhenever(docum, 0);
+	SetWhenever(lost, true);
+	SendSignal(doc, 1);
+	GoTo end;
+}
+
+Whenever lost(!_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+	SetWhenever(found, true);
+	SendSignal(doc, 2);
+	GoTo end;
+}
+Whenever found(_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+	SetWhenever(lost, true);
+	SendSignal(doc, 3);
+	GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever docum2(_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+	SetWhenever(docum2, 0);
+	SetWhenever(lost2, true);
+	SetActorState(tnt, 0);
+	SendSignal(obj, 2);
+	GoTo end;
+}
+
+Whenever lost2(!_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+	SetWhenever(found2, true);
+	SendSignal(obj, 5);
+	GoTo end;
+}
+Whenever found2(_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+	SetWhenever(lost2, true);
+	SendSignal(obj, 6);
+	GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever signal(_SignalReceived(1))	// received from BU1_obj_01
+{
+	Block {
+	SetWhenever(docum, 0);
+	SetWhenever(lost, 0);
+	SetWhenever(found, 0);
+	}
+	SetWhenever(docum2, 1);
+	GoTo end;
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+Label end:

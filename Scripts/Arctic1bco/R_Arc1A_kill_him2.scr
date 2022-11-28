@@ -1,0 +1,12 @@
+frame Albert;		FRM_FindFrame(Albert, "rebel");
+
+Onsignal(1)
+{
+  PlaySound(2, 5);
+  Delay(800);
+  PlaySound(2, 5);
+  HUMAN_Kill(Albert);
+  Delay(500);
+  PlaySound(2, 5);
+  EndScript();
+}

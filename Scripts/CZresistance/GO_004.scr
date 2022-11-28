@@ -1,0 +1,105 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+FRM_SwitchFaceTexture(me,"e_f078");
+
+Frame B1;		FRM_FindFrame(B1,"Bx11");
+Frame S1;		FRM_FindFrame(S1,"GS_010");
+Frame S2;                                FRM_FindFrame(S2,"GS_009");
+Frame S3;                                FRM_FindFrame(S3,"GS_008");
+Frame O1;                                FRM_FindFrame(O1,"La_OpelE_1");
+
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Label SpeechLoop:
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1); 
+FRM_MorphSpeechDelayed(me, 07991515, 5, 30);
+FRM_MorphSpeechDelayed(me, 07991516, 5, 30);
+Delay(400);
+FRM_MorphSpeechDelayed(S2, 07991517, 5, 30);
+Delay(300);
+FRM_MorphSpeechDelayed(me, 07991518, 5, 30);
+Delay(250);
+FRM_MorphSpeechDelayed(S2, 07991519, 5, 30);
+Delay(7000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(B1, 0);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 1);
+Delay(170);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(30000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(S3,0);
+HUMAN_TurnAt(S3);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(me, 07991574, 5, 30);
+Delay(700);
+FRM_MorphSpeechDelayed(S3, 07991575, 5, 30);
+FRM_MorphSpeechDelayed(me, 07991576, 5, 30);
+Delay(400);
+FRM_MorphSpeechDelayed(me, 07991577, 5, 30);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Walk();
+HUMAN_MoveToFrame(O1,0);
+HUMAN_BoardVehicle("La_OpelE_1",  1, 1);
+Delay(10000);
+HUMAN_BoardVehicle("La_OpelE_1",  0, 0);
+HUMAN_MoveToFrame(S3,0);
+HUMAN_TurnAt(S3);
+FRM_MorphSpeechDelayed(me, 07991576, 5, 30);
+HUMAN_MoveToFrame(S2,0);
+HUMAN_TurnAt(S2);
+Delay(300);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(5000);
+goto SpeechLoop;
+
+
+//*SpeechLoop
+
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+//*DefaultLoad
+goto SpeechLoop;
+
+Label END:

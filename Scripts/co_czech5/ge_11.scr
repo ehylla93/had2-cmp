@@ -1,0 +1,63 @@
+//Tiger - Driver
+
+Frame count;		FRM_FindFrame(count, "dead_counter");
+Frame tiger;		FRM_FindFrame(tiger, "La_TigerEv_1");
+HUMAN_SetAlarm(False);
+SetAlarmType(1023, false);
+HUMAN_BoardVehicle("La_TigerEv_1", 1, 0);
+
+OnSignal(1)
+	{
+	Label xx:
+	HUMAN_Drive("xsec", 45);
+	HUMAN_Drive("A21", 45);
+	HUMAN_Drive("A22", 45);
+	HUMAN_Drive("A23", 45);
+	HUMAN_Drive("A24", 45);
+	HUMAN_Drive("A25", 45);
+
+	HUMAN_Drive("A26", 40);
+	HUMAN_Drive("A27", 40);
+	HUMAN_Drive("A28", 40);
+	HUMAN_Drive("A29", 40);
+	HUMAN_Drive("A30", 40);
+	HUMAN_Drive("A31", 40);
+	HUMAN_Drive("A32", 40);
+	HUMAN_Drive("A33", 40);
+	HUMAN_Drive("A34", 40);
+	HUMAN_Drive("A35", 40);
+	HUMAN_Drive("A36", 40);
+	HUMAN_Drive("A37", 40);
+	HUMAN_Drive("B67", 40);
+	HUMAN_Drive("B68", 40);
+	HUMAN_Drive("A38", 40);
+	HUMAN_Drive("A39", 40);
+	HUMAN_Drive("A40", 40);
+	HUMAN_Drive("A41", 40);
+	HUMAN_Drive("A42", 40);
+	HUMAN_Drive("A43", 30);
+	HUMAN_Drive("", 0);
+	}
+
+OnAlarm()
+	{
+	Printf("Driver alarmed");
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	Printf("Driver alarm done");
+	}
+	
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}
+

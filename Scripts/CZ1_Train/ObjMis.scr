@@ -1,0 +1,61 @@
+// THE STATION Objectives
+//-----------------------------------------------------------------------------------------------
+
+Block
+{
+SetObjectiveStatus(1, 4);	// zavorar - optional
+SetObjectiveStatus(2, 0);	// Trebissky
+SetObjectiveStatus(3, 4);	// exit
+SetObjectiveStatus(4, 4);	// civilians
+SetObjectiveStatus(5, 0);	// transport vehicles
+SetObjectiveStatus(6, 0);	// find the valuables
+
+Frame Ally1;		FRM_FindFrame(Ally1, "AF1_tank01_03");
+Frame Ally2;		FRM_FindFrame(Ally2, "Ge_");
+Frame Ally3;		FRM_FindFrame(Ally3, "posila2b");
+
+//Frame opelE;	FRM_FindFrame(opelE, "La_OpelE_");
+//Frame kubel1;	FRM_FindFrame(kubel1, "la_kubelW_");
+
+}
+//------------------------------------------------------------------------------------------------
+
+
+Whenever SUCCESS (_SignalReceived(8))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993607);
+SetObjectiveStatus(2, 1);
+Delay(3000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Zavorar_Ok(_SignalReceived(4))	
+{
+SetObjectiveStatus(1, 1);
+GoTo end;
+}
+
+
+//Whenever killed (((_Actor_GetState(Ally1)==0) OR (_Actor_GetState(Ally2)==0) OR (_Actor_GetState(Ally3)==0)))
+//{
+//SetObjectiveStatus(4, 2);
+//Delay(3500);
+//SetObjectiveStatus(4, 3);
+//EndScript();
+//}
+
+
+//------------------------------------------------------------------------------------------------------
+
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993606);
+Delay(5000);
+SUBTITLES_SetText(52999704);
+Delay(5000);
+SUBTITLES_SetOn(0);
+GoTo end;
+
+Label end:

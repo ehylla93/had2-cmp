@@ -1,0 +1,36 @@
+// Obj 3 - Destroy the Enemy Heavy Equipment
+// -----------------------------------------
+
+Block
+{
+Frame T1;	FRM_FindFrame(T1,"La_tiger_1");
+Frame T2;	FRM_FindFrame(T2,"La_tiger_2");
+Frame T3;	FRM_FindFrame(T3,"La_tiger_3");
+
+Frame K1;	FRM_FindFrame(K1,"Kanon17a");
+Frame K2;	FRM_FindFrame(K2,"Kanon17b");
+Frame K3;	FRM_FindFrame(K3,"Kanon17c");
+Frame K4;	FRM_FindFrame(K4,"Kanon17d");
+Frame K5;	FRM_FindFrame(K5,"Kanon17e");
+Frame K6;	FRM_FindFrame(K6,"Kanon17f");
+
+Frame Obj6;	FRM_FindFrame(Obj6,"obj4");
+
+SetObjectiveStatus(3, 0);
+}
+
+// -----------------------------------------
+
+Whenever Heavy_Equipment_Destroyed (((((((((_Actor_GetState(T1)==0) And (_Actor_GetState(T2)==0)) And (_Actor_GetState(T3)==0)) And (_Actor_GetState(K1)==2)) And (_Actor_GetState(K2)==2)) And (_Actor_GetState(K3)==2)) And (_Actor_GetState(K4)==2)) And (_Actor_GetState(K5)==2)) And (_Actor_GetState(K6)==2))
+{
+Delay(1500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(16993207);
+Delay(3000);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetText(17993413);
+Delay(3000);
+SendSignal(Obj6, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

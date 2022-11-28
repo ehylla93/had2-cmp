@@ -1,0 +1,16 @@
+Frame z4_gener1;	FRM_FindFrame (z4_gener1,"z4_gener1");
+Frame z4_gener2;	FRM_FindFrame (z4_gener2,"z4_gener2");
+
+
+
+
+Whenever je(_PlayerInRange(8))
+{
+
+SendSignal (z4_gener1,1);
+SendSignal (z4_gener2,1);
+
+}
+
+
+SetWheneverTime(je, 100);

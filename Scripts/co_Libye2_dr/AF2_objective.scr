@@ -1,0 +1,268 @@
+// AF2_obj - objective script
+// --------------------------
+// Variables definition
+Block
+{
+Frame Sniper;	FRM_FindFrame(Sniper, "AF2_B04");
+
+Frame add_10;
+	FRM_FindFrame(add_10, "Add_10");
+Frame add_30;
+	FRM_FindFrame(add_30, "Add_30");
+Frame add_31;
+	FRM_FindFrame(add_31, "Add_31");
+Frame add_32;
+	FRM_FindFrame(add_32, "Add_32");
+Frame add_33;
+	FRM_FindFrame(add_33, "Add_33");
+Frame add_34;
+	FRM_FindFrame(add_34, "Add_34");
+Frame add_35;
+	FRM_FindFrame(add_35, "Add_35");
+Frame add_36;
+	FRM_FindFrame(add_36, "Add_36");
+Frame add_37;
+	FRM_FindFrame(add_37, "Add_37");
+Frame add_38;
+	FRM_FindFrame(add_38, "Add_38");
+Frame add_39;
+	FRM_FindFrame(add_39, "Add_39");
+Frame add_40;
+	FRM_FindFrame(add_40, "Add_40");
+Frame af2_44;
+	FRM_FindFrame(af2_44, "AF2_44");
+Frame af2_45;
+	FRM_FindFrame(af2_45, "AF2_45");
+Frame af2_46;
+	FRM_FindFrame(af2_46, "AF2_46");
+Frame af2_47;
+	FRM_FindFrame(af2_47, "AF2_47");
+Frame af2_48;
+	FRM_FindFrame(af2_48, "AF2_48");
+Frame af2_49;
+	FRM_FindFrame(af2_49, "AF2_49");
+Frame af2_99;
+	FRM_FindFrame(af2_99, "AF2_99");
+Frame bf2_01;
+	FRM_FindFrame(bf2_01, "BF2_01");
+Frame bf2_02;
+	FRM_FindFrame(bf2_02, "BF2_02");
+Frame bf2_03;
+	FRM_FindFrame(bf2_03, "BF2_03");
+Frame bf2_04;
+	FRM_FindFrame(bf2_04, "BF2_04");
+Frame bf2_05;
+	FRM_FindFrame(bf2_05, "BF2_05");
+Frame bf2_06;
+	FRM_FindFrame(bf2_06, "BF2_06");
+Frame bf2_12;
+	FRM_FindFrame(bf2_12, "BF2_12");
+Frame texty;
+	FRM_FindFrame(texty, "AF2_texty");
+Frame opel1;
+	FRM_FindFrame(opel1, "Opel1");
+Frame opel2;
+	FRM_FindFrame(opel2, "Opel2");
+Frame opel3;
+	FRM_FindFrame(opel3, "Opel3");
+Frame opel4;
+	FRM_FindFrame(opel4, "Opel4");
+Frame opel5;
+	FRM_FindFrame(opel5, "Opel5");
+Frame opelflak1;
+	FRM_FindFrame(opelflak1, "Opelflak1");
+Frame opelflak2;
+	FRM_FindFrame(opelflak2, "Opelflak2");
+Frame kubel;
+	FRM_FindFrame(kubel, "la_kubelAf_");
+Frame jeep1;
+	FRM_FindFrame(jeep1, "Jeep1");
+Frame jeep2;
+	FRM_FindFrame(jeep2, "Jeep2");
+Integer gametype;
+	gametype=666;
+}
+gametype=_SPGetGameType();
+SetWhenever(players, false);
+// ---------------------------
+// Whenever keywords and signals
+Whenever player(_MP_AllTeamMembersAreInRange(1, 30))
+{
+	If((_ACTOR_GetState(af2_44)==0) AND (_ACTOR_GetState(af2_45)==0) AND (_ACTOR_GetState(af2_46)==0) AND (_ACTOR_GetState(af2_47)==0) AND
+(_ACTOR_GetState(add_10)==0) AND (_ACTOR_GetState(add_30)==0) AND
+(_ACTOR_GetState(add_31)==0) AND (_ACTOR_GetState(add_32)==0) AND
+(_ACTOR_GetState(add_32)==0) AND (_ACTOR_GetState(add_33)==0) AND
+(_ACTOR_GetState(add_34)==0) AND (_ACTOR_GetState(add_35)==0) AND
+(_ACTOR_GetState(add_36)==0) AND (_ACTOR_GetState(add_37)==0) AND
+(_ACTOR_GetState(add_38)==0) AND (_ACTOR_GetState(add_39)==0) AND
+(_ACTOR_GetState(add_40)==0) AND (_ACTOR_GetState(bf2_01)==0) AND
+(_ACTOR_GetState(bf2_02)==0) AND (_ACTOR_GetState(bf2_03)==0) AND
+(_ACTOR_GetState(bf2_04)==0) AND (_ACTOR_GetState(bf2_05)==0) AND
+(_ACTOR_GetState(bf2_06)==0) AND (_ACTOR_GetState(bf2_12)==0) AND
+(_ACTOR_GetState(af2_99)==0) AND  
+(_ACTOR_GetState(af2_48)==0) AND (_ACTOR_GetState(af2_49)==0))
+	{
+//	printf("presiel si kanonom");
+	SetObjectiveStatus(1, 1);
+	SendSignal(texty, 1);
+	SetWhenever(players, true);
+	GoTo end;
+	}
+	Delay(1000);
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+Whenever players(_MP_AllTeamMembersAreInRange(1, 30))
+{
+	If(_FrameInRange(opel1)<30)
+	{
+	printf("Opel1 je v range");
+	If(_ACTOR_GetState(opel1)==1)
+		{
+	printf("Opel1 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opel2)<30)
+	{
+	printf("Opel2 je v range");
+	If(_ACTOR_GetState(opel2)==1)
+		{
+	printf("Opel2 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opel3)<30)
+	{
+	printf("Opel3 je v range");
+	If(_ACTOR_GetState(opel3)==1)
+		{
+	printf("Opel3 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opel4)<30)
+	{
+	printf("Opel4 je v range");
+	If(_ACTOR_GetState(opel4)==1)
+		{
+	printf("Opel4 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opel5)<30)
+	{
+	printf("Opel5 je v range");
+	If(_ACTOR_GetState(opel5)==1)
+		{
+	printf("Opel5 je v range a nie je poskodeny");
+	SaveGameValue(33, 3);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opelflak1)<30)
+	{
+	printf("Opelflak1 je v range");
+	If(_ACTOR_GetState(opelflak1)==1)
+		{
+	printf("Opelflak1 je v range a nie je poskodeny");
+	SaveGameValue(33, 4);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(opelflak2)<30)
+	{
+	printf("Opelflak2 je v range");
+	If(_ACTOR_GetState(opelflak2)==1)
+		{
+	printf("Opelflak2 je v range a nie je poskodeny");
+	SaveGameValue(33, 4);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(kubel)<30)
+	{
+	printf("Kubel je v range");
+	If(_ACTOR_GetState(kubel)==1)
+		{
+	printf("Kubel je v range a nie je poskodeny");
+	SaveGameValue(33, 2);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(jeep1)<30)
+	{
+	printf("Jeep1 je v range");
+	If(_ACTOR_GetState(jeep1)==1)
+		{
+	printf("Jeep1 je v range a nie je poskodeny");
+	SaveGameValue(33, 1);
+			GoTo dalej;	}
+	}
+	If(_FrameInRange(jeep2)<30)
+	{
+	printf("Jeep2 je v range");
+	If(_ACTOR_GetState(jeep2)==1)
+		{
+	printf("Jeep2 je v range a nie je poskodeny");
+	SaveGameValue(33, 1);
+			GoTo dalej;	}
+	}
+	// jeep = 1, kubel = 2, opel = 3, opel flak = 4
+	printf("OBJECTIVE: hraci su v range, ale nemaju sebou vozidlo testujem znova");
+	Delay(1000);
+	SetWhenever(players, true);
+	GoTo end;
+	Label dalej:
+	printf("zhromazdil si sa kdesi v pici");
+	SendSignal(texty, 2);
+	SetObjectiveStatus(2, 1);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_obj3
+{
+	printf("rozjebal si im vozovy park, zasa medaila naviac!");
+	SetObjectiveStatus(3, 1);
+	SendSignal(texty, 3);
+	GoTo end;
+}
+
+Whenever objfail((_ACTOR_GetState(jeep1)==0) AND (_ACTOR_GetState(jeep2)==0) AND (_ACTOR_GetState(kubel)==0) AND (_ACTOR_GetState(opelflak1)==0) AND (_ACTOR_GetState(opelflak2)==0) AND (_ACTOR_GetState(opel1)==0) AND (_ACTOR_GetState(opel2)==0) AND (_ACTOR_GetState(opel3)==0) AND (_ACTOR_GetState(opel4)==0) AND (_ACTOR_GetState(opel5)==0))
+{
+	SendSignal(texty, 5);
+	printf("tak to je fkunde... musis pesi, dojebal si to, chcipnes v pusti");
+	Delay(3000);
+	SetObjectiveStatus(1, 2);
+	SetObjectiveStatus(2, 2);
+	SetObjectiveStatus(3, 2);	// add this
+	GoTo end;
+}
+
+//OBJ3 - succ
+Whenever KokotNaVezi ( _Actor_GetState(Sniper)==0 )
+{
+	SetObjectiveStatus(3, 1);
+	SendSignal(texty, 8);
+	
+	GoTo end;
+}
+
+
+// ---------------------------
+// Starting pose
+SetObjectiveStatus(1, 0);	// prejst kanonom
+SetObjectiveStatus(2, 0);	// zhromazdit sa na exitpointe s funkcnym vozidlom
+SetObjectiveStatus(3, 0);	// kill a sniper
+//SetObjectiveStatus(3, 4);	// optional - sposobit co najvacsie skody na vozovom parku (6 vozidiel)
+
+//SetObjectiveStatus(4, 4);	// optional - vsetci musia prezit
+
+Delay(1000);
+SUBTITLES_SetOn(true);
+printf("prejst kanonom");
+SUBTITLES_SetText(53999901);
+Delay(3000);
+printf("zhromazdit sa s vozidlom");
+SUBTITLES_SetText(53999902);
+Delay(3000);
+SUBTITLES_SetOn(false);
+
+Label end:

@@ -1,0 +1,15 @@
+frame sound1;		frm_findframe(sound1,"S_ef1_hang03");
+frame sound2;		frm_findframe(sound2,"S_ef2_hang03");
+frame sound3;		frm_findframe(sound3,"S_ef1_hang04");
+
+integer rnd;	
+integer rnd_pause;
+
+label loop:
+rnd= _randomint(3) ;
+rnd_pause= _randomint(11000) +11000;
+if (rnd==1) {FRM_SetOn(sound1,true);}
+if (rnd==2) {FRM_SetOn(sound2,true);} 
+if (rnd==0) {FRM_SetOn(sound3,true);} 
+delay(rnd_pause);
+goto loop;

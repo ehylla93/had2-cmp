@@ -1,0 +1,11 @@
+
+Block {
+frame S6;	FRM_FindFrame(S6, "Static_6");
+}
+
+Whenever A (_PlayerInRange(8))
+{
+  SendSignal(S6, 10);
+  Delay(45000);
+  SetWhenever(A, True);
+}

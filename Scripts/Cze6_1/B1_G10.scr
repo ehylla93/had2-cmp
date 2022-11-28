@@ -1,0 +1,98 @@
+// B1_G10 - Hilltop Signaller and Sniper
+// ----------------------------------------
+
+Block
+{
+Frame Lavicka;	FRM_FindFrame(Lavicka,"B1_Lavicka1");
+Frame Sig;		FRM_FindFrame(Sig, "Tgt_G10_Signal");
+Frame Reinf;	FRM_FindFrame(Reinf, "Reinforcement");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f060");
+
+Integer Signal;		Signal = 0;
+
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(90);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+
+If (Signal == 0)
+{
+SendSignal(Reinf, 3);
+}
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SETSIGHTRANGE(153);
+HUMAN_SETHEARRANGE(110);
+
+If (Signal == 0)
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Lavicka, 3);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(Sig);
+Delay(200);
+HUMAN_Attack(Sig, 2000);
+SendSignal(Reinf, 4);
+Signal = 1;
+HUMAN_RemoveItemsFromStore(me, 261);
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveToFrame(Lavicka, 2);
+}
+
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Lie();
+HUMAN_WeaponUp(1);
+HUMAN_SetSniper(1, 10);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+
+HUMAN_SETMODE_Lie();
+HUMAN_WeaponUp(1);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 160))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%sedimtak", 1000, 1000, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

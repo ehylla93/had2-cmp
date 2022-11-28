@@ -1,0 +1,27 @@
+// Vybira Snipry kteri budou hlidat kampu 1/4
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"ZSnip1");
+Frame S2;	FRM_FindFrame(S2,"ZSnip2");
+Frame S3;	FRM_FindFrame(S3,"ZSnip3");
+Frame S4;	FRM_FindFrame(S4,"ZSnip4");
+
+Integer SnipVyber;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(2000);
+goto Vybiram;
+
+Label Vybiram:
+SnipVyber =_RandomInt(4);
+If(SnipVyber == 0){  SendSignal(S1, 1);}
+If(SnipVyber == 1){  SendSignal(S2, 1);}
+If(SnipVyber == 2){  SendSignal(S3, 1);}
+If(SnipVyber == 3){  SendSignal(S4, 1);}
+goto END;
+
+Label END:

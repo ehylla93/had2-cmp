@@ -1,0 +1,48 @@
+
+Block {
+frame treb;			FRM_FindFrame(treb, "Ci_");
+frame obj;			FRM_FindFrame(obj, "objectives");
+Frame me;			FRM_GetMyFrame(me);
+frame get_player;
+}
+
+
+Whenever chat(_SignalReceived(1))
+{
+SetWhenever(chat, false);
+SUBTITLES_SetOn(true);
+Delay(3000);
+FRM_GetNearestPlayer(treb, get_player);
+FRM_MorphSpeech(get_player, 18993657, 1000, 1000);
+Delay(7000);
+FRM_MorphSpeech(treb, 18993658, 1000, 1000);
+Delay(4500);
+FRM_GetNearestPlayer(treb, get_player);
+FRM_MorphSpeech(get_player, 18993659, 1000, 1000);
+Delay(5000);
+FRM_GetNearestPlayer(treb, get_player);
+FRM_MorphSpeech(get_player, 18993660, 1000, 1000);
+Delay(2500);
+FRM_MorphSpeech(treb, 18993661, 1000, 1000);	//"Freiberg has them... Gunter von Freiberg."
+Delay(4500);
+FRM_GetNearestPlayer(treb, get_player);
+FRM_MorphSpeech(get_player, 18993662, 1000, 1000);
+Delay(7500);
+FRM_MorphSpeech(treb, 18993663, 1000, 1000);
+Delay(3500);
+SendSignal(treb, 3);	//Kills Trebissky
+Delay(3500);
+FRM_GetNearestPlayer(treb, get_player);
+FRM_MorphSpeech(get_player, 18993664, 1000, 1000);
+Delay(5500);
+SUBTITLES_SetOn(false);
+SendSignal(obj, 1);
+}
+
+OnSignal(2)
+{
+SetWhenever(chat, false);
+SUBTITLES_SetOn(false);
+FRM_MorphSpeech(get_player, 0, 0, 0);
+FRM_MorphSpeech(treb, 0, 0, 0);
+}

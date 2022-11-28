@@ -1,0 +1,145 @@
+// PASSAGER
+block
+{
+Frame Runne1;		FRM_FindFrame(Runne1,"Runne1");
+Frame Runne2;		FRM_FindFrame(Runne2,"Runne2");
+Frame signals;		FRM_FindFrame(signals,"signals");
+
+Frame la_BmwR_;		FRM_FindFrame(la_BmwR_,"la_BmwR_");
+Frame hakl_na;		FRM_FindFrame(hakl_na,"hakl_na");
+Frame Ge27b1;		FRM_FindFrame(Ge27b1,"Ge27b1");
+
+Frame _expl2;			FRM_FindFrame(_expl2, "_expl2");
+
+Frame Dzone7;		FRM_FindFrame(Dzone7,"Dzone7");
+Frame Dzone8;		FRM_FindFrame(Dzone8,"Dzone8");
+Frame Dzone9;		FRM_FindFrame(Dzone9,"Dzone9");
+Frame Dzone10;		FRM_FindFrame(Dzone10,"Dzone10");
+Frame Dzone11;		FRM_FindFrame(Dzone11,"Dzone11");
+
+frame hakl;	FRM_FindFrame(hakl, "hakl3");
+Frame cum;	FRM_FindFrame(cum, "haklcum"); //mameaj haklcum2
+integer aievent;
+HUMAN_SETAIMODE_Defensive();
+}
+
+
+
+HUMAN_Suspend(1);
+
+goto end;
+
+
+Whenever go(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(0);
+
+SendSignal(Runne1, 1);
+SendSignal(Runne2, 1);
+delay (1000);
+HUMAN_BoardVehicle("la_BmwR_",  1, 0);
+
+goto chodim;
+}
+
+
+
+Whenever alarm(_SignalReceived(2))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_TurnAtNearestPlayer();
+block
+{
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+}
+
+goto chodim;
+
+}
+
+
+//------------------------------------------------------------
+label chodim:
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+delay (1000);
+
+HUMAN_Drive("B50",30);
+HUMAN_Drive("C8",30);
+HUMAN_Drive("C9",30);
+HUMAN_Drive("C10",30);
+HUMAN_Drive("C11",30);
+HUMAN_Drive("", 0);
+delay (1000);
+HUMAN_BoardVehicle("la_BmwR_",0,0);
+delay (1000);
+SendSignal(Runne1, 2);
+SendSignal(Runne2, 2);
+HUMAN_MoveToFrame(la_BmwR_, 10);
+delay (1000);
+HUMAN_Move("Ge31_4");
+delay (1000);
+HUMAN_TurnAtNearestPlayer();
+goto chodim;
+
+
+OnAlarm()
+{
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+delay (1000);
+SendSignal(Runne1, 2);
+SendSignal(Runne2, 2);
+
+block
+{
+HUMAN_BoardVehicle("la_BmwR_",  0, 0);
+DisableWhenevers(1);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+
+EndScript();
+}
+
+//------------------------------------------------------------
+
+OnAlarmDone()
+{
+
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_TurnAtNearestPlayer();
+goto chodim;
+}
+
+OnDeath()
+{
+
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+label end:

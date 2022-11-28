@@ -1,0 +1,58 @@
+block
+{
+Frame ge12;		Frm_FindFrame (ge12,"ge_12");
+integer zivy;	zivy=3;
+integer in;		in=0;
+}
+
+goto end;
+
+Whenever 13(_SignalReceived(13))
+{
+//ge13 mounted
+in=in+1;
+goto check;
+}
+
+Whenever 23(_SignalReceived(23))
+{
+//ge13 det
+zivy=zivy-1;
+goto check;
+}
+
+Whenever 14(_SignalReceived(14))
+{
+//ge14 mounted
+in=in+1;
+goto check;
+}
+
+Whenever 24(_SignalReceived(24))
+{
+//ge14 det
+zivy=zivy-1;
+goto check;
+}
+
+Whenever 15(_SignalReceived(15))
+{
+//ge15 mounted
+in=in+1;
+goto check;
+}
+
+Whenever 25(_SignalReceived(25))
+{
+//ge15 det
+zivy=zivy-1;
+goto check;
+}
+
+label check:
+if (in==zivy)
+{
+SendSignal (ge12,2);
+}
+
+label end:

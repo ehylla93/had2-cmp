@@ -1,0 +1,16 @@
+Frame z2_ven4;	FRM_FindFrame (z2_ven4,"z2_ven4");
+
+
+
+
+
+Whenever je(_PlayerInRange(11))
+{
+printf ("signal z2_ven4");
+SendSignal (z2_ven4,2);
+
+
+}
+
+
+

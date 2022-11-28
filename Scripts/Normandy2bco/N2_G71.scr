@@ -1,0 +1,55 @@
+// Stoji v budove u kubelu (Kubel1)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame MG;		FRM_FindFrame(MG,"N2_G75");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(MG, 1);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_Stop();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever player (_PlayerInRange(15))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SetOptimized(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

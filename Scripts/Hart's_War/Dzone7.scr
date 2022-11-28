@@ -1,0 +1,221 @@
+//CONDUCTEUR
+
+block
+
+{
+
+
+frame MyFRM;		FRM_GetMyFrame(MyFRM);
+FRAME Object032;	FRM_FindFrame(Object032, "la_citroen.Object03");
+  FRAME this;			FRM_GetMyFrame(this);
+  FRM_SwitchFaceTexture(this, "e_f079");
+
+Frame La_tiger_1;	FRM_FindFrame(La_tiger_1,"La_tiger_1");
+Frame Madam2;			FRM_FindFrame(Madam2, "Madam2");
+Frame Madam1;			FRM_FindFrame(Madam1, "Madam1");
+Frame la_BmwR_;		FRM_FindFrame(la_BmwR_,"la_BmwR_");
+Frame la_citroen;		FRM_FindFrame(la_citroen,"la_citroen");
+Frame Dzone8;		FRM_FindFrame(Dzone8,"Dzone8");
+
+
+SetAlarmType(1023, 0);
+integer aievent;
+}
+
+HUMAN_Suspend(1);
+
+
+goto end;
+
+//------------------------------------------------------------------------
+
+Whenever go(_SignalReceived(1))
+{
+
+
+
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(0);
+SendSignal(Dzone8,1);
+SendSignal(Madam1,1);
+SendSignal(Madam2,1);
+
+delay (1000);
+SendSignal(Madam1,2);
+
+HUMAN_BoardVehicle("la_citroen",1,0);
+delay (1000);
+HUMAN_Drive("B65",70);
+HUMAN_Drive("B50",70);
+HUMAN_Drive("B46",70);
+HUMAN_Drive("B44",70);
+HUMAN_Drive("B42",70);
+HUMAN_Drive("Hakl",70);
+HUMAN_Drive("", 0);
+delay (1000);
+HUMAN_BoardVehicle("la_citroen",0,0);
+delay (1000);
+SendSignal(Dzone8,2);
+SendSignal(La_tiger_1,3);
+
+HUMAN_TurnAtNearestPlayer();
+block
+{
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,0);
+SetAlarmType(1015,0);
+}
+goto chodim;
+}
+
+//-----------------------------------------------------------------------
+
+Whenever buch(_SignalReceived(2))
+{
+
+
+block
+{
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,0);
+SetAlarmType(1015,0);
+}
+goto end;
+}
+
+
+//------------------------------------------------------------
+
+OnAlarm()
+{
+SendSignal(Madam2,2);
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+}
+
+EndScript();
+}
+
+//------------------------------------------------------------
+
+label chodim:
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+SetAlarmType(1,0);
+SetAlarmType(2,0);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,0);
+SetAlarmType(64,0);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+
+HUMAN_MoveToFrame(la_citroen, 2);
+delay (1000);
+HUMAN_TurnAt(Madam2);
+SendSignal(Madam2,2);
+delay (1000);
+
+HUMAN_TurnAtNearestPlayer();
+goto chodim1;
+
+
+label chodim1:
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+SetAlarmType(1,0);
+SetAlarmType(2,0);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,0);
+SetAlarmType(64,0);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+
+HUMAN_MoveToFrame(la_citroen, 2);
+delay (1000);
+HUMAN_BoardVehicle("la_citroen",1,0);
+delay (4000);
+HUMAN_Drive("B30",70);
+HUMAN_Drive("B25",70);
+HUMAN_Drive("B20",70);
+delay (1000);
+HUMAN_Drive("bx2x5",30);
+delay (1000);
+HUMAN_Drive("bx2x6",70);
+HUMAN_Drive("", 0);
+delay (1000);
+HUMAN_BoardVehicle("la_citroen",0,0);
+delay (1000);
+HUMAN_WeaponOnArm(False);
+HUMAN_MoveToFrame(la_citroen, 1);
+HUMAN_TurnAt(la_citroen);
+HUMAN_SetAnim("%%mechanik", 300, 300, true);
+Delay(30000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+goto chodim3;
+
+label chodim3:
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_Move("Ge33_2");
+delay (1000);
+HUMAN_TurnAtNearestPlayer();
+delay (1000);
+HUMAN_MoveToFrame(la_citroen, 2);
+delay (1000);
+
+goto chodim3;
+
+
+OnAlarmDone()
+{
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(1023,0);
+SetAlarmType(1015,0);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+goto chodim;
+}
+
+OnDeath()
+{
+HUMAN_BoardVehicle("la_citroen",0,0);
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+label end:
+
+
+
+
+
+

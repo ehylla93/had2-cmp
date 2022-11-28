@@ -1,0 +1,11 @@
+
+Frame fueltboom;      	FRM_FindFrame(fueltboom, "m_nadrz_1.EXPL00");
+
+SaveGameValue(101, 0);
+
+OnDeath(){
+  printf("fuel tank 1 destroyed");
+  MakeExplosion(fueltboom, 2000000, 10000);
+  SaveGameValue(101, 1);
+  EndScript();
+}

@@ -1,0 +1,10 @@
+// 05_radio_play - Radio Sound
+
+FRAME radio_sound_1;	 FRM_FindFrame(radio_sound_1, "bytm_01");
+
+// ----------------------------------------
+
+OnDeath()
+{
+  FRM_SetOn(radio_sound_1, false);
+}

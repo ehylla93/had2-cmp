@@ -1,0 +1,57 @@
+// Snowing
+//-------------------------------------
+
+Block
+
+{
+   
+integer count;		
+count = 20000;
+   
+integer speed;		
+speed = 3500;    
+integer snow;		
+snow = 0; 
+}
+
+//------------------------------------
+
+
+Block
+{
+WEATHER_SetCount(count);
+   
+WEATHER_SetColorOut( 80, 80, 80, 0 );
+   
+WEATHER_SetColorIn( 70, 70, 50, 60 );
+   
+WEATHER_SetSpeed(speed);
+   
+WEATHER_SetSize(150, 150);
+   
+WEATHER_SetSpace(15, 15);       
+   
+
+
+WEATHER_SetOn(1);
+
+}
+goto Snezi;
+
+Label Snezi:
+Delay(450000);
+goto prestava;
+
+
+Label prestava:
+Delay(20000);
+count=count-1000;
+snow=snow+1;
+
+If(snow==19)
+{
+goto END;
+}
+goto prestava;
+
+Label end:

@@ -1,0 +1,85 @@
+
+// Nasledujici hodnoty se v initu naplni smysluplnou hodnotou
+Integer  unsuspend_range  = 10; 	
+Integer  alarm_sight_range = 180;       
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// 1   - blizka strelba    2   - strelba     4     - kroky                    8     - zvuky (OnUse)    16   - exploze
+// 32 - vidim                 64 - zraneni    128 - smrtelny vykrik    256 - friendly fire         512 - vidim mrtvolu
+// -------------------------------------------------------------------------------------------------------------
+SetAlarmType( 1023,  false );
+SetAlarmType( 255, true );
+
+
+// ----------------------------------------------------------------------------------------------------
+// AKTIVACE ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarm()
+{
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+      HUMAN_SETSIGHTRANGE( alarm_sight_range );
+      HUMAN_SetSniper(true, 200);
+      HUMAN_Move("RIF2_2");
+      EndScript();
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// KONEC ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarmDone()
+{
+     SetAlarmType( 1023,  false );
+     SetAlarmType( 255, true );
+     HUMAN_SetSniper(false, 200);
+     Block { DisableSignals(0);  DisableWhenevers(0); }
+     GoTo Walk;
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// SMRT
+// ----------------------------------------------------------------------------------------------------
+OnDeath()
+{
+      EndScript( );
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// SIGNALY
+// ----------------------------------------------------------------------------------------------------
+OnSignal(1)	// received from ...
+{
+    // Zde patri nejaky obsluzny kod     
+    GoTo end;
+}
+
+// ----------------------------------------------------------------------------------------------------
+// INIT
+// ----------------------------------------------------------------------------------------------------
+  Delay(300);  // Pro jistotu, at se stihnou nastavit GameValue
+  Block
+  {
+      unsuspend_range  = _LoadGameValue( 1 );
+      alarm_sight_range = _LoadGameValue( 2 );
+  }
+  HUMAN_SETAIMODE_Defensive();
+  Integer  number;
+
+Label Walk:
+  HUMAN_SetOptimized( 2 );
+  HUMAN_LookAround( 3 );
+Label Again:
+  HUMAN_Move("RIF2_1");
+  HUMAN_LookAround( 3 ); 
+  number= 2500 + _RandomInt(1500);
+  Delay(  number );
+  HUMAN_Move("RIF2_2");
+  GoTo Again;
+
+
+// ----------------------------------------------------------------------------------------------------
+Label End:
+

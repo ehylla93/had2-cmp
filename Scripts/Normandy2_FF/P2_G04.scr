@@ -1,0 +1,65 @@
+// Enemy near MG4
+// ---------------------------
+
+Block
+{
+Frame MG4;	FRM_FindFrame(MG4,"MG4");
+Frame Plan1;	FRM_FindFrame(Plan1,"m_mapa_1");
+Frame Plan2;	FRM_FindFrame(Plan2,"m_mapa_2");
+Frame Plan3;	FRM_FindFrame(Plan3,"m_mapa_3");
+
+SetAlarmType(1023,0); //all off
+
+}
+
+// ---------------------------
+
+OnDeath(){
+printf("P2_G04 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(2))
+{
+Delay(1500);
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(MG4, 15);
+Delay(900);
+HUMAN_BoardVehicle("MG4",  1, 0);	//test
+HUMAN_Attack(Plan1, 2750);
+HUMAN_Attack(Plan2, 2750);
+HUMAN_Attack(Plan3, 2800);
+HUMAN_BoardVehicle("MG4",  0, 0);	//test
+HUMAN_Attack(Plan1, 7000);
+Delay(1200);
+
+SetAlarmType(1023,1);
+HUMAN_SETAIMODE_Aggressive();
+goto END;
+}
+
+
+// ---------------------------
+
+HUMAN_SETSIGHTRANGE(98);
+HUMAN_SETHEARRANGE(98);
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

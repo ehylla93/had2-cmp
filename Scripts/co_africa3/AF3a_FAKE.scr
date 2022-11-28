@@ -1,0 +1,7 @@
+//Used as radio speaker
+
+Block {
+SetAlarmType(1023, false);
+}
+
+HUMAN_Suspend(true);

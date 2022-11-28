@@ -1,0 +1,20 @@
+Block
+{
+integer CO;
+frame B1;	FRM_FindFrame(B1, "tv5bran24");
+frame B2;	FRM_FindFrame(B2, "tv5bran35");
+}
+
+Delay(5000);
+goto TheEnd;
+
+OnSignal(1) {}
+
+Block
+ {
+  CO = _ACTOR_GetState(B1); 	SaveGameValue(250, CO);
+  CO = _ACTOR_GetState(B2); 	SaveGameValue(251, CO);
+ } 
+ Printf("BRANY - dokonceno ulozeni hodnot!");
+
+Label TheEnd:

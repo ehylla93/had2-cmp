@@ -1,0 +1,88 @@
+// BU2_Rx02 - suicidal madman
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame sherman;	FRM_FindFrame(sherman, "Sherman");
+Frame Rx02boom;	FRM_FindFrame(Rx02boom, "Rx02_boom");
+
+SetAlarmType(1023, false);	// 1, 2, 4, 8, 16, 32, 64, 128, 256, 512
+}
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	Block
+	{
+	//MakeExplosion(me, 1500000, 7);
+	//FRM_CreateParticle(41, me);
+	SetActorState(Rx02boom, 1);
+	HUMAN_RemoveItemsFromStore(me, 3);
+	HUMAN_RemoveItemsFromStore(me, 173);
+	HUMAN_RemoveItemsFromStore(me, 173);
+	}
+	EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever player(_PlayerInRange(40))
+{
+	Block
+	{
+	SetWhenever(tank, false);
+	SetAlarmType(99, true);
+	}
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever tank(_FrameInRange(sherman)<35)
+{
+	Block
+	{
+	SetWhenever(player, false);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_Suspend(false);
+	HUMAN_MoveToFrame(sherman, 10);
+	HUMAN_Kill(me);
+	GoTo end;
+}
+
+Whenever tank2(_FrameInRange(sherman)<5)
+{
+	HUMAN_Kill(me);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f049");
+HUMAN_SetOptimized(2);
+}
+HUMAN_Suspend(true);
+
+Label end:

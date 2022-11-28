@@ -1,0 +1,56 @@
+// C5_G38 - bunker officer who has documents
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame look01;	FRM_FindFrame(look01, "C5_G38_look01");
+Frame zbran;	FRM_FindFrame(zbran, "G38_zbran");
+Frame me;		FRM_GetMyFrame(me);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_SetOptimized(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("C5_G38_01");
+	SendSignal(zbran, 1);
+	HUMAN_CreateItemInStore(0, 3);
+	HUMAN_TurnAt(look01);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+Whenever signal(_SignalReceived(1))	// received from C5_G34_activator01
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+FRM_SwitchFaceTexture(me, "e_f051");
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Defensive();
+}
+HUMAN_Suspend(true);
+
+Label end:

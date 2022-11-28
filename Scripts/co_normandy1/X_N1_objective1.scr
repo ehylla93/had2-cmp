@@ -1,0 +1,85 @@
+// objective1 - at the lighthouse
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame obj;		FRM_FindFrame(obj, "objectives");
+Frame sound1;	FRM_FindFrame(sound1, "l_liin_");
+Frame sound2;	FRM_FindFrame(sound2, "l_liho_");
+Frame majak;	FRM_FindFrame(majak, "m_maj_svet01");
+Integer switch = 0;
+Integer counter = 1;
+Integer volume = 0;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnUse()
+{
+// first use of switch
+// couter=2: Generator switched on; counter=1: Generator off
+	If(counter==1)
+	{
+		If(switch==0)
+		{
+			switch=1;
+			SUBTITLES_SetOn(true);
+			SUBTITLES_SetText(16993210);	//"THE POWER IS OFF. FIND THE GENERATOR AND SWITCH IT ON."
+			Delay(4000);
+			SUBTITLES_SetOn(false);
+			GoTo end;
+		}
+		If(switch==1)
+		{
+			switch=0;
+			GoTo end;
+		}
+	}
+// second and other use of switch
+	If(counter==2)
+	{
+		If(switch==0)
+		{
+			Block
+			{
+			switch=1;
+			SendSignal(obj, 4);
+			SendSignal(majak, 1);
+			FRM_SetOn(sound1, true);
+			FRM_SetOn(sound2, true);
+			PlayMusic(36);
+			}
+			GoTo end;
+		}
+		If(switch==1)
+		{
+			Block
+			{
+			switch=2;
+			SendSignal(obj, 4);
+			SendSignal(majak, 1);
+			FRM_SetOn(sound1, true);
+			FRM_SetOn(sound2, true);
+			PlayMusic(36);
+			}
+			GoTo end;
+		}
+		If(switch==2)
+		{
+			switch=2;
+			GoTo end;
+		}
+	}
+}
+
+OnSignal(1)
+{
+	counter=2;
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SetOn(sound1, false);
+FRM_SetOn(sound2, false);
+GoTo end;
+
+Label end:

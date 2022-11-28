@@ -1,0 +1,15 @@
+// Objective fail if Sygurd's contacted and left-behind
+
+frame objectives;		FRM_FindFrame(objectives, "dummy_objectives");
+
+Whenever fail (_PlayerInRange(70))
+{
+SendSignal(objectives, 25);
+}
+
+OnSignal(1)
+{
+SetWhenever(fail, 0);
+}
+
+Label end:

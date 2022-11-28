@@ -1,0 +1,44 @@
+//Explorez l'iceberg
+
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+//^Block
+SetObjectiveStatus(2, 0);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(2)
+{
+SetObjectiveStatus(2, 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990810); 
+//^player-1
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:

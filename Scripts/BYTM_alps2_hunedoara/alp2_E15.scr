@@ -1,0 +1,86 @@
+// alp2_E15
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1,1);		//Close Shooting
+SetAlarmType(2,1);		//Enemy Shots
+SetAlarmType(4,1);		//Hear Steps
+SetAlarmType(8,1);		//Action Sounds
+SetAlarmType(16,1);		//Explosions
+SetAlarmType(32,1);		//Sighted
+SetAlarmType(64,1);		//Is Injured
+SetAlarmType(128,0);	//From Script
+SetAlarmType(256,1);	//Friendly Shots
+SetAlarmType(512,1);	//Sight Corpse
+
+Frame me;		FRM_GetMyFrame(me);
+Frame speech;	FRM_FindFrame(speech,"alp2_E15_E16_speech");
+Frame door;		FRM_FindFrame(door, "dvereop01");
+
+FRM_SwitchFaceTexture(me, "e_f023");
+
+HUMAN_SETAIMODE_Zombie();
+
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+}
+
+HUMAN_Suspend(1);
+
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+SendSignal(speech, 1);
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(speech, 1);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Signal1 (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+}
+
+OnSignal(2)
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_SetAnim("%%rozhovor", 1000, 1000, 1);
+goto END;
+}
+
+Whenever Signal4 (_SignalReceived(4))
+{
+SetWhenever(Signal4, 0);
+SendSignal(speech, 1);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAt(door);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

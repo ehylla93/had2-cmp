@@ -1,0 +1,90 @@
+// 05_E17 - patrolling enemy (inside building downstairs)
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1023,0);
+SetAlarmType(867, 1);
+HUMAN_SETSIGHTRANGE(180);
+HUMAN_SETAIMODE_Defensive();
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f024");
+
+Integer done = 0;
+Integer way = 0;
+Integer a = 0;
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath() 
+{
+printf("05_E17 dead");
+EndScript();
+}
+
+OnAlarm() 
+{
+HUMAN_SetAnim("", 300, 300, 0);
+EndScript();
+}
+
+OnAlarmDone() 
+{
+done = 1;
+Block {	SetAlarmType(1023, 0); SetAlarmType(255, 1); }
+goto Patrol;
+}
+
+Whenever Spawn (_LoadGameValue(98)==1)
+{
+FRM_TeleportNearCheckpoint(MyFRM, "way8_01", "");
+Integer AImode = _RandomInt(99);
+if(AImode > 75) { HUMAN_SETAIMODE_Aggressive(); }
+else {
+	if(AImode < 25) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+	}
+HUMAN_Suspend(0);
+printf("05_E17 spawns");
+}
+
+// ----------------------------------------
+
+Label Patrol:
+HUMAN_SETMODE_Stand();
+if(done==1) { HUMAN_SETMODE_Walk(); }
+else { HUMAN_SETMODE_Guard(); }
+way = _RandomInt(2);
+if(way==0) { HUMAN_Move("way8_02"); gosub Animation; }
+if(way==1) { HUMAN_Move("way8_03"); gosub Animation; }
+way = _RandomInt(2);
+if(way==0) { HUMAN_Move("way8_04"); gosub Animation; }
+if(way==1) { HUMAN_Move("way8_05"); gosub Animation; }
+goto Patrol;
+
+Label Animation:
+if(done==0) {
+a = _RandomInt(4);
+if(a==0) { HUMAN_SetAnim("%%nuda", 600, 600, 0); Delay(11500); }
+if(a==1) { HUMAN_SetAnim("%%nuda1", 600, 600, 0); Delay(4000); }
+if(a==2) { HUMAN_SetAnim("%%divase", 600, 600, 0); Delay(6000); }
+if(a==3) { HUMAN_SetAnim("%%turnleft", 600, 600, 0); Delay(3500); HUMAN_SetAnim("%%turnright", 600, 600, 0); Delay(3500); }
+}
+Return;
+
+// ----------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

@@ -1,0 +1,80 @@
+// Objective - Return to dropship
+
+Block
+{
+frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+
+integer counter = 0;
+integer b = 0;
+}
+
+goto end;
+
+Whenever Tirpic (_SignalReceived(5))
+{
+counter = counter + 1;
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(11992206);	//"OBJECTIVE ACCOMPLISHED: EXPLOSIVES PLACED ON THE TIRPITZ."
+Delay(5000);
+SUBTITLES_SetOn(False);
+gosub check;
+SetObjectiveStatus(1, 1);
+goto end;
+}
+
+Whenever Sweeper (_SignalReceived(6))
+{
+counter = counter + 1;
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(11992207);	//"OBJECTIVE ACCOMPLISHED: EXPLOSIVES PLACED ON THE MINESWEEPER."
+Delay(5000);
+SUBTITLES_SetOn(False);
+gosub check;
+SetObjectiveStatus(2, 1);
+goto end;
+}
+
+OnSignal(7)
+{
+if (b==0)
+{
+b=1;
+counter = counter + 1;
+}
+SendSignal(OBJ, 7);			//enigma=1
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(11992208);	//"OBJECTIVE ACCOMPLISHED: ENIGMA STOLEN."
+Delay(5000);
+SUBTITLES_SetOn(False);
+gosub check;
+SetObjectiveStatus(3, 1);
+goto end;
+}
+
+OnSignal(8)
+{
+SendSignal(OBJ, 8);
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(11992212);	// "OBJECTIVE FAILED."
+SetObjectiveStatus(3, 2);
+Delay(5000);
+SUBTITLES_SetOn(False);
+goto end;
+}
+
+Label check:
+If (counter == 3)
+{
+block
+{
+SetObjectiveStatus(5, 0);
+SendSignal(OBJ, 1);
+}
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(11992205); 		//"NEW OBJECTIVE: RETURN TO THE DROP SHIP."
+Delay(5000);
+SUBTITLES_SetOn(False);
+}
+Return;
+
+Label end:

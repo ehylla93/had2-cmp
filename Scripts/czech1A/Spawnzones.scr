@@ -1,0 +1,44 @@
+// Spawnzones
+// ------------------------------------
+
+Block
+{
+Frame G01;	FRM_FindFrame(G01,"C1_G78");
+Frame G02;	FRM_FindFrame(G02,"C1_G79");
+Frame G03;	FRM_FindFrame(G03,"C1_G91");
+Frame G04;	FRM_FindFrame(G04,"C1_G92");
+
+Frame T01;	FRM_FindFrame(T01,"La_tiger_1");
+
+SetWhenever(Player, 0);
+}
+
+// ------------------------------------
+
+Whenever Spawnzone2_Enable (((((_Actor_GetState(G01)==0) And (_Actor_GetState(G02)==0)) And (_Actor_GetState(G03)==0)) And (_Actor_GetState(G04)==0)) And (_Actor_GetState(T01)==0)) 
+{
+SetWhenever(Player, 1);
+goto End;
+}
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 25))
+{
+MP_EnableSpawnZone("zone2", 1);
+MP_EnableSpawnZone("zone1", 2);
+
+
+goto End;
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(55999904);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label End:

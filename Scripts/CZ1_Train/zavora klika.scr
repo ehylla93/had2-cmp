@@ -1,0 +1,53 @@
+// detector klika na zvedani zavory
+  
+Frame MyFrame;
+Frame pike1;      FRM_FindFrame(pike1,"zavora1.Cylinder01");           
+Frame pike2;      FRM_FindFrame(pike2,"zavora2.Cylinder01");
+
+gosub zavory_up;
+
+OnUse()
+{		
+	If(_ACTOR_GetState(myframe)==2)
+	{
+		gosub zavory_down;
+		
+	}
+	else
+	{
+		gosub zavory_up;
+	}
+}
+
+OnExit()
+{ 
+	SetActorState(pike1, 0);
+	SetActorState(pike2, 0);
+}
+
+goto end;
+
+label zavory_up:
+	FRM_GetMyFrame(MyFrame); 
+           	FRM_FindFrame(pike1,"zavora1.Cylinder01"); 
+            FRM_FindFrame(pike2,"zavora2.Cylinder01"); 
+	SetActorState(pike1, 0);
+	SetActorState(pike2, 0);
+return;
+
+label zavory_down:
+
+	FRM_GetMyFrame(MyFrame); 
+          	FRM_FindFrame(pike1,"zavora1.Cylinder01"); 
+            FRM_FindFrame(pike2,"zavora2.Cylinder01"); 
+	SetActorState(pike1, 1);
+	SetActorState(pike2, 1);
+return;
+
+
+label end:
+
+
+
+
+

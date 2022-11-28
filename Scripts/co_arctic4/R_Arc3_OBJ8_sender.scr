@@ -1,0 +1,119 @@
+// Carnage obj Kill all of the enemy
+
+if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) ) 
+{
+  EndScript();		// !!! nepovinny obj kill all (not exactly all, but all what you need)
+}
+  
+Block
+  {
+     Frame Corpse_1;		FRM_FindFrame(Corpse_1, "AG_In_1");
+     Frame Corpse_2;		FRM_FindFrame(Corpse_2, "sub_gunner_1");
+     Frame Corpse_3;		FRM_FindFrame(Corpse_3, "sub_gunner_2");
+     Frame Corpse_4;		FRM_FindFrame(Corpse_4, "Sub_Guard_1");
+     Frame Corpse_5;		FRM_FindFrame(Corpse_5, "Sub_Guard_2");
+     Frame Corpse_6;		FRM_FindFrame(Corpse_6, "Sub_Guard_3");
+     Frame Corpse_7;		FRM_FindFrame(Corpse_7, "Sub_Guard_4");
+     Frame Corpse_8;		FRM_FindFrame(Corpse_8, "Sub_Guard_5");
+     Frame Corpse_9;		FRM_FindFrame(Corpse_9, "Marine_1");
+     Frame Corpse_10;		FRM_FindFrame(Corpse_10, "Marine_2");
+     Frame Corpse_11;		FRM_FindFrame(Corpse_11, "Marine_3");
+     Frame Corpse_12;		FRM_FindFrame(Corpse_12, "Marine_4");
+     Frame Corpse_13;		FRM_FindFrame(Corpse_13, "Marine_5");
+     Frame Corpse_14;		FRM_FindFrame(Corpse_14, "Marine_6");
+     Frame Corpse_15;		FRM_FindFrame(Corpse_15, "Marine_7");
+     Frame Corpse_16;		FRM_FindFrame(Corpse_16, "Static_Guard_1");
+     Frame Corpse_17;		FRM_FindFrame(Corpse_17, "Static_Guard_2");
+     Frame Corpse_18;		FRM_FindFrame(Corpse_18, "Static_Guard_3");     
+     Frame Corpse_19;		FRM_FindFrame(Corpse_19, "Static_Guard_4");     
+     Frame Corpse_20;		FRM_FindFrame(Corpse_20, "Static_Guard_5");
+     Frame Corpse_21;		FRM_FindFrame(Corpse_21, "Static_Guard_6");     
+     Frame Corpse_22;		FRM_FindFrame(Corpse_22, "Walking_Guard_1");     
+     Frame Corpse_23;		FRM_FindFrame(Corpse_23, "Walking_Guard_2");     
+     Frame Corpse_24;		FRM_FindFrame(Corpse_24, "Walking_Guard_3");     
+     Frame Corpse_25;		FRM_FindFrame(Corpse_25, "Radio_Guard");  
+     Frame Corpse_26;		FRM_FindFrame(Corpse_26, "Alkoholik");     
+     Frame Corpse_27;		FRM_FindFrame(Corpse_27, "Meteorolog");     
+     Frame Corpse_28;		FRM_FindFrame(Corpse_28, "Sniper_1");          
+     Frame Corpse_29;		FRM_FindFrame(Corpse_29, "Sniper_2");          
+     Frame Corpse_30;		FRM_FindFrame(Corpse_30, "Hunter_1");          
+     Frame Corpse_31;		FRM_FindFrame(Corpse_31, "Hunter_2");          
+     Frame Corpse_32;		FRM_FindFrame(Corpse_32, "Hunter_3");          
+     Frame Corpse_33;		FRM_FindFrame(Corpse_33, "AG_In_2");          
+     Frame Corpse_34;		FRM_FindFrame(Corpse_34, "AG_In_3");          
+     Frame Corpse_35;		FRM_FindFrame(Corpse_35, "AG_Out_1");          
+     Frame Corpse_36;		FRM_FindFrame(Corpse_36, "AG_Out_2");          
+     Frame Corpse_37;		FRM_FindFrame(Corpse_37, "AG_Out_3");          
+     Frame Corpse_38;		FRM_FindFrame(Corpse_38, "AntiSniper_1");          
+     Frame Corpse_39;		FRM_FindFrame(Corpse_39, "AntiSniper_2");
+     Frame Corpse_40;		FRM_FindFrame(Corpse_40, "AntiSniper_3");
+// Marine_Oficer_1    neni potreba ho testovat     
+     
+     Frame OBJ;		FRM_FindFrame(OBJ, "dummy_objectives");
+     Frame Myfrm;		FRM_GetMyFrame(Myfrm);
+  }
+
+// Nekdo umrel
+OnSignal(30) {}
+Label loop:
+  If (( _ACTOR_GetState(Corpse_1) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_2) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_3) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_4) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_5) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_6) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_7) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_8) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_9) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_10) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_11) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_12) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_13) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_14) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_15) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_16) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_17) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_18) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_19) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_20) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_21) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_22) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_23) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_24) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_25) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_26) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_27) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_28) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_29) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_30) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_31) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_32) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_33) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_34) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_35) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_36) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_37) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_38) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_39) == 1 ))    { Goto A_Nic; }
+  If (( _ACTOR_GetState(Corpse_40) == 1 ))    { Goto A_Nic; }
+
+// if it is here ==> all neaded enemys are dead
+  SendSignal(Myfrm, 15);
+  EndScript();
+
+
+Label A_Nic:
+  Delay(5000);
+  Goto loop;		// kvuli zajmutejm ...
+
+
+// OBJ 8 - nepovinny (kill all enemies) - neprezil nikdo, kdo by informoval nemce a tom co se tu stalo
+// v CARNAGE vypinam u senderu (R_Arc3_OBJ8_sender)
+OnSignal(15)
+{
+   SetObjectiveStatus(8, 1);
+   SUBTITLES_SetOn(True);
+   SUBTITLES_SetText(04990870);			//"OPTIONAL OBJECTIVE COMPLETED: THERE ARE NO SURVIVORS TO REPORT OF THE ATTACK."
+   Delay(4000);
+   SUBTITLES_SetOn(False);
+}

@@ -1,0 +1,5 @@
+Frame me;			FRM_GetMyFrame(me);
+OnDeath()
+	{
+	FRM_CreateParticle(79, me);
+	}

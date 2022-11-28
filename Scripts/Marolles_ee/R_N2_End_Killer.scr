@@ -1,0 +1,39 @@
+// od Ami tank Drivera
+
+  frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+  Frame FRM;
+
+// nedával do bloku !!! nebo to rozdrbe END CAMERAS !!!!
+OnSignal(1)
+{
+  FRM_FindFrame(FRM, "Blue_1");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_2");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_3");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_4");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_5");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_6");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_7");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_8");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_9");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_10");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_11");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_13");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_14");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_15");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Blue_17");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Wave2_1");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Wave2_2");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Wave2_3");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  SendSignal(OBJ, 4); 		// OBJ posledni OK
+  FRM_FindFrame(FRM, "Wave1_1");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Wave1_3");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+  FRM_FindFrame(FRM, "Wave1_5");		If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+}
+
+// to jsou ostatkz po rusenzch panacich
+//*//  FRM_FindFrame(FRM, "Blue_12");	If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+//*//  FRM_FindFrame(FRM, "Blue_16");	If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+//*//  FRM_FindFrame(FRM, "Wave1_2");	If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+//*//  FRM_FindFrame(FRM, "Wave1_4");	If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+//*//  FRM_FindFrame(FRM, "Wave2_4");	If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }
+//*//  FRM_FindFrame(FRM, "Wave2_5");	If ( _ACTOR_GetState(FRM)==1 )  { HUMAN_Kill(FRM); }

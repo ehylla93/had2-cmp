@@ -1,0 +1,13 @@
+
+frame T1;	FRM_FindFrame(T1, "Trap2_1");
+frame T2;	FRM_FindFrame(T2, "Trap2_2");
+frame T3;	FRM_FindFrame(T3, "Trap2_3");
+
+Whenever AAA (_PlayerInRange(45); )
+{
+  SendSignal(T1, 1);
+  SendSignal(T2, 1);
+  SendSignal(T3, 1);
+}
+
+SetWheneverTime(AAA, 1500);

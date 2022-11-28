@@ -1,0 +1,10 @@
+// Signal sent by PlaneGuard2, TreeGuard1 & 3, E01, E03, E05, E06, E12 (Sygurd decides which way to take)
+
+SaveGameValue(4, 1);	//swamp (default)
+
+OnSignal(1)
+{
+EnableSignal(1, false);
+SaveGameValue(4, 0);	//road
+printf("sgv4 = 0, Sygurd takes road");
+}

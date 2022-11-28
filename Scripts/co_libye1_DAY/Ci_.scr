@@ -1,0 +1,54 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame __OBJECTIVE8;		FRM_FindFrame(__OBJECTIVE8,"__OBJECTIVE8");
+
+Frame HAMMER2;		FRM_FindFrame(HAMMER2,"HAMMER2");
+Frame NPC3;		FRM_FindFrame(NPC3,"NPC3");
+Frame NPC4;		FRM_FindFrame(NPC4,"NPC4");
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("HAMMER2",  1, 2);
+
+//^la_ammo_
+}
+
+Whenever team (_MP_AllTeamMembersAreInRange(1, 20))
+{
+
+SendSignal(__OBJECTIVE8, 1);
+SendSignal(NPC3, 10);
+SendSignal(NPC4, 10);
+//^Whenever-la_ammo_
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_Suspend(1);
+//^DefaultLoad
+goto END;
+
+Label END:

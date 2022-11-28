@@ -1,0 +1,113 @@
+// AF4_23 - Hans Schumann
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME obj;			FRM_FindFrame(obj, "dummy_gigant");
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME runway;			FRM_FindFrame(runway, "dummy_runway");
+  FRAME pl;				FRM_GetNearestPlayer(this, pl);
+  
+  SetAlarmType(1023, false);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+  
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  DisableWhenevers(1);
+  goto END;
+}
+
+Whenever player(_PlayerInRange(20)){
+  goto ACTIVATE;
+}
+
+Whenever detector(_PlayerInRange(2)){
+  SetWhenever(player, false);
+  SetWhenever(detector, false);
+  HUMAN_SetAnim("", 100, 100, false);
+  SendSignal(obj, 1);
+  HUMAN_SetOptimized(0);
+  SUBTITLES_SetOn(true);
+
+  HUMAN_TurnAtNearestPlayer();
+  FRM_GetNearestPlayer(this, pl);
+  FRM_MorphSpeechDelayed(pl, 09991951, 3, 9);
+  HUMAN_SetAnim("", 200, 200, false);
+  HUMAN_SetAnim("%%kecy1", 200, 200, false);
+  FRM_MorphSpeechDelayed(this, 09991952, 3, 9);
+  HUMAN_SetAnim("", 200, 200, false);
+
+  FRM_MorphSpeechDelayed(pl, 09991953, 3, 9);
+  FRM_MorphSpeechDelayed(pl, 09991954, 3, 9);
+  FRM_MorphSpeechDelayed(pl, 09991955, 3, 9);
+
+  HUMAN_SetAnim("%%kecy1", 200, 200, false);
+  FRM_MorphSpeechDelayed(this, 09991956, 3, 9);
+  HUMAN_SetAnim("", 200, 200, false);
+
+  FRM_MorphSpeechDelayed(pl, 09991957, 3, 9);
+
+  SetObjectiveStatus(1, 1);
+  SetObjectiveStatus(5, 0);
+  SendSignal(runway, 1);
+  SUBTITLES_SetOn(false);
+  goto Follow;
+}
+
+OnAlarm(){
+  goto END;
+}
+
+OnAlarmDone(){
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label Follow:
+	If(_PlayerInRange(25))
+	{
+		FRM_GetNearestPlayer(this, pl);
+		HUMAN_MoveToFrame(pl, 1);
+
+		If(_PlayerInRange(2))
+		{
+			HUMAN_SETMODE_Walk();
+			HUMAN_TurnAtNearestPlayer();
+			goto Follow;
+		}
+	
+		If(!_PlayerInRange(2))
+		{
+			If(!_PlayerInRange(10))
+			{
+				HUMAN_SETMODE_Stand();
+				HUMAN_SETMODE_Run();
+				goto Follow;
+			}
+		HUMAN_SETMODE_Walk();
+		goto Follow;
+		}
+	}
+	else {goto Follow;}
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetAnim("%%nuda1", 200, 200, true);
+  goto END;
+
+Label END:

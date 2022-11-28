@@ -1,0 +1,95 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Doktor (civilista) osetrujici raneneho a na priblizeni hrace pokeca a zmeni objectivy 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Block
+  {
+     integer AIEvent;
+     frame MyFRM;		FRM_GetMyFrame(MyFRM);
+     frame detector;		FRM_FindFrame(detector, "detector_rozhovor");
+     frame zraneny;		FRM_FindFrame(zraneny, "dummy_zranenej_9");
+     frame Doktor_dabing;	FRM_FindFrame(doktor_dabing, "dummy_doktor_dabing");	
+
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SETMODE_Run();
+     HUMAN_SetOptimized(2);
+     SetAlarmType(1023, False);
+  }
+  
+  HUMAN_Suspend(true);
+  Delay(5000);
+  HUMAN_Suspend(false);
+  SetAlarmType(1023, False);
+  HUMAN_Move("doktor_1");
+  HUMAN_SETMODE_Walk();		
+  HUMAN_Move("doktor_end");
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAt(zraneny);
+  HUMAN_SetAnim("%%obvazovani", 500, 500, true); 	
+  SendSignal(doktor_dabing, 10);	// rozhovor doktor - zraneny
+  goto TheEnd;
+
+Whenever AktivaceKecy ( _PlayerInRange(5))	
+{
+  SetWhenever(Okolo, False);
+  HUMAN_SetAnim("", 250, 250, False); 
+  HUMAN_SETMODE_Stand();
+  HUMAN_TurnAtNearestPlayer();  
+  SendSignal(doktor_dabing, 1);		// monolog doktor - hrac
+}
+
+// posila to detector_rozhovor (doktor bezi k dire a pak rozhovor change OBJ)
+Whenever Okolo ( _SignalReceived(2) )
+{
+  SetWhenever(AktivaceKecy, False);
+  HUMAN_SetAnim("", 250, 250, False); 	
+  Delay(300);
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);	// doktor prestava pripadne mluvit se zranenym	
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("doktor_2");	
+  HUMAN_TurnAt(detector);
+  SendSignal(doktor_dabing, 1);		// monolog doktor - hrac
+}
+label loop:
+  Delay(1500);
+  HUMAN_TurnAtNearestPlayer();
+goto loop;
+
+// vratit ho ke zranenymu
+OnSignal(1)
+{
+  HUMAN_SETMODE_Walk();		
+  HUMAN_Move("doktor_end");	
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAt(zraneny);
+  HUMAN_SetAnim("%%obvazovani", 500, 500, True); 	
+}
+
+OnAlarm()
+{
+  Printf("HLASIT - doktor na alarmu, nemelo by nikdy nastat.");
+  EndScript();
+}
+OnAlarmDone()
+{
+  SetAlarmType(1023, False);
+  HUMAN_SetAlarm(False);
+  Goto TheEnd;
+}
+
+OnDeath()
+{
+  SendSignal(Doktor_dabing, 2);	// ukonceni kecy kvuli smrti
+  EndScript();
+}
+
+Label TheEnd:
+
+
+
+

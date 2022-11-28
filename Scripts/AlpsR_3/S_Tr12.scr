@@ -1,0 +1,147 @@
+// Posatka Nakladaku 2
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame nasOpel;	FRM_FindFrame(nasOpel,"Opel_03");
+Frame cp1;	FRM_FindFrame(cp1,"MG3");
+Frame cp2;	FRM_FindFrame(cp2,"BritCum");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f034");
+
+integer AIEvent;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Lie();
+AIEvent =_GetAlarmType();
+
+If (((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+If ((AIEvent==4) OR (AIEvent==256))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+HUMAN_SetSniper(1, 5);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_Crouch();
+Delay(500);
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp1, 2);
+HUMAN_TurnAt(cp2);
+goto END;
+}
+
+OnSignal(1)  // Nasedame
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(30);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("Opel_03", 1, 1);
+goto END;
+}
+
+OnSignal(3)  // Ridic mrtev
+{
+HUMAN_BoardVehicle("Opel_03", 0, 1);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETSIGHTRANGE(150);
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_Crouch();
+Delay(500);
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp1, 2);
+HUMAN_TurnAt(cp2);
+goto END;
+}
+
+OnSignal(7)    // Vysedame na Alarm
+{
+HUMAN_BoardVehicle("Opel_03", 0, 1);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETSIGHTRANGE(150);
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveFromFrame(nasOpel, 10);
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_Crouch();
+Delay(500);
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp1, 2);
+HUMAN_TurnAt(cp2);
+goto END;
+}
+
+OnSignal(2)  // dojeli jsme bez alarmu
+{
+HUMAN_BoardVehicle("Opel_03", 0, 1);
+DisableSignals(1);
+Delay(200);
+HUMAN_Suspend(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

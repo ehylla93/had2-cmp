@@ -1,0 +1,61 @@
+// C5_G34 - soldier in the bunker
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame g35;	FRM_FindFrame(g35, "C5_G35");
+Frame me;	FRM_GetMyFrame(me);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received C5_G34_activator01
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever signal2(_SignalReceived(2))	// received from C5_G37
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("C5_G34_01");
+	HUMAN_Move("C5_G34_02");
+	HUMAN_Move("C5_G34_03");
+	GoTo end;
+}
+
+OnDeath()
+{
+	SendSignal(g35, 2);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+FRM_SwitchFaceTexture(me, "e_f039");
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Run();
+}
+HUMAN_Suspend(true);
+
+Label end:

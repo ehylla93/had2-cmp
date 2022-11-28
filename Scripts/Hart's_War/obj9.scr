@@ -1,0 +1,48 @@
+
+Block
+{
+Frame door23;	    FRM_FindFrame(door23,"door23");
+Frame Detector_33;	FRM_FindFrame(Detector_33,"Detector_33");
+Frame Detector_32;	FRM_FindFrame(Detector_32,"Detector_32");
+Frame Detector_05;	FRM_FindFrame(Detector_05,"Detector_05");
+Frame Object324;	FRM_FindFrame(Object324,"Object324");
+
+SetWhenever (Aktiv11, true);
+SetWhenever (go, true);
+
+}
+
+Whenever go(_SignalReceived(20)) // recever  charon2 and  d_navplace
+{
+	  	SendSignal(Detector_05, 11);
+        SendSignal(Object324, 11);
+		SendSignal(Detector_33, 11);
+		SendSignal(Detector_32, 11);
+        SendSignal(door23, 10);
+Delay(1000);
+SetWhenever (go, false);
+}
+
+
+Whenever Aktiv11 (_SignalReceived(12))
+{
+Delay(1000);
+SetObjectiveStatus(6, 0);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993408); // OBJECTIVE ACCOMPLISHED: REINFORCEMENTS ARRIVED.
+Delay(7000);
+SUBTITLES_SetOn(0);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999907); // NEW OBJECTIVE: PLACE THE NAVIGATION EQUIPMENT FOR THE BOMBERS IN A SUITABLE PLACE
+Delay(7000);
+SUBTITLES_SetOn(0);
+delay (1000);
+SetWhenever (Aktiv11, false);
+}
+
+
+
+
+Label END:

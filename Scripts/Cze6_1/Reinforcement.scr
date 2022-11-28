@@ -1,0 +1,163 @@
+// Enemy Reinforcements called by Radio
+// --------------------------------------
+
+Block
+{
+Frame G01;	FRM_FindFrame(G01,"RC_G01");
+Frame G02;	FRM_FindFrame(G02,"RC_G02");
+Frame G03;	FRM_FindFrame(G03,"RC_G03");
+Frame G04;	FRM_FindFrame(G04,"RC_G04");
+Frame G05;	FRM_FindFrame(G05,"RC_G05");
+Frame G06;	FRM_FindFrame(G06,"RC_G06");
+Frame G07;	FRM_FindFrame(G07,"RC_G07");
+
+Frame R01;	FRM_FindFrame(R01,"RF_G19");
+Frame R02;	FRM_FindFrame(R02,"RF_G20");
+Frame R03;	FRM_FindFrame(R03,"RF_G21");
+Frame R04;	FRM_FindFrame(R04,"RF_G22");
+Frame R05;	FRM_FindFrame(R05,"RF_G23");
+Frame R06;	FRM_FindFrame(R06,"RF_G24");
+Frame R07;	FRM_FindFrame(R07,"RF_G25");
+Frame R08;	FRM_FindFrame(R08,"RF_G26");
+Frame R09;	FRM_FindFrame(R09,"RF_G27");
+Frame R10;	FRM_FindFrame(R10,"RF_G28");
+Frame R11;	FRM_FindFrame(R11,"RF_G29");
+Frame R12;	FRM_FindFrame(R12,"RF_G30");
+Frame R13;	FRM_FindFrame(R13,"RF_G31");
+Frame R14;	FRM_FindFrame(R14,"RF_G32");
+Frame R15;	FRM_FindFrame(R15,"RF_G33");
+
+Frame R16;	FRM_FindFrame(R16, "RF_G64");
+Frame R17;	FRM_FindFrame(R17, "RF_G65");
+Frame R18;	FRM_FindFrame(R18, "RF_G66");
+
+Frame Obj5;	FRM_FindFrame(Obj5, "obj5");
+
+Integer Selected;
+Integer Radio_Called;
+Integer Reinf_Select;
+Integer PanzerTank;
+}
+
+goto END;
+
+// ----------------------------------------
+
+Whenever Radio_Call (_SignalReceived(5))
+{
+Radio_Called = 1;
+SetWhenever(Reinf_Fail, 0);
+Delay(45000);
+Reinf_Select = _RandomInt(3);
+PanzerTank = _RandomInt(2);
+
+If(PanzerTank == 1)
+{
+SendSignal(R16, 3);SendSignal(R17, 3);SendSignal(R18, 3);
+}
+
+If(Reinf_Select == 0)
+{
+SendSignal(R01, 1);SendSignal(R02, 1);SendSignal(R03, 1);
+SendSignal(R04, 1);SendSignal(R05, 1);
+}
+
+If(Reinf_Select == 1)
+{
+SendSignal(R06, 1);SendSignal(R07, 1);SendSignal(R08, 1);
+SendSignal(R09, 1);SendSignal(R10, 1);
+}
+
+If(Reinf_Select == 2)
+{
+SendSignal(R11, 1);SendSignal(R12, 1);SendSignal(R13, 1);
+SendSignal(R14, 1);SendSignal(R15, 1);
+}
+
+}
+
+Whenever Reinf_Fail (((((((_Actor_GetState(G01)==0) And (_Actor_GetState(G02)==0)) And (_Actor_GetState(G03)==0)) And (_Actor_GetState(G04)==0)) And (_Actor_GetState(G05)==0)) And (_Actor_GetState(G06)==0)) And (_Actor_GetState(G07)==0))
+{
+SendSignal(Obj5, 1);
+goto END;
+}
+
+Whenever Alarm_Hilltop (_SignalReceived(4))
+{
+SendSignal(R16, 3);SendSignal(R17, 3);SendSignal(R18, 3);
+goto END;
+}
+
+Whenever Sniper_Dead (_SignalReceived(3))
+{
+SendSignal(R16, 3);SendSignal(R17, 3);SendSignal(R18, 3);
+SendSignal(R11, 1);SendSignal(R12, 1);SendSignal(R13, 1);
+SendSignal(R14, 1);SendSignal(R15, 1);
+goto END;
+}
+
+Whenever AlarmDone (_SignalReceived(1))
+{
+Delay(10000);
+goto ReinfSelect;
+}
+
+// ----------------------------------------
+
+Label ReinfSelect:
+Selected = 0;
+Radio_Called = 0;
+
+
+If((_Actor_GetState(G01)==1) And (Selected == 0))
+{
+SendSignal(G01, 7);
+Selected = 1;
+}
+
+If((_Actor_GetState(G02)==1) And (Selected == 0))
+{
+SendSignal(G02, 7);
+Selected = 1;
+}
+
+If((_Actor_GetState(G03)==1) And (Selected == 0))
+{
+SendSignal(G03, 7);
+Selected = 1;
+}
+
+If((_Actor_GetState(G04)==1) And (Selected == 0))
+{
+SendSignal(G04, 7);
+Selected = 1;
+}
+
+If((_Actor_GetState(G05)==1) And (Selected == 0))
+{
+SendSignal(G05, 7);
+Selected = 1;
+}
+
+If((_Actor_GetState(G06)==1) And (Selected == 0))
+{
+SendSignal(G06, 7);
+Selected = 1;
+}
+
+If((_Actor_GetState(G07)==1) And (Selected == 0))
+{
+SendSignal(G07, 7);
+Selected = 1;
+}
+
+Delay(20000);
+If(Radio_Called == 0)
+{
+goto ReinfSelect;
+}
+
+goto END;
+
+
+Label END:

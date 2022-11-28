@@ -1,0 +1,204 @@
+//coop only
+
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETAIMODE_Zombie();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+
+integer alarmpos;
+integer suspend;
+Integer endx;		endx=0;
+integer aievent;
+integer a;
+
+frame detect1;		FRM_FindFrame (detect1,"detectz4gener");
+Frame cum;		FRM_FindFrame(cum, "Object238");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f057");
+}
+
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+suspend=0;
+SetAlarmType(503,1);	
+HUMAN_SetAnim("%%hledam", 500,500,1);
+goto end;
+}
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(375,1);
+aievent=(_GetAlarmType());
+PrintfNumber("z4_gener2  alrm:",aievent);
+
+}
+
+
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	block
+	{
+	HUMAN_SetAnim("", 90,90,0);
+	endx=1;
+	}
+	EndScript();
+	}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+
+if (_LoadGameValue(5)==0)
+
+	{
+	//neni w zone
+
+	block
+	{
+	SetAlarmType(1023,0);
+	SetAlarmType(274,1);		//slysim strelbu
+	DisableWhenevers(0);
+	DisableSignals(0);
+	}
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+if (suspend==1)
+	{
+		suspend=0;
+		HUMAN_Suspend(0);
+
+		HUMAN_WeaponOnArm(1);
+	}
+
+
+	if (alarmpos==0)
+	{
+	HUMAN_SetAnim("", 90,90,0);
+	SetAlarmType(278,0);
+	HUMAN_SetAlarm(0);
+	HUMAN_TurnAtNearestPlayer();
+	delay (2500);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("z4_gener_02");
+	block
+	{
+	alarmpos=1;
+	SetAlarmType(278,1);
+	}
+	
+
+	}
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay (2500);
+
+SetAlarmType(278,1);				//strelba a kroky
+HUMAN_TurnAt(cum);
+goto end;
+}
+
+
+if (aievent==4)
+{
+if (_PlayerInBox(detect1)==0)
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+}
+
+block
+{
+HUMAN_SetAnim("", 90,90,0);
+endx=1;
+}
+
+EndScript();
+
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarmDone()
+{
+
+
+
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Walk();
+HUMAN_Move("z4_gener_02");
+HUMAN_TurnAt(cum);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+
+
+
+label end:

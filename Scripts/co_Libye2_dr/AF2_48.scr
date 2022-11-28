@@ -1,0 +1,55 @@
+// AF2_48 - straz v zakope
+// ---------------------------
+// Variables definition
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame MG42_5;	FRM_FindFrame(MG42_5, "MG42_5");
+SetAlarmType(1023, true);
+}
+// --------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// --------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+		
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_44_A1
+{
+	HUMAN_Suspend(false);
+	HUMAN_TurnAt(MG42_5);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+// ---------------------------
+// Starting pose
+HUMAN_SETAIMODE_Zombie();
+FRM_SwitchFaceTexture(me, "e_f043");
+HUMAN_Suspend(true);
+
+Label end:

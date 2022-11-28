@@ -1,0 +1,83 @@
+// N17 - officer studying documents in commanding room
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;	aievent=0;
+Integer setalarm;	setalarm=0;
+Frame me;	FRM_GetMyFrame(me);
+	
+SetAlarmType(16, false);
+//SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	aievent=_GetAlarmType();
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		EndScript();
+	}
+	EndScript();
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	SetWhenever(alarm, true);
+	}
+	HUMAN_SETMODE_Stand();
+	If(setalarm==1)	{ GoTo alarmed; }
+	GoTo end;
+}
+
+Whenever activate(_SignalReceived(1))
+{
+	HUMAN_Suspend(false);
+	If(setalarm==1)	{ GoTo alarmed; }
+	GoTo path;
+}
+
+Whenever alarm(_SignalReceived(5))
+{
+	setalarm=1;
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f053");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_SetAnim("%%studmapu", 200, 200, true);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+Label alarmed:
+	HUMAN_SetAnim("%%kecy1", 200, 200, true);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+Label end:

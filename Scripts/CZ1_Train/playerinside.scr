@@ -1,0 +1,7 @@
+Frame zavorar;
+	FRM_FindFrame(zavorar, "vechtr");
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(zavorar, 4);
+}

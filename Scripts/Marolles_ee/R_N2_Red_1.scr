@@ -1,0 +1,54 @@
+
+integer  AIEvent;
+integer RND = 0;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red1_turn");	
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(1)
+{						
+  HUMAN_Suspend(False);			
+}						
+
+label DeAlarm:
+  Block
+    {
+       RND = _RandomInt(3);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Walk();
+    }
+  HUMAN_SETMODE_Crouch();
+  If (RND == 0)  	{  HUMAN_Move("Red1_1");	}
+  If (RND == 1)  	{  HUMAN_Move("Red1_2");	}
+  If (RND == 2)  	{  HUMAN_Move("Red1_3");	}
+  HUMAN_SetSniper(True, 1);
+  HUMAN_TurnAt(turn);
+  Delay(200);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 1: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

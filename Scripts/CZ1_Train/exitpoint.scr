@@ -1,0 +1,27 @@
+// Exitpoint - Obj 3
+//-----------------------------------------------------------
+
+Whenever Assemble (_MP_AllTeamMembersAreInRange(1,5))
+{
+Delay(28000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993608);
+Delay(5000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(3, 1);
+EndScript();
+}
+
+OnSignal(1)
+{
+SetWhenever(Assemble, 1);
+SetObjectiveStatus(3, 0);
+goto End;
+}
+
+//-----------------------------------------------------------
+
+SetWhenever(Assemble, 0);
+goto End;
+
+Label End:

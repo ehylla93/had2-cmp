@@ -1,0 +1,49 @@
+// AF4_tank2_01 - tank2_01
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd				= 0;
+
+  SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  goto END;
+}
+
+OnDeath(){
+  EndScript();  
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("la_tiger_3",  true, 1);
+goto END;
+
+ 
+Label END:

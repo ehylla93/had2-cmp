@@ -1,0 +1,40 @@
+// Obj 3 - Stolen Paintings Recovered
+// ------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Documents;
+Frame Player;
+
+SetObjectiveStatus(3, 0);
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 246, Documents))
+{
+SetObjectiveStatus(3, 1);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 246, Documents))
+{
+
+SetObjectiveStatus(3, 0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 246, Documents))
+{
+
+SetObjectiveStatus(3, 1);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Label End:

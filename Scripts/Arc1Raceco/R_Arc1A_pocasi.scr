@@ -1,0 +1,71 @@
+Block
+{
+   integer count;		count = 1500;
+   integer speed;		speed = 1200;    // ( == 1.2 m/s )
+   integer X;	X = 10;
+   integer Z;	Z = -70;
+   integer Y;	Y = -100;
+   integer A;	A = 0 ;
+
+   WEATHER_SetCount(count);
+   WEATHER_SetColorOut( 56, 57, 63, 0 );
+   WEATHER_SetColorIn( 78, 52, 51, 139 );
+   WEATHER_SetSpeed(speed);
+   WEATHER_SetSize(200, 200);
+   WEATHER_SetSpace(15, 15);       
+   WEATHER_SetDir(X, Y, Z);    
+}
+
+WEATHER_SetOn(1);
+WEATHER_SetMode(1);
+
+
+/////////////  vracim to tam  /////////////// goto TheEnd;    // zatim vyhazuju kvuli .... pada to
+
+
+label UP:
+  if (count < 4000)
+   {
+      count = count + 250;
+      WEATHER_SetCount(count);
+     Delay(250);      
+      speed = speed + 50;
+      WEATHER_SetSpeed(speed);
+     Delay(250);      
+      gosub DIR;
+      WEATHER_SetDir(X, Y, Z); 
+      Delay(1500);
+     } else { 
+      Goto DOWN;
+   }
+goto UP;
+
+label DOWN:
+  if (count > 1000)
+    {
+       count = (-250) + count;
+       WEATHER_SetCount(count);
+      Delay(250);      
+       speed = (-50) + speed;
+       WEATHER_SetSpeed(speed);
+      Delay(250);      
+       gosub DIR;
+       WEATHER_SetDir(X, Y, Z);    
+       Delay(1500);
+      } else  {  
+       Goto UP; 
+    }
+goto DOWN;
+
+Label DIR:
+  A = _RandomInt(11) - 5;
+  X = X +A;
+  If ( X <  (-60) ) {X = 0 - 60;}
+  If ( X > 60) {X = 60;}
+  A = _RandomInt(11) - 5;
+  Z = Z +A;
+  If ( Z < (-60)) {Z = -60;}
+  If ( Z > 60) {Z = 60;}
+Return;
+
+label TheEnd:

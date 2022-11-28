@@ -1,0 +1,151 @@
+//ge_31 - firing practice
+//Game Value 31 = 0: ge_31 dead
+
+block
+{
+SetAlarmType(1,1);		//close shooting
+SetAlarmType(2,1);		//enemy shots
+SetAlarmType(4,0);		//hears steps
+SetAlarmType(8,0);		//action sounds
+SetAlarmType(16,1);		//explosions
+SetAlarmType(32,1);		//sighted
+SetAlarmType(64,1);		//is injured
+SetAlarmType(128,1);	//from script
+SetAlarmType(256,1);	//Friendly shots
+SetAlarmType(512,1);	//Sights corpse
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer a;	a=0;
+integer b;	b=0;
+
+frame puf;		Frm_FindFrame(puf,"ge31_terc");	
+Frame ge30;		Frm_FindFrame (ge30,"ge_30");
+Frame ge32;		Frm_FindFrame (ge32,"ge_32");
+frame cum;		Frm_FindFrame(cum,"ge32cum");
+frame cum1;		Frm_FindFrame(cum1,"ge31cum1");
+frame me;		FRM_GetMyFrame(me);
+frame krik;		FRM_FindFrame (krik,"ge31krik");
+SaveGameValue(31, 1);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+HUMAN_Stop();
+aievent=(_GetAlarmType());
+DisableSignals(1);
+}
+if (((aievent==32) or (aievent==64) or (aievent==512)))
+{
+block
+{
+sendSignal(ge30,6);
+sendSignal(ge32,6);
+sendsignal (krik,1);
+}
+}
+if (b==0)
+{
+b=1;
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponOnArm(1);
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(274,1);
+HUMAN_Move("ge31_05");
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+HUMAN_SETMODE_Silence();
+HUMAN_Move("ge31_06");
+HUMAN_TurnAt(cum1);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SaveGameValue(31, 0);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+goto strelba;
+}
+
+OnSignal(2)
+{
+goto strelba;
+}
+
+Whenever alarm2(_SignalReceived(6))
+{
+HUMAN_Stop();
+DisableSignals(1);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+Whenever alarm(_SignalReceived(3))
+{
+HUMAN_Stop();
+DisableSignals(1);
+SetAlarmType(259,1);
+HUMAN_Stop();
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Run();
+HUMAN_Move("ge31_05");
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+label strelba:
+delay(3000);
+HUMAN_Move("ge31_01");
+HUMAN_TurnAt(puf);
+HUMAN_WeaponOnArm(1);
+HUMAN_IllFire(puf,12000);
+HUMAN_WeaponOnArm(0);
+sendsignal (ge30,2);
+
+label terc:
+HUMAN_Move("ge31_02");
+HUMAN_TurnAt(puf);
+delay(4500);
+HUMAN_Move("ge31_01");
+HUMAN_TurnAt(puf);
+goto end;
+
+label end:

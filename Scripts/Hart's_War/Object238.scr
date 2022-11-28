@@ -1,0 +1,109 @@
+// maison en bas de ma rue
+//
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+Frame explocheminer1;		FRM_FindFrame(explocheminer1,"explocheminer1");
+Frame explocheminer;		FRM_FindFrame(explocheminer,"explocheminer");
+
+Frame komin184;	FRM_FindFrame(komin184,"komin184");
+Frame komin185;	FRM_FindFrame(komin185,"komin185");
+Frame komin186;	FRM_FindFrame(komin186,"komin186");
+
+
+Frame komin28;	FRM_FindFrame(komin28,"komin28");
+Frame komin30;	FRM_FindFrame(komin30,"komin30");
+Frame komin29;	FRM_FindFrame(komin29,"komin29");
+
+Frame Mesh153;	FRM_FindFrame(Mesh153,"Mesh153");
+Frame Object299;	FRM_FindFrame(Object299,"Object299");
+Frame Mesh152;	FRM_FindFrame(Mesh152,"Mesh152");
+
+Integer bomber;	// Sets delay between bombing
+	bomber=0;
+
+SetWhenever(Players8111, 0);
+//^Block
+//Detector_34
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//Whenever Players8111 (_MP_AllTeamMembersAreInRange(1,50))  
+
+Whenever Players8111 (_PlayerInRange(500))
+{
+SendSignal(explocheminer, 1);
+
+goto chodim;
+}
+goto END;
+
+label chodim:
+ Delay(3000);
+
+    FRM_CreateParticle(083, komin28);   // pret de la route
+	Delay(1000);
+	
+	FRM_CreateParticle(79, komin30);  // au milieu
+	Delay(1000);
+	
+    FRM_CreateParticle(083, komin29);  //plus pret de l arbre
+	Delay(4000);
+    goto chodim1;
+
+
+label chodim1:	
+
+FRM_CreateParticle(79, Mesh153); 
+
+
+FRM_CreateParticle(79, Object299);  //  maison en bas de ma rue au milieu
+
+
+FRM_CreateParticle(79, Mesh152);  //
+  
+goto chodim2;
+
+label chodim2:	
+FRM_CreateParticle(083, komin184);   // 
+Delay(4000);
+FRM_CreateParticle(79, komin185);  //  maison en bas de ma rue au milieu
+Delay(4000);
+FRM_CreateParticle(083, komin186);  //
+    Delay(10000);
+goto END;
+
+Whenever go(_SignalReceived(10))
+{
+delay (10000);
+SetWhenever(Players8111, 1);
+}
+
+
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+//  FRM_CreateIndexedParticle(95, Frame(me), komin28);
+//^DefaultLoad
+goto END;
+
+Label END:

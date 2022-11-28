@@ -1,0 +1,54 @@
+
+integer  AIEvent;
+
+SetAlarmType(1023, False);
+SetAlarmType(97, True);	// 1 + 32 + 64 = 97
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(1)
+{
+  Delay(12000);
+  HUMAN_Suspend(False);
+}
+
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("W1manX_1");
+  SetAlarmType(262, True);
+  HUMAN_Move("W1man5_2");
+  HUMAN_Move("W1manX_3");
+					///////////////tady///// DOPLNIT  dalsi pohyb - asi do budovy
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Prvni vlna - 5: ", AIEvent);
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(648, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

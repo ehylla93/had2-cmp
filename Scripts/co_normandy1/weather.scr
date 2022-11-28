@@ -1,0 +1,11 @@
+
+WEATHER_SetCount(3000);
+WEATHER_SetColorIn(205,250,250,15);
+WEATHER_SetColorOut(200,200,200,0);
+WEATHER_SetSpeed(300);
+WEATHER_SetSize(120,120);
+
+WEATHER_SetSpace(12, 30);
+
+WEATHER_SetOn(1);
+WEATHER_SetMode(0);

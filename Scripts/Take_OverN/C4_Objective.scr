@@ -1,0 +1,16 @@
+// C4_objective
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetObjectiveStatus(1, 0);     // Capture Freiberg - ok
+SetObjectiveStatus(2, 0);     // Destroy the fuel supply - ok
+SetObjectiveStatus(3, 4);     // Kill the enemy - ok
+SetObjectiveStatus(4, 0);     // Destroy all enemy tanks - ok
+SetObjectiveStatus(5, 4);     // Noone can escape - ok
+SetObjectiveStatus(6, 0);     // Aquire documents - ok
+}
+
+//-------------------------------------------------------------------------------------
+
+Label end:

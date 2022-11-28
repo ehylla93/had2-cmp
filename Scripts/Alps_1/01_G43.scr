@@ -1,0 +1,176 @@
+// 01_G43 - Stands by rockside
+// ----------------------------------------
+
+Block
+{
+Frame G01;		FRM_FindFrame(G01, "01_G40");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f043");
+
+Integer AIEvent;
+Integer AIStyle;
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 0, 0, 1);
+FRM_MorphSpeech(me, 90001076, 10, 50);
+AIEvent = _GetAlarmType();
+AIStyle = _RandomInt(3);
+
+If (((AIEvent == 1) OR (AIEvent == 2)) OR (AIEvent == 256))
+{
+
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+}
+
+If ((AIEvent == 4) OR (AIEvent == 8))
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Silence();
+}
+
+If (AIEvent == 32)
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Lie();
+}
+
+If (AIEvent == 64)
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(G01, 15);
+HUMAN_SETMODE_Lie();
+}
+
+If (AIEvent == 512)
+{
+	If (AIStyle == 0)
+	{
+		HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (AIStyle == 1)
+	{
+		HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (AIStyle == 2)
+	{
+		HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SETMODE_Lie();
+HUMAN_SETMODE_Silence();
+}
+
+HUMAN_SETSIGHTRANGE(115);
+HUMAN_SETHEARRANGE(80);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 80))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%Kecy3", 2000, 2000, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

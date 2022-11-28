@@ -1,0 +1,234 @@
+// BU2_Allied06 - allied soldier, shooting at BU2_R03, R05, R24, R07, R06, R11, R13 - moving right flank
+// commanded by signals from BU2_Allied05
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame r03;	FRM_FindFrame(r03, "BU2_R03");
+Frame r05;	FRM_FindFrame(r05, "BU2_R05");
+Frame r24;	FRM_FindFrame(r24, "BU2_R24");
+Frame r07;	FRM_FindFrame(r07, "BU2_R07");
+Frame r06;	FRM_FindFrame(r06, "BU2_R06");
+Frame r11;	FRM_FindFrame(r11, "BU2_R11");
+Frame r13;	FRM_FindFrame(r13, "BU2_R13");
+Frame shoot01;	FRM_FindFrame(shoot01, "BU2_A06_shoot01");
+Frame me;		FRM_GetMyFrame(me);
+Integer path;	path=0;
+Integer r03live;	r03live=0;
+Integer r05live;	r05live=0;
+Integer r24live;	r24live=0;
+Integer r07live;	r07live=0;
+Integer r06live;	r06live=0;
+Integer r11live;	r11live=0;
+Integer r13live;	r13live=0;
+
+HUMAN_SETEVENTS(false);
+FRM_SwitchFaceTexture(me, "e_f054");
+
+SetAlarmType(1023, false);
+}
+
+HUMAN_SETMODE_Run();
+
+GoTo end;
+
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)	// received from BU2_Allied05
+{
+	GoTo beh;
+}
+OnSignal(2)	// received from BU2_Allied05
+{
+	GoTo shootonce;
+}
+OnSignal(3)	// received from BU2_Allied05
+{
+	GoTo continue2;
+}
+OnSignal(4)	// received from BU2_Allied05
+{
+	GoTo continue3;
+}
+OnSignal(5)	// received from BU2_Allied05
+{
+	GoTo continue4;
+}
+OnSignal(6)	// received from BU2_Allied05
+{
+	HUMAN_Stop();
+	GoTo meet_r05;
+}
+
+Whenever bu2_r03(_FrameInRange(r03)<30)
+{
+	SendSignal(r03, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r03);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r03;
+}
+
+Whenever bu2_r05(_FrameInRange(r05)<30)
+{
+	SendSignal(r05, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r05);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r05;
+}
+
+Whenever bu2_r24(_FrameInRange(r24)<30)
+{
+	SendSignal(r24, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r24);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r24;
+}
+
+Whenever bu2_r07(_FrameInRange(r07)<30)
+{
+	SendSignal(r07, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r07);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r07;
+}
+
+Whenever bu2_r06(_FrameInRange(r06)<30)
+{
+	SendSignal(r06, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r06);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r06;
+}
+
+Whenever bu2_r11(_FrameInRange(r11)<30)
+{
+	SendSignal(r11, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r11);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r11;
+}
+
+Whenever bu2_r13(_FrameInRange(r13)<30)
+{
+	SendSignal(r13, 1);
+	HUMAN_Stop();
+	HUMAN_TurnAt(r13);
+	HUMAN_SETMODE_Crouch();
+	GoTo meet_r13;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Label beh:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A06_01");
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+Label continue2:
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A06_02");
+	GoTo end;
+Label continue3:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A06_03");
+	GoTo end;
+Label continue4:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("BU2_A06_04");
+	HUMAN_Kill(me);
+	GoTo end;
+
+Label shootonce:
+	HUMAN_TurnAt(shoot01);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetOptimized(2);
+	HUMAN_Attack(shoot01, 3000);
+	Delay(2000);
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+
+Label meet_r03:
+	HUMAN_SetOptimized(2);
+		r03live=_ACTOR_GetState(r03);
+	If(r03live==1)
+	{
+		HUMAN_Attack(r03, 2000);
+		Delay(500);
+		GoTo meet_r03;
+	}
+	GoTo end;
+
+Label meet_r05:
+	HUMAN_SetOptimized(2);
+		r05live=_ACTOR_GetState(r05);
+	If(r05live==1)
+	{
+		HUMAN_Attack(r05, 2000);
+		Delay(500);
+		GoTo meet_r05;
+	}
+	GoTo end;
+
+Label meet_r24:
+	HUMAN_SetOptimized(2);
+		r24live=_ACTOR_GetState(r24);
+	If(r24live==1)
+	{
+		HUMAN_Attack(r24, 2000);
+		Delay(500);
+		GoTo meet_r24;
+	}
+	GoTo end;
+
+Label meet_r07:
+	HUMAN_SetOptimized(2);
+		r07live=_ACTOR_GetState(r07);
+	If(r07live==1)
+	{
+		HUMAN_Attack(r07, 2000);
+		Delay(500);
+		GoTo meet_r07;
+	}
+	GoTo end;
+
+Label meet_r06:
+	HUMAN_SetOptimized(2);
+		r06live=_ACTOR_GetState(r06);
+	If(r06live==1)
+	{
+		HUMAN_Attack(r06, 2000);
+		Delay(500);
+		GoTo meet_r06;
+	}
+	GoTo end;
+
+Label meet_r11:
+	HUMAN_SetOptimized(2);
+		r11live=_ACTOR_GetState(r11);
+	If(r11live==1)
+	{
+		HUMAN_Attack(r11, 2000);
+		Delay(500);
+		GoTo meet_r11;
+	}
+	GoTo end;
+
+Label meet_r13:
+	HUMAN_SetOptimized(2);
+		r13live=_ACTOR_GetState(r13);
+	If(r13live==1)
+	{
+		HUMAN_Attack(r13, 2000);
+		Delay(500);
+		GoTo meet_r13;
+	}
+	GoTo end;
+
+Label end:

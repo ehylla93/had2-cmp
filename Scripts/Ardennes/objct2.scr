@@ -1,0 +1,31 @@
+// Obj 2 - Find the documents
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever doc(_IsInInventory(252))
+{
+SetWhenever(lost, true);
+PlayMusic(6);
+SetObjectiveStatus(2, 1);
+GoTo end;
+}
+
+Whenever lost(!_IsInInventory(252))
+{
+SetWhenever(found, true);
+SetObjectiveStatus(2, 0);
+GoTo end;
+}
+
+Whenever found(_IsInInventory(252))
+{
+SetWhenever(lost, true);
+SetObjectiveStatus(2, 1);
+GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+SetWhenever(lost, false);
+SetWhenever(found, false);
+
+Label end:

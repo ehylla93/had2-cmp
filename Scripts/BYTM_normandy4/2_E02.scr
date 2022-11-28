@@ -1,0 +1,50 @@
+// 2_E02
+
+block
+{
+SetAlarmType(128,0);
+
+integer aievent;
+Integer a = _RandomInt(4);
+}
+
+if(a==0) { HUMAN_SETAIMODE_Zombie(); }
+if(a==1) { HUMAN_SETAIMODE_Aggressive(); }
+else { HUMAN_SETAIMODE_Defensive(); }
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("2_E02 alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("2_E02 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(45))
+{
+printf("2_E02 spawned");
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

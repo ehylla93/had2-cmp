@@ -1,0 +1,13 @@
+// BU1_N01_particle - particle script
+Frame me;	FRM_GetMyFrame(me);
+Integer index;
+
+OnSignal(1)	// received from BU1_N01
+{
+FRM_CreateIndexedParticle(23, me, index);
+}
+
+OnSignal(2)	// received from BU1_EE
+{
+FRM_DestroyIndexedParticle(index);
+}

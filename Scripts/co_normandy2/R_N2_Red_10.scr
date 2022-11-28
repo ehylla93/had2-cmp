@@ -1,0 +1,54 @@
+
+Block {
+integer  AIEvent;
+
+SetAlarmType(520, False);	
+HUMAN_SETEVENTS(False);
+}
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(20)
+{						
+  HUMAN_Suspend(False);			 
+}			
+
+  HUMAN_WeaponOnArm(False);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("Red10_1");					
+  HUMAN_Move("Red10_2");					
+  HUMAN_SETEVENTS(True);
+  HUMAN_Move("Red10_3");					
+  HUMAN_SETMODE_Crouch();
+  Delay(500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("Red10_END");				
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:
