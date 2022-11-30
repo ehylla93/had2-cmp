@@ -1,0 +1,211 @@
+//--Objectives------------------------------------------------------------
+//1 - flaks (have to put it in obj_ponorci.scr to get it working. New script obj_flaks.scr attached to dummy was not read by game for some reasons)
+//2 - fueltanks
+//3 - radio
+//4 - submarines
+//5 - assemble
+//------------------------------------------------------------------------
+
+//--SetObjectiveStatus----------------------------------------------------
+// Setting objectives works with "SetObjectiveStatus(2, 4);" where the first integer represents the number of objective and the second the state of the objective. 
+//0 	Objective uncompleted
+//1 	Objective done
+//2 	Objective failed
+//3 	Objective failed (Mission failed)
+//4 	Objective hidden 
+//------------------------------------------------------------------------
+
+//--OnSignals-------------------------------------------------------------
+// OnSignal(1) flaks OK
+// OnSignal(2) flaks NOT
+// OnSignal(3) fueltanks OK
+// OnSignal(4) fueltanks NOT
+// OnSignal(5) radio OK
+// OnSignal(6) radio NOT
+// OnSignal(7) submarines OK
+// OnSignal(8) submarines NOT
+
+//------------------------------------------------------------------------
+
+block
+{
+	SetObjectiveStatus(1, 0); //flaks
+	SetObjectiveStatus(2, 0); //fueltanks
+	SetObjectiveStatus(3, 0); //radio
+	SetObjectiveStatus(4, 0); //submarines
+
+	SetWhenever (endx,0);
+
+	integer flaks;
+	integer fueltanks;
+	integer radio;
+	integer submarines;
+	integer assemble;
+}
+
+goto end;
+
+OnSignal(1)
+{	
+	// flaks
+	block
+	{	
+		if((fueltanks==1) and (radio==1) and (submarines==1) and (assemble==0))
+		{
+			SetObjectiveStatus(5, 0);
+			SetWhenever (endx,1);
+			assemble=1;
+		}
+		printf ("flaks signal received");
+		SetObjectiveStatus(1, 1);
+		flaks=1;
+	}
+}
+
+OnSignal(3)
+{	
+	// fueltanks
+	block
+	{
+		if((flaks==1) and (submarines==1) and (radio==1) and (assemble==0))
+		{
+			SetObjectiveStatus(5, 0);
+			SetWhenever (endx,1);
+			assemble=1;
+		}
+		SetObjectiveStatus(2, 1);
+		fueltanks=1;
+	}
+}
+
+OnSignal(5)
+{	
+	// radio
+	block
+	{
+		if((fueltanks==1) and (flaks==1) and (submarines==1) and (assemble==0))
+		{
+			SetObjectiveStatus(5, 0);
+			SetWhenever (endx,1);
+			assemble=1;
+		}
+		SetObjectiveStatus(3, 1);
+		radio=1;
+	}
+}
+
+OnSignal(7)
+{	
+	// submarines
+	block
+	{
+		if((fueltanks==1) and (flaks==1) and (radio==1) and (assemble==0))
+		{
+			SetObjectiveStatus(5, 0);
+			SetWhenever (endx,1);
+			assemble=1;
+		}
+		SetObjectiveStatus(4, 1);
+		submarines=1;
+	}
+}
+
+if (assemble==1)
+{
+	Delay(5000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(51999902); // NEW OBJECTIVE: ASSEMBLE AT THE PLANNED LOCATION
+	delay (5000);
+	SUBTITLES_SetOn(0);
+	goto end;
+}
+
+OnSignal(2)
+{
+	block
+	{
+		flaks=0;
+		SetObjectiveStatus(1, 0);
+	}
+	goto end;
+}
+
+OnSignal(4)
+{
+	block
+	{
+		fueltanks=0;
+		SetObjectiveStatus(2, 0);
+	}
+	goto end;
+}
+
+OnSignal(6)
+{
+	block
+	{
+		radio=0;
+		SetObjectiveStatus(3, 0);
+	}
+	goto end;
+}
+
+OnSignal(8)
+{
+	block
+	{
+		submarines=0;
+		SetObjectiveStatus(4, 0);
+	}
+	goto end;
+}
+
+Whenever endx(_MP_AllTeamMembersAreInRange(1, 20))
+{
+	printf ("JOPOOOOOOO");
+	DisableSignals(1);
+
+	if (flaks==0)
+	{
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(51999905);
+		delay (4000);
+		SUBTITLES_SetOn(0);
+		SetObjectiveStatus(1, 3);
+	goto end;
+	}
+	
+	if (fueltanks==0)
+	{
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(51999805);
+		delay (4000);
+		SUBTITLES_SetOn(0);
+		SetObjectiveStatus(2, 3);
+	goto end;
+	}
+	
+	if (radio==0)
+	{
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(51999909);
+		delay (4000);
+		SUBTITLES_SetOn(0);
+		SetObjectiveStatus(3, 3);
+	goto end;
+	}
+	
+	if (submarines==0)
+	{
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(51999905);
+		delay (4000);
+		SUBTITLES_SetOn(0);
+		SetObjectiveStatus(4, 3);
+	goto end;
+	}
+
+	SetObjectiveStatus(5, 1);
+}
+
+label end:

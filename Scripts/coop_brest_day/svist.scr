@@ -1,0 +1,40 @@
+Frame me;		FRM_GetMyFrame(me);
+
+Frame brana;		FRM_FindFrame(brana, "Object59");
+
+integer Door;		Door = 0;
+
+OnUse()
+  {
+
+     if (Door == 0)
+       {
+	block
+	{
+	printf ("oteviram");
+	DOOR_Lock(brana, 0);
+	SetActorState(brana,1);
+	CheckpointJoin("j1", "j11");
+	CheckpointJoin("j2", "j22");
+	CheckpointJoin("j3", "j33");
+	Door = 1;
+	}
+
+        }
+    else
+       {
+	block
+	{
+	printf ("zaviram");
+	SetActorState(brana,0);
+	CheckpointSeparate("j1", "j11");
+	CheckpointSeparate("j2", "j22");
+	CheckpointSeparate("j3", "j33");
+	Door = 0;
+	}
+       }
+
+  }
+
+	delay (5500);
+	DOOR_Lock(brana, 1);

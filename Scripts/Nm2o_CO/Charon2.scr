@@ -1,0 +1,40 @@
+// Sherman Firefly crew, Driver
+
+Block
+ {
+    
+Frame Bmik_MG;	FRM_FindFrame(Bmik_MG, "Charon_1");
+
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+OnAlarm()	{}
+OnAlarmDone()  {}
+
+Whenever inrange (_MP_IsTeamMemberInRange(1, 50))
+{
+	Delay(5000);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_shermanAf_2", true, 0);
+  Delay(90000);	// 30000
+  
+  HUMAN_Drive("AmiiTank_1", 9);
+SendSignal(Bmik_MG, 1);
+  HUMAN_Drive("AmiiTank_2", 9);
+  HUMAN_Drive("AmiiTank_3", 9);
+  HUMAN_Drive("AmiiTank_4", 9);
+SendSignal(Bmik_MG, 2);
+  HUMAN_Drive("AmiiTank_5", 13);
+  HUMAN_Drive("AmiiTank_6", 13);
+  
+  HUMAN_Drive("", 0);
+  
+  
+}
+
+Label TheEnd:

@@ -1,0 +1,35 @@
+block
+{
+	Frame en_szkop; 		FRM_FindFrame(en_szkop, "en_szkop");
+	Frame detecttest;		FRM_FindFrame (detecttest,"detect_test");
+	frame sound1;        	FRM_FindFrame(sound1,"comgo");
+	//SetWhenever(notInRange,0);
+}
+
+//Whenever inRange(_PlayerInRange(detecttest,5))
+//Whenever inRange(_MP_IsTeamMemberInRange(1, 5);)
+Whenever inRange(_PlayerInBox(detecttest))
+{
+	//SetActorState(en_szkop,0)
+	//FRM_SetOn(en_szkop,false);
+	//SUBTITLES_SetOn(1);
+	//SUBTITLES_SetText(52999715);
+	//delay (1000);
+	//SUBTITLES_SetOn(0);
+	//FRM_SetOn(en_szkop,false);
+	SendSignal (en_szkop,1);	
+	//SetWhenever(notInRange,1);
+	FRM_SetOn (sound1,true);	
+	
+}
+
+Whenever notInRange(!_PlayerInBox(detecttest))
+{
+	SendSignal (en_szkop,2);
+	//SetWhenever(inRange,1);	
+	FRM_SetOn (sound1,false);	
+}
+
+//SetWheneverTime("inRange", 2000);
+//SetWhenever(inRange,1);
+

@@ -1,0 +1,25 @@
+// dead ally in H38
+
+Block
+ {
+	Frame driver;	FRM_FindFrame(driver, "Charon6t");
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+Whenever inrange (_MP_IsTeamMemberInRange(1, 11))
+{
+	Delay(10000);
+  //HUMAN_Suspend(False);
+  SendSignal(driver, 1);
+}
+				
+OnAlarm()	{}
+
+OnAlarmDone()  {}
+
+Label TheEnd:

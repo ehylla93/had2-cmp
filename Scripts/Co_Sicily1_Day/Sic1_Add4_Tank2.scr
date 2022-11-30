@@ -1,0 +1,69 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Osadka Panzeru2 (ridic) Add4_Tank2 - jede ... 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+frame MyTank;	FRM_FindFrame(MyTank, "Tank2");
+integer RND = 0;
+
+Block
+{
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+FRM_SetOn(Mytank, False);
+HUMAN_Suspend(True);	
+///////////////////////////////// test - start
+//  Frame Kolega;	
+//  FRM_FindFrame(Kolega, "Add6_Tank2");
+//  Frame MyFRM;
+//  FRM_GetMyFrame(MyFRM);  
+//  SendSignal(Kolega, 1);
+//  SendSignal(Myfrm, 1);
+//////////////////////////////// test - end
+goto TheEnd;
+
+// posila aktivator druhe vlny
+Onsignal(1)		
+{
+  FRM_SetOn(Mytank, true);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Tank2", true, 0);
+} 
+
+// aktivni cast - jede
+Delay(2000);
+HUMAN_Drive("Tank2_end", 19);
+Delay(2500);
+RND = _RandomInt(2);
+If (RND == 1) 
+  {
+     HUMAN_Drive("Tank2_RND1", 17);
+   } else {
+     HUMAN_Drive("Tank2_RND2", 17);
+  }
+HUMAN_Drive("", 0);
+Label GOGO:
+  Delay(34513);
+  RND = _RandomInt(3) + 1;
+  If (RND == 1)     {       HUMAN_Drive("Tank2_RND1", 17);    } 
+  If (RND == 2)     {       HUMAN_Drive("Tank2_RND2", 17);    } 
+  If (RND == 3)     {       HUMAN_Drive("Tank2_RND3", 17);    } 
+  HUMAN_Drive("", 0);
+Goto GOGO;
+
+OnAlarm()  
+  {
+    Printf("HLASIT - nemelo by nikdy nastat - ridic Panzeru2 presel do alarmu");      
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+} 
+
+label TheEnd:
+

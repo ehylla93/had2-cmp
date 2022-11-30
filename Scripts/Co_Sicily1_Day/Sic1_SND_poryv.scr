@@ -1,0 +1,34 @@
+frame sound1;		frm_findframe(sound1,"S_poryv");
+frame sound2;		frm_findframe(sound2,"S_trava1");
+frame sound3;		frm_findframe(sound3,"S_trava2");
+frame sound4;		frm_findframe(sound4,"S_trava3");
+frame sound5;		frm_findframe(sound5,"S_trava4");
+frame sound6;		frm_findframe(sound6,"S_strom1");
+frame sound7;		frm_findframe(sound7,"S_strom2");
+frame sound8;		frm_findframe(sound8,"S_strom3");
+frame sound9;		frm_findframe(sound9,"S_strom4");
+frame sound10;	frm_findframe(sound10,"S_strom5");
+frame sound11;	frm_findframe(sound11,"S_strom6");
+
+
+integer rnd_pause;
+
+label loop:
+rnd_pause= _randomint(18000) + 25000;
+delay(rnd_pause);
+FRM_SetOn(sound1, true);
+delay (4000);
+FRM_SetOn(sound2, true);
+delay (1000);
+FRM_SetOn(sound3, true);
+delay (1000);
+FRM_SetOn(sound4, true);
+FRM_SetOn(sound6, true);
+FRM_SetOn(sound7, true);
+FRM_SetOn(sound8, true);
+delay (1000);
+FRM_SetOn(sound5, true);
+FRM_SetOn(sound9, true);
+FRM_SetOn(sound10, true);
+FRM_SetOn(sound11, true);
+goto loop;

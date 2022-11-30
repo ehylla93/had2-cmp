@@ -1,0 +1,28 @@
+// Obj 3 - destroy all enemy tanks
+// --------------------------------------
+
+Block
+{
+Frame t1;	FRM_FindFrame(t1, "La_tiger_1"); 
+Frame t2;	FRM_FindFrame(t2, "La_tiger_3"); 
+Frame t3;	FRM_FindFrame(t3, "La_tiger_4");
+Frame t4;	FRM_FindFrame(t4, "Tank1");
+
+SetObjectiveStatus(3, 0);
+Delay(4000);
+printf("tank script");
+}
+
+// --------------------------------------
+
+Whenever Tankbum ((((_Actor_GetState(t1)==0) And (_Actor_GetState(t2)==0) ) And (_Actor_GetState(t3)==0) )And (_Actor_GetState(t4)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999601);
+Delay(4000);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetOn(0);
+GoTo end;
+}
+
+Label end:

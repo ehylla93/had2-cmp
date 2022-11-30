@@ -1,0 +1,99 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	IT 40 - V podzemi				*
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+/////////////////////////////////////////////// BACHA COOP nepodporuje fci lock na dvere
+
+Block
+{
+  integer  AIEvent;
+  integer  FirstAlarm = 0;
+  Frame GAlarm;	FRM_FindFrame(GAlarm, "dummy_global_alarm");	   
+  Frame turn; 		FRM_FindFrame(turn, "dummy_it_40_see"); 
+  frame magor1;	FRM_FindFrame(magor1, "IT_49");
+  frame magor2;	FRM_FindFrame(magor2, "IT_50");
+  frame magor3;	FRM_FindFrame(magor3, "IT_51");
+  frame dvere1;	FRM_FindFrame(dvere1, "d_dvere_10");
+  frame dvere2;	FRM_FindFrame(dvere2, "d_dvere_09");
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+Whenever XXX ( _PlayerInRange(40) )
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+     SetAlarmType(1023, True);		
+  }
+  HUMAN_SetAnim("%%zedianemacka", 100, 100, True); 	
+  HUMAN_SETMODE_Crouch();
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("it_40_end");	
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+ If (FirstAlarm == 1)  
+   { 
+      EndScript();
+     } else {
+      FirstAlarm = 1;
+   }
+  HUMAN_SetAnim("%%zedimacka", 100, 100, False); 	
+  HUMAN_SETMODE_Stand();
+  Delay(2700);
+  Block
+  {
+    SendSignal(magor1, 2);
+    SendSignal(magor2, 2);
+    SendSignal(magor3, 2);
+    DOOR_Lock(dvere1, false);    
+    DOOR_Lock(dvere2, false);
+    SendSignal(GAlarm, 1);
+  }
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" --- 40 --- ma alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  HUMAN_SetAnim("", 100, 100, False); 	
+  HUMAN_WeaponOnArm(True);
+  Delay(1300);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

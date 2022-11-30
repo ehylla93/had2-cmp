@@ -1,0 +1,55 @@
+//
+//----------------------Block----------------------
+Block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+integer Rnd1;
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_PlayerInRange(100))
+{
+HUMAN_Suspend(0);
+Block
+{
+Rnd1=(_randomint(20)+50);
+HUMAN_SETSIGHTRANGE(Rnd1);
+Rnd1=(_randomint(20)+50);
+HUMAN_SETHEARRANGE(Rnd1);
+HUMAN_BoardVehicle("panther2", 1, 0);
+HUMAN_SETAIMODE_Aggressive();
+goto END;
+}
+}
+
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+EndScript();
+}
+
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+//
+}
+
+//----------------------OnDeath----------------------
+OnDeath()
+{
+EndScript();
+}
+
+// ----------------------END----------------------
+Label END:

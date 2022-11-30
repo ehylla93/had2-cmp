@@ -1,0 +1,53 @@
+Block
+{
+	  integer  AIEvent;
+	  frame MyFRM;	FRM_GetMyFrame(MyFRM);
+	  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+Block
+{
+    HUMAN_WeaponOnArm(True);
+    HUMAN_SETAIMODE_Defensive();
+    SetAlarmType(1023, True);		
+}
+
+Delay(500);
+  
+Goto TheEnd;
+
+label DeAlarm:
+	HUMAN_SetOptimized(2);
+	Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+	Block
+    {
+		  AIEvent =_GetAlarmType(); 
+		  PrintfNumber("EN PORT 5 ON ALARM", AIEvent);	
+		  HUMAN_Stop();
+		  HUMAN_SETAIMODE_Aggressive();
+    }
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETMODE_Stand();
+	SetAlarmType(1023, True);	
+	HUMAN_SetAlarm(False);	
+	Delay(200);
+	goto DeAlarm;
+}
+
+OnDeath()
+{
+	FRM_MorphSpeech(MyFRM, 0, 0, 0);
+	EndScript();
+}
+
+Label TheEND:

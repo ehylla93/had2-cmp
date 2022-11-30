@@ -1,0 +1,21 @@
+// la_Jeepsas_f motorhaube
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+//FRAME me; 			FRM_GetMyFrame(me);  
+FRAME la_Jeepsas_f;	FRM_FindFrame(la_Jeepsas_f, "la_Jeepsas_f");
+FRAME Object03;	FRM_FindFrame(Object03, "la_Jeepsas_f.Object03");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_CreateParticle(77, Object03);
+//Car_SetFuel(la_Jeepsas_f, 0);
+FRM_RotateX(Object03, -45, 90);
+goto END;
+
+
+Label END:
+
+

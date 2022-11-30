@@ -1,0 +1,53 @@
+// Sherman French crew, Tank Gun
+
+Block
+ {
+    Frame tank1;			FRM_FindFrame(tank1, "La_tiger_1");
+    Frame tank2;			FRM_FindFrame(tank2, "Tank1");
+    //Frame bank;		FRM_FindFrame(bank, "m_banka_13");
+    //Frame hakl;			FRM_FindFrame(hakl, "hakl");	
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+HUMAN_Suspend(True);
+goto TheEnd;				
+
+Whenever inrange (_MP_IsTeamMemberInRange(1, 60))
+{
+  Delay(150000);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_shermanAf_3", true, 2);
+}
+
+
+Onsignal(2)
+{
+  label loopT:
+  If ( _ACTOR_GetState(tank1) == 1 ) 
+    {
+       HUMAN_TurnAt(tank1);
+       Delay(2500);
+       HUMAN_Attack(tank1, 4000); 
+       Goto loopT;
+    }
+
+ 
+ label loop:
+  If ( _ACTOR_GetState(tank2) == 1 ) 
+    {
+       HUMAN_TurnAt(tank2);
+       Delay(2500);
+       HUMAN_Attack(tank2, 4000); 
+       Goto loop;
+    }
+}
+	
+
+			
+OnAlarm()	{}
+
+OnAlarmDone()  {}
+
+Label TheEnd:

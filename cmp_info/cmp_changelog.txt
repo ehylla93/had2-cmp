@@ -1,6 +1,24 @@
 CHANGELOG
 
-28/11/2022 - Coop Map Package (CMP) v2.0.2 (unofficial)
+29/11/2022 - Coop Map Package (CMP) v2.0.3
+==========================================
+* + Si1(Day)
+* + Br(Day)
+* + Normandy2B
+* + Nm2(Battle)
+* + Go_Karting
+* + Africa(Skyrace)
+* + Maze
+* + Alaska(Race)
+* + Af1(Race)
+* + Canada(Race)
+* + Li2(Race)
+* + Optional Mod "Texture Enhancement Project"
+* + Optional Mod "Weapon Models Enhancement Project"
+* + Optional Mod "Widescreen Fix"
+* + Optional Mod "Widescreen Fix (HUD Fix addon)"
+
+28/11/2022 - Coop Map Package (CMP) v2.0.2
 ==========================================
 * + Cz1(Red_Army)
 * + Cz2(Red_Army)

@@ -1,0 +1,35 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	obsluhuje tlacitko a zvuk alarmu			*
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Block
+{
+//  Frame hide;		FRM_FindFrame(hide , "M_ALAR_3.Cylinder01");
+  frame MySound;	FRM_FindFrame(MySound, "S_alarm2");
+  integer hidden = 0;
+}
+//FRM_SetOn(hide, True);
+
+OnUse()
+{
+   If ( hidden == 0 ) 
+      {
+          hidden = 1;
+//          FRM_SetOn(hide, False);
+          FRM_SetOn(MySound, True);
+         } else {
+          hidden = 0;
+  //        FRM_SetOn(hide, True);
+          FRM_SetOn(MySound, False);
+      }
+}
+
+OnSignal(1)
+{
+//   FRM_SetOn(hide, False);
+   hidden = 1;
+}
+

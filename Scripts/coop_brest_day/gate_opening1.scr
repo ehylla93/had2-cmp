@@ -1,0 +1,39 @@
+Frame me;		FRM_GetMyFrame(me);
+
+Frame brama;       FRM_FindFrame(brama, "M_WR5_Brest_Gate_01");
+Frame brama2;       FRM_FindFrame(brama2, "M_WR5_Brest_Gate_02");
+			
+integer Door;		Door = 0;
+
+OnUse()
+{
+    if (Door == 0)
+    {
+		block
+		{
+			printf ("oteviram");
+			DOOR_Lock(brama, 0);
+			DOOR_Lock(brama2, 0);
+			SetActorState(brama,1);
+			SetActorState(brama2,1);
+	
+			Door = 1;
+		}
+
+    }
+    else
+    {
+		block
+		{
+			printf ("zaviram");
+			SetActorState(brama,0);
+			SetActorState(brama2,0);
+
+			Door = 0;
+		}
+    }
+}
+
+delay (5500);
+DOOR_Lock(brama, 1);
+DOOR_Lock(brama2, 1);

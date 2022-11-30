@@ -1,0 +1,69 @@
+//----------------------objectives----------------------
+// 1: Assemble at the planned location
+// 2: Destroy the ammunitions store
+// 3: Destroy all enemy tanks
+// 4: Optional: Cause as much damage as possible to enemy vehicles.
+// 5: Optional: Kill the enemy.
+//----------------------objectives----------------------
+
+block
+{
+Frame box1;			FRM_FindFrame(box1, "Explbox1");
+Frame box2;			FRM_FindFrame(box2, "Explbox2");
+Frame box3;			FRM_FindFrame(box3, "Explbox3");
+Frame box4;			FRM_FindFrame(box4, "Explbox4");
+Frame box5;			FRM_FindFrame(box5, "Explbox5");
+Frame Tank1;		FRM_FindFrame(Tank1, "panther1");
+Frame Tank2;		FRM_FindFrame(Tank2, "panther2");
+Frame Tank3;		FRM_FindFrame(Tank3, "panther3");
+Frame Tank4;		FRM_FindFrame(Tank4, "panther4");
+Frame txt;		FRM_FindFrame(txt,"zone1");
+Integer C_counter;
+Integer counter2;
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(5, 4);
+SetWhenever(EndMission, 0);
+C_counter=0;
+counter2=2;
+}
+goto end;
+
+//----------------------objectives----------------------
+Whenever OBJ_Ammo ((_ACTOR_GetState(box1)==0) and (_ACTOR_GetState(box2)==0) and (_ACTOR_GetState(box3)==0) and (_ACTOR_GetState(box4)==0) and (_ACTOR_GetState(box5)==0))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(Txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(1, 0); SendSignal(Txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(2, 1);
+}
+}
+
+Whenever OBJ_Tanks ((_ACTOR_GetState(Tank1)==0) and (_ACTOR_GetState(Tank2)==0) and (_ACTOR_GetState(Tank3)==0) and (_ACTOR_GetState(Tank4)==0))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(Txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(1, 0); SendSignal(Txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(3, 1);
+}
+}
+
+
+//----------------------EndMission----------------------
+Whenever EndMission (_MP_AllTeamMembersAreInRange(1, 10))
+{
+SendSignal(Txt, 4);
+Delay(8000);
+SetObjectiveStatus(1, 1);
+goto end;
+}
+
+Label end:

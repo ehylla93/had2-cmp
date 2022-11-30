@@ -1,0 +1,27 @@
+// Jeepsas_6 Driver Tatra
+
+frame la_Jeepsas_6;	FRM_FindFrame(la_Jeepsas_6, "la_Jeepsas_6");
+
+Whenever inrange ( _PlayerInRange(25))
+{
+  HUMAN_BoardVehicle("la_Jeepsas_6", true, 0);
+  delay(6000);
+}
+
+{
+	GoTo driveloop;
+}
+
+{
+Frame FRM;		FRM_GetMyFrame(FRM);
+Label driveloop:
+	HUMAN_Drive("o2_act1_03", 105);
+	HUMAN_Drive("o2_act1_01", 105);
+	HUMAN_Drive("tank01_al01", 105);
+	HUMAN_Drive("tank02_01", 150);
+	HUMAN_Drive("tank02_al01", 175);
+	HUMAN_Drive("o2_act1_04", 125);
+GoTo driveloop;
+} 
+
+label TheEnd:

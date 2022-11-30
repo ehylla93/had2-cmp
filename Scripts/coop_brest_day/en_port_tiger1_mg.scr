@@ -1,0 +1,52 @@
+
+SetAlarmType(512, false);
+SetAlarmType(256, false);
+
+// ----------------------------------------------------------------------------------------------------
+// AKTIVACE ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarm()
+{
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+      printf("Tiger_MG OnAlarm()");
+      HUMAN_SETSIGHTRANGE(150);
+      EndScript();
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// KONEC ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarmDone()
+{
+      Block { DisableSignals(0);  DisableWhenevers(0); }
+      GoTo Action;
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// SMRT
+// ----------------------------------------------------------------------------------------------------
+OnDeath()
+{
+      EndScript( );
+}
+
+
+
+SetWheneverTime("player_in_range", 2000);
+HUMAN_BoardVehicle( "Tiger1", 1, 1 );
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(150);
+suspended=-1;
+DisableWhenevers(0);
+suspended=1;
+HUMAN_Suspend(true);
+
+goto End;
+
+Label Action:
+    // Sem se defaultne skace po unsuspendovani a pri dealarmu
+    HUMAN_LookAround( 3 );
+// ----------------------------------------------------------------------------------------------------
+Label End:

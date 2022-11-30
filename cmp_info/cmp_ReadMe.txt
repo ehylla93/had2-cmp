@@ -1,6 +1,6 @@
 ---------------------------------------------
-Coop Map Package (CMP) v2.0 compiled by =RpR=
-published on 24/07/2021
+Coop Map Package (CMP) v2.0.1 compiled by =RpR=
+published on 29/11/2022
 
 ---------------------------------------------
 ABOUT
@@ -71,11 +71,15 @@ REQUIREMENTS
 
 ---------------------------------------------
 HD2 WEBLINKS
-german fansite			www.hidden-and-dangerous.de
-english fansite			https://hidden-and-dangerous.net
-=RpR= Clan			rprclan.com
-gog.com HD forum		https://www.gog.com/forum/hidden_dangerous_series#1514134302
-Steam HD2 game hub		http://steamcommunity.com/app/703320
+german fansite				www.hidden-and-dangerous.de
+english fansite				https://hidden-and-dangerous.net
+=RpR= Clan				rprclan.com
+gog.com HD forum			https://www.gog.com/forum/hidden_dangerous_series#1514134302
+Steam HD2 game hub			http://steamcommunity.com/app/703320
+Texture Enhancement Project		https://www.nexusmods.com/hiddenanddangerous2courageunderfire/mods/16
+Weapon Models Enhancement Project	https://www.nexusmods.com/hiddenanddangerous2courageunderfire/mods/2
+HD2 Widescreen Fix			https://github.com/ThirteenAG/WidescreenFixesPack/releases/tag/hd2
+HUD Fix for the Widescreen Fix		https://www.nexusmods.com/hiddenanddangerous2courageunderfire/mods/6
 
 ---------------------------------------------
 MAPNAME ABBREVIATIONS
@@ -97,13 +101,14 @@ Norway		Nw
 ---------------------------------------------
 MAPS
 
-	***BREST*** (#4)
+	***BREST*** (#5)
 	  Br(Silent-Op)			by Rs_sabre
 	  Br(Gestopo)			by Rs_sabre
 	  Br(Extended)			by BetterYouThanMe
 	  Br(Blitz)			by Stern
+	  Br(Day)			by Winters
 
-	***LIBYA*** (#14)
+	***LIBYA*** (#16)
 	  Li1(Day)
 	  Li1(Dherna)
 	  Li1(Sidi_Badullah)		by miamidos
@@ -114,14 +119,16 @@ MAPS
 	  Libya2b			by Sqdn. Ldr. Ted Striker
 	  Li2(Tiger_Tomb)		by Sqdn. Ldr. Ted Striker
 	  Li2(Tankbite)			by Rs_sabre
-	  Li2(Dead-End)			by
+	  Li2(Dead-End)			by Sqdn. Ldr. Ted Striker
+	  Li2(Race)			by Sasha
 	  Li3(Blowout)			by Rs_sabre
 	  Li3(Scorpio)			by Sqdn. Ldr. Ted Striker
 	  Li3(Littorio)			by Sqdn. Ldr. Ted Striker
 	  Li3(Jailbreak)		by BetterYouThanMe
 
-	***SICILY*** (#8)
+	***SICILY*** (#10)
 	  Si1(NightAttack)		by Zdenda
+	  Si1(Day)			by Sqdn. Ldr. Ted Striker
 	  Si2(Stormbridge)		by Zdenda
 	  Si2_A2			unknown
 	  Si2(Boom)			by Sqdn. Ldr. Ted Striker
@@ -141,7 +148,7 @@ MAPS
 	*** Tutorial *** (#1)
 	  Tu(Great-Battle)		by miamidos
 
-	***AFRICA*** (#19)
+	***AFRICA*** (#22)
 	  Africa1			reconverted from SP by BetterYouThanMe
 	  Africa2			reconverted from SP by BetterYouThanMe
 	  Africa3			reconverted from SP by BetterYouThanMe
@@ -153,6 +160,7 @@ MAPS
 	  Af1(Airfield)			by Zdenda
 	  Af1(Delivery)			by Sqdn. Ldr. Ted Striker
 	  Af1(Grant)			by Sqdn. Ldr. Ted Striker
+	  Af1(Race)			by Sasha
 	  Af2(Rommels_Road)		by Dr_NO
 	  Af3(Oasis)			by Zdenda
 	  Af3(Turnover)			by Zdenda
@@ -161,8 +169,10 @@ MAPS
 	  Af4(Turnover)			by Zdenda
 	  Af5(Art_Of_Sand)		by Zdenda
 	  Af5(Stealth_Of_Sand)		by Zdenda
+	  Af6(Race)			by Sasha
+	  Africa(Skyrace)		by Sqdn. Ldr. Ted Striker
 	  
-	***CZECH*** (#24)
+	***CZECH*** (#30)
 	  Czech1			by Zdenda and Lars, reconverted from SP by BetterYouThanMe
 	  Czech2			reconverted from SP by BetterYouThanMe
 	  Czech3			by Zdenda, reconverted from SP by BetterYouThanMe
@@ -199,7 +209,6 @@ MAPS
 	  Arctic2			reconverted from SP by BetterYouThanMe
 	  Arctic3			reconverted from SP by BetterYouThanMe
 	  Arctic4			reconverted from SP by BetterYouThanMe
-	  Ac4(Haudegen)			by Sqdn. Ldr. Ted Striker
 	  Ac1(First_Strike)		by Zdenda
 	  Ac1(The_Factory)		by Zdenda
 	  Ac1(Ext)Day			by BetterYouThanMe
@@ -210,6 +219,7 @@ MAPS
 	  Ac(Complex)N			by Zdenda
 	  Ac4(Radiocamp)		by Zdenda
 	  Ac4(Convoy)			by Joel
+	  Ac4(Haudegen)			by Sqdn. Ldr. Ted Striker
 
 	***ALPS*** (#9)
 	  Alps1				reconverted from SP by BetterYouThanMe
@@ -222,15 +232,17 @@ MAPS
 	  Al2(Hunedoara)		by BetterYouThanMe
 	  Al3(Oddball)			by BetterYouThanMe
 
-	***NORMANDY*** (#13)
+	***NORMANDY*** (#15)
 	  Normandy1			by Lars & GUB, reconverted from SP by BetterYouThanMe
 	  Normandy2			by Lars & GUB, reconverted from SP by BetterYouThanMe
+	  Normandy2B			by Stern
 	  Nm2(Front_Line)		by Zdenda
 	  Nm2(Saving_Pvt_Smith)		by Zdenda
 	  Nm2(Resistance)		by Black Akres
 	  Nm2(Marolles)			by Sqdn. Ldr. Ted Striker
 	  Nm2(Bait)			by Sqdn. Ldr. Ted Striker
 	  Nm2(Firefly)			by Sqdn. Ldr. Ted Striker
+	  Nm2(Battle)			by Sqdn. Ldr. Ted Striker
 	  Nm3(Bridge)			by Lars, Zdenda
 	  Nm4(HantaYo)			by BetterYouThanMe
 	  Nm4(Calais)			by Stern
@@ -261,9 +273,21 @@ MAPS
 	***MAFIA*** (#1)
 	  Mafia(Racing)			by Sqdn. Ldr. Ted Striker
 
-	***HDD*** (#1)
+	***HDD*** (#2)
 	  Italy1			by culticaxe
           Italy2			by culticaxe
 
+	***GO_KARTING*** (#1)
+	  Go_Karting			by ProSabre
+
+	***MAZE*** (#1)
+	  Maze				by Stern
+
+	***ALASKA*** (#1)
+	  Alaska(Race)			by Sqdn. Ldr. Ted Striker
+
+	***CANADA*** (#1)
+	  Canada(Race)			by Sasha
+
 ---------------------------------------------
- #127 Maps
+ #148 Maps

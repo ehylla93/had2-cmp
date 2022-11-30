@@ -210,6 +210,59 @@
 <OBJECTIVE allied_text="15501" axis_text="15501" value="03"/>
 <AIRCRAFTATACK allied="0" axis="0" />
 </MAP>
+<MAP  name="Br(Day)"  dir="coop_brest_day" desc="17820">
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="5" item_num="1" ammo_num="15"/>
+<ITEM item_id="6" item_num="1" ammo_num="15"/>
+<ITEM item_id="7" item_num="1" ammo_num="15"/>
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="14" item_num="1" ammo_num="15"/>
+<ITEM item_id="15" item_num="1" ammo_num="15"/>
+<ITEM item_id="17" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="23" item_num="1" ammo_num="25"/>
+<ITEM item_id="24" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="15"/>
+<ITEM item_id="31" item_num="1" ammo_num="15"/>
+<ITEM item_id="39" item_num="1" ammo_num="5"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="54" item_num="4"/>
+<ITEM item_id="56" item_num="1"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="60" item_num="1"/>
+<ITEM item_id="61" item_num="1"/>
+<ITEM item_id="62" item_num="1"/>
+<ITEM item_id="63" item_num="1"/>
+<ITEM item_id="68" item_num="5"/>
+<ITEM item_id="70" item_num="2"/>
+<ITEM item_id="95" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="115" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="159" item_num="1" ammo_num="1"/>
+<ITEM item_id="160" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="222" item_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="15546" axis_text="15546" value="03"/>
+<OBJECTIVE allied_text="15503" axis_text="15503" value="03"/>
+<OBJECTIVE allied_text="15506" axis_text="15506" value="03"/>
+<OBJECTIVE allied_text="15500" axis_text="15500" value="03"/>
+<OBJECTIVE allied_text="15501" axis_text="15501" value="03"/>
+</MAP>
 
 //////////////////////////////LIBYA//////////////////////////////
 
@@ -848,6 +901,53 @@
 <OBJECTIVE  allied_text="15538"  axis_text="15538"  value="03"/>
 <OBJECTIVE  allied_text="15556"  axis_text="15556"  value="03"/>
 </MAP>
+<MAP name="Li2(Race)" dir="co_Li2-Race">
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="5" item_num="1" ammo_num="15"/>
+<ITEM item_id="23" item_num="1" ammo_num="25"/>
+<ITEM item_id="39" item_num="1" ammo_num="5"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="54" item_num="4"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="5"/>
+<ITEM item_id="66" item_num="2"/>
+<ITEM item_id="97" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="222" item_num="1"/>
+<ITEM item_id="228" item_num="1"/>
+<ITEM item_id="114" item_num="1" ammo_num="1"/>
+<ITEM item_id="116" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="122" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="261" item_num="1" ammo_num="15"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+<ITEM item_id="264" item_num="1" ammo_num="5"/>
+<ITEM item_id="266" item_num="1" ammo_num="1"/>
+<ITEM item_id="267" item_num="1" ammo_num="1"/>
+<ITEM item_id="273" item_num="1" ammo_num="0"/>
+<ITEM item_id="275" item_num="1" ammo_num="0"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="8021" axis_text="8021" value="03"/>
+<OBJECTIVE allied_text="6117" axis_text="6117" value="03"/>
+<OBJECTIVE allied_text="6063" axis_text="6063" value="03"/>
+<OBJECTIVE allied_text="6053" axis_text="6053" value="03"/>
+<OBJECTIVE allied_text="6061" axis_text="6061" value="03"/>
+<OBJECTIVE allied_text="6071" axis_text="6071" value="03"/>
+<OBJECTIVE allied_text="6081" axis_text="6081" value="03"/>
+<OBJECTIVE allied_text="6083" axis_text="6083" value="03"/>
+</MAP>
 <MAP name="Li3(Blowout)" dir="L3Blowout" desc="17823">
 <ALLOWEDITEMS version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="10"/>
@@ -1203,6 +1303,75 @@
 <OBJECTIVE allied_text="15514" axis_text="15514" value="03"/>
 <OBJECTIVE allied_text="6162"  axis_text="6162"  value="03"/>
 <OBJECTIVE allied_text="6165"  axis_text="6165"  value="03"/>
+<OBJECTIVE allied_text="15547" axis_text="15547" value="03"/>
+<OBJECTIVE allied_text="15548" axis_text="15548" value="03"/>
+</MAP>
+<MAP name="Si1(Day)" dir="Co_Sicily1_Day" desc="17824">
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="0" item_num="1" ammo_num="10"/>
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="15"/>
+<ITEM item_id="4" item_num="1" ammo_num="15"/>
+<ITEM item_id="6" item_num="1" ammo_num="15"/>
+<ITEM item_id="7" item_num="1" ammo_num="15"/>
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="13" item_num="1" ammo_num="15"/>
+<ITEM item_id="14" item_num="1" ammo_num="15"/>
+<ITEM item_id="15" item_num="1" ammo_num="15"/>
+<ITEM item_id="17" item_num="1" ammo_num="15"/>
+<ITEM item_id="18" item_num="1" ammo_num="15"/>
+<ITEM item_id="19" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="26" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="15"/>		
+<ITEM item_id="39" item_num="1" ammo_num="5"/>
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="54" item_num="5"/>
+<ITEM item_id="56" item_num="1"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="60" item_num="2"/>
+<ITEM item_id="61" item_num="0"/>
+<ITEM item_id="62" item_num="4"/>
+<ITEM item_id="63" item_num="0"/>
+<ITEM item_id="66" item_num="2"/>
+<ITEM item_id="68" item_num="3"/>
+<ITEM item_id="70" item_num="2"/>
+<ITEM item_id="71" item_num="1"/>
+<ITEM item_id="97" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="115" item_num="1" ammo_num="1"/>
+<ITEM item_id="116" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="129" item_num="1" ammo_num="1"/>
+<ITEM item_id="131" item_num="1" ammo_num="1"/>
+<ITEM item_id="138" item_num="1" ammo_num="1"/>
+<ITEM item_id="144" item_num="1" ammo_num="1"/>
+<ITEM item_id="145" item_num="1" ammo_num="1"/>
+<ITEM item_id="152" item_num="1" ammo_num="1"/>
+<ITEM item_id="153" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="260" item_num="1" ammo_num="15"/>
+<ITEM item_id="261" item_num="1" ammo_num="5"/>
+<ITEM item_id="262" item_num="1" ammo_num="15"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="15540" axis_text="15540" value="03"/>
+<OBJECTIVE allied_text="15541" axis_text="15541" value="03"/>
+<OBJECTIVE allied_text="15542" axis_text="15542" value="03"/>
+<OBJECTIVE allied_text="15545" axis_text="15545" value="03"/>
+<OBJECTIVE allied_text="15546" axis_text="15546" value="03"/>
 <OBJECTIVE allied_text="15547" axis_text="15547" value="03"/>
 <OBJECTIVE allied_text="15548" axis_text="15548" value="03"/>
 </MAP>
@@ -3183,6 +3352,53 @@
 <OBJECTIVE allied_text="6084"  axis_text="6084"  value="03"/>
 <OBJECTIVE allied_text="15556" axis_text="15556" value="03"/>
 </MAP>
+<MAP name="Af1(Race)" dir="co_AF1-Race">
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="5" item_num="1" ammo_num="15"/>
+<ITEM item_id="23" item_num="1" ammo_num="25"/>
+<ITEM item_id="39" item_num="1" ammo_num="5"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="54" item_num="4"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="5"/>
+<ITEM item_id="66" item_num="2"/>
+<ITEM item_id="97" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="222" item_num="1"/>
+<ITEM item_id="228" item_num="1"/>
+<ITEM item_id="114" item_num="1" ammo_num="1"/>
+<ITEM item_id="116" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="122" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="261" item_num="1" ammo_num="15"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+<ITEM item_id="264" item_num="1" ammo_num="5"/>
+<ITEM item_id="266" item_num="1" ammo_num="1"/>
+<ITEM item_id="267" item_num="1" ammo_num="1"/>
+<ITEM item_id="273" item_num="1" ammo_num="0"/>
+<ITEM item_id="275" item_num="1" ammo_num="0"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="8021" axis_text="8021" value="03"/>
+<OBJECTIVE allied_text="6117" axis_text="6117" value="03"/>
+<OBJECTIVE allied_text="6063" axis_text="6063" value="03"/>
+<OBJECTIVE allied_text="6053" axis_text="6053" value="03"/>
+<OBJECTIVE allied_text="6061" axis_text="6061" value="03"/>
+<OBJECTIVE allied_text="6071" axis_text="6071" value="03"/>
+<OBJECTIVE allied_text="6081" axis_text="6081" value="03"/>
+<OBJECTIVE allied_text="6083" axis_text="6083" value="03"/>
+</MAP>
 <MAP  name="Af2(Rommels_Road)"  dir="AFRICA2bco" desc="10260">
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="2" item_num="1" ammo_num="10"/>
@@ -3544,6 +3760,77 @@
 <OBJECTIVE allied_text="6033"  axis_text="6033"  value="03"/>
 <OBJECTIVE allied_text="15514" axis_text="15514" value="03"/>
 <OBJECTIVE allied_text="6122"  axis_text="6122"  value="03"/>
+</MAP>
+<MAP name="Af6(Race)"  dir="co_AF6-Race">
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="5" item_num="1" ammo_num="15"/>
+<ITEM item_id="23" item_num="1" ammo_num="25"/>
+<ITEM item_id="39" item_num="1" ammo_num="5"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="54" item_num="4"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="5"/>
+<ITEM item_id="66" item_num="2"/>
+<ITEM item_id="97" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="222" item_num="1"/>
+<ITEM item_id="228" item_num="1"/>
+<ITEM item_id="114" item_num="1" ammo_num="1"/>
+<ITEM item_id="116" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="122" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="261" item_num="1" ammo_num="15"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+<ITEM item_id="264" item_num="1" ammo_num="5"/>
+<ITEM item_id="266" item_num="1" ammo_num="1"/>
+<ITEM item_id="267" item_num="1" ammo_num="1"/>
+<ITEM item_id="273" item_num="1" ammo_num="0"/>
+<ITEM item_id="275" item_num="1" ammo_num="0"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="8021" axis_text="8021" value="03"/>
+<OBJECTIVE allied_text="6117" axis_text="6117" value="03"/>
+<OBJECTIVE allied_text="6063" axis_text="6063" value="03"/>
+<OBJECTIVE allied_text="6053" axis_text="6053" value="03"/>
+<OBJECTIVE allied_text="6061" axis_text="6061" value="03"/>
+<OBJECTIVE allied_text="6071" axis_text="6071" value="03"/>
+<OBJECTIVE allied_text="6081" axis_text="6081" value="03"/>
+<OBJECTIVE allied_text="6083" axis_text="6083" value="03"/>
+</MAP>
+<MAP  name="Africa(Skyrace)"  dir="AF_SkyRace_Co"> 
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="114" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="139" item_num="1" ammo_num="1"/>
+<ITEM item_id="140" item_num="1" ammo_num="1"/>
+<ITEM item_id="141" item_num="1" ammo_num="1"/>
+<ITEM item_id="143" item_num="1" ammo_num="1"/>
+<ITEM item_id="157" item_num="1" ammo_num="1"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="8021" axis_text="8021" value="03"/>
+<OBJECTIVE allied_text="6117" axis_text="6117" value="03"/>
+<OBJECTIVE allied_text="6063" axis_text="6063" value="03"/>
+<OBJECTIVE allied_text="6053" axis_text="6053" value="03"/>
+<OBJECTIVE allied_text="6061" axis_text="6061" value="03"/>
+<OBJECTIVE allied_text="6071" axis_text="6071" value="03"/>
+<OBJECTIVE allied_text="6081" axis_text="6081" value="03"/>
+<OBJECTIVE allied_text="6083" axis_text="6083" value="03"/>
 </MAP>
 
 //////////////////////////////NORWAY//////////////////////////////
@@ -4336,6 +4623,47 @@
 <OBJECTIVE allied_text="6175" axis_text="6175" value="03"/>
 <OBJECTIVE allied_text="6176" axis_text="6176" value="03"/>
 </MAP>
+<MAP name="Normandy2B" dir="N2B_coop">
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="6" item_num="1" ammo_num="10"/>
+<ITEM item_id="7" item_num="1" ammo_num="10"/>
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="14" item_num="1" ammo_num="10"/>
+<ITEM item_id="15" item_num="1" ammo_num="10"/>
+<ITEM item_id="17" item_num="1" ammo_num="10"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="10"/>
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="54" item_num="2"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="2"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="129" item_num="1" ammo_num="1"/>
+<ITEM item_id="137" item_num="1" ammo_num="1"/>
+<ITEM item_id="138" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="0" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="0"/>
+<ITEM item_id="169" item_num="1" ammo_num="0"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="17065" axis_text="17065" value="03" />
+<OBJECTIVE allied_text="17066" axis_text="17066" value="03" />
+<OBJECTIVE allied_text="15556" axis_text="15556" value="03" />
+<OBJECTIVE allied_text="15523" axis_text="15523" value="03" />
+<OBJECTIVE allied_text="6300" axis_text="6300" value="03" />
+</MAP>
 <MAP  name="Nm2(Frontline)"  dir="Normandy2bco">
 <ALLOWEDITEMS  version="0.1">
 <ITEM item_id="1" item_num="1" ammo_num="15"/>
@@ -4577,6 +4905,55 @@
 <OBJECTIVE allied_text="15556" axis_text="15556" value="03"/>
 <OBJECTIVE allied_text="15518" axis_text="15518" value="03"/>
 <OBJECTIVE allied_text="15519" axis_text="15519" value="03"/>
+</MAP>
+<MAP name="Nm2(Battle)" dir="Nm2o_CO">  
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="6" item_num="1" ammo_num="10"/>
+<ITEM item_id="7" item_num="1" ammo_num="10"/>
+<ITEM item_id="10" item_num="1" ammo_num="15"/>
+<ITEM item_id="11" item_num="1" ammo_num="15"/>
+<ITEM item_id="14" item_num="1" ammo_num="10"/>
+<ITEM item_id="15" item_num="1" ammo_num="10"/>
+<ITEM item_id="17" item_num="1" ammo_num="10"/>
+<ITEM item_id="18" item_num="1" ammo_num="15"/>
+<ITEM item_id="19" item_num="1" ammo_num="15"/>
+<ITEM item_id="20" item_num="1" ammo_num="15"/>
+<ITEM item_id="21" item_num="1" ammo_num="15"/>
+<ITEM item_id="22" item_num="1" ammo_num="15"/>
+<ITEM item_id="26" item_num="1" ammo_num="15"/>
+<ITEM item_id="28" item_num="1" ammo_num="15"/>
+<ITEM item_id="29" item_num="1" ammo_num="10"/>
+<ITEM item_id="39" item_num="1" ammo_num="6"/>
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="54" item_num="5"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="60" item_num="1"/>
+<ITEM item_id="62" item_num="5"/>
+<ITEM item_id="66" item_num="3"/>
+<ITEM item_id="70" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="129" item_num="1" ammo_num="1"/>                
+<ITEM item_id="137" item_num="1" ammo_num="1"/>
+<ITEM item_id="138" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="0" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="0"/>
+<ITEM item_id="169" item_num="1" ammo_num="0"/>
+<ITEM item_id="229" item_num="1"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+</ALLOWEDITEMS>          
+<ALLOWEDPRESETS>"Allied gunner" "Axis gunner" "Allied sniper" "Axis sniper" "Allied rifleman" "Axis rifleman" "Allied heavy gunner" "Axis heavy gunner" "Allied assault gunner" "Axis assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="15533" axis_text="15533" value="03"/>
+<OBJECTIVE allied_text="6171" axis_text="6171" value="03"/>
+<OBJECTIVE allied_text="15556" axis_text="15556" value="03"/>
+<OBJECTIVE allied_text="15518" axis_text="15518" value="03"/>
+<OBJECTIVE allied_text="15519"	xis_text="15519"value="03"/>
 </MAP>
 <MAP  name="Nm3(Bridge)"  dir="Normandy3co">
 <ALLOWEDITEMS  version="0.1">
@@ -6408,6 +6785,126 @@
 <OBJECTIVE  allied_text="4525"  axis_text="4525"  value="03"/>
 <OBJECTIVE  allied_text="15503"  axis_text="15503"  value="03"/>
 <OBJECTIVE  allied_text="15560"  axis_text="15560"  value="03"/>
+</MAP>
+
+//////////////////////////////GO KARTING//////////////////////////////
+
+<MAP name="Go_Karting" dir="Go_Karting">
+<ALLOWEDITEMS version="0.1">
+<ITEM item_id="9" item_num="1"/>
+<ITEM item_id="53" item_num="4"/>  
+<ITEM item_id="54" item_num="4"/>  
+<ITEM item_id="66" item_num="2"/>
+<ITEM item_id="115" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+</MAP>
+
+//////////////////////////////MAZE//////////////////////////////
+
+<MAP name="Maze" dir="Amazing_Maze">
+<ALLOWEDITEMS version="0.1">
+<ITEM  item_id="68" item_num="4"/>
+<ITEM item_id="114" item_num="1" ammo_num="1"/>
+<ITEM item_id="115" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="122" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="17065" axis_text="17065" value="03" />	Assemble at the planned location.
+<OBJECTIVE allied_text="17066" axis_text="17066" value="03" />	Destroy the ammunitions store.
+<OBJECTIVE allied_text="17066" axis_text="17066" value="03" />	Destroy the ammunitions store.
+<OBJECTIVE allied_text="17066" axis_text="17066" value="03" />	Destroy the ammunitions store.
+<OBJECTIVE allied_text="17066" axis_text="17066" value="03" />	Destroy the ammunitions store.
+</MAP>
+
+//////////////////////////////ALASKA//////////////////////////////
+
+<MAP name="Alaska(Race)" dir="co_Alaska1_Race"> 
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="3"/>
+<ITEM item_id="39" item_num="1" ammo_num="2"/>
+<ITEM item_id="53" item_num="1"/>
+<ITEM item_id="54" item_num="5"/>
+<ITEM item_id="56" item_num="1"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="1"/>
+<ITEM item_id="66" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="120" item_num="0" ammo_num="1"/>
+<ITEM item_id="122" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="1" ammo_num="1"/>
+<ITEM item_id="225" item_num="1"/>
+<ITEM item_id="261" item_num="1" ammo_num="5"/> 		               
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+</MAP>
+
+//////////////////////////////CANADA//////////////////////////////
+
+<MAP name="Canada(Race)" dir="co_canada">
+<ALLOWEDITEMS  version="0.1">
+<ITEM item_id="1" item_num="1" ammo_num="10"/>
+<ITEM item_id="2" item_num="1" ammo_num="10"/>
+<ITEM item_id="5" item_num="1" ammo_num="15"/>
+<ITEM item_id="23" item_num="1" ammo_num="25"/>
+<ITEM item_id="39" item_num="1" ammo_num="5"/>
+<ITEM item_id="53" item_num="2"/>
+<ITEM item_id="54" item_num="4"/>
+<ITEM item_id="57" item_num="1"/>
+<ITEM item_id="62" item_num="5"/>
+<ITEM item_id="66" item_num="2"/>
+<ITEM item_id="97" item_num="1"/>
+<ITEM item_id="99" item_num="1"/>
+<ITEM item_id="101" item_num="1"/>
+<ITEM item_id="222" item_num="1"/>
+<ITEM item_id="228" item_num="1"/>
+<ITEM item_id="114" item_num="1" ammo_num="1"/>
+<ITEM item_id="116" item_num="1" ammo_num="1"/>
+<ITEM item_id="118" item_num="1" ammo_num="1"/>
+<ITEM item_id="119" item_num="1" ammo_num="1"/>
+<ITEM item_id="120" item_num="1" ammo_num="1"/>
+<ITEM item_id="122" item_num="1" ammo_num="1"/>
+<ITEM item_id="123" item_num="1" ammo_num="1"/>
+<ITEM item_id="124" item_num="1" ammo_num="1"/>
+<ITEM item_id="125" item_num="1" ammo_num="1"/>
+<ITEM item_id="167" item_num="1" ammo_num="1"/>
+<ITEM item_id="168" item_num="1" ammo_num="1"/>
+<ITEM item_id="169" item_num="1" ammo_num="1"/>
+<ITEM item_id="261" item_num="1" ammo_num="15"/>
+<ITEM item_id="263" item_num="1" ammo_num="15"/>
+<ITEM item_id="264" item_num="1" ammo_num="5"/>
+<ITEM item_id="266" item_num="1" ammo_num="1"/>
+<ITEM item_id="267" item_num="1" ammo_num="1"/>
+<ITEM item_id="273" item_num="1" ammo_num="0"/>
+<ITEM item_id="275" item_num="1" ammo_num="0"/>
+</ALLOWEDITEMS>
+<ALLOWEDPRESETS>"Allied gunner" "Allied sniper" "Allied rifleman" "Allied heavy gunner" "Allied assault gunner"</ALLOWEDPRESETS>
+<OBJECTIVE allied_text="8021" axis_text="8021" value="03"/>
+<OBJECTIVE allied_text="6117" axis_text="6117" value="03"/>
+<OBJECTIVE allied_text="6063" axis_text="6063" value="03"/>
+<OBJECTIVE allied_text="6053" axis_text="6053" value="03"/>
+<OBJECTIVE allied_text="6061" axis_text="6061" value="03"/>
+<OBJECTIVE allied_text="6071" axis_text="6071" value="03"/>
+<OBJECTIVE allied_text="6081" axis_text="6081" value="03"/>
+<OBJECTIVE allied_text="6083" axis_text="6083" value="03"/>
 </MAP>
 
 </GAMESTYLE>

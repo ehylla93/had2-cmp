@@ -1,0 +1,38 @@
+// Jeepsas_p Driver JeepK
+
+frame la_Jeepsas_p;	FRM_FindFrame(la_Jeepsas_p, "la_Jeepsas_p");
+
+Whenever inrange ( _PlayerInRange(35))
+{
+  HUMAN_BoardVehicle("la_Jeepsas_p", true, 0);
+  delay(12000);
+//  HUMAN_Drive("o2_act1_04", 95);
+}
+
+{
+	GoTo driveloop;
+}
+
+{
+Frame FRM;		FRM_GetMyFrame(FRM);
+Label driveloop:
+//	HUMAN_Drive("o2_act1_03", 55);
+//	HUMAN_Drive("o2_act1_02", 55);
+//	HUMAN_Drive("o1_act1_02", 75);
+//	HUMAN_Drive("o1_act1_01", 75);
+//	HUMAN_Drive("o1_act1_02", 75);
+//	HUMAN_Drive("o1_act1_03", 75);
+//	HUMAN_Drive("o1_act1_04", 75);
+//	HUMAN_Drive("o2_act1_04", 105);
+	HUMAN_Drive("o2_act1_03", 165);
+//	HUMAN_Drive("o2_act1_02", 105);
+	HUMAN_Drive("o2_act1_01", 150);
+	HUMAN_Drive("tank01_al01", 145);
+//	HUMAN_Drive("o1_act1_03", 105);
+	HUMAN_Drive("tank02_01", 145);
+	HUMAN_Drive("tank02_al01", 158);
+	HUMAN_Drive("o2_act1_04", 150);
+GoTo driveloop;
+} 
+
+label TheEnd:
