@@ -1,9 +1,0 @@
-
-Block {
-frame V2;	FRM_FindFrame(V2, "Static_14");
-}
-
-Whenever Near (_PlayerInRange(2))
-{
-  SendSignal(V2, 11);
-}

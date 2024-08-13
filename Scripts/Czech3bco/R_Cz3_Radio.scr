@@ -1,6 +1,0 @@
-frame Radio_sound;	 FRM_FindFrame(Radio_sound, "l_3rad_");
-
-OnDeath()
-{
-  FRM_SetOn(Radio_sound, False);
-}

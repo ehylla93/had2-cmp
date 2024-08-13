@@ -1,7 +1,0 @@
-
-Frame al2_34;		FRM_FindFrame(al2_34,"al2_34");
-
-Whenever go(_PlayerInRange(2))
-{
-SendSignal (al2_34,1);
-}

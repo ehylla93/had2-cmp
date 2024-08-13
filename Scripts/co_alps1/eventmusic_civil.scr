@@ -1,5 +1,0 @@
-
-Whenever fff(_SignalReceived(1))
-{
-PlayMusic(34);
-}

@@ -1,4 +1,0 @@
-Whenever ted(_PlayerInRange(2))
-{
-HINT_Add(15600);
-}

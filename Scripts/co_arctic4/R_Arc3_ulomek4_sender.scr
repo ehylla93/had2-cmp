@@ -1,5 +1,0 @@
-Whenever spadni (_PlayerInRange(12); )
-{
-  frame ulomek;	FRM_FindFrame(ulomek, "dummy_bouchni");
-  SendSignal(ulomek, 1);
-}

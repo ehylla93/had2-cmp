@@ -1,8 +1,0 @@
-Frame door;	FRM_FindFrame(door, "Mesh271");
-
-Whenever ted(_PlayerInRange(6))
-{
-CheckpointJoin("bd1", "bd2");
-CheckpointJoin("bd3", "bd4");
-DOOR_Lock(door, 0);
-}

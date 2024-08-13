@@ -1,8 +1,0 @@
- 
-Frame MyFRM;	FRM_GetMyFrame(MyFRM);
-FRM_SetOn(MyFRM, False);
-
-OnSignal(10)
-{
-  FRM_SetOn(MyFRM, True);
-}

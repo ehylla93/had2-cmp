@@ -1,8 +1,0 @@
-// X_N1_spawnzone2 trigger
-
-//Frame n09;	FRM_FindFrame(n09, "n09");
-
-MP_EnableSpawnZone("zone1", 2);
-MP_EnableSpawnZone("zone2", 1);
-MP_EnableSpawnZone("zone3", 2); 
-

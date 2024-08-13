@@ -1,4 +1,0 @@
-// Corpse in southern forest
-
-Frame MyFRM;	FRM_GetMyFrame(MyFRM);
-HUMAN_Kill(MyFRM);

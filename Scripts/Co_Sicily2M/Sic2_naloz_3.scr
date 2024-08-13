@@ -1,9 +1,0 @@
-// subtitles prisoners free
-
-Onsignal(21)	// from SAS6
-{
-SUBTITLES_SetOn(true);
-SUBTITLES_SetText(52999907);
-Delay(3000);
-SUBTITLES_SetOn(false);
-}

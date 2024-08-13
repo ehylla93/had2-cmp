@@ -1,7 +1,0 @@
-block{
-  FRAME this;			FRM_GetMyFrame(this);
-}
-
-FRM_SetOn(this, false);
-
-EndScript();

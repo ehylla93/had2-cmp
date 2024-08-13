@@ -1,5 +1,0 @@
-// 06_A01 dead allied soldier
-
-Frame this;		FRM_GetMyFrame(this);
-HUMAN_SetAnim("%%sedimL4", 800, 800, 1);
-HUMAN_Kill(this);

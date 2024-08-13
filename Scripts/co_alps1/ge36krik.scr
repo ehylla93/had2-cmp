@@ -1,9 +1,0 @@
-
-Block {
-frame ci1;	FRM_FindFrame (ci1,"ge_36");
-}
-
-Whenever kokot(_SignalReceived(1))
-{
-FRM_MorphSpeech(ci1, 14992831,6,30);	//"Alarm!"
-}

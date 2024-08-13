@@ -1,9 +1,0 @@
-// X_N1_spawnzone2 trigger
-
-Frame n09;	FRM_FindFrame(n09, "n09");
-MP_EnableSpawnZone("zone2", 2);
-
-Whenever N09dead (_ACTOR_GetState(n09)==0)
-{
-MP_EnableSpawnZone("zone2", 1);
-}

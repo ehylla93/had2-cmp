@@ -1,7 +1,0 @@
-
-Whenever bez(_SignalReceived(1))
-{
-PlaySound(9,48);
-delay (2000);
-PlaySound(9,48);
-}

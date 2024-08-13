@@ -1,7 +1,0 @@
-
-Frame spac;		FRM_FindFrame(spac, "Small_spici");
-
-OnUse()
-{
-SendSignal (spac,1);
-}

@@ -1,7 +1,0 @@
-
-Frame switch;		FRM_FindFrame(switch,"switchlightmap1");
-
-OnUse()
-{
-SendSignal(switch, 1);
-}

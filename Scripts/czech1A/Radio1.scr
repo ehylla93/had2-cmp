@@ -1,8 +1,0 @@
-
-  Frame obj11;	FRM_FindFrame(obj11, "ob11");
-
-OnDeath()
-{
-	SendSignal(obj11, 1);
-	EndScript();
-}

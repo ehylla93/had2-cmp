@@ -1,8 +1,0 @@
-FRAME ge00;						FRM_FindFrame(ge00, "german00");		// MG Guard
-FRAME me;						FRM_GetMyFrame(me);
-
-Whenever player (_PlayerInRange(10))
-{
-  SendSignal(ge00, 1);
-EndScript();
-}

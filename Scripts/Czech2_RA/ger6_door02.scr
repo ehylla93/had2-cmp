@@ -1,8 +1,0 @@
-Frame ger6;	FRM_FindFrame(ger6,"ger_6");
-
-
-OnUse()
-{
-SendSignal(ger6,2);
-
-}
