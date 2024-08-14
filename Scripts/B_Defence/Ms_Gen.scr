@@ -1,0 +1,62 @@
+// MISSION Generator / Random objects + Start of mission
+// ------------------------------------------------------
+
+Block
+{
+Frame G01;	FRM_FindFrame(G01,"SF_G01");
+Frame G02;	FRM_FindFrame(G02,"SF_G02");
+Frame G03;	FRM_FindFrame(G03,"SF_G03");
+Frame G04;	FRM_FindFrame(G04,"SF_G04");
+Frame G05;	FRM_FindFrame(G05,"SF_G05");
+Frame G06;	FRM_FindFrame(G06,"SF_G06");
+Frame G07;	FRM_FindFrame(G07,"SF_G07");
+Frame G08;	FRM_FindFrame(G08,"SF_G08");
+Frame G09;	FRM_FindFrame(G09,"SF_G09");
+Frame G10;	FRM_FindFrame(G10,"SF_G10");
+Frame G11;	FRM_FindFrame(G11,"SF_G11");
+Frame G12;	FRM_FindFrame(G12,"SF_G12");
+Frame G13;	FRM_FindFrame(G13,"SF_G13");
+Frame G14;	FRM_FindFrame(G14,"SF_G14");
+Frame G15;	FRM_FindFrame(G15,"SF_G15");
+Frame G16;	FRM_FindFrame(G16,"SF_G16");
+
+// *** DETEKTORY ***
+
+Frame D1;	FRM_FindFrame(D1,"Reinforcement");
+
+// **** Hlavni Spinace ****
+// 1 = ON / 0 = OFF
+
+Integer S1; // Reinforcement
+	S1=1;
+
+Integer S2; // Enemy - Kamp
+	S2=1;
+
+Integer S3; // Spawnzone
+	S3=1;
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(58999703);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+// ------------------------------------------------------
+
+If(S3==1){MP_EnableSpawnZone("zone2", 1);}
+If(S1==1){SendSignal(D1, 1);}
+If(S2==1){SendSignal(G01, 1);SendSignal(G02, 1);SendSignal(G03, 1);
+SendSignal(G04, 1);SendSignal(G05, 1);SendSignal(G06, 1);SendSignal(G07, 1);
+SendSignal(G08, 1);SendSignal(G09, 1);SendSignal(G10, 1);SendSignal(G11, 1);
+SendSignal(G12, 1);SendSignal(G13, 1);SendSignal(G14, 1);SendSignal(G15, 1);
+SendSignal(G16, 1);}
+goto END;
+
+
+Label END:

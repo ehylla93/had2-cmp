@@ -1,0 +1,128 @@
+//
+block
+{
+Frame Tank1;	FRM_FindFrame(Tank1, "panther1");
+Frame Tank2;	FRM_FindFrame(Tank2, "panther2");
+Frame Tank3;	FRM_FindFrame(Tank3, "panther3");
+Frame Tank4;	FRM_FindFrame(Tank4, "panther4");
+Frame Tank5;	FRM_FindFrame(Tank5, "panther5");
+Frame Tank6;	FRM_FindFrame(Tank6, "panther6");
+Frame S1;		FRM_FindFrame(S1, "hakl1");
+Frame S2;		FRM_FindFrame(S2, "hakl2");
+Frame S3;		FRM_FindFrame(S3, "krupp1");
+Frame S4;		FRM_FindFrame(S4, "la_krupp1");
+Frame S5;		FRM_FindFrame(S5, "la_krupp2");
+Frame S6;		FRM_FindFrame(S6, "opel3");
+Frame S7;		FRM_FindFrame(S7, "opel5");
+Frame S8;		FRM_FindFrame(S8, "hakl3");
+Frame S9;		FRM_FindFrame(S9, "hakl9");
+Frame S10;		FRM_FindFrame(S10, "opel9");
+Frame S11;		FRM_FindFrame(S11, "krupp9");
+Frame S12;		FRM_FindFrame(S12, "opel8");
+Frame Txt;		FRM_FindFrame(Txt, "Text");
+Frame S30;		FRM_FindFrame(S30, "la_sherman");
+Frame S31;		FRM_FindFrame(S31, "sherman_01");
+Integer C1;
+}
+
+//SetWhenever (Tank01,0);
+//SetWhenever (Tank02,0);
+//SetWhenever (Tank03,0);
+//SetWhenever (Tank04,0);
+
+if (_randomint(2)==1) {Car_SetFuel(S1, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S2, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S3, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S4, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S5, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S6, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S7, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S8, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S9, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S10, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S11, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S12, 0);}
+
+goto Count;
+
+//if (_randomint(2)==1) {MakeExplosion(S5, 10000000, 5000);}
+
+//MakeExplosion(S21, 10000000, 5000);
+
+//Delay(2500);
+//SetWhenever (Tank01,1);
+//SetWhenever (Tank02,1);
+//SetWhenever (Tank03,1);
+//SetWhenever (Tank04,1);
+
+
+//Smoke effect
+
+Whenever Tank01 (_Actor_GetState(Tank1)==0)
+{
+FRM_CreateParticle(83, Tank1);
+goto Count;
+}
+Whenever Tank02 (_Actor_GetState(Tank2)==0)
+{
+FRM_CreateParticle(83, Tank2);
+goto Count; //goto end;
+}
+Whenever Tank03 (_Actor_GetState(Tank3)==0)
+{
+FRM_CreateParticle(83, Tank3);
+goto Count;
+}
+Whenever Tank04 (_Actor_GetState(Tank4)==0)
+{
+FRM_CreateParticle(83, Tank4);
+goto Count;
+}
+Whenever Tank05 (_Actor_GetState(Tank5)==0)
+{
+FRM_CreateParticle(83, Tank5);
+goto Count;
+}
+Whenever Tank06 (_Actor_GetState(Tank6)==0)
+{
+FRM_CreateParticle(83, Tank6);
+goto Count;
+}
+goto Count;
+
+
+
+Label Count:
+C1=0;
+if (_ACTOR_GetState(Tank1)==0) {C1=C1+1;}
+if (_ACTOR_GetState(Tank2)==0) {C1=C1+1;}
+if (_ACTOR_GetState(Tank3)==0) {C1=C1+1;}
+if (_ACTOR_GetState(Tank4)==0) {C1=C1+1;}
+if (_ACTOR_GetState(Tank5)==0) {C1=C1+1;}
+if (_ACTOR_GetState(Tank6)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S1)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S2)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S3)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S4)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S5)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S6)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S7)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S8)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S9)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S10)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S11)==0) {C1=C1+1;}
+if (_ACTOR_GetState(S12)==0) {C1=C1+1;}
+//PrintfNumber("C1: ", C1);
+if (C1>17)
+{
+SendSignal(Txt, 2);
+delay(4000); 
+SetObjectiveStatus(7, 1);  //enemy cars 
+goto END;
+}
+delay(10000); 
+goto Count;
+
+
+
+label end:

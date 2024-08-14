@@ -1,0 +1,53 @@
+// HdV_E01 meeting (underneath ramp)
+
+block
+{
+SetAlarmType(128,0);
+
+integer aievent;
+integer a = _RandomInt(4);
+integer b = 1;
+}
+
+if(a==0) { HUMAN_SETAIMODE_Zombie(); }
+if(a==1) { HUMAN_SETAIMODE_Aggressive(); }
+else { HUMAN_SETAIMODE_Defensive(); }
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("HdV_E01 alarm:",aievent);
+HUMAN_SetAnim("", 200, 200, 0);
+if(b==1) { b=0; HUMAN_MoveToAlarm(); }
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("HdV_E01 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(50))
+{
+HUMAN_SetAnim("%%sedimL", 500, 500, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

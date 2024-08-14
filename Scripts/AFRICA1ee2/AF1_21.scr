@@ -1,0 +1,141 @@
+// AF1_21 - Officier - tells player about Schumann.
+// ---------------------------
+
+block{
+  FRAME sit;					FRM_FindFrame(sit, "af1_dummy20");
+  FRAME obj;					FRM_FindFrame(obj, "AF1_obj");
+  FRAME dabing;				FRM_FindFrame(dabing, "dummy_dabing_01");
+  FRAME this;					FRM_GetMyFrame(this);
+  FRAME get_player;				FRM_GetNearestPlayer(this, get_player);
+
+  FRAME old_camera;				FRM_FindFrame(old_camera, "");
+  FRAME new_camera;			FRM_FindFrame(new_camera, "camera_officer");
+  FRAME cam_target;				FRM_FindFrame(cam_target, "AF1_21.cameraFPV");
+  FRAME null;					FRM_FindFrame(null, "");
+
+  INTEGER pokecali 				= 0;
+  INTEGER Atype				= 0;
+
+  SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,1); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,0); //see a dead body
+
+  SaveGameValue(21, 0);
+}
+
+FRAME hrac;
+
+// --------------------------
+
+OnDeath(){
+  SaveGameValue(55, 1);
+  if(!pokecali)
+  {
+    PlayMusic(34);
+    SUBTITLES_SetOn(true);
+    SUBTITLES_SetText(05991076);
+    Delay(2000);
+    SUBTITLES_SetOn(false);
+    SetObjectiveStatus(1, 3);
+  }
+  goto END;
+}
+
+Whenever player(_PlayerInRange(40)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(player, false);
+    HUMAN_Suspend(false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+    printfnumber("21: ", Atype);
+  }
+  HUMAN_SETMODE_Stand();
+  goto END;
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(768, false);		// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  goto ACTIVATE;
+}
+
+OnCutscene(10){
+  FRM_GetNearestPlayer(this, hrac);
+
+  CSC_FadeOut(100);
+  FRM_GetActiveCamera(old_camera);
+  FRM_SetCameraFrame(hrac);
+  FRM_SetActiveCamera(new_camera);
+//  FRM_SetCameraFrame(old_camera);  
+  SendSignal(dabing, 1);
+  CSC_FadeIn(100);
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  SUBTITLES_SetOn(true);
+  FRM_SetCameraFrameSlide(cam_target, 5);
+  Delay(2100);
+//  HUMAN_Move("AF1_21_01");
+  HUMAN_TurnAtNearestPlayer();
+//  HUMAN_SetAnim("%%kecy1", 500, 300, true);
+  HUMAN_SetAnim("%%af1_ital1", 500, 300, false);
+  Delay(1500);
+  HUMAN_TurnAtNearestPlayer();
+  Delay(7000);
+  HUMAN_SetAnim("", 300, 300, false);
+  goto END;
+}
+
+OnCutsceneDone(10){
+  block
+  {
+    pokecali = 1;
+    SetObjectiveStatus(2, 0);
+    SetObjectiveStatus(1, 4);
+    SaveGameValue(21, 1);
+    SendSignal(obj, 5);				// signal to objectives, that they allready chat...
+    FRM_SetActiveCamera(old_camera);
+    FRM_FindFrame(old_camera, "");
+    FRM_SetCameraFrame(null);
+  }
+  CSC_FadeIn(100);
+  HUMAN_SetAnim("", 300, 300, false);
+  if(!_IsInInventory(252))
+  {
+    SUBTITLES_SetOn(true);
+    SUBTITLES_SetText(05011009); 
+    Delay(2500);
+    SUBTITLES_SetOn(false);
+  }
+  goto END;
+}
+
+// ---------------------------
+
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Guard();
+  SetAlarmType(1023, false);
+  HUMAN_Suspend(true);
+  HUMAN_SetEvents(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+
+Label END:

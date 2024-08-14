@@ -1,0 +1,57 @@
+// X_N14_N15_speech - speech dummy for N14, N15
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame n14;
+	FRM_FindFrame(n14, "N14");
+Frame n15;
+	FRM_FindFrame(n15, "N15");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever speak(_SignalReceived(1))	// signal received from N14
+{
+	GoTo rozhovor;
+}
+
+OnSignal(2)	// received from N14, N15 on death or on alarm
+{
+	EndScript();
+}
+
+Whenever speak2(_SignalReceived(3))	// signal received from N14
+{
+	GoTo rozhovor2;
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(n14, 16993215, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993217, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993216, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993218, 3, 20);
+	SendSignal(n14, 3);
+	GoTo end;
+
+Label rozhovor2:
+	FRM_MorphSpeechDelayed(n14, 16993300, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993301, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993302, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993303, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993304, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993305, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993306, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993307, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993308, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993309, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993310, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993311, 3, 20);
+	FRM_MorphSpeechDelayed(n15, 16993312, 3, 20);
+	FRM_MorphSpeechDelayed(n14, 16993313, 3, 20);
+	SendSignal(n14, 4);
+	SendSignal(n15, 4);
+	GoTo end;
+
+Label end:

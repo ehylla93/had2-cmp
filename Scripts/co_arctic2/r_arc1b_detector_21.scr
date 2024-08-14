@@ -1,0 +1,15 @@
+
+Block {
+integer posledni;
+integer predposledni;
+}
+
+Whenever X (_PlayerInRange(2) )
+{
+  posledni	= _LoadGameValue(73);
+  SaveGameValue(72, posledni);
+  SaveGameValue(73, 21);
+}
+
+Delay(5000);
+SetWhenever(X, True);

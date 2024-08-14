@@ -1,0 +1,21 @@
+//OBJ3 - success
+Block
+{
+Frame officer;	FRM_FindFrame(officer, "Red_1");
+//Frame obj; FRM_FindFrame(obj, "AF2_obj");
+//Frame texty; 	FRM_FindFrame(texty, "AF2_texty");
+SetObjectiveStatus(3, 0);
+}
+
+
+Whenever officerdead ( _Actor_GetState(officer)==0 )
+{
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(54999611);
+Delay(3000);
+SUBTITLES_SetOn(false);	
+SetObjectiveStatus(3, 1);
+//	SendSignal(texty, 9);
+	
+	EndScript();
+}

@@ -1,0 +1,104 @@
+// 05_pzIII_01_02 - main gunner
+// ----------------------------------------
+
+Block {
+Frame deg0;		FRM_FindFrame(deg0, "05_pzIII_01_0deg");
+Frame deg90;	FRM_FindFrame(deg90, "05_pzIII_01_90deg");
+Frame degn90;	FRM_FindFrame(degn90, "05_pzIII_01_n90deg");
+Frame deg155;	FRM_FindFrame(deg155, "05_pzIII_01_155deg");
+
+Integer alarm_sight_range = 180;
+Integer mode = 1;
+Integer time = 0;
+
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnAlarm()
+{
+printf("05_pzIII_01_02 main gunner alarm");
+HUMAN_SETSIGHTRANGE(200);
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+if(mode==1) { goto 1; }
+if(mode==2) { goto 2; }
+else { goto 3; }
+}
+
+OnDeath()
+{
+printf("05_pzIII_01_02 dead");
+EndScript();
+}
+
+// ----------------------------------------
+
+OnSignal(1)
+{
+HUMAN_BoardVehicle("05_pzIII_01", 1, 2);
+HUMAN_Suspend(0);
+goto 1;
+}
+
+OnSignal(2)
+{
+mode = 2;
+printf("05_pzIII_01_02 signal2 received");
+goto 2;
+}
+
+OnSignal(3)
+{
+mode = 3;
+printf("05_pzIII_01_02 signal3 received");
+goto 3;
+}
+
+// ----------------------------------------
+
+Label 1:
+HUMAN_TurnAt(deg0);
+gosub Timer;
+goto 1;
+
+Label 2:
+if(_LoadGameValue(7)==1) { HUMAN_TurnAt(deg90); }
+else { HUMAN_TurnAt(degn90); }
+gosub Timer;
+goto 2;
+
+Label 3:
+HUMAN_TurnAt(degn90);
+gosub Timer;
+HUMAN_TurnAt(deg0);
+gosub Timer;
+HUMAN_TurnAt(deg155);
+gosub Timer;
+goto 3;
+
+Label Timer:
+time = _RandomInt(5000) + 5000;
+Delay(time);
+Return;
+
+// ----------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

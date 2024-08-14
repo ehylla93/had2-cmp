@@ -1,0 +1,77 @@
+  
+Block
+  {
+     Frame Corpse_1;		FRM_FindFrame(Corpse_1, "Blue_1");
+     Frame Corpse_2;		FRM_FindFrame(Corpse_2, "Blue_2");
+     Frame Corpse_3;		FRM_FindFrame(Corpse_3, "Blue_3");
+     Frame Corpse_4;		FRM_FindFrame(Corpse_4, "Blue_4");
+     Frame Corpse_5;		FRM_FindFrame(Corpse_5, "Blue_5");
+     Frame Corpse_6;		FRM_FindFrame(Corpse_6, "Blue_6");
+     Frame Corpse_7;		FRM_FindFrame(Corpse_7, "Blue_7");
+     Frame Corpse_8;		FRM_FindFrame(Corpse_8, "Blue_8");
+     Frame Corpse_9;		FRM_FindFrame(Corpse_9, "Blue_9");
+     Frame Corpse_10;		FRM_FindFrame(Corpse_10, "Blue_10");
+     Frame Corpse_11;		FRM_FindFrame(Corpse_11, "Blue_11");
+     //*//Frame Corpse_12;		FRM_FindFrame(Corpse_12, "Blue_12");
+     Frame Corpse_13;		FRM_FindFrame(Corpse_13, "Blue_13");
+     Frame Corpse_14;		FRM_FindFrame(Corpse_14, "Blue_14");
+     Frame Corpse_15;		FRM_FindFrame(Corpse_15, "Blue_15");
+     //*//Frame Corpse_16;		FRM_FindFrame(Corpse_16, "Blue_16");
+     Frame Corpse_17;		FRM_FindFrame(Corpse_17, "Blue_17");
+     Frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+     Frame Tank1;		FRM_FindFrame(Tank1, "Amik_tank_driver");
+     Frame Tank2;		FRM_FindFrame(Tank2, "Amik_tank_MG");
+     Frame Tank3;		FRM_FindFrame(Tank3, "Amik_tank_LG");
+     Frame Tank4;		FRM_FindFrame(Tank4, "Amik_tank_4");
+     integer Counter = 0;		
+     integer Amici = 1;
+  }
+
+OnSignal(30)	// Nekdo umrel
+{ 
+  Counter = 0;		
+  If (( _ACTOR_GetState(Corpse_1) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_2) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_3) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_4) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_5) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_6) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_7) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_8) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_9) == 0 ))    { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_10) == 0 ))  { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_11) == 0 ))  { Counter = Counter + 1; }
+  //*//If (( _ACTOR_GetState(Corpse_12) == 0 ))  { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_13) == 0 ))  { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_14) == 0 ))  { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_15) == 0 ))  { Counter = Counter + 1; }
+  //*//If (( _ACTOR_GetState(Corpse_16) == 0 ))  { Counter = Counter + 1; }
+  If (( _ACTOR_GetState(Corpse_17) == 0 ))  { Counter = Counter + 1; }
+
+  If ( (Counter > 8) AND (AMICI) ) 
+     {
+        AMICI = 0;
+        Block
+          {
+              Printf("Tank Vyrazi............ted....");  
+              SendSignal(Tank1, 1);
+              SendSignal(Tank2, 1);
+              SendSignal(Tank3, 1);
+              SendSignal(Tank4, 1);
+         }
+     }
+
+//*// 15
+  If (Counter > 13) 
+   {
+//     SendSignal(OBJ, 7);	// NENI TREBA OBJ KONCI AZ DOJEDE AMIK S TANKEM
+       PrintfNumber("GER posily takrka eliminovany - mrtvo: " , Counter );
+//       EndScript();
+    } else 
+    {
+       PrintfNumber("GER posily  - mrtvo: " , Counter ); 
+    }
+
+}
+
+Label TheEnd:

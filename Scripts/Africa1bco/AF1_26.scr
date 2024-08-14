@@ -1,0 +1,82 @@
+// AF1_26
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  FRAME frm;				FRM_FindFrame(frm, "af1_dummy1");
+  FRAME frm1;				FRM_FindFrame(frm1, "af1_dummy2");
+  FRAME T6;				FRM_FindFrame(T6, "AF1_16");
+  
+ INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+ SendSignal(T6, 5); 
+EndScript();
+}
+
+Whenever inrange(_PlayerInRange(100)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 300, 300, false);
+  block{
+    HUMAN_Stop();
+    SetWhenever(inrange, false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(150);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("26: ", Atype);
+  }
+//  HUMAN_TurnAtNearestPlayer();
+  
+  if(Atype != 32){
+    SetAlarmType(1023, false);
+    SetAlarmType(99, true);
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    SetAlarmType(1023, true);
+    goto END;
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){
+  block{
+    SetAlarmType(1023, true);		// all alarm events are on
+    SetAlarmType(512, false);		// 512, 256
+    HUMAN_SETSIGHTRANGE(80);
+    HUMAN_SetOptimized(true);
+    HUMAN_SetAlarm(false);
+  }
+  goto START;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SETMODE_Run();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetAnim("%%sedimL2", 200, 200, true);
+  goto END;
+
+Label START:
+//  doplnit
+goto START;
+
+Label END:

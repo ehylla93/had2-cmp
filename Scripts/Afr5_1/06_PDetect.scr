@@ -1,0 +1,55 @@
+// Player Detector at Fuel Store 
+// ----------------------------------------
+
+Block
+{
+Frame G52;			FRM_FindFrame(G52, "06_G52");
+Frame G53;			FRM_FindFrame(G53, "06_G53");
+Frame G54;			FRM_FindFrame(G54, "06_G54");
+Frame G55;			FRM_FindFrame(G55, "06_G55");
+
+Frame Bomb1;		FRM_FindFrame(Bomb1, "06_Bomb_01");
+Frame Bomb2;		FRM_FindFrame(Bomb2, "06_Bomb_02");
+Frame Bomb3;		FRM_FindFrame(Bomb3, "06_Bomb_03");
+Frame Bomb4;		FRM_FindFrame(Bomb4, "06_Bomb_04");
+Frame me;			FRM_GetMyFrame(me);
+Frame Get_Player;
+
+Integer Bomb_Ftanks;	Bomb_Ftanks = 0;
+}
+
+// ----------------------------------------
+
+Whenever Ftanks_Planted (_SignalReceived(1))
+{
+Bomb_Ftanks = 1;
+}
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 10))
+{
+SendSignal(G52, 1);SendSignal(G53, 1);
+SendSignal(G54, 1);SendSignal(G55, 1);
+}
+
+
+Whenever Bombs_Active (_MP_IsTeamMemberInRange(1, 5))
+{
+
+If (Bomb_Ftanks == 1)
+{
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990431, 5, 30);
+}
+
+Else
+{
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990433, 5, 30);
+}
+
+Delay(200);
+SendSignal(Bomb1, 1);SendSignal(Bomb2, 1);
+SendSignal(Bomb3, 1);SendSignal(Bomb4, 1);
+Endscript();
+}
+

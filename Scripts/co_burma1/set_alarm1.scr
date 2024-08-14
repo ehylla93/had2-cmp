@@ -1,0 +1,41 @@
+// TURN OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame E01;	FRM_FindFrame(E01,"BU1_01");
+Frame E02;	FRM_FindFrame(E02,"BU1_02");
+Frame E03;	FRM_FindFrame(E03,"BU1_03");
+Frame E04;	FRM_FindFrame(E04,"BU1_04");
+Frame E05;	FRM_FindFrame(E05,"BU1_05");
+Frame E06;	FRM_FindFrame(E06,"BU1_06");
+Frame E07;	FRM_FindFrame(E07,"BU1_07");
+Frame E08;	FRM_FindFrame(E08,"BU1_08");
+Frame E09;	FRM_FindFrame(E09,"BU1_09");
+Frame E10;	FRM_FindFrame(E10,"BU1_10");
+
+Frame E11;	FRM_FindFrame(E11,"BU1_11");
+Frame E12;	FRM_FindFrame(E12,"BU1_12");
+Frame E13;	FRM_FindFrame(E13,"BU1_13");
+Frame E14;	FRM_FindFrame(E14,"BU1_14");
+Frame E15;	FRM_FindFrame(E15,"BU1_15");
+Frame E16;	FRM_FindFrame(E16,"BU1_16");
+Frame E17;	FRM_FindFrame(E17,"BU1_17");
+Frame E18;	FRM_FindFrame(E18,"BU1_18");
+Frame E19;	FRM_FindFrame(E19,"BU1_19");
+Frame E20;	FRM_FindFrame(E20,"BU1_20");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(E01, 19);SendSignal(E02, 19);SendSignal(E03, 19);
+SendSignal(E04, 19);SendSignal(E05, 19);SendSignal(E06, 19);
+SendSignal(E07, 19);SendSignal(E08, 19);SendSignal(E09, 19);
+SendSignal(E10, 19);SendSignal(E11, 19);SendSignal(E12, 19);
+SendSignal(E13, 19);SendSignal(E14, 19);SendSignal(E15, 19);
+SendSignal(E16, 19);SendSignal(E17, 19);SendSignal(E18, 19);
+SendSignal(E19, 19);SendSignal(E20, 19);
+EndScript();
+}

@@ -1,0 +1,239 @@
+// AF3a_02 - walking on the fortification
+// -------------------------------------------------------------------------------------------------------------
+
+INTEGER loaded = _LoadGameValue(51);
+printfnumber("LOADED VALUE: ", loaded);
+
+block{
+  FRAME look1_01;			FRM_FindFrame(look1_01, "AF3a_02_look1_01");
+  FRAME look1_02;			FRM_FindFrame(look1_02, "AF3a_02_look1_02");
+  FRAME look2_01;			FRM_FindFrame(look2_01, "AF3a_02_look2_01");
+  FRAME look3_01;			FRM_FindFrame(look3_01, "AF3a_02_look3_01");
+  FRAME look3_02;			FRM_FindFrame(look3_02, "AF3a_02_look3_02");
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME alarm_wp;  			FRM_FindFrame(alarm_wp, "dummy_pristup01");
+  FRAME kulomet;			FRM_FindFrame(kulomet, "AF3a_MG_02");
+  FRAME af03;				FRM_FindFrame(af03, "AF3a_03");
+  FRAME flaska;			FRM_FindFrame(flaska, "");
+  INTEGER rnd 			= 0;
+  INTEGER pathselect 			= 0;
+  INTEGER slysizvuk 			= 0;
+  INTEGER state 			= 1;
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("02: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  EnableSignal(20, false);
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETSIGHTRANGE(400);
+    Atype = _GetAlarmType();
+    printfnumber("02: ", Atype);
+  }
+  HUMAN_ACTIVITY_Smoke(false);
+
+  if((Atype == 4) AND (state == 1)){
+    slysizvuk = slysizvuk + 1;
+    if(slysizvuk == 1){
+      HUMAN_SetAlarm(false);
+      HUMAN_Stop();
+      HUMAN_TurnAtNearestPlayer();
+      Delay(1000);
+      printf("02 :: Is anybody down there?");
+      HUMAN_SetAnim("%%cumvoda", 500, 500, false);		// climb checkpoints pak upravit
+      Delay(4000);
+      HUMAN_LookAround(true);
+      Delay(2000);      
+    }
+    if(slysizvuk == 1){
+      block{
+      SetAlarmType(4, false);						// nebude reagovat na dalsi kroky
+      HUMAN_Stop();
+      Delay(500);
+      HUMAN_TurnAt(af03);
+      Delay(800);
+      printf("02 :: Hey Hans, somebody's walking along the wall, could you check it out?");
+      HUMAN_SetAnim("%%kecy2", 500, 500, false);
+      SendSignal(af03, 10);
+      Delay(2000);
+      }
+    }
+
+  if(!_PlayerInRange(80)){
+    HUMAN_SETMODE_Run();
+    HUMAN_MOVE("AF3a_02_kulomet");
+    HUMAN_SETMODE_Crouch();
+    HUMAN_SETAIMODE_Defensive();
+    HUMAN_BoardVehicle("AF3a_MG_02", true, 0);
+    EndScript();
+  }
+
+    HUMAN_SetAlarm(false);
+    goto ACTIVITY;
+  }
+
+  HUMAN_SETMODE_Crouch();
+  SendSignal(dummy_alarm, 1);
+  printf("signal sender 02");
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(60);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(20){
+  DisableSignals(true);
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETSIGHTRANGE(400);
+    HUMAN_SETMODE_Run();
+  }
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("AF3a_02_kulomet");
+  HUMAN_TurnAt(alarm_wp);
+  HUMAN_BoardVehicle("AF3a_MG_02", true, 0);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+
+Label ACTIVITY:
+  pathselect = pathselect + 1;
+  if(_PlayerInRange(60)){
+    goto PATH_01;
+  }
+  Else{
+    pathselect = pathselect - 1;
+  }
+  If(pathselect == 10){
+    pathselect = 0;
+    goto PATH_02;
+  }
+  Else{
+    goto PATH_COMMON;
+  }
+
+Label PATH_01:
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("AF3a_02_01");
+  HUMAN_Move("AF3a_02_02");
+  HUMAN_TurnAt(look1_02);
+  Delay(2000);
+  HUMAN_TurnAt(look1_01);
+  Delay(2000);
+  HUMAN_TurnAt(look1_02);
+  Delay(2000);
+  HUMAN_Move("AF3a_02_03");
+  HUMAN_TurnAt(look2_01);
+  Delay(2000);
+  HUMAN_Move("AF3a_02_03b");
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_02_04");
+  HUMAN_WeaponOnArm(false);
+  Delay(800);
+  HUMAN_TurnAt(look3_02);
+  state = 0;
+  HUMAN_ACTIVITY_Turk();
+  Delay(3000);
+  HUMAN_ACTIVITY_Smoke(true);
+  rnd = _RandomInt(10000) + 15000; Delay(rnd);
+  HUMAN_ACTIVITY_Smoke(false);
+  Delay(2000);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  Delay(1500);
+  state = 1;
+  HUMAN_Move("AF3a_02_04");
+  Delay(500);
+  HUMAN_Move("AF3a_02_03b");
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("AF3a_02_03");
+  HUMAN_TurnAt(look2_01);
+  Delay(2000);
+goto ACTIVITY;
+
+Label PATH_02:				// druha cesta
+  HUMAN_Move("AF3a_02_01");
+  HUMAN_Move("AF3a_02_02");
+  HUMAN_TurnAt(look1_02);
+  Delay(2000);
+  HUMAN_TurnAt(look1_01);
+  Delay(2000);
+  HUMAN_TurnAt(look1_02);
+  Delay(2000);
+  HUMAN_Move("AF3a_02_03");
+  HUMAN_TurnAt(look2_01);
+  Delay(2000);
+  HUMAN_Move("AF3a_02_03b");
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_02_04");
+  HUMAN_WeaponOnArm(false);
+  Delay(500);
+  HUMAN_TurnAt(look3_01);
+  Delay(500);
+  state = 0;
+  HUMAN_ACTIVITY_Turk();
+  Delay(3000);
+  HUMAN_ACTIVITY_Hot();
+  HUMAN_ACTIVITY_Drinkbottle(flaska);
+  rnd = _RandomInt(15000) + 15000; Delay(rnd);
+  HUMAN_SETMODE_Stand();
+  state = 1;
+  Delay(1500);
+  HUMAN_Move("AF3a_02_04");
+  Delay(500);
+  HUMAN_Move("AF3a_02_03");
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("AF3a_02_03");
+  HUMAN_TurnAt(look2_01);
+  Delay(1000);
+  goto ACTIVITY;
+
+Label PATH_COMMON:
+  HUMAN_Move("AF3a_02_01");
+  rnd = _RandomInt(3);
+  If(rnd == 0){
+    HUMAN_Move("AF3a_02_02");
+    HUMAN_TurnAt(look1_02);
+    Delay(2000);
+    HUMAN_ACTIVITY_Hot();
+    HUMAN_TurnAt(look1_01);
+    Delay(2000);
+  }
+  HUMAN_Move("AF3a_02_03");
+  HUMAN_TurnAt(look2_01);
+  rnd = _RandomInt(3);
+  If(rnd == 0){
+    HUMAN_ACTIVITY_Hot();
+    Delay(200);
+  }
+  goto ACTIVITY;
+
+Label END:

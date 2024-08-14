@@ -1,0 +1,189 @@
+
+//// mechanic
+
+
+
+block
+{
+
+
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(50);
+
+
+integer a;
+integer x;	x=0;
+
+integer aievent;
+  frame puma;			FRM_FindFrame(puma, "la_puma00");
+ frame kecac;			FRM_FindFrame(kecac,"mechanik_kecac");
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+  frame velitel;		FRM_FindFrame (velitel,"velitel");
+  frame me;		FRM_GetMyFrame(me);
+frame cum;		FRM_FindFrame(cum, "mechanikcum");
+frame cum1;		FRM_FindFrame(cum1, "mechanikcum1");
+frame cum2;		FRM_FindFrame(cum2, "mechanikcum2");
+
+frame para_hid;	FRM_FindFrame(para_hid, "para_hid");
+	FRM_SwitchFaceTexture(me, "e_f024");
+
+HUMAN_SetOptimized(1);
+}
+
+HUMAN_Suspend(1);
+goto end;
+//----------------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("mechanic alarm c:",aievent);
+
+}
+
+HUMAN_SetAnim("",10,10,0);
+
+if (x==0)
+{
+SetAlarmType(1023, 0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("pist");
+HUMAN_TurnAt(cum);
+//tady dat anim
+block
+{
+frame para;		FRM_FindFrame(para, "w_para");
+ITEM_Teleport(para, para_hid);
+FRM_FindFrame(para, "");
+HUMAN_CreateItemInStore(0, 3);
+SetAlarmType(371,1);
+x=1;
+}
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+delay (200);
+HUMAN_TurnAtNearestPlayer();
+delay (900);
+goto rozhled;
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto rozhled;
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+goto end;
+SetAlarmType(654,0);
+HUMAN_SetAlarm(0);
+HUMAN_Move("pist");
+HUMAN_SETMODE_Crouch();
+delay (200);
+goto rozhled;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+//sendsignal (kecac,2);
+EndScript();
+}
+
+
+
+Whenever(_PlayerInRange(80))
+{
+HUMAN_Suspend(0);
+goto funguj;
+}
+
+Whenever velitel(_SignalReceived(1))
+{
+	HUMAN_SetAnim("",1000, 1000,0);
+	HUMAN_Move("hammer_12");
+	HUMAN_TurnAt(velitel);
+	SendSignal (velitel,7);	//prisel sem
+	goto end;
+}
+
+Whenever vel2(_SignalReceived(2))
+{
+Printf (" Potrubí,èerpadlo a závìsy kol už mám skoro hotový, ale bez té");
+HUMAN_SetAnim("%%rozhovor3",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994042, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,8);		//mluf
+goto end;
+}
+
+Whenever vel3(_SignalReceived(3))
+{
+Printf ("Tak to nevím.Dokud nenastartuju motor nemùžu to vyzkoušet.Baterky jsou už dost slabé.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994044, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,9);		//mluf
+goto end;
+}
+
+Whenever vel4(_SignalReceived(4))
+{
+goto funguj;
+}
+//----------------------------------------------------------------------------------------------
+
+label funguj:
+
+	
+
+
+
+	HUMAN_Move("hammer_13");
+	HUMAN_TurnAt(puma);
+	HUMAN_SetAnim("%%mechanik",1000, 1000,1);
+
+
+
+
+
+
+goto end;
+
+label rozhled:
+HUMAN_TurnAt(cum1);
+delay (10000);
+HUMAN_TurnAt(cum2);
+delay (10000);
+goto rozhled;
+
+
+label end:

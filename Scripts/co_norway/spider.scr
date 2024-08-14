@@ -1,0 +1,40 @@
+//Alarms soldiers on trawler
+
+Block {
+frame small1;		FRM_FindFrame(small1,"small1");
+frame small4r;		FRM_FindFrame(small4r,"small4r");
+frame small4;		FRM_FindFrame(small4,"small4");
+frame small7r;		FRM_FindFrame(small7r,"small7r");
+frame small7;		FRM_FindFrame(small7,"small7");   
+frame small3;		FRM_FindFrame(small3,"small3");
+frame small2;		FRM_FindFrame(small2,"small2");
+frame small5;		FRM_FindFrame(small5,"small5");
+frame small6;		FRM_FindFrame(small6,"small6");
+frame small8;		FRM_FindFrame(small8,"small8");
+frame small9;		FRM_FindFrame(small9,"small9");
+frame small10;		FRM_FindFrame(small10,"small10");
+frame small11;		FRM_FindFrame(small11,"small_11");
+}
+
+GoTo end;
+
+Whenever pizduch(_SignalReceived(1))
+{
+Block {
+SendSignal(small1,22);
+SendSignal(small2,22);
+SendSignal(small3,22);
+SendSignal(small4,22);
+SendSignal(small4r,22);
+SendSignal(small5,22);
+SendSignal(small6,22);
+SendSignal(small7r,22);
+SendSignal(small7,22);
+SendSignal(small8,22);
+SendSignal(small9,22);
+SendSignal(small10,22);
+SendSignal(small11,22);
+}
+}
+
+label end:

@@ -1,0 +1,115 @@
+// N11 - sitting at the table with lamp
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame sit01;
+	FRM_FindFrame(sit01, "N11_sit01");
+Frame speech;
+	FRM_FindFrame(speech, "N10_N11_speech");
+Frame n10;
+	FRM_FindFrame(n10, "N10");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer aievent;
+	aievent=0;
+	
+SetAlarmType(16, false);
+//SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_StandFast();
+	HUMAN_WeaponOnArm(1);
+	Block
+	{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SETMODE_Run();
+		aievent=_GetAlarmType();
+	}
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_StandFast();
+		HUMAN_TurnAtNearestPlayer();
+		EndScript();
+	}
+	HUMAN_TurnAtNearestPlayer();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	SendSignal(speech, 2);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received from N10_A1, N10_A2, N10_A3
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(2)	// received from N10
+{
+	HUMAN_SetAnim("", 100, 100, false);
+	Delay(200);
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("N11_1");
+	HUMAN_Move("N11_2");
+	HUMAN_TurnAt(n10);
+	GoTo end;
+}
+
+OnSignal(3)	// received from N10_N11_speech
+{
+	HUMAN_Move("N11_1");
+	GoTo path;
+}
+
+OnSignal(4)	// received from N10_N11_speech
+{
+	HUMAN_SetAnim("%%ozralstul", 100, 100, true);
+	GoTo end;
+}
+
+OnSignal(5)	// received from N11
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f054");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_ACTIVITY_Sit(sit01);
+	HUMAN_SetAnim("%%ozralstul", 100, 100, true);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+Label end:

@@ -1,0 +1,18 @@
+// C5_objective_scrass - objective script assigner
+// -------------------------------------------------------------------------------------------------------------
+Frame obj;
+	FRM_FindFrame(obj, "C5_objective");
+Integer gametype;
+	gametype=0;
+// -------------------------------------------------------------------------------------------------------------
+gametype=_SPGetGameType();
+
+If((gametype==3) OR (gametype==7))
+{
+	ScriptAssign(obj, "C5_objective2");
+	GoTo end;
+}
+
+ScriptAssign(obj, "C5_objective");
+
+Label end:

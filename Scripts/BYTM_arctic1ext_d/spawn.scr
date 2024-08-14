@@ -1,0 +1,57 @@
+// on spawn
+// -------------------------------------------------------
+
+Block {
+frame E01;			FRM_FindFrame(E01, "n_E01");
+frame E04;			FRM_FindFrame(E04, "n_E04");
+frame E05;			FRM_FindFrame(E05, "n_E05");
+frame E06;			FRM_FindFrame(E06, "n_E06");
+frame pilot;		FRM_FindFrame(pilot, "Pilot");
+frame objectives;	FRM_FindFrame(objectives, "dummy_objectives");
+Frame evac1;		FRM_findFrame(evac1, "n_evac_1");
+Frame evac2;		FRM_findFrame(evac2, "n_evac_2");
+
+Integer pilotspawn = _RandomInt(2);
+}
+
+goto end;
+
+
+Whenever Player_Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+if(pilotspawn==1)
+{
+SetObjectiveStatus(10, 0);
+Delay(1500);
+Block {
+SendSignal(pilot, 1);
+SendSignal(evac1, 2);
+SendSignal(evac2, 2);
+printf("Pilot Sig1 sent");
+}
+}
+else { SendSignal(objectives, 1); }
+
+Block {
+SendSignal(E01, 1);
+SendSignal(E04, 1);
+SendSignal(E05, 1);
+SendSignal(E06, 1);
+}
+Delay(3500);
+SUBTITLES_SetOn(true);
+
+if(pilotspawn==1)
+{
+SUBTITLES_SetText(03990618);	//"NEW OBJECTIVE: FIND THE PILOT."
+Delay(4000);
+}
+SUBTITLES_SetText(01010202);	//"NEW OBJECTIVE: FIND THE ENTRANCE TO THE UNDERGROUND FACILITY."
+Delay(4000);
+SUBTITLES_SetText(01010201);	//"NEW OBJECTIVE: ELIMINATE THE ENEMY IN THE FACTORY COMPLEX."
+Delay(4000);
+SUBTITLES_SetOn(false);
+EndScript();
+}
+
+Label end:

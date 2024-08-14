@@ -1,0 +1,80 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame A4_S01;		FRM_FindFrame(A4_S01,"A4_S01");
+Frame A4_S02;		FRM_FindFrame(A4_S02,"A4_S02");
+Frame A4_S03;		FRM_FindFrame(A4_S03,"A4_S03");
+
+Frame A4_S04;		FRM_FindFrame(A4_S04,"A4_S04");
+Frame A4_S05;		FRM_FindFrame(A4_S05,"A4_S05");
+Frame A4_S06;		FRM_FindFrame(A4_S06,"A4_S06");
+Frame A4_S07;		FRM_FindFrame(A4_S07,"A4_S07");
+Frame A4_S08;		FRM_FindFrame(A4_S08,"A4_S08");
+Frame A4_S09;		FRM_FindFrame(A4_S09,"A4_S09");
+
+Frame A4_S10;		FRM_FindFrame(A4_S10,"A4_S10");
+Frame A4_S11;		FRM_FindFrame(A4_S11,"A4_S11");
+Frame A4_S12;		FRM_FindFrame(A4_S12,"A4_S12");
+Frame A4_S13;		FRM_FindFrame(A4_S13,"A4_S13");
+
+
+}
+// ---------------------------
+
+OnDeath(){
+
+EndScript();
+}
+
+OnAlarm(){
+
+EndScript();
+}
+
+OnAlarmDone(){
+
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(1)
+{
+Delay(3000);
+SendSignal(A4_S01, 1);
+SendSignal(A4_S02, 1);
+SendSignal(A4_S03, 1);
+  Delay(4000);
+SendSignal(A4_S04, 1);
+SendSignal(A4_S05, 1);
+SendSignal(A4_S06, 1);
+SendSignal(A4_S07, 1);
+SendSignal(A4_S08, 1);
+SendSignal(A4_S09, 1);
+SendSignal(A4_S10, 1);
+Delay(8000);
+SendSignal(A4_S11, 1);
+SendSignal(A4_S12, 1);
+SendSignal(A4_S13, 1);
+
+//  Delay(3000);
+//  SUBTITLES_SetOn(1);
+//  SUBTITLES_SetText(18993607);
+DisableSignals(1);
+
+
+}
+
+goto END;
+
+Label END:

@@ -1,0 +1,14 @@
+////-------------prepinani lightmap od dveri m_dv_m09------------------------
+
+Block {
+frame dv_m09;		FRM_GetMyFrame(dv_m09);
+integer door;			door=0;
+}
+
+OnUse()
+	{
+	Delay(800);
+	If (door==1) {door=0}
+	Else {door=1}
+	FRM_SetGroupLightMap("1s_m_dv_m09",door);	
+	}

@@ -1,0 +1,22 @@
+// green smoke 
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME this; 			FRM_GetMyFrame(this);
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever spawn(_PlayerInRange(600))
+{
+	GoTo movement;
+}
+
+{
+Frame FRM;		FRM_GetMyFrame(FRM);
+Label movement:
+FRM_CreateParticle(24, this);
+Delay(45000);
+FRM_CreateParticle(24, this);
+Delay(60000);
+GoTo movement;
+}
+Label end:

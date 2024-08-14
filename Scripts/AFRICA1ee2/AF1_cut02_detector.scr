@@ -1,0 +1,34 @@
+// AF1_cut02_detector - detector on door
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER dead_cnt			= 0;
+  FRAME posila01;			FRM_FindFrame(posila01, "AF1_posila_01");
+  FRAME posila02;			FRM_FindFrame(posila02, "AF1_posila_02");
+  FRAME posila03;			FRM_FindFrame(posila03, "AF1_posila_03");
+  FRAME posila04;			FRM_FindFrame(posila04, "AF1_posila_04");
+  FRAME posila05;			FRM_FindFrame(posila05, "AF1_posila_05");
+  FRAME posila06;			FRM_FindFrame(posila06, "AF1_posila_06");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnUse(){
+  CSC_RunCutscene(10);
+  EndScript();
+}
+
+OnSignal(10){
+  dead_cnt = dead_cnt + 1;
+  printfnumber("nyni je mrtvo: ", dead_cnt);
+  if(dead_cnt == 16){
+    SendSignal(posila01, 1);
+    SendSignal(posila02, 1);
+    SendSignal(posila03, 1);
+    SendSignal(posila04, 1);
+    SendSignal(posila05, 1);
+    SendSignal(posila06, 1);
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------

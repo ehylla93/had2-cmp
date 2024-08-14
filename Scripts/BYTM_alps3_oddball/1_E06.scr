@@ -1,0 +1,57 @@
+// 1_E06
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 1);
+
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(40);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Integer AImode;
+}
+
+HUMAN_Suspend(1);
+HUMAN_SetOptimized(1);
+
+AImode=_RandomInt(2);
+if(AImode==0) { HUMAN_SETAIMODE_Defensive(); }
+else {
+	AImode=_RandomInt(3);
+	if(AImode==0) { HUMAN_SETAIMODE_Aggressive(); }
+	if(AImode==1) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+}
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 500, 0);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_SetAnim("%%sedimtak", 500, 500, 1);
+HUMAN_Suspend(0);
+}
+
+// ------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

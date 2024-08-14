@@ -1,0 +1,52 @@
+// Supply Trucks Controller
+// ----------------------------------------------------
+
+Block
+{
+Frame obj2;	FRM_FindFrame(obj2,"obj2");
+Frame obj9;	FRM_FindFrame(obj9,"obj9");
+Frame obj10;	FRM_FindFrame(obj10,"obj10");
+Frame SpTrucks;	FRM_FindFrame(SpTrucks,"Supply_Trucks");
+}
+
+// -----------------------------------------------------
+
+Whenever Trucky_Jedou (_SignalReceived(2))
+{
+Delay(3000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(12992404);
+SetObjectiveStatus(9, 0);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Trucky_Nejedou (_SignalReceived(3))
+{
+SendSignal(obj10, 3);
+SendSignal(obj9, 2);
+EndScript();
+}
+
+Whenever Supply_Trucks_Check (_SignalReceived(3))
+{
+SendSignal(SpTrucks, 1);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(1000))
+{
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(53999901);
+Delay(4000);
+SUBTITLES_SetText(23994601);
+Delay(4000);
+SUBTITLES_SetText(52999704);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Label END:

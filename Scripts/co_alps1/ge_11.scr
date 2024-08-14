@@ -1,0 +1,119 @@
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(70);
+HUMAN_SETMODE_guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+integer a;	a=0;
+integer b;	b=0;
+integer c;	c=0;
+frame cum;	FRM_FindFrame(cum,"ge11cum");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+HUMAN_SETSIGHTRANGE(50);
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (a==0)
+{
+a=1;
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(520,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,1);
+SetAlarmType(520,0);
+goto flakejse;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+label flakejse:
+delay (5000);
+b=(_RandomInt(4));
+
+if (b==1)
+{	HUMAN_Move("ge11_03");	goto flakejse;	}
+
+if (b==2)
+{	HUMAN_Move("ge11_04");	goto flakejse;	}
+
+if (b==3)
+{	HUMAN_Move("ge11_02");	goto flakejse;	}
+
+
+if (b==0)
+{
+c=(_RandomInt(1));
+
+if (c==1)
+{
+	HUMAN_Move("ge11_01");
+	HUMAN_TurnAt(cum);
+	HUMAN_SetAnim("%%nuda",500,500,1);
+	delay(8000);
+	HUMAN_SetAnim("",500,500,1);
+}
+	goto flakejse;
+}
+
+label end:

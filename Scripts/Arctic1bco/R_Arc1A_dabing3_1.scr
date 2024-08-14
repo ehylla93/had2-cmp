@@ -1,0 +1,44 @@
+
+frame PG1;		FRM_FindFrame(PG1, "Plane_Guard_1");
+frame PG2;		FRM_FindFrame(PG2, "Plane_Guard_2");
+frame PG3;		FRM_FindFrame(PG3, "Plane_guard_3");
+
+
+// 01990245	Ahoj Karle, vypad·te jako dva rampouchy.	
+// 01990246	Jdeme v·s vyst¯Ìdat.	
+//	 2838		998	
+
+// 01990242	Hmm, kde se fl·k·te! Je mi tady uû straön· zima.
+//	2670	
+
+// 01990247	Douf·m, ûe to je poslednÌ hlÌdka. MajÌ to tady p¯ijet uklidit.	
+// 01990248	Jo abych nezapomÏl, postavil jsem v·m vodu na Ëaj, tak pohnÏte aù to nevyv¯e.	
+//	4189		4841	
+
+// 01990243	Snad, ale teÔ se tÏöÌm jen na ten Ëaj.	
+// 01990244	Tak zase za Ëty¯i hodiny ... uûijte si to tady, ahoj.	
+//	2879		2670
+
+
+OnSignal(1)
+{
+  SendSignal(PG1, 10);   		 // otoË se
+  FRM_MorphSpeechDelayed(PG3, 01990245, 15, 45);	  Delay(29);
+  FRM_MorphSpeechDelayed(PG3, 01990246, 15, 45);	  Delay(10);
+  SendSignal(PG1, 11);  		 // mluv
+  FRM_MorphSpeechDelayed(PG1, 01990242, 15, 45);	  Delay(27);
+  SendSignal(PG3, 11);   		// mluv
+  FRM_MorphSpeechDelayed(PG3, 01990247, 15, 45);	  Delay(42);	
+  FRM_MorphSpeechDelayed(PG3, 01990248, 15, 45);	  Delay(49);
+  SendSignal(PG1, 12);		// mluv
+  FRM_MorphSpeechDelayed(PG1, 01990243, 15, 45);	  Delay(29);
+  FRM_MorphSpeechDelayed(PG1, 01990244, 15, 45);	  Delay(27);
+  SendSignal(PG2, 11);   		// odchod
+}
+
+OnSignal(2)
+{
+  // konec - alarm, death ...
+  printf("KONEC DABINGU 3_1... TERMINATOR ");
+  EndScript();
+}

@@ -1,0 +1,62 @@
+Block
+  {
+     integer AIEvent;
+  
+     HUMAN_SETAIMODE_aggressive();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SETMODE_Run();
+     HUMAN_SetOptimized(1);
+     SetAlarmType(1023, True);
+  }
+
+  HUMAN_Suspend(true);
+  Goto TheEnd;
+
+
+OnSignal(1)
+{
+  HUMAN_Suspend(False);
+}
+
+  HUMAN_Move("Tr1_1");
+  HUMAN_Move("Tr1_2");
+  HUMAN_SETMODE_Crouch();
+  HUMAN_LookAround(3);
+  Delay(1500);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Tr1_3");
+  HUMAN_Move("Tr1_4");
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Trap2 --- 1: ", AIEvent);
+    }
+  HUMAN_Stop();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("Tr1_4");
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

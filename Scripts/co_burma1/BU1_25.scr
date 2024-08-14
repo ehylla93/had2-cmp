@@ -1,0 +1,63 @@
+// BU1_25 - guard in the bunker
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame door25;	FRM_FindFrame(door25, "m_b_buDV_14");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(132, false);
+}
+
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f050");
+HUMAN_Suspend(true);
+
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SETSIGHTRANGE(55);
+	DisableSignals(true);
+	HUMAN_SETMODE_Run();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	DisableSignals(false);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(50))
+{
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("Type97_11", 1, 0);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(1)	// received from door25
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_BoardVehicle("Type97_11", 0, 0);
+	HUMAN_WeaponOnArm(true);
+	HUMAN_TurnAt(door25);
+	GoTo end;
+}
+
+OnDeath()
+{
+	HUMAN_BoardVehicle("Type97_11", 0, 0);
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label end:

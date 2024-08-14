@@ -1,0 +1,64 @@
+
+integer AIEvent;
+integer RND = 0;
+Frame turn1;		FRM_FindFrame(turn1, "dummy_Red3_turn_1");
+Frame turn2;		FRM_FindFrame(turn2, "dummy_Red3_turn_2");
+Frame turn3;		FRM_FindFrame(turn3, "dummy_Red3_turn_3");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(1)
+{						
+  HUMAN_Suspend(False);			
+}						
+
+label DeAlarm:
+  RND = _RandomInt(3);
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETMODE_Walk();
+  If (RND == 0)
+     {
+        HUMAN_Move("Red3_1");				
+        HUMAN_TurnAt(turn1);				
+     }
+  If (RND == 1)
+     {
+        HUMAN_Move("Red3_2");				
+        HUMAN_TurnAt(turn2);				
+     }
+  If (RND == 2)
+     {
+        HUMAN_Move("Red3_3");				
+        HUMAN_TurnAt(turn3);				
+     }
+  Delay(1500);
+  HUMAN_WeaponOnArm(False);
+  Delay(2500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 3: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

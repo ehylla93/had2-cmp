@@ -1,0 +1,43 @@
+// AmiGuy4 dying
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME me; 			FRM_GetMyFrame(me);
+  SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+	{
+	Delay(1000);
+	MakeExplosion(me, 1500000, 7);
+	FRM_CreateParticle(41, me);
+	HUMAN_RemoveItemsFromStore(me, 76);
+	HUMAN_SetAnim("", 100, 100, 0);
+	Delay(300);
+	EndScript();
+	}
+
+Whenever inrange (_PlayerInRange(4))
+	{
+Frame FRM;		FRM_GetMyFrame(FRM);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeech(me, 00990113, 3, 20);
+Delay(3500);
+HUMAN_Kill(FRM);
+
+	}
+
+Whenever notinrange (_PlayerInRange(30)){
+  SetWhenever(inrange, true); 
+  HUMAN_Suspend(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetMode_Stand();
+
+Label END:
+

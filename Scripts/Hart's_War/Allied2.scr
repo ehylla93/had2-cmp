@@ -1,0 +1,82 @@
+// BU2_A_Sherman02 - allied soldier, at the tank machinegun
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame Sherman;  FRM_FindFrame(Sherman, "Sherman");
+
+Frame La_tiger_1; FRM_FindFrame(La_tiger_1, "La_tiger_1");
+Frame r18; FRM_FindFrame(r18, "La_tiger_1");
+Frame r23; FRM_FindFrame(r23, "La_tiger_1");
+Frame r27; FRM_FindFrame(r27, "La_tiger_1");
+Frame r30; FRM_FindFrame(r30, "La_tiger_1");
+
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+HUMAN_SETEVENTS(false);
+SetAlarmType(1023, false);
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever bu2_01(_FrameInRange(La_tiger_1)<70)
+{
+HUMAN_BoardVehicle("Sherman", true, 2);
+	{
+		HUMAN_Attack(La_tiger_1, 5000);
+	
+	}
+		goto chodim;
+}
+
+Whenever bu2_18(_FrameInRange(La_tiger_1)<80)
+{
+HUMAN_BoardVehicle("Sherman", true, 2);
+	{
+	
+		HUMAN_Attack(La_tiger_1, 5000);
+	
+	}
+		goto chodim;
+}
+
+Whenever bu2_23(_FrameInRange(La_tiger_1)<90)
+{
+HUMAN_BoardVehicle("Sherman", true, 2);
+	{
+
+		HUMAN_Attack(La_tiger_1, 5000);
+
+	}
+		goto chodim;
+}
+
+Whenever bu2_27(_FrameInRange(La_tiger_1)<70)
+{
+HUMAN_BoardVehicle("Sherman", true, 2);
+	{
+		HUMAN_Attack(La_tiger_1, 5000);
+
+	}
+		goto chodim;
+}
+
+Whenever bu2_30(_FrameInRange(La_tiger_1)<80)
+{
+HUMAN_BoardVehicle("Sherman", true, 2);
+	{
+	
+		HUMAN_Attack(La_tiger_1, 5000);
+		   Delay(5000);
+
+	}
+	goto chodim;
+	
+	label chodim: 
+HUMAN_Attack(La_tiger_1, 5000);
+goto chodim;
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_BoardVehicle("Sherman", true, 2);
+
+Label end:

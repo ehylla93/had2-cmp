@@ -1,0 +1,48 @@
+frame SG_3;		FRM_FindFrame(SG_3, "Static_Guard_3");
+frame SG_2;		FRM_FindFrame(SG_2, "Static_Guard_2");
+
+// 04990855 Je tady sice zatracená, opravdu zatracená zima,
+// 		ale poøád je to menší zlo, než se vrátit na ponorku.					# 3
+// 04990856 Mnì ponorka nevadí, ale máš pravdu, tady to má svoje kouzlo. 
+// 		Když chceš, vidíš oblohu, slunce,							# 2
+// 04990857 èerstvého vzduchu a jídla máš, co hrdlo ráèí ...	  					# 2
+// 04990858 Nìco ti øeknu, ale nech si to pro sebe. Bojím se tam vrátit.
+//		 Všechno tam na mne padá, mám pocit, že se udusím.				# 3	
+// 04990859 Nìkdy si myslím, že prostì otevøu poklop a radìji 
+// 		vyplavu na hladinu, než bych tam byl zavøený.					# 3
+// 04990865 No jo, tomu se øíký klaustrofobie nebo tak nìjak. Radím ti dobøe, nech se pøeložit.	# 2
+// 04990871 Bývalo mi zle už døíve, ale dalo se to vydržet. Teï se to zhoršilo, 
+// 		nedokážu si pøedstavit, že se vrátím tam dolù					# 3
+// 04990872 a nìkolik dnù nebo týdnù tam budu uvìznìný.						# 3
+// 04990873 Musíš to vydržet, za šest dní nastupujeme dovolenou,
+//  		budeš mít dva týdny na to, aby sis zaøídil to pøeložení.				# 2
+// 04990874 Øekneš lékaøi popravdì co ti je, napíše ti doporuèení, 
+//		dají tì nìkam na pevninu a budeš mít po problému. 				# 2
+// 04990875 To se prostì obèas stává, není to nic, z èeho by sis mìl dìlat hlavu.			# 2
+// 04990876 Kéž by to bylo tak snadné. Snad mne nedají k tankistùm, haha ...			# 3
+// 3245  4632  2600  7697  4342  2908  4083  2362  4051  6272  2818  3676 
+
+OnSignal(1)
+{
+  FRM_MorphSpeechDelayed(SG_3, 04990855, 10, 45);	  Delay(33);	
+  FRM_MorphSpeechDelayed(SG_2, 04990856, 10, 45);	  Delay(47);
+  FRM_MorphSpeechDelayed(SG_2, 04990857, 10, 45);	  Delay(26);
+  FRM_MorphSpeechDelayed(SG_3, 04990858, 10, 45);	  Delay(77);
+  FRM_MorphSpeechDelayed(SG_3, 04990859, 10, 45);	  Delay(44);
+  FRM_MorphSpeechDelayed(SG_2, 04990865, 10, 45);	  Delay(30);
+  FRM_MorphSpeechDelayed(SG_3, 04990871, 10, 45);	  Delay(41);
+  FRM_MorphSpeechDelayed(SG_3, 04990872, 10, 45);	  Delay(24);
+  FRM_MorphSpeechDelayed(SG_2, 04990873, 10, 45);	  Delay(41);
+  FRM_MorphSpeechDelayed(SG_2, 04990874, 10, 45);	  Delay(63);
+  FRM_MorphSpeechDelayed(SG_2, 04990875, 10, 45);	  Delay(29);
+  FRM_MorphSpeechDelayed(SG_3, 04990876, 10, 45);	  Delay(37);
+  SendSignal(SG_3, 2);
+  SendSignal(SG_2, 2);
+}
+
+OnSignal(2)
+{
+  // konec - alarm, death ...
+  printf("KONEC DABINGU Alkac... TERMINATOR ");
+  EndScript();
+}

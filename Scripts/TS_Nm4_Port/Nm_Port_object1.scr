@@ -1,0 +1,29 @@
+// Obj 1 - Eliminate all Enemies
+// -------------------------------------------------
+
+block
+{
+//Frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+Frame me;		FRM_GetMyFrame(me);
+SetObjectiveStatus(1, 0);
+//Printf("enemy obj script");
+//SetWhenever(AreaClear, 0);
+}
+
+
+//------------------------------------------
+Whenever AreaClear (!_EnemyInRange(me,1000))
+{
+Delay(5000);
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05991005);
+Delay(3000);
+SetObjectiveStatus(1, 1);
+//Printf("enemies killed");
+SUBTITLES_SetOn(0);
+//SendSignal(OBJ, 7);
+goto END;
+}
+
+label end:

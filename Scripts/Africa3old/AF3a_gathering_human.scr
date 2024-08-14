@@ -1,0 +1,84 @@
+block
+{
+  FRAME look1;		FRM_FindFrame(look1, "m_palma");
+  FRAME look2;		FRM_FindFrame(look2, "m_AF5_ost_dr4");
+  FRAME look3;		FRM_FindFrame(look3, "m_palma10");
+  INTEGER pos		= 0;  // naloadovana value kam ma jit
+  INTEGER atpos		= 0;  // uz je panak na pozici?
+  INTEGER p			= 0;  // pomocna promenna
+//  SetAlarmType(1023, true);
+}
+
+goto TOTAL_END;
+
+OnSignal(21)
+{
+  goto PRESUN;
+}
+
+OnAlarm()
+{
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, false);
+  goto PRESUN;
+}
+
+Label PRESUN:
+  if(!atpos)
+  {
+    HUMAN_SetAnim("", 100, 100, false);
+    HUMAN_Suspend(false);
+    SetAlarmType(1023, true);
+    SetAlarmType(512, false);
+    HUMAN_SetOptimized(0);
+    HUMAN_SetMODE_Stand();
+    HUMAN_SetMode_Crouch();
+    HUMAN_SetMODE_Walk();
+    HUMAN_WeaponOnArm(true);
+    if(!pos)
+    {
+      block
+      {
+        pos = _LoadGameValue(101);
+        p = pos + 1;
+        SaveGameValue(101, p);
+      }
+    }
+    printfnumber("ONEOFLAST - loaded value: ", pos);
+    if(pos == 1)
+    {
+      HUMAN_Move("AF3a_ls01");
+      HUMAN_TurnAt(look1);
+    }
+    if(pos == 2)
+    {
+      HUMAN_Move("AF3a_ls02");
+      HUMAN_TurnAt(look2);
+    }
+    if(pos == 3)
+    {
+      HUMAN_Move("AF3a_ls03");
+      HUMAN_TurnAt(look3);
+    }
+    if(pos == 4)
+    {
+      HUMAN_Move("AF3a_ls04");
+    }
+    atpos = 1;
+  }
+goto END;
+
+Label END:
+  if(pos == 4)
+  {
+    HUMAN_TurnAtNearestPlayer();
+    Delay(1000);
+    goto END;
+  }
+
+Label TOTAL_END:

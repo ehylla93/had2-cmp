@@ -1,0 +1,53 @@
+// C5_G25 - soldier in the bunker, occupies the MG42 near ladder
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;		FRM_GetMyFrame(me);
+Frame ladder;	FRM_FindFrame(ladder, "rebrik_bunker");
+
+FRM_SwitchFaceTexture(me, "e_f053");
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(60))
+{
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("MG42_Stand03", 1, 0);
+	GoTo end;
+}
+
+OnSignal(1)
+{
+HUMAN_BoardVehicle("MG42_Stand03", 0, 0);
+HUMAN_TurnAt(ladder);
+GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

@@ -1,0 +1,16 @@
+block
+{   
+Frame me;		FRM_GetMyFrame(me);
+Frame start; FRM_FindFrame(start, "Group_4");
+}
+goto end;
+
+Whenever Yes (_PlayerInBox(me))
+{
+//printf ("Player in 2. detect area");
+//SendSignal (start,1);
+}
+
+
+//----------------------/END/----------------------
+label end:

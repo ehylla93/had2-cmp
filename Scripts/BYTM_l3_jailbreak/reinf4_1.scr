@@ -1,0 +1,103 @@
+// reinf4_1 - triggers infantry
+// -----------------------------------------------------
+
+Block
+{
+Frame s1;    FRM_FindFrame(s1, "R4_E01");
+Frame s2;    FRM_FindFrame(s2, "R4_E02");
+Frame s3;    FRM_FindFrame(s3, "R4_E03");
+Frame s4;    FRM_FindFrame(s4, "R4_E04");
+Frame s5;    FRM_FindFrame(s5, "R4_E05");
+Frame s6;    FRM_FindFrame(s6, "R4_E06");
+
+Frame s7;    FRM_FindFrame(s7, "R4_E09");	// sniper
+Frame s8;    FRM_FindFrame(s8, "R4_E10");	// sniper
+
+Integer a;
+Integer time;
+}
+
+goto end;
+
+// -----------------------------------------------------
+
+Label Snipers:
+time = _RandomInt(20000) + 20000;
+Delay(time);
+a = _RandomInt(5);
+if(a==0) { gosub SetupS1; }
+if(a==1) { gosub SetupS2; }
+if(a==2) { gosub SetupS3; }
+if(a==3) { gosub SetupS4; }
+if(a==4) { gosub SetupS5; }
+EndScript();
+
+Label SetupS1:
+printf("Sniper setup1 s1, s3");
+SendSignal(s7, 1);
+SendSignal(s8, 3);
+Return;
+
+Label SetupS2:
+printf("Sniper setup1 s2, s5");
+SendSignal(s7, 2);
+SendSignal(s8, 5);
+Return;
+
+Label SetupS3:
+printf("Sniper setup1 s4, s3");
+SendSignal(s7, 4);
+SendSignal(s8, 3);
+Return;
+
+Label SetupS4:
+printf("Sniper setup1 s5, s1");
+SendSignal(s7, 5);
+SendSignal(s8, 1);
+Return;
+
+Label SetupS5:
+printf("Sniper setup1 s4, s5");
+SendSignal(s7, 4);
+SendSignal(s8, 5);
+Return;
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+a = _RandomInt(100);
+if(a<50) { goto Setup1; }
+else { goto Setup2; }
+}
+
+Label Setup1:
+printf("R4 Inf setup1");
+SendSignal(s1, 1);
+Delay(500);
+SendSignal(s2, 1);
+Delay(500);
+SendSignal(s3, 1);
+Delay(5500);
+SendSignal(s4, 1);
+Delay(500);
+SendSignal(s5, 1);
+Delay (500);
+SendSignal(s6, 1);
+goto Snipers;
+
+Label Setup2:
+printf("R4 Inf setup2");
+SendSignal(s1, 2);
+Delay(500);
+SendSignal(s2, 2);
+Delay(500);
+SendSignal(s3, 2);
+Delay(5500);
+SendSignal(s4, 2);
+Delay(500);
+SendSignal(s5, 2);
+Delay (500);
+SendSignal(s6, 2);
+goto Snipers;
+
+Label end:

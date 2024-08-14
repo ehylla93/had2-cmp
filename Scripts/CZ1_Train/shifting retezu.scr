@@ -1,0 +1,41 @@
+Frame retez;
+	FRM_GetMyFrame(retez);
+Frame klika;
+	FRM_FindFrame(klika,"klika");
+
+
+FRM_SetShifting(retez, 0, false);
+
+
+
+Label shifting:
+Block
+{	
+	If(_ACTOR_GetState(klika)==2)
+	{
+		FRM_SetShifting(retez, 1,false);
+	}
+	else
+	{
+		If(_ACTOR_GetState(klika)==3)
+		{
+			FRM_SetShifting(retez, 1,true);
+		}
+		else
+		{
+			FRM_SetShifting(retez, false,true);
+		}
+	}
+
+}
+
+
+
+
+
+
+goto shifting;	
+
+
+
+

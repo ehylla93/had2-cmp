@@ -1,0 +1,279 @@
+block
+{   
+Frame barrier1;	FRM_FindFrame(barrier1, "la_strazbud_.zavora");
+Frame Signal_1; FRM_FindFrame(Signal_1, "Group_1");
+Frame Signal_2; FRM_FindFrame(Signal_2, "Group_2");
+Frame Signal_3; FRM_FindFrame(Signal_3, "Group_3");
+Frame Signal_4; FRM_FindFrame(Signal_4, "Group_4");
+Frame Signal_5; FRM_FindFrame(Signal_5, "Group_5");
+Frame Signal_6; FRM_FindFrame(Signal_6, "Group_6");
+Frame Signal_7; FRM_FindFrame(Signal_7, "Group_7");
+Frame Signal_8; FRM_FindFrame(Signal_8, "Group_8");
+Frame Signal_9; FRM_FindFrame(Signal_9, "Group_9");
+Frame Signal_0; FRM_FindFrame(Signal_0, "Group_0");
+//
+Frame E_MP40_1; FRM_FindFrame(E_MP40_1, "E_MP40_1");
+Frame E_MP40_2; FRM_FindFrame(E_MP40_2, "E_MP40_2");
+Frame E_MP40_3; FRM_FindFrame(E_MP40_3, "E_MP40_3");
+Frame E_MP40_4; FRM_FindFrame(E_MP40_4, "E_MP40_4");
+Frame E_MP40_5; FRM_FindFrame(E_MP40_5, "E_MP40_5");
+Frame E_MP40_6; FRM_FindFrame(E_MP40_6, "E_MP40_6");
+Frame E_MP40_7; FRM_FindFrame(E_MP40_7, "E_MP40_7");
+Frame E_MP40_8; FRM_FindFrame(E_MP40_8, "E_MP40_8");
+Frame E_MP40_9; FRM_FindFrame(E_MP40_9, "E_MP40_9");
+Frame E_MP40_10; FRM_FindFrame(E_MP40_10, "E_MP40_10");
+Frame E_MP40_11; FRM_FindFrame(E_MP40_11, "E_MP40_11");
+Frame E_MP40_12; FRM_FindFrame(E_MP40_12, "E_MP40_12");
+Frame E_MP40_13; FRM_FindFrame(E_MP40_13, "E_MP40_13");
+Frame E_MP40_14; FRM_FindFrame(E_MP40_14, "E_MP40_14");
+Frame E_MP40_15; FRM_FindFrame(E_MP40_15, "E_MP40_15");
+Frame E_MP40_16; FRM_FindFrame(E_MP40_16, "E_MP40_16");
+Frame E_MP40_17; FRM_FindFrame(E_MP40_17, "E_MP40_17");
+Frame E_MP40_18; FRM_FindFrame(E_MP40_18, "E_MP40_18");
+Frame E_MP40_19; FRM_FindFrame(E_MP40_19, "E_MP40_19");
+Frame E_MP40_20; FRM_FindFrame(E_MP40_20, "E_MP40_20");
+Frame E_MP40_21; FRM_FindFrame(E_MP40_21, "E_MP40_21");
+Frame E_MP40_22; FRM_FindFrame(E_MP40_22, "E_MP40_22");
+Frame E_MP40_23; FRM_FindFrame(E_MP40_23, "E_MP40_23");
+Frame E_MP40_24; FRM_FindFrame(E_MP40_24, "E_MP40_24");
+Frame E_MP40_25; FRM_FindFrame(E_MP40_25, "E_MP40_25");
+Frame E_MP40_26; FRM_FindFrame(E_MP40_26, "E_MP40_26");
+Frame E_MP40_27; FRM_FindFrame(E_MP40_27, "E_MP40_27");
+Frame E_MP40_28; FRM_FindFrame(E_MP40_28, "E_MP40_28");
+Frame E_MP40_29; FRM_FindFrame(E_MP40_29, "E_MP40_29");
+Frame E_MP40_30; FRM_FindFrame(E_MP40_30, "E_MP40_30");
+Frame E_MP40_31; FRM_FindFrame(E_MP40_31, "E_MP40_31");
+Frame E_MP40_32; FRM_FindFrame(E_MP40_32, "E_MP40_32");
+Frame E_MP40_33; FRM_FindFrame(E_MP40_33, "E_MP40_33");
+Frame E_MP40_34; FRM_FindFrame(E_MP40_34, "E_MP40_34");
+Frame E_MP40_35; FRM_FindFrame(E_MP40_35, "E_MP40_35");
+//
+Frame E_MP44_1; FRM_FindFrame(E_MP44_1, "E_MP44_1");
+Frame E_MP44_2; FRM_FindFrame(E_MP44_2, "E_MP44_2");
+Frame E_MP44_3; FRM_FindFrame(E_MP44_3, "E_MP44_3");
+Frame E_MP44_4; FRM_FindFrame(E_MP44_4, "E_MP44_4");
+Frame E_MP44_5; FRM_FindFrame(E_MP44_5, "E_MP44_5");
+Frame E_MP44_6; FRM_FindFrame(E_MP44_6, "E_MP44_6");
+Frame E_MP44_7; FRM_FindFrame(E_MP44_7, "E_MP44_7");
+Frame E_MP44_8; FRM_FindFrame(E_MP44_8, "E_MP44_8");
+Frame E_MP44_9; FRM_FindFrame(E_MP44_9, "E_MP44_9");
+Frame E_MP44_10; FRM_FindFrame(E_MP44_10, "E_MP44_10");
+Frame E_MP44_11; FRM_FindFrame(E_MP44_11, "E_MP44_11");
+Frame E_MP44_12; FRM_FindFrame(E_MP44_12, "E_MP44_12");
+Frame E_MP44_13; FRM_FindFrame(E_MP44_13, "E_MP44_13");
+Frame E_MP44_14; FRM_FindFrame(E_MP44_14, "E_MP44_14");
+Frame E_MP44_15; FRM_FindFrame(E_MP44_15, "E_MP44_15");
+Frame E_MP44_16; FRM_FindFrame(E_MP44_16, "E_MP44_16");
+Frame E_MP44_17; FRM_FindFrame(E_MP44_17, "E_MP44_17");
+Frame E_MP44_18; FRM_FindFrame(E_MP44_18, "E_MP44_18");
+Frame E_MP44_19; FRM_FindFrame(E_MP44_19, "E_MP44_19");
+Frame E_MP44_20; FRM_FindFrame(E_MP44_20, "E_MP44_20");
+Frame E_MP44_21; FRM_FindFrame(E_MP44_21, "E_MP44_21");
+Frame E_MP44_22; FRM_FindFrame(E_MP44_22, "E_MP44_22");
+Frame E_MP44_23; FRM_FindFrame(E_MP44_23, "E_MP44_23");
+Frame E_MP44_24; FRM_FindFrame(E_MP44_24, "E_MP44_24");
+Frame E_MP44_25; FRM_FindFrame(E_MP44_25, "E_MP44_25");
+Frame E_MP44_26; FRM_FindFrame(E_MP44_26, "E_MP44_26");
+Frame E_MP44_27; FRM_FindFrame(E_MP44_27, "E_MP44_27");
+Frame E_MP44_28; FRM_FindFrame(E_MP44_28, "E_MP44_28");
+Frame E_MP44_29; FRM_FindFrame(E_MP44_29, "E_MP44_29");
+Frame E_MP44_30; FRM_FindFrame(E_MP44_30, "E_MP44_30");
+Frame E_MP44_31; FRM_FindFrame(E_MP44_31, "E_MP44_31");
+Frame E_MP44_32; FRM_FindFrame(E_MP44_32, "E_MP44_32");
+Frame E_MP44_33; FRM_FindFrame(E_MP44_33, "E_MP44_33");
+Frame E_MP44_34; FRM_FindFrame(E_MP44_34, "E_MP44_34");
+Frame E_MP44_35; FRM_FindFrame(E_MP44_35, "E_MP44_35");
+Frame E_MP44_36; FRM_FindFrame(E_MP44_36, "E_MP44_36");
+Frame E_MP44_37; FRM_FindFrame(E_MP44_37, "E_MP44_37");
+Frame E_MP44_38; FRM_FindFrame(E_MP44_38, "E_MP44_38");
+Frame E_MP44_39; FRM_FindFrame(E_MP44_39, "E_MP44_39");
+Frame E_MP44_40; FRM_FindFrame(E_MP44_40, "E_MP44_40");
+Frame E_MP44_41; FRM_FindFrame(E_MP44_41, "E_MP44_41");
+Frame E_MP44_42; FRM_FindFrame(E_MP44_42, "E_MP44_42");
+Frame E_MP44_43; FRM_FindFrame(E_MP44_43, "E_MP44_43");
+Frame E_MP44_44; FRM_FindFrame(E_MP44_44, "E_MP44_44");
+Frame E_MP44_45; FRM_FindFrame(E_MP44_45, "E_MP44_45");
+Frame E_MP44_46; FRM_FindFrame(E_MP44_46, "E_MP44_46");
+Frame E_MP44_47; FRM_FindFrame(E_MP44_47, "E_MP44_47");
+Frame E_MP44_48; FRM_FindFrame(E_MP44_48, "E_MP44_48");
+Frame E_MP44_49; FRM_FindFrame(E_MP44_49, "E_MP44_49");
+Frame E_MP44_50; FRM_FindFrame(E_MP44_50, "E_MP44_50");
+
+integer Rnd1;
+integer C1;
+SetActorState(barrier1, 1);
+SetActorState(barrier1, 1);
+}
+goto end;
+
+
+//----------------------/OnSignal/----------------------
+OnSignal(1) // Signal from zone_1
+{
+printf("Signal from zone_1");
+goto Start_1;
+}
+
+
+//----------------------//----------------------
+label Start_1:
+
+
+Rnd1=(_randomint(10000)+10000);
+delay(Rnd1);
+
+SendSignal (Signal_2,1);
+printf("Group 2 start");
+delay(5000);
+SendSignal (Signal_6,1);
+printf("Group 6 start");
+
+Rnd1=(_randomint(10000)+10000);
+delay(Rnd1);
+
+SendSignal (Signal_3,1);
+printf("Group 3 start");
+delay(5000);
+SendSignal (Signal_7,1);
+printf("Group 7 start");
+
+Rnd1=(_randomint(15000)+25000);
+delay(Rnd1);
+
+SendSignal (Signal_4,1);
+printf("Group 4 start");
+delay(5000);
+SendSignal (Signal_8,1);
+printf("Group 8 start");
+
+Rnd1=(_randomint(15000)+25000);
+delay(Rnd1);
+
+SendSignal (Signal_5,1);
+printf("Group 5 start");
+delay(5000);
+SendSignal (Signal_9,1);
+printf("Group 9 start");
+delay(5000);
+SendSignal (Signal_0,1);
+printf("Group 0 start");
+
+
+//goto end;
+
+goto Count;
+
+
+
+//----------------------Counter----------------------
+Label Count:
+
+Block
+{
+C1=0;
+C1=C1+_ACTOR_GetState(E_MP40_1);
+C1=C1+_ACTOR_GetState(E_MP40_2);
+C1=C1+_ACTOR_GetState(E_MP40_3);
+C1=C1+_ACTOR_GetState(E_MP40_4);
+C1=C1+_ACTOR_GetState(E_MP40_5);
+C1=C1+_ACTOR_GetState(E_MP40_6);
+C1=C1+_ACTOR_GetState(E_MP40_7);
+C1=C1+_ACTOR_GetState(E_MP40_8);
+C1=C1+_ACTOR_GetState(E_MP40_9);
+C1=C1+_ACTOR_GetState(E_MP40_10);
+C1=C1+_ACTOR_GetState(E_MP40_11);
+C1=C1+_ACTOR_GetState(E_MP40_12);
+C1=C1+_ACTOR_GetState(E_MP40_13);
+C1=C1+_ACTOR_GetState(E_MP40_14);
+C1=C1+_ACTOR_GetState(E_MP40_15);
+C1=C1+_ACTOR_GetState(E_MP40_16);
+C1=C1+_ACTOR_GetState(E_MP40_17);
+C1=C1+_ACTOR_GetState(E_MP40_18);
+C1=C1+_ACTOR_GetState(E_MP40_19);
+C1=C1+_ACTOR_GetState(E_MP40_20);
+C1=C1+_ACTOR_GetState(E_MP40_21);
+C1=C1+_ACTOR_GetState(E_MP40_22);
+C1=C1+_ACTOR_GetState(E_MP40_23);
+C1=C1+_ACTOR_GetState(E_MP40_24);
+C1=C1+_ACTOR_GetState(E_MP40_25);
+C1=C1+_ACTOR_GetState(E_MP40_26);
+C1=C1+_ACTOR_GetState(E_MP40_27);
+C1=C1+_ACTOR_GetState(E_MP40_28);
+C1=C1+_ACTOR_GetState(E_MP40_29);
+C1=C1+_ACTOR_GetState(E_MP40_30);
+C1=C1+_ACTOR_GetState(E_MP40_31);
+C1=C1+_ACTOR_GetState(E_MP40_32);
+C1=C1+_ACTOR_GetState(E_MP40_33);
+C1=C1+_ACTOR_GetState(E_MP40_34);
+C1=C1+_ACTOR_GetState(E_MP40_35);
+//----------------------mp44----------------------
+C1=C1+_ACTOR_GetState(E_MP44_1);
+C1=C1+_ACTOR_GetState(E_MP44_2);
+C1=C1+_ACTOR_GetState(E_MP44_3);
+C1=C1+_ACTOR_GetState(E_MP44_4);
+C1=C1+_ACTOR_GetState(E_MP44_5);
+C1=C1+_ACTOR_GetState(E_MP44_6);
+C1=C1+_ACTOR_GetState(E_MP44_7);
+C1=C1+_ACTOR_GetState(E_MP44_8);
+C1=C1+_ACTOR_GetState(E_MP44_9);
+C1=C1+_ACTOR_GetState(E_MP44_10);
+C1=C1+_ACTOR_GetState(E_MP44_11);
+C1=C1+_ACTOR_GetState(E_MP44_12);
+C1=C1+_ACTOR_GetState(E_MP44_13);
+C1=C1+_ACTOR_GetState(E_MP44_14);
+C1=C1+_ACTOR_GetState(E_MP44_15);
+C1=C1+_ACTOR_GetState(E_MP44_16);
+C1=C1+_ACTOR_GetState(E_MP44_17);
+C1=C1+_ACTOR_GetState(E_MP44_18);
+C1=C1+_ACTOR_GetState(E_MP44_19);
+C1=C1+_ACTOR_GetState(E_MP44_20);
+C1=C1+_ACTOR_GetState(E_MP44_21);
+C1=C1+_ACTOR_GetState(E_MP44_22);
+C1=C1+_ACTOR_GetState(E_MP44_23);
+C1=C1+_ACTOR_GetState(E_MP44_24);
+C1=C1+_ACTOR_GetState(E_MP44_25);
+C1=C1+_ACTOR_GetState(E_MP44_26);
+C1=C1+_ACTOR_GetState(E_MP44_27);
+C1=C1+_ACTOR_GetState(E_MP44_28);
+C1=C1+_ACTOR_GetState(E_MP44_29);
+C1=C1+_ACTOR_GetState(E_MP44_30);
+C1=C1+_ACTOR_GetState(E_MP44_31);
+C1=C1+_ACTOR_GetState(E_MP44_32);
+C1=C1+_ACTOR_GetState(E_MP44_33);
+C1=C1+_ACTOR_GetState(E_MP44_34);
+C1=C1+_ACTOR_GetState(E_MP44_35);
+C1=C1+_ACTOR_GetState(E_MP44_36);
+C1=C1+_ACTOR_GetState(E_MP44_37);
+C1=C1+_ACTOR_GetState(E_MP44_38);
+C1=C1+_ACTOR_GetState(E_MP44_39);
+C1=C1+_ACTOR_GetState(E_MP44_40);
+C1=C1+_ACTOR_GetState(E_MP44_41);
+C1=C1+_ACTOR_GetState(E_MP44_42);
+C1=C1+_ACTOR_GetState(E_MP44_43);
+C1=C1+_ACTOR_GetState(E_MP44_44);
+C1=C1+_ACTOR_GetState(E_MP44_45);
+C1=C1+_ACTOR_GetState(E_MP44_46);
+C1=C1+_ACTOR_GetState(E_MP44_47);
+C1=C1+_ACTOR_GetState(E_MP44_48);
+C1=C1+_ACTOR_GetState(E_MP44_49);
+C1=C1+_ACTOR_GetState(E_MP44_50);
+}
+SaveGameValue(111, C1);
+if (C1==0)
+{
+PrintfNumber("Enemy Counter: ",C1);
+//SaveGameValue(111, 0);  
+//0 = No Enemy 
+goto END;
+}
+
+
+PrintfNumber("Enemy Counter: ",C1);
+
+
+delay(30000); 
+goto Count;
+
+
+//----------------------/END/----------------------
+label end:

@@ -1,0 +1,57 @@
+// SF_G40 - Sniper na konci
+// ---------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f024");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+// ---------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetSniper(1, 5);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

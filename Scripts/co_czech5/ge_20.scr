@@ -1,0 +1,41 @@
+// North-East near SdKfZ
+
+Frame count;	FRM_FindFrame(count, "dead_counter");
+
+Label Guard:
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+HUMAN_Move("GE_20_1");
+Delay(1000);
+HUMAN_Move("GE_20_2");
+Delay(1000);
+GoTo Guard;
+
+OnAlarm()
+	{
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("GE_20s");
+	HUMAN_SetSniper(1, 10);
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo Guard;
+	}
+	
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}

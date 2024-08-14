@@ -1,0 +1,37 @@
+// Tank 3 (La_tiger_3) Ridic
+// ----------------------------------------------------------------
+
+Block
+{
+Frame Cas;	FRM_FindFrame(Cas,"T3_Cas");
+Frame T3;	FRM_FindFrame(T3,"La_tiger_3");
+}
+
+//-----------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Reinf(_SignalReceived(1))
+{
+Car_SetFuel(T3, 900);
+Delay(250);
+Block{FRM_SetOn(T3, 1);}
+SendSignal(Cas, 1);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_3", 1, 0);
+HUMAN_Drive("o2_act1_01", 30);
+HUMAN_Drive("tank01_al02", 35);
+HUMAN_Drive("o2_act1_02", 15);
+HUMAN_Drive("", 15);
+goto END;
+}
+
+//-----------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

@@ -1,0 +1,31 @@
+// Obj 5 - Destroy all enemy Tanks
+// ---------------------------------------------------------
+
+Block
+{
+Frame Tank1;	FRM_FindFrame(Tank1,"A1_Panzer");
+Frame Tank2;	FRM_FindFrame(Tank2,"A2_Panzer");
+Frame Tank3;	FRM_FindFrame(Tank3,"A3_Tiger_01");
+}
+
+Whenever Tanks1 ((_Actor_GetState(Tank1) == 0) And (_Actor_GetState(Tank3) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999802);
+Delay(3500);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Tanks2 ((_Actor_GetState(Tank2) == 0) And (_Actor_GetState(Tank3) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999802);
+Delay(3500);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

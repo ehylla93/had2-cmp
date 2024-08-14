@@ -1,0 +1,23 @@
+// Sherman French crew, back seat
+
+Block
+ {
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+Whenever inrange (_MP_IsTeamMemberInRange(1, 50))
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_shermanAf_3", true, 3);
+}
+				
+OnAlarm()	{}
+
+OnAlarmDone()  {}
+
+Label TheEnd:

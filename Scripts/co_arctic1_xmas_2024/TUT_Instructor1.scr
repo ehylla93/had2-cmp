@@ -1,0 +1,107 @@
+Block
+{
+	Frame me;			FRM_GetMyFrame(me);
+	Frame target;
+	FRAME T_panak2;		FRM_FindFrame(T_panak2, "T_panak_2");
+	FRAME T_panak1;		FRM_FindFrame(T_panak1, "T_panak_1");
+	FRAME T_panak3;		FRM_FindFrame(T_panak3, "T_panak_3");
+	SetAlarmType(1,1); //close shooting
+	SetAlarmType(2,1); //shooting (enemy)
+	SetAlarmType(4,1); //hears steps
+	SetAlarmType(8,1); //sounds from
+	SetAlarmType(16,1); //explosion
+	SetAlarmType(32,1); //see
+	SetAlarmType(64,1); //gets hurt
+	SetAlarmType(128,1); //from script
+	SetAlarmType(256,1); //friendly fire
+	SetAlarmType(512,1); //sees dead body
+}
+
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+HUMAN_AttackMove("tutinst1");
+printf("TUT_Instructor1 initialized");
+goto END;
+
+
+Whenever TPIR (_PlayerInRange(10))
+{
+	printf("TPIR");
+	Delay(5000);
+	Printf("TPIR detected");
+	HUMAN_SetAnim("%%tut_instr1", 1000, 10000, 1);
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeech(me, 00990084, 20, 50);
+	Delay(5800);
+	// This weather is perfect, rain and mud, just the way we like it here.
+	FRM_MorphSpeech(me, 00990085, 20, 50);
+	Delay(5100);
+	//Even your own mother won't recognise you by the time I get through with you.
+	FRM_MorphSpeech(me, 00990086, 20, 50);
+	Delay(5800);
+	//But looking at you, that won't be such a bad thing. Okay now, listen up!
+	HUMAN_SetAnim("%%tut_instr2", 1000, 10000, 1);
+	FRM_MorphSpeech(me, 00990087, 20, 50);
+	// You need to get through the snake track. And remember I'll be watching you so there better be no dawdling!
+	Delay(6700);
+	FRM_MorphSpeech(me, 00990088, 20, 50);
+	Delay(3500);
+	// Then over the gangplanks and climb over all of the wooden fences, then…
+
+	FRM_MorphSpeech(me, 00990089, 20, 50);
+	Delay(4000);
+	// ...up the wall as though the devil himself was after you, and down through the trenches,
+	FRM_MorphSpeech(me, 00990090, 20, 50);
+	// you best then be on your belly soldier to stay under the razor wire!
+	Delay(5000);
+	HUMAN_SetAnim("%%tut_instr1", 1000, 10000, 1);
+	FRM_MorphSpeech(me, 00990091, 20, 50);
+	// I want you to taste the dirt! So, lets see what you can do! Move it!	
+	Delay(8000);
+	FRM_MorphSpeech(me, 00990079, 20, 50);
+	// Gentlemen, here we have another candidate for team leader.
+	Delay(5000);
+	FRM_MorphSpeech(me, 00990080, 20, 50);
+	// You have to order the soldiers in the unit to run to the barrels.
+	Delay(5000);
+	HUMAN_TurnAtNearestPlayer();
+	SendSignal(T_panak1, 1);
+	SendSignal(T_panak2, 1);
+	SendSignal(T_panak3, 1);
+}
+
+
+OnSignal(1)
+{
+	printf("tut instructor 1 attack mode");
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	SetWhenever(TPIR, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_WeaponUp(true);
+	HUMAN_SETMODE_Run();
+	GOTO LOOP;
+	
+}
+
+
+Label loop:
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	printf("tut instructor 1 loop");
+	HUMAN_AttackMove("tutinst1");
+	HUMAN_AttackMove("TUT1");
+	goto loop;
+
+OnDeath()
+{
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Label END:
+
+SetWheneverTime(TPIR, 5000);

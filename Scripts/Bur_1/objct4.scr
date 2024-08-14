@@ -1,0 +1,57 @@
+// Obj 4 - Assemble at the extraction zone
+// -------------------------------------------------
+
+Block
+{
+Integer Obj_Done;
+	Obj_Done=0;
+
+SetObjectiveStatus(5, 0);
+
+SetWhenever(Players, 0);
+}
+
+// -------------------------------------------------
+
+Whenever Players (_MP_AllTeamMembersAreInRange(1,20))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993608);
+Delay(4000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+Delay(1000);
+SetObjectiveStatus(5, 1);
+EndScript();
+}
+
+OnSignal(2)
+{
+Obj_Done=Obj_Done-1;
+SetWhenever(Players, 0);
+SetObjectiveStatus(4, 4);
+MP_EnableSpawnZone("zone4", 1);
+MP_EnableSpawnZone("zone1", 2);
+goto End;
+}
+
+OnSignal(1)
+{
+Obj_Done=Obj_Done+1;
+
+If(Obj_Done > 2)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(18993607);
+Delay(4000);
+SetWhenever(Players, 1);
+SetObjectiveStatus(4, 0);
+SUBTITLES_SetOn(0);
+MP_EnableSpawnZone("zone1", 1);
+MP_EnableSpawnZone("zone4", 2);
+}
+goto End;
+}
+
+
+Label End:

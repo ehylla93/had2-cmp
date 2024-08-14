@@ -1,0 +1,61 @@
+// Frames
+// ----------------------------------------------
+
+Block
+{
+Frame xplo01;	FRM_FindFrame(xplo01, "x_vybuch_01");
+Frame xplo02;	FRM_FindFrame(xplo02, "x_vybuch_02");
+Frame xplo03;	FRM_FindFrame(xplo03, "x_vybuch_03");
+Frame xplo04;	FRM_FindFrame(xplo04, "x_vybuch_04");
+Frame xplo05;	FRM_FindFrame(xplo05, "x_vybuch_05");
+Frame xplo06;	FRM_FindFrame(xplo06, "x_vybuch_06");
+Frame xplo07;	FRM_FindFrame(xplo07, "x_vybuch_07");
+Frame xplo08;	FRM_FindFrame(xplo08, "x_vybuch_08");
+Frame xplo09;	FRM_FindFrame(xplo09, "x_vybuch_09");
+Frame xplo10;	FRM_FindFrame(xplo10, "x_vybuch_10");
+Frame xplo11;	FRM_FindFrame(xplo11, "x_vybuch_11");
+Frame xplo12;	FRM_FindFrame(xplo12, "x_vybuch_12");
+Frame xplo13;	FRM_FindFrame(xplo13, "x_vybuch_13");
+Frame xplo14;	FRM_FindFrame(xplo14, "x_vybuch_14");
+Frame xplo15;	FRM_FindFrame(xplo15, "x_vybuch_15");
+Frame xplo16;	FRM_FindFrame(xplo16, "x_vybuch_16");
+Frame xplo17;	FRM_FindFrame(xplo17, "x_vybuch_17");
+Frame xplo18;	FRM_FindFrame(xplo18, "x_vybuch_18");
+Frame xplo19;	FRM_FindFrame(xplo19, "x_vybuch_19");
+Frame xplo20;	FRM_FindFrame(xplo20, "x_vybuch_20");
+Frame xplo21;	FRM_FindFrame(xplo21, "x_vybuch_21");
+Frame xplo22;	FRM_FindFrame(xplo22, "x_vybuch_22");
+Frame xplo23;	FRM_FindFrame(xplo23, "x_vybuch_23");
+Frame xplo24;	FRM_FindFrame(xplo24, "x_vybuch_24");
+}
+
+Block {
+FRM_SetOn(xplo01, 0);
+FRM_SetOn(xplo02, 0);
+FRM_SetOn(xplo03, 0);
+FRM_SetOn(xplo04, 0);
+FRM_SetOn(xplo05, 0);
+FRM_SetOn(xplo06, 0);
+FRM_SetOn(xplo07, 0);
+FRM_SetOn(xplo08, 0);
+FRM_SetOn(xplo09, 0);
+FRM_SetOn(xplo10, 0);
+FRM_SetOn(xplo11, 0);
+FRM_SetOn(xplo12, 0);
+}
+Block {
+FRM_SetOn(xplo13, 0);
+FRM_SetOn(xplo14, 0);
+FRM_SetOn(xplo15, 0);
+FRM_SetOn(xplo16, 0);
+FRM_SetOn(xplo17, 0);
+FRM_SetOn(xplo18, 0);
+FRM_SetOn(xplo19, 0);
+FRM_SetOn(xplo20, 0);
+FRM_SetOn(xplo21, 0);
+FRM_SetOn(xplo22, 0);
+FRM_SetOn(xplo23, 0);
+FRM_SetOn(xplo24, 0);
+}
+
+Label end:

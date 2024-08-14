@@ -1,0 +1,136 @@
+#include "_inc_rozhovor.scr"
+
+// AF3a_15 - guarding the main gate
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME lookat01;			FRM_FindFrame(lookat01, "AF3a_15_lookat01");
+  FRAME lookat02;			FRM_FindFrame(lookat02, "AF3a_15_lookat02");
+  FRAME lookAF14;			FRM_FindFrame(lookAF14, "AF3a_15_lookAF14");
+  FRAME lookAF15;			FRM_FindFrame(lookAF15, "AF3a_14_lookAF15");
+  FRAME af14;				FRM_FindFrame(af14, "AF3a_14");
+  FRAME sit01;				FRM_FindFrame(sit01, "dummy_15_sit");
+  FRAME dummy_rozhovor;		FRM_FindFrame(dummy_rozhovor, "dummy_rozhovor_02");
+  INTEGER Atype			= 0;
+  INTEGER at_alert_pos		= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(512, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SaveGameValue(31, 0);
+  SendSignal(dummy_rozhovor, 2);
+  printf("15: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SaveGameValue(31, 0);
+    SendSignal(dummy_rozhovor, 2);
+    HUMAN_Stop();
+    DisableSignals(true);
+    HUMAN_SetOptimized(2);
+    HUMAN_SetMODE_Stand();
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+    printfnumber("15: ", Atype);
+  }
+
+  HUMAN_ACTIVITY_Smoke(false);
+  SendSignal(dummy_alarm, 1);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  if(_LoadGameValue(31))
+  {
+    SaveGameValue(31, 0);
+    SendSignal(dummy_rozhovor, 2);
+  }
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(60);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  if(at_alert_pos){
+    goto ALERTLOOP;
+  }
+  goto ALERT;  
+}
+
+OnSignal(20){
+  DisableSignals(true);
+  goto ALERT;
+}
+
+OnSignal(9)
+{
+  HUMAN_Stop();
+  HUMAN_TurnAt(af14);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+ 
+Label ACTIVITY:
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  HUMAN_Move("AF3a_15_02");
+  Delay(500);
+  HUMAN_TurnAt(lookat01);
+  Delay(500);
+  HUMAN_TurnAt(lookat02);
+  Delay(500);
+  rnd = _RandomInt(5);
+  if(rnd == 0){
+    HUMAN_Move("AF3a_15_sit");
+    Delay(500);
+    HUMAN_ACTIVITY_Sit(sit01);
+    Delay(1500);
+    HUMAN_ACTIVITY_Smoke(true);
+   Delay(20000);
+    HUMAN_ACTIVITY_Smoke(false);
+  }
+  HUMAN_Move("AF3a_15_01");
+  HUMAN_TurnAt(lookAF14);
+  Delay(1000);
+  HUMAN_Move("AF3a_22_01");
+  Delay(200);
+  FRAME turnat01;	FRM_FindFrame(turnat01, "la_karafa_4");
+  HUMAN_SetAnim("%%sedimL", 200, 200, true);
+  Delay(20000);
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+goto ACTIVITY;
+
+Label ALERT:
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Stand();
+  HUMAN_SetMODE_Run();
+  if(!at_alert_pos)
+  {
+    HUMAN_Move("AF3a_15_01");
+    HUMAN_SetMODE_Crouch();
+    at_alert_pos = 1;
+  }
+Label ALERTLOOP:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1000);
+goto ALERTLOOP;
+
+Label END:

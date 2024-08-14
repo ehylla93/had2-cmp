@@ -1,0 +1,33 @@
+// Obj 5 - Find a fuctioning vehicle
+// -----------------------------------------
+
+Block
+{
+Frame Obj6;	FRM_FindFrame(Obj6,"obj4");
+
+SetObjectiveStatus(5, 0);
+}
+
+// -----------------------------------------
+
+Whenever Player(_PlayerInRange(15))
+{
+SendSignal(Obj6, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(07991404);
+SetObjectiveStatus(5, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+OnDeath(){
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(5, 2);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+EndScript();
+}

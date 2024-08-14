@@ -1,0 +1,127 @@
+// AL2_08 - guard walking in the hallway (south) - starts from kitchen (Küche)
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+block
+{
+Integer aievent = 0;
+Frame shotalarm;	FRM_FindFrame (shotalarm,"shotalarm");
+Frame cum;			FRM_FindFrame (cum,"al208cum");
+Frame door;			FRM_FindFrame (door,"secret_door03");
+frame cum1;			FRM_FindFrame(cum1, "al08cum");
+frame al2_34;		FRM_FindFrame(al2_34, "al2_34");
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+SetWhenever(doorx, 0);
+SetWhenever (turn,0);
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+block
+{
+SetWhenever(alarmed,0);
+aievent=_GetAlarmType();
+SetWhenever(doorx,0);
+SetWhenever(turn,0);
+}
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+	SendSignal (shotalarm,1);
+}
+	HUMAN_WeaponOnArm(1);
+	HUMAN_TurnAt(cum);	
+	HUMAN_SetSniper(1, 1);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever activate(_SignalReceived(1))	// received from B18_sc_21, B18_sc_20
+{
+	HUMAN_Suspend(false);
+	GoTo mode1;
+}
+
+Whenever alarmed(_SignalReceived(2))	// received from AL2_alarm
+{
+	GoTo mode2;
+}
+
+Whenever doorx(_ACTOR_GetState(door)<>0)	
+{
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("al2_08_08");
+	SendSignal (al2_34,2);
+	HUMAN_TurnAt(cum1);
+	if (_LoadGameValue(14)==1)
+	{
+	//Mission_SetUniformDisguise(0);
+	}
+	SetWhenever (turn,1);
+goto end;
+}
+
+Whenever turn(_PlayerInRange(6))
+{
+HUMAN_TurnAtNearestPlayer();
+delay (300);
+SetWhenever (turn,1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label mode1:			// before alarm
+	HUMAN_Move("AL2_08_01");
+	HUMAN_Move("AL2_08_03");
+	Label loop:
+		HUMAN_Move("AL2_08_06");
+SetWhenever(doorx, 1);
+		HUMAN_Move("AL2_08_02");
+		HUMAN_Move("AL2_08_07");
+SetWhenever(doorx, 0);
+		HUMAN_Move("AL2_08_04");
+		GoTo loop;
+
+Label mode2:			// after alarm
+	SetAlarmType(1011, true);
+	DisableSignals(1);
+	HUMAN_Suspend(0);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("al2_08_05");
+	SetAlarmType(274,0);
+	HUMAN_TurnAt(cum);	
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetSniper(1, 1);
+	GoTo end;
+
+Label end:

@@ -1,0 +1,49 @@
+// Snowing in Ardennes
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+Integer count;
+	count=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+WEATHER_SetColorOut(110, 110, 110, 1);
+WEATHER_SetColorIn(120, 120, 120, 60);
+WEATHER_SetSize(30, 40);
+WEATHER_SetSpace(12, 12);
+WEATHER_SetSpeed(1250);
+WEATHER_SetCount(count);
+WEATHER_SetOn(1);
+}
+Delay(35000);
+goto Z_Snezi;
+
+Label Z_Snezi:
+
+Block
+{
+Delay(3000);
+count=count+20;
+WEATHER_SetCount(count);
+}
+
+If(count==9600){WEATHER_SetCount(count);Delay(450000);goto P_Snezi;}
+
+Goto Z_Snezi;
+
+
+Label P_Snezi:
+
+Block
+{
+Delay(3000);
+count=count-5;
+WEATHER_SetCount(count);
+}
+
+If(count==2000){WEATHER_SetCount(count);Delay(700000);Goto Z_Snezi;}
+
+Goto P_Snezi;
+

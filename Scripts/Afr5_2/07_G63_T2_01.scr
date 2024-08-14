@@ -1,0 +1,43 @@
+// 07_G63 - T2, 1 - Driver
+// -----------------------------------------------------
+
+Block
+{
+Frame MyTank;	FRM_FindFrame(MyTank, "07_Panther_01"); 
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("07_Panther_01", 1, 0);
+Delay(6000);
+HUMAN_Drive("t2_01", 20);
+HUMAN_Drive("t2_02", 20);
+HUMAN_Drive("t2_03", 20);
+HUMAN_Drive("t2_04", 10);
+HUMAN_Drive("", 0);
+Delay(2000);
+HUMAN_BoardVehicle("07_Panther_01", 1, 3);
+goto END;
+}
+
+Label END:

@@ -1,0 +1,35 @@
+// T4, 3
+// ---------------------------
+
+block{
+    SetAlarmType(1023, true);
+  
+}
+// --------------------------
+
+
+OnDeath(){
+  
+  EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(False);
+  SetAlarmType(1023, True);
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+// ---------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("Panzer3_04",  true, 2);
+goto END;
+
+Label END:

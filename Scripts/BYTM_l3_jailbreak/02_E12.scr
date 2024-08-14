@@ -1,0 +1,68 @@
+// 02_E12
+// ----------------------------------------
+
+Block {
+Integer  alarm_sight_range = 180;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f052");
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 400, 400, 0);
+Block { DisableSignals(1); DisableWhenevers(1); }
+HUMAN_SETSIGHTRANGE(alarm_sight_range);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+Block { DisableSignals(0); DisableWhenevers(0); }
+goto end;
+}
+
+OnDeath()
+{
+printf("02_E12 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(170))
+{
+Integer AImode = _RandomInt(99);
+if(AImode > 50) { HUMAN_SETAIMODE_Aggressive(); }
+else {
+	if(AImode < 20) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+	}
+printf("02_E12 spawns");
+HUMAN_Suspend(0);
+}
+
+Label Animate:
+HUMAN_SetAnim("%%neslysim", 500, 500, 0);
+Delay(1700);
+HUMAN_SetAnim("%%nuda", 600, 600, 1);
+Delay(30000);
+HUMAN_SetAnim("%%cumvoda", 600, 600, 1);
+Delay(7000);
+goto Animate;
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

@@ -1,0 +1,49 @@
+// Cpl. Stanislav Rejthar
+// ---------------------------------------------
+
+Block
+{
+Frame Cp1;	FRM_FindFrame(Cp1,"Cp_C04_1");
+Frame Cp2;	FRM_FindFrame(Cp2,"Cp_C04_2");
+
+Frame Cum;	FRM_FindFrame(Cum,"Maj. Frantisek Novotny");
+Frame me;	FRM_GetMyFrame(me);
+
+FRM_SwitchFaceTexture(me,"e_f012");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_PlayerInRange(15))
+{
+HUMAN_Suspend(0);
+DisableAlarms(1);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Guard();
+Delay(5000);
+goto Patrol;
+}
+
+// ---------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Patrol:
+HUMAN_MoveToFrame(Cp1, 0);
+HUMAN_TurnAt(Cum);
+HUMAN_SetAnim("%%divase", 1000, 1000, 1);
+Delay(6000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(500);
+HUMAN_MoveToFrame(Cp2, 0);
+HUMAN_TurnAt(Cum);
+Delay(10000);
+goto Patrol;
+
+
+Label END:

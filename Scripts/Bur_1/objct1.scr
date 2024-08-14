@@ -1,0 +1,72 @@
+// Obj 1 - Aquire the Documents
+// ------------------------------------
+
+Block
+{
+Frame Obj4;	FRM_FindFrame(Obj4,"obj4");
+Frame Documents;
+
+SetObjectiveStatus(1, 0);
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(Obj4, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990815);
+Delay(3500);
+SetObjectiveStatus(1, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(Obj4, 2);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);
+Delay(3500);
+SetObjectiveStatus(1, 0);
+SUBTITLES_SetOn(0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);
+Delay(3500);
+SetObjectiveStatus(1, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+SendSignal(Obj4, 1);
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(12992405);
+Delay(4000);
+SUBTITLES_SetText(23994601);
+Delay(4000);
+SUBTITLES_SetText(55999701);
+Delay(2000);
+SUBTITLES_SetText(55999702);
+Delay(2000);
+SUBTITLES_SetText(55999703);
+Delay(3000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Label END:

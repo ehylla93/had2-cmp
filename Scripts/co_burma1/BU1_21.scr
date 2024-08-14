@@ -1,0 +1,95 @@
+// BU1_21 - guarding in the jungle and at the fallen tree
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;	FRM_GetMyFrame(me);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+FRM_SwitchFaceTexture(me, "e_f046");
+
+SetAlarmType(12, false);
+}
+
+HUMAN_Suspend(true);
+
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SETSIGHTRANGE(55);
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Run();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_WeaponOnArm(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Guard();
+	GoTo start;
+}
+
+Whenever player(_PlayerInRange(60))
+{
+	HUMAN_Suspend(false);
+	GoTo start;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+Label start:
+	HUMAN_Move("BU1_21_01");
+	HUMAN_WeaponOnArm(0);
+	Delay(500);
+	HUMAN_SetAnim("%%turnright", 200, 200, false);
+	Delay(3700);
+	HUMAN_SetAnim("%%turnleft", 200, 200, false);
+	Delay(10000);
+	HUMAN_SetAnim("%%turnright", 200, 200, false);
+	Delay(3700);
+	HUMAN_SetAnim("%%turnleft", 200, 200, false);
+	HUMAN_WeaponOnArm(1);
+	Delay(10000);
+	HUMAN_Move("BU1_21_02");
+	HUMAN_Move("BU1_21_03");
+	HUMAN_Move("BU1_21_04");
+	Delay(1000);
+	HUMAN_Move("BU1_21_05");
+	HUMAN_Move("BU1_21_06");
+	HUMAN_Move("BU1_21_07");
+	HUMAN_Move("BU1_21_08");
+	HUMAN_Move("BU1_21_09");
+	HUMAN_WeaponOnArm(0);
+	Delay(500);
+	HUMAN_SetAnim("%%turnright", 200, 200, false);
+	Delay(3700);
+	HUMAN_WeaponOnArm(1);
+	Delay(500);
+	HUMAN_Move("BU1_21_08");
+	HUMAN_Move("BU1_21_07");
+	HUMAN_Move("BU1_21_06");
+	HUMAN_Move("BU1_21_05");
+	HUMAN_Move("BU1_21_04");
+	HUMAN_Move("BU1_21_03");
+	HUMAN_Move("BU1_21_02");
+	GoTo start;
+
+Label end:

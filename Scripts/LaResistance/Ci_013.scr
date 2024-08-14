@@ -1,0 +1,65 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,0);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+FRM_SwitchFaceTexture(me,"e_f015");
+Frame Player;
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetSniper(1, 5);
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever BriefingResistance (_PlayerInRange(2))
+{
+HUMAN_SetAnim("%%rozhovor", 1000, 1000, 1);
+HUMAN_TurnAtNearestPlayer();
+Delay(800);
+FRM_MorphSpeechDelayed(me, 01990275, 5, 30);
+Delay(500);
+FRM_MorphSpeechDelayed(me, 01990276, 5, 30);
+Delay(400);
+FRM_MorphSpeechDelayed(me, 01990277, 5, 30);
+Delay(500);
+FRM_MorphSpeechDelayed(me, 01990281, 5, 30);
+HUMAN_SetAnim("", 1000, 1000, 1);
+
+//*WE-BR
+}
+
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+//*DefaultLoad
+goto END;
+
+Label END:

@@ -1,0 +1,37 @@
+
+Frame Marine1;		FRM_FindFrame(Marine1, "Marine_1");
+Frame Marine2;		FRM_FindFrame(Marine2, "Marine_2");
+Frame Marine3;		FRM_FindFrame(Marine3, "Marine_3");
+Frame Marine4;		FRM_FindFrame(Marine4, "Marine_4");
+Frame Marine5;		FRM_FindFrame(Marine5, "Marine_5");
+Frame Marine6;		FRM_FindFrame(Marine6, "Marine_6");
+Frame Marine7;		FRM_FindFrame(Marine7, "Marine_7");
+Frame Objectives;		FRM_FindFrame(Objectives, "dummy_objectives");
+
+Whenever GOGOGOGOGOGOGO (_PlayerInRange(1);) 
+{
+  SendSignal(Marine1, 20);
+  SendSignal(Marine2, 20);
+  SendSignal(Marine3, 20);
+  SendSignal(Marine4, 20);
+  SendSignal(Marine5, 20);
+  SendSignal(Marine6, 20);
+  SendSignal(Marine7, 20);
+}
+
+OnSignal(10) {}
+Label loop:
+  If (( _ACTOR_GetState(Marine1) == 1 ))    { Goto A_Nic; }  
+  If (( _ACTOR_GetState(Marine2) == 1 ))    { Goto A_Nic; }  
+  If (( _ACTOR_GetState(Marine3) == 1 ))    { Goto A_Nic; }  
+  If (( _ACTOR_GetState(Marine4) == 1 ))    { Goto A_Nic; }  
+  If (( _ACTOR_GetState(Marine5) == 1 ))    { Goto A_Nic; }  
+  If (( _ACTOR_GetState(Marine6) == 1 ))    { Goto A_Nic; }  
+  If (( _ACTOR_GetState(Marine7) == 1 ))    { Goto A_Nic; }  
+// if it is here ==> all neaded enemys are dead
+  SendSignal(Objectives, 10); 
+  EndScript();
+
+Label A_Nic:
+  Delay(3500);
+  Goto loop;

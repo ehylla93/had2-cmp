@@ -1,0 +1,90 @@
+// Hakl 1 (Hakl_01) Posadka
+// ------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp1;	FRM_FindFrame(Cp1,"Cp_Oasis_01");
+Frame Cp2;	FRM_FindFrame(Cp2,"Cp_Oasis_02");
+Frame Cp3;	FRM_FindFrame(Cp3,"Radio1");
+Frame Cp4;	FRM_FindFrame(Cp4,"Cp_Brana1");
+Frame Cp5;	FRM_FindFrame(Cp5,"Cp_Brana2");
+Frame Cp6;	FRM_FindFrame(Cp6,"Cp_S1G06_Relax");
+Frame Cp7;	FRM_FindFrame(Cp7,"obj1");
+Frame Cp8;	FRM_FindFrame(Cp8,"Weaponbox3");
+Frame Cp9;	FRM_FindFrame(Cp9,"Weaponbox1");
+Frame Cp10;	FRM_FindFrame(Cp10,"Aidkitbox1");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f094");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp10, 2);
+HUMAN_TurnAt(Cp5);
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+Whenever Jedem (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_BoardVehicle("Hakl_01",  1, 4);
+goto END;
+}
+
+Whenever Vysedat (_Signalreceived(2))
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_BoardVehicle("Hakl_01",  0, 4);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETSIGHTRANGE(220);
+HUMAN_SETHEARRANGE(180);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp10, 2);
+HUMAN_TurnAt(Cp5);
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

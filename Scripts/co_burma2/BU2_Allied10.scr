@@ -1,0 +1,55 @@
+// BU2_Allied10 - allied soldier - wounded, Frank
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame me;			FRM_GetMyFrame(me);
+Frame xplo;			FRM_FindFrame(xplo, "BU2_allxplo");
+Frame a09;			FRM_FindFrame(a09, "BU2_Allied09");
+Frame boom;			FRM_FindFrame(boom, "Allied10_boom");
+
+FRM_SwitchFaceTexture(me, "e_f059");
+HUMAN_SETEVENTS(false);
+SetWhenever(xplode, false);
+
+SetAlarmType(1023, false);
+}
+
+HUMAN_Suspend(true);
+
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever player(_PlayerInRange(45))
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetAnim("%%umre", 200, 200, true);
+	GoTo end;
+}
+
+Whenever player2(_PlayerInRange(10))
+{
+	SetWhenever(xplode, true);
+	GoTo end;
+}
+
+Whenever xplode(!_PlayerInRange(20))
+{
+	SetActorState(boom, 1);
+	GoTo end;
+}
+
+OnDeath()
+{
+	Block
+	{
+		SendSignal(xplo, 1);
+		SendSignal(a09, 2);
+	}
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

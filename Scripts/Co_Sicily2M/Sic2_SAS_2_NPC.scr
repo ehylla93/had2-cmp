@@ -1,0 +1,78 @@
+// Ally Sherman_01 tank gunner
+
+Block
+{
+  Frame Panzer_1;			FRM_FindFrame( Panzer_1, "Panzer_1");
+  Frame Panzer_2;			FRM_FindFrame( Panzer_2, "Panzer_2");
+  frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+  Frame It_5;			FRM_FindFrame( It_5, "It_5");
+  Frame Tiger;			FRM_FindFrame( Tiger, "Tiger");
+//Frame mg3;			FRM_FindFrame( mg3, "w_mg42Crouch_3");
+  Frame mg4;			FRM_FindFrame( mg4, "w_mg42Crouch_4");
+  
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+goto TheEnd;
+
+OnDeath(){
+SendSignal(SAS1, 14);
+goto TheEnd;
+}
+
+Onsignal(7)	// from traitor
+{
+Delay(52500);
+HUMAN_BoardVehicle("Sherman_01", true, 2);
+SetAlarmType(1023, True); 	
+GoTo attackloop1;
+}
+
+{
+Label attackloop1:
+Delay(50);
+HUMAN_Attack(mg4, 3000);		Delay(5000);
+HUMAN_Attack(It_5, 3000);		Delay(25000);
+HUMAN_Attack(Panzer_1, 2000);		Delay(5000);
+HUMAN_Attack(Panzer_2, 2000);		Delay(5000);
+HUMAN_Attack(Panzer_1, 2000);		Delay(5000);
+HUMAN_Attack(Panzer_2, 2000);		Delay(5000);
+GoTo attackloop2;
+} 
+
+{
+Label attackloop2:
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_Attack(Panzer_1, 3000);		Delay(6000);
+HUMAN_BoardVehicle("Sherman_01", true, 3);
+} 
+
+Onsignal(9)	// from tiger
+{
+Delay(500);
+HUMAN_BoardVehicle("Sherman_01", true, 2);
+HUMAN_Attack(Tiger, 12000);		
+SetAlarmType(1023, True); 	
+}
+
+
+OnAlarm()  
+  {
+    
+    goto TheEnd;
+  }
+
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+  SetAlarmType(1023, True); 
+} 
+
+label TheEnd:

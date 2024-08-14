@@ -1,0 +1,87 @@
+// do nothing and see on sea
+
+Block
+{
+   frame see1;		FRM_FindFrame(see1, "dummy_S2_s1");
+   frame see2;		FRM_FindFrame(see2, "dummy_S2_s2");
+   integer AIEvent;
+   frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+   HUMAN_SETAIMODE_Zombie();
+   HUMAN_SetOptimized(2);
+   HUMAN_SETMODE_Guard();
+
+   SetAlarmType(1023, True);	
+   SetAlarmType(268, True);	// 4 + 8 + 256
+}
+
+HUMAN_SETMODE_Stand();
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;
+  Whenever A (_PlayerInRange(101);)			
+{						
+  HUMAN_Suspend(False);			
+}						
+
+
+label Start:
+  HUMAN_TurnAt(see1);
+  HUMAN_WeaponOnArm(false);
+  Delay(250);
+  HUMAN_ACTIVITY_Binoculars();
+//  HUMAN_UseInv(99); 	// at se kouka na more
+//  HUMAN_SetAnim("%%dalekohled", 500, 500, True);
+  goto TheEND;  
+
+OnAlarm()
+{
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("AIE See2: ", AIEvent);
+  DisableSignals(True);
+//  HUMAN_SetAnim("", 250, 250, False);
+  HUMAN_ACTIVITY_BinocularsEnd();
+  HUMAN_Stop();
+  HUMAN_SETMODE_Walk();
+  If (AIEvent == 1) {goto AIE_1;}	// blizka strelba
+  If (AIEvent == 2) {goto AIE_2;}	// strelba
+  If (AIEvent == 16) {goto AIE_16;}	// exploze
+  If (AIEvent == 32) {goto AIE_32;}	// vidim
+  If (AIEvent == 64) {goto AIE_64;}	// zraneni
+  GOTO miss;
+Label AIE_16:		// exploze
+  HUMAN_TurnAt(see2);
+  delay(800);
+  goto DeAlarm;
+Label AIE_2:		// strelba
+Label AIE_32:		// vidim
+Label AIE_1:		// blizka strelba
+Label AIE_64:		// zraneni
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Defensive();
+label miss:
+  EndScript();
+}
+
+OnAlarmDone()
+{
+label DeAlarm:
+  SetAlarmType(1023, True);
+  SetAlarmType(520, false);
+  DisableSignals(False);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetOptimized(2);
+  Delay(500);
+//  goto Start; 
+}
+
+OnDeath()
+{
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+Label TheEND:

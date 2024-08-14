@@ -1,0 +1,92 @@
+// Sniper 1 (Backup)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1,"Cp_SPG01_Al1");
+Frame Cp2;		FRM_FindFrame(Cp2,"Cp_SPG01_Al2");
+Frame Cp3;		FRM_FindFrame(Cp3,"Cp_SPG01_Relax");
+Frame Cum_Brana;	FRM_FindFrame(Cum_Brana,"Bomb_01");
+Frame Cum_Spawn1;	FRM_FindFrame(Cum_Spawn1,"SpawnZone");
+Frame Cum_Sedim;	FRM_FindFrame(Cum_Sedim,"Weaponbox6");
+
+Frame Zebrik;		FRM_FindFrame(Zebrik,"Ladder_01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+integer AIEvent;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+AIEvent =_GetAlarmType();
+
+If ((((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==16)) OR (AIEvent==256))
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_MoveToFrame(Cp1, 0);
+HUMAN_SetSniper(1, 5);
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponUp(1);
+HUMAN_TurnAt(Cum_Spawn1);
+EndScript();
+}
+
+If (((AIEvent==4) OR (AIEvent==8)) OR (AIEvent==512))
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_MoveToFrame(Cp3, 1);
+HUMAN_WeaponUp(1);
+HUMAN_TurnAt(Zebrik);
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Cp3, 0);
+HUMAN_TurnAt(Cum_Sedim);
+goto END;
+}
+
+Whenever Backup_On (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp3, 0);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(Cum_Sedim);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(260);
+HUMAN_SETHEARRANGE(225);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

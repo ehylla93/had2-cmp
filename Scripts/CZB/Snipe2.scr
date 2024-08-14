@@ -1,0 +1,54 @@
+// Sniper2
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  FRM_MorphSpeechDelayed(me, 90004063, 5, 30); // hey
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(100)){
+  HUMAN_Suspend(false);
+  HUMAN_SETMODE_Lie();
+  Delay(10000);
+  HUMAN_SETMODE_Stand();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+ goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Lie();
+Delay(1000);
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

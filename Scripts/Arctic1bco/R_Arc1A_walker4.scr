@@ -1,0 +1,115 @@
+// walking guard #2
+
+Block
+{
+   integer AIEvent;
+   frame GG;		FRM_FindFrame(GG, "Gate_Guard");
+   frame Dog;		FRM_FindFrame(Dog, "Pes_00");
+   frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+   SetAlarmType(1023, True);	
+   SetAlarmType(256, False); 	
+}
+
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;						
+  Whenever A (_PlayerInRange(110);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+
+integer way;
+
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Stand();
+label DeAlarm:
+  HUMAN_WeaponOnArm(False);
+  Delay(750);
+  HUMAN_SETMODE_Guard();
+
+HUMAN_SetOptimized(1);
+
+label XX:
+  HUMAN_SetAnim("", 250, 250, False);
+  way = _RandomInt(4)+1;
+  Delay(1500);
+  HUMAN_Move("walker4_start");
+  If (way == 1) 
+    {  
+      HUMAN_Move("walker4_1");
+      HUMAN_Move("walker4_1a");
+      HUMAN_Move("walker4_1b");
+      HUMAN_Move("walker4_1c");
+      HUMAN_Move("walker4_start");
+    }
+  If (way == 2) 
+    {  
+      HUMAN_SetAnim("", 250, 250, False);
+      HUMAN_Move("walker4_2");
+      Delay(2500);
+      HUMAN_Move("walker4_start");
+    }
+  If (way == 3) 
+    {  
+      HUMAN_Move("walker4_3");
+      HUMAN_Move("walker4_3a");
+      HUMAN_Move("walker4_3b");
+      HUMAN_Move("walker4_3c");
+      HUMAN_Move("walker4_start");
+    }
+  If (way == 4) 
+    {  
+      HUMAN_Move("walker4_4");
+      HUMAN_Move("walker4_4a");
+      HUMAN_Move("walker4_4b");
+      HUMAN_Move("walker4_4c");
+      HUMAN_Move("walker4_start");
+    }
+goto XX;
+
+
+OnAlarm()
+{
+  Block
+    {
+       HUMAN_SETSIGHTRANGE(54);
+       HUMAN_SETHEARRANGE(64);
+       AIEvent =_GetAlarmType(); 
+       PrintfNumber("AIE walker 4: ", AIEvent);
+       DisableSignals(True);
+       SaveGameValue(29, 99);		// skip CSC 3 - roof 
+    }
+  HUMAN_Stop();
+  HUMAN_SetAnim("", 0, 0, False);
+  HUMAN_SETMODE_Run();
+//  HUMAN_SETSIGHTRANGE(70);	  // UPRAVIT POZDEJI
+//  HUMAN_SETHEARRANGE(85);
+  HUMAN_SETAIMODE_Aggressive();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(40);
+  HUMAN_SETHEARRANGE(45);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("walker4_DeAlarm");
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  HUMAN_SetAnim("", 0, 0, False);
+  SendSignal(GG, 5);
+  SendSignal(Dog, 5);
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+Label TheEnd:

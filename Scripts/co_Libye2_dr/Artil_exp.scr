@@ -1,0 +1,52 @@
+//Artillery zone8
+//---------------
+
+
+Block
+{
+//Frame me;		FRM_GetMyFrame(me);
+//FramePlayer;
+
+integer y;
+}
+
+
+label arty:
+if (((_MP_IsTeamMemberInRange(1, 50))  ) and (y==0)){
+
+    Frame   x;
+    //Integer  d;
+  
+    FRM_FindFrame( x, "_expl10_1" );
+    SetActorState( x, 1 );   
+Delay(800);
+    
+    FRM_FindFrame( x, "_expl10_2" );   
+    SetActorState( x, 1 );
+Delay(700);   
+    
+    FRM_FindFrame( x, "_expl4_1" );   
+    SetActorState( x, 1 );
+Delay(900);
+        
+ 	FRM_FindFrame( x, "_expl3" );   
+ 	SetActorState( x, 1 );
+Delay(800); 
+
+	FRM_FindFrame( x, "_expl4_2" );   
+ 	SetActorState( x, 1 );
+Delay(600);
+
+	FRM_FindFrame( x, "_expl5_1" );   
+     SetActorState( x, 1 );
+Delay(300);
+     
+
+y=0;
+//EndScript( );
+}
+
+
+goto arty;
+
+

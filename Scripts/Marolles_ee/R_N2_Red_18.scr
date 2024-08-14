@@ -1,0 +1,64 @@
+
+integer  AIEvent;
+integer RND = 0;
+integer GodAlarm = 0;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red18_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(4)
+{						
+  HUMAN_Suspend(False);			
+}						
+
+
+label DeAlarm:
+  GodAlarm = 0;
+  RND = _RandomInt(3);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Red18_1");				
+  HUMAN_TurnAt(turn);
+  Delay(1500);
+  HUMAN_WeaponOnArm(False);
+  Delay(2500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 18: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  If ((( AIEvent == 1) OR ( AIEvent == 2)) OR (( AIEvent == 64) OR ( AIEvent == 256)))   	 { GodAlarm = 1; }
+  If (( RND == 0) AND ( GodAlarm == 1))	    
+    { 
+       Block
+          {
+             HUMAN_SETAIMODE_Aggressive();
+             HUMAN_SETMODE_Crouch();
+             HUMAN_SETMODE_Silence();
+          }
+       HUMAN_Move("Red18_1");				       
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);		  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

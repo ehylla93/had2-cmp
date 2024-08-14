@@ -1,0 +1,18 @@
+// Opel with gold
+// -----------------------------------------
+
+Frame obj1;		FRM_FindFrame(obj1,"obj1");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+// -----------------------------------------
+
+Whenever PIR (_PlayerInRange(2)){
+SendSignal(obj1, 1);
+EndScript();
+}
+
+Car_SetFuel(MyFRM, 0);
+
+// -----------------------------------------
+
+Label end:

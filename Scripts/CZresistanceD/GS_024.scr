@@ -1,0 +1,82 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+FRM_SwitchFaceTexture(me,"e_f001");
+Frame S1;		FRM_FindFrame(S1,"GS_015");
+Frame B1;		FRM_FindFrame(B1,"Bx10");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SetSniper(1, 5);
+HUMAN_SETMODE_Lie();
+HUMAN_WeaponOnArm(1);
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Label SpeechLoop:
+HUMAN_TurnAt(S1);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1); 
+FRM_MorphSpeechDelayed(me, 09991818, 5, 30);
+Delay(400);
+FRM_MorphSpeechDelayed(me, 09991820, 5, 30);
+FRM_MorphSpeechDelayed(S1, 09991821, 5, 30);
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 09991822, 5, 30);
+FRM_MorphSpeechDelayed(S1, 09991823, 5, 30);
+FRM_MorphSpeechDelayed(me, 09991824, 5, 30);
+FRM_MorphSpeechDelayed(S1, 09991825, 5, 30);
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 09991826, 5, 30);
+FRM_MorphSpeechDelayed(S1, 09991827, 5, 30);
+Delay(1000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(B1,0);
+HUMAN_TurnAt(B1);
+HUMAN_SetAnim("%%mina2", 1000, 1000, 1);
+Delay(30000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(S1,0);
+
+goto SpeechLoop;
+
+//*SpeechLoop
+
+
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+//*DefaultLoad
+goto SpeechLoop;
+
+Label END:

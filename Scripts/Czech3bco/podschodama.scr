@@ -1,0 +1,149 @@
+// na alarm ceka v cupu
+//w carnage neni
+
+
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+
+integer aievent;
+integer a;	a=0;
+integer b;	b=0;
+Integer sus;	sus=0;
+
+frame sit;		Frm_FindFrame(sit,"hlidka_ohr_sit");
+frame cum1;		Frm_FindFrame(cum1,"naschodech1cum1");
+frame cum2;		Frm_FindFrame(cum2,"naschodech1cum2");
+frame cum3;		Frm_FindFrame(cum3,"naschodech1cum3");
+Frame kontrol;		FRM_FindFrame(kontrol,"podschod_kontrol");
+
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(2);
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f039");
+
+
+
+integer mrd;	mrd=(_SPGetGameType());
+}
+
+if ((mrd==3) or (mrd==7))
+{
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+
+
+HUMAN_SetSniper(1, 1);
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+
+//-------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+block
+{
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("podschodama alarm c:",aievent);
+}
+
+
+
+if (sus==0)
+	{
+if (_PlayerInRange(9)==1)	
+	{
+	delay (4000);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	if (_LoadGameValue(3)==1)
+	{
+	HUMAN_SETEVENTS(0);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	HUMAN_Suspend(0);
+block
+{
+	sus=1;
+	sendsignal (kontrol,2);
+
+}
+	}
+
+if (aievent==4)
+{
+HUMAN_Stop();
+SetAlarmType(4,0); //kroky
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+HUMAN_LookAround(1);
+delay(5000);
+SetAlarmType(4,1); //kroky
+goto end;
+}
+
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+goto end;
+
+}
+
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever vyp(_SignalReceived(1))
+{
+HUMAN_SETEVENTS(0);
+}
+
+Label end:

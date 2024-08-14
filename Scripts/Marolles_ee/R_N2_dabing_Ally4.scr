@@ -1,0 +1,23 @@
+
+frame Ally;		FRM_FindFrame(Ally, "ally_4");
+
+
+// 17993420	Rád vás vidím, pane!	
+// 17993421	Náš velitel je nahoøe, pokud ještì žije.	
+	
+OnSignal(1)
+{
+  SUBTITLES_SetOn(False);  // rusi tytulky od jineho dubingu
+  SUBTITLES_SetOn(True);
+  If (_ACTOR_GetState(Ally) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(Ally, 17993420, 5, 15);	  Delay(16);
+     }
+  If (_ACTOR_GetState(Ally) == 1) 
+     { 
+          FRM_MorphSpeechDelayed(Ally, 17993421, 5, 15);	  Delay(41);	 
+     }
+// 5700
+// vypinat to nemuzu kvuli tomu navrchu ...
+}
+

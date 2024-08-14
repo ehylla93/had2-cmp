@@ -1,0 +1,80 @@
+// Hakl Posadka
+// --------------------------------------------------
+
+Block
+{
+Frame Hakl;	FRM_FindFrame(Hakl,"Hakl2n");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me, "e_f046");
+}
+
+// --------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+goto END;
+}
+
+Whenever Jedem (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_BoardVehicle("Hakl2n",  1, 5);
+goto END;
+}
+
+Whenever Vysedat (_Signalreceived(2))
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_BoardVehicle("Hakl2n",  0, 5);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(70);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Hakl, 20);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+// --------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

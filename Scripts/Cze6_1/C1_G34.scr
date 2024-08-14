@@ -1,0 +1,131 @@
+// C1_G34 - Guarding AA gun at C1
+// ------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f089");
+
+Integer AIEvent;
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+FRM_MorphSpeech(me, 90004060, 10, 50);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+
+AIEvent = _GetAlarmType();
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 64) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Run();
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 160))
+{
+HUMAN_Suspend(0);
+goto Watch;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label Watch:
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+Delay(6000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%turnleft", 1000, 1000, 1);
+Delay(3200);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 1);
+Delay(6500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%dalekohled", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+Delay(25000);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+Delay(4000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+Delay(2500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+goto Watch;
+
+
+Label END:

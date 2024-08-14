@@ -1,0 +1,14 @@
+
+Block {
+frame ci1;	FRM_FindFrame (ci1,"ci_01");
+}
+
+Whenever kokot(_SignalReceived(1))
+{
+FRM_MorphSpeech(ci1, 14992836, 10, 40);
+}
+
+Whenever kokot2(_SignalReceived(6))
+{
+FRM_MorphSpeech(ci1, 14992837, 10, 40);
+}

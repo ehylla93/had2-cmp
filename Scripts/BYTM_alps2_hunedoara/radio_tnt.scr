@@ -1,0 +1,32 @@
+// radio_tnt Radio Explosives(TNT)
+
+Block
+{
+Frame me;			FRM_GetMyFrame(me);
+Frame Get_Player;
+}
+
+SetActorState(me, 3);
+
+goto END;
+
+// ----------------------------------------
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 2))
+{
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990433, 5, 30);
+Delay(1000);
+SetActorState(me, 0);
+}
+
+Whenever TNT (_Actor_GetState(me)==2)
+{
+
+//objstatus
+EndScript();
+}
+
+// ----------------------------------------
+
+Label END:

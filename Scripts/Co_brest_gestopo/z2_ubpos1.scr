@@ -1,0 +1,193 @@
+//coop only
+
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+
+integer alarmpos;
+integer suspend;
+Integer endx;		endx=0;
+integer aievent;
+integer a;
+
+frame detect2;		FRM_FindFrame (detect2,"detectz2ubik1alarm");
+frame detect1;		FRM_FindFrame (detect1,"detectz2ubpos");
+frame detect;		FRM_FindFrame (detect,"detect_zona2");
+frame cum;		FRM_FindFrame (cum,"z2ubpos1cum");
+
+Frame z2_ubik2;	FRM_FindFrame (z2_ubik2,"z2_ubik2");
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f051");
+}
+
+integer mrd;	mrd=(_SPGetGameType());
+
+if ((mrd==3) or (mrd==7))
+
+{
+DisableWhenevers(1);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+
+
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(375,1);
+aievent=(_GetAlarmType());
+PrintfNumber("z2_ubpos1  alrm:",aievent);
+
+}
+
+
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	block
+	{
+	HUMAN_SetAnim("", 100,100,0);
+	endx=1;
+	}
+	EndScript();
+	}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+
+if (_LoadGameValue(6)==0)
+
+	{
+	if (suspend==1)
+	{
+	block
+	{
+	SetAlarmType(1023,0);
+	SetAlarmType(274,1);		//slysim strelbu
+	DisableWhenevers(0);
+	DisableSignals(0);
+	}
+	}
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+
+
+
+if (suspend==1)
+	{
+		suspend=0;
+		HUMAN_Suspend(0);
+
+	}
+
+label nene:
+
+if (((_FrameInRange(z2_ubik2)<10) and (_ACTOR_GetState(z2_ubik2)==1)) or (_PlayerInBox(detect1)==1))
+{
+
+HUMAN_SetAlarm(0);
+
+goto end;	
+}
+
+
+
+
+
+
+endx=1;
+EndScript();
+
+}
+
+
+
+block
+{
+HUMAN_SetAnim("", 100, 100, 0);
+endx=1;
+}
+
+EndScript();
+
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarmDone()
+{
+
+
+
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SETMODE_Walk();
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_Move("z2_ubpos1_01");
+HUMAN_TurnAt(cum);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+
+
+
+label end:

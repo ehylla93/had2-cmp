@@ -1,0 +1,21 @@
+// Spawnzone 3
+
+block {
+FRAME me;      		FRM_GetMyFrame(me);
+FRAME e01;			FRM_FindFrame(e01, "AF2_21");
+FRAME e02;			FRM_FindFrame(e02, "AF2_22");
+FRAME e03;			FRM_FindFrame(e03, "AF2_23");
+
+MP_EnableSpawnZone("zone3", 2);
+}
+
+Whenever EnSpawn3 ((((_PlayerInRange(50)) AND (_ACTOR_GetState(e01) == 0)) AND (_ACTOR_GetState(e02) == 0)) AND (_ACTOR_GetState(e03) == 0))
+{
+SetWhenever(EnSpawn3, 0);
+MP_EnableSpawnZone("zone3", 1);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(59995027);
+Delay(3000);
+SUBTITLES_SetOn(false);
+EndScript();
+}

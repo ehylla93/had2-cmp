@@ -1,0 +1,66 @@
+// Is in smal building near gate (HERMANN)
+Block
+  {
+    frame sit;		FRM_FindFrame(sit,"dummy_Herman_sit");
+    frame see;		FRM_FindFrame(see,"tv5okno14");
+    integer counter = 0;
+	SetAlarmType(1,1); //close shooting
+	SetAlarmType(2,1); //shooting (enemy)
+	SetAlarmType(4,1); //hears steps
+	SetAlarmType(8,1); //sounds from
+	SetAlarmType(16,1); //explosion
+	SetAlarmType(32,1); //see
+	SetAlarmType(64,1); //gets hurt
+	SetAlarmType(128,1); //from script
+	SetAlarmType(256,1); //friendly fire
+	SetAlarmType(512,1); //sees dead body
+	}
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+Printf("HERMANN INIT");   						
+goto home;
+
+Label Home:
+  HUMAN_Move("Herman_4");
+  HUMAN_TurnAt(see);
+  Delay(1500);
+  HUMAN_ACTIVITY_Sit(sit);
+  goto TheEND;
+
+
+label loop:
+    counter = counter + 1;
+    If (counter > 100 ) 
+      {
+          counter = 0;
+          Delay(1500);
+          goto home;
+       }
+    delay(500);
+    HUMAN_AttackMove("Walker3_6");
+	HUMAN_AttackMove("Walker2_5");
+	goto loop;
+
+OnSignal(1)
+{
+	printf("OnSignal(1)");
+	HUMAN_SetOptimized(2);
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_WeaponUp(true);
+	HUMAN_SETMODE_Run();
+	GOTO LOOP;
+}
+
+
+
+OnDeath()
+{
+  EndScript();
+}
+
+label TheEND:
+
+

@@ -1,0 +1,134 @@
+block
+{
+	frame current_sound;
+	frame snd;
+	frame disco;				FRM_FindFrame(disco,	"disco"); 
+	Integer switch = 0;
+	SaveGameValue(3, switch);
+}
+goto changemusic;
+
+  
+Label changemusic:
+	printfnumber("current_sw: ", switch);
+	If (switch == 0)
+		{
+		FRM_FindFrame(current_sound, "jingle_tech_inside");
+		SendSignal(disco, 4);
+		}
+	If (switch == 1)
+		{
+		FRM_FindFrame(current_sound, "simple");
+		SendSignal(disco, 2);
+		}
+	If (switch == 2)
+		{
+		FRM_FindFrame(current_sound, "14dj");
+		SendSignal(disco, 3);
+		}
+	If (switch == 3)
+		{
+		FRM_FindFrame(current_sound, "caramel");
+		SendSignal(disco, 0);
+		}
+	If (switch == 4)
+		{
+		FRM_FindFrame(current_sound, "polska");
+		SendSignal(disco, 5);
+		}
+	If (switch == 5)
+		{
+		FRM_FindFrame(current_sound, "al1_a");
+		}
+	If (switch == 6)
+		{
+		FRM_FindFrame(current_sound, "bu1_a");
+		}
+	If (switch == 7)
+		{
+		FRM_FindFrame(current_sound, "ar1_a");
+		}
+	if ((_LoadGameValue(3) != switch) and (switch < 5))
+	{
+		printfnumber("FRM_SetOn switch: ", switch);
+		FRM_SetOn(current_sound, True);
+		FRM_SoundAdjustVolume(current_sound, 500);
+		SaveGameValue(3, switch);
+	}
+	goto turnoff;
+  
+OnUse()
+{
+	switch = switch + 1;
+	If (switch > 4) {switch = 0;}
+	goto changemusic;
+}
+  
+OnSignal(1)
+{
+	switch = 5;
+	FRM_SoundAdjustVolume(current_sound, 0);
+	FRM_SetOn(current_sound, False);
+	FRM_FindFrame(current_sound, "al1_a");
+	FRM_SetOn(current_sound, True);
+	FRM_SoundAdjustVolume(current_sound, 500);
+}
+
+OnSignal(2)
+{
+	switch = 6;
+	FRM_SoundAdjustVolume(current_sound, 0);
+	FRM_SetOn(current_sound, False);
+	FRM_FindFrame(current_sound, "bu1_a");
+	FRM_SetOn(current_sound, True);
+	FRM_SoundAdjustVolume(current_sound, 500);
+}
+OnSignal(3)
+{
+	switch = 7;
+	FRM_SoundAdjustVolume(current_sound, 0);
+	FRM_SetOn(current_sound, False);
+	FRM_FindFrame(current_sound, "ar1_a");
+	FRM_SetOn(current_sound, True);
+	FRM_SoundAdjustVolume(current_sound, 500);
+}
+
+label turnoff:
+	If (switch != 0)
+		{FRM_FindFrame(snd, "jingle_tech_inside");
+			FRM_SetOn(snd, False);
+		}
+	If (switch != 1)
+		{FRM_FindFrame(snd, "simple");
+			FRM_SetOn(snd, False);
+		}
+	If (switch != 2)
+		{FRM_FindFrame(snd, "14dj");
+			FRM_SetOn(snd, False);
+		}
+	If (switch != 3)
+		{FRM_FindFrame(snd, "caramel");
+			FRM_SetOn(snd, False);
+		}
+	If (switch != 4)
+		{FRM_FindFrame(snd, "polska");
+			FRM_SetOn(snd, False);
+		}
+	If (switch != 5)
+		{FRM_FindFrame(snd, "al1_a");
+			FRM_SetOn(snd, False);
+		}
+	If (switch != 6)
+		{FRM_FindFrame(snd, "bu1_a");
+			FRM_SetOn(snd, False);
+		}
+	If (switch != 7)
+		{FRM_FindFrame(snd, "ar1_a");
+			FRM_SetOn(snd, False);
+		}
+	goto loop;
+	
+label loop:
+	delay(2000);
+	goto changemusic;
+Label END:

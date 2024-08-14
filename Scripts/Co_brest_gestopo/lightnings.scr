@@ -1,0 +1,46 @@
+
+block
+{
+Frame blesk1;		FRM_Findframe(blesk1,"k_blesk1");
+Frame blesk2;		FRM_Findframe(blesk2,"k_blesk2");
+Frame blesk3;		FRM_Findframe(blesk3,"k_blesk3");
+Frame blesk4;		FRM_Findframe(blesk4,"k_blesk4");
+frame hromy;		FRM_FIndFrame(hromy,"hromy");
+
+integer time;
+integer wait;
+integer blesk;
+
+FRM_SetOn(blesk1,0);
+FRM_SetOn(blesk2,0);
+FRM_SetOn(blesk3,0);
+FRM_SetOn(blesk4,0);
+}
+
+
+Label loop:
+  time = _RandomInt(90) + 10;
+  blesk = _RandomInt(6);
+block
+{
+if (blesk==0)	{ FRM_SetOn(blesk1,1); }
+if (blesk==1)	{ FRM_SetOn(blesk2,1); }
+if (blesk==2)	{ FRM_SetOn(blesk3,1); }
+if (blesk==3)	{ FRM_SetOn(blesk4,1); }
+Sendsignal (hromy,1);
+THUNDERSTORM_MP(time);
+
+}
+
+  Delay(time);
+block
+{
+FRM_SetOn(blesk1,0);
+FRM_SetOn(blesk2,0);
+FRM_SetOn(blesk3,0);
+FRM_SetOn(blesk4,0);
+}
+
+  wait = _RandomInt(20000) + 10000;
+  Delay(wait);
+goto loop;

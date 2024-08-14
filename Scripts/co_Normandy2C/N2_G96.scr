@@ -1,0 +1,51 @@
+// Enemy in H32 1st floor
+// --------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// ---------------------------
+
+OnDeath(){
+printf("N2_G96 in H32 dead");
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever player (_PlayerInRange(35))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETAIMODE_Zombie();
+goto END;
+}
+
+// --------------------------
+
+HUMAN_SETMODE_Stand();
+HUMAN_SetOptimized(1);
+Delay(1000);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

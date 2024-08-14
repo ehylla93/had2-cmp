@@ -1,0 +1,58 @@
+
+integer AIEvent;	
+integer OnCar = 0;
+frame Hakl;		FRM_FindFrame(Hakl, "Hakl");
+
+SetAlarmType(1023, False);
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(True);
+
+OnSignal(1)
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("hakl" , true, 1);  	 
+  OnCar = 1;
+  Delay(1000);		// !nechat!
+  SendSignal(hakl, 1);
+  Delay(10000);
+  SetAlarmType(119, True);
+  goto TheEnd;
+}
+
+OnSignal(2)
+{
+  delay(1500);
+  HUMAN_BoardVehicle("" , False, 0);
+/////////  HUMAN_Move("");		
+////////////  HUMAN_TurnAt();
+}
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Druha vlna - 2: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_Suspend(False);	
+    }
+  If (OnCar == 1) {  HUMAN_BoardVehicle("" , False, 0); }
+  EndScript();
+}
+
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+/////////  HUMAN_Move("");
+///////////  HUMAN_TurnAt(); 
+  HUMAN_SETMODE_Crouch();
+}
+
+Label TheEnd:
+

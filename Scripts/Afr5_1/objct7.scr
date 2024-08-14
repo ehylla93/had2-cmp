@@ -1,0 +1,48 @@
+// Obj 7 - Aquire the Code Tables
+// ------------------------------------
+
+Block
+{
+Frame Documents;
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+SetWhenever(Found, 1);
+
+SetObjectiveStatus(7, 0);
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 280, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999802);
+Delay(3500);
+SetObjectiveStatus(7, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 280, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);
+Delay(3500);
+SetObjectiveStatus(7, 0);
+SUBTITLES_SetOn(0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 280, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);
+Delay(3500);
+SetObjectiveStatus(7, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Label END:

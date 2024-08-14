@@ -1,0 +1,56 @@
+// SF_G12 - Vojak Hlidajici Pak_01
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f050");
+}
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(50))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+// ----------------------------------------
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(45);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

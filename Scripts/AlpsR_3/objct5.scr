@@ -1,0 +1,45 @@
+// Obj 5, Capture Freiberg
+//------------------------------------
+
+Block
+{
+Frame Freiberg;	FRM_FindFrame(Freiberg, "K1_G08");
+
+SetObjectiveStatus(5, 0);
+}
+
+//------------------------------------
+
+Whenever Captured (_Actor_GetState(Freiberg)==0)  
+{
+Delay(4000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993804);
+Delay(3000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(5, 1);
+Delay(3000);
+SetObjectiveStatus(11, 1);
+}
+
+Whenever FAIL (_SignalReceived(2))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993803);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+SetObjectiveStatus(8, 4);
+SetObjectiveStatus(9, 4);
+SetObjectiveStatus(10, 4);
+SetObjectiveStatus(11, 4);
+SetObjectiveStatus(12, 4);
+Delay(4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(5, 2);
+EndScript();
+}
+

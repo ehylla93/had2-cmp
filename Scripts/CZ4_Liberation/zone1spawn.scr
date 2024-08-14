@@ -1,0 +1,66 @@
+ 
+Frame me;		FRM_GetMyFrame(me);
+//Frame obj;	FRM_FindFrame(obj,"objectives");
+Frame start; FRM_FindFrame(start, "Group_1");
+Frame Timer1; FRM_FindFrame(Timer1, "control_enemy");
+Frame C_Timer;	FRM_FindFrame(C_Timer, "w_explosive_1");
+SetWhenever(detect_player, 0);
+SetWhenever(detect_enemy, 1);
+goto end;
+
+
+Whenever detect_player_1 (_PlayerInRange(25))  // detect player first time
+{
+block
+{
+SetActorState(C_Timer,5);
+printf ("Player in ZONE 1");
+SendSignal (start,1);
+SendSignal (Timer1,1);
+SaveGameValue(1, 1);
+SetObjectiveStatus(1, 1);
+MP_EnableSpawnZone("zone1", 1);
+MP_EnableSpawnZone("zone2", 1);
+MP_EnableSpawnZone("zone3", 1);
+MP_EnableSpawnZone("zone4", 1);
+MP_EnableSpawnZone("zone9", 1);
+MP_EnableSpawnZone("zone11", 1);
+MP_EnableSpawnZone("zone12", 1);
+MP_EnableSpawnZone("zone13", 1);
+SetWhenever(detect_player, 1);
+}
+}
+
+
+Whenever detect_player (_PlayerInRange(18) and !_EnemyInRange(me,35))
+{
+block
+{
+printf ("ZONE 1");
+MP_EnableSpawnZone("zone1", 1);
+SaveGameValue(1, 1);
+SetObjectiveStatus(1, 1);
+SetWhenever(detect_enemy, 1);
+}
+}
+
+SetWheneverTime(detect_player, 10000);
+
+
+Whenever detect_enemy (_EnemyInRange(me,18))
+{
+block
+{
+SaveGameValue(1, 0);
+MP_EnableSpawnZone("zone1", 0);
+SetObjectiveStatus(1, 2);
+SetWhenever(detect_player, 1);
+}
+}
+
+
+SetWhenever(detect_player, 1);
+SetWhenever(detect_enemy, 1);
+
+//----------------------/END/----------------------
+label end:

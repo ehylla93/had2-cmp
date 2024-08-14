@@ -1,0 +1,24 @@
+// Officer 4 Ally
+// ------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+
+FRM_SwitchFaceTexture(me,"e_f009");
+}
+
+// ------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+// ------------------------------
+
+HUMAN_SetOptimized(1);
+goto END;
+
+
+Label END:

@@ -1,0 +1,14 @@
+
+frame small3;		FRM_FindFrame(small3,"small3");
+integer a;
+
+OnSignal(1)
+{
+a=(6000+(_RandomInt(5000)));
+delay(a);
+SendSignal(small3,0);
+}
+
+OnSignal(3)
+{
+}

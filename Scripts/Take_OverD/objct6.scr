@@ -1,0 +1,25 @@
+// Obj 6 - Najdi dokumenty (Freiberg - HQ)
+//----------------------------------------------
+
+Block
+{
+Frame Documents;
+
+SetObjectiveStatus(6, 0);
+}
+
+//----------------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+Delay(2000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993807); 		
+Delay(4000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+goto end;
+}
+
+
+Label END:

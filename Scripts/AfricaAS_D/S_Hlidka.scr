@@ -1,0 +1,118 @@
+// Straze v Oaze
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S01;		FRM_FindFrame(S01,"S1_G01");
+Frame S02;		FRM_FindFrame(S02,"S1_G02");
+Frame S03;		FRM_FindFrame(S03,"S1_G03");
+Frame S04;		FRM_FindFrame(S04,"S1_G04");
+Frame S05;		FRM_FindFrame(S05,"S1_G05");
+Frame S06;		FRM_FindFrame(S06,"S1_G06");
+Frame S07;		FRM_FindFrame(S07,"S1_G07");
+Frame S08;		FRM_FindFrame(S08,"S1_G08");
+Frame S09;		FRM_FindFrame(S09,"S1_G09");
+
+Frame S10;		FRM_FindFrame(S10,"S1_G10");
+Frame S11;		FRM_FindFrame(S11,"S1_G11");
+Frame S12;		FRM_FindFrame(S12,"S1_G12");
+Frame S13;		FRM_FindFrame(S13,"S1_G13");
+Frame S14;		FRM_FindFrame(S14,"S1_G14");
+Frame S15;		FRM_FindFrame(S15,"S1_G15");
+Frame S16;		FRM_FindFrame(S16,"S1_G16");
+Frame S17;		FRM_FindFrame(S17,"S1_G17");
+Frame S18;		FRM_FindFrame(S18,"S1_G18");
+Frame S19;		FRM_FindFrame(S19,"S1_G19");
+
+Frame S20;		FRM_FindFrame(S20,"S1_G20");
+Frame S21;		FRM_FindFrame(S21,"S1_G21");
+Frame S22;		FRM_FindFrame(S22,"S1_G22");
+Frame S23;		FRM_FindFrame(S23,"S1_G23");
+Frame S24;		FRM_FindFrame(S24,"S1_G24");
+Frame S25;		FRM_FindFrame(S25,"S1_G25");
+Frame S26;		FRM_FindFrame(S26,"S1_G26");
+Frame S27;		FRM_FindFrame(S27,"S1_G27");
+Frame S28;		FRM_FindFrame(S28,"S1_G28");
+Frame S29;		FRM_FindFrame(S29,"S1_G29");
+
+Frame S30;		FRM_FindFrame(S30,"S1_G30");
+Frame S31;		FRM_FindFrame(S31,"S1_G31");
+Frame S32;		FRM_FindFrame(S32,"S1_G32");
+Frame S33;		FRM_FindFrame(S33,"S1_G33");
+Frame S34;		FRM_FindFrame(S34,"S1_G34");
+Frame S35;		FRM_FindFrame(S35,"S1_G35");
+
+
+Frame SuO1;		FRM_FindFrame(SuO1,"SuO_01");
+Frame SuO2;		FRM_FindFrame(SuO2,"SuO_02");
+
+Frame Su1;		FRM_FindFrame(Su1,"Suman1");
+Frame Su2;		FRM_FindFrame(Su2,"Suman2");
+Frame Su3;		FRM_FindFrame(Su3,"Suman3");
+Frame Su4;		FRM_FindFrame(Su4,"Suman4");
+Frame Su5;		FRM_FindFrame(Su5,"Suman5");
+
+Integer Brana;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Start (_SignalReceived(1))
+{
+
+Brana=_RandomInt(3);
+If(Brana==0){SendSignal(S01, 1);SendSignal(S02, 1);SendSignal(S03, 1);}
+If(Brana==1){SendSignal(S04, 1);SendSignal(S05, 1);SendSignal(S06, 1);}
+If(Brana==2){SendSignal(S07, 1);SendSignal(S08, 1);SendSignal(S06, 1);}
+
+Brana=_RandomInt(3);
+If(Brana==0){SendSignal(S13, 1);SendSignal(S16, 1);}
+If(Brana==1){SendSignal(S14, 1);SendSignal(S16, 1);}
+If(Brana==2){SendSignal(S15, 1);SendSignal(S16, 1);}
+
+Brana=_RandomInt(4);
+If(Brana==0){SendSignal(S20, 1);SendSignal(S21, 1);}
+If(Brana==1){SendSignal(S20, 1);SendSignal(S22, 1);}
+If(Brana==2){SendSignal(S20, 1);SendSignal(S23, 1);}
+If(Brana==3){SendSignal(S20, 1);SendSignal(S19, 1);}
+
+Brana=_RandomInt(2);
+If(Brana==0){SendSignal(S24, 1);}
+If(Brana==1){SendSignal(S25, 1);}
+
+Brana=_RandomInt(3);
+If(Brana==0){SendSignal(S11, 1);}
+If(Brana==1){SendSignal(S26, 1);}
+If(Brana==2){SendSignal(S27, 1);}
+
+Brana=_RandomInt(2);
+If(Brana==0){SendSignal(S12, 1);}
+If(Brana==1){SendSignal(S28, 1);}
+
+Brana=_RandomInt(3);
+If(Brana==0){SendSignal(S09, 1);SendSignal(S29, 1);}
+If(Brana==1){SendSignal(S09, 1);SendSignal(S30, 1);}
+If(Brana==2){SendSignal(S09, 1);SendSignal(S30, 1);}
+
+Brana=_RandomInt(2);
+If(Brana==0){SendSignal(S18, 1);SendSignal(S33, 1);}
+If(Brana==1){SendSignal(S19, 1);SendSignal(S34, 1);}
+
+Brana=_RandomInt(3);
+If(Brana==0){SendSignal(S10, 1);}
+If(Brana==1){SendSignal(S31, 1);}
+If(Brana==2){SendSignal(S32, 1);}
+
+SendSignal(S17, 1);
+SendSignal(S35, 1);
+SendSignal(SuO1, 1);
+SendSignal(SuO2, 1);
+
+Brana=_RandomInt(5);
+If(Brana==0){SendSignal(Su1, 1);}
+If(Brana==1){SendSignal(Su2, 1);}
+If(Brana==2){SendSignal(Su3, 1);}
+If(Brana==3){SendSignal(Su4, 1);}
+If(Brana==4){SendSignal(Su5, 1);}
+
+EndScript();
+}

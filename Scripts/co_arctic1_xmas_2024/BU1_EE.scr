@@ -1,0 +1,98 @@
+// BU1_EE - easter egg script
+Block
+{
+	Frame n01;	FRM_FindFrame(n01, "BU1_N01");
+	Frame n02;	FRM_FindFrame(n02, "BU1_N02");
+	Frame n03;	FRM_FindFrame(n03, "BU1_N03");
+	Frame n01p;	FRM_FindFrame(n01p, "BU1_N01_particle");
+	Frame n02p;	FRM_FindFrame(n02p, "BU1_N02_particle");
+	Frame n03p;	FRM_FindFrame(n03p, "BU1_N03_particle");
+	Frame god;	FRM_FindFrame(god, "Goddess");
+	Frame goddetector;	FRM_FindFrame(goddetector, "qsign01");
+	Frame me;	FRM_GetMyFrame(me);
+	Frame vybuch_teleport_snd;	FRM_FindFrame(vybuch_teleport_snd, "vybuch_teleport_snd");
+	Frame vybuch_end_snd;	FRM_FindFrame(vybuch_end_snd, "vybuch_end_snd");
+	Frame skelet;	FRM_FindFrame(skelet, "kw13");
+	Frame solter;	FRM_FindFrame(solter, "Goddess");	
+	Frame switch1;	FRM_FindFrame(switch1, "switch1");
+	
+}
+SaveGameValue(4, 0);
+FRM_SetOn(god, false);
+GoTo end;
+
+OnSignal(1)
+{
+	SendSignal(n01, 1);
+	SendSignal(n02, 1);
+	SendSignal(n03, 1);
+	GoTo end;
+}
+
+
+OnSignal(2)	// received from BU1_N01
+{
+
+	SendSignal(skelet, 1);
+	Delay(2000);
+	SendSignal(switch1, 1);
+	FRM_CreateParticle(24, me);
+	Delay(3000);
+	MakeExplosion(me, 0, 30000);
+	FRM_CreateParticle(48, n01);
+	PlaySound(6, 2);
+	FRM_SetOn(vybuch_teleport_snd, True);
+	Delay(2000);
+	MakeExplosion(me, 0, 30000);
+	FRM_CreateParticle(48, n02);
+	PlaySound(6, 2);
+	FRM_SetOn(vybuch_teleport_snd, True);
+	Delay(2000);
+	MakeExplosion(me, 0, 30000);
+	FRM_CreateParticle(48, n03);
+	PlaySound(6, 2);
+	FRM_SetOn(vybuch_teleport_snd, True);
+	FRM_SetOn(god, true);
+	Delay(2000);
+	FRM_CreateParticle(18, me);
+	MakeExplosion(me, 0, 30000);
+	FRM_CreateParticle(36, me);
+	PlaySound(6, 24);
+	FRM_SetOn(vybuch_end_snd, True);
+	SendSignal(solter, 1);
+
+	
+	SaveGameValue(4, 1);
+	Block
+	{
+		WEATHER_SetColorOut(3, 0, 130, 0);
+		WEATHER_SetColorIn(1, 0, 40, 128);
+	}
+	FRM_CreateParticle(114, me);
+	FRM_CreateParticle(119, me);
+	SendSignal(goddetector, 1);
+	GoTo end;
+}
+
+OnSignal(3)	// received from qsign05
+{
+	SendSignal(n01p, 2);
+	SendSignal(n02p, 2);
+	SendSignal(n03p, 2);
+	SendSignal(n01, 4);
+	SendSignal(n02, 4);
+	SendSignal(n03, 4);
+	EndScript();
+}
+
+OnSignal(31)	// received from BU1_N01, BU1_N02, BU1_N03
+{
+	Block
+	{
+		FRM_SetOn(god, false);
+	}
+	EndScript();
+}
+
+
+Label end:

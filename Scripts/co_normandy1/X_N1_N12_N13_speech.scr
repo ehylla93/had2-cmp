@@ -1,0 +1,77 @@
+// X_N12_N13_speech - speech dummy for N12, N13
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame n12;
+	FRM_FindFrame(n12, "N12");
+Frame n13;
+	FRM_FindFrame(n13, "N13");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever speak(_SignalReceived(1))	// signal received from N12
+{
+	GoTo rozhovor;
+}
+
+OnSignal(2)	// received from N12, N13 on death or on alarm
+{
+	EndScript();
+}
+
+Whenever range(_PlayerInRange(10))
+{
+	GoTo rozhovor2;
+}
+
+Whenever range2(_PlayerInRange(10))
+{
+	GoTo rozhovor3;
+}
+// -------------------------------------------------------------------------------------------------------------
+SetWhenever(range, false);
+SetWhenever(range2, false);
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(n12, 16993220, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993222, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993221, 3, 20);
+	FRM_MorphSpeech(n13, 16993223, 3, 20);
+	Delay(14000);
+	SetWhenever(range, true);
+	GoTo end;
+
+Label rozhovor2:
+	FRM_MorphSpeechDelayed(n12, 16993277, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993278, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993279, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993280, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993281, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993282, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993283, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993284, 3, 20);
+	FRM_MorphSpeech(n13, 16993285, 3, 20);
+	Delay(14000);
+	SetWhenever(range2, true);
+	GoTo end;
+
+Label rozhovor3:
+	FRM_MorphSpeechDelayed(n13, 16993286, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993287, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993288, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993289, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993290, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993291, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993292, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993293, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993294, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993295, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993296, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993297, 3, 20);
+	FRM_MorphSpeechDelayed(n13, 16993298, 3, 20);
+	FRM_MorphSpeechDelayed(n12, 16993299, 3, 20);
+	GoTo end;
+
+Label end:

@@ -1,0 +1,40 @@
+// Obj 3 - Place Explosives on the fuel tanks
+// ---------------------------------------------
+
+Block
+{
+	Frame B1;		FRM_FindFrame(B1, "04_Bomb_01");
+	Frame B2;		FRM_FindFrame(B2, "04_Bomb_02");
+	Frame Obj7;		FRM_FindFrame(Obj7, "obj7");
+	
+	SetWhenever(Planted, 0);
+}
+
+Whenever Planted ((_Actor_GetState(B1) == 1) And (_Actor_GetState(B2) == 1))
+{	
+	Delay(1000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(51999801);
+	SendSignal(Obj7, 1);
+	Delay(3500);
+	SetObjectiveStatus(3, 1);
+	SUBTITLES_SetOn(0);
+}
+
+Whenever Return (_SignalReceived(3))
+{
+	SetWhenever(Planted, 1);
+}
+
+Whenever Active (_SignalReceived(7))
+{
+	SetObjectiveStatus(3, 0);
+	Delay(3000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(51999804);
+	Delay(3500);
+	SUBTITLES_SetText(52999714);
+	Delay(3500);
+	SUBTITLES_SetOn(0);
+	SetWhenever(Planted, 1);
+}

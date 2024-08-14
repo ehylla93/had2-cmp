@@ -1,0 +1,11 @@
+// vypinac05
+Block
+{
+Frame svetlo17;
+	FRM_FindFrame(svetlo17, "la_svetlo_17.Mesh01");
+}
+
+OnUse()
+{
+	SendSignal(svetlo17, 1);
+}

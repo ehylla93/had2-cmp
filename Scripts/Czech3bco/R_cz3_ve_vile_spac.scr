@@ -1,0 +1,138 @@
+// sedici ve vile a spici
+//// siting and sleaping - in villa
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,0); //vidi			!!!!!!!!!!!!!!!!!!
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+    integer AIEvent;
+integer a;	a=0;
+Integer sus;	sus=0;
+integer first;	first=0;
+
+Frame cum1;		FRM_FindFrame(cum1, "spaccum1");
+  frame Sleep_point;		FRM_FindFrame(Sleep_point, "e_matrce4");
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+frame s1;		FRM_FindFrame(s1, "c3wn_vil117");
+frame s2;		FRM_FindFrame(s2, "c3wn_vil107");
+frame s3;		FRM_FindFrame(s3, "c3wn_vil108");
+frame s4;		FRM_FindFrame(s4, "c3wn_vil118");
+
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f051");
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+
+}
+
+
+HUMAN_Suspend(True);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+
+//-------------------------------------------------------------------------------
+
+Whenever aaa (_PlayerInRange(60); )
+{
+  HUMAN_Suspend(False);
+sus=1;
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("spac1");
+  HUMAN_TurnAt(cum1);
+//HUMAN_SETMODE_Lie();
+HUMAN_SetAnim("%%spac1", 300,300,1);
+goto end;
+}
+
+OnAlarm()
+{
+
+block
+{
+SetWhenever(aaa, 0);
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Spac: ", AIEvent);
+SetAlarmType(32,1);
+}
+
+if (sus==0)
+	{
+	HUMAN_Suspend(0);
+	sus=1;
+	}
+
+if (first ==0)
+{
+HUMAN_SetAnim("", 100, 100, 0);
+delay (100);
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(1);
+first=1;
+delay (500);
+}
+
+if (_PlayerInRange(7)==1)
+{
+ EndScript();
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (a==0)
+{
+
+HUMAN_Move("spac2");
+HUMAN_Attack(s1, 500);
+delay (1000);
+HUMAN_Attack(s2, 500);
+HUMAN_Attack(s3, 500);
+HUMAN_Attack(s4, 500);
+HUMAN_SetSniper(1, 1);
+a=1;
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+
+  EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+  HUMAN_SETMODE_Stand();
+SetAlarmType(652,0);
+HUMAN_Move("spac2");
+HUMAN_TurnAt(s2);
+
+  Goto end;
+}
+
+OnDeath()
+{
+  SendSignal(reinfo, 0);
+  Printf("ve_vile_spac is DEAD!!!");
+  EndScript();
+}
+
+label wait_signal:
+label end:

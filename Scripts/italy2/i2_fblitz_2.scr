@@ -1,0 +1,18 @@
+// i2_fblitz_2
+// -------------------------------------------------------------------------------------------------------------
+
+	Frame fblz_2;
+	FRM_FindFrame(fblz_2, "fblitz_2");
+	
+	Car_SetFuel(fblz_2, 0);
+	
+OnDeath()
+{
+  	FRM_CreateParticle(53, fblz_2);
+	MakeExplosion(fblz_2, 9000000, 15000);
+	SetActorState(fblz_2, 0);
+	
+EndScript();
+}
+
+

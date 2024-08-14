@@ -1,0 +1,133 @@
+//n_E19
+//Sniper on tower
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(80);
+
+integer AIEvent;
+integer spawn;
+integer a;
+integer b=0;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame d1;		FRM_FindFrame(d1, "n_tower_d1");
+Frame d2;		FRM_FindFrame(d2, "n_tower_d2");
+Frame d3;		FRM_FindFrame(d3, "n_tower_d3");
+Frame d4;		FRM_FindFrame(d4, "n_tower_d4");
+Frame d5;		FRM_FindFrame(d5, "n_tower_d5");
+
+Frame R13;		FRM_FindFrame(R13, "n_R13");
+frame cc;		FRM_FindFrame(cc, "dummy_OBJ1_sender");
+frame sgv5;		FRM_FindFrame(sgv5, "m_dv_t01");
+
+SaveGameValue(10, 1);
+
+HUMAN_SetSniper(1, 5);
+}
+
+HUMAN_Suspend(1);
+spawn = _RandomInt(2);
+if(spawn==0)
+{ EnableSignal(1, false); SaveGameValue(10, 0); printf("E19(Sniper) inactive"); }
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+AIEvent = _GetAlarmType();
+PrintfNumber("E19 alarm:",aievent);
+}
+If((AIEvent == 1) OR (AIEvent == 2) OR (AIEvent == 16) OR (AIEvent == 32) OR (AIEvent == 64) OR (AIEvent == 256) OR (AIEvent == 512))
+{
+	if(_LoadGameValue(5)==0)
+	{
+	FRM_MorphSpeech(MyFRM, 90004055, 15, 35);	//"Watch out! Enemy!"
+	SendSignal(sgv5, 1);
+	}
+}
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+SendSignal(cc, 1);
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+OnSignal(1)
+{
+EnableSignal(1, false);
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+}
+
+Label go:
+HUMAN_Move("tower_3");
+HUMAN_TurnAt(d3);
+gosub anim;
+HUMAN_Move("tower_2");
+HUMAN_TurnAt(d2);
+gosub anim;
+HUMAN_Move("tower_1");
+HUMAN_TurnAt(d1);
+gosub anim;
+HUMAN_Move("tower_4");
+HUMAN_TurnAt(d4);
+gosub anim;
+HUMAN_Move("tower_5");
+HUMAN_TurnAt(d5);
+gosub anim;
+goto go;
+
+Label anim:
+a=_RandomInt(4);
+if(a==0) { HUMAN_SetAnim("%%rozhlizeni1", 500, 500, 1); }
+if(a==1) { HUMAN_SetAnim("%%c4_hlida1", 500, 500, 1); }
+if(a==2) { HUMAN_SetAnim("%%c4_hlida1", 500, 500, 1); }
+if(a==3) { HUMAN_SetAnim("%%divase", 500, 500, 1); }
+a=_RandomInt(20000) + 5000;
+Delay(a);
+HUMAN_SetAnim("", 300, 300, 0);
+Return;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

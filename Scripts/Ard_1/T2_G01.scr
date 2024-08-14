@@ -1,0 +1,48 @@
+// Kulometcik Tigra (La_tiger_2)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(50);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_2", 1, 1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

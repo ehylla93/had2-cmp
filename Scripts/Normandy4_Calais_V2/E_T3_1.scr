@@ -1,0 +1,73 @@
+//
+//----------------------Block----------------------
+Block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+integer Rnd1;
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_PlayerInRange(95))
+{
+HUMAN_Suspend(0);
+Block
+{
+Rnd1=(_randomint(20)+50);
+HUMAN_SETSIGHTRANGE(Rnd1);
+Rnd1=(_randomint(20)+50);
+HUMAN_SETHEARRANGE(Rnd1);
+HUMAN_BoardVehicle("panther3", 1, 0);
+HUMAN_SETAIMODE_Aggressive();
+goto END;
+}
+}
+
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+EndScript();
+}
+
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+//
+}
+
+Whenever InRange (_MP_IsTeamMemberInRange(1, 10))
+{
+Rnd1=(_randomint(5));
+  if (Rnd1==1)
+  {
+HUMAN_BoardVehicle("panther3", 0, 0);
+//HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+goto END;
+  }
+  else
+  {
+delay(5000);
+SetWhenever(InRange, 1);
+goto END;
+  }
+}
+
+//----------------------OnDeath----------------------
+OnDeath()
+{
+EndScript();
+}
+
+// ----------------------END----------------------
+Label END:

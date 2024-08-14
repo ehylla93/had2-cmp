@@ -1,0 +1,56 @@
+// TURN OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+//Frame E01;	FRM_FindFrame(E01,"ridic nakladaku");
+Frame E02;	FRM_FindFrame(E02,"posila2");
+Frame E03;	FRM_FindFrame(E03,"posila3");
+Frame E04;	FRM_FindFrame(E04,"posila4");
+Frame E05;	FRM_FindFrame(E05,"posila5");
+Frame E06;	FRM_FindFrame(E06,"posila6");
+Frame E07;	FRM_FindFrame(E07,"posila7");
+Frame E08;	FRM_FindFrame(E08,"posila8");
+Frame E09;	FRM_FindFrame(E09,"posila9");
+Frame E10;	FRM_FindFrame(E10,"posila10");
+
+Frame E11;	FRM_FindFrame(E11,"posila11");
+Frame E12;	FRM_FindFrame(E12,"posila12");
+Frame E13;	FRM_FindFrame(E13,"posila13");
+Frame E14;	FRM_FindFrame(E14,"posila14");
+Frame E15;	FRM_FindFrame(E15,"posila15");
+Frame E16;	FRM_FindFrame(E16,"posila16");
+Frame E17;	FRM_FindFrame(E17,"posila17");
+Frame E18;	FRM_FindFrame(E18,"cetnik01");
+Frame E19;	FRM_FindFrame(E19,"cetnik_");
+Frame E20;	FRM_FindFrame(E20,"cetnik3");
+
+Frame E21;	FRM_FindFrame(E21,"cetnik4");
+Frame E22;	FRM_FindFrame(E22,"posila1b");
+Frame E23;	FRM_FindFrame(E23,"posila2b");
+Frame E24;	FRM_FindFrame(E24,"posila3b");
+Frame E25;	FRM_FindFrame(E25,"posila4b");
+Frame E26;	FRM_FindFrame(E26,"posila5b");
+Frame E27;	FRM_FindFrame(E27,"posila6b");
+Frame E28;	FRM_FindFrame(E28,"posila7b");
+Frame E29;	FRM_FindFrame(E29,"posila8b");
+Frame E30;	FRM_FindFrame(E30,"posila9b");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+//SendSignal(E01, 19);
+SendSignal(E02, 19);SendSignal(E03, 19);
+SendSignal(E04, 19);SendSignal(E05, 19);SendSignal(E06, 19);
+SendSignal(E07, 19);SendSignal(E08, 19);SendSignal(E09, 19);
+SendSignal(E10, 19);SendSignal(E11, 19);SendSignal(E12, 19);
+SendSignal(E13, 19);SendSignal(E14, 19);SendSignal(E15, 19);
+SendSignal(E16, 19);SendSignal(E17, 19);SendSignal(E18, 19);
+SendSignal(E19, 19);SendSignal(E20, 19);SendSignal(E21, 19);
+SendSignal(E22, 19);SendSignal(E23, 19);SendSignal(E24, 19);
+SendSignal(E25, 19);SendSignal(E26, 19);SendSignal(E27, 19);
+SendSignal(E28, 19);SendSignal(E29, 19);SendSignal(E30, 19);
+EndScript();
+}

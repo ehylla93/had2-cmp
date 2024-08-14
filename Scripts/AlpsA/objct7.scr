@@ -1,0 +1,380 @@
+// Obj 7 , Kill All Snipers
+//-----------------------------------------------------------
+Block
+{
+// ***** ZACATEK *****
+
+Frame S1;	FRM_FindFrame(S1,"ZSnip1");
+Integer Sn1;	Sn1 = 1;
+Frame S2;	FRM_FindFrame(S2,"ZSnip2");
+Integer Sn2;	Sn2 = 1;
+Frame S3;	FRM_FindFrame(S3,"ZSnip3");
+Integer Sn3;	Sn3 = 1;
+Frame S4;	FRM_FindFrame(S4,"ZSnip4");
+Integer Sn4;	Sn4 = 1;
+Frame S5;	FRM_FindFrame(S5,"ZSnip5");
+Integer Sn5;	Sn5 = 1;
+Frame S6;	FRM_FindFrame(S6,"ZSnip6");
+Integer Sn6;	Sn6 = 1;
+Frame S7;	FRM_FindFrame(S7,"ZSnip7");
+Integer Sn7;	Sn7 = 1;
+Frame S8;	FRM_FindFrame(S8,"ZSnip8");
+Integer Sn8;	Sn8 = 1;
+Frame S9;	FRM_FindFrame(S9,"ZSnip9");
+Integer Sn9;	Sn9 = 1;
+
+
+// ***** STRED *****
+
+Frame S10;	FRM_FindFrame(S10,"SSnip1");
+Integer Sn10;	Sn10 = 1;
+Frame S11;	FRM_FindFrame(S11,"SSnip2");
+Integer Sn11;	Sn11 = 1;
+Frame S12;	FRM_FindFrame(S12,"SSnip3");
+Integer Sn12;	Sn1 = 12;
+Frame S13;	FRM_FindFrame(S13,"SSnip4");
+Integer Sn13;	Sn1 = 13;
+Frame S14;	FRM_FindFrame(S14,"SSnip5");
+Integer Sn14;	Sn1 = 14;
+Frame S15;	FRM_FindFrame(S15,"SSnip6");
+Integer Sn15;	Sn15 = 1;
+Frame S16;	FRM_FindFrame(S16,"SSnip7");
+Integer Sn16;	Sn16 = 1;
+Frame S17;	FRM_FindFrame(S17,"SSnip8");
+Integer Sn17;	Sn17 = 1;
+Frame S18;	FRM_FindFrame(S18,"SSnip9");
+Integer Sn18;	Sn18 = 1;
+
+Frame S19;	FRM_FindFrame(S19,"S1_S01");
+Integer Sn19;	Sn19 = 1;
+Frame S20;	FRM_FindFrame(S20,"S1_S02");
+Integer Sn20;	Sn20 = 1;
+Frame S21;	FRM_FindFrame(S21,"S1_S03");
+Integer Sn21;	Sn21 = 1;
+Frame S22;	FRM_FindFrame(S22,"S1_S04");
+Integer Sn22;	Sn22 = 1;
+
+
+// ***** KONEC *****
+
+Frame S23;	FRM_FindFrame(S23,"KSnip1");
+Integer Sn23;	Sn23 = 1;
+Frame S24;	FRM_FindFrame(S24,"KSnip2");
+Integer Sn24;	Sn24 = 1;
+Frame S25;	FRM_FindFrame(S25,"KSnip3");
+Integer Sn25;	Sn25 = 1;
+Frame S26;	FRM_FindFrame(S26,"KSnip4");
+Integer Sn26;	Sn26 = 1;
+Frame S27;	FRM_FindFrame(S27,"KSnip5");
+Integer Sn27;	Sn27 = 1;
+Frame S28;	FRM_FindFrame(S28,"KSnip6");
+Integer Sn28;	Sn28 = 1;
+
+Integer pocitac;
+	pocitac = 0;
+
+SetObjectiveStatus(7, 0);
+}
+//-----------------------------------------------------------
+
+Delay(500);
+goto Sniperkill;
+
+Label Sniperkill:
+
+Block
+{
+If(Sn1 == 1)
+{
+
+If(_Actor_GetState(S1)==0)
+{	
+pocitac=pocitac+1;		
+Sn1=0;	
+}	
+}
+
+If(Sn2 == 1)
+{
+
+If(_Actor_GetState(S2)==0)
+{
+pocitac=pocitac+1;
+Sn2=0;
+}
+}
+
+If(Sn3 == 1)
+{
+
+If(_Actor_GetState(S3)==0)
+{
+pocitac=pocitac+1;
+Sn3=0;
+}
+}
+
+If(Sn4 == 1)
+{
+
+If(_Actor_GetState(S4)==0)
+{
+pocitac=pocitac+1;
+Sn4=0;
+}
+}
+
+If(Sn5 == 1)
+{
+
+If(_Actor_GetState(S5)==0)
+{
+pocitac=pocitac+1;Sn5=0;
+}
+}
+
+If(Sn6 == 1)
+{
+
+If(_Actor_GetState(S6)==0)
+{
+pocitac=pocitac+1;
+Sn6=0;
+}
+}
+
+If(Sn7 == 1)
+{
+
+If(_Actor_GetState(S7)==0)
+{
+pocitac=pocitac+1;
+Sn7=0;
+}
+}
+
+If(Sn8 == 1)
+{
+
+If(_Actor_GetState(S8)==0)
+{
+pocitac=pocitac+1;
+Sn8=0;
+}
+}
+
+If(Sn9 == 1)
+{
+
+If(_Actor_GetState(S9)==0)
+{
+pocitac=pocitac+1;
+Sn9=0;
+}
+}
+
+If(Sn10 == 1)
+{
+
+If(_Actor_GetState(S10)==0)
+{
+pocitac=pocitac+1;
+Sn10=0;
+}
+}
+
+If(Sn11 == 1)
+{
+
+If(_Actor_GetState(S11)==0)
+{
+pocitac=pocitac+1;
+Sn11=0;
+}
+}
+
+If(Sn12 == 1)
+{
+
+If(_Actor_GetState(S12)==0)
+{
+pocitac=pocitac+1;
+Sn12=0;
+}
+}
+
+If(Sn13 == 1)
+{
+
+If(_Actor_GetState(S13)==0)
+{
+pocitac=pocitac+1;
+Sn13=0;
+}
+}
+
+If(Sn14 == 1)
+{
+
+If(_Actor_GetState(S14)==0)
+{
+pocitac=pocitac+1;
+Sn14=0;
+}
+}
+
+If(Sn15 == 1)
+{
+
+If(_Actor_GetState(S15)==0)
+{
+pocitac=pocitac+1;
+Sn15=0;
+}
+}
+
+If(Sn16 == 1)
+{
+
+If(_Actor_GetState(S16)==0)
+{
+pocitac=pocitac+1;
+Sn16=0;
+}
+}
+
+If(Sn17 == 1)
+{
+
+If(_Actor_GetState(S17)==0)
+{
+pocitac=pocitac+1;
+Sn17=0;
+}
+}
+
+If(Sn18 == 1)
+{
+
+If(_Actor_GetState(S18)==0)
+{pocitac=pocitac+1;
+Sn18=0;
+}
+}
+
+If(Sn19 == 1)
+{
+
+If(_Actor_GetState(S19)==0)
+{
+pocitac=pocitac+1;
+Sn19=0;
+}
+}
+
+If(Sn20 == 1)
+{
+
+If(_Actor_GetState(S20)==0)
+{
+pocitac=pocitac+1;
+Sn20=0;
+}
+}
+
+If(Sn21 == 1)
+{
+
+If(_Actor_GetState(S21)==0)
+{
+pocitac=pocitac+1;
+Sn21=0;
+}
+}
+
+If(Sn22 == 1)
+{
+
+If(_Actor_GetState(S22)==0)
+{
+pocitac=pocitac+1;
+Sn22=0;
+}
+}
+
+If(Sn23 == 1)
+{
+
+If(_Actor_GetState(S23)==0)
+{
+pocitac=pocitac+1;
+Sn23=0;
+}
+}
+
+If(Sn24 == 1)
+{
+
+If(_Actor_GetState(S24)==0)
+{
+pocitac=pocitac+1;
+Sn24=0;
+}
+}
+
+If(Sn25 == 1)
+{
+
+If(_Actor_GetState(S25)==0)
+{
+pocitac=pocitac+1;
+Sn25=0;
+}
+}
+
+If(Sn26 == 1)
+{
+
+If(_Actor_GetState(S26)==0)
+{
+pocitac=pocitac+1;
+Sn26=0;
+}
+}
+
+If(Sn27 == 1)
+{
+
+If(_Actor_GetState(S27)==0)
+{
+pocitac=pocitac+1;
+Sn27=0;
+}
+}
+
+If(Sn28 == 1)
+{
+
+If(_Actor_GetState(S28)==0)
+{
+pocitac=pocitac+1;
+Sn28=0;
+}
+}
+
+}
+
+If(pocitac == 14)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993405);
+SetObjectiveStatus(7, 1);
+Delay(5000);
+SUBTITLES_SetOn(0);
+Delay(200);
+EndScript();
+}
+
+Delay(5000);
+goto Sniperkill;
+

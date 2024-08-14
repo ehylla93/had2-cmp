@@ -1,0 +1,9 @@
+
+Block {
+Frame N02;	FRM_FindFrame(N02, "N02");
+}
+
+Whenever player(_PlayerInRange(4))
+{
+	SendSignal(N02, 3);
+}

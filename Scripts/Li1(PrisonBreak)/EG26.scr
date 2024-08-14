@@ -1,0 +1,164 @@
+//EG01 Standing Guard
+//----------------------Block----------------------
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Player;
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rndcp;
+integer rndpause;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+SetWhenever(InRange, 0);
+SetWhenever(NotInRange, 0);
+}
+goto END;
+//----------------------Spawn/Activity----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+rnd1=(_randomint(4)+1);
+  if (rnd1==1)
+  {
+printf ("EG26 not spawn");
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+goto END;
+  }
+  else
+  {
+HUMAN_Suspend(0);
+rnd1=(_randomint(8)+1);
+  if (rnd1==1){HUMAN_CreateItemInStore(61, 1);}
+printf ("EG26 spawn");
+  }
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(60);
+HUMAN_WeaponOnArm(0);
+HUMAN_WeaponUp(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_Stop();
+goto checkpoint1;
+//-----------------------
+label checkpoint1:
+HUMAN_LookAround(1);
+gosub anim;
+gosub delay;
+gosub delay;
+goto checkpoint1;
+//----------------------Anim
+label anim:
+rnd1=(_randomint(5)+1);
+  if (rnd1==1){HUMAN_ACTIVITY_Hot();}
+  if (rnd1==2){HUMAN_SetAnim("%%nuda", 1000, 1000, 1);}
+  if (rnd1==3){HUMAN_SetAnim("%%kopkamen1", 1000, 1000, 1);}
+  if (rnd1==4){HUMAN_ACTIVITY_Hot();}
+  if (rnd1==5){HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);}
+return;
+//----------------------Delay
+label delay:
+rndpause=(_randomint(15000)+5000);
+delay(rndpause);
+HUMAN_SetAnim("", 1000, 1000, 1);
+delay(1000);
+return;
+}
+//----------------------Detect Player (After Alarm)----------------------
+Whenever InRange (_PlayerInRange(40))
+{
+SetWhenever(NotInRange, 1);
+rnd1=(_randomint(5)+1);
+  if (rnd1==1)
+  {goto follow;}
+  else
+  {goto alrmdone;}
+goto END;
+}
+Whenever NotInRange (!_PlayerInRange(40))
+{
+SetWhenever(InRange, 1);
+goto alrmdone;
+goto END;
+}
+//----------------------Follow Player----------------------
+label follow:
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+delay(3000);
+FRM_GetNearestPlayer(me, Player);
+HUMAN_MoveToFrame(Player, 5);
+delay(3000);
+HUMAN_MoveToFrame(Player, 5);
+rnd1=(_randomint(3)+1);
+  if (rnd1==1){goto follow;}
+  else {goto alrmdone;}
+//----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+printf ("EG01 Alarm");
+AIEvent = _GetAlarmType();
+PrintfNumber("EP01 alarm type: ",AIEvent);
+If (AIEvent == 32){HUMAN_SETMODE_Lie();}
+If ((AIEvent == 2) or (AIEvent == 256))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+EndScript();
+}
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+printf ("EG01 Alarm done");
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+SetWhenever(InRange, 1);
+rnd1=(_randomint(2)+1);
+  if (rnd1==1){HUMAN_SETMODE_Stand();HUMAN_SETMODE_Walk();}
+  if (rnd1==2){HUMAN_SETMODE_Crouch();}
+goto alrmdone;
+//
+label alrmdone:
+rndpause=(_randomint(8000)+2000);
+delay(rndpause);
+rnd1=(_randomint(30)+5);
+HUMAN_MoveRandomRadius(rnd1);
+goto alrmdone;
+}
+//----------------------Random Items----------------------
+label RndItems:
+rnd1=(_randomint(12)+1);
+  if (rnd1==2){HUMAN_CreateItemInStore(54, 1);}
+  if (rnd1==4){HUMAN_CreateItemInStore(61, 1);}
+  if ((rnd1==6) and (_LoadGameValue(1)==1)) {HUMAN_CreateItemInStore(68, 1);}
+  if ((rnd1==8) and (_LoadGameValue(7)==1)) {HUMAN_CreateItemInStore(66, 1);}
+  if (rnd1==10){HUMAN_CreateItemInStore(174, 1);}
+return;
+//----------------------OnDeath----------------------
+OnDeath()
+{
+gosub RndItems;
+printf ("EG26 - Enemy killed");
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+//----------------------END----------------------
+Label END:

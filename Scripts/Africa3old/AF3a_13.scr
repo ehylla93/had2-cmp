@@ -1,0 +1,161 @@
+__SetupAutoLogging(true, "AF3a_13.txt");
+// AF3a_13 - walking on the fortification
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME synchronizer;  	FRM_FindFrame(synchronizer, "dummy_1113_detector");
+  FRAME dummy_alarm;  	FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME look1_01;		FRM_FindFrame(look1_01, "AF3a_13_look1_01");
+  FRAME alarm_wp;  		FRM_FindFrame(alarm_wp, "dummy_pristup01");
+  FRAME en11;			FRM_FindFrame(en11, "AF3a_11");
+  FRAME bottle;  		FRM_FindFrame(bottle, "");
+  INTEGER kroky 		= 1;
+  INTEGER rnd			= 0;
+  INTEGER torally		= 1;
+  INTEGER Atype		= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("13: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableSignals(true);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(300);
+    Atype = _GetAlarmType();
+    printfnumber("13: ", Atype);
+  }
+
+  If((AType == 4)){
+    SetAlarmType(4, False);	// kroky     
+    SendSignal(synchronizer, 1);
+    SendSignal(en11, 10);
+    HUMAN_SetAlarm(false);
+    goto TORALLYPOINT;
+  }
+
+  block{
+    printf("signal sender 13");
+    SendSignal(dummy_alarm, 1);
+  }
+  HUMAN_SetSniper(true, 10);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  DisableSignals(false);
+  HUMAN_SETSIGHTRANGE(120);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  HUMAN_SetMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+OnSignal(1){
+  HUMAN_Stop();
+  Delay(2000);
+  printf(" Helmut :: Blbost, z toho horka uz slysis nesmysly ....");
+  Delay(2000);
+}
+
+OnSignal(2){
+  HUMAN_Stop();
+  printf(" Helmut :: Nezda se ti ze nekdo chodi pod hradbami?");
+  Delay(4000);
+  printf(" Helmut :: No fakt se me to nezda");
+  Delay(1000);
+}
+
+OnSignal(4){
+  HUMAN_Stop();
+  Delay(2000);
+  printf(" Helmut :: Taky sem neco slysel, to je divny ...");
+  Delay(4000);
+  printf(" Helmut :: Dobrej napad ...");
+  Delay(2000);
+}
+
+OnSignal(10){
+Label TORALLYPOINT:
+  if(torally == 1){
+    torally = 0;
+    HUMAN_Stop();
+    HUMAN_SETMODE_Walk();
+    HUMAN_Move("AF3a_13_03");		// prejde rychleji na misto pobliz AF11 (aby mohli kecat)
+    HUMAN_SETMODE_Guard();
+    Delay(20000);
+    SetAlarmType(4, true);			// kroky     
+  }
+  torally = 1;
+  HUMAN_SetAlarm(false);
+  goto ACTIVITY; 
+}
+
+OnSignal(20){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETSIGHTRANGE(250);
+    HUMAN_SETMODE_Run();
+  }
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("AF3a_13_alert");
+  HUMAN_TurnAt(alarm_wp);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+
+Label ACTIVITY:
+  kroky = 1;
+  HUMAN_Move("AF3a_13_01");
+  rnd = _RandomInt(15);
+  if(rnd == 0){
+    HUMAN_ACTIVITY_DrinkBottle(bottle);
+  }
+  if(rnd == 1){
+//    HUMAN_Move("AF3a_13_sit");
+//    FRAME sit01;  FRM_FindFrame(sit01, "dummy_13_sit");
+//    HUMAN_ACTIVITY_Sit(sit01);
+    HUMAN_SetAnim("%%sedimL4", 300, 300, true);
+    Delay(2000);
+    HUMAN_ACTIVITY_Hot();
+    Delay(15000);   
+    HUMAN_SetAnim("", 300, 300, false);
+    HUMAN_SETMODE_Stand();
+  }
+  rnd = _RandomInt(2500) + 1000;
+  Delay(rnd);
+  HUMAN_Move("AF3a_13_02");
+  HUMAN_TurnAt(look1_01);
+  Delay(2000);
+  HUMAN_Move("AF3a_13_03");
+  Delay(5000);
+  rnd = _RandomInt(5);
+  if(rnd == 0){
+    HUMAN_ACTIVITY_DrinkBottle(bottle);
+  }
+  Delay(1000);
+GoTo ACTIVITY;
+
+Label END:

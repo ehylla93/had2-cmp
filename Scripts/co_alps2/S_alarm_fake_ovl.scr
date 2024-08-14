@@ -1,0 +1,11 @@
+
+block
+{
+Frame zwuk;		FRM_FindFrame(zwuk,"S_alarm_fake");
+FRM_SetOn(zwuk, 0);
+}
+
+Whenever tyyyt(_SignalReceived(1))
+{
+FRM_SetOn(zwuk,1);
+}

@@ -1,0 +1,100 @@
+//ge_43 - south of cottage - ALARMER
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,1);
+
+frame krik;		FRM_FindFrame (krik,"ge30krik");
+frame me;		FRM_GetMyFrame(me);
+frame check;	FRM_FindFrame(check,"check_tel");
+frame tar;		FRM_FindFrame(tar,"m_dvere_03");
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer first=1;
+integer a=0;
+}
+
+HUMAN_Suspend(1);
+HUMAN_SetOptimized(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+if(first==1)
+{
+first=0;
+SendSignal (krik,2);	//"Alarm!"
+goto alarm;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+HUMAN_SetAnim("", 0, 0, False);
+FRM_MorphSpeech(me, 0,0,0);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))	//detector_forge26
+{
+HUMAN_Suspend(0);
+HUMAN_Move("ge43_01");
+goto loop;
+}
+
+Whenever slysistrelbu(_SignalReceived(2))
+{
+HUMAN_Move("ge43_01");
+goto loop;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+label loop:
+a=(_RandomInt(3));
+if (a==0)	{ HUMAN_Move("ge43_01"); HUMAN_LookAround(1); Delay(6000); }
+if (a==1)	{ HUMAN_Move("ge43_02"); }
+if (a==3)	{ HUMAN_Move("ge43_03"); }
+goto loop;
+
+Label alarm:
+SetAlarmType(1023,0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(tar, 5);
+SendSignal (krik,1);	//"Alarm!"
+HUMAN_SetAnim("%%mava", 100, 250, False);
+Delay(4500);
+SendSignal (check,1);	//"Call castle guards"
+SetAlarmType(1023,1);
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+
+label end:

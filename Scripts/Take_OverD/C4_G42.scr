@@ -1,0 +1,92 @@
+// Motocyklar
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame m2;		FRM_FindFrame(m2,"C4_G43");
+Frame m3;		FRM_FindFrame(m3,"C4_G44");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer send;
+	send=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+If(send==0)
+{
+SendSignal(m2, 3);
+SendSignal(m3, 3);
+}
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_Stop();
+HUMAN_Drive("", 80);
+Delay(800);
+SendSignal(m2, 3);
+SendSignal(m3, 3);
+send=send+1;
+HUMAN_BoardVehicle("Bmw1", 0, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+Delay(300000);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Bmw1", 1, 0);
+HUMAN_DriveNearPlayer(30);
+HUMAN_Drive("", 0);
+SendSignal(m2, 3);
+SendSignal(m3, 3);
+HUMAN_BoardVehicle("Bmw1", 0, 0);
+Delay(200);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+
+Label END:

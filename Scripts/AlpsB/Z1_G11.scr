@@ -1,0 +1,98 @@
+// Hlidka za skalou
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame K2;	FRM_FindFrame(K2,"Z1_G10");
+Frame me;	FRM_GetMyFrame(me);
+Frame Alarm;	FRM_FindFrame(Alarm,"Alarmer_Zacatek");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(Alarm, 1);
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(Alarm, 1);
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetSniper(1, 5);
+HUMAN_SETAIMODE_Defensive();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto patrol;
+}
+
+OnSignal(1)
+{
+HUMAN_TurnAt(K2);
+Delay(500);
+HUMAN_SetAnim("%%kecy3", 300, 300, 1);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_SetAnim("%%turnleft",200,200,1);
+Delay (2800);
+HUMAN_SetAnim("%%turnright",200,200,1);
+Delay(3700);
+HUMAN_SetAnim("%%kopkamen1", 500, 500, 1);
+Delay(4000);
+HUMAN_SetAnim("", 500, 500, 1);
+HUMAN_Move("ge07_09");
+goto patrol;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Guard();
+HUMAN_Move("ge07_04");
+HUMAN_Move("ge07_05");
+HUMAN_Move("ge07_06");
+HUMAN_Move("ge07_07");
+HUMAN_Move("ge07_08");
+HUMAN_Stop();
+HUMAN_TurnAt(K2);
+Delay(500);
+HUMAN_ACTIVITY_Salute(1);
+SendSignal(K2, 1);
+FRM_MorphSpeechDelayed(me, 90004039, 5, 30);
+goto END;
+
+Label patrol:
+HUMAN_SETMODE_Guard();
+HUMAN_Move("ge07_08");
+HUMAN_Move("ge07_07");
+HUMAN_Move("ge07_06");
+HUMAN_Move("ge07_05");
+HUMAN_Move("ge07_04");
+HUMAN_Move("ge07_05");
+HUMAN_Move("ge07_06");
+HUMAN_Move("ge07_07");
+HUMAN_Move("ge07_08");
+HUMAN_Move("ge07_09");
+goto patrol;
+
+Label END:

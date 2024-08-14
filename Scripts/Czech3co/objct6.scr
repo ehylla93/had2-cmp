@@ -1,0 +1,24 @@
+// Obj 6 - najdi dokumenty
+// -------------------------------
+
+Block
+{
+Frame Documents;
+
+SetObjectiveStatus(6, 0);
+}
+
+// -------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 252, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(14992804);
+Delay(5000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+GoTo end;
+}
+
+
+Label end:

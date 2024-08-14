@@ -1,0 +1,50 @@
+// Obj 8 - hod kec se svicakem
+//--------------------------------------
+Block
+{
+Frame obj9;		FRM_FindFrame(obj9,"obj9");
+Frame obj10;	FRM_FindFrame(obj10,"ob10");
+Frame obj2;		FRM_FindFrame(obj2,"obj2");
+Frame obj6;		FRM_FindFrame(obj6,"obj6");
+}
+//--------------------------------------
+
+OnSignal(1)  // hodil kec se svicakem
+{
+SetobjectiveStatus(9, 0);
+SetobjectiveStatus(10, 0);
+SetobjectiveStatus(2, 0);
+SetobjectiveStatus(7, 0);
+SetobjectiveStatus(6, 0);
+SetobjectiveStatus(11, 0);
+SendSignal(obj9, 1);
+SendSignal(obj10, 1);
+SendSignal(obj2, 1);
+SendSignal(obj6, 1);
+Delay(500);
+PlayMusic(6);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(18993606);
+Delay(3000);
+SUBTITLES_SetOn(false);
+SetobjectiveStatus(8, 1);
+goto end;
+}
+
+OnSignal(2)  // svicak zabit
+{
+//SetObjectiveStatus(1, 4);     // zabij vsechny 
+SetObjectiveStatus(2, 4);	// znic tigra  
+SetobjectiveStatus(4, 4);     // najdi kamose  
+SetobjectiveStatus(5, 4);     // znic vsechna pancejrova vozidla 
+SetobjectiveStatus(6, 4);     // znic nakladaky  
+SetobjectiveStatus(7, 4);     // najdi trebisskyho  
+SetobjectiveStatus(8, 2);     // hod kec se svicakem  
+SetobjectiveStatus(9, 4);     // zabij dustojniky 
+SetobjectiveStatus(10, 4);    // zabij snipry  
+SetobjectiveStatus(11, 4);    // znic radio 
+PlayMusic(34);
+goto end;
+}
+
+Label end:

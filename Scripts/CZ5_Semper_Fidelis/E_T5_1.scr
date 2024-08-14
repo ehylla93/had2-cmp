@@ -1,0 +1,80 @@
+//
+//----------------------Block----------------------
+Block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+HUMAN_SetOptimized(2);
+SetWhenever(PlayerInRange1, 0);
+HUMAN_Suspend(1);
+integer AIEvent;
+integer Rnd1;
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_PlayerInRange(400))
+{
+HUMAN_Suspend(0);
+Block
+{
+//Rnd1=(_randomint(30)+50);
+HUMAN_SETSIGHTRANGE(50);
+//Rnd1=(_randomint(30)+50);
+HUMAN_SETHEARRANGE(40);
+HUMAN_BoardVehicle("panther5", 1, 0);
+HUMAN_SETAIMODE_Aggressive();
+goto END;
+}
+}
+
+
+//----------------------OnAlarm----------------------
+OnAlarm()
+{
+AIEvent = _GetAlarmType();
+////PrintfNumber("Tank driver alarm", AIEvent);
+Rnd1=(_randomint(10));  //100
+If ((Rnd1==8) and (AIEvent == 2))
+{
+////Printf("Tank drive to Player");
+SetWhenever(PlayerInRange1, 1);
+HUMAN_DriveNearPlayer(4);
+HUMAN_Drive("",0);
+}
+HUMAN_SetAlarm(0);	
+goto END;
+//EndScript();
+}
+
+
+Whenever PlayerInRange1 (_PlayerInRange(20))  //20 metros
+{
+////Printf("Player in range 20 meters");
+HUMAN_Drive("",0);
+goto END;
+}
+
+
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+////Printf("Tank STOP");
+HUMAN_Drive("",0);
+}
+
+//----------------------OnDeath----------------------
+OnDeath()
+{
+EndScript();
+}
+
+// ----------------------END----------------------
+Label END:

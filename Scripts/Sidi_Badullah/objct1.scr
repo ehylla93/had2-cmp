@@ -1,0 +1,52 @@
+// Obj 1 - Free the Prisoners
+// ---------------------------------------------
+
+Block
+{
+	Frame Obj8;			FRM_FindFrame(Obj8, "obj8");
+	Frame NPC1;			FRM_FindFrame(NPC1, "NPC1");
+	Frame NPC2;			FRM_FindFrame(NPC2, "NPC2");
+
+	Integer Prisoner_Count;		Prisoner_Count = 0;
+
+	SetObjectiveStatus(1, 0);
+}
+
+Whenever Prisoners_Killed ((_Actor_GetState(NPC1) == 0) Or (_Actor_GetState(NPC2) == 0))
+{
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(52999906);
+	Delay(3500);
+	SetObjectiveStatus(2, 4);
+	SetObjectiveStatus(3, 4);
+	SetObjectiveStatus(4, 4);
+	SetObjectiveStatus(5, 4);
+	SetObjectiveStatus(6, 4);
+	SetObjectiveStatus(7, 4);
+	SetObjectiveStatus(8, 4);
+	Delay(500);
+	SetObjectiveStatus(1, 2);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}
+
+OnSignal(1) // Whenever Prisoners_Rescued
+{
+	Prisoner_Count = Prisoner_Count + 1;
+
+	If (Prisoner_Count == 2)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(52999907);
+		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(1, 1);
+		SUBTITLES_SetOn(0);
+	}
+
+	GoTo end;
+}
+
+
+Label END:

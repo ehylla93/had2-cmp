@@ -1,0 +1,72 @@
+// Obj 2 - Hand Papers to the Officer
+// ------------------------------------
+
+Block
+{
+	Frame Obj3;			FRM_FindFrame(Obj3, "obj3");
+	Frame Obj4;			FRM_FindFrame(Obj4, "obj4");
+	Frame Obj5;			FRM_FindFrame(Obj5, "obj5");
+	Frame Obj6;			FRM_FindFrame(Obj6, "obj6");
+	Frame FtanksDet;	FRM_FindFrame(FtanksDet, "04_Player_Detect");
+	Frame D1;			FRM_FindFrame(D1, "Box03");
+	Frame D2;			FRM_FindFrame(D2, "Box04");
+
+	SetObjectiveStatus(2, 0);
+}
+
+Whenever Papers_Handed_In (_SignalReceived(1)) 
+{
+	Delay(1000);
+	DOOR_Lock(D1, 0);
+	DOOR_Lock(D2, 0);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(15993042);
+	SendSignal(Obj3, 7);
+	SendSignal(Obj4, 7);
+	SendSignal(Obj5, 7);
+	SendSignal(Obj6, 7);
+	Delay(3000);
+	SetObjectiveStatus(2, 1);
+	SendSignal(FtanksDet, 1);
+	EndScript();
+}
+
+Whenever Fail_Alarm (_SignalReceived(6))
+{
+	Delay(6000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(11992211);
+	SetObjectiveStatus(2, 4);
+	SetObjectiveStatus(3, 4);
+	SetObjectiveStatus(4, 4);
+	SetObjectiveStatus(5, 4);
+	SetObjectiveStatus(6, 4);
+	SetObjectiveStatus(7, 4);
+	SetObjectiveStatus(8, 4);
+	SetObjectiveStatus(9, 4);
+	SetObjectiveStatus(10, 4);
+	Delay(3500);
+	SetObjectiveStatus(1, 2);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}
+
+Whenever Officer_Dead (_SignalReceived(7))
+{
+	Delay(3000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(15993041);
+	SetObjectiveStatus(1, 4);
+	SetObjectiveStatus(3, 4);
+	SetObjectiveStatus(4, 4);
+	SetObjectiveStatus(5, 4);
+	SetObjectiveStatus(6, 4);
+	SetObjectiveStatus(7, 4);
+	SetObjectiveStatus(8, 4);
+	SetObjectiveStatus(9, 4);
+	SetObjectiveStatus(10, 4);
+	Delay(3500);
+	SetObjectiveStatus(2, 2);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}

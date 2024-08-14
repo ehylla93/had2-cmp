@@ -1,0 +1,105 @@
+// BU1_18 - at the storage building
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame bu1_17;	FRM_FindFrame(bu1_17, "BU1_17");
+Frame look01;	FRM_FindFrame(look01, "BU1_18_look01");
+Frame speech;	FRM_FindFrame(speech, "BU1_17_18_speech");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(12, false);
+}
+
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f048");
+HUMAN_Suspend(true);
+
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+Block
+{
+	SendSignal(speech, 2);
+	HUMAN_SETSIGHTRANGE(55);
+	DisableWhenevers(true);
+	DisableSignals(true);
+	HUMAN_SETMODE_Run();
+}
+	HUMAN_WeaponOnArm(true);
+	HUMAN_SETMODE_Stand();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	DisableWhenevers(true);
+	DisableSignals(true);
+	}
+	HUMAN_WeaponOnArm(false);
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(60))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from BU1_17
+{
+	HUMAN_TurnAt(look01);
+	Delay(1000);
+	HUMAN_ACTIVITY_Turk();
+	GoTo end;
+}
+
+OnSignal(2)	// received from BU1_17
+{
+	// koniec obhliadky
+	HUMAN_SETMODE_Stand();
+	Delay(500);
+	HUMAN_TurnAt(bu1_17);
+	GoTo end;
+}
+
+OnSignal(3)	// received from BU1_17_18_speech
+{
+	HUMAN_ACTIVITY_Turk();
+	GoTo end;
+}
+
+Whenever hide(_SignalReceived(4))	// received from BU1_16
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Run();
+	Delay(500);
+	HUMAN_Move("BU1_18_01");
+	HUMAN_Move("BU1_18_02");
+	HUMAN_Move("BU1_18_03");
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+}
+
+OnDeath()
+{
+SendSignal(speech, 2);
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label end:

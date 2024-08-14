@@ -1,0 +1,99 @@
+// AF1_25 - soldier in the hangar
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+  EndScript();
+}
+
+OnSignal(10){
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  HUMAN_SetMode_Stand();
+  HUMAN_TurnAtNearestPlayer();
+  EndScript(); 
+}
+
+Whenever player(_PlayerInRange(20)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Suspend(false);
+    DisableSignals(true);
+    SetWhenever(player, false);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+//    HUMAN_SetOptimized(false);
+    HUMAN_SetMODE_Stand();
+    Atype = _GetAlarmType();
+    printfnumber("25: ", Atype);
+  }
+
+  if(Atype == 256){
+    HUMAN_SetMODE_Crouch();
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_SetAlarm(false);
+    goto END;
+  }
+
+  if((Atype == 2) OR (Atype == 8)){
+    SetAlarmType(10, false);			// disable 2, 8, 256
+    HUMAN_SetMode_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    goto END;
+  }
+
+  //HUMAN_ACTIVITY_Smoke(false);
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_WeaponOnArm(true);
+Label ALARM_DONE_LOOP:
+  HUMAN_Move("AF1_10_10");
+  Delay(300);
+  HUMAN_Move("AF1_10_06");
+  Delay(300);
+goto ALARM_DONE_LOOP;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetAnim("%%sedimL", 100, 100, true);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+//  HUMAN_ACTIVITY_Card(1);
+//Label LOOP:
+//  HUMAN_ACTIVITY_Card(2);
+//  Delay(1500);
+//  goto LOOP;
+//goto END;
+
+Label END:

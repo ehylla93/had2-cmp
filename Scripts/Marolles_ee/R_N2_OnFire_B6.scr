@@ -1,0 +1,12 @@
+
+Frame 	A3;		FRM_FindFrame(A3, "Ally_3");
+Frame Blue;		FRM_FindFrame(Blue, "Blue_6");
+
+integer RND;
+
+Whenever YES ( _FrameInRange(Blue)<3 )
+{
+  RND = _RandomInt(3);
+  If ( !RND == 0 )  { SendSignal(A3, 6); }  
+}
+

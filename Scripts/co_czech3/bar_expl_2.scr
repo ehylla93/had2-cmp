@@ -1,0 +1,11 @@
+Frame me;		FRM_GetMyFrame(me);
+
+OnDeath()
+{
+Block
+{
+FRM_CreateParticle(64, me);
+MakeExplosion(me,800000,14000);  
+}
+EndScript();
+}

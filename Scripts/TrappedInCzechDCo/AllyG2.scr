@@ -1,0 +1,42 @@
+// Guard 2 Ally (Sit)
+// ------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Cp1;	FRM_FindFrame(Cp1,"Britcum");
+Frame Cp2;	FRM_FindFrame(Cp2,"Ammobox3");
+Frame Dopredu;		FRM_FindFrame(Dopredu,"Britcum");
+
+FRM_SwitchFaceTexture(me,"e_f004");
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+goto Patrol;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(83);
+HUMAN_SETHEARRANGE(85);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Patrol:
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+HUMAN_MoveToFrame(Cp1, 0);
+
+
+Label END:

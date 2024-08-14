@@ -1,0 +1,123 @@
+
+  Frame Ally1;		FRM_FindFrame(Ally1, "Ally_1");
+  Frame Ally2;		FRM_FindFrame(Ally2, "Ally_2");
+  Frame Ally3;		FRM_FindFrame(Ally3, "Ally_3");
+  Frame Ally4;		FRM_FindFrame(Ally4, "Ally_4");
+  Frame Ally5;		FRM_FindFrame(Ally5, "Ally_5");
+
+  Frame OBJ4;		FRM_FindFrame(OBJ4, "dummy_OBJ4");
+  Frame turn; 		FRM_FindFrame(turn, "Ally_1");		//////// ZATIM TOTO //////////
+  integer  AIEvent;
+  integer counter = 0;
+
+SetAlarmType(1023, False);
+SetAlarmType(97, True);	// 1 + 32 + 64 = 97
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(10)         
+{
+  HUMAN_Suspend(False);
+  Printf("BLUE wake up ------ 6");
+}
+
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red30_1");		// !
+  HUMAN_TurnAt(turn);	
+  SetAlarmType(262, True);
+goto TheEnd;				
+
+OnSignal(1)	/////// Doplnit poslani od odesilatele (od Ally1)
+{
+  Label loop_A1:
+    If (( _ACTOR_GetState(Ally1) == 0 ))    { Goto TheEnd; }
+    If (counter == 6) { Goto TheEnd; }
+    counter = counter +1;
+    HUMAN_TurnAt(Ally1);	
+    HUMAN_Attack(Ally1, 1000);
+    Delay(1500);
+  goto loop_A1;
+}
+OnSignal(2)	/////// Doplnit poslani od odesilatele (od Ally2)
+{
+  Label loop_A2:
+    If (( _ACTOR_GetState(Ally2) == 0 ))    { Goto TheEnd; }
+    If (counter == 4) { Goto TheEnd; }
+    counter = counter +1;
+    HUMAN_TurnAt(Ally2);	
+    HUMAN_Attack(Ally2, 1000);
+    Delay(1500);
+  goto loop_A2;
+}
+OnSignal(3)	/////// Doplnit poslani od odesilatele (od Ally3)
+{
+  Label loop_A3:
+    If (( _ACTOR_GetState(Ally3) == 0 ))    { Goto TheEnd; }
+    If (counter == 5) { Goto TheEnd; }
+    counter = counter +1;
+    HUMAN_TurnAt(Ally3);	
+    HUMAN_Attack(Ally3, 1000);
+    Delay(1500);
+  goto loop_A3;
+}
+OnSignal(4)	/////// Doplnit poslani od odesilatele (od Ally4)
+{
+  Label loop_A4:
+    If (( _ACTOR_GetState(Ally4) == 0 ))    { Goto TheEnd; }
+    If (counter == 7) { Goto TheEnd; }
+    counter = counter +1;
+    HUMAN_TurnAt(Ally4);	
+    HUMAN_Attack(Ally4, 1000);
+    Delay(1500);
+  goto loop_A4;
+}
+OnSignal(5)	/////// Doplnit poslani od odesilatele (od Ally5)
+{
+  Label loop_A5:
+    If (( _ACTOR_GetState(Ally5) == 0 ))    { Goto TheEnd; }
+    If (counter == 5) { Goto TheEnd; }
+    counter = counter +1;
+    HUMAN_TurnAt(Ally5);	
+    HUMAN_Attack(Ally5, 1000);
+    Delay(1500);
+  goto loop_A1;
+}
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Blue 6: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(648, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  SendSignal(OBJ4, 30);
+  EndScript();
+}
+
+Label TheEND:
+  counter = 0;

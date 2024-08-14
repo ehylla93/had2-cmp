@@ -1,0 +1,81 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+FRM_SwitchFaceTexture(me,"e_f062");
+Frame O1;		FRM_FindFrame(O1,"GO_007");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Label SpeechLoop:
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(me, 18993800, 5, 30);
+FRM_MorphSpeechDelayed(me, 18993801, 5, 30);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1); 
+FRM_MorphSpeechDelayed(me, 18993802, 5, 30);
+FRM_MorphSpeechDelayed(me, 18993803, 5, 30);
+FRM_MorphSpeechDelayed(me, 18993804, 5, 30);
+Delay(1000);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(O1, 18993805, 5, 30);
+FRM_MorphSpeechDelayed(O1, 18993806, 5, 30);
+Delay(400);
+HUMAN_SetAnim("%%mluvi8", 1000, 1000, 1);	
+FRM_MorphSpeechDelayed(me, 18993807, 5, 30);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(O1, 18993808, 5, 30);
+FRM_MorphSpeechDelayed(O1, 18993809, 5, 30);
+Delay(500);
+HUMAN_SetAnim("%%mluvi1", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(me, 18993810, 5, 30);
+FRM_MorphSpeechDelayed(me, 18993811, 5, 30);
+Delay(600);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+FRM_MorphSpeechDelayed(O1, 18993812, 5, 30);
+Delay(7000);
+
+goto SpeechLoop;
+//*SpeechLoop
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(5);
+HUMAN_SETHEARRANGE(10);
+//*DefaultLoad
+goto SpeechLoop;
+
+Label END:

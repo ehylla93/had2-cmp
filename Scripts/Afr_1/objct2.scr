@@ -1,0 +1,174 @@
+// Obj 2 - Destroy all enemy Fuel Tanks
+// -------------------------------------
+
+Block
+{
+Frame P01;	FRM_FindFrame(P01,"Ftank_01");
+Integer IntP01;		IntP01=1;
+Frame P02;	FRM_FindFrame(P02,"Ftank_02");
+Integer IntP02;		IntP02=1;
+Frame P03;	FRM_FindFrame(P03,"Ftank_03");
+Integer IntP03;		IntP03=1;
+Frame P04;	FRM_FindFrame(P04,"Ftank_04");
+Integer IntP04;		IntP04=1;
+Frame P05;	FRM_FindFrame(P05,"Ftank_05");
+Integer IntP05;		IntP05=1;
+Frame P06;	FRM_FindFrame(P06,"Ftank_06");
+Integer IntP06;		IntP06=1;
+Frame P07;	FRM_FindFrame(P07,"Ftank_07");
+Integer IntP07;		IntP07=1;
+Frame P08;	FRM_FindFrame(P08,"Ftank_08");
+Integer IntP08;		IntP08=1;
+Frame P09;	FRM_FindFrame(P09,"Ftank_09");
+Integer IntP09;		IntP09=1;
+Frame P10;	FRM_FindFrame(P10,"Ftank_10");
+Integer IntP10;		IntP10=1;
+
+Integer Actor_Eliminated;	Actor_Eliminated = 0;
+
+SetObjectiveStatus(2, 0);
+}
+
+// -------------------------------------
+
+Delay(500);
+goto Ftankkill;
+
+Label Ftankkill:
+
+Block
+{
+
+If(IntP01 == 1)
+{
+
+If(_Actor_GetState(P01)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP01=0;	
+MakeExplosion(P01, 200000, 10000);
+FRM_CreateParticle(68, P01);
+}	
+}
+
+If(IntP02 == 1)
+{
+
+If(_Actor_GetState(P02)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP02=0;	
+MakeExplosion(P02, 200000, 10000);
+FRM_CreateParticle(68, P02);
+}	
+}
+
+If(IntP03 == 1)
+{
+
+If(_Actor_GetState(P03)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP03=0;	
+MakeExplosion(P03, 200000, 10000);
+FRM_CreateParticle(68, P03);
+}	
+}
+
+If(IntP04 == 1)
+{
+
+If(_Actor_GetState(P04)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP04=0;	
+MakeExplosion(P04, 200000, 10000);
+FRM_CreateParticle(68, P04);
+}	
+}
+
+If(IntP05 == 1)
+{
+
+If(_Actor_GetState(P05)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP05=0;	
+MakeExplosion(P05, 200000, 10000);
+FRM_CreateParticle(68, P05);
+}	
+}
+
+If(IntP06 == 1)
+{
+
+If(_Actor_GetState(P06)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP06=0;	
+MakeExplosion(P06, 200000, 10000);
+FRM_CreateParticle(68, P06);
+}	
+}
+
+If(IntP07 == 1)
+{
+
+If(_Actor_GetState(P07)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP07=0;	
+MakeExplosion(P07, 200000, 10000);
+FRM_CreateParticle(68, P07);
+}	
+}
+
+If(IntP08 == 1)
+{
+
+If(_Actor_GetState(P08)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP08=0;	
+MakeExplosion(P08, 200000, 10000);
+FRM_CreateParticle(68, P08);
+}	
+}
+
+If(IntP09 == 1)
+{
+
+If(_Actor_GetState(P09)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP09=0;	
+MakeExplosion(P09, 200000, 10000);
+FRM_CreateParticle(68, P09);
+}	
+}
+
+If(IntP10 == 1)
+{
+
+If(_Actor_GetState(P10)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP10=0;	
+MakeExplosion(P10, 200000, 10000);
+FRM_CreateParticle(68, P10);
+}	
+}
+
+}
+
+If(Actor_Eliminated > 9)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05011015);
+Delay(3500);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+goto Ftankkill;

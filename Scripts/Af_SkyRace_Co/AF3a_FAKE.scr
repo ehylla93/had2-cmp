@@ -1,0 +1,2 @@
+HUMAN_Suspend(true);
+SetAlarmType(1023, false);

@@ -1,0 +1,12 @@
+// C5_G31_activator01 - activator 01
+
+Block {
+Frame g31;	FRM_FindFrame(g31, "C5_G31");
+Frame g32;	FRM_FindFrame(g32, "C5_G32");
+}
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(g31, 1);
+	SendSignal(g32, 1);
+}

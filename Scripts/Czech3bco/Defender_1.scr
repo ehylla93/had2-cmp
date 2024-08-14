@@ -1,0 +1,203 @@
+// Variables definition
+
+Block 
+	{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+	Frame okno;		FRM_FindFrame(okno,"c3wn_vil156");
+	Frame reinfo;		FRM_FindFrame(reinfo,"dummy_reinforcement");
+	Frame def2;		FRM_FindFrame(def2, "defender_2");
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f021");
+
+
+	Integer aievent;
+	integer a;		a=0;
+
+	HUMAN_SETAIMODE_Defensive();
+	
+
+	}
+
+//-----------------------------------------------------------------------------------------
+
+OnAlarm()
+	{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("defender1 alarm c:",aievent);
+
+}
+HUMAN_ACTIVITY_Smoke(0);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+EndScript();
+
+
+	}
+
+
+OnAlarmDone()
+{
+	SetAlarmType(140,0);
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Crouch();
+	goto end;
+}
+
+
+OnDeath()
+{
+  	SendSignal(reinfo, 0);
+	DisableSignals(1);
+ 	Printf("Defender_1 is DEAD!!!");
+	EndScript();
+}
+
+Whenever opelridic(_SignalReceived(1))		//od opelridice-du uklid se mimo
+{
+HUMAN_Move("Defender_01_03");
+HUMAN_TurnAt(def2);
+HUMAN_ACTIVITY_Smoke(1);
+goto end;
+}
+
+Whenever def2(_SignalReceived(2))		//od def2 po odchodu
+{
+printf ("Hmmmm Velitel øíkal nìco o bednách tady vedle. Až pøijede Horst s náklaïákem.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994022, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def2, 4);
+goto end;
+}
+
+Whenever def2x2(_SignalReceived(3))		
+{
+printf (" Fajn. Já tu poèkám.");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994024, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def2, 5);
+delay (2000);
+goto hlidani;
+}
+
+Whenever def2odvelitl(_SignalReceived(4))		
+{
+HUMAN_SETMODE_Walk();
+HUMAN_Move("Defender_01_05");
+SendSignal(def2,12);			//cum na mne
+HUMAN_TurnAt(def2);
+printf ("  Tak co ?");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994030, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def2, 8);
+goto end;
+}
+
+
+Whenever def2x3(_SignalReceived(5))		
+{
+
+printf ("Mne to moc jako pohoda nepøijde. Mám tu z toho divný pocit. Radši bych se sbalil ..");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994032, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def2, 9);
+goto end;
+}
+
+Whenever def2x4(_SignalReceived(6))		
+{
+
+printf ("To je sice fakt ,ale mé špatné tušení nikdy nezklamalo.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994034, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def2,10);
+goto end;
+}
+
+Whenever def2x5(_SignalReceived(7))		
+{
+
+printf ("Øíkej si co chceš , já budu dávat pozor.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994036, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def2,11);
+HUMAN_SETMODE_Guard();
+goto hlidani;
+}
+//-----------------------------------------------------------------------------------------
+Label gdng:
+	HUMAN_WeaponOnArm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_Move("gdng_1");
+	HUMAN_LookAround(1);
+	Delay(6000);
+	HUMAN_Move("gdng_2");
+	HUMAN_LookAround(1);
+	Delay(6000);
+if (_RandomInt(4)==0)
+{
+	HUMAN_Move("Defender_01_02");
+	HUMAN_LookAround(1);
+	Delay(6000);
+}
+
+	GoTo gdng;
+
+
+Label hlidani:
+	
+	a=(_RandomInt(4));
+	if (a==0)	{	HUMAN_Move("Defender_01_04");	Gosub rozhled;	}
+	if (a==1)	{	HUMAN_Move("ShootPlazza_01");	Gosub rozhled;	}
+	if (a==2)	{	HUMAN_Move("Nosic2_DA2");	Gosub rozhled;	}
+	if (a==3)	{	HUMAN_Move("opelridic6");		Gosub rozhled;	}
+	
+	
+goto hlidani;
+
+
+label rozhled:
+
+HUMAN_LookAround(1);
+delay (5000);
+Return;
+
+
+
+label end:

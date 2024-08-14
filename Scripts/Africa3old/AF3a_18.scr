@@ -1,0 +1,40 @@
+// Sniper 1
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+  SetAlarmType(1023, false);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  SetAlarmType(1023, false);
+  SetAlarmType(768, true);
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, false);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+  HUMAN_SETSIGHTRANGE(50000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(2);
+goto END;
+
+Label END:
+
+
+

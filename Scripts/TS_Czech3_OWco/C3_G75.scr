@@ -1,0 +1,168 @@
+//	face assigner
+Block
+{
+  INTEGER german_faces_count	= 14;		
+  INTEGER italian_faces_count	= 5;		
+  INTEGER japan_faces_count	= 5;		
+  INTEGER american_faces_count	= 5;		
+  INTEGER russian_faces_count	= 5;		
+
+  INTEGER rnd_german	= _RandomInt(german_faces_count);
+  INTEGER rnd_italian		= _RandomInt(italian_faces_count);
+  INTEGER rnd_japan		= _RandomInt(japan_faces_count);
+  INTEGER rnd_american	= _RandomInt(american_faces_count);
+  INTEGER rnd_rusian		= _RandomInt(russian_faces_count);
+  FRAME FRM;		FRM_FindFrame(FRM, "");			
+}
+
+
+  FRM_FindFrame(FRM, "C3_G01");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G02");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G03");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G04");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G05");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G06");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G07");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G08");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G09");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G10");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G11");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G12");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G13");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G14");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G15");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G16");			gosub AMERICAN_FACE;
+  FRM_FindFrame(FRM, "C3_G17");			gosub AMERICAN_FACE;
+  FRM_FindFrame(FRM, "C3_G18");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G19");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G20");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G21");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G22");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G23");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G24");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G25");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G26");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G27");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G28");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G29");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G30");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G31");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G32");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G33");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G34");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G35");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G36");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G37");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G38");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G39");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G40");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G41");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G42");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G43");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G44");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G45");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G46");			gosub RUSIAN_FACE;
+  FRM_FindFrame(FRM, "C3_G47");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G48");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G49");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G50");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G51");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G52");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G53");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G54");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G55");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G56");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G57");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G58");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G59");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G60");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G61");			gosub GERMAN_FACE;
+//FRM_FindFrame(FRM, "C3_G62");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G63");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G64");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G65");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G66");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G67");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G68");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G69");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G70");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G71");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G72");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G73");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "C3_G74");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Priso1");			gosub AMERICAN_FACE;
+  FRM_FindFrame(FRM, "Priso2");			gosub AMERICAN_FACE;
+  FRM_FindFrame(FRM, "Snipe1");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Snipe2");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Snipe3");			gosub GERMAN_FACE;
+  
+EndScript();
+
+
+LABEL GERMAN_FACE:
+Block
+{
+  if(rnd_german == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f021"); }
+  if(rnd_german == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f059"); }
+  if(rnd_german == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f024"); }
+  if(rnd_german == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f039"); }
+  if(rnd_german == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f042"); }
+  if(rnd_german == 5)	{  FRM_SwitchFaceTexture(FRM, "e_f043"); }
+  if(rnd_german == 6)	{  FRM_SwitchFaceTexture(FRM, "e_f045"); }
+  if(rnd_german == 7)	{  FRM_SwitchFaceTexture(FRM, "e_f051"); }
+  if(rnd_german == 8)	{  FRM_SwitchFaceTexture(FRM, "e_f052"); }
+  if(rnd_german == 9)	{  FRM_SwitchFaceTexture(FRM, "e_f053"); }
+  if(rnd_german == 10){  FRM_SwitchFaceTexture(FRM, "e_f054"); }
+  if(rnd_german == 11){  FRM_SwitchFaceTexture(FRM, "e_f055"); }
+  if(rnd_german == 12){  FRM_SwitchFaceTexture(FRM, "e_f056"); }
+  if(rnd_german == 13){  FRM_SwitchFaceTexture(FRM, "e_f057"); }
+  rnd_german = rnd_german + 1;
+  if(rnd_german == german_faces_count){ rnd_german = 0; }
+}
+return;
+
+LABEL ITALIAN_FACE:
+Block
+{
+  if(rnd_italian == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f031"); }
+  if(rnd_italian == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f036"); }
+  if(rnd_italian == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f044"); }
+  if(rnd_italian == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f058"); }
+  if(rnd_italian == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f060"); }
+  rnd_italian = rnd_italian + 1;
+  if(rnd_italian == italian_faces_count){ rnd_italian = 0; }
+}
+return;
+
+LABEL JAPAN_FACE:
+  if(rnd_japan == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f046"); }
+  if(rnd_japan == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f047"); }
+  if(rnd_japan == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f048"); }
+  if(rnd_japan == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f049"); }
+  if(rnd_japan == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f050"); }
+  rnd_japan = rnd_japan + 1;
+  if(rnd_japan == japan_faces_count){ rnd_japan = 0; }
+return;
+
+LABEL AMERICAN_FACE:
+Block
+{
+  if(rnd_american == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f054"); }
+  if(rnd_american == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f055"); }
+  if(rnd_american == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f056"); }
+  if(rnd_american == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f057"); }
+  if(rnd_american == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f059"); }
+  rnd_american = rnd_american + 1;
+  if(rnd_american == american_faces_count){ rnd_american = 0; }
+}
+return;
+
+LABEL RUSIAN_FACE:
+  if(rnd_rusian == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f054"); }
+  if(rnd_rusian == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f055"); }
+  if(rnd_rusian == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f056"); }
+  if(rnd_rusian == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f057"); }
+  if(rnd_rusian == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f059"); }
+  rnd_rusian = rnd_rusian + 1;
+  if(rnd_rusian == russian_faces_count){ rnd_rusian = 0; }
+return;

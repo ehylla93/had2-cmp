@@ -1,0 +1,121 @@
+// POR_01 - officer waiting for documents
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //Close shooting (si ferit, ataca)
+SetAlarmType(2,1); //Hear shooting
+SetAlarmType(4,0); //steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explozion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //I´m wounded
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //Friendly fire
+SetAlarmType(512,1); //I see a dead body
+
+Frame GER_01;			FRM_FindFrame(GER_01,"GER_01");
+Frame SNI2;			FRM_FindFrame(SNI2,"SNI2");
+Frame GSS_04;			FRM_FindFrame(GSS_04,"GSS_04");
+Frame obj2;			FRM_FindFrame(obj2,"obj2");
+Frame MOTO;	FRM_FindFrame(MOTO, "MOTO");
+Frame GZZ6;	FRM_FindFrame(GZZ6, "GZZ6");
+Frame COTXE1;	FRM_FindFrame(COTXE1, "COTXE1");
+Frame GTR1;	FRM_FindFrame(GTR1, "GTR1");
+Frame OFI_05;	FRM_FindFrame(OFI_05, "OFI_05");
+
+Frame Documents;
+
+Frame get_player;
+
+//Integer time;		time=0;
+
+FRM_SwitchFaceTexture(me,"e_f025");
+
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+HUMAN_SETMODE_Stand();
+
+}
+goto END;
+
+HUMAN_SetAnim("%%piseloop",1, 1, 1);
+goto end;
+
+
+//--------------------------------------------------------------------
+
+
+Whenever player(_PlayerInRange(3))
+{
+If(_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+HUMAN_TurnAtNearestPlayer();
+SUBTITLES_SetOn(1);
+delay (900);
+FRM_GetNearestPlayer(me, get_player);
+FRM_MorphSpeech(get_player, 15993051, 5, 20);
+delay (2000);
+FRM_MorphSpeech(get_player, 15993052, 5, 20);
+delay (1500);
+FRM_MorphSpeech(me, 15993053, 5, 20);		// un momento
+delay (3220);
+FRM_MorphSpeech(me, 15993054, 5, 20);		//esta en el pasillo
+delay (2550);
+FRM_MorphSpeech(me, 15993055, 5, 20);		//lo llamare
+delay (500);
+HUMAN_SetAnim("%%n1_prijmac",500,300,0);
+delay (7000);
+FRM_MorphSpeech(me, 15993056, 5, 20);		//hey
+delay (4600);
+FRM_MorphSpeech(me, 15993057, 5, 20);		//si señor
+delay (3000);
+FRM_MorphSpeech(me, 15993058, 5, 20);		//"You can go now."
+SendSignal(GSS_04,20);
+delay (2000);
+SUBTITLES_SetOn(0);
+goto end;
+}
+SendSignal(SNI2,21);
+Delay(500);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(me, 15993085, 5, 10);	//"We have a spy here! Alarm! Alarm!"
+delay (90);
+SUBTITLES_SetOn(0);
+SetAlarmType(32, 1);
+HUMAN_SETAIMODE_Aggressive();
+}
+goto end;
+
+//--------------------------------------------------------------------
+
+
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_WeaponUp(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+goto END;
+}
+
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 360))
+{
+HUMAN_Suspend(0);
+}
+
+Label END:

@@ -1,0 +1,59 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame la_OpelFAf_1;		FRM_FindFrame(la_OpelFAf_1,"la_OpelFAf_1");
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+HUMAN_BoardVehicle("la_OpelFAf_1",  1, 1);
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(0);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_BoardVehicle("la_OpelFAf_1",  1, 2);
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(0);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_BoardVehicle("la_OpelFAf_1",  1, 1);
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(0);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_BoardVehicle("la_OpelFAf_1",  1, 2);
+//^DefaultLoad
+goto END;
+
+Label END:

@@ -1,0 +1,6 @@
+5/28/2009 12:23:22 PM : Initializing Form...
+5/28/2009 12:23:22 PM : Form Initialized
+5/28/2009 12:23:22 PM : Retriving OS Version
+5/28/2009 12:23:22 PM : Retriving Number Of Processors
+5/28/2009 12:23:22 PM : Retriving Windows User Name
+5/28/2009 12:23:22 PM : Tool Tips Loaded

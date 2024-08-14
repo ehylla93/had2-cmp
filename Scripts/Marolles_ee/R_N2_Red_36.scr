@@ -1,0 +1,55 @@
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red36_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(7)
+{
+  HUMAN_Suspend(False);
+  HUMAN_SetSniper(True, 6);
+}
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Stand();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red36_1");		
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 36: ", AIEvent);
+      HUMAN_SETSIGHTRANGE(70);
+      HUMAN_SETHEARRANGE(75);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SETSIGHTRANGE(60);
+  HUMAN_SETHEARRANGE(70);
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

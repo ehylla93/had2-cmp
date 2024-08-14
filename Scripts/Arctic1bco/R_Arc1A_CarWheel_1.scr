@@ -1,0 +1,104 @@
+__SetupAutoLogging(true, "ARC1_ZAVOZNIK");
+
+Block
+{
+    integer AIEvent;
+    Frame CAR;		FRM_Findframe(CAR, "Auti_BAD");
+    Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+    SetAlarmType(1023, True);	
+}
+
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;		
+
+  Whenever XXX (_PlayerInRange(105); )		
+  {							
+    HUMAN_Suspend(False);	
+      HUMAN_SETAIMODE_Defensive();
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Walk();
+      HUMAN_WeaponOnArm(False);
+      HUMAN_SetOptimized(1);
+    SendSignal(MyFRM, 1);			
+  }							
+  OnSignal(5)		
+  {							
+    HUMAN_Suspend(False);				
+  }							
+
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_WeaponOnArm(False);
+  HUMAN_SetOptimized(1);
+  Goto TheEnd;
+
+OnSignal(1)  // AKCE - START
+{
+  HUMAN_SetAnim("%%odtlacovac2", 400, 400, True);	 
+  Goto TheEnd;
+}  
+OnSignal(2)  // AKCE - END
+{
+  Delay(150);
+  HUMAN_SetAnim("", 250, 250, False);
+  Goto TheEnd;
+}  
+
+OnSignal(10)
+{
+  HUMAN_Move("nastup_1"); 	
+  HUMAN_LookAround(4);
+  delay(2500);
+  HUMAN_LookAround(0);
+  HUMAN_Move("nastup_2");
+  HUMAN_Move("nastup_3");
+  HUMAN_SetAnim("", 200, 200, True);
+  label loop_car:
+  If ( _FrameInRange(CAR)< 5 )
+     {
+         HUMAN_BoardVehicle("Auti_Bad", 1, true);
+     } else {
+         Delay(3000);
+         Goto loop_car;
+     }
+  // a jsou pryc
+  Delay(15000);
+  SetAlarmType(1023, False);
+  SetAlarmType(1023, True);	// 1 + 16 + 32 + 64 + 128 = 241
+}
+
+OnAlarm()
+{
+  Block
+     {
+         HUMAN_SETSIGHTRANGE(45);
+         HUMAN_SETHEARRANGE(55);
+         AIEvent =_GetAlarmType(); 
+         PrintfNumber("AIE CarWheel 1: ", AIEvent);
+         HUMAN_SETAIMODE_Defensive();
+         DisableSignals(true);
+         SaveGameValue(30, 99);	// pro cutsc 4 (auto) - má-li se vynechat , nebo pøerušit
+     }
+    HUMAN_SetAnim("", 100, 100, False);
+    EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(35);
+  HUMAN_SETHEARRANGE(40);
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("nastup_1");
+  HUMAN_SETMODE_Crouch();  
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SetAlarm(False);
+}
+
+OnCutscene(4){}
+OnCutsceneDone(4){}
+
+Label TheEnd:

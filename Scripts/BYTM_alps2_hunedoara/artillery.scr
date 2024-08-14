@@ -1,0 +1,53 @@
+
+EnableSignal( 1, 1 );
+
+// Start artillery fire
+//Whenever Spawn (_MP_IsTeamMemberInRange(1, 2))
+OnSignal ( 1 )
+{
+    EnableSignal( 1, 0 );
+    Frame   x;
+    Integer  d;
+   
+    //  EXPLOSION 1 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl1" );   }
+    else  		      {   FRM_FindFrame( x, "_expl1" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );
+
+    //  EXPLOSION 2 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl2" );   }
+    else  		      {   FRM_FindFrame( x, "_expl2" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );
+
+    //  EXPLOSION 3 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl3" );   }
+    else  		      {   FRM_FindFrame( x, "_expl3" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );
+
+    //  EXPLOSION 4 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl4_1" );   }
+    else  		      {   FRM_FindFrame( x, "_expl4_2" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );
+
+    //  EXPLOSION 5 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl5_1" );   }
+    else  		      {   FRM_FindFrame( x, "_expl5_2" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );
+
+    //  EXPLOSION 6 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl6_1" );   }
+    else  		      {   FRM_FindFrame( x, "_expl6_2" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );
+
+    //  EXPLOSION 7 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl7_1" );   }
+    else  		      {   FRM_FindFrame( x, "_expl7_2" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );
+
+    //  EXPLOSION 8 
+    if ( _RandomInt(2) == 0 )  {   FRM_FindFrame( x, "_expl8_1" );   }
+    else  		      {   FRM_FindFrame( x, "_expl8_2" );   }
+    SetActorState( x, 1 );   d = _RandomInt( 2200 );  d = d + 800;   Delay( d );	
+	
+    EndScript( );
+}

@@ -1,0 +1,47 @@
+// g_E01 sitting on stage
+
+block
+{
+SetAlarmType(128,0);
+
+HUMAN_SETAIMODE_Defensive();
+integer aievent;
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("g_E01 alarm:",aievent);
+HUMAN_SetAnim("", 200, 200, 0);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("g_E01 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(65))
+{
+HUMAN_SetAnim("%%sedila1", 500, 500, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

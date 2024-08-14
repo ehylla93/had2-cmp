@@ -1,0 +1,43 @@
+// BR_G14 - Ridic Tigra (La_tiger_1)
+// -------------------------------------------
+
+Block
+{
+Frame Cas;	FRM_FindFrame(Cas,"TG_Cas");
+Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+}
+
+// -------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_1", 1, 0);
+Delay(250);
+SendSignal(Cas, 1);
+HUMAN_Drive("Hakl_5", 15);
+goto END;
+}
+
+OnSignal(2)
+{
+SendSignal(Cas, 2);
+HUMAN_Drive("Hakl_5", 8);
+Goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_Drive("", 8);
+SendSignal(Reinf, 2);
+Goto END;
+}
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

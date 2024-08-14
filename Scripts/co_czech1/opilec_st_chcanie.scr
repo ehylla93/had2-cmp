@@ -1,0 +1,17 @@
+
+Block {
+frame me;	frm_getmyframe(me);
+integer moc;
+}
+
+OnSignal(1)	// received from Ge_2
+{
+FRM_CreateIndexedParticle(21, me, moc);
+Delay(27000);
+FRM_DestroyIndexedParticle(moc);
+}
+
+OnSignal(2)	// received from Ge_2
+{
+FRM_DestroyIndexedParticle(moc);
+}

@@ -1,0 +1,133 @@
+block
+{
+FRAME en01;			FRM_FindFrame(en01, "AF3b_01");
+FRAME en02;			FRM_FindFrame(en02, "AF3b_02");
+FRAME en03;			FRM_FindFrame(en03, "AF3b_03");
+FRAME en04;			FRM_FindFrame(en04, "AF3b_04");
+FRAME en05;			FRM_FindFrame(en05, "AF3b_05");
+FRAME en06;			FRM_FindFrame(en06, "AF3b_06");
+FRAME en07;			FRM_FindFrame(en07, "AF3b_07");
+FRAME en08;			FRM_FindFrame(en08, "AF3b_08");
+FRAME en09;			FRM_FindFrame(en09, "AF3b_09");
+FRAME en10;			FRM_FindFrame(en10, "AF3b_10");
+FRAME en11;			FRM_FindFrame(en11, "AF3b_11");
+FRAME en12;			FRM_FindFrame(en12, "AF3b_12");
+FRAME en13;			FRM_FindFrame(en13, "AF3b_13");
+FRAME en14;			FRM_FindFrame(en14, "AF3b_14");
+FRAME en15;			FRM_FindFrame(en15, "AF3b_15");
+FRAME en16;			FRM_FindFrame(en16, "AF3b_16");
+FRAME en17;			FRM_FindFrame(en17, "AF3b_17");
+FRAME en18;			FRM_FindFrame(en18, "AF3b_18");
+FRAME en19;			FRM_FindFrame(en19, "AF3b_19");
+FRAME en20;			FRM_FindFrame(en20, "AF3b_20");
+FRAME en21;			FRM_FindFrame(en21, "AF3b_21");
+FRAME en22;			FRM_FindFrame(en22, "AF3b_22");
+FRAME en23;			FRM_FindFrame(en23, "AF3b_23");
+FRAME en24;			FRM_FindFrame(en24, "AF3b_24");
+FRAME en25;			FRM_FindFrame(en25, "AF3b_25");
+FRAME en26;			FRM_FindFrame(en26, "AF3b_26");
+FRAME en27;			FRM_FindFrame(en27, "AF3b_27");
+FRAME en28;			FRM_FindFrame(en28, "AF3b_28");
+FRAME en29;			FRM_FindFrame(en29, "AF3b_29");
+FRAME en30;			FRM_FindFrame(en30, "AF3b_30");
+FRAME en31;			FRM_FindFrame(en31, "AF3b_31");
+FRAME en32;			FRM_FindFrame(en32, "AF3b_32");
+FRAME en33;			FRM_FindFrame(en33, "AF3b_33");
+FRAME tiger1;		FRM_FindFrame(tiger1, "tiger01");
+FRAME tiger2;		FRM_FindFrame(tiger2, "tiger02");
+
+FRAME obj;			FRM_FindFrame(obj, "MINARET22");
+FRAME act;
+Integer x=32;
+Integer tank = 1;
+}
+
+Delay(3000);
+goto check;
+
+
+Label check:
+x=32;
+
+block
+{
+if (_ACTOR_GetState(en01)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en02)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en03)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en04)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en05)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en06)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en07)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en08)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en09)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en10)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(en11)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en12)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en13)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en14)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en15)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en16)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en17)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en18)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en19)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en20)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(en21)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en22)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en23)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en24)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en25)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en26)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en27)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en28)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en29)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en30)==0)	{	x=x-1;	}
+}
+
+block
+{
+if (_ACTOR_GetState(en31)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en32)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en33)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(tiger1)==0)	{	tank=0; printf("one or both tanks destroyed");	}
+if (_ACTOR_GetState(tiger2)==0)	{	tank=0; printf("one or both tanks destroyed");	}
+}
+
+if ((x<5) and (tank==0))
+ {
+  SendSignal(obj, 1); 
+  FRM_FindFrame(act, "af3b_01"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }		//"Retreat!  Retreat!"
+  FRM_FindFrame(act, "af3b_02"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_03"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_04"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_05"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_06"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_07"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_08"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_09"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_10"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_11"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_12"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_13"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_14"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_15"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_16"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_17"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_18"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_19"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_20"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_21"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_22"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_23"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_24"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  FRM_FindFrame(act, "af3b_25"); if(_actor_getstate(act)){ FRM_MorphSpeech(act, 08991607, 5, 80); }
+  EndScript();
+}
+goto check;
+
+Label end:

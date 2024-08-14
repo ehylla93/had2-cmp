@@ -1,0 +1,32 @@
+// Particles on Objects
+// -----------------------------------------------------------------
+
+Block
+{
+Frame Ju871;		FRM_FindFrame(Ju871, "01_Ju87");
+Frame Ju871_X;		FRM_FindFrame(Ju871_X, "01_Ju87_Smoke");
+
+Frame Ju872;		FRM_FindFrame(Ju872, "10_Ju87");
+Frame Ju872_X;		FRM_FindFrame(Ju872_X, "10_Ju87_Smoke");
+
+Frame Ju873;		FRM_FindFrame(Ju873, "11_Ju87");
+Frame Ju873_X;		FRM_FindFrame(Ju873_X, "11_Ju87_Smoke");
+
+Frame Ju874;		FRM_FindFrame(Ju874, "02_Ju87");
+Frame Ju874_X;		FRM_FindFrame(Ju874_X, "02_Ju87_Smoke");
+
+FRM_CreateParticle(68, Ju871_X);
+SetActorState(Ju871, 0);
+
+FRM_CreateParticle(68, Ju872_X);
+SetActorState(Ju872, 0);
+
+FRM_CreateParticle(68, Ju873_X);
+SetActorState(Ju873, 0);
+
+FRM_CreateParticle(68, Ju874_X);
+SetActorState(Ju874, 0);
+
+EndScript();
+}
+

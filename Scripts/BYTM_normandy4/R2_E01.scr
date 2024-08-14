@@ -1,0 +1,51 @@
+// R2_E01
+
+block
+{
+SetAlarmType(925, 0); // 1+4+8+16+128+256+512
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+SetAlarmType(925, 1);
+HUMAN_SetAnim("", 200, 200, 0);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("R2_E01 dead");
+DisableSignals(1);
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_SETMODE_Run();
+FRM_TeleportNearCheckpoint(MyFRM, "door1", "door1_1");
+HUMAN_Suspend(0);
+HUMAN_Move("reinf2_1");
+SetAlarmType(1023, 0);
+SetAlarmType(1023, 0);
+HUMAN_Move("reinf2_2");
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

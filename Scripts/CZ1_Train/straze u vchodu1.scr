@@ -1,0 +1,125 @@
+// Ge_9
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame stlp;
+	FRM_FindFrame(stlp, "m_nm2_valec_");
+Frame posila7;
+	FRM_FindFrame(posila7, "posila7");
+Frame posila8;
+	FRM_FindFrame(posila8, "posila8");
+Frame posila9;
+	FRM_FindFrame(posila9, "posila9");
+Frame posila10;
+	FRM_FindFrame(posila10, "posila10");
+
+Integer aievent;
+	aievent=0;
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(35);
+FRM_SwitchFaceTexture(me, "e_f024");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor1
+{
+	HUMAN_Suspend(false);
+}
+
+Label hlidka:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_9_01");
+	HUMAN_Move("Ge_9_02");
+	HUMAN_Move("Ge_9_01");
+	HUMAN_Move("Ge_9_02");
+	HUMAN_Move("Ge_9_01");
+	HUMAN_Move("Ge_9_02");
+	HUMAN_Move("Ge_9_03");
+	HUMAN_TurnAt(stlp);
+	HUMAN_SETHEARRANGE(30);
+	HUMAN_SetOptimized(2);
+	Delay(1000);
+	HUMAN_SetAnim("%%lenin", 1000, 1000, true);
+	Delay(50000);
+	HUMAN_SetAnim("", 1000, 1000, false);
+	Delay(1000);
+	HUMAN_SetOptimized(1);
+	HUMAN_SETHEARRANGE(70);
+	GoTo hlidka;
+
+Label hlidka2:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_9_01");
+	Delay(2000);
+	HUMAN_Move("Ge_9_02");
+	Delay(2000);
+	GoTo hlidka2;
+
+Label hlidka3:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_9_04");
+	Delay(2000);
+	HUMAN_Move("Ge_9_05");
+	Delay(2000);
+	GoTo hlidka3;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+		aievent=_GetAlarmType();
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(50);
+	}
+	If((aievent==1) OR (aievent==2))
+	{
+		Block
+		{
+			SendSignal(posila7, 1);
+			SendSignal(posila8, 1);
+			SendSignal(posila9, 1);
+			SendSignal(posila10, 1);
+		}
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_LookAround(4);
+	GoTo hlidka2;
+}
+
+OnDeath()
+{
+	Block
+	{
+		SendSignal(posila7, 1);
+		SendSignal(posila8, 1);
+		SendSignal(posila9, 1);
+		SendSignal(posila10, 1);
+	}
+	EndScript();
+}
+
+Label end:

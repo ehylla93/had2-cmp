@@ -1,0 +1,67 @@
+// sniper bez sniperky
+
+integer  AIEvent;
+Frame turn1;		FRM_FindFrame(turn1, "dummy_sniper3_turn_1");	
+Frame Ally1;		FRM_FindFrame(Ally1, "Ally_1");	
+frame OBJ;		FRM_FindFrame(OBJ, "Objectives");	
+
+SetAlarmType(920, False);	// 8+16+128+256+512
+HUMAN_Suspend(True);			
+goto TheEnd;				
+
+OnSignal(7)
+{			
+  HUMAN_SETSIGHTRANGE(55);
+  HUMAN_SETHEARRANGE(66);
+  HUMAN_Suspend(False);			
+  HUMAN_SetSniper(True, 5);
+}						
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETMODE_Walk();
+    }
+  HUMAN_Move("Sniper3_1");			
+  HUMAN_TurnAt(turn1);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      DisableSignals(True);
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Sniper 3: ", AIEvent);
+      HUMAN_SETMODE_Stand();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  DisableSignals(False);
+  SetAlarmType(1023, True);	
+  SetAlarmType(920, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 1);
+  EndScript();
+}
+
+OnSignal(15)
+{
+  HUMAN_TurnAt(Ally1);
+  HUMAN_IllFire(Ally1, 1000);
+}
+
+Label TheEND:

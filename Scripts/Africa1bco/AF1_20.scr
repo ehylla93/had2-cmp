@@ -1,0 +1,127 @@
+// AF1_20
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME sleep;			FRM_FindFrame(sleep, "af1_dummy19");
+  FRAME pobocnik;			FRM_FindFrame(pobocnik, "AF1_pobocnik");
+  INTEGER Atype			= 0;
+  INTEGER atpos			= 0;
+  INTEGER rnd 			= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  //HUMAN_SetAlarm(true);
+  goto END;
+}
+
+OnSignal(21)
+{
+  SetWhenever(infarrange, false);
+  goto ACTIVATE;
+}
+
+OnDeath(){
+  printf("20: dead");
+  
+  EndScript();
+}
+
+Whenever infarrange (_PlayerInRange(150)){
+  goto ACTIVATE;
+}
+
+Whenever inclrange (_PlayerInRange(50)){
+  HUMAN_SetAIMODE_Aggressive();
+  goto END;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableSignals(true);
+    DisableWhenevers(true);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    SetWhenever(infarrange, false);
+    SetWhenever(inclrange, false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+    Atype = _GetAlarmType();
+    printfnumber("20: ", Atype);
+    SendSignal(pobocnik, 20);
+  }
+
+  if(!atpos){
+    if(((Atype == 32) OR (Atype == 64)) OR (Atype == 1)) 
+    {
+      EndScript();
+    }
+    HUMAN_SetMODE_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_Move("AF1_20_alert");
+    atpos = 1;
+    goto END;
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(768, false);		// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SETMODE_Walk();
+//  Delay(1000);
+//Label LOOP:
+//  HUMAN_Move("AF1_20_01");
+//  gosub LOOKAROUND;
+//  HUMAN_Move("AF1_20_02");
+//  HUMAN_Move("AF1_20_03");
+//  gosub LOOKAROUND;
+//  HUMAN_Move("AF1_20_04");
+//  HUMAN_Move("AF1_20_05");
+//  gosub LOOKAROUND;
+//  HUMAN_Move("AF1_20_06");
+//  HUMAN_Move("AF1_20_07");
+//  gosub LOOKAROUND;
+//  HUMAN_Move("AF1_20_08");
+//goto LOOP;
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Zombie();
+// HUMAN_Suspend(true);
+//  HUMAN_SetEvents(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetMODE_Walk();
+
+  HUMAN_Move("AF1_20_pres01");
+  HUMAN_Move("AF1_20_pres02");
+  HUMAN_TurnAt(pobocnik);
+
+  Label LOOP:
+    rnd = _RandomInt(3);
+    if(rnd == 0){  HUMAN_SetAnim("%%rozhovor1", 200, 200, true); Delay(8000); }
+    if(rnd == 1){  HUMAN_SetAnim("%%rozhovor2", 200, 200, true); Delay(10000); }
+    if(rnd == 2){  HUMAN_SetAnim("%%rozhovor3", 200, 200, true); Delay(11000); }
+  goto LOOP;
+goto END;
+
+Label END:

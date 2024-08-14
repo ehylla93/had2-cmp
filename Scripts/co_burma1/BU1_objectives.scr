@@ -1,0 +1,223 @@
+// BU_obj - objectives detector
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+//Objective 1: Reason for german transports
+//Objective 2: Documentations
+//Objective 3: Destroy airplane parts
+//Objective 4: Bridge
+//Objective 5: Gather team at exit point
+//Objective 6: Kantana (optional)
+//Objective 7: Radio (optional)
+//Objective 8: Identification tags (optional)
+//Objective 9: All soldiers survive (inactive)
+
+Block
+{
+Integer docs;		docs=0;
+Integer discovered;	discovered=0;
+Integer bridgedown;	bridgedown=0;
+Integer firsttime;	firsttime=1;
+Integer exploded;	exploded=0;
+Frame timer;		FRM_FindFrame(timer, "BU1_timer");
+Frame texty;		FRM_FindFrame(texty, "obj_texty");
+Frame documents;
+
+SetObjectiveStatus(1, 0);
+SetObjectiveStatus(4, 0);
+
+SetWhenever(objective3, false);
+SetWhenever(objective5, false);
+}
+
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever objective1(_SignalReceived(1))	// received from place with airplane parts BU1_obj_01
+{
+	SetWhenever(objective1, 0);
+		discovered=1;
+	GoTo obj1complete;
+}
+
+Whenever objective2(_SignalReceived(2))	// received from technical documentation BU1_obj_02
+{
+		docs=1;
+	GoTo obj2complete;
+}
+
+Whenever objective3(_SignalReceived(3))	// received from airplane parts on destroy BU1_obj_03
+{
+	If(exploded==1)
+	{
+	EnableSignal(7, false);
+	GoTo end;
+	}
+	exploded=1;
+	GoTo obj3complete;
+}
+
+Whenever objective4(_SignalReceived(4))	// received from bridge on destroy BU1_obj_04
+{
+	GoTo obj4complete;
+}
+
+OnSignal(5)	// received from technical documentation BU1_obj_02
+{
+	GoTo obj2incomplete;
+}
+
+OnSignal(6)	// received from techincal documentation BU1_obj_02
+{
+	GoTo obj2complete2;
+}
+
+OnSignal(7)	// received from explosion BU1_obj_01
+{
+	EnableSignal(3, false);
+	If((discovered==1) AND (docs==1))
+	{
+		GoTo obj3complete;
+	}
+	GoTo obj1failed;
+}
+
+OnSignal(8)	// received from BU1_obj_06
+{
+	GoTo obj6complete;
+}
+
+OnSignal(9)	// received from BU1_obj_06
+{
+	GoTo obj6incomplete;
+}
+
+OnSignal(10)	// received from BU1_obj_07
+{
+	GoTo obj7complete;
+}
+
+OnSignal(11)	// received from BU1_obj_08
+{
+	GoTo obj8complete;
+}
+
+OnSignal(12)	// received from BU1_obj_08
+{
+	GoTo obj8incomplete;
+}
+
+Whenever objective5(_MP_AllTeamMembersAreInRange(1, 20))
+{
+	GoTo obj5complete;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label obj1complete:
+	SendSignal(timer, 2);		//stop timer
+	SetWhenever(objective3, true);
+	SetObjectiveStatus(2, 0);
+	SetObjectiveStatus(1, 1);
+	SendSignal(texty, 1);
+
+	If (_MP_IsItemInTeamInventory(1, 252, documents))
+	{	
+		GoTo obj2complete;
+	}
+	GoTo end;
+
+Label obj1failed:
+	SendSignal(texty, 2);
+	SetObjectiveStatus(1, 3);
+	GoTo end;
+
+Label obj2complete:
+	If(firsttime==0)
+	{	GoTo end;	}
+		firsttime=0;
+	SetObjectiveStatus(3, 0);
+	SendSignal(texty, 3);
+	SetObjectiveStatus(2, 1);
+	GoTo end;
+
+Label obj2incomplete:
+	SetObjectiveStatus(2, 0);
+	SendSignal(texty, 4);
+	GoTo end;
+
+Label obj2complete2:
+	SetObjectiveStatus(2, 1);
+	SendSignal(texty, 5);
+	GoTo end;
+
+Label obj3complete:
+	If(docs==0)
+	{
+		SendSignal(texty, 6);
+		SetObjectiveStatus(3, 3);
+		GoTo end;
+	}
+	SendSignal(texty, 7);
+	If(bridgedown==1)
+	{
+		GoSub setobjective5;
+	}
+	SetObjectiveStatus(3, 1);
+	EnableSignal(3, false);
+	GoTo end;
+
+Label obj4complete:
+	SendSignal(texty, 8);
+	If(discovered==1)
+	{
+		GoSub setobjective5;
+	}
+	SetObjectiveStatus(4, 1);
+	bridgedown=1;
+	SendSignal(timer, 1);		//start timer
+	GoTo end;
+
+Label obj5complete:
+	If(!_MP_IsItemInTeamInventory(1, 252, documents))
+	{
+		Delay(1000);
+		SetWhenever(objective5, true);
+		GoTo end;
+	}
+	SendSignal(texty, 9);
+	GoTo end;
+
+Label obj6complete:
+	SendSignal(texty, 10);
+	SetObjectiveStatus(6, 1);
+	GoTo end;
+
+Label obj6incomplete:
+	SetObjectiveStatus(6, 4);
+	GoTo end;
+
+Label obj7complete:
+	SendSignal(texty, 11);
+	SetObjectiveStatus(7, 1);
+	GoTo end;
+
+Label obj8complete:
+	SendSignal(texty, 12);
+	SetObjectiveStatus(8, 1);
+	GoTo end;
+
+Label obj8incomplete:
+	SetObjectiveStatus(8, 4);
+	GoTo end;
+
+Label setobjective5:
+	SendSignal(texty, 13);
+	Delay(5000);
+	SetObjectiveStatus(5, 0);
+	SetWhenever(objective5, true);
+	Return;
+
+Label end:

@@ -1,0 +1,38 @@
+// Ally Arctic4
+// ---------------------------------------------
+
+Block
+{
+	
+//	Frame me;			FRM_GetMyFrame(me);
+	
+
+//	FRM_SwitchFaceTexture(me,"e_f058");
+	HUMAN_SETSIGHTRANGE(500);
+	HUMAN_SETHEARRANGE(500);
+	SetAlarmType(1023, 1);
+
+	HUMAN_SetOptimized(1);
+	HUMAN_Suspend(1);
+}
+goto END;
+
+// ---------------------------------------------
+
+OnDeath(){
+printf("Ally killed by Offic1");
+EndScript();
+}
+
+
+Whenever Player (_PlayerInRange(250))
+{
+	Delay(2000);
+	HUMAN_Suspend(0);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetAnim("%%SedimL4", 4000, 4000, 1);
+	goto END;
+}
+
+
+Label END:

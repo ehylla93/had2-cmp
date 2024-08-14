@@ -1,0 +1,28 @@
+// AF4_14_activator - at the only entrance to commander room
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME af4_14;				FRM_FindFrame(af4_14, "AF4_14");
+  FRAME af4_15;				FRM_FindFrame(af4_15, "AF4_15");
+  FRAME af4_16;				FRM_FindFrame(af4_16, "AF4_16");
+  FRAME af4_17;				FRM_FindFrame(af4_17, "AF4_17");
+  FRAME af4_18;				FRM_FindFrame(af4_18, "AF4_18");
+  FRAME af4_19;				FRM_FindFrame(af4_19, "AF4_19");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inrejnz (_PlayerInRange(1)){
+  SendSignal(af4_14, 1);
+  Delay(1000);
+  SendSignal(af4_15, 1);
+  SendSignal(af4_19, 1);
+  Delay(1000);
+  SendSignal(af4_16, 1);
+  Delay(1000);
+  SendSignal(af4_17, 1);
+  Delay(1000);
+  SendSignal(af4_18, 1);
+}
+
+// -------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,74 @@
+//ge_34 - sitting on bench, MP40
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent=0;
+
+frame sit;		Frm_FindFrame(sit,"ge34sit");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+HUMAN_SetAnim("", 50,50,0);
+if (aievent==32)
+{
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedila1",500,500,1);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+label end:

@@ -1,0 +1,108 @@
+// Posadka jeepu 2
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame Jeep1;		FRM_FindFrame(Jeep1,"Jeep1");
+Frame Jeep2;		FRM_FindFrame(Jeep2,"Jeep2");
+Frame Dopredu;		FRM_FindFrame(Dopredu,"Britcum");
+Frame B2;		FRM_FindFrame(B2,"Brit02");
+
+Frame N1;		FRM_FindFrame(N1,"BK_G01");
+Frame N2;		FRM_FindFrame(N2,"BK_G02");
+Frame N3;		FRM_FindFrame(N3,"BK_G03");
+Frame N4;		FRM_FindFrame(N4,"BK_G04");
+Frame N5;		FRM_FindFrame(N5,"BK_G05");
+Frame N6;		FRM_FindFrame(N6,"BK_G06");
+Frame N7;		FRM_FindFrame(N7,"BK_G07");
+Frame N8;		FRM_FindFrame(N8,"BK_G08");
+Frame kill;		FRM_FindFrame(kill,"Ally_Detect");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(kill, 5);
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Jeep2",  true, 2);
+goto END;
+}
+
+OnSignal(2)
+{
+Delay(4000);
+HUMAN_BoardVehicle("Jeep2",  0, 2);
+SetActorState(Jeep2, 1);
+Delay(1000);
+HUMAN_MoveFromFrame(Jeep2, 6);
+HUMAN_TurnAt(jeep2);
+HUMAN_SETMODE_Crouch();
+Delay(200);
+HUMAN_SetAnim("%%sedimL2", 500, 500, 1);
+goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_BoardVehicle("Jeep2",  0, 2);
+Delay(500);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto END;
+}
+
+OnSignal(10)
+{
+HUMAN_SetAnim("", 500, 500, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveToFrame(B2, 1);
+HUMAN_SETMODE_StandFast();
+HUMAN_TurnAt(Dopredu);
+HUMAN_WeaponUp(1);
+goto end;
+}
+
+OnSignal(11)
+{
+Delay(1300);
+HUMAN_Attack(Dopredu, 4000);
+HUMAN_Attack(N5, 4000);
+HUMAN_Attack(N6, 8000);
+HUMAN_Attack(N7, 4000);
+goto end;
+}
+
+OnSignal(15)
+{
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 90000482, 5, 30);  // Yes sir!!
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Dopredu, 20);
+HUMAN_SETMODE_Silence();
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(Dopredu, 13);
+HUMAN_SETMODE_Crouch();
+Delay(6000);
+HUMAN_LookAround(1);
+HUMAN_SETMODE_StandFast();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(0);
+HUMAN_TurnAt(Jeep2);
+HUMAN_MoveToFrame(Jeep2, 1);
+HUMAN_BoardVehicle("Jeep2",  1, 2);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

@@ -1,0 +1,58 @@
+//zjisti jestli sou panaci z oplu in a nebo mrtvi.
+block
+{
+Frame f1;	FRM_FindFrame(f1, "opel_driver");
+Frame f2;	FRM_FindFrame(f2, "solcar_2");
+Frame f3;	FRM_FindFrame(f3, "solcar_1");
+Frame vybihac;	FRM_FindFrame(vybihac,"vybihac_kontrol");
+
+integer in;	in=1;		//jestli sou na scene
+integer x;	x=3;
+}
+
+goto end;
+
+
+Whenever blr (_SignalReceived(2))
+{
+//od ridice-sme out
+in=0;
+goto end;
+}
+
+Whenever check(_SignalReceived(1))
+{
+//hlavni mrtvi zjisti tydle a posli vybihacum
+goto check;
+}
+
+
+label check:
+
+if (in==0)
+{
+goto pokracuj;
+}
+x=3;
+block
+{
+if (_ACTOR_GetState(f1)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(f2)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(f3)==0)	{	x=x-1;	}
+
+PrintfNumber("opeler x=", x);
+}
+
+if (x==0)
+{
+goto pokracuj;
+}
+delay (4000);
+goto check;
+
+Label pokracuj:
+SendSignal (vybihac,1);
+
+
+
+Label end:

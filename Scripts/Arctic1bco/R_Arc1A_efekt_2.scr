@@ -1,0 +1,29 @@
+// efekt odfouknuteho snehu na zemi
+frame FRM;	FRM_GetMyFrame(FRM);
+integer wait = 3000;
+integer YorN;
+
+label loop:
+  Delay(2500);
+  SetWhenever(KO, true);
+  Delay(30000);
+goto loop;
+
+Whenever OK ( (_PlayerInRange(40) ) AND  (!_PlayerInRange(15)) )
+{
+  YorN = _RandomInt(2);
+  If (YorN == 0)
+   {
+      FRM_CreateParticle(26, FRM);
+   }
+  wait = _RandomInt(5000) + 5000;
+  Delay(wait);
+  SetWhenever(OK, true);
+  goto loop;
+}
+
+Whenever KO ( (_PlayerInRange(15)) OR (!_PlayerInRange(40)) )
+{
+  SetWhenever(OK, true);
+  goto loop;
+}

@@ -1,0 +1,7 @@
+
+frame S1;	FRM_FindFrame(S1,"s_boj1");
+frame S2;	FRM_FindFrame(S2,"s_boj2");
+
+
+Whenever N1	(_PlayerInRange(90); )	{  FRM_SetOn(S1, false); }
+Whenever N3	(_PlayerInRange(70); )	{  FRM_SetOn(S2, false); }

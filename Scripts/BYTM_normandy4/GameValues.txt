@@ -1,0 +1,9 @@
+GameValues in use
+
+// GV 14: Flak manned, bourelly_flak_E01, g_E02
+GV 15: poterne_E04, poterne_E04_det.scr
+GV 16: global alarm, settings.scr
+GV 30 - 32: gery_S01, gery_S02, gery_S03, randomize1.scr
+
+GV 1: convoy_E04, convoy_E05
+// GV 2: convoy_E08

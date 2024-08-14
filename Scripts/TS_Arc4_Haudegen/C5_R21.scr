@@ -1,0 +1,58 @@
+// C5_R21 Sherman2 lend/lease - 1-mg
+
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+//Frame me;
+//	FRM_GetMyFrame(me);
+}
+// ---------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// ---------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	printfnumber("Sherman2 MG: ", aievent);
+	HUMAN_TurnAtNearestPlayer();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+
+OnDeath()
+{
+	Delay(2000);
+	printf("C5_R21 Sherman2 MG dead");
+	EndScript();
+}
+// ---------------------------
+// Starting pose
+HUMAN_BoardVehicle("la_shermanAf_2", true, 1);
+HUMAN_SETSIGHTRANGE(600);
+HUMAN_SETHEARRANGE(400);
+SetAlarmType(1023,1);
+
+HUMAN_SETAIMODE_Defensive();
+//HUMAN_Suspend(true);
+
+Label end:
+

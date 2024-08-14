@@ -1,0 +1,60 @@
+// pobìží od vraku k protìjší stìnì
+
+integer  AIEvent;
+Frame turn;		FRM_FindFrame(turn, "dummy_Red20_turn");
+
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(5)
+{						
+  HUMAN_Suspend(False);			
+}						
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETMODE_Walk();
+    }
+  HUMAN_Move("Red20_1");			
+  HUMAN_TurnAt(turn);
+  Delay(1000);
+  HUMAN_SETMODE_Crouch();
+  Delay(2500);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType();
+      PrintfNumber("Red 20: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SetOptimized(1);
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+    }
+  If (_PlayerInRange(20); )  {  EndScript(); }
+  HUMAN_Move("Red20_2");			
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETMODE_Crouch();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);		  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

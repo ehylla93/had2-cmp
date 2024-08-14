@@ -1,0 +1,48 @@
+
+Frame turn; 		FRM_FindFrame(turn, "dummy_Ally3_turn");
+Frame OBJ; 		FRM_FindFrame(OBJ, "objectives");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+
+HUMAN_SetOptimized(2);
+SetWhenever( unsuspend, 1500);
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Whenever Unsuspend ( _PlayerInRange(20); )		
+{
+  HUMAN_Suspend(False);
+}
+
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETMODE_Run();
+  }
+  HUMAN_Move("Ally3_1");
+  HUMAN_TurnAt(turn);
+  HUMAN_SETMODE_Crouch();
+goto TheEnd;				
+
+Whenever KolizeOn ( _PlayerInRange(8); )
+{
+  HUMAN_SetOptimized(0);
+  goto TheEnd;	
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 30);
+  EndScript();
+}
+
+OnSignal(5)
+{
+  Printf("END SKRIPTU OD 3");
+//  EndScript();
+//  ScriptAssign(MyFRM, "R_N2_Ally3_Go");		////// Tady to byt nemuze - je to v OBJECTIVES !!!!!!!
+}
+
+Label TheEND:
+

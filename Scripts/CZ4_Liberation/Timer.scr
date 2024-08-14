@@ -1,0 +1,54 @@
+//----------------------/----------------------
+block
+{
+Frame Txt;		FRM_FindFrame(Txt,"Text");
+//Frame me;		FRM_GetMyFrame(me);
+Frame C_Timer;	FRM_FindFrame(C_Timer, "w_explosive_1");
+//SetActorState(C_Timer,5);
+integer rnd1;
+Integer C1;
+}
+Printf("Timer script");
+goto END;
+
+
+
+
+
+//----------------------Timer----------------------
+Whenever MissionFucked ((_ACTOR_GetState(C_Timer)==2) and (_LoadGameValue(200)==0))
+{
+SendSignal(Txt, 5);
+//Printf("Timer end");
+Delay(4000);
+SetObjectiveStatus(1, 2);
+SetObjectiveStatus(2, 2);
+SetObjectiveStatus(3, 2);
+SetObjectiveStatus(4, 2);
+SetObjectiveStatus(5, 2);
+SetObjectiveStatus(6, 2);
+SetObjectiveStatus(7, 2);
+SetObjectiveStatus(8, 2);
+SetObjectiveStatus(9, 2);
+SetObjectiveStatus(10, 2);
+SetObjectiveStatus(11, 2);
+SetObjectiveStatus(12, 2);
+SetObjectiveStatus(13, 2);
+SetObjectiveStatus(14, 2);
+goto end;
+}
+
+
+//TIMER:
+//
+//ACTORS.bin
+//Add object: dynamite place
+//Set desired time
+//
+//Script
+//Start counting with command: SetActorState(dynamite,5);
+//When timer runs to zero, actor state changes to (2): _ACTOR_GetState(dynamite)==2
+
+
+
+label end:

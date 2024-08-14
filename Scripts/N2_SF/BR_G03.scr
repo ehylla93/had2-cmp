@@ -1,0 +1,97 @@
+// BR_G03 - Enemy Reinforcement
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Reinf;	FRM_FindFrame(Reinf,"SF_G03");
+Frame MG;	FRM_FindFrame(MG,"MG3");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_SETSIGHTRANGE(69);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(0);
+HUMAN_MoveToFrame(Reinf, 0);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_WeaponUp(1);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+goto End;
+}
+
+Whenever Tiger_Destroyed (_SignalReceived(2))
+{
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(MG, 2);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

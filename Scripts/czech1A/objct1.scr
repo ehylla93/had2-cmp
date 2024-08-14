@@ -1,0 +1,15 @@
+// Obj 1 - Nepovinny ukol , zabij vsechny nemce
+//----------------------------------------------------------
+
+// Whenever AED (_AllEnemiesDead())
+// {
+// SUBTITLES_SetOn(true);
+// PlayMusic(6);
+// SUBTITLES_SetText(07991406);
+// Delay(6000);
+// SUBTITLES_SetOn(false);
+// SetObjectiveStatus(1, 1);
+// goto end;
+// }
+
+// Label end:

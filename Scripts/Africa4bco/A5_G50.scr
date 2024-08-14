@@ -1,0 +1,123 @@
+// Hakl Ridic
+// ----------------------------------------------------
+
+Block
+{
+Frame Hakl;	FRM_FindFrame(Hakl,"Hakl2n");
+
+Frame H1g2;	FRM_FindFrame(H1g2,"A5_G51");
+Frame H1g3;	FRM_FindFrame(H1g3,"A5_G52");
+Frame H1g4;	FRM_FindFrame(H1g4,"A5_G53");
+Frame H1g5;	FRM_FindFrame(H1g5,"A5_G54");
+Frame H1g6;	FRM_FindFrame(H1g6,"A5_G55");
+
+Frame T01;	FRM_FindFrame(T01,"A5_G56");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer Trasa;
+
+FRM_SwitchFaceTexture(me, "e_f041");
+}
+
+// ----------------------------------------------------
+
+OnDeath(){
+Car_SetFuel(Hakl, 0);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+goto END;
+}
+
+Whenever ALARM_Jedem (_SignalReceived(1))
+{
+SendSignal(T01, 2);
+Delay(5000);
+Car_SetFuel(Hakl, 900);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Hakl2n", 1, 0);
+HUMAN_SetOptimized(2);
+HUMAN_Drive("o1_act1_03", 80);
+HUMAN_Drive("o1_act1_02", 80);
+SendSignal(T01, 3);
+Trasa = _RandomInt(2);
+
+If(Trasa == 0)
+{
+HUMAN_Drive("tank01_al01", 70);
+HUMAN_Drive("", 0);
+}
+
+If(Trasa == 1)
+{
+HUMAN_Drive("o2_act1_01", 70);
+HUMAN_Drive("", 0);
+}
+
+If(Trasa == 2)
+{
+HUMAN_Drive("tank01_01", 70);
+HUMAN_Drive("", 0);
+}
+
+Delay(5000);
+
+SendSignal(H1g2, 2);
+SendSignal(H1g3, 2);
+SendSignal(H1g4, 2);
+SendSignal(H1g5, 2);
+SendSignal(H1g6, 2);
+
+HUMAN_BoardVehicle("Hakl2n", 0, 0);
+HUMAN_SetOptimized(1);
+HUMAN_WeaponOnArm(1);
+Car_SetFuel(Hakl, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(70);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Hakl, 17);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+// ----------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

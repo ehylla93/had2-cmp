@@ -1,0 +1,99 @@
+Integer  suspended             = 1;
+// Nasledujici hodnoty se v initu naplni smysluplnou hodnotou
+Integer  unsuspend_range  = 10; 	 // V Initu naplnime smysluplnou hodnotou
+Integer  alarm_sight_range = 180;            //  Na jakou vzdalenost vidi pri alarmu
+Frame   hakl;    FRM_FindFrame( hakl, "Tank2" );          
+
+
+// ---------------------------
+// Alarm and AI event settings
+// 1   - blizka strelba    2   - strelba     4     - kroky                    8     - zvuky (OnUse)    16   - exploze
+// 32 - vidim                 64 - zraneni    128 - smrtelny vykrik    256 - friendly fire         512 - vidim mrtvolu
+// ---------------------------
+SetAlarmType( 1023,  false );
+
+// ------------------
+// AKTIVACE ALARMU
+// ------------------
+OnAlarm()
+{
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+      HUMAN_SETSIGHTRANGE( alarm_sight_range );
+      EndScript();
+}
+
+
+// ------------------
+// KONEC ALARMU
+// ------------------
+OnAlarmDone()
+{
+      SetAlarmType( 1023, false );
+      Block { DisableSignals(0);  DisableWhenevers(0); }
+      GoTo Action;
+}
+
+
+// ------------------
+// SMRT
+// -------------------
+OnDeath()
+{
+//      SendSignal( hakl, 2 );
+      EndScript( );
+}
+
+
+// ------------------
+// SIGNALY
+// ------------------
+EnableSignal( 1, true );
+// NASEDNUTI DO HAKLU - od HAMMER2
+OnSignal(1)	
+{
+      EnableSignal(1, false);
+      Human_Suspend( false );	      
+      HUMAN_BoardVehicle( "Tank2",  1, 3 );
+      GoTo end;
+}
+
+EnableSignal( 2, true );
+// VYSEDNUTI Z HAKLU - od HAMMER2
+OnSignal(2)	
+{
+      EnableSignal(2, false);
+      HUMAN_BoardVehicle( "Tank2",  0, 3 );
+      GoTo Action;
+}
+
+
+// ------------------
+// INIT
+// -------------------
+   Delay(300);  // Pro jistotu, at se stihnou nastavit GameValue   
+   Block
+   {
+       unsuspend_range  = _LoadGameValue( 1 );
+       alarm_sight_range = _LoadGameValue( 2 );
+   }
+   HUMAN_SetOptimized( 1 );
+   HUMAN_Suspend(true);  
+   //...................
+   // DOPLNIT DALSI INICIALIZACNI KOD
+   GoTo  End;
+
+
+Label Action:
+    Block 
+    {	
+        SetAlarmType( 255,  true );
+        HUMAN_SetOptimized( 1 );
+        HUMAN_SETAIMODE_Aggressive();
+        HUMAN_SETMODE_Run();
+        HUMAN_SETMODE_Stand();
+    }
+    HUMAN_Move( "HAMMER2_GO3" );
+
+// ------------------
+Label End:
+

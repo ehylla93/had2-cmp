@@ -1,0 +1,50 @@
+// 05_E21
+// ----------------------------------------
+
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f042");
+SetAlarmType(1023,0);
+SetAlarmType(867, 1);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("05_E21 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+Whenever PIR (_PlayerInRange(60))
+{
+printf("05_E21 spawns");
+Integer AImode = _RandomInt(99);
+if(AImode > 75) { HUMAN_SETAIMODE_Aggressive(); }
+else {
+	if(AImode < 25) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+	}
+HUMAN_SetAnim("%%MRTVOLAK", 500, 500, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

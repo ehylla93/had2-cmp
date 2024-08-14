@@ -1,0 +1,186 @@
+//kdyz bez alarmu player prijde na schody tak si de zakourit 
+// na alarm ceka v cupu
+
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+
+integer aievent;
+integer a;	a=0;
+integer b;	b=0;
+Integer sus;	sus=0;
+
+frame sit;		Frm_FindFrame(sit,"hlidka_ohr_sit");
+frame cum1;		Frm_FindFrame(cum1,"naschodech1cum1");
+frame cum2;		Frm_FindFrame(cum2,"naschodech1cum2");
+frame cum3;		Frm_FindFrame(cum3,"naschodech1cum3");
+frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f042");
+
+HUMAN_SETMODE_Walk();
+
+
+}
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+
+//-------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+block
+{
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("na schodech1 alarm c:",aievent);
+}
+
+if (sus==0)
+	{
+	if (_PlayerInRange(10)==1)	
+	{
+	delay (2000);
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+	HUMAN_Suspend(0);
+	sus=1;
+	
+	}
+
+if (aievent==4)
+{
+HUMAN_Stop();
+SetAlarmType(4,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+HUMAN_LookAround(1);
+delay(5000);
+SetAlarmType(4,1);
+goto rozdel;
+}
+
+
+HUMAN_WeaponOnArm(1);
+HUMAN_ACTIVITY_Smoke(0);
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+HUMAN_LookAround(1);
+delay(5000);
+SetAlarmType(274,1);
+goto end;
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+goto end;
+
+}
+
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+
+Whenever player(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+block
+{
+sus=1;
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+SetAlarmType(4,1); //kroky
+}
+
+a=2;
+label 2:
+HUMAN_Move("naschodech1_02");
+a=3;
+label 3:
+HUMAN_Move("naschodech1_03");
+a=4;
+label 4:
+HUMAN_Move("naschodech1_04");
+a=5;
+label 5:
+
+HUMAN_ACTIVITY_Smoke(1);
+a=6;
+label kur:
+HUMAN_TurnAt(cum1);
+delay (8000);
+HUMAN_TurnAt(cum2);
+delay (8000);
+HUMAN_TurnAt(cum3);
+delay (10000);
+b=b+1;
+goto kur;	
+
+HUMAN_SetAnim("(tipnuti",400, 400, 0);
+delay (2100);
+HUMAN_ACTIVITY_Smoke(0);
+HUMAN_SetAnim("",200, 200, 0);
+
+a=7;
+label 7:
+HUMAN_Move("naschodech1_01");
+SetAlarmType(4,0); //kroky
+HUMAN_Suspend(1);
+goto end;
+
+}
+
+label rozdel:
+
+if (a==2)	{ goto 2; }
+if (a==3)	{ goto 3; }
+if (a==4)	{ goto 4; }
+if (a==5)	{ goto 5; }
+if (a==6)	{ goto kur; }
+if (a==7)	{ goto 7; }
+
+
+Label end:

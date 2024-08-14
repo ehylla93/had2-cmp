@@ -1,0 +1,49 @@
+//Unlock or Lock gate door
+// ----------------------Block----------------------
+
+Block
+{
+frame Mesh24;		FRM_FIndFrame(Mesh24,"Mesh24");
+integer locked=1;
+}
+
+// ----------------------OnUse----------------------
+
+OnUse()
+	{
+	if (locked == 1)
+	{
+	block
+	{
+	DOOR_Lock(Mesh24, 0);		//Unlock door
+	//SetActorState(Mesh24,1);
+	locked = 0;
+	}
+	}
+	else
+	{
+	block
+	{
+	SetActorState(Mesh24,0);	//Close door
+	}
+	delay(4000);
+	block
+	{
+	DOOR_Lock(Mesh24, 1);		//Lock door
+	locked = 1;
+	}
+	}
+	}
+
+// ----------------------Automatic Close----------------------
+
+Whenever close(_Actor_GetState(Mesh24)==1)
+	{
+	delay (95000);
+	block
+	{
+	//printf ("Automatic close door");
+	SetActorState(Mesh24,0);
+	}
+	SetWhenever(close,1);
+	}

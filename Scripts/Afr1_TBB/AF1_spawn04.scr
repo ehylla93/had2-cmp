@@ -1,0 +1,5 @@
+FRAME player;
+
+OnUse(){
+  ScriptAssign(player, "AF1_player04");
+}

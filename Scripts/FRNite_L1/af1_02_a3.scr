@@ -1,0 +1,14 @@
+// Trucks no fuel
+
+Block
+{
+	Frame T1;			FRM_FindFrame(T1, "Opel1");
+	Frame T2;			FRM_FindFrame(T2, "Opel2");
+}
+
+
+Car_SetFuel(T1, 0);
+Car_SetFuel(T2, 0);
+goto END;
+
+Label END:

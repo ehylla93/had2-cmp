@@ -1,0 +1,82 @@
+// Hakl ridic (1)
+// -------------------------------------------------------------------------------------------------------------
+
+
+block
+{
+
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+  Frame sed1;		FRM_FindFrame(sed1,"C5_G12");
+  Frame sed2;		FRM_FindFrame(sed2,"C5_G13");
+  Frame sed3;		FRM_FindFrame(sed3,"C5_G14");
+  Frame sed4;		FRM_FindFrame(sed4,"C5_G15");
+  Frame sed5;		FRM_FindFrame(sed5,"C5_G16");
+  Frame hakl2;		FRM_FindFrame(hakl2,"C5_G17");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnDeath(){
+  SendSignal(hakl2, 9);
+  EndScript();
+}
+
+OnSignal(8)  //  nasedat!!! Advance!!
+{
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("Hakl1n",  true, 0);
+  
+  SendSignal(sed1, 1);
+  SendSignal(sed2, 1);
+  SendSignal(sed3, 1);
+  SendSignal(sed4, 1);
+  SendSignal(sed5, 1);
+  
+  Delay(1000);
+  HUMAN_Drive("BMW_1",50);
+  HUMAN_Drive("BMW_2",50);
+  HUMAN_Drive("BMW_3",50);
+  HUMAN_DriveNearPlayer(30);
+  goto END; 
+}
+
+Whenever player (_PlayerInRange(60)) // Ich sehe ihm!!! - vidim ho , lol
+{
+  HUMAN_Stop();
+  HUMAN_Drive("", 30);
+  Delay(1000);
+  SendSignal(hakl2, 9);
+  HUMAN_BoardVehicle("Hakl1n",  false, 0);
+  Delay(1000);
+  SendSignal(sed1, 2);
+  SendSignal(sed2, 2);
+  SendSignal(sed3, 2);
+  SendSignal(sed4, 2);
+  SendSignal(sed5, 2);
+  HUMAN_SETSIGHTRANGE(100);
+  goto END; 
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+  HUMAN_Suspend(true);
+  HUMAN_SETSIGHTRANGE(10);
+  HUMAN_SETAIMODE_Aggressive();    
+  HUMAN_SetOptimized(2);
+  goto END;
+
+  Label END:

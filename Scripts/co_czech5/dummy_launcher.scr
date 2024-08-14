@@ -1,0 +1,36 @@
+
+Block {
+Frame G22;				FRM_FindFrame(G22, "GE_22");
+Frame G23;				FRM_FindFrame(G23, "GE_23");
+Frame G12;				FRM_FindFrame(G12, "GE_12");
+Frame G13;				FRM_FindFrame(G13, "GE_13");
+Frame opel;				FRM_FindFrame(opel, "GE_14");
+Frame tank;				FRM_FindFrame(tank, "GE_11");
+Frame launch2;			FRM_FindFrame(launch2, "dummy_launcher2");
+}
+
+Whenever PIR (_PlayerInRange(120))
+	{
+	SendSignal(launch2, 1);
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(22994411);	//"ENEMY REINFORCEMENTS HAVE ARRIVED."
+	Delay(5000);
+	SendSignal(tank, 1);
+	SendSignal(opel, 1);
+	SendSignal(G12, 1);
+	SendSignal(G13, 1);
+	SendSignal(G22, 1);
+	SendSignal(G23, 1);
+	SUBTITLES_SetText(22994412);	//"THEY WILL PROBABLY TRY TO FORCE THEIR WAY THROUGH THE VILLAGE"
+	Delay(5000);
+	SUBTITLES_SetText(22994413);	//"YOU MUST STOP THEM BEFORE THEY ARE ABLE TO LEAVE THE VILLAGE"
+	Delay(5000);
+	SUBTITLES_SetOn(false);
+	EndScript();
+	}
+	
+OnSignal(1)
+{
+SetWhenever(PIR, false);
+EndScript();
+}

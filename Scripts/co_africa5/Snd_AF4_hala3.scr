@@ -1,0 +1,14 @@
+// pisek2
+frame sound1;		frm_findframe(sound1,"S_pisek_hala03");
+frame sound2;		frm_findframe(sound2,"S_pisek_hala04");
+
+integer rnd;	
+integer rnd_pause;
+
+label loop:
+rnd= _randomint(2) +1;
+rnd_pause= _randomint(16500) +5000;
+if (rnd==1) {FRM_SetOn(sound1,true);}
+if (rnd==2) {FRM_SetOn(sound2,true);} 
+delay(rnd_pause);
+goto loop; 

@@ -1,0 +1,58 @@
+// 02_E11
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(128,0);
+
+Frame this;		FRM_GetMyFrame(this);
+Frame go;		FRM_FindFrame(go, "02_E06_trigger");
+
+integer rdm;
+
+FRM_SwitchFaceTexture(this, "e_f049");
+
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("02_E11 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 200, 200, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)		//received from 02_E08
+{
+HUMAN_SETMODE_Stand();
+rdm = _RandomInt(2);
+if(rdm==0) { HUMAN_SETMODE_Silence(); }
+else { HUMAN_SETMODE_Run(); }
+HUMAN_Suspend(0);
+HUMAN_MoveToFrame(go, 1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

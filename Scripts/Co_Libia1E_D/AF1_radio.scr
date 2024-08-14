@@ -1,0 +1,8 @@
+
+  Frame objectives;	FRM_FindFrame(objectives, "obj3");
+
+OnDeath()
+{
+	SendSignal(objectives, 1);
+	EndScript();
+}

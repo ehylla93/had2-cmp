@@ -1,0 +1,73 @@
+// pobìží od vraku k protìjší stìnì
+
+integer  AIEvent;
+integer RND = 0;
+integer FirstAlarm = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red25_turn");
+
+SetAlarmType(520, False);
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(6)
+{
+  Block
+    {
+       HUMAN_Suspend(False);
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETMODE_Run();
+       SetAlarmType(288, False);	// 256+32  a driv jeste   8+128+512   je false
+    }
+  goto TheEnd;
+}
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_Stop();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("Red25_2");			
+  HUMAN_TurnAt(turn);
+  Delay(500);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 25: ", AIEvent);
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+      RND = _RandomInt(3);
+    }
+  If ( FirstAlarm == 0 ) 
+    {
+       HUMAN_Move("Red25_1");			
+       SetAlarmType(288, True);			//   8+128+512   je false
+       HUMAN_SETAIMODE_Zombie();
+       FirstAlarm = 1;
+    }
+  HUMAN_SETMODE_Crouch();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

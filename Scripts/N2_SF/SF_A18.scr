@@ -1,0 +1,115 @@
+// Cpl. Simon Finch 
+// -------------------------------------------
+
+Block
+{
+Frame Cas;	FRM_FindFrame(Cas,"Sh_Cas");
+Frame USHakl;	FRM_FindFrame(USHakl,"US_Hakl1");
+Frame Sherman;	FRM_FindFrame(Sherman,"Sherman1");
+Frame Cum;	FRM_FindFrame(Cum,"Ally_pal03");
+
+Frame C1;	FRM_FindFrame(C1,"MG2");
+Frame C2;	FRM_FindFrame(C2,"Ally_pal03");
+Frame C3;	FRM_FindFrame(C3,"Ally_pal02");
+
+Frame T1;	FRM_FindFrame(T1,"BR_G06");
+Frame T2;	FRM_FindFrame(T2,"BR_G07");
+Frame T3;	FRM_FindFrame(T3,"BR_G08");
+Frame T4;	FRM_FindFrame(T4,"BR_G09");
+Frame T5;	FRM_FindFrame(T5,"BR_G10");
+
+Integer VyberCil;	VyberCil=0;
+}
+
+// --------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+Delay(250);
+HUMAN_MoveToFrame(USHakl, 2);
+HUMAN_MoveToFrame(Sherman, 3);
+HUMAN_SETMODE_Lie();
+Delay(200);
+HUMAN_TurnAt(Cum);
+HUMAN_WeaponUp(1);
+HUMAN_Attack(C1, 6000);
+Delay(2000);
+HUMAN_Attack(C2, 2000);
+HUMAN_Attack(C3, 4000);
+goto Palba;
+}
+
+Whenever Suspend (_SignalReceived(9))
+{
+HUMAN_Stop();
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Palba:
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(T1)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T1);
+Delay(200);
+HUMAN_Attack(T1, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(T2)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T2);
+Delay(200);
+HUMAN_Attack(T2, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(T3)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T3);
+Delay(200);
+HUMAN_Attack(T3, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(T4)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T4);
+Delay(200);
+HUMAN_Attack(T4, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(T5)==0){VyberCil=_RandomInt(4);Goto Palba;}
+
+HUMAN_TurnAt(T5);
+Delay(200);
+HUMAN_Attack(T5, 3000);
+VyberCil=_RandomInt(5);
+}
+
+goto Palba;
+
+
+Label END:

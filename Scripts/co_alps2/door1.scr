@@ -1,0 +1,10 @@
+
+Frame al2_01;	FRM_FindFrame(al2_01, "AL2_01");
+goto end;
+
+OnUse()
+{
+SendSignal (al2_01,8);
+}
+
+label end:

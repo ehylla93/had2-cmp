@@ -1,0 +1,94 @@
+// Ge27b_
+
+Block
+{
+Frame objectives;
+	FRM_FindFrame(objectives, "objectives");
+Frame trebissky;
+	FRM_FindFrame(trebissky, "ci_");
+Frame ss1;
+	FRM_GetMyFrame(ss1);
+Frame chci;
+	FRM_FindFrame(chci, "la_zasten_20");
+Frame moc;
+	FRM_FindFrame(moc, "Ge_27_chcanie");
+Frame dvere;
+	FRM_FindFrame(dvere, "railsta419");
+Frame vojak;
+	FRM_FindFrame(vojak, "ss_railst00");
+Integer random;
+	random=0;
+Integer aievent;
+	aievent=0;
+
+HUMAN_SETSIGHTRANGE(5);
+HUMAN_SETAIMODE_Defensive();
+}
+HUMAN_Suspend(true);
+
+Whenever player(_PlayerInRange(10))
+{
+	HUMAN_Suspend(false);
+	Delay(2000);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_27_01");
+	SendSignal(vojak, 1);
+	HUMAN_Move("Ge_27_02");
+	HUMAN_Move("Ge_27_03");
+	HUMAN_TurnAt(chci);
+	HUMAN_SetOptimized(2);
+	Delay(1000);
+	HUMAN_SetAnim("%%chcije", 1000, 1000, true);
+	SendSignal(moc, 1);
+	Delay(34000);
+	HUMAN_SetAnim("", 1000, 1000, false);
+	Delay(1500);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_27_02");
+	HUMAN_Move("Ge_27_01");
+	SendSignal(vojak, 2);
+	HUMAN_Move("Ge_27_04");
+	HUMAN_SetAnim("%%lenin", 200, 200, true);
+	HUMAN_TurnAt(dvere);
+	HUMAN_SetOptimized(2);
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("SS1_02");
+	HUMAN_SetSniper(true, 1);
+	HUMAN_TurnAt(dvere);
+	HUMAN_SetOptimized(2);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 100, 100, false);
+	Block
+	{
+		aievent=_GetAlarmType();
+	HUMAN_SETSIGHTRANGE(20);
+	HUMAN_SetSniper(true, 1);
+	HUMAN_SETMODE_Run();
+	}
+	If((aievent==32) OR (aievent==64))	{	EndScript();	}
+	If(random==1)	{	HUMAN_Move("SS1_01");	}
+	If(random==2)	{	HUMAN_Move("SS1_03");	}
+	HUMAN_TurnAt(dvere);
+	HUMAN_SETMODE_Crouch();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetAlarm(false);
+}
+
+OnDeath()
+{
+	SendSignal(objectives, 1);
+}

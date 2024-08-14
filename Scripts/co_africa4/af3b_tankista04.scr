@@ -1,0 +1,80 @@
+// AF3b_tankista04 - Tiger02 driver
+// -------------------------------------------------------------------------------------------------------------
+
+SetAlarmType(1023, 0);
+FRAME T05;		FRM_FindFrame(T05, "AF3b_tank02_02");
+Integer speed;
+Integer b = 0;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnSignal(1){
+HUMAN_Suspend(false);
+goto ACTIVITY1;
+}
+
+OnSignal(2){
+HUMAN_Suspend(false);
+goto ACTIVITY2;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_BoardVehicle("Tiger02", true, 0);
+HUMAN_Suspend(true);
+HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVITY1:
+printf("tank2 activtiy1");
+speed = 30;
+goto DRIVE;
+
+Label ACTIVITY2:
+printf("tank2 activtiy2");
+speed = 15;
+
+Label DRIVE:
+integer a = _RandomInt(100);
+printfnumber("Integer a tank2: ", a);
+
+if(a > 50)
+{
+Label DRIVE1:
+HUMAN_Drive("tank01_07", speed);
+if(b==0) { SendSignal(T05, 1); b=1; }
+HUMAN_Drive("tank01_06", speed);
+HUMAN_Drive("tank01_05", speed);
+HUMAN_Drive("tank01_04", speed);
+HUMAN_Drive("tank01_03", speed);
+HUMAN_Drive("tank01_02", speed);
+HUMAN_Drive("tank01_01", speed);
+goto DRIVE1;
+}
+
+else
+{
+Label DRIVE2:
+HUMAN_Drive("tank01_01", speed);
+if(b==0) { SendSignal(T05, 1); b=1; }
+HUMAN_Drive("tank01_02", speed);
+HUMAN_Drive("tank01_03", speed);
+HUMAN_Drive("tank01_04", speed);
+HUMAN_Drive("tank01_05", speed);
+HUMAN_Drive("tank01_06", speed);
+HUMAN_Drive("tank01_07", speed);
+goto DRIVE2;
+}
+
+Label END:

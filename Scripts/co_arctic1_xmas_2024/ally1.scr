@@ -1,0 +1,75 @@
+block
+{
+	Frame me;						FRM_GetMyFrame(me);
+	integer rnd1 = 0;
+	integer msg = 90001000;
+	string name = "%%mluvi";
+	string s = "";
+}
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+printf("trebiski initialized.");
+
+OnDeath()
+{
+	EndScript();
+}
+
+
+Whenever Near (_PlayerInRange(1))
+{
+	rnd1 = _randomint(1355);
+	rnd1 = msg + rnd1;
+	FRM_MorphSpeechDelayed(me, rnd1, 3, 10);
+	Delay(2100);
+	SetWhenever(Near, true);
+	goto loop;
+}
+
+OnSignal(1)
+{
+	SetWhenever(Near, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_WeaponUp(true);
+	HUMAN_SETMODE_Run();
+	HUMAN_AttackMove("gg1");
+	HUMAN_BoardVehicle("la_opelwin1", 1, 0);
+	HUMAN_Drive("v_4", 500);
+	HUMAN_Drive("tankattack", 500);
+	HUMAN_Drive("leave", 500);
+	HUMAN_Drive("ccg", 500);
+}
+
+Label loop:
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	rnd1 = _randomint(6);
+	if (rnd1 == 0)
+		{HUMAN_AttackMove("dance_0");}
+	if (rnd1 == 1)
+		{HUMAN_AttackMove("dance_1");}
+	if (rnd1 == 2)
+		{HUMAN_AttackMove("dance_2");}
+	if (rnd1 == 3)
+		{HUMAN_AttackMove("dance_3");}
+	if (rnd1 == 4)
+		{HUMAN_AttackMove("dance_4");}
+	if (rnd1 == 5)
+		{HUMAN_AttackMove("dance_5");}
+	if (rnd1 == 6)
+		{HUMAN_AttackMove("dance_6");}
+	rnd1 = _randomint(9);
+	if (rnd1 == 9)
+		{HUMAN_SetAnim("%%mluvi", 1000, 1000, 1);}
+	else
+		{
+			s = name + rnd1;
+			HUMAN_SetAnim(s, 1000, 1000, 1);
+		}
+	delay(5000);
+	goto loop;
+
+SetWheneverTime(Near, 4000);

@@ -1,0 +1,44 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,0);
+SetAlarmType(2,0);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,0);
+SetAlarmType(64,0);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+
+Frame Krupp;		FRM_FindFrame(Krupp,"krupp1");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+Car_SetFuel(Krupp, 0);
+//*DefaultLoad
+goto END;
+
+Label END:

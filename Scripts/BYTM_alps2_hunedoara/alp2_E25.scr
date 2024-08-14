@@ -1,0 +1,90 @@
+// alp2_E25 - library - ALARMER
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1,1);		//Close Shooting
+SetAlarmType(2,1);		//Enemy Shots
+SetAlarmType(4,1);		//Hear Steps
+SetAlarmType(8,1);		//Action Sounds
+SetAlarmType(16,1);		//Explosions
+SetAlarmType(32,1);		//Sighted
+SetAlarmType(64,1);		//Is Injured
+SetAlarmType(128,0);	//From Script
+SetAlarmType(256,1);	//Friendly Shots
+SetAlarmType(512,1);	//Sight Corpse
+
+Frame me;		FRM_GetMyFrame(me);
+Frame door;		FRM_FindFrame(door,"B01_k_17");
+Frame alarm;	FRM_FindFrame(alarm, "alarm_switch");
+
+Integer AIEvent;
+Integer Int;
+
+Int = _RandomInt(2);
+
+	If (Int == 0)
+	{
+	HUMAN_SETAIMODE_Zombie();
+	}
+
+	If (Int == 1)
+	{
+	HUMAN_SETAIMODE_Defensive();
+	}
+
+//FRM_SwitchFaceTexture(me,"e_f052");
+
+HUMAN_SETSIGHTRANGE(25);
+HUMAN_SETHEARRANGE(25);
+}
+
+HUMAN_Suspend(1);
+
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+	AIEvent = _GetAlarmType();
+	If((AIEvent == 1) OR (AIEvent == 2) OR (AIEvent == 256))
+	{
+	SendSignal(alarm, 1);
+	}
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Signal1 (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+}
+
+Whenever Signal4 (_SignalReceived(4))
+{
+SetWhenever(Signal4, 0);
+HUMAN_Suspend(0);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAt(door);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

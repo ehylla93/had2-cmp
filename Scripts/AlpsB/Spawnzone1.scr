@@ -1,0 +1,53 @@
+// Spawnzone 1 - Western Machinegun Position
+//----------------------------------------------
+Block
+{
+Frame Airdrop;		FRM_FindFrame(Airdrop,"Ammoboxy");
+Frame briti;		FRM_FindFrame(briti,"Brit01");
+Frame briti2;		FRM_FindFrame(briti2,"Brit05");
+Frame Spawn2;		FRM_FindFrame(Spawn2,"Spawnzone2");
+Frame Opel;			FRM_FindFrame(Opel,"Opel_01");
+Frame Obj1;			FRM_FindFrame(Obj1,"obj1");
+
+Frame V1;		FRM_FindFrame(V1,"Z1_G12");
+Frame S1;		FRM_FindFrame(S1,"Z1_G13");
+Frame S2;		FRM_FindFrame(S2,"Z1_G14");
+Frame S3;		FRM_FindFrame(S3,"Z1_G15");
+Frame S4;		FRM_FindFrame(S4,"Z1_G16");
+Frame S5;		FRM_FindFrame(S5,"Z1_G17");
+
+Integer Les;
+}
+//----------------------------------------------
+
+Whenever Player (_PlayerInRange(25))
+{
+Sendsignal(Airdrop, 1);
+MP_EnableSpawnZone("zone3", 1);
+MP_EnableSpawnZone("zone1", 2);
+SendSignal(Obj1, 2);
+SendSignal(Spawn2, 6);
+
+Les = _RandomInt(6);
+If(Les == 0){ Delay(10000);SendSignal(V1, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);Delay(40000);SendSignal(briti, 7);SendSignal(briti2, 7);}
+If(Les == 1){ Delay(50000);SendSignal(briti, 7);SendSignal(briti2, 7);Delay(600000);SendSignal(V1, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);}
+If(Les == 2){ Delay(50000);SendSignal(briti, 7);SendSignal(briti2, 7);Delay(900000);SendSignal(V1, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);}
+If(Les == 3){ Delay(50000);SendSignal(briti, 7);SendSignal(briti2, 7);Delay(1200000);SendSignal(V1, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);}
+If(Les == 4){ Delay(50000);SendSignal(briti, 7);SendSignal(briti2, 7);Delay(1600000);SendSignal(V1, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);}
+If(Les == 5){ Delay(50000);SendSignal(briti, 7);SendSignal(briti2, 7);Delay(1800000);SendSignal(V1, 1);SendSignal(S1, 1);SendSignal(S2, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5, 1);}
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(2))
+{
+SetWhenever(Player, 1);
+goto END;
+}
+
+//---------------------------------------------
+
+SetWhenever(Player, 0);
+goto END;
+
+
+Label END:

@@ -1,0 +1,56 @@
+// BU2_19 - guard in the bunkers
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(280, false);	// vypnute 8, 16, 256
+}
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(280, false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_SignalReceived(1))	// received from BU2_19_A1
+{
+	HUMAN_Suspend(false);
+	GoTo action1;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+FRM_SwitchFaceTexture(me, "e_f049");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label action1:
+	HUMAN_Move("BU2_19_01");
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+
+Label end:

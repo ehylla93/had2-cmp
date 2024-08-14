@@ -1,0 +1,19 @@
+// Obj 6 - Destroy the fuel tanks
+// ---------------------------------------------------------
+
+Block
+{
+Frame Tank1;	FRM_FindFrame(Tank1,"A3_Ftank_01");
+Frame Tank2;	FRM_FindFrame(Tank2,"A3_Ftank_02");
+}
+
+Whenever FTanks_Destroyed ((_Actor_GetState(Tank1) == 0) And (_Actor_GetState(Tank2) == 0))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05011015);
+Delay(3500);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

@@ -1,0 +1,10 @@
+//Dvere 1 u gumaka
+
+Block {
+Frame LMswitch;		FRM_FindFrame(LMswitch, "tunel07");
+}
+
+OnUse()
+{
+SendSignal(LMswitch,1);
+}

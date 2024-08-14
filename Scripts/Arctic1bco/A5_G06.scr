@@ -1,0 +1,28 @@
+// Ostrelovac1
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  
+FRAME obj;	FRM_FindFrame(obj, "objectives");
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(obj, 1);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Lie();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(2);
+  goto END;
+
+  Label END:
+

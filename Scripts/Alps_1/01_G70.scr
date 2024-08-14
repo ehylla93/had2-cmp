@@ -1,0 +1,177 @@
+// 01_G70 - Truck Driver (Reinf)
+// ----------------------------------------
+
+Block
+{
+Frame Opel;		FRM_FindFrame(Opel, "A2_Opel_01");
+Frame C1;		FRM_FindFrame(C1, "01_G69");
+Frame C2;		FRM_FindFrame(C2, "01_G71");
+Frame C3;		FRM_FindFrame(C3, "01_G72");
+Frame C4;		FRM_FindFrame(C4, "01_G73");
+Frame C5;		FRM_FindFrame(C5, "01_G74");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1023,0);
+
+FRM_SwitchFaceTexture(me,"e_f070");
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+SendSignal(C1, 3);
+SendSignal(C2, 3);
+SendSignal(C3, 3);
+SendSignal(C4, 3);
+SendSignal(C5, 3);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_Drive("", 0);
+Delay(2500);
+SendSignal(C1, 2);
+SendSignal(C2, 2);
+SendSignal(C3, 2);
+SendSignal(C4, 2);
+SendSignal(C5, 2);
+HUMAN_BoardVehicle("A2_Opel_01", 0, 0);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Opel, 18);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(120);
+HUMAN_SETHEARRANGE(80);
+SetAlarmType(1023,1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever Spawn_A (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A2_Opel_01", 1, 0);
+SendSignal(C1, 1);
+SendSignal(C2, 1);
+SendSignal(C3, 1);
+SendSignal(C4, 1);
+SendSignal(C5, 1);
+HUMAN_Drive("hakl_01", 60);
+SetAlarmType(611,1);
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(50);
+HUMAN_Drive("hakl_06", 60);
+Delay(2500);
+SendSignal(C1, 3);
+SendSignal(C2, 3);
+SendSignal(C3, 3);
+SendSignal(C4, 3);
+SendSignal(C5, 3);
+HUMAN_BoardVehicle("A2_Opel_01", 0, 0);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Opel, 18);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+goto END;
+}
+
+Whenever Spawn_B (_SignalReceived(2))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A2_Opel_01", 1, 0);
+SendSignal(C1, 1);
+SendSignal(C2, 1);
+SendSignal(C3, 1);
+SendSignal(C4, 1);
+SendSignal(C5, 1);
+HUMAN_Drive("hakl_01", 60);
+SetAlarmType(611,1);
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(50);
+HUMAN_Drive("hakl_06", 30);
+Delay(2500);
+SendSignal(C1, 3);
+SendSignal(C2, 3);
+SendSignal(C3, 3);
+SendSignal(C4, 3);
+SendSignal(C5, 3);
+HUMAN_BoardVehicle("A2_Opel_01", 0, 0);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Opel, 18);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+goto END;
+}
+
+Whenever Spawn_C (_SignalReceived(3))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A2_Opel_01", 1, 0);
+SendSignal(C1, 1);
+SendSignal(C2, 1);
+SendSignal(C3, 1);
+SendSignal(C4, 1);
+SendSignal(C5, 1);
+HUMAN_Drive("hakl_01", 60);
+SetAlarmType(611,1);
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(50);
+HUMAN_Drive("hakl_10", 30);
+Delay(2500);
+SendSignal(C1, 3);
+SendSignal(C2, 3);
+SendSignal(C3, 3);
+SendSignal(C4, 3);
+SendSignal(C5, 3);
+HUMAN_BoardVehicle("A2_Opel_01", 0, 0);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Opel, 18);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+goto END;
+}
+
+Whenever Spawn_D (_SignalReceived(4))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A2_Opel_01", 1, 0);
+SendSignal(C1, 1);
+SendSignal(C2, 1);
+SendSignal(C3, 1);
+SendSignal(C4, 1);
+SendSignal(C5, 1);
+HUMAN_Drive("hakl_09", 80);
+HUMAN_Drive("hakl_10", 35);
+HUMAN_Drive("", 35);
+Delay(2000);
+SendSignal(C1, 2);
+SendSignal(C2, 2);
+SendSignal(C3, 2);
+SendSignal(C4, 2);
+SendSignal(C5, 2);
+Delay(4000);
+HUMAN_Drive("hakl_11", 80);
+Delay(6000);
+HUMAN_Drive("", 80);
+HUMAN_Suspend(1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

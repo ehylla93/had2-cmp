@@ -1,0 +1,99 @@
+// Tank 2 (La_tiger_2) Ridic
+// ----------------------------------------------------------------
+
+Block
+{
+Frame Cas;	FRM_FindFrame(Cas,"T2_Cas");
+Frame T2;	FRM_FindFrame(T2,"La_tiger_2");
+
+Integer CasP;
+}
+
+//-----------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Reinf(_SignalReceived(1))
+{
+Car_SetFuel(T2, 900);
+Delay(250);
+Block{FRM_SetOn(T2, 1);}
+SendSignal(Cas, 1);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_2", 1, 0);
+Delay(5000);
+HUMAN_Drive("o1_act1_03", 80);
+Delay(100);
+HUMAN_Drive("tank02_al01", 80);
+Delay(100);
+HUMAN_Drive("o1_act1_04", 60);
+Delay(100);
+HUMAN_Drive("tank02_al01", 80);
+Delay(15000);
+goto PrePatrola;
+}
+
+//-----------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label PrePatrola:
+HUMAN_Drive("o1_act1_03", 80);
+HUMAN_Drive("o1_act1_02", 80);
+HUMAN_Drive("o1_act1_01", 50);
+HUMAN_Drive("tank01_al01", 60);
+goto Cekam1;
+
+Label Cekam1:
+
+CasP=_RandomInt(5);
+If(CasP==0){}
+If(CasP==1){Delay(20000);}
+If(CasP==2){Delay(40000);}
+If(CasP==3){Delay(60000);}
+If(CasP==4){Delay(100000);}
+goto Patrola1;
+
+Label Cekam2:
+
+CasP=_RandomInt(5);
+If(CasP==0){}
+If(CasP==1){Delay(20000);}
+If(CasP==2){Delay(40000);}
+If(CasP==3){Delay(60000);}
+If(CasP==4){Delay(100000);}
+goto Patrola2;
+
+Label Cekam3:
+
+CasP=_RandomInt(5);
+If(CasP==0){}
+If(CasP==1){Delay(20000);}
+If(CasP==2){Delay(40000);}
+If(CasP==3){Delay(60000);}
+If(CasP==4){Delay(100000);}
+goto Patrola3;
+
+Label patrola1:
+HUMAN_Drive("o1_act1_02", 11);
+HUMAN_Drive("", 11);
+goto Cekam2;
+
+Label patrola2:
+HUMAN_Drive("tank01_al01", 40);
+HUMAN_Drive("tank01_01", 20);
+HUMAN_Drive("tank01_al02", 11);
+HUMAN_Drive("", 15);
+goto Cekam3;
+
+Label patrola3:
+HUMAN_Drive("tank01_01", 15);
+HUMAN_Drive("tank01_al01", 30);
+HUMAN_Drive("o1_act1_02", 25);
+HUMAN_Drive("", 25);
+goto Cekam2;
+
+Label END:

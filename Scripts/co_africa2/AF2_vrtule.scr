@@ -1,0 +1,9 @@
+FRAME blur;		FRM_GetMyFrame(blur);
+
+OnCutscene(1){
+  FRM_RotateZ(blur, 72000, 1440);
+}
+
+OnCutsceneDone(1){
+  EndScript();
+}

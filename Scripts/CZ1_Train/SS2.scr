@@ -1,0 +1,68 @@
+// Ge_8
+
+Block
+{
+Frame objectives;
+	FRM_FindFrame(objectives, "objectives");
+Frame zidla;
+	FRM_FindFrame(zidla, "zidlass");
+Frame ss2;
+	FRM_GetMyFrame(ss2);
+Frame trebissky;
+	FRM_FindFrame(trebissky, "ci_");
+Frame dvere;
+	FRM_FindFrame(dvere, "railsta419");
+
+HUMAN_SETSIGHTRANGE(5);
+HUMAN_SETAIMODE_Aggressive();
+FRM_TeleportNearCheckpoint(ss2, "sszidla", "");
+HUMAN_ACTIVITY_Sit(zidla);
+HUMAN_SetOptimized(2);
+}
+HUMAN_Suspend(true);
+
+Whenever player(_PlayerInRange(10))
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETSIGHTRANGE(15);
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	HUMAN_SetOptimized(2);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("SS2_01");
+	HUMAN_TurnAt(dvere);
+	HUMAN_SetOptimized(2);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetOptimized(2);
+	HUMAN_SETMODE_Stand();
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(20);
+	HUMAN_SetSniper(true, 1);
+	}
+	HUMAN_Move("SS2_01");
+	HUMAN_TurnAt(dvere);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("sszidla");
+	HUMAN_SetOptimized(2);
+}
+
+OnDeath()
+{
+	SendSignal(objectives, 1);
+	EndScript();
+}

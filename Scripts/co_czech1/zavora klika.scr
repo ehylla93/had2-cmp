@@ -1,0 +1,38 @@
+// Barrier script
+
+Block {
+Frame me;		FRM_GetMyFrame(me);
+Frame pike1;  	FRM_FindFrame(pike1,"zavora1.Cylinder01");  
+Frame pike2;	FRM_FindFrame(pike2,"zavora2.Cylinder01");
+frame sound;	FRM_FindFrame(sound,"l_cross_");
+}
+
+gosub zavory_up;
+goto end;
+
+OnUse()
+{
+	If(_ACTOR_GetState(me)==2)
+	{
+		gosub zavory_down;
+	}
+	else
+	{
+		gosub zavory_up;
+	}
+goto end;
+}
+
+label zavory_up:
+	FRM_SetOn(sound, 0);
+	SetActorState(pike1, 0);
+	SetActorState(pike2, 0);
+return;
+
+label zavory_down:
+	FRM_SetOn(sound, 1);
+	SetActorState(pike1, 1);
+	SetActorState(pike2, 1);
+return;
+
+label end:

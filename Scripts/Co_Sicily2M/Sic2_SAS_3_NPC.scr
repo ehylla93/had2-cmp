@@ -1,0 +1,98 @@
+// Ally Sherman_01 mg gunner
+
+Block
+{
+  frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+  Frame It_5;			FRM_FindFrame( It_5, "It_5");
+  Frame It_6;			FRM_FindFrame( It_6, "It_6");
+  Frame It_7;			FRM_FindFrame( It_7, "It_7");
+//  Frame mg3;			FRM_FindFrame( mg3, "w_mg42Crouch_3");
+  Frame mg4;			FRM_FindFrame( mg4, "w_mg42Crouch_4");
+  Frame Sherman_01;		FRM_FindFrame( Sherman_01, "Sherman_01");
+//  Frame Sh3;			FRM_FindFrame( Sh3, "Sherman_03");
+  frame Ger16;		FRM_FindFrame(Ger16, "GER_16");
+//  frame Ger17;		FRM_FindFrame(Ger17, "GER_17");
+  frame Ger18;		FRM_FindFrame(Ger18, "GER_18");
+//  frame Ger19;		FRM_FindFrame(Ger19, "GER_19");
+  frame Ger20;		FRM_FindFrame(Ger20, "GER_20");
+//  frame Ger21;		FRM_FindFrame(Ger21, "GER_21");
+  frame Ger22;		FRM_FindFrame(Ger22, "GER_22");
+//  frame Ger23;		FRM_FindFrame(Ger23, "GER_23");
+  frame Ger24;		FRM_FindFrame(Ger24, "GER_24");
+//  frame Ger25;		FRM_FindFrame(Ger25, "GER_25");
+  frame Ger26;		FRM_FindFrame(Ger26, "GER_26");
+//  frame Ger27;		FRM_FindFrame(Ger27, "GER_27");
+  frame Ger28;		FRM_FindFrame(Ger28, "GER_28");
+//  frame Ger29;		FRM_FindFrame(Ger29, "GER_29");
+  frame Ger30;		FRM_FindFrame(Ger30, "GER_30");
+//  frame Ger31;		FRM_FindFrame(Ger31, "GER_31");
+
+
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+goto TheEnd;
+
+Whenever inrange ( _PlayerInRange(87))	
+{
+HUMAN_BoardVehicle("Sherman_01", true, 3);
+}
+
+OnDeath(){
+SendSignal(SAS1, 14);
+goto TheEnd;
+}
+
+
+Onsignal(8)	// from traitor
+{
+Delay(52500);
+HUMAN_BoardVehicle("Sherman_01", true, 1);
+SetAlarmType(1023, True); 	
+GoTo attackloop;
+}
+
+{
+Label attackloop:
+//HUMAN_Attack(mg3, 4000);		Delay(2000);
+HUMAN_Attack(mg4, 4000);		Delay(2000);
+HUMAN_Attack(It_5, 4000);		Delay(2000);
+HUMAN_Attack(It_6, 4000);		Delay(2000);
+HUMAN_Attack(It_7, 4000);		Delay(2000);
+//HUMAN_Attack(mg3, 4000);		Delay(2000);
+HUMAN_Attack(mg4, 4000);		Delay(2000);
+HUMAN_Attack(It_5, 4000);		Delay(2000);
+HUMAN_Attack(It_6, 4000);		Delay(2000);
+HUMAN_Attack(It_7, 4000);		Delay(2000);
+GoTo attackloop2;
+} 
+
+{
+Label attackloop2:
+HUMAN_Attack(Ger16, 3000);		Delay(2000);
+HUMAN_Attack(Ger18, 3000);		Delay(2000);
+HUMAN_Attack(Ger20, 3000);		Delay(2000);
+HUMAN_Attack(Ger22, 3000);		Delay(2000);
+HUMAN_Attack(Ger24, 3000);		Delay(2000);
+HUMAN_Attack(Ger26, 3000);		Delay(2000);
+HUMAN_Attack(Ger28, 3000);		Delay(2000);
+HUMAN_Attack(Ger30, 3000);		Delay(2000);
+GoTo attackloop2;
+} 
+
+
+OnAlarm()  
+  {
+          
+    goto TheEnd;
+  }
+
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+  SetAlarmType(1023, True); 
+} 
+
+label TheEnd:
+

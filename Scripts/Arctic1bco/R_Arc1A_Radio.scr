@@ -1,0 +1,19 @@
+frame Radio_sound_1;	 FRM_FindFrame(Radio_sound_1, "l_haydn_");		// zvuk uvnitr
+frame Radio_sound_2;	 FRM_FindFrame(Radio_sound_2, "l_haydn_2");		// zvuk venku
+frame CUDLIK;	 		 FRM_FindFrame(CUDLIK, "m_radiog_.tlac_hide");		// cudlik
+//  frame objimka;		 FRM_FindFrame(objimka, "m_radiog_.objimka");		// objimka
+
+// INICIALIZACE !!!
+  FRM_SetOn(Radio_sound_1, true);
+  FRM_SetOn(Radio_sound_2, true);
+//  FRM_SetOn(CUDLIK, true);
+//  FRM_SetOn(objimka, true);
+  
+OnDeath()
+{
+  FRM_SetOn(Radio_sound_1, false);
+  FRM_SetOn(Radio_sound_2, false);
+//  FRM_SetOn(CUDLIK, false);
+//  FRM_SetOn(objimka, false);
+  SendSignal(CUDLIK, 1);
+}

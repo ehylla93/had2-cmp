@@ -1,0 +1,127 @@
+// Guard at cottage
+
+Block
+{
+frame GP1;			FRM_FindFrame(GP1, "Plane_Guard_1");
+frame GP2;			FRM_FindFrame(GP2, "Plane_Guard_2");
+frame GP3;			FRM_FindFrame(GP3, "Plane_Guard_3");
+frame GP4;			FRM_FindFrame(GP4, "Plane_Guard_4");
+frame Dabing3_1;	FRM_FindFrame(Dabing3_1, "dummy_dabing3_1");
+frame Dabing1_2;	FRM_FindFrame(Dabing1_2, "dummy_dabing1_2");
+frame Dabing3_4;	FRM_FindFrame(Dabing3_4, "dummy_dabing3_4");
+frame swamp;		FRM_FindFrame(swamp, "n_swampcheck");
+frame MyFRM;		FRM_GetMyFrame(MyFRM);
+
+integer AIEvent;	AIEvent = 99;
+integer a=0;
+
+SetAlarmType(1023, True);
+SetAlarmType(8, False);
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Defensive();
+
+SetWhenever(PIR2, 0);
+}
+
+HUMAN_Suspend(True);
+HUMAN_SetOptimized(1);
+Goto TheEnd;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+Block {
+SendSignal(dabing3_1, 2);
+SendSignal(dabing3_4, 2);
+HUMAN_SETSIGHTRANGE(49);
+HUMAN_SETHEARRANGE(60);
+AIEvent =_GetAlarmType();
+}
+If ((AIEvent == 256) and (a==0)) { a=1; SendSignal(swamp, 1); }
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETSIGHTRANGE(32);
+HUMAN_SETHEARRANGE(45);
+SetAlarmType(1023, True);	
+SetAlarmType(8, False);
+HUMAN_SetAlarm(False);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_Move("PG3_4");			
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto TheEnd;
+}
+
+OnDeath()
+{
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+SendSignal(dabing3_1, 2);
+SendSignal(dabing3_4, 2);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever PIR1 (_PlayerInRange(80))
+{
+HUMAN_Suspend(False);
+SetWhenever(PIR2, 1);
+}
+
+Whenever PIR2 (_PlayerInRange(30))
+{
+HUMAN_Move("PG3_1");
+HUMAN_TurnAt(GP4);
+// 01990262 Come on, hurry, we're late.  You know Karl, he'll be moaning.
+// 01990263 I'm coming, I'm just putting the water on the stove.
+
+// 01990264 God, it's cold.  I'll never get used to it.
+// 01990265 I've survived worse.  You will too.  How long are you posted here?
+// 01990266 For almost another month.
+// 01990267 Lucky you, I have another six months to go. I guess we'll both have to deal with the cold for a while longer.
+SendSignal(dabing3_4, 1);		
+Delay(6800);
+HUMAN_Move("PG3_2");	
+HUMAN_SETSIGHTRANGE(37);
+HUMAN_SETHEARRANGE(50);
+HUMAN_Move("PG3_3");
+HUMAN_Move("PG3_4");
+HUMAN_TurnAt(GP1);	
+SendSignal(dabing3_1, 1);
+SendSignal(dabing1_2, 2);	// dabing 1_2 nebude
+HUMAN_SetAnim("%%rozhovor3", 400, 400, True);
+Delay(3500);
+}
+
+OnSignal(11)
+{
+HUMAN_SetAnim("%%kecy1", 400, 400, True);
+Delay(2500);
+HUMAN_SetAnim("%%rozhovor", 400, 400, True);
+Delay(2000);
+HUMAN_TurnAt(GP1);
+Delay(2000);
+HUMAN_TurnAt(GP1);
+Delay(2000);
+HUMAN_SetAnim("", 0, 0, False);
+HUMAN_TurnAt(GP1);
+Delay(2000);
+HUMAN_TurnAt(GP1);
+Delay(2000);
+HUMAN_TurnAt(GP1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

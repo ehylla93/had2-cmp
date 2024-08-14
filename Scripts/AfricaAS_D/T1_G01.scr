@@ -1,0 +1,77 @@
+// Tank 1 (La_tiger_1) Ridic
+// ----------------------------------------------------------------
+
+Block
+{
+Frame Cas;	FRM_FindFrame(Cas,"T1_Cas");
+Frame T1;	FRM_FindFrame(T1,"La_tiger_1");
+
+Integer Trasa;
+}
+
+//-----------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Reinf(_SignalReceived(1))
+{
+Car_SetFuel(T1, 900);
+Delay(250);
+Block{FRM_SetOn(T1, 1);}
+SendSignal(Cas, 1);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_1", 1, 0);
+HUMAN_Drive("o1_act1_01", 35);
+HUMAN_Drive("tank02_al02", 40);
+HUMAN_Drive("tank02_01", 20);
+HUMAN_Drive("", 20);
+Delay(45000);
+goto Jedu;
+}
+
+//-----------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Jedu:
+Trasa= 1;//_RandomInt(3);
+
+If(Trasa == 0)
+{
+goto END;
+}
+
+If(Trasa == 1)
+{
+HUMAN_Drive("o1_act1_03", 11);
+Delay(100);
+HUMAN_Drive("tank02_al01", 60);
+Delay(100);
+HUMAN_Drive("o2_act1_03", 50);
+HUMAN_Drive("", 11);
+Delay(30000);
+HUMAN_Drive("tank02_al01", 20);
+Delay(100);
+HUMAN_Drive("o2_act1_03", 11);
+Delay(100);
+HUMAN_Drive("tank02_al02", 40);
+HUMAN_Drive("tank02_01", 25);
+}
+
+If(Trasa == 2)
+{
+HUMAN_Drive("o1_act1_03", 11);
+Delay(100);
+HUMAN_Drive("tank02_al01", 60);
+Delay(100);
+HUMAN_Drive("o1_act1_04", 50);
+}
+
+Delay(15000);
+goto Jedu;
+
+Label END:

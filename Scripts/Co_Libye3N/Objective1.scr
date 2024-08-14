@@ -1,0 +1,200 @@
+Block
+{
+    Frame   objectives;           FRM_FindFrame( objectives,  "__objectives"  );
+    Frame   this;             FRM_FindFrame( this,            "d_zone2_flag"  );
+    //Frame   ger_flag;                         FRM_FindFrame( ger_flag, "d_gerflag_"  );
+    //Frame   gb_flag;                          FRM_FindFrame( gb_flag, "d_gbflag_"  );
+
+    Frame   liberator;                         FRM_FindFrame( liberator, "la_Lib3_Liber_vrak_"  );
+    Frame   obj3_explosive;             FRM_FindFrame( obj3_explosive, "w_explosive_1"  );
+    Frame   obj5_1;                           FRM_FindFrame( obj5_1, "VILLAGE_OFFICER_1"  );
+    Frame   obj5_2;                           FRM_FindFrame( obj5_2, "VILLAGE_OFFICER_11"  );
+    Frame   obj6_explosive;             FRM_FindFrame( obj6_explosive, "w_explosive_2"  );
+    Frame   obj6_frame;                    FRM_FindFrame( obj6_frame, "bedny"  );
+    Frame   obj7_explosive;             FRM_FindFrame( obj7_explosive, "w_explosive_3"  );
+    Frame   obj7_frame;                    FRM_FindFrame( obj7_frame, "munice"  );
+    Frame   tiger;			    FRM_FindFrame( tiger, "tiger"  );
+    Frame   panzer_driver;	    FRM_FindFrame( panzer_driver, "Panzer_driver"  );
+    Frame   particle3;                        FRM_FindFrame( particle3, "__Particle3"  );
+    Frame   particle6;                        FRM_FindFrame( particle6, "__Particle6"  );
+    Frame   particle7;                        FRM_FindFrame( particle7, "__Particle7"  );
+
+Frame   opel_gunner;     FRM_FindFrame( opel_gunner, "OPEL_GUNNER"  );
+
+Frame L01;	FRM_FindFrame(L01, "HAMMER1");
+Frame L02;	FRM_FindFrame(L02, "HAMMER2");
+Frame L03;	FRM_FindFrame(L03, "la_OpelFaf_1");
+Frame L04;	FRM_FindFrame(L04, "THOR2");
+Frame L05;	FRM_FindFrame(L05, "Tank1");
+Frame L06;	FRM_FindFrame(L06, "Tank2");
+Frame L07;	FRM_FindFrame(L07, "Tank3");
+Frame L08;	FRM_FindFrame(L08, "Tank4");
+
+    Integer  current_objective = 0;
+    Integer  obj2_time             = 0;
+}
+
+// -----------------------------------------------------------------------
+//OBJ1 - KONTROLNI CHECKPOINT OBSAZEN
+// -----------------------------------------------------------------------
+Whenever "Objective1" ( ((current_objective == 1) and _PlayerInRange( 15 )) and (not _EnemyInRange( this, 25 )) )
+{     // objective1 splnen
+      Block
+      {
+           SendSignal( objectives, 25 );
+		SendSignal ( opel_gunner, 2);
+           //FRM_SetOn( ger_flag, false );
+           //FRM_SetOn( gb_flag, true );
+      }
+      GoTo End;
+}
+SetWheneverTime( "Objective1",  2000 );
+
+// -----------------------------------------------------------------------
+//OBJ2 - destroy heavy equipment
+// -----------------------------------------------------------------------
+
+Whenever Destroyed ((((((((_Actor_GetState(L01) == 0) And (_Actor_GetState(L02) == 0 )) And (_Actor_GetState(L03) == 0 )) And (_Actor_GetState(L04) == 0 )) And (_Actor_GetState(L05) == 0 )) And (_Actor_GetState(L06) == 0 )) And (_Actor_GetState(L07) == 0 )) And (_Actor_GetState(L08) == 0 )) 
+
+{     // objective2 ztracen
+      SendSignal( objectives, 27 );	
+      GoTo End;
+}
+//SetWheneverTime( "Objective2_failed",  2000 );
+
+
+
+
+// -----------------------------------------------------------------------
+//OBJ3 - ZNICENI ZARIZENI LIBERATORU
+// -----------------------------------------------------------------------
+Whenever "Objective3" ( (current_objective == 3) and ( _ACTOR_GetState( obj3_explosive ) == 2 ))
+{     // objective3 splnen
+      Delay(400);
+      SetActorState( liberator, 0 ); 	
+      SendSignal   ( objectives, 28 );
+      FRM_CreateParticle( 125,  particle3 );
+      GoTo End;
+}
+SetWheneverTime( "Objective3",  200000 );
+
+
+// -----------------------------------------------------------------------
+//OBJ4 - ZNICENI ZAKOPANEHO TANKU
+// -----------------------------------------------------------------------
+Whenever "Objective4" ( (current_objective == 4) and ( _ACTOR_GetState( tiger ) == 0 ))
+{     // objective4 splnen
+      SendSignal( objectives, 29 );	
+      SendSignal( panzer_driver, 1 );
+      GoTo End;
+}
+SetWheneverTime( "Objective4",  2000 );
+
+
+// -----------------------------------------------------------------------
+//OBJ5 - ZABIT VELITEL POSADKY
+// -----------------------------------------------------------------------
+Whenever "Objective5" ( (current_objective == 5) and (( _ACTOR_GetState(obj5_1) == 0 ) or ( _ACTOR_GetState(obj5_2) ==0 )))
+{     // objective5 splnen
+      SendSignal   ( objectives, 30 );
+      GoTo End;
+}
+SetWheneverTime( "Objective5",  200000 );
+
+
+// -----------------------------------------------------------------------
+//OBJ6 - ZNICEN ZBYTEK ZARIZENI LIBERATORU
+// -----------------------------------------------------------------------
+Whenever "Objective6" ( (current_objective == 5) and ( _ACTOR_GetState(obj6_explosive) == 2 ))
+{     // objective6 splnen
+      SendSignal   ( objectives, 31 );
+      Delay(500);
+      SetActorState( obj6_frame, 0 ); 	
+      FRM_CreateParticle( 82,  particle6 );
+      GoTo End;
+}
+SetWheneverTime( "Objective6",  200000 );
+
+
+// -----------------------------------------------------------------------
+//OBJ7 - ZNICENA ZASOBA MUNICE 
+// -----------------------------------------------------------------------
+Whenever "Objective7" ( (current_objective == 5) and ( _ACTOR_GetState(obj7_explosive) == 2 ))
+{     // objective7 splnen
+      SendSignal   ( objectives, 15 );
+      Delay(500);
+      SetActorState( obj7_frame, 0 ); 	
+      FRM_CreateParticle( 82,  particle7 );
+      GoTo End;
+}
+SetWheneverTime( "Objective7",  200000 );
+
+// -----------------------------------------------------------------------
+// SIGNALY - NASTAVEN ZADANY OBJECTIVE
+// -----------------------------------------------------------------------
+OnSignal( 20 )
+{
+     Block
+     {
+         current_objective = 1;
+         //FRM_SetOn( ger_flag, true );
+         //FRM_SetOn( gb_flag, false );
+     }
+     GoTo End;
+}
+
+OnSignal( 21 )
+{
+    current_objective = 2;
+//    GoTo Obj2_timmer;
+}
+
+OnSignal( 22 )
+{
+     Block
+     {
+         current_objective = 3;
+         SetWheneverTime( "Objective3",  200 );
+     }
+    GoTo End;
+}
+
+OnSignal( 23 )
+{
+    current_objective = 4;
+    GoTo End;
+}
+
+OnSignal( 24 )
+{
+    Block
+     {
+        current_objective = 5;
+        SetWheneverTime( "Objective5",  800 );
+        SetWheneverTime( "Objective6",  400 );
+        SetWheneverTime( "Objective7",  400 );
+    }  
+    GoTo End;
+}
+
+GoTo End;
+
+Label Obj2_timmer:
+    Delay( 4500);	// 45000
+    SUBTITLES_SetOn(true);
+    printf("2 minutes left");
+    SUBTITLES_SetText( 54999617 );
+    Delay(3000);
+    SUBTITLES_SetOn(false);
+
+    Delay( 4500); 	// 45000
+    SUBTITLES_SetOn(true);
+    printf("1 minute left");
+    SUBTITLES_SetText( 54999618 );
+    Delay(3000);
+    SUBTITLES_SetOn(false);
+    
+    Delay( 4500);	// 45000
+    SendSignal( objectives, 27 );	
+
+Label  End:

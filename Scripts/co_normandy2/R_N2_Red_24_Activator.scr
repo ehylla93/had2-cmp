@@ -1,0 +1,8 @@
+
+//*//Frame R24;		FRM_FindFrame(R24, "Red_24");
+
+//*//Whenever Activator (_PlayerInRange(2); )
+//*//{
+//*//  SendSignal(R24, 30);
+//*//}
+EndScript();	//*// vyhodit

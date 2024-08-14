@@ -1,0 +1,22 @@
+frame zavora;
+	FRM_GetMyFrame(zavora);
+frame zvonek;
+	FRM_FindFrame(zvonek,"l_cross_");
+
+OnUse()
+{
+	If(_ACTOR_GetState(zavora)==2)
+	{
+	FRM_SetOn(zvonek, 1);
+	}
+	Else
+	{
+	FRM_SetOn(zvonek, 0);
+	}
+}
+
+
+OnExit()
+{
+FRM_SetOn(zvonek, 0);
+}

@@ -1,0 +1,30 @@
+// Obj 2 - Destroy the Fuel Supplies
+//-----------------------------------------
+
+Block
+{
+Frame F1;	FRM_FindFrame(F1,"m_nadrz_");
+Frame F2;	FRM_FindFrame(F2,"m_nadrz_2");
+Frame F3;	FRM_FindFrame(F3,"m_nadrz_3");
+Frame F4;	FRM_FindFrame(F4,"m_nadrz_4");
+Frame F5;	FRM_FindFrame(F5,"m_nadrz_5");
+Frame F6;	FRM_FindFrame(F6,"m_nadrz_6");
+Frame Obj6;	FRM_FindFrame(Obj6,"obj6");
+
+SetObjectiveStatus(2, 0);
+}
+//-----------------------------------------
+
+Whenever Fuel_Tanks_Destroyed ((((((_Actor_GetState(F1)==0) And (_Actor_GetState(F2)==0)) And (_Actor_GetState(F3)==0)) And (_Actor_GetState(F4)==0)) And (_Actor_GetState(F5)==0)) And (_Actor_GetState(F6)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05011015);
+Delay(3000);
+SetObjectiveStatus(2, 1);
+SendSignal(Obj6, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label END:

@@ -1,0 +1,94 @@
+// AF3a_20 - sleeping officer
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummy_pristup_01;	FRM_FindFrame(dummy_pristup_01, "dummy_af20_al_01");		// look dummy on doors
+  FRAME dummy_pristup_02;	FRM_FindFrame(dummy_pristup_02, "dummy_pristup02");			// look dummy on wall
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");					// alert organizer
+  INTEGER Atype	= 0;
+
+  SetAlarmType(1023, true);
+  INTEGER where 			= 1;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    HUMAN_SetAnim("", 100, 100, false);
+    DisableSignals(true);
+    SetWhenever(player, false);
+    HUMAN_Suspend(false);
+    HUMAN_Stop();
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+  }
+ 
+  if(Atype == 2){
+    SetAlarmType(2, false);
+    HUMAN_SetMODE_Crouch();
+    HUMAN_SetMODE_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    goto END;
+  }
+
+  SendSignal(dummy_alarm, 1);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  goto END;
+}
+
+OnSignal(20){
+  HUMAN_Stop(); 
+  goto END;
+}
+
+Whenever player(_PlayerInRange(10)){
+  goto ACTIVATE;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+  HUMAN_SetAIMODE_Aggressive();
+  HUMAN_Suspend(true);
+  HUMAN_SetEvents(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  SetWhenever(player, false);
+  HUMAN_SETSIGHTRANGE(30);
+goto END;
+
+Label ALERT:
+  if(_PlayerInRange(15)){
+    if(where != 1){						// if not inside
+      HUMAN_Move("AF3a_20_al_01");			// run inside building
+      where = 1;
+    }
+    HUMAN_TurnAt(dummy_pristup_01);
+  }
+  else{
+    if(where != 2){						// if not outside
+      HUMAN_Move("AF3a_20_al_02");			// run outside building
+    }
+    HUMAN_TurnAt(dummy_pristup_02);
+  }
+goto END;
+
+Label END:

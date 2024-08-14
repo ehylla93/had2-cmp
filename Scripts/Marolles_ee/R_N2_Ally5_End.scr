@@ -1,0 +1,109 @@
+
+Block
+{
+  Frame Target;
+  Frame illF;		FRM_FindFrame(illF, "dummy_Ally5_turn_2");
+  Frame turn2; 		FRM_FindFrame(turn2, "dummy_Ally5_turn_2");
+  Frame OBJ; 		FRM_FindFrame(OBJ, "objectives");
+  Frame turn1;		FRM_FindFrame(turn1, "dummy_Ally5_turn_1");
+
+  integer RND;
+  integer kdo = 0;
+  integer counter = 0;
+}
+
+  Printf("Ally 5 GO - prirazen");
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(0);
+  SetAlarmType(1023, False);
+  HUMAN_SetAlarm(False);
+  Goto TheEnd;
+
+OnSignal(8) {  FRM_FindFrame(Target, "Blue_8"); }  
+OnSignal(9) {  FRM_FindFrame(Target, "Blue_9"); }  
+OnSignal(10) {  FRM_FindFrame(Target, "Blue_10"); }  
+OnSignal(11) {  FRM_FindFrame(Target, "Blue_11"); }  
+//*//OnSignal(12) {  FRM_FindFrame(Target, "Blue_12"); }  
+OnSignal(13) {  FRM_FindFrame(Target, "Blue_13"); }  
+// GLOBAL 2 !!!
+OnSignal(26) { FRM_FindFrame(Target, "Blue_3"); }
+OnSignal(27) { FRM_FindFrame(Target, "Blue_4"); }
+OnSignal(20) { FRM_FindFrame(Target, "Blue_5"); }
+OnSignal(14) { FRM_FindFrame(Target, "Blue_14"); }
+OnSignal(17) { FRM_FindFrame(Target, "Blue_17"); }
+OnSignal(1) { FRM_FindFrame(Target, "Wave1_1"); }
+OnSignal(3) { FRM_FindFrame(Target, "Wave1_3"); }
+
+
+  label loop:
+    counter = 0;
+    DisableSignals(True);
+    HUMAN_Move("Ally5_2");
+    HUMAN_TurnAt(turn2);
+    HUMAN_SETMODE_Stand();
+    HUMAN_illFire(illF, 1300);    
+    HUMAN_WeaponUp(false);
+    HUMAN_SetAnim("%%Radek2a", 500, 500, False);
+    Delay(1200);
+    HUMAN_SetAnim("%%Radek2c", 500, 500, True);    
+    SendSignal(Target, 5);	// at Ger opetuje palbu
+  label loop2:
+    Delay(1500);
+    HUMAN_SetAnim("%%Radek2b", 500, 500, False);
+    Delay(999);
+    HUMAN_Attack(Target, 1300);
+    HUMAN_WeaponUp(false);
+    Delay(200);
+    HUMAN_TurnAt(turn2);
+    Delay(300);
+    HUMAN_SetAnim("%%Radek2a", 500, 500, False);
+    Delay(1200);
+    HUMAN_SetAnim("%%Radek2c", 500, 500, True);
+    Delay(800);
+    counter = counter +1;
+    If (counter == 3)
+        {
+            HUMAN_Reload();
+        }
+    Delay(800);
+    If (counter == 3)
+        {
+            HUMAN_SetAnim("%%Radek2b", 500, 500, False);
+            HUMAN_illFire(illF, 1300);
+            Delay(1100);
+            HUMAN_SETMODE_Crouch();
+            HUMAN_Move("Ally5_1");
+            HUMAN_TurnAt(turn1);	 
+            DisableSignals(False);
+            goto TheEnd;
+        }     
+  goto loop2;
+
+
+
+OnDeath()
+{
+  SendSignal(OBJ, 30);
+  EndScript();
+}
+
+
+Label TheEnd:
+         HUMAN_Move("Ally5_1");
+         HUMAN_TurnAt(turn1);		
+         RND = _RandomInt(3) +1;
+         HUMAN_SETMODE_Crouch();
+// rusova strelba
+         Delay(3000);
+         HUMAN_Reload();
+         Delay(10000);
+         HUMAN_Move("Ally5_2");
+           IF (RND == 1) { FRM_FindFrame(Target, "dummy_Red30_turn"); }         //  nejakej dumy co uz sem pouzil jinde
+           IF (RND == 2) { FRM_FindFrame(Target, "dummy_sniper6_turn_2"); }   //  nejakej dumy co uz sem pouzil jinde
+           IF (RND == 3) { FRM_FindFrame(Target, "dummy_sniper6_turn_1"); }   //  nejakej dumy co uz sem pouzil jinde
+         HUMAN_TurnAt(Target);
+         HUMAN_SETMODE_Stand();
+         Delay(350);
+         HUMAN_Attack(Target, 2000);
+         Goto TheEnd;    
+

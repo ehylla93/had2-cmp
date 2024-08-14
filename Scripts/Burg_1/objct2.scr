@@ -1,0 +1,16 @@
+// Obj 2 - Locate the radio station
+// -------------------------------------
+
+Block
+{
+SetObjectiveStatus(2, 0);
+}
+
+Whenever Player (_PlayerInRange(3))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990811);
+Delay(3500);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+}

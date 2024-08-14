@@ -1,0 +1,168 @@
+// Guard
+
+Block
+{
+HUMAN_SETSIGHTRANGE(16);
+
+frame timer11;	FRM_FindFrame(timer11,"small11_timer");
+frame predek;	FRM_FindFrame(predek,"predek");
+frame zadek;	FRM_FindFrame(zadek,"zadek");
+frame cum1;		FRM_FindFrame(cum1,"small11cum1");
+frame cum2;		FRM_FindFrame(cum2,"smal11cum2");
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+
+integer AIEvent;
+integer a=1;
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(2);
+}
+
+//------------------------------------------------------------------------------------------------
+
+OnSignal(0)		//received from timer
+{
+SetAlarmType(4,1);
+If(a==2)
+{
+goto 2;
+}
+goto guard;
+}
+
+//------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+	HUMAN_Stop();
+	DisableSignals(1);
+	HUMAN_SETSIGHTRANGE(35);
+  	AIEvent =_GetAlarmType(); 
+}
+HUMAN_SetAnim("", 40, 40, 0);
+
+If ((AIEvent==64) or (AIEvent==32))
+{
+block
+{
+SendSignal(timer11,3);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETAIMODE_Aggressive();
+}
+  EndScript();
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+goto rozhled;
+}
+
+If(AIEvent==4)
+{
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+SendSignal(timer11,1);	// start timer (if ran down Signal 0 received)
+HUMAN_MoveToAlarm();
+goto end;
+}
+
+block
+{
+SendSignal(timer11,3);   // stop timer
+HUMAN_SETAIMODE_Aggressive();
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+DisableSignals(0);
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,0);
+SetAlarmType(119,1);
+HUMAN_SETMODE_Walk();
+}
+HUMAN_WeaponOnArm(1);
+SetAlarmType(4,1);
+HUMAN_SETMODE_Crouch();
+delay (200);
+goto rozhled;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever kokot(_SignalReceived(22))			//Sirena on
+{
+	SetAlarmType(4,1);
+	HUMAN_SetAnim("",50,50,0);
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETSIGHTRANGE(30);
+	goto guard;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+goto end;
+}
+
+label guard:
+a=1;
+  HUMAN_Move("man11_1");
+  delay(1500);
+
+if (_RandomInt(2)==1)
+{
+HUMAN_Move("man11_3");
+HUMAN_TurnAt(cum1);
+HUMAN_SetAnim("%%duma", 400, 400, 1);
+delay (20000);
+HUMAN_SetAnim("", 400, 400, 0);
+}
+
+label 2:
+a=2;
+HUMAN_Move("man11_2");
+
+if (_RandomInt(2)==1)
+{
+HUMAN_Move("man11_4");
+HUMAN_TurnAt(cum2);
+HUMAN_SetAnim("%%rozhlizeni1", 400, 400, 1);
+delay (20000);
+HUMAN_SetAnim("", 400, 400, 0);
+}
+delay(500);
+goto guard;
+
+label rozhled:
+delay (3000);
+HUMAN_TurnAt(predek);
+delay (3000);
+HUMAN_TurnAt(zadek);
+goto rozhled;
+
+label end:

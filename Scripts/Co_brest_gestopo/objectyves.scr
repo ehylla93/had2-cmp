@@ -1,0 +1,180 @@
+//1 - ponorky
+//2 - radio
+//3 - nadrze
+//4 - navrat
+//5- generatory
+//6 - kill all
+//7 - kokoti prezili
+
+
+
+block
+{
+SetObjectiveStatus(1, 0);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+
+SetWhenever (endx,0);
+
+integer ponorky;
+integer radio;
+integer nadrze;
+integer navrat;
+integer vypis;
+integer plnum;
+
+}
+
+
+
+goto end;
+
+
+OnSignal(1)
+{
+block
+{
+if(((radio==1) and (nadrze==1)) and (navrat==0))
+{
+SetObjectiveStatus(4, 0);
+SetWhenever (endx,1);
+navrat=1;
+}
+SetObjectiveStatus(1, 1);
+ponorky=1;
+}
+}
+
+OnSignal(3)
+{
+//radio ok
+block
+{
+if(((ponorky==1) and (nadrze==1)) and (navrat==0))
+{
+SetObjectiveStatus(4, 0);
+SetWhenever (endx,1);
+navrat=1;
+}
+SetObjectiveStatus(2, 1);
+radio=1;
+}
+}
+
+OnSignal(5)
+{
+//nadrze ok
+block
+{
+if(((ponorky==1) and (radio==1)) and (navrat==0))
+{
+SetObjectiveStatus(4, 0);
+SetWhenever (endx,1);
+navrat=1;
+}
+SetObjectiveStatus(3, 1);
+nadrze=1;
+}
+}
+
+//------------------------------------------------------------------------
+
+if ((navrat==1) and (vypis==0))
+{
+Delay(5000); // cas pro vypis predchoziho obj 
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999902);
+vypis=1;
+//tahnete naspatky
+delay (5000);
+SUBTITLES_SetOn(0);
+goto end;
+}
+//------------------------------------------------------------------------
+
+OnSignal(2)
+{
+block
+{
+ponorky=0;
+SetObjectiveStatus(1, 0);
+}
+goto end;
+}
+
+OnSignal(4)
+{
+//radio ne
+block
+{
+radio=0;
+SetObjectiveStatus(2, 0);
+}
+goto end;
+}
+
+OnSignal(6)
+{
+//nadrze ne
+block
+{
+nadrze=0;
+SetObjectiveStatus(3, 0);
+}
+goto end;
+}
+
+
+
+Whenever endx(_MP_AllTeamMembersAreInRange(1, 20))
+{
+printf ("JOPOOOOOOO");
+DisableSignals(1);
+
+if (ponorky==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999905);
+delay (4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(1, 3);
+goto end;
+}
+
+
+if (radio==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999909);
+delay (4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(2, 3);
+goto end;
+}
+
+if (nadrze==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999805);
+delay (4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(3, 3);
+goto end;
+}
+
+
+
+
+SetObjectiveStatus(4, 1);
+
+}
+
+
+
+
+
+
+
+
+
+label end:

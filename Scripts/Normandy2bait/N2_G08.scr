@@ -1,0 +1,62 @@
+// (La_tiger_1) Ridic
+// ----------------------------------------------------
+
+Block
+{
+Frame kulomet;		FRM_FindFrame(kulomet,"N2_G09");
+Frame kanon;		FRM_FindFrame(kanon,"N2_G10");
+Frame u1;		FRM_FindFrame(u1,"N2_G25");
+Frame u2;		FRM_FindFrame(u2,"N2_G26");
+Frame u3;		FRM_FindFrame(u3,"N2_G27");
+Frame u4;		FRM_FindFrame(u4,"N2_G28");
+Frame u5;		FRM_FindFrame(u5,"N2_G29");
+Frame u6;		FRM_FindFrame(u6,"N2_G30");
+Frame tank;		FRM_FindFrame(tank,"N2_G33");
+Frame hakl;		FRM_FindFrame(hakl,"N2_G36");
+}
+
+// ----------------------------------------------------
+
+OnDeath(){
+SendSignal(hakl, 1);
+Delay(15000);
+SendSignal(tank, 1);
+SendSignal(u1, 1);
+SendSignal(u2, 1);
+SendSignal(u3, 1);
+SendSignal(u4, 1);
+SendSignal(u5, 1);
+SendSignal(u6, 1);
+EndScript();
+}
+
+Whenever Player (_PlayerInRange(41))
+{
+Delay(2000);
+SendSignal(kulomet, 1);
+SendSignal(kanon, 1);
+Delay(200);
+HUMAN_Drive("GerTank3", 40);
+//SendSignal(hakl, 1);
+HUMAN_Drive("Hakl_4", 20);
+HUMAN_Drive("Hakl_5", 12);
+HUMAN_Drive("", 0);
+//SendSignal(tank, 1);
+SendSignal(u1, 1);
+SendSignal(u2, 1);
+SendSignal(u3, 1);
+SendSignal(u4, 1);
+SendSignal(u5, 1);
+SendSignal(u6, 1);
+goto END;
+}
+
+// ----------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_BoardVehicle("La_tiger_1",  1, 0);
+goto END;
+
+
+Label END:

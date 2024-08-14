@@ -1,0 +1,70 @@
+// AF3a_33 - soldier hidden in the house
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME dummy_rozhovor;		FRM_FindFrame(dummy_rozhovor, "dummy_rozhovor_03");
+  INTEGER Atype			= 0;
+  INTEGER rnd				= _RandomInt(2);
+
+  FRAME this;				FRM_GetMyFrame(this);
+  FRAME turn1;			FRM_FindFrame(turn1, "oa_dv91");
+  FRAME turn2;			FRM_FindFrame(turn2, "oa_dv92");
+
+  SetAlarmType(1023, false);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("33: dead");
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    HUMAN_Suspend(false);
+    Atype = _GetAlarmType();
+    printfnumber("33: ", Atype);
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Crouch();
+  goto END;
+}
+
+Whenever player (_PlayerInRange(15)){
+  goto ACTIVATE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_TurnAt(turn1);
+//  HUMAN_SetSniper(true, 1);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetMODE_Crouch();
+  HUMAN_Suspend(true);
+goto  END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  block
+  {
+    HUMAN_SetOptimized(1);
+    SetAlarmType(1023, true);
+    SetAlarmType(768, false);
+  }
+  HUMAN_SetMODE_Crouch();
+goto END;
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(300);
+goto END;

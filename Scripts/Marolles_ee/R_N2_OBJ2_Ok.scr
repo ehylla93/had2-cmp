@@ -1,0 +1,14 @@
+
+Frame OBJ;			FRM_FindFrame(OBJ, "objectives");
+Frame Ally4;			FRM_FindFrame(Ally4, "Ally_4");
+Frame Waves;			FRM_FindFrame(Waves, "dummy_waves_organizer");
+
+Whenever obj2 ( _PlayerInRange(2); )
+{
+  SendSignal(OBJ, 2);
+  Delay(1500);
+  SendSignal(Ally4, 2);
+  Delay(240000);
+  SendSignal(waves, 1);		// Pojistka co tam chtel nejakej anglanskej testr
+}
+

@@ -1,0 +1,43 @@
+// bourelly_E09 takling
+
+Block
+{
+Frame p1;	FRM_FindFrame(p1, "bourelly_E09");
+Integer rdm = 0;
+Integer time = 0;
+}
+
+OnSignal(1)	// signal received from bourelly_E09
+{
+	GoTo talk;
+}
+
+OnSignal(2)	// received from bourelly_E09 on death
+{
+	FRM_MorphSpeechDelayed(p1, 0, 0, 0);
+	EndScript();
+}
+
+OnSignal(3)
+{
+	FRM_MorphSpeechDelayed(p1, 09991922, 3, 20);
+}
+
+GoTo end;
+
+Label talk:
+	FRM_MorphSpeechDelayed(p1, 90003034, 3, 20);
+	Label loop:
+	time = _RandomInt(12000) + 2000;
+	Delay(time);
+	rdm = _RandomInt(7);
+	if(rdm==0) { FRM_MorphSpeechDelayed(p1, 90003003, 3, 20); }
+	if(rdm==1) { FRM_MorphSpeechDelayed(p1, 90003004, 3, 20); }
+	if(rdm==2) { FRM_MorphSpeechDelayed(p1, 90003005, 3, 20); }
+	if(rdm==3) { FRM_MorphSpeechDelayed(p1, 90003006, 3, 20); }
+	if(rdm==4) { FRM_MorphSpeechDelayed(p1, 90003007, 3, 20); }
+	if(rdm==5) { FRM_MorphSpeechDelayed(p1, 90003022, 3, 20); }
+	if(rdm==6) { FRM_MorphSpeechDelayed(p1, 90003026, 3, 20); }
+GoTo loop;
+
+Label end:

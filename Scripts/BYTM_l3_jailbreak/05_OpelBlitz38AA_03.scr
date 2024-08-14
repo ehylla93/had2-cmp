@@ -1,0 +1,45 @@
+// 05_OpelBlitz38AA_03 - 05_OpelBlitz38AA - Flak
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1023, 0);
+SetAlarmType(768, 1);
+
+HUMAN_SETSIGHTRANGE(150);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("05_OpelBlitz38AA_03 dead");
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnSignal(1)
+{
+HUMAN_BoardVehicle("05_OpelBlitz38AA",  true, 2);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

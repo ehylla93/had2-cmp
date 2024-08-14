@@ -1,0 +1,10 @@
+// BU2_04_A2 - activator
+
+Block {
+Frame bu2_04;	FRM_FindFrame(bu2_04, "BU2_04");
+}
+
+OnUse()
+{
+	SendSignal(bu2_04, 2);
+}

@@ -1,0 +1,50 @@
+// Haklak
+// -----------------------------------------------------------------------------------------------------------
+
+block
+{
+INTEGER Atype				= 0;
+INTEGER rnd					= 0;  
+
+SetAlarmType(1023, true);
+SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(false);
+HUMAN_BoardVehicle("Hakl1n",  true, 1);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_BoardVehicle("Hakl1n",  false, 1);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_TurnAtNearestPlayer();
+goto END; 
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+HUMAN_Suspend(true);
+HUMAN_SETSIGHTRANGE(10);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(2);
+goto END; 
+
+Label END:

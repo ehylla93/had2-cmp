@@ -1,0 +1,30 @@
+// Jeepsas_5 Driver citroen // improved route
+
+frame la_Jeepsas_5;	FRM_FindFrame(la_Jeepsas_5, "la_Jeepsas_5");
+
+Whenever inrange ( _PlayerInRange(25))
+{
+  HUMAN_BoardVehicle("la_Jeepsas_5", true, 0);
+  delay(9000);
+//  HUMAN_Drive("o2_act1_04", 95);
+}
+
+{
+	GoTo driveloop;
+}
+
+{
+Frame FRM;		FRM_GetMyFrame(FRM);
+Label driveloop:
+	HUMAN_Drive("o2_act1_03", 105);
+//	HUMAN_Drive("o2_act1_02", 105);
+	HUMAN_Drive("o2_act1_01", 105);
+	HUMAN_Drive("tank01_al01", 105);
+//	HUMAN_Drive("o1_act1_03", 105);
+	HUMAN_Drive("tank02_01", 105);
+	HUMAN_Drive("tank02_al01", 110);
+	HUMAN_Drive("o2_act1_04", 110);
+GoTo driveloop;
+} 
+
+label TheEnd:

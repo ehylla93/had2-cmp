@@ -1,0 +1,49 @@
+// Obj 8 - Send message to HQ
+// -----------------------------------------------
+
+Block
+{
+	Frame S1;			FRM_FindFrame(S1, "09_G121");
+	Frame S2;			FRM_FindFrame(S2, "09_G122");
+	Frame Obj9;			FRM_FindFrame(Obj9, "obj9");
+	Frame Radio_Bomb;	FRM_FindFrame(Radio_Bomb, "09_Radio_Bomb");
+	Frame Radio;		FRM_FindFrame(Radio, "09_Radio");
+	Frame me;			FRM_GetMyFrame(me);
+	Frame Player;
+	
+	SetActorState(Radio, 0);
+	
+	SetWhenever(Message_Send, 0);
+}
+
+Whenever Send_Message (_SignalReceived(1))
+{
+	Delay(3000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(04990803);
+	Delay(2500);
+	SetActorState(Radio, 1);
+	SetWhenever(Message_Send, 1);
+	SUBTITLES_SetOn(0);
+}
+
+Whenever Message_Send (_Actor_GetState(Radio) == 2)
+{
+	FRM_GetNearestPlayer(me, Player);
+	FRM_MorphSpeechDelayed(Player, 04990882, 5, 30);
+	Delay(200);
+	SendSignal(S1, 3);
+	SendSignal(S2, 3);
+	FRM_MorphSpeechDelayed(Player, 04990884, 5, 30);
+	Delay(200);
+	FRM_MorphSpeechDelayed(Player, 04990885, 5, 30);
+	Delay(500);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(04990812);
+	SetObjectiveStatus(9, 0);
+	Delay(3000);
+	SetObjectiveStatus(8, 1);
+	SendSignal(Obj9, 1);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}

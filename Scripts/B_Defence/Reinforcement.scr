@@ -1,0 +1,174 @@
+// Enemy Reinforcements
+// ----------------------------------------------------
+
+Block
+{
+// ** TANKY **
+
+Frame G01;	FRM_FindFrame(G01,"SF_G25");
+Frame G02;	FRM_FindFrame(G02,"SF_G26");
+Frame G03;	FRM_FindFrame(G03,"SF_G27");
+
+Frame G11;	FRM_FindFrame(G11,"SF_G28");
+Frame G12;	FRM_FindFrame(G12,"SF_G29");
+Frame G13;	FRM_FindFrame(G13,"SF_G30");
+
+Frame G21;	FRM_FindFrame(G21,"SF_G31");
+Frame G22;	FRM_FindFrame(G22,"SF_G32");
+Frame G23;	FRM_FindFrame(G23,"SF_G33");
+
+// ** PAKY **
+
+Frame G31;	FRM_FindFrame(G31,"SF_G34");
+Frame G32;	FRM_FindFrame(G32,"SF_G35");
+Frame G33;	FRM_FindFrame(G33,"SF_G36");
+
+// ** HAKL **
+
+Frame G1;	FRM_FindFrame(G1,"SF_G37");
+Frame G2;	FRM_FindFrame(G2,"SF_G38");
+Frame G3;	FRM_FindFrame(G3,"SF_G39");
+Frame G4;	FRM_FindFrame(G4,"SF_G40");
+Frame G5;	FRM_FindFrame(G5,"SF_G41");
+Frame G6;	FRM_FindFrame(G6,"SF_G42");
+
+Frame T1;	FRM_FindFrame(T1,"La_tiger_4");
+Frame T2;	FRM_FindFrame(T2,"La_tiger_5");
+
+// ** PECHOTA **
+
+Frame P01;	FRM_FindFrame(P01,"SF_G43");
+Frame P02;	FRM_FindFrame(P02,"SF_G44");
+Frame P03;	FRM_FindFrame(P03,"SF_G45");
+Frame P04;	FRM_FindFrame(P04,"SF_G46");
+Frame P05;	FRM_FindFrame(P05,"SF_G47");
+Frame P06;	FRM_FindFrame(P06,"SF_G48");
+Frame P07;	FRM_FindFrame(P07,"SF_G49");
+Frame P08;	FRM_FindFrame(P08,"SF_G50");
+Frame P09;	FRM_FindFrame(P09,"SF_G51");
+Frame P10;	FRM_FindFrame(P10,"SF_G52");
+
+Frame P11;	FRM_FindFrame(P11,"SF_G53");
+Frame P12;	FRM_FindFrame(P12,"SF_G54");
+Frame P13;	FRM_FindFrame(P13,"SF_G55");
+Frame P14;	FRM_FindFrame(P14,"SF_G56");
+Frame P15;	FRM_FindFrame(P15,"SF_G57");
+Frame P16;	FRM_FindFrame(P16,"SF_G58");
+Frame P17;	FRM_FindFrame(P17,"SF_G59");
+Frame P18;	FRM_FindFrame(P18,"SF_G60");
+Frame P19;	FRM_FindFrame(P19,"SF_G61");
+
+Frame P20;	FRM_FindFrame(P20,"SF_G62");
+Frame P21;	FRM_FindFrame(P21,"SF_G63");
+Frame P22;	FRM_FindFrame(P22,"SF_G64");
+Frame P23;	FRM_FindFrame(P23,"SF_G65");
+Frame P24;	FRM_FindFrame(P24,"SF_G66");
+Frame P25;	FRM_FindFrame(P25,"SF_G67");
+Frame P26;	FRM_FindFrame(P26,"SF_G68");
+Frame P27;	FRM_FindFrame(P27,"SF_G69");
+Frame P28;	FRM_FindFrame(P28,"SF_G70");
+
+Frame Buz;	FRM_FindFrame(Buz,"Buzerant");
+Frame Obj;	FRM_FindFrame(Obj,"obj1");
+
+SetWhenever(Reinf, 0);
+SetWhenever(Reinf2, 0);
+}
+
+// ----------------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Reinf, 1);
+SetWhenever(Reinf2, 1);
+goto END;
+}
+
+Whenever Reinf ((_Actor_GetState(T1)==0) OR (_Actor_GetState(T2)==0))
+{
+SetWhenever(Reinf2, 0);
+SendSignal(G01, 1);SendSignal(G02, 1);SendSignal(G03, 1);
+Delay(7000);
+SendSignal(G21, 1);SendSignal(G22, 1);SendSignal(G23, 1);
+Delay(5000);
+SendSignal(G11, 1);SendSignal(G12, 1);SendSignal(G13, 1);
+SendSignal(Buz, 1);
+Delay(15000);
+SendSignal(G31, 1);SendSignal(G32, 1);SendSignal(G33, 1);
+Delay(50000);
+SendSignal(G1, 1);SendSignal(G2, 1);SendSignal(G3, 1);
+SendSignal(G4, 1);SendSignal(G5, 1);SendSignal(G6, 1);
+Delay(50000);
+SendSignal(P01, 1);SendSignal(P02, 1);SendSignal(P03, 1);
+SendSignal(P11, 1);SendSignal(P12, 1);SendSignal(P20, 1);
+Delay(50000);
+SendSignal(P04, 1);SendSignal(P05, 1);SendSignal(P13, 1);
+SendSignal(P14, 1);SendSignal(P15, 1);SendSignal(P21, 1);
+Delay(50000);
+SendSignal(P06, 1);SendSignal(P07, 1);SendSignal(P16, 1);
+SendSignal(P22, 1);SendSignal(P23, 1);SendSignal(P24, 1);
+Delay(50000);
+SendSignal(P08, 1);SendSignal(P17, 1);SendSignal(P18, 1);
+SendSignal(P25, 1);SendSignal(P26, 1);SendSignal(P09, 1);
+Delay(50000);
+SendSignal(P09, 1);SendSignal(P10, 1);SendSignal(P19, 1);
+SendSignal(P27, 1);SendSignal(P28, 1);
+Delay(10000);
+SendSignal(Obj, 1);
+goto END;
+}
+
+Whenever Reinf2 (_SignalReceived(3))
+{
+SetWhenever(Reinf, 0);
+SendSignal(G01, 1);SendSignal(G02, 1);SendSignal(G03, 1);
+Delay(7000);
+SendSignal(G21, 1);SendSignal(G22, 1);SendSignal(G23, 1);
+Delay(5000);
+SendSignal(G11, 1);SendSignal(G12, 1);SendSignal(G13, 1);
+SendSignal(Buz, 1);
+Delay(15000);
+SendSignal(G31, 1);SendSignal(G32, 1);SendSignal(G33, 1);
+Delay(50000);
+SendSignal(G1, 1);SendSignal(G2, 1);SendSignal(G3, 1);
+SendSignal(G4, 1);SendSignal(G5, 1);SendSignal(G6, 1);
+Delay(50000);
+SendSignal(P01, 1);SendSignal(P02, 1);SendSignal(P03, 1);
+SendSignal(P11, 1);SendSignal(P12, 1);SendSignal(P20, 1);
+Delay(50000);
+SendSignal(P04, 1);SendSignal(P05, 1);SendSignal(P13, 1);
+SendSignal(P14, 1);SendSignal(P15, 1);SendSignal(P21, 1);
+Delay(50000);
+SendSignal(P06, 1);SendSignal(P07, 1);SendSignal(P16, 1);
+SendSignal(P22, 1);SendSignal(P23, 1);SendSignal(P24, 1);
+Delay(50000);
+SendSignal(P08, 1);SendSignal(P17, 1);SendSignal(P18, 1);
+SendSignal(P25, 1);SendSignal(P26, 1);SendSignal(P09, 1);
+Delay(50000);
+SendSignal(P09, 1);SendSignal(P10, 1);SendSignal(P19, 1);
+SendSignal(P27, 1);SendSignal(P28, 1);
+Delay(10000);
+SendSignal(Obj, 1);
+goto END;
+}
+
+Whenever Retreat (_Signalreceived(2))
+{
+SendSignal(G01, 2);SendSignal(G11, 2);
+SendSignal(Buz, 2);SendSignal(G1, 2);SendSignal(G2, 2);
+SendSignal(G4, 2);SendSignal(G5, 2);SendSignal(G6, 2);
+SendSignal(P01, 2);SendSignal(P02, 2);SendSignal(P03, 2);
+SendSignal(P11, 2);SendSignal(P12, 2);SendSignal(P20, 2);
+SendSignal(P04, 2);SendSignal(P05, 2);SendSignal(P13, 2);
+SendSignal(P14, 2);SendSignal(P15, 2);SendSignal(P21, 2);
+SendSignal(P06, 2);SendSignal(P07, 2);SendSignal(P16, 2);
+SendSignal(P22, 2);SendSignal(P23, 2);SendSignal(P24, 2);
+SendSignal(P08, 2);SendSignal(P17, 2);SendSignal(P18, 2);
+SendSignal(P25, 2);SendSignal(P26, 2);SendSignal(P09, 2);
+SendSignal(P09, 2);SendSignal(P10, 2);SendSignal(P19, 2);
+SendSignal(P27, 2);SendSignal(P28, 2);SendSignal(G3, 2);
+goto END;
+}
+
+
+Label END:

@@ -1,0 +1,69 @@
+// Particles on Objects
+// -----------------------------------------------------------------
+
+Block
+{
+Frame TigerVrak1;		FRM_FindFrame(TigerVrak1, "TVrak_01");
+Frame PanzerVrak1;		FRM_FindFrame(PanzerVrak1, "PVrak_01");
+Frame HaklVrak1;		FRM_FindFrame(HaklVrak1, "HVrak_01");
+Frame HaklVrak2;		FRM_FindFrame(HaklVrak2, "HVrak_02");
+Frame Ohen1;			FRM_FindFrame(Ohen1, "B1_Ohen");
+Frame ST1;				FRM_FindFrame(ST1, "Smoke_Tent01");
+
+Frame Nadrz1;			FRM_FindFrame(Nadrz1,"E1_Ftank_01");
+Frame Nad1X;			FRM_FindFrame(Nad1X,"E1_Ftank_01X");
+Frame Nadrz2;			FRM_FindFrame(Nadrz2,"E1_Ftank_02");
+Frame Nad2X;			FRM_FindFrame(Nad2X,"E1_Ftank_02X");
+Frame Nadrz3;			FRM_FindFrame(Nadrz3,"E1_Ftank_03");
+Frame Nad3X;			FRM_FindFrame(Nad3X,"E1_Ftank_03X");
+Frame Nadrz4;			FRM_FindFrame(Nadrz4,"E1_Ftank_04");
+Frame Nad4X;			FRM_FindFrame(Nad4X,"E1_Ftank_04X");
+
+Frame Panther;			FRM_FindFrame(Panther, "D1_Panther_01");
+Frame PantX;			FRM_FindFrame(PantX, "D1_Panther_Explo");
+Frame Panzer;			FRM_FindFrame(Panzer, "D1_Panzer_01");
+
+FRM_CreateParticle(95, TigerVrak1);
+FRM_CreateParticle(95, PanzerVrak1);
+FRM_CreateParticle(95, HaklVrak1);
+FRM_CreateParticle(95, HaklVrak2);
+FRM_CreateParticle(40, Ohen1);
+FRM_CreateParticle(73, ST1);
+}
+
+Whenever Panther_Destroyed (_Actor_GetState(Panther) == 0)
+{
+MakeExplosion(Panther, 100000, 5000);
+FRM_CreateParticle(53, Panther);
+FRM_CreateParticle(95, PantX);
+}
+
+Whenever Panzer_Destroyed (_Actor_GetState(Panzer) == 0)
+{
+MakeExplosion(Panzer, 100000, 2000);
+FRM_CreateParticle(53, Panzer);
+}
+
+Whenever Nad1 (_Actor_GetState(Nadrz1) == 0)
+{
+MakeExplosion(Nadrz1, 250000, 20000);
+FRM_CreateParticle(68, Nad1X);
+}
+
+Whenever Nad2 (_Actor_GetState(Nadrz2) == 0)
+{
+MakeExplosion(Nadrz2, 250000, 20000);
+FRM_CreateParticle(68, Nad2X);
+}
+
+Whenever Nad3 (_Actor_GetState(Nadrz3) == 0)
+{
+MakeExplosion(Nadrz3, 250000, 20000);
+FRM_CreateParticle(68, Nad3X);
+}
+
+Whenever Nad4 (_Actor_GetState(Nadrz4) == 0)
+{
+MakeExplosion(Nadrz4, 250000, 20000);
+FRM_CreateParticle(68, Nad4X);
+}

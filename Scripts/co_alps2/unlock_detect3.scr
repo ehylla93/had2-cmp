@@ -1,0 +1,23 @@
+
+block
+{
+Frame al2_03;	FRM_FindFrame(al2_03,"al2_03");
+frame door;	FRM_FindFrame(door, "B10_t_06");
+integer a;	a=0;
+SetWhenever(open, 0);
+}
+
+Whenever unlok(_ACTOR_GetState(door)==0)
+{
+	SendSignal (al2_03,6);
+	SetWhenever(open, 1);
+	
+}
+
+Whenever open(_ACTOR_GetState(door)<>0)
+{
+	SendSignal (al2_03,8);
+}
+
+Label end:
+

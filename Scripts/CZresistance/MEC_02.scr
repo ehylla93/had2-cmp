@@ -1,0 +1,80 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+FRM_SwitchFaceTexture(me,"e_f029");
+Frame G5;		FRM_FindFrame(G5,"GS_005");
+Frame G6;		FRM_FindFrame(G5,"GS_006");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Crouch();
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Label SpeechLoop:
+HUMAN_SetAnim("%%maze", 1000, 1000, 1); 
+FRM_MorphSpeechDelayed(me, 02990486, 5, 30);
+FRM_MorphSpeechDelayed(me, 02990487, 5, 30);
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 02990488, 5, 30);
+FRM_MorphSpeechDelayed(me, 02990489, 5, 30);
+Delay(1000);
+FRM_MorphSpeechDelayed(G5, 02990490, 5, 30);
+Delay(500);
+FRM_MorphSpeechDelayed(me, 02990491, 5, 30);
+Delay(700);
+FRM_MorphSpeechDelayed(me, 02990492, 5, 30);
+FRM_MorphSpeechDelayed(me, 02990493, 5, 30);
+Delay(800);
+FRM_MorphSpeechDelayed(G5, 02990494, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(me, 09991922, 5, 30);
+Delay(12000);
+
+
+//*SpeechLoop
+goto SpeechLoop;
+
+
+//*CustomSection
+
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(5);
+//*DefaultLoad
+goto SpeechLoop;
+
+Label END:

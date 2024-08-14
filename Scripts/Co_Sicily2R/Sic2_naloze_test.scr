@@ -1,0 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Hlida obj odminovani a posila signal pro OBJ odminovani
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+Frame N1;		FRM_FindFrame(N1, "naloz_1");
+Frame N2;		FRM_FindFrame(N2, "naloz_2");
+Frame N3;		FRM_FindFrame(N3, "naloz_3");
+Frame N4;		FRM_FindFrame(N4, "naloz_4");
+Frame N5;		FRM_FindFrame(N5, "naloz_5");
+Frame N6;		FRM_FindFrame(N6, "naloz_6");
+
+Whenever ODMINOVANO ( (((((_ACTOR_GetState(N1)==0) and (_ACTOR_GetState(N2)==0)) and (_ACTOR_GetState(N3)==0)) and (_ACTOR_GetState(N4)==0)) and (_ACTOR_GetState(N5)==0)) and (_ACTOR_GetState(N6)==0)  )
+{
+  Printf("NALOZE ODSTRANENY .... vsech 6");
+  SendSignal(OBJ, 3);
+  EndScript();
+}
+
+SetWheneverTime(ODMINOVANO, 1000);

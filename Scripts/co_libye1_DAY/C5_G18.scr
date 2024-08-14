@@ -1,0 +1,73 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame AF1_09;		FRM_FindFrame(AF1_09,"AF1_09");
+Frame AF1_07;		FRM_FindFrame(AF1_07,"AF1_07");
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(1300);
+HUMAN_SETHEARRANGE(300);
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETSIGHTRANGE(1300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+GoTo activity;
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(1300);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+GoTo activity;
+//^DefaultLoad
+goto END;
+
+Label activity:
+
+HUMAN_MoveToFrame(AF1_07, 0);
+HUMAN_TurnAt(AF1_09);
+Delay(2000);
+HUMAN_MoveToFrame(AF1_09, 0);
+HUMAN_TurnAt(AF1_07);
+Delay(2000);
+GoTo activity;
+
+Label END:

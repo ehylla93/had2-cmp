@@ -1,0 +1,63 @@
+
+
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red35_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(8)
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+   }
+  HUMAN_TurnAt(turn);
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red35_1");		
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 35: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

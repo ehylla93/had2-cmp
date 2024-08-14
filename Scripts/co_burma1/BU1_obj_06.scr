@@ -1,0 +1,37 @@
+// BU1_obj_06 - optional - katana
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Katana;
+
+Frame obj;		FRM_FindFrame(obj, "BU1_objectives");
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+SetWhenever(Found, 1);
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 248, Katana))
+{
+SetWhenever(lost, true);
+SendSignal(obj, 8);
+PlayMusic(36);
+GoTo end;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 248, Katana))
+{
+SetWhenever(found, true);
+SendSignal(obj, 9);
+GoTo end;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 248, Katana))
+{
+SetWhenever(Lost, 1);
+SendSignal(obj, 8);
+goto END;
+}
+
+Label END:

@@ -1,0 +1,80 @@
+//n_E24
+//sniper on island
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+
+integer aievent;
+integer spawn;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+HUMAN_SetSniper(1, 100);
+}
+
+HUMAN_Suspend(1);
+//spawn = _RandomInt(2);
+//if(spawn==0)
+//{ EnableSignal(1, false); }
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent = _GetAlarmType();
+PrintfNumber("E24 alarm:",aievent);
+}
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(110))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%sedimL", 500, 500, 1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

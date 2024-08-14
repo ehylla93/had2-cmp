@@ -1,0 +1,105 @@
+// Ge_6
+
+Block
+{
+Frame lampa;	FRM_FindFrame(lampa, "l_ndrlamp8.lamp");
+Frame vagon;	FRM_FindFrame(vagon, "la_vagon11");
+Frame skladnik;	FRM_FindFrame(skladnik, "posila_sklad01");
+Frame me;		FRM_GetMyFrame(me);
+Integer ctr=0;
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(45);
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from l_bedny_3.bedny09
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+	goto hlidka;
+}
+
+Label hlidka:
+	HUMAN_Move("h1");
+	HUMAN_Move("h2");
+	HUMAN_Move("h3");
+	HUMAN_Move("h4");
+	Integer rndwait=_RandomInt(3);
+	If(rndwait==0)
+	{
+		HUMAN_TurnAt(lampa);
+		HUMAN_SetOptimized(2);
+		HUMAN_SetAnim("%%nudazed2", 1000, 3000,false);
+		Delay(11000);
+		HUMAN_SetOptimized(1);
+	}
+	HUMAN_Move("h5");
+	HUMAN_Move("h6");
+	Integer rndsmoke=_RandomInt(4);
+	If(rndsmoke==0)
+	{
+		Gosub SMOKE;
+	}
+	HUMAN_Move("h7");
+	GoTo hlidka;
+
+Label SMOKE:
+Delay(4500);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 0);		//(Looking Through Pockets Then Lights Fag)
+Delay(10000);
+HUMAN_SetAnim("%%cumvoda", 1000, 1000, 0);
+Delay(5000);
+SetAlarmType(32, true);
+Label SMOKE2:
+ctr=ctr+1;
+if(ctr==4)
+{
+ctr=0;
+Return;
+}
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 0);		//(Brings Hand Up To Smoke)
+Delay(10000);
+goto SMOKE2;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 200, 200, 0);
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(65);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	DisableSignals(true);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("h1");
+	GoTo hlidka;
+}
+
+OnDeath()
+{
+	SendSignal(skladnik, 1);
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label end:

@@ -1,0 +1,68 @@
+// Sherman Firefly crew, Tank Gun
+
+Block
+ {
+    Frame tank3;			FRM_FindFrame(tank3, "La_tiger_3");
+    Frame tank4;			FRM_FindFrame(tank4, "La_tiger_4");
+    Frame bank;			FRM_FindFrame(bank, "m_banka_13");
+    //Frame hakl;			FRM_FindFrame(hakl, "hakl");	
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+HUMAN_Suspend(True);
+goto TheEnd;				
+
+Whenever inrange (_MP_IsTeamMemberInRange(1, 54))
+{
+  Delay(10000);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_shermanAf_2", true, 2);
+  printf("Firefly gun boarded");
+}
+
+
+Onsignal(1)
+{
+  label loopT:
+  If ( _ACTOR_GetState(tank4) == 1 ) 
+    {
+       HUMAN_TurnAt(tank4);
+       Delay(1500);
+       HUMAN_Attack(tank4, 4000); 
+       Goto loopT;
+    }
+
+}
+
+OnSignal(2)
+{
+ 
+ label loop:
+  If ( _ACTOR_GetState(tank3) == 1 ) 
+    {
+       HUMAN_TurnAt(tank3);
+       Delay(1500);
+       HUMAN_Attack(tank3, 4000); 
+       Goto loop;
+    }
+}
+	
+OnSignal(3)
+    {
+	printf("Firefly attacks bank");
+
+       HUMAN_TurnAt(bank);
+       Delay(1500);
+       HUMAN_Attack(bank, 3000); 
+       
+    }
+
+
+			
+OnAlarm()	{}
+
+OnAlarmDone()  {}
+
+Label TheEnd:

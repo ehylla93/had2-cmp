@@ -1,0 +1,75 @@
+// Africa(Oasis) Objectives - OBJ5 (HALFTRUCKS DESTRUCTION)
+// -----------------------------------------------------------
+// 1) Use Radio
+// 2) Defend the Oasis - Cancelled
+// 3) Destroy the enemy Tank
+// 4) Find Documents
+// 5) Znicte pancejrova vozidla
+// 6) Zabijte Nepritele
+// -----------------------------------------------------------
+
+Block
+{
+Frame C1;	FRM_FindFrame(C1, "Hakl1n");
+Frame C2;	FRM_FindFrame(C2, "Hakl2n");
+
+Frame V1;	FRM_FindFrame(V1, "volny1");
+Frame V2;	FRM_FindFrame(V2, "volny2");
+Frame V3;	FRM_FindFrame(V3, "volny3");
+Frame V4;	FRM_FindFrame(V4, "volny4");
+Frame V5;	FRM_FindFrame(V5, "volny5");
+Frame V6;	FRM_FindFrame(V6, "volny6");
+
+Integer Select;
+
+SetObjectiveStatus(5, 4);	// Znicte Pancejrova vozidla
+goto END;
+}
+
+// -----------------------------------------------------------
+
+Whenever START (_PlayerInRange(1000))
+{
+Car_SetFuel(C1, 0);
+Car_SetFuel(C2, 0);
+Select = _RandomInt(4);
+
+If(Select == 0)
+{
+SendSignal(V1, 1);SendSignal(V3, 1);SendSignal(V5, 1);
+}
+
+If(Select == 1)
+{
+SendSignal(V2, 1);SendSignal(V4, 1);
+}
+
+If(Select == 2)
+{
+SendSignal(V1, 1);SendSignal(V6, 1);
+}
+
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(23994601);
+Delay(4000);
+SUBTITLES_SetText(07011403);
+Delay(4000);
+SUBTITLES_SetText(07011402);
+Delay(4000);
+SUBTITLES_SetOn(0);
+GoTo end;
+}
+
+Whenever OBJ5_DONE_Armoured_Vehicles_Destroyed ((_Actor_GetState(C1)==0) And (_Actor_GetState(C2)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(09991829);
+Delay(3500);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label end:

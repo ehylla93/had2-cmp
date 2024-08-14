@@ -1,0 +1,220 @@
+// Pilot
+
+Block
+{
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+Frame obj_p;		FRM_Findframe(obj_p, "n_pilot_obj");
+Frame objectives;	FRM_Findframe(objectives, "dummy_objectives");
+Frame crate;		FRM_Findframe(crate, "n_crate_1");
+Frame Player;
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(30);
+SetAlarmType(1023, 0);
+
+Integer pilotfound = 0;
+Integer pilotpos;
+
+SetWhenever(Player_Rescuing, 0);
+
+Integer AIEvent;
+Integer SayStyle;
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+
+goto END;
+
+// ---------------------------------------------
+
+OnSignal(1)
+{
+printf("Pilot Sig1 received");
+pilotpos = _RandomInt(5);
+printfnumber("pilotpos no", pilotpos);
+if(pilotpos==0) { FRM_TeleportNearCheckpoint(MyFRM, "pilot_1", ""); }							//airplane
+if(pilotpos==1) { FRM_TeleportNearCheckpoint(MyFRM, "pilot_2", ""); HUMAN_TurnAt(crate); }		//cottage
+if(pilotpos==2) { FRM_TeleportNearCheckpoint(MyFRM, "pilot_3", ""); }							//behind in forest
+if(pilotpos==3) { FRM_TeleportNearCheckpoint(MyFRM, "pilot_4", "pilot_4a"); }					//complex basement
+if(pilotpos==4) { FRM_TeleportNearCheckpoint(MyFRM, "pilot_5", ""); HUMAN_TurnAt(crate); }		//complex warehouse
+
+SetWhenever(Player_Rescuing, 1);
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%kucasedi", 700, 300, 1);
+
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+OnDeath(){
+SendSignal(obj_p, 2);
+EndScript();
+}
+
+OnAlarm(){
+	AIEvent = _GetAlarmType();
+	SayStyle = _RandomInt(2);
+
+	If(AIEvent == 32)
+	{
+		HUMAN_SETMODE_Lie();
+		
+		If(SayStyle == 0)
+		{
+			FRM_MorphSpeech(MyFRM, 90004304, 10, 50);
+		}
+
+		If(SayStyle == 1)
+		{
+			FRM_MorphSpeechDelayed(MyFRM, 90000974, 10, 50);
+			Delay(200);
+			FRM_MorphSpeech(MyFRM, 90000910, 10, 50);
+		}
+	}
+
+	If((AIEvent == 1) OR (AIEvent == 2))
+	{
+		HUMAN_SETMODE_Lie();
+		HUMAN_SETMODE_Run();
+		HUMAN_MoveFromFrame(Player, 6);
+
+		If(SayStyle == 0)
+		{
+			FRM_MorphSpeech(MyFRM, 90000954, 10, 50);
+		}
+
+		If(SayStyle == 1)
+		{
+			FRM_MorphSpeech(MyFRM, 90000901, 10, 50);
+		}
+
+	}
+
+	If(AIEvent == 64)
+	{
+		Delay(200);
+		HUMAN_SETMODE_Lie();
+		HUMAN_SETMODE_Run();
+		FRM_GetNearestPlayer(MyFRM, Player);
+
+		If(SayStyle == 0)
+		{
+			FRM_MorphSpeech(MyFRM, 90000805, 10, 50);
+		}
+
+		If(SayStyle == 1)
+		{
+			FRM_MorphSpeech(MyFRM, 90000936, 10, 50);
+		}
+
+		HUMAN_MoveFromFrame(Player, 8);
+	}
+
+	If(AIEvent == 4)
+	{
+		HUMAN_SETMODE_Lie();
+
+		If(SayStyle == 0)
+		{
+			FRM_MorphSpeech(MyFRM, 90000947, 10, 50);
+		}
+
+		If(SayStyle == 1)
+		{
+			FRM_MorphSpeech(MyFRM, 90000913, 10, 50);
+		}
+
+	}
+
+	Delay(12000);
+	HUMAN_SetAlarm(0);
+	
+	If(SayStyle == 0)
+	{
+		FRM_MorphSpeechDelayed(MyFRM, 90004201, 10, 50);
+		Delay(100);
+		FRM_MorphSpeech(MyFRM, 90000790, 10, 50);
+	}
+
+	If(SayStyle == 1)
+	{
+		FRM_MorphSpeechDelayed(MyFRM, 90000982, 10, 50);
+		Delay(100);
+		FRM_MorphSpeech(MyFRM, 90000772, 10, 50);
+	}
+
+	HUMAN_SETMODE_Crouch();
+	goto Follow;
+}
+
+OnAlarmDone()
+{
+goto END;
+}
+
+Whenever Player_Rescuing (_PlayerInRange(2))
+{
+	SetWhenever(Player_Rescuing, 0);
+	HUMAN_SETMODE_Stand();
+	Delay(1500);
+	FRM_MorphSpeech(MyFRM, 03990612, 10, 50);			//"Fortune is smiling on me at last. Now please, get me out of here."
+	HUMAN_SetAnim("%%kecy1", 800, 500, 0);
+	HUMAN_TurnAtNearestPlayer();
+	Delay(7500);
+	HUMAN_SetAnim("", 200, 200, 0);
+	Delay(500);
+	pilotfound = 1;
+	HUMAN_WeaponOnArm(1);
+	Delay(500);
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SETHEARRANGE(50);
+	SendSignal(objectives, 6);
+	SetAlarmType(99, 1);	//64+32+2+1 (Injured, Spotting enemy, close shooting, enemy shots)
+	goto Follow;
+}
+
+Label Follow:
+If(pilotfound == 1)
+{
+	If(_PlayerInRange(40))
+	{
+		FRM_GetNearestPlayer(MyFRM, Player);
+		HUMAN_MoveToFrame(Player, 0);
+
+		If(_PlayerInRange(2))
+		{
+			HUMAN_SETMODE_Lie();
+			HUMAN_SETMODE_Run();
+			goto Follow;
+		}
+	
+		If(!_PlayerInRange(2))
+		{
+	
+			If(!_PlayerInRange(10))
+			{
+				HUMAN_SETMODE_Stand();
+				HUMAN_SETMODE_Run();
+				goto Follow;
+			}
+		
+		HUMAN_SETMODE_Crouch();
+		HUMAN_SETMODE_Run();
+		goto Follow;
+		}
+	}
+}
+goto Follow;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

@@ -1,0 +1,56 @@
+// Bdd_27 - boards L1_Mg42_02 EQ S
+// ---------------------------
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+Frame me;
+	FRM_GetMyFrame(me);
+}
+// --------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// ---------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+		aievent=_GetAlarmType();
+	
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+
+OnDeath()
+{
+Printf("Bdd_31 MG42-02 EQ dead ");
+EndScript();
+}
+// ---------------------------
+// Starting pose
+
+HUMAN_SETMODE_Guard();
+HUMAN_SetSniper(1, 5);
+HUMAN_BoardVehicle("L1_Mg42_02", true, 0);
+//HUMAN_SETAIMODE_Zombie();
+//FRM_SwitchFaceTexture(me, "e_f053");
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+
+Label end:

@@ -1,0 +1,55 @@
+// Obj 2 - Eliminate all snipers
+// -----------------------------------------------
+
+Block
+{ 
+	Frame S01;		FRM_FindFrame(S01, "Sniper_1");
+	Frame S02;		FRM_FindFrame(S02, "Sniper_3");
+	Frame S03;		FRM_FindFrame(S03, "Sniper_5");
+	Frame S04;		FRM_FindFrame(S04, "Sniper_6");
+	Frame S05;		FRM_FindFrame(S05, "Si3B_8");
+	Frame S06;		FRM_FindFrame(S06, "Si3B_9");
+	
+
+//	Frame Obj8;		FRM_FindFrame(Obj8, "obj8");
+
+	Integer Sniper_Count;	Sniper_Count = 0;
+
+	SetObjectiveStatus(2, 0);
+//	printf("sniper obj script");
+}
+
+
+Whenever Snipers_Killed1 (((_Actor_GetState(S01) == 0) And (_Actor_GetState(S02) == 0)) And (_Actor_GetState(S03) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 2)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+//		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(2, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}
+
+Whenever Snipers_Killed2 (((_Actor_GetState(S04) == 0) And (_Actor_GetState(S05) == 0)) And (_Actor_GetState(S06) == 0)) 
+{
+	Sniper_Count = Sniper_Count + 1;
+
+	If(Sniper_Count == 2)
+	{
+		Delay(1000);
+		SUBTITLES_SetOn(1);
+		SUBTITLES_SetText(17993405);
+//		SendSignal(Obj8, 1);
+		Delay(3500);
+		SetObjectiveStatus(2, 1);
+		SUBTITLES_SetOn(0);
+		EndScript();
+	}
+}

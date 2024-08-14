@@ -1,0 +1,30 @@
+// AF4_rozhovor_02_activator
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME af07;				FRM_FindFrame(af07, "AF1_07");
+FRAME af08;				FRM_FindFrame(af08, "AF1_08");
+FRAME af09;				FRM_FindFrame(af09, "AF1_09");
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever pir (_PlayerInRange(85))
+{
+  printf("ice_ sejvneme value pro talk TABULE? ");
+  if((_ACTOR_GetState(af07) AND _ACTOR_GetState(af08)) AND _ACTOR_GetState(af09))
+  {
+    printf("ice_ tabletalk - JO");
+    SaveGameValue(89, 1);
+  }
+  else
+  {
+    printf("ice_ tabletalk - NE");
+  }
+}
+
+Whenever deadmech ((!_ACTOR_GetState(af07) OR !_ACTOR_GetState(af08)) OR (!_ACTOR_GetState(af09)))
+{
+  printf("ice_ JEDEN Z MECHANIKU JE TUHEJ TAK END ROZHOVOR");
+  SaveGameValue(89, 0);
+}
+
+// -------------------------------------------------------------------------------------------------------------

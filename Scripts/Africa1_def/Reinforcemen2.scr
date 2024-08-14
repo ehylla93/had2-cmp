@@ -1,0 +1,32 @@
+// Reinforcement 
+
+Block
+{
+ 
+
+Frame C1;	FRM_FindFrame(C1,"AF1_07");
+Frame C2;	FRM_FindFrame(C2,"AF1_08");
+Frame C3;	FRM_FindFrame(C3,"AF1_09");
+ 
+ 
+
+ 
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+ 
+
+Whenever Reinforcemen2   (_PlayerInRange(50))
+{
+Delay(5000);
+SUBTITLES_SetText(08991617);
+SendSignal(C1, 1);SendSignal(C2, 1);SendSignal(C3, 1);   
+goto END;
+}
+
+
+Label END:
+
+

@@ -1,0 +1,54 @@
+//----------------------mp44----------------------
+//item 26 - mp44
+Block
+{
+Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame weapon;
+
+SetWhenever(Lost, 0);
+SetWhenever(LostAndFound, 0);
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 26, weapon))
+{
+Delay(2500);
+//printf ("mp44 found");
+SendSignal(obj, 6);
+SetObjectiveStatus(6, 1);
+SetWhenever(Lost, 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993010);  //OBJECTIVE COMPLETED
+Delay(3000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 26, weapon))
+{
+Delay(2500);
+//printf ("mp44 lost");
+SendSignal(obj, 7);
+SetObjectiveStatus(6, 0);
+SetWhenever(LostAndFound, 1);
+goto END;
+}
+
+Whenever LostAndFound (_MP_IsItemInTeamInventory(1, 26, weapon))
+{
+Delay(2500);
+//printf ("mp44 lost and found");
+SendSignal(obj, 6);
+SetObjectiveStatus(6, 1);
+SetWhenever(Lost, 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993010);  //OBJECTIVE COMPLETED
+Delay(3000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+Label END:
+
+
+

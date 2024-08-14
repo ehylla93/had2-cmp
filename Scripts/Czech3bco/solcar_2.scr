@@ -1,0 +1,126 @@
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+
+frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+frame opel;			FRM_FindFrame(opel, "opel_2");
+frame ridic;		FRM_FindFrame(ridic,"opel_driver");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f053");
+}
+HUMAN_SETEVENTS(0);
+HUMAN_Suspend(1);
+goto end;
+
+//----------------------------------------------------------------------------------------------
+
+Whenever start(_SignalReceived(1))
+	{
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("opel_2",1,3);
+	goto end;
+	}
+	
+
+Whenever alarm(_SignalReceived(2))
+	{
+	HUMAN_SetOptimized(1);
+	HUMAN_BoardVehicle("opel_2",0,3);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Run();
+	HUMAN_MoveFromFrame(opel,8);
+	block
+	{
+	HUMAN_SETEVENTS(1);
+	SetAlarmType(652,0);
+	goto end;
+	}
+	HUMAN_TurnAtNearestPlayer();
+	goto end;
+	}
+
+Whenever uvily(_SignalReceived(3))
+	{
+	HUMAN_SetOptimized(1);
+	HUMAN_BoardVehicle("opel_2",0,3);
+	block
+	{
+	EnableSignal(2, 0);
+	HUMAN_SETEVENTS(1);
+	SetAlarmType(652,0);
+	}
+	HUMAN_ACTIVITY_Smoke(1);
+	goto end;
+	}
+
+
+Whenever odjezd(_SignalReceived(4))
+	{
+	delay (3500);
+	HUMAN_ACTIVITY_Smoke(0);	
+	HUMAN_BoardVehicle("opel_2",1,3);
+	EnableSignal(2, 1);
+	SendSignal (ridic,6);
+	HUMAN_SETEVENTS(0);
+	
+	goto end;
+	}
+	
+OnAlarm()
+	{
+	
+	block
+	{
+	aievent=(_GetAlarmType());
+	PrintfNumber("solcar2 alarm c:",aievent);
+	}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+
+HUMAN_MoveRandomRadius(6);
+SetAlarmType(274,1);
+goto end;
+}
+
+	EndScript();
+	}
+
+
+
+OnAlarmDone()
+	{
+	SetAlarmType(652,0);
+	HUMAN_SetAlarm(0);
+	HUMAN_SETMODE_Crouch();
+	goto end;
+	}
+
+OnDeath()
+{
+	  SendSignal(reinfo, 0);
+  	  Printf("Solcar_2 is DEAD!!!");
+	  EndScript();
+}
+
+label end:

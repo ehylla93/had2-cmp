@@ -1,0 +1,86 @@
+// Spawnzones
+// ----------------------------------------------
+
+Block
+{
+Integer SpawnSelect;
+		SpawnSelect = _RandomInt(4);
+		
+}
+
+If(SpawnSelect == 0)
+{
+MP_EnableSpawnZone("zone1", 1);
+}
+
+If(SpawnSelect == 1)
+{
+MP_EnableSpawnZone("zone3", 1);
+}
+
+If(SpawnSelect == 2)
+{
+MP_EnableSpawnZone("zone7", 1);
+}
+
+If(SpawnSelect == 3)
+{
+MP_EnableSpawnZone("zone10", 1);
+}
+
+// ----------------------------------------------
+
+Whenever Zone2_TurnOn (_SignalReceived(2))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone8", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Zone3_TurnOn (_SignalReceived(3))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone6", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Zone4_TurnOn (_SignalReceived(4))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone5", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Zone5_TurnOn (_SignalReceived(5))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone2", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Zone6_TurnOn (_SignalReceived(6))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone4", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Zone7_TurnOn (_SignalReceived(7))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+MP_EnableSpawnZone("zone9", 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+

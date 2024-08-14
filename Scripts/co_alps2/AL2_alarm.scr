@@ -1,0 +1,115 @@
+// AL2_alarm - alarm
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame al211kecac;		FRM_FindFrame (al211kecac ,"al211kecac" );
+Frame al210kecac;		FRM_FindFrame (al210kecac ,"a210kecac" );
+
+Frame obj;		FRM_FindFrame(obj, "AL2_objective");
+Frame al2_02;	FRM_FindFrame(al2_02, "AL2_02");
+Frame al2_03;	FRM_FindFrame(al2_03, "AL2_03");
+Frame al2_01;	FRM_FindFrame(al2_01, "AL2_01");
+Frame al2_04;	FRM_FindFrame(al2_04, "AL2_04");
+Frame zwuk;		FRM_FindFrame (zwuk,"S_alarm_fake_ovl");
+
+Frame al2_05;	FRM_FindFrame(al2_05, "AL2_05");
+Frame al2_06;	FRM_FindFrame(al2_06, "AL2_06");
+Frame al2_07;	FRM_FindFrame(al2_07, "AL2_07");
+Frame al2_08;	FRM_FindFrame(al2_08, "AL2_08");
+Frame al2_09;	FRM_FindFrame(al2_09, "AL2_09");
+Frame al2_10;	FRM_FindFrame(al2_10, "AL2_10");
+Frame al2_11;	FRM_FindFrame(al2_11, "AL2_11");
+Frame al2_12;	FRM_FindFrame(al2_12, "AL2_12");
+Frame al2_18;	FRM_FindFrame(al2_18, "AL2_18");
+Frame al2_21;	FRM_FindFrame(al2_21, "AL2_21");
+Frame al2_22;	FRM_FindFrame(al2_22, "AL2_22");
+Frame al2_32;	FRM_FindFrame(al2_32, "AL2_32");
+Frame al2_30;	FRM_FindFrame(al2_30, "AL2_30");
+Frame al2_31;	FRM_FindFrame(al2_31, "AL2_31");
+Frame al2_33;	FRM_FindFrame(al2_33, "AL2_33");
+Frame al2_34;	FRM_FindFrame(al2_34, "AL2_34");
+Frame al2_40;	FRM_FindFrame(al2_40, "AL2_40");	
+Frame al2_41;	FRM_FindFrame(al2_41, "AL2_41");	
+
+Frame al2_15_a1;	FRM_FindFrame(al2_15_a1, "AL2_15_A1");
+Frame al2_15_a2;	FRM_FindFrame(al2_15_a2, "AL2_15_A2");
+Frame al2_15_a3;	FRM_FindFrame(al2_15_a3, "AL2_15_A3");
+Frame al2_15_a4;	FRM_FindFrame(al2_15_a4, "AL2_15_A4");
+Frame al2_15_a5;	FRM_FindFrame(al2_15_a5, "AL2_15_A5");
+Frame al2_15_a6;	FRM_FindFrame(al2_15_a6, "AL2_15_A6");
+Frame al2_15_a7;	FRM_FindFrame(al2_15_a7, "AL2_15_A7");
+Frame al2_15_a8;	FRM_FindFrame(al2_15_a8, "AL2_15_A8");
+
+Frame al2_19_a1;	FRM_FindFrame(al2_19_a1, "AL2_19_A1");
+Frame al2_19_a2;	FRM_FindFrame(al2_19_a2, "AL2_19_A2");
+Frame al2_19_a3;	FRM_FindFrame(al2_19_a3, "AL2_19_A3");
+
+Frame al220_detector1;	FRM_FindFrame(al220_detector1, "al220_detector1");
+Frame al220_detector2;	FRM_FindFrame(al220_detector2, "al220_detector2");
+Frame al220_detector3;	FRM_FindFrame(al220_detector3, "al220_detector3");
+Frame detectoral204_3;	FRM_FindFrame(detectoral204_3, "detectoral204_3");	
+Frame detectoral204_2;	FRM_FindFrame(detectoral204_2, "detectoral204_2");
+Frame detectoral204;	FRM_FindFrame(detectoral204, "detectoral204_1");	
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever alarmarchive(_SignalReceived(6))	// player is inside archive (AL2_36)
+{
+DisableWhenevers(1);
+SendSignal(zwuk, 1);	//Alarm sound on
+delay (2000);
+	Block
+	{
+	SendSignal(al2_01, 4);	//Officer who received papers
+	SendSignal(detectoral204_3,3);
+	SendSignal(detectoral204_2,3);
+	SendSignal(detectoral204,3);
+	SendSignal(al2_02, 1);
+	SendSignal(al2_03, 7);
+	SendSignal(al2_05, 3);	
+	SendSignal(al2_06, 1);
+	SendSignal(al2_07, 1);
+	SendSignal(al2_08, 2);
+	SendSignal(al2_09, 2);
+	SendSignal(al2_10, 2);
+	SendSignal(al2_11, 3);
+	SendSignal(al2_12, 3);	
+	SendSignal(al2_18, 1);
+	SendSignal(al220_detector1,1);
+	SendSignal(al220_detector2,1);
+	SendSignal(al220_detector3,1);
+	SendSignal(al2_21, 30);
+	SendSignal(al2_22, 20);
+	
+	SendSignal(al2_15_a1, 1);
+	SendSignal(al2_15_a2, 1);
+	SendSignal(al2_15_a3, 1);
+	SendSignal(al2_15_a4, 1);
+	SendSignal(al2_15_a5, 1);
+	SendSignal(al2_15_a6, 1);
+	SendSignal(al2_15_a7, 1);
+	SendSignal(al2_15_a8, 1);
+	SendSignal(al2_19_a1, 1);
+	SendSignal(al2_19_a2, 1);
+	SendSignal(al2_19_a3, 1);
+	
+	SendSignal(al2_30, 2);
+	SendSignal(al2_40, 2);
+	SendSignal(al2_41, 2);
+	SendSignal(al2_31, 4);
+	SendSignal(al2_32, 3);
+	SendSignal(al2_33, 3);
+	SendSignal(al2_34, 2);
+
+	SendSignal ( al211kecac,3);
+	SendSignal ( al210kecac,3);
+	}
+	GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

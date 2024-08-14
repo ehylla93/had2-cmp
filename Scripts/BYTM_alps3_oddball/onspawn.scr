@@ -1,0 +1,46 @@
+// on spawn
+// -------------------------------------------------------
+
+Block {
+Frame S01;		FRM_FindFrame(S01, "S01");		//snipers
+Frame S02;		FRM_FindFrame(S02, "S02");
+Frame S03;		FRM_FindFrame(S03, "S03");
+Frame S04;		FRM_FindFrame(S04, "S04");
+
+Frame E01;		FRM_FindFrame(E01, "1_E01");
+Frame E02;		FRM_FindFrame(E02, "1_E02");
+Frame E03;		FRM_FindFrame(E03, "1_E03");
+Frame E04;		FRM_FindFrame(E04, "1_E04");
+Frame E05;		FRM_FindFrame(E05, "1_E05");
+Frame E06;		FRM_FindFrame(E06, "1_E06");
+
+Frame Oddball;	FRM_FindFrame(Oddball, "Sgt. Oddball");
+}
+
+Whenever Player_Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+SetWhenever(Player_Spawn, 0);
+Delay(4000);
+Block {
+SendSignal(S01, 1);
+SendSignal(S02, 1);
+SendSignal(S03, 1);
+SendSignal(S04, 1);
+SendSignal(E01, 1);
+SendSignal(E02, 1);
+SendSignal(E03, 1);
+SendSignal(E04, 1);
+SendSignal(E05, 1);
+SendSignal(E06, 1);
+}
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001001);		//"NEW OBJECTIVE: CROSS THE CANYON WITH DAMAGED TANK"
+Delay(5000);
+SUBTITLES_SetText(27001002);		//"NEW OBJECTIVE: DESTROY ALL ENEMY TANKS"
+Delay(5000);
+SUBTITLES_SetText(27001003);		//"NEW OBJECTIVE: DESTROY PAK 40 CANNONS"
+Delay(5000);
+SUBTITLES_SetOn(0);
+SendSignal(Oddball, 3);
+EndScript();
+}

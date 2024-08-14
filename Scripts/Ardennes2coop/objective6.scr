@@ -1,0 +1,21 @@
+//----------------------objective6----------------------
+// Place the homing transmitter.
+//--------------------------------------------
+block
+{
+Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame Beacon;	FRM_FindFrame(Beacon,"Beaconplace");
+}
+goto end;
+
+Whenever Yes (_ACTOR_GetState(Beacon)==1)
+{
+Delay(1000);
+//SetObjectiveStatus(6, 1);
+SendSignal(txt, 1);
+Delay(3000);
+SendSignal(obj, 6);
+goto end;
+}
+label end:

@@ -1,0 +1,61 @@
+// SF_G78 - V Komplexu
+// ------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f039");
+SetWhenever(Spawn, 0);
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Spawn, 1);
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(120))
+{
+HUMAN_Suspend(0);
+goto END;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

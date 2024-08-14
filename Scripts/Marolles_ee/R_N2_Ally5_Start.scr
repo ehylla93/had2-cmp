@@ -1,0 +1,76 @@
+
+Frame turn1; 		FRM_FindFrame(turn1, "dummy_Ally5_turn_1");
+Frame turn2; 		FRM_FindFrame(turn2, "dummy_Ally5_turn_2");
+Frame OBJ; 		FRM_FindFrame(OBJ, "objectives");
+Frame Sniper5;	FRM_FindFrame(Sniper5, "Sniper_5");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+integer RND = 1;
+integer FireCounter = 1;
+
+
+HUMAN_SetOptimized(2);
+//HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Onsignal(7)		
+{
+  HUMAN_Suspend(False);
+}
+
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETMODE_Run();
+  }
+  HUMAN_Move("Ally5_1");
+  HUMAN_TurnAt(turn1);
+  HUMAN_SETMODE_Crouch();
+  Delay(12000);
+  SendSignal(MyFRM, 1);
+goto TheEnd;				
+
+Whenever KolizeOn ( _PlayerInRange(8); )
+{
+  HUMAN_SetOptimized(0);
+  Delay(14500);
+  SendSignal(MyFRM, 1);
+}
+
+OnSignal(1)		// poslat aby to vypadalo, ze se neco deje
+{
+  If (( _ACTOR_GetState(Sniper5) == 0 ))   {Goto TheEnd;}
+  HUMAN_SETMODE_Run();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Ally5_2");
+  HUMAN_TurnAt(turn2);	 
+  HUMAN_IllFire(Sniper5, 1250);
+  HUMAN_Move("Ally5_1");
+  HUMAN_TurnAt(turn1);
+  HUMAN_SETMODE_Crouch();
+  FireCounter = FireCounter + 1;
+  RND = _RandomInt(5000) + 8000;
+  If (  FireCounter < 11 )
+    {
+       Delay(RND);
+       SendSignal(MyFRM, 1);
+    } else {
+       goto TheEnd;	
+    }
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 30);
+  EndScript();
+}
+
+OnSignal(5)
+{
+  Printf("END SKRIPTU OD 5");
+//  EndScript();
+//  ScriptAssign(MyFRM, "R_N2_Ally5_Go");		////// Tady to byt nemuze - je to v OBJECTIVES !!!!!!!
+}
+
+Label TheEnd:
+

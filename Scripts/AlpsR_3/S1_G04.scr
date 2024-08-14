@@ -1,0 +1,69 @@
+// S1_G04 - Sedi vedle kulometu Mg42 (Eastern Machinegun position)
+// ---------------------------------------------------------------
+
+Block
+{
+Frame Mg42;	FRM_FindFrame(Mg42,"MG2");
+Frame Alcum;	FRM_FindFrame(Alcum,"BritCum");
+
+Frame V1;	FRM_FindFrame(V1,"S1_G05");
+Frame V2;	FRM_FindFrame(V2,"Hunt02");
+Frame Alarmer;	FRM_FindFrame(Alarmer,"Alarmer_Stred");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f018");
+}
+
+// ---------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(Alarmer, 1);
+SendSignal(V1, 1);
+SendSignal(V2, 1);
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_MoveToFrame(Mg42, 1);
+HUMAN_BoardVehicle("MG2", 1, 0);
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(50))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%sedimL4", 450, 300, 1);
+goto END;
+}
+
+// ---------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETMODE_Crouch();
+Delay(500);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

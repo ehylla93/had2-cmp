@@ -1,0 +1,37 @@
+// AF1_tanky_organizer
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME me;      			FRM_GetMyFrame(me);
+
+  INTEGER tank1	= 1;
+  INTEGER tank2	= 1;
+  INTEGER tank3	= 1;
+
+  SaveGameValue(11, 1);
+  SaveGameValue(12, 1);
+  SaveGameValue(13, 1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1){
+  tank1 = _LoadGameValue(11);
+  tank2 = _LoadGameValue(12);
+  tank3 = _LoadGameValue(13);
+
+  if(tank1){ goto END; }
+  if(tank2){ goto END; }
+  if(tank3){ goto END; }
+
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(09991829);			//"OPTIONAL OBJECTIVE ACCOMPLISHED: GERMAN ARMOURED VEHICLES DESTROYED."
+  Delay(3500);
+  SetObjectiveStatus(6, 1);
+  SUBTITLES_SetOn(false);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

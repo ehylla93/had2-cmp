@@ -1,0 +1,53 @@
+//
+//----------------------Block----------------------
+Block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_PlayerInRange(95))
+{
+Block
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(55);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("PAK40_1", 1, 0);
+HUMAN_SETAIMODE_Aggressive();
+}
+goto END;
+}
+//----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_BoardVehicle("PAK40_1", 1, 0);
+EndScript();
+}
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+HUMAN_BoardVehicle("PAK40_1", 1, 0);
+}
+//----------------------OnDeath----------------------
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+//----------------------END----------------------
+Label END:

@@ -1,0 +1,44 @@
+// talk af23, af24
+//------------------------------------------------
+
+Block
+{
+Frame af23;	FRM_FindFrame(af23, "AF1_23");
+Frame af24;	FRM_FindFrame(af24, "AF1_24");
+}
+
+
+Whenever Aktivace (_SignalReceived(1))
+{
+goto start;
+}
+
+
+Whenever Alarm (_SignalReceived(2))
+{
+goto END;
+}
+
+//------------------------------------------------
+
+goto END;
+
+
+Label start:
+FRM_MorphSpeechDelayed(af23, 52990012, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af24, 52990013, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af23, 52990014, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af24, 52990015, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af24, 52990016, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af24, 52990017, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af23, 52990018, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af24, 52990019, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af23, 52990020, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af23, 52990021, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af23, 52990022, 15, 35); Delay(10);
+FRM_MorphSpeechDelayed(af24, 52990023, 15, 35); Delay(10);
+//Delay(10000);
+//GoTo start;
+
+
+Label END:

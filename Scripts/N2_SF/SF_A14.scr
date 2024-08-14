@@ -1,0 +1,171 @@
+// Cpl. John Glesby - Ridic US Haklu 1 
+// -------------------------------------------
+
+Block
+{
+Frame Cas;	FRM_FindFrame(Cas,"Sh_Cas");
+Frame Browning;	FRM_FindFrame(Browning,"MG1");
+Frame Cum;	FRM_FindFrame(Cum,"Ally_pal03");
+Frame hakl;	FRM_FindFrame(hakl,"US_Hakl1");
+
+Frame Posadka1;	FRM_FindFrame(Posadka1,"Pte. Patrick Mullholland");
+Frame Posadka2;	FRM_FindFrame(Posadka2,"Cpl. Arthur Muncie");
+Frame Posadka3;	FRM_FindFrame(Posadka3,"Cpl. Daniel O'Sullivan");
+
+Frame C1;	FRM_FindFrame(C1,"MG5_02");
+Frame C2;	FRM_FindFrame(C2,"MG2_02");
+Frame C3;	FRM_FindFrame(C3,"MG3_02");
+Frame C4;	FRM_FindFrame(C4,"BR_G06");
+Frame C5;	FRM_FindFrame(C5,"BR_G12");
+Frame C6;	FRM_FindFrame(C6,"BR_G13");
+Frame C7;	FRM_FindFrame(C7,"BR_G03");
+Frame C8;	FRM_FindFrame(C8,"BR_G04");
+Frame C9;	FRM_FindFrame(C9,"BR_G11");
+
+Integer VyberCil;	VyberCil=0;
+}
+
+// --------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("US_Hakl1", 1, 0);
+Delay(250);
+HUMAN_Drive("Hakl_4", 11);
+SendSignal(Cas, 2);
+HUMAN_Drive("Hakl_5", 10);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_Drive("", 10);
+Delay(1000);
+Car_SetFuel(hakl, 0);
+Delay(1000);
+SendSignal(Posadka1, 2);
+SendSignal(Posadka2, 2);
+Delay(1000);
+SendSignal(Posadka3, 2);
+Delay(200);
+HUMAN_BoardVehicle("US_Hakl1", 0, 0);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+Delay(250);
+HUMAN_MoveToFrame(Browning, 1);
+HUMAN_BoardVehicle("MG1", 1, 0);
+Delay(200);
+HUMAN_TurnAt(Cum);
+goto Palba;
+}
+
+Whenever Suspend (_SignalReceived(9))
+{
+HUMAN_Stop();
+HUMAN_Suspend(1);
+goto END;
+}
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Palba:
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(C1)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C1);
+Delay(200);
+HUMAN_Attack(C1, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(C2)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C2);
+Delay(200);
+HUMAN_Attack(C2, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(C3)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C3);
+Delay(200);
+HUMAN_Attack(C3, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(C4)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C4);
+Delay(200);
+HUMAN_Attack(C4, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(C5)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C5);
+Delay(200);
+HUMAN_Attack(C5, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==5)
+{
+If(_Actor_GetState(C6)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C6);
+Delay(200);
+HUMAN_Attack(C6, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==6)
+{
+If(_Actor_GetState(C7)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C7);
+Delay(200);
+HUMAN_Attack(C7, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==7)
+{
+If(_Actor_GetState(C8)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C8);
+Delay(200);
+HUMAN_Attack(C8, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==8)
+{
+If(_Actor_GetState(C9)==0){VyberCil=_RandomInt(8);Goto Palba;}
+
+HUMAN_TurnAt(C9);
+Delay(200);
+HUMAN_Attack(C9, 3000);
+VyberCil=_RandomInt(9);
+}
+
+goto Palba;
+
+Label END:

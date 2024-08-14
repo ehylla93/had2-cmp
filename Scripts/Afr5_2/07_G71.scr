@@ -1,0 +1,213 @@
+// 07_G71 - Tank Park Guard
+// -----------------------------------------------------
+
+Block
+{
+	Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+	Frame Truck;	FRM_FindFrame(Truck,"07_Opel");
+	Frame Cp1;		FRM_FindFrame(Cp1,"Cp_G71_01");
+	Frame Comm;		FRM_FindFrame(Comm,"07_G77");
+	Frame me;		FRM_GetMyFrame(me);
+
+	SetAlarmType(1,1); //blizka strelba
+	SetAlarmType(2,1); //slysim strelbu
+	SetAlarmType(4,0); //kroky
+	SetAlarmType(8,0); //zvuky by use
+	SetAlarmType(32,0); //vidi
+	SetAlarmType(64,1); //jsem zranen
+	SetAlarmType(128,1); //zeskriptu
+	SetAlarmType(256,1); //pratelska strelba
+	SetAlarmType(512,1); //vidim flakotu
+
+	FRM_SwitchFaceTexture(me,"e_f067");
+
+	Integer AIEvent;
+	Integer AIStyle;
+
+	HUMAN_SETSIGHTRANGE(100);
+	HUMAN_SETHEARRANGE(90);
+	HUMAN_SetOptimized(1);
+	HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+SendSignal(Reinf, 4);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETSIGHTRANGE(265);
+HUMAN_SETHEARRANGE(80);
+AIEvent = _GetAlarmType();
+AIStyle = _RandomInt(2);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+
+If(AIStyle == 0)
+{
+HUMAN_SETMODE_Stand();
+}
+
+Else
+{
+HUMAN_SETMODE_Crouch();
+}
+}
+
+If((AIEvent == 4) OR (AIEvent == 8))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+
+If(AIStyle == 0)
+{
+HUMAN_SETMODE_Stand();
+}
+
+Else
+{
+HUMAN_SETMODE_Crouch();
+}
+}
+
+If(AIEvent == 32)
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+}
+
+If(AIEvent == 64)
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+HUMAN_SETMODE_Run();
+}
+
+If(AIEvent == 256)
+{
+HUMAN_SETMODE_Walk();
+
+If(AIStyle == 0)
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+}
+
+Else
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+}
+}
+
+If(AIEvent == 512)
+{
+HUMAN_SETMODE_Silence();
+HUMAN_SETMODE_Crouch();
+
+If(AIStyle == 0)
+{
+HUMAN_SETAIMODE_Defensive();
+}
+
+Else
+{
+HUMAN_SETAIMODE_Zombie();
+}
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETHEARRANGE(180);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+goto END;
+}
+
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 140))
+{
+	HUMAN_Suspend(0);
+	goto WatchPatrol;
+}
+
+Whenever Called_In (_SignalReceived(1))
+{
+	Delay(600);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_SETMODE_Walk();
+	HUMAN_MoveToFrame(Cp1, 0);
+	Delay(200);
+	HUMAN_TurnAt(Comm);
+	Delay(400);
+	FRM_MorphSpeechDelayed(me, 90001328, 5, 30);
+	Delay(300);
+	HUMAN_TurnAt(Comm);
+	FRM_MorphSpeechDelayed(me, 90001232, 5, 30);
+	Delay(500);
+	SendSignal(Comm, 2);
+	Delay(100);
+	FRM_MorphSpeechDelayed(Comm, 15993038, 5, 30);
+	Delay(400);
+	HUMAN_SetAnim("%%kecy3", 1000, 1000, 1);
+	FRM_MorphSpeechDelayed(me, 15993057, 5, 30);
+	Delay(500);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_SETMODE_Walk();
+	HUMAN_MoveToFrame(Truck, 9);
+	HUMAN_TurnAt(Comm);
+	goto WatchPatrol;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+	DisableAlarms(1);
+}
+
+Label WatchPatrol:
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 1);
+Delay(6500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%turnleft", 1000, 1000, 1);
+Delay(3200);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+Delay(6000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+Delay(4000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+Delay(2500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+goto WatchPatrol;
+
+
+Label END:

@@ -1,0 +1,89 @@
+//Opel - Driver
+
+Frame car;				FRM_FindFrame(car, "La_OpelE_5");
+Frame GE_15;			FRM_FindFrame(GE_15, "GE_15");
+Frame GE_16;			FRM_FindFrame(GE_16, "GE_16");
+Frame GE_17;			FRM_FindFrame(GE_17, "GE_17");
+Frame GE_18;			FRM_FindFrame(GE_18, "GE_18");
+Frame GE_19;			FRM_FindFrame(GE_19, "GE_19");
+Frame count;			FRM_FindFrame(count, "dead_counter");
+
+HUMAN_SetAlarm(False);
+SetAlarmType(1023, false);
+HUMAN_BoardVehicle("La_OpelE_5", 1, 0);
+
+OnSignal(1)
+	{
+	HUMAN_Drive("A20", 45);
+	HUMAN_Drive("B1", 45);
+	HUMAN_Drive("B1_1", 45);
+	HUMAN_Drive("B1_2", 35);
+	HUMAN_Drive("B5", 30);
+
+	HUMAN_Drive("B6", 25);
+	HUMAN_Drive("B6_1", 10);
+	HUMAN_Drive("", 0);
+	Delay(200);
+	HUMAN_BoardVehicle("", 0, 0);
+	SendSignal(GE_15, 1);
+	SendSignal(GE_16, 1);
+	SendSignal(GE_17, 1);
+	SendSignal(GE_18, 1);
+	SendSignal(GE_19, 1);
+	Delay(500);
+	HUMAN_WeaponOnArm(true);
+	SetAlarmType(1023, true);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("DR_1");
+	HUMAN_Move("DR_2");
+	HUMAN_Move("GE_16_1");
+	HUMAN_Move("GE_17_1");
+	HUMAN_Move("GE_17_2");
+	HUMAN_Move("GE_17_3");	
+	}
+	
+OnSignal(2)
+	{
+	Delay(200);
+	HUMAN_Move("F_1");
+	HUMAN_Move("F_2");
+	HUMAN_Move("F_3");
+	HUMAN_Move("F_4");
+	HUMAN_Move("F_5");
+	HUMAN_Move("F_6");
+	HUMAN_Move("F_7");
+	HUMAN_Move("F_8");
+	HUMAN_Move("F_9");
+	HUMAN_Move("F_10");
+	HUMAN_Move("F_11");
+	HUMAN_Move("F_12");
+	}	
+
+OnAlarm()
+	{
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETMODE_Run();
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	Printf("Driver alarm done");
+	}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}
+
+OnDeath()
+	{
+	SendSignal(count, 1);
+	SendSignal(GE_15, 1);
+	SendSignal(GE_16, 1);
+	SendSignal(GE_17, 1);
+	SendSignal(GE_18, 1);
+	SendSignal(GE_19, 1);
+	}

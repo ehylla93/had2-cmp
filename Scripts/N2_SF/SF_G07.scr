@@ -1,0 +1,58 @@
+// SF_G07 - Vojak napadajici banku
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Reinf;	FRM_FindFrame(Reinf,"BR_G12");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Delay(55000);
+SendSignal(Reinf, 1);
+EndScript();
+}
+
+OnAlarm(){
+SetAlarmType(32,1); //vidi
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SetSniper(1, 5);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_SETSIGHTRANGE(69);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(0);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

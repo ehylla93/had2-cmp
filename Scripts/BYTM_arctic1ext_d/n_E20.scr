@@ -1,0 +1,88 @@
+//n_E20 - ZB
+//storage
+
+block
+{
+SetAlarmType(1023, 0);
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+
+integer aievent;
+integer spawn;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame sit;		FRM_FindFrame(sit,"n_E20_sit");
+frame door1;	FRM_FindFrame(door1,"m_dv_t01");		//m_dv_t02
+frame door2;	FRM_FindFrame(door2,"m_dv_t02");
+frame cc;		FRM_FindFrame(cc, "dummy_OBJ1_sender");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent = _GetAlarmType();
+PrintfNumber("E20 alarm:",aievent);
+}
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+SendSignal(cc, 1);
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+OnSignal(1)		//received from n_door1
+{
+EnableSignal(1, false);
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("!naponorce", 300, 300, 1);
+SetAlarmType(609, 1);	// 512 + 64 + 32 + 1
+}
+
+OnSignal(2)
+{
+EnableSignal(2, false);
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Run();
+HUMAN_Move("E21_cover");
+HUMAN_TurnAt(door2);
+HUMAN_SETMODE_Crouch();
+SetAlarmType(1023, 1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

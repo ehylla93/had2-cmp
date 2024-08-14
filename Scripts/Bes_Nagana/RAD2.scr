@@ -1,0 +1,23 @@
+// RADIO1 - RADIO MUSICA
+// ----------------------------------------
+
+
+Frame me;	FRM_GetMyFrame(me);
+Frame get_player;
+
+//FRAME radio_sound_1;	 FRM_FindFrame(radio_sound_1, "Lili_01");
+
+
+// ----------------------------------------
+
+//Whenever player(_PlayerInRange(2))
+OnUse()
+	{
+	FRM_MorphSpeechDelayed(me, 54990032, 5, 20); //"We're being attacked by British units, requesting artillery support on these coordinates!"
+	Delay(1000);
+	FRM_MorphSpeechDelayed(me, 54990033, 5, 20); //" I say again! British units attacking our position, send'em some shells on our last transmitted coordinates!"
+	GoTo end;
+	}
+
+
+Label END:

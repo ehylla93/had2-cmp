@@ -1,0 +1,38 @@
+// Flaker 3
+// -------------------------------------------------------------------------------------------------------------
+
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("tank2_01: death");
+  EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("Flak3",  true, 0);
+goto END;
+
+Label END:

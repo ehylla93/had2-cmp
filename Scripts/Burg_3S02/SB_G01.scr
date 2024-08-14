@@ -1,0 +1,4 @@
+// SB_G01 - Enemy Soldier at Start
+// ------------------------------------------------
+
+HUMAN_Suspend(1);

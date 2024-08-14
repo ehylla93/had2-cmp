@@ -1,0 +1,38 @@
+// Obj 10 - Zabij snipry
+//----------------------------------------
+
+Block
+{
+  Frame Sn1;	FRM_FindFrame(Sn1, "Snipe1"); 
+  Frame Sn2;	FRM_FindFrame(Sn2, "Snipe2"); 
+  Frame Sn3;	FRM_FindFrame(Sn3, "Snipe3"); 
+  Frame Sn4;	FRM_FindFrame(Sn4, "Snipe4"); 
+  Frame Sn5;	FRM_FindFrame(Sn5, "Snipe5"); 
+  Frame Sn6;	FRM_FindFrame(Sn6, "Snipe6");
+}
+
+//-----------------------------------------------
+
+Whenever Snipers_Killed ((((((_Actor_GetState(Sn1)==0) And (_Actor_GetState(Sn2)==0) ) And (_Actor_GetState(Sn3)==0) ) And (_Actor_GetState(Sn4)==0) ) And (_Actor_GetState(Sn5)==0) ) And (_Actor_GetState(Sn6)==0) ) 
+{
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(17993405);
+PlayMusic(6);
+Delay(3000); 
+SetObjectiveStatus(10, 1);
+SUBTITLES_SetOn(false);
+GoTo end;
+}
+
+OnSignal(1)
+{	
+SetWhenever(Snipers_Killed , 1);
+goto end;
+}
+
+//--------------------------------------------------------
+
+SetWhenever(Snipers_Killed , 0);
+goto end;
+
+Label end:

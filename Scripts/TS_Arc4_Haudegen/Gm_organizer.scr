@@ -1,0 +1,67 @@
+// Start / Objective Texts 
+// -----------------------
+
+Block
+{
+Frame D1;		FRM_FindFrame(D1,"03_box_guns_1");
+Frame D2;		FRM_FindFrame(D2, "03_box_guns_2");
+Frame D3;		FRM_FindFrame(D3,"03_box_ammo");
+Frame D4;		FRM_FindFrame(D4,"03_box_boom");
+
+Frame Opel2;		FRM_FindFrame(Opel2,"Opel2");
+Frame Opel5;		FRM_FindFrame(Opel5,"Opel5");
+Frame Opel6;		FRM_FindFrame(Opel6,"Opel6");
+
+Frame Get_Player;
+Frame this;			FRM_GetMyFrame(this);
+
+Frame E135;		FRM_FindFrame(E135,"exterier_135");
+
+Frame UD0;		FRM_FindFrame(UD0,"k_mustek_door");
+Frame UD1;		FRM_FindFrame(UD1,"k_mustek_door01");
+Frame UD2;		FRM_FindFrame(UD2,"k_mustek_door02");
+Frame UD3;		FRM_FindFrame(UD3,"k_mustek_door03");
+Frame UD4;		FRM_FindFrame(UD4,"k_mustek_door04");
+
+}
+
+// ----------------------------------------
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+SetActorState(E135, 0);
+//SetActorState(UD0, 0);
+//SetActorState(UD1, 0);
+//SetActorState(UD2, 0);
+//SetActorState(UD3, 0);
+//SetActorState(UD4, 0);
+
+Delay(2000);
+MakeExplosion(Opel2, 8500000, 5000);
+Delay(2000);
+MakeExplosion(Opel5, 8500000, 5000);
+Delay(1000);
+MakeExplosion(Opel6, 8500000, 5000);
+Delay(20500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(23994603); //52999714
+Delay(4000);
+FRM_GetNearestPlayer(this, Get_Player);
+FRM_MorphSpeech(Get_Player, 90009996, 3, 10);	//"russians are here"
+Delay(1000);
+SUBTITLES_SetOn(0);
+
+Delay(1000);
+
+//SUBTITLES_SetOn(1);
+//SUBTITLES_SetText(53999707);//53999707
+
+
+
+goto END;
+}
+
+
+// ----------------------------------------
+
+Label END:

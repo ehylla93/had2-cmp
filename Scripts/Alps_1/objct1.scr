@@ -1,0 +1,45 @@
+// Obj 1 - Rescue the SAS Commander
+// ----------------------------------
+
+Block
+{
+Frame SAS;			FRM_FindFrame(SAS, "SAS Commander");
+Frame Obj2;			FRM_FindFrame(Obj2, "obj2");
+
+SetObjectiveStatus(1, 0);
+}
+
+Whenever Commander_Rescued (_SignalReceived(1))
+{
+SetObjectiveStatus(2, 0);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999705);
+Delay(3500);
+SetobjectiveStatus(1, 1);
+SUBTITLES_SetText(03990618);
+Delay(3500);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Fail (_Actor_GetState(SAS) == 0)
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999708);
+Delay(3500);
+SetobjectiveStatus(1, 2);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Player (_PlayerInRange(1000))
+{
+Delay(500000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999708);
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetobjectiveStatus(1, 2);
+}

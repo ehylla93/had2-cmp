@@ -1,0 +1,195 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Guard();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(60);
+
+integer a;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+frame cum1;		FRM_FindFrame(cum1, "zbdok11cum1");
+frame cum2;		FRM_FindFrame(cum2, "zbdok11cum2");
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f056");
+
+}
+
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+block
+{
+suspend=0;
+SetAlarmType(887,1);	
+}
+goto kourim;
+}
+
+LAbel kourim:
+
+HUMAN_SetAnim("%%nuda1", 300, 300, 0);
+delay (9000);
+
+
+goto kourim; 
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+aievent=(_GetAlarmType());
+PrintfNumber("zbdok11 alarm c:",aievent);
+}
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	block
+	{
+	HUMAN_SetAnim("", 90,90,0);
+	endx=1;
+	}
+	EndScript();
+	}
+
+
+if (aievent==4)
+{
+
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+
+HUMAN_Stop();
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+SetAlarmType(4,1);
+HUMAN_TurnAt(cum1);
+goto kourim;
+}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+if ((_LoadGameValue(8)==0) and (_LoadGameValue(9)==0))
+
+	{
+	if (suspend==1)
+	{
+	block
+	{
+	SetAlarmType(1023,0);
+	SetAlarmType(274,1);		//slysim strelbu
+	DisableWhenevers(0);
+	DisableSignals(0);
+	}
+	}
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+
+if (suspend==1)
+	{
+		suspend=0;
+		HUMAN_Suspend(0);
+		SetAlarmType(375,1);
+
+	}
+
+
+
+
+
+}
+
+	block
+	{
+	HUMAN_SetAnim("", 90,90,0);
+	endx=1;
+	}
+	EndScript();
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+
+
+
+SetAlarmType(1023,0);
+SetAlarmType(503,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Run();
+HUMAN_Move("zb_dok11_1");
+HUMAN_TurnAt(cum1);
+goto end;
+}
+
+
+
+
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+
+
+
+

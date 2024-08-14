@@ -1,0 +1,33 @@
+SetAlarmType(1023, true);					// enable all alarms
+SetAlarmType(4, false);					// disable 4: Hear steps
+Frame self;						FRM_GetMyFrame(self);	
+HUMAN_Suspend(1);
+DisableAlarms(True);
+HUMAN_SetOptimized(true);
+HUMAN_SETHEARRANGE(2000);
+HUMAN_SETSIGHTRANGE(1000);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetSniper(true, 1000);
+HUMAN_SETMODE_Run();
+PRINTF("SNIPER");
+goto END;
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+	PlaySound(6, 10);
+	FRM_CreateParticle(53, self);
+	EndScript();
+}
+
+OnSignal(1){
+	HUMAN_Suspend(0);
+	HUMAN_SETMODE_Lie();
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_AttackMove("mole_2");
+	HUMAN_SETAIMODE_Defensive();
+	EndScript();
+}
+
+
+Label END:

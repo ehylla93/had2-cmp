@@ -1,0 +1,158 @@
+// AF3a_05 - soldier walking on fortification
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME af06;			FRM_FindFrame(af06, "AF3a_06");
+  FRAME bottle;		FRM_FindFrame(bottle, "");
+  FRAME look1_01;		FRM_FindFrame(look1_01, "AF3a_05_look1_01");
+  FRAME synchronizer;	FRM_FindFrame(synchronizer, "AF3a_0506_synchronizer");
+  FRAME alarm_wp;		FRM_FindFrame(alarm_wp, "m_AF5_ost_dr8");
+  FRAME dummy_alarm;	FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  INTEGER rnd 		= 0;
+  INTEGER pathcounter 	= 0;		// promenna pro volbu cesty
+  INTEGER Atype		= 0;		// promenna pro zjisteni typu alarmu
+
+  SetAlarmType(1023, true);			// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("05: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    EnableSignal(1, false);
+    EnableSignal(2, false);
+    EnableSignal(20, false);
+    HUMAN_SetAnim("", 100, 100, false);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(300);
+    Atype = _GetAlarmType();
+    printfnumber("05: ", Atype);
+  }
+
+  If(Atype == 4){
+    HUMAN_SetAlarm(false);
+    HUMAN_LookAround(1);
+    Delay(500);
+    goto ACTIVITY;
+  }
+
+  SendSignal(dummy_alarm, 1);
+  DisableSignals(false);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetSniper(true, 5);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(100);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+
+  HUMAN_SetMODE_Crouch();  
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF3a_05_alert");
+
+  goto END;
+}
+
+OnSignal(1){
+  HUMAN_Stop();
+  Delay(500);
+  printf("05 :: Something new?");
+  Delay(5000);
+  GoTo ACTIVITY;
+}
+
+OnSignal(2){
+  HUMAN_Stop();
+  Delay(500);
+  printf("05 :: I have heard that Hans entered Hitlerjunge ...");
+  Delay(8000);
+  GoTo ACTIVITY;
+}
+
+OnSignal(20){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableSignals(true);
+    DisableAlarms(true);
+    HUMAN_Stop();
+    HUMAN_SETSIGHTRANGE(400);
+    DisableSignals(false);
+    DisableAlarms(false);
+  }
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("AF3a_05_alert");
+  HUMAN_TurnAt(alarm_wp);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("AF3a_05_02");
+  HUMAN_SETMODE_Guard();
+
+Label ACTIVITY:
+  pathcounter = pathcounter + 1;
+  If(pathcounter == 5){
+    pathcounter = 0;
+    goto PATH_REST;
+  }
+  Else{
+    goto PATH_COMMON;
+  }
+
+Label PATH_COMMON:
+  HUMAN_Move("AF3a_05_04");
+  rnd = _RandomInt(5);
+  if(rnd == 0){
+    HUMAN_ACTIVITY_Smoke(false);
+  }
+  Delay(500);
+  HUMAN_Move("AF3a_05_02");
+  rnd = _RandomInt(5);
+  if(rnd == 0){
+    HUMAN_ACTIVITY_Smoke(true);
+  }
+  Delay(2000);
+  HUMAN_TurnAt(look1_01);
+  Delay(2000);
+goto ACTIVITY;
+
+Label PATH_REST:
+  HUMAN_Move("AF3a_05_01");
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_05_03");
+  HUMAN_SetOptimized(1);
+  Delay(1000);
+  HUMAN_ACTIVITY_Turk();		//doplnit az bude ok
+  Delay(5000);
+  HUMAN_ACTIVITY_DrinkBottle(bottle);
+  rnd = _RandomInt(10000) + 10000;
+  Delay(rnd);
+  HUMAN_ACTIVITY_DrinkBottle(bottle);
+  Delay(5000);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_05_01");
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("AF3a_05_02");
+goto ACTIVITY;
+
+
+Label END:

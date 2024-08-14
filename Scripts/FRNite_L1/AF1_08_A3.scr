@@ -1,0 +1,32 @@
+// talk AF1_12
+//------------------------------------------------
+
+
+Frame af12;	FRM_FindFrame(af12, "AF1_12");
+
+Whenever activate(_PlayerInRange(200))
+{
+	GoTo start;
+}
+
+Whenever Death (_SignalReceived(2))
+{
+FRM_MorphSpeechDelayed(af12, 0, 0, 0);
+goto END;
+}
+
+
+
+//------------------------------------------------
+
+goto END;
+
+Label start:
+FRM_MorphSpeechDelayed(af12, 90001270, 14, 34); Delay(1550);
+FRM_MorphSpeechDelayed(af12, 90001270, 15, 35); Delay(2500);
+FRM_MorphSpeechDelayed(af12, 90001270, 11, 31); Delay(3500);
+FRM_MorphSpeechDelayed(af12, 90001270, 16, 35); Delay(750);
+GoTo start;
+
+
+Label END:

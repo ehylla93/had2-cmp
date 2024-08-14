@@ -1,0 +1,177 @@
+// Reinforcements
+
+Block
+{
+Frame E01;	FRM_FindFrame(E01,"joel");
+Frame E02;	FRM_FindFrame(E02,"joel1");
+Frame E03;	FRM_FindFrame(E03,"joel2");
+Frame E04;	FRM_FindFrame(E04,"joel3");                       //  Whenever Reinforcements1 dead
+Frame E05;	FRM_FindFrame(E05,"03_E05");
+Frame E06;	FRM_FindFrame(E06,"03_E06");
+Frame E07;	FRM_FindFrame(E07,"03_E07");
+Frame E08;	FRM_FindFrame(E08,"03_E08");
+
+Frame R1_E01;	FRM_FindFrame(R1_E01,"SpawnZones");
+Frame R1_E02;	FRM_FindFrame(R1_E02,"dup.1");
+Frame R1_E03;	FRM_FindFrame(R1_E03,"dup.2");
+Frame R1_E04;	FRM_FindFrame(R1_E04,"dup.3");
+Frame R1_E05;	FRM_FindFrame(R1_E05,"dup.4");              //  Whenever Reinforcements1 SendSignal
+Frame R1_E06;	FRM_FindFrame(R1_E06,"dup.5");
+Frame T1;	FRM_FindFrame(T1,"C5_G12");
+Frame T2;	FRM_FindFrame(T2,"SF_G01");
+
+
+Frame E09;	FRM_FindFrame(E09,"dup.0");
+Frame E10;	FRM_FindFrame(E10,"C3_E02");
+Frame E11;	FRM_FindFrame(E11,"C3_E03");                    //  Whenever Reinforcements3
+Frame E12;	FRM_FindFrame(E12,"C3_E04");
+Frame E13;	FRM_FindFrame(E13,"C3_E05");
+Frame E14;	FRM_FindFrame(E14,"C3_E06");
+
+Frame R3_E01;	FRM_FindFrame(R3_E01,"SpawnZones111");      
+Frame R3_E02;	FRM_FindFrame(R3_E02,"R3_E02");
+Frame R3_E03;	FRM_FindFrame(R3_E03,"R3_E03");              // SendSignal
+Frame R3_E04;	FRM_FindFrame(R3_E04,"R3_E04");
+Frame R3_E05;	FRM_FindFrame(R3_E05,"R3_E05");
+Frame R3_E06;	FRM_FindFrame(R3_E06,"R3_E06");
+
+Frame R2_E01;	FRM_FindFrame(R2_E01,"dup.2");
+Frame R2_E02;	FRM_FindFrame(R2_E02,"R2_E02");
+Frame R2_E03;	FRM_FindFrame(R2_E03,"R2_E03");               //   OnSignal2	received from C1_trigger & obj4 & obj3
+Frame R2_E04;	FRM_FindFrame(R2_E04,"R2_E04");
+Frame E16;		FRM_FindFrame(E16,"01_E16");
+Frame E17;		FRM_FindFrame(E17,"01_E17");
+
+
+Frame R4_E01;	FRM_FindFrame(R4_E01,"SF_G002");
+Frame R4_E04;	FRM_FindFrame(R4_E04,"SF_G004");
+Frame R4_E05;	FRM_FindFrame(R4_E05,"SF_G003");
+Frame R4_E06;	FRM_FindFrame(R4_E06,"R4_E06");
+Frame R4_E07;	FRM_FindFrame(R4_E07,"R4_E07");
+Frame R4_E08;	FRM_FindFrame(R4_E08,"R4_E08");
+Frame R4_E11;	FRM_FindFrame(R4_E11,"R4_E11");             	// OnSignal3   received from obj5
+Frame R4_E12;	FRM_FindFrame(R4_E12,"R4_E12");
+Frame R4_S01;	FRM_FindFrame(R4_S01,"R4_S01");
+Frame R4_S02;	FRM_FindFrame(R4_S02,"R4_S02");
+Frame T3_E01;	FRM_FindFrame(T3_E01,"T3_E01");
+Frame T3_E02;	FRM_FindFrame(T3_E02,"T3_E02");
+Frame T3_E03;	FRM_FindFrame(T3_E03,"T3_E03");
+
+
+Integer Timer;
+		Timer = _RandomInt(5);
+Integer Obj_Done;
+		Obj_Done = 0;
+}
+
+// ----------------------------------------
+
+Whenever Reinforcements1 ((((((((_Actor_GetState(E01) == 0) AND (_Actor_GetState(E02) == 0)) AND 
+(_Actor_GetState(E03) == 0)) AND (_Actor_GetState(E04) == 0)) AND (_Actor_GetState(E05) == 0)) AND 
+(_Actor_GetState(E06) == 0)) AND (_Actor_GetState(E07) == 0)) AND (_Actor_GetState(E08) == 0))
+
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+Delay(3500);
+SUBTITLES_SetOn(0);
+Delay(4000);
+SendSignal(R1_E01, 3);SendSignal(R1_E02, 1);SendSignal(R1_E05, 1);SendSignal(R1_E06, 1);SendSignal(R1_E07, 1);SendSignal(R1_E08, 1);
+SendSignal(T1, 1);SendSignal(T2, 1);Delay(20000);SendSignal(R1_E03, 1);SendSignal(R1_E04, 1);
+goto END;
+}
+
+Whenever Reinforcements3 ((((((_Actor_GetState(E09) == 0) AND (_Actor_GetState(E10) == 0)) AND 
+(_Actor_GetState(E11) == 0)) AND (_Actor_GetState(E12) == 0)) AND (_Actor_GetState(E13) == 0)) AND 
+(_Actor_GetState(E14) == 0))
+{
+	If (Timer == 0)
+	{
+	Delay(5000);
+	}
+	
+	If (Timer == 1)
+	{
+	Delay(10000);
+	}
+	
+	If (Timer == 2)
+	{
+	Delay(15000);
+	}
+	
+	If (Timer == 3)
+	{
+	Delay(20000);
+	}
+	
+	If (Timer == 4)
+	{
+	Delay(25000);
+	}
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(22994411);
+Delay(3500);
+SUBTITLES_SetOn(0);
+Delay(4000);
+MP_EnableSpawnZone("zone2", 1);
+MP_EnableSpawnZone("zone1", 0);
+SendSignal(R3_E01, 1);SendSignal(R3_E02, 1);SendSignal(R3_E03, 1);SendSignal(R3_E04, 1);SendSignal(R3_E05, 1);SendSignal(R3_E06, 1);
+goto END;
+}
+
+OnSignal(2)	//received from C1_trigger & obj4 & obj3
+{
+Obj_Done=Obj_Done+1;
+
+If(Obj_Done > 2)
+	{
+	SendSignal(R2_E01, 1);SendSignal(R2_E02, 1);SendSignal(R2_E03, 1);SendSignal(R2_E04, 1);
+	SendSignal(E16, 1);SendSignal(E17, 1);
+	}
+
+goto END;
+}
+
+OnSignal(3)	//received from obj5
+{
+	If (Timer == 0)
+	{
+	Delay(15000);
+	}
+	
+	If (Timer == 1)
+	{
+	Delay(17000);
+	}
+	
+	If (Timer == 2)
+	{
+	Delay(20000);
+	}
+	
+	If (Timer == 3)
+	{
+	Delay(25000);
+	}
+	
+	If (Timer == 4)
+	{
+	Delay(30000);
+	}
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(22994411);
+Delay(3500);
+SUBTITLES_SetOn(0);
+Delay(4000);
+SendSignal(R4_E01, 1);SendSignal(R4_E04, 1);SendSignal(R4_E05, 1);SendSignal(R4_E06, 1);
+SendSignal(R4_E07, 1);SendSignal(R4_E08, 1);SendSignal(R4_E11, 1);SendSignal(R4_E12, 1);
+SendSignal(R4_S01, 1);SendSignal(R4_S02, 1);SendSignal(T3_E01, 1);SendSignal(T3_E02, 1);SendSignal(T3_E03, 1);
+goto END;
+}
+
+// ----------------------------------------
+
+Label END:

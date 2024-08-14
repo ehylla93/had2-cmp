@@ -1,0 +1,55 @@
+// AF2_posily_04 - rescue team
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+FRAME sd01;		FRM_FindFRAME(sd01, "SdKfZ1_01");
+FRAME sd02;		FRM_FindFRAME(sd02, "SdKfZ1_02");
+FRAME sd03;		FRM_FindFRAME(sd03, "SdKfZ1_03");
+FRAME sd04;		FRM_FindFRAME(sd04, "SdKfZ1_04");
+FRAME sd05;		FRM_FindFRAME(sd05, "SdKfZ1_05");
+FRAME veh;		FRM_FindFRAME(veh, "SdKfZ_1");
+
+SetWhenever(PIR, false);
+}
+
+FRM_SetOn(veh, 0);
+//goto START;
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever notactive (_SignalReceived(1))
+{
+block
+{
+SetWhenever(active, false);
+HUMAN_Kill(sd01);
+HUMAN_Kill(sd02);
+HUMAN_Kill(sd03);
+HUMAN_Kill(sd04);
+HUMAN_Kill(sd05);
+}
+EndScript();
+}
+
+Whenever active (_SignalReceived(2)) {
+SetWhenever(notactive, false);
+SetWhenever(PIR, true);
+FRM_SetOn(veh, 1);
+goto END;
+}
+
+Whenever PIR (_PlayerInRange(350))
+{
+goto START;
+}
+
+Label START:
+    SendSignal(sd01, 1);
+    SendSignal(sd02, 1);
+    SendSignal(sd03, 1);
+    SendSignal(sd04, 1);
+    SendSignal(sd05, 1);
+EndScript();
+
+Label END:

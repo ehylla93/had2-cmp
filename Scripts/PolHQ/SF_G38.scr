@@ -1,0 +1,67 @@
+// SF_G38 - Vojak pred HQ Hlidka Ulice
+// ---------------------------------------------
+
+Block
+{
+Frame Cp1;	FRM_FindFrame(Cp1,"Cp_G38_1");
+Frame Cp2;	FRM_FindFrame(Cp2,"Kubel_01");
+Frame Cp3;	FRM_FindFrame(Cp3,"Hakl_01");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f010");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto Patrol;
+}
+
+Whenever Spawn (_PlayerInRange(75))
+{
+HUMAN_Suspend(0);
+goto Patrol;
+}
+
+// ---------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(50);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Patrol:
+HUMAN_SETMODE_Guard();
+HUMAN_SETMODE_Stand();
+HUMAN_MoveToFrame(Cp2, 2);
+HUMAN_MoveToFrame(Cp3, 8);
+HUMAN_MoveToFrame(Cp2, 2);
+HUMAN_MoveToFrame(Cp1, 0);
+goto Patrol;
+
+
+Label END:

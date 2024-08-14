@@ -1,0 +1,14 @@
+
+Block
+{
+Frame af45;	FRM_FindFrame(af45, "AF1_45");
+Frame af46;	FRM_FindFrame(af46, "AF1_46");
+Frame af47;	FRM_FindFrame(af47, "AF1_47");
+}
+
+Whenever activate(_PlayerInRange(3))
+{
+	SendSignal(af45, 1);
+	SendSignal(af46, 1);
+	SendSignal(af47, 1);
+}

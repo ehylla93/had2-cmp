@@ -1,0 +1,105 @@
+// Ge_7
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame Ge_;
+	FRM_FindFrame(Ge_,"Ge_");
+Frame cet;
+	FRM_FindFrame(cet,"cetnik01");
+Frame cet2;
+	FRM_FindFrame(cet2,"cetnik_");
+Frame sit;
+	FRM_FindFrame(sit, "zz3");
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+/// FRM_SwitchFaceTexture(me, "e_f024");
+}
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from detektor v domku
+{
+	HUMAN_Suspend(false);
+	Delay(1000);
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_ACTIVITY_Sit(sit);
+	Delay(2000);
+	HUMAN_SetAnim("%%ozralstul", 500, 100, true);
+}
+
+OnSignal(5)	// received from Civ
+{
+	Block
+	{
+///	SetAlarmType(1023,1);
+	HUMAN_SETSIGHTRANGE(15);
+	HUMAN_SETHEARRANGE(15);
+	HUMAN_SetSniper(1, 5);
+	}
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_TurnAt(Ge_);
+	Delay(75);
+	HUMAN_WeaponOnArm(1);
+  	HUMAN_Attack(Ge_, 10000);
+///	SendSignal(Salter, 1);
+	Delay(850);
+	HUMAN_Attack(Ge_, 10000);
+}
+
+OnSignal(7)	// received from cet
+{
+	Block
+	{
+///	SetAlarmType(1023,1);
+	HUMAN_SETSIGHTRANGE(15);
+	HUMAN_SETHEARRANGE(15);
+	HUMAN_SetSniper(1, 5);
+	}
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_TurnAt(Ge_);
+	Delay(75);
+	HUMAN_WeaponOnArm(1);
+  	HUMAN_Attack(Ge_, 10000);
+///	SendSignal(Salter, 1);
+	Delay(850);
+	HUMAN_Attack(Ge_, 10000);
+}
+
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SetOptimized(1);
+	HUMAN_SetSniper(1, 5);
+	HUMAN_SETMODE_Stand();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+}
+
+OnDeath()
+{
+	Block
+	{
+	SendSignal(cet, 8);
+	SendSignal(cet2, 8);
+	}
+	EndScript();
+}

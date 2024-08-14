@@ -1,0 +1,32 @@
+// Tiger main gun
+
+Block
+{
+  HUMAN_SetOptimized(1);
+  SetAlarmType(1023, True);
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive(); 
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator 
+Onsignal(1)		// aktivace 
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Tiger", true, 2);	
+  
+} 
+
+OnAlarm()  
+  {
+    
+    EndScript();
+  }
+
+OnAlarmDone()  
+{
+  EndScript();
+} 
+
+label TheEnd:

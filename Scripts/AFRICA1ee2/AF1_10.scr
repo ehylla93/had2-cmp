@@ -1,0 +1,93 @@
+// AF1_10
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  Frame me;		FRM_GetMyFrame(me);
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME turn;				FRM_FindFrame(turn, "af1_dummy21");
+  FRAME look;				FRM_FindFrame(look, "m_palma20");
+  FRAME af07;				FRM_FindFrame(af07, "AF1_07");
+  FRAME af08;				FRM_FindFrame(af08, "AF1_08");
+  FRAME af09;				FRM_FindFrame(af09, "AF1_09");
+  FRAME af12;				FRM_FindFrame(af12, "AF1_12");
+  FRAME drink;				FRM_FindFrame(drink, "!174");
+  
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+
+OnDeath(){
+  printf("10: dead");
+  EndScript();
+}
+
+Whenever inrange (_PlayerInRange(250)){
+  HUMAN_Suspend(false);
+  goto START;
+}
+
+OnAlarm(){  
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Stand();
+
+EndScript();
+}
+
+
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, true);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SetOptimized(true);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+
+Label START:
+  HUMAN_Move("af1_10_01");
+  HUMAN_Move("af1_10_02");
+  HUMAN_Move("af1_10_03");
+  HUMAN_Move("af1_10_04");
+  HUMAN_Move("af1_10_05");
+  HUMAN_Move("af1_10_06");
+  HUMAN_Move("af1_10_07");
+  HUMAN_Move("af1_10_08");
+  HUMAN_Move("af1_10_09");
+  HUMAN_Move("af1_10_10");
+  HUMAN_Move("af1_10_11");
+  HUMAN_Move("af1_10_10");
+  HUMAN_Move("af1_10_10");
+goto START;
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1000);
+goto END;

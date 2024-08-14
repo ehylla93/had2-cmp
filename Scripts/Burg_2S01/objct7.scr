@@ -1,0 +1,24 @@
+// Obj 7 - Destroy the enemy radio station
+// ------------------------------------
+
+Block
+{
+SetWhenever(Radio_Destroyed, 0);
+}
+
+
+Whenever Active (_SignalReceived(1))
+{
+SetWhenever(Radio_Destroyed, 1);
+}
+
+Whenever Radio_Destroyed (_SignalReceived(1))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999711);
+Delay(3500);
+SetobjectiveStatus(7, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

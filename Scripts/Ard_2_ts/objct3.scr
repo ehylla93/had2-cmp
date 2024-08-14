@@ -1,0 +1,48 @@
+// Obj 3 - Destroy all tigers
+//----------------------------------------------
+
+Block
+{
+Frame t1;	FRM_FindFrame(t1, "La_tiger_1");
+Frame t2;	FRM_FindFrame(t2, "La_tiger_2");
+Frame t3;	FRM_FindFrame(t3, "La_tiger_3");
+Frame t4;	FRM_FindFrame(t4, "La_tiger_4");
+
+Frame Opel;	FRM_FindFrame(Opel, "Opel_01");
+Frame Kubel;	FRM_FindFrame(Kubel, "Kubel_01");
+
+SetObjectiveStatus(3, 0);
+}
+
+
+Whenever All_Tigers_Destroyed ((((_Actor_GetState(t1)==0) And (_Actor_GetState(t2)==0) ) And (_Actor_GetState(t3)==0) ) And (_Actor_GetState(t4)==0) ) 
+{	
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(09991829);   
+Delay(3000);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetOn(0);
+goto end;
+}
+
+
+Whenever Start (_PlayerInRange(1000))
+{
+Car_SetFuel(Opel, 0);
+Car_SetFuel(Kubel, 0);
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999701); 
+Delay(5000);
+SUBTITLES_SetText(59999702);
+Delay(5000);
+SUBTITLES_SetText(59999703);
+Delay(5000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label end:
+
+

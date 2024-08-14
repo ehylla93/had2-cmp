@@ -1,0 +1,56 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame Flak02;		FRM_FindFrame(Flak02,"Flak02");
+FRM_SwitchFaceTexture(me,"e_f099");
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_BoardVehicle("Flak02",  1, 0);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(2300);
+HUMAN_SETHEARRANGE(2300);
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_BoardVehicle("Flak02",  0, 0);
+HUMAN_MoveToFrame(Flak02, 4);
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(2300);
+HUMAN_SETHEARRANGE(2300);
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:

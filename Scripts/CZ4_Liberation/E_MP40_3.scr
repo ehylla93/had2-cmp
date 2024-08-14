@@ -1,0 +1,92 @@
+//
+Block
+{
+//
+Frame me;	FRM_GetMyFrame(me);
+//Frame Player;
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+integer Rnd1;
+}
+goto END;
+
+
+//----------------------Spawn----------------------
+Whenever Spawn (_PlayerInRange(75))
+{
+Rnd1=(_randomint(4)); //Activate
+  if (Rnd1==1)
+  {
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+HUMAN_Kill(me);
+goto END;
+  }
+  else
+  {
+Block
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(70);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Zombie();
+}
+HUMAN_MoveRandomRadius(10);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+}
+
+
+//----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_WeaponOnArm(1); 
+HUMAN_SETMODE_Crouch();
+Rnd1=(_randomint(8));  //Aggression
+If ((Rnd1 == 1) or (Rnd1 == 2) or (Rnd1 == 3) or (Rnd1 == 4))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+}
+If (Rnd1 == 5)
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+}
+EndScript();
+}
+
+
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+HUMAN_MoveRandomRadius(10);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+}
+
+
+//----------------------OnDeath----------------------
+OnDeath()
+{
+Rnd1=(_randomint(12));  //Items
+  if (Rnd1==2){HUMAN_CreateItemInStore(54, 1);}		//First-Aid kit
+EndScript();
+}
+
+//----------------------END----------------------
+Label END:

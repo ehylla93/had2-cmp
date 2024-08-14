@@ -1,0 +1,32 @@
+// talk af06
+//------------------------------------------------
+
+Frame af06;	FRM_FindFrame(af06, "AF1_06");
+
+
+Whenever activate(_PlayerInRange(200))
+{
+	GoTo start;
+}
+
+Whenever Death (_SignalReceived(2))
+{
+goto END;
+}
+
+
+
+//------------------------------------------------
+
+goto END;
+
+
+Label start:
+FRM_MorphSpeechDelayed(af06, 90001311, 17, 37); Delay(2500);
+FRM_MorphSpeechDelayed(af06, 90001311, 12, 33); Delay(4000);
+FRM_MorphSpeechDelayed(af06, 90001311, 16, 36); Delay(7800);
+GoTo start;
+
+
+Label END:
+

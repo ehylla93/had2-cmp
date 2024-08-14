@@ -1,0 +1,10 @@
+INTEGER cnt_n;
+INTEGER cnt_c;
+
+Label LOOP:
+  cnt_n = _GetNumLiveEnemies();
+  cnt_c = _GetCountOfCarnageEnemies();
+  printfnumber("Enemies remain:", cnt_n);
+  printfnumber("Carnage enemies remain:", cnt_c);
+  Delay(5000);
+goto LOOP;

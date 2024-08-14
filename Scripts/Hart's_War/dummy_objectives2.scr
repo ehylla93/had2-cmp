@@ -1,0 +1,48 @@
+
+//  frame obj2;         FRM_FindFrame(obj2,"dummy_objectives2");
+// SendSignal(obj2, 20);   // SendSignal final1 final2 final3 final4 final5
+
+Frame final1;		FRM_FindFrame(final1,"final1");
+Frame final2;		FRM_FindFrame(final2,"final2");
+Frame final3;		FRM_FindFrame(final3,"final3");
+Frame final4;		FRM_FindFrame(final4,"final4");
+Frame final5;		FRM_FindFrame(final5,"final5");
+
+Frame final_1;		FRM_FindFrame(final_1,"final_1");
+Frame final_2;		FRM_FindFrame(final_2,"final_2");
+Frame final_3;		FRM_FindFrame(final_3,"final_3");
+Frame final_4;		FRM_FindFrame(final_4,"final_4");
+Frame final_5;		FRM_FindFrame(final_5,"final_5");
+
+Frame Snipe1_toit;		FRM_FindFrame(Snipe1_toit,"Snipe1_toit");
+Frame Snipe2_toit;		FRM_FindFrame(Snipe2_toit,"Snipe2_toit");
+Frame Snipe3_toit;		FRM_FindFrame(Snipe3_toit,"Snipe3_toit");
+
+SetWhenever (alarm, true);
+
+
+
+Whenever alarm(_SignalReceived(20))
+{
+delay(1000);
+SendSignal(Snipe1_toit,1);
+SendSignal(Snipe2_toit,1);
+SendSignal(Snipe3_toit,1);
+delay(1000);
+SendSignal(final1,1);
+SendSignal(final2,1);
+SendSignal(final3,1);
+SendSignal(final4,1);
+SendSignal(final5,1);
+delay(1000);
+SendSignal(final_1,1);
+SendSignal(final_2,1);
+SendSignal(final_3,1);
+SendSignal(final_4,1);
+SendSignal(final_5,1);
+//^alarm
+}
+
+
+
+

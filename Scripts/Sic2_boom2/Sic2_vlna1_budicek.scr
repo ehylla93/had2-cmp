@@ -1,0 +1,36 @@
+
+Block
+{
+  frame ital_1;		FRM_FindFrame(ital_1, "IT_1");
+  frame ital_2;		FRM_FindFrame(ital_2, "IT_2");
+  frame ital_3;		FRM_FindFrame(ital_3, "IT_3");
+  frame ital_4;		FRM_FindFrame(ital_4, "IT_4");
+  
+  frame ital_8;		FRM_FindFrame(ital_8, "IT_8");
+  frame ital_9;		FRM_FindFrame(ital_9, "IT_9");
+  frame ital_10;	FRM_FindFrame(ital_10, "IT_10");
+  frame ital_11;	FRM_FindFrame(ital_11, "IT_11");
+  frame ital_12;	FRM_FindFrame(ital_12, "IT_12");
+  frame ital_13;	FRM_FindFrame(ital_13, "IT_13");
+  frame ital_14;	FRM_FindFrame(ital_14, "IT_14");
+  frame ital_15;	FRM_FindFrame(ital_15, "IT_15");
+
+  
+  Frame Add1;		FRM_FindFrame(Add1, "Add_1");
+  Frame Add6;		FRM_FindFrame(Add6, "Add_6");
+  Frame Add7;		FRM_FindFrame(Add7, "Add_7");
+}
+
+Whenever Budicek (_PlayerInRange(50) )
+{
+  Block
+  {
+     SendSignal(ital_1, 1);       SendSignal(ital_2, 1);       SendSignal(ital_3, 1);
+     SendSignal(ital_4, 1);       SendSignal(ital_8, 1);       SendSignal(ital_9, 1);
+     SendSignal(ital_10, 1);     SendSignal(ital_11, 1);     SendSignal(ital_12, 1);
+     SendSignal(ital_13, 1);     SendSignal(ital_14, 1);     SendSignal(ital_15, 1);
+
+     SendSignal(Add1, 1);    SendSignal(Add6, 1);     SendSignal(Add7, 1);   
+  }
+}
+

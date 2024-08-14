@@ -1,0 +1,86 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame B1;		FRM_FindFrame(B1,"Box3");
+Frame O1;		FRM_FindFrame(O1,"La_OpelE_5");
+
+FRM_SwitchFaceTexture(me,"e_f003");
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+
+
+
+//*CustomSection
+
+Label WorkLoop:
+HUMAN_SetAnim("%%studmapu", 1000, 1000, 1);
+Delay(10000);
+HUMAN_SetAnim("%%studmapuukuca", 1000, 1000, 1);
+Delay(10000);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 1);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(5000);
+HUMAN_SetAnim("%%hledam1", 1000, 1000, 1);
+Delay(4000);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("%%studmapu", 1000, 1000, 1);
+Delay(5000);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(4000);
+HUMAN_SetAnim("%%maze", 1000, 1000, 1); 
+Delay(5000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(B1, 0);
+HUMAN_SetAnim("%%mina1a", 1000, 1000, 1);
+Delay(15000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_MoveToFrame(O1,0);
+
+goto WorkLoop;
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(15);
+HUMAN_SETHEARRANGE(15);
+//*DefaultLoad
+goto WorkLoop;
+
+Label END:

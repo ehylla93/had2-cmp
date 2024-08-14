@@ -1,0 +1,30 @@
+Block
+{
+  frame Tele_1;		FRM_FindFrame(Tele_1, "Tele_1");
+  frame Tele_2;		FRM_FindFrame(Tele_2, "Tele_2");
+  frame Tele_3;		FRM_FindFrame(Tele_3, "Tele_3");
+  frame Tele_4;		FRM_FindFrame(Tele_4, "Tele_4");
+  frame Tele_5;		FRM_FindFrame(Tele_5, "Tele_5");
+  integer RND1;		RND1 = _RandomInt(3)+1;
+  integer RND2;		RND2 = _RandomInt(3)+1;
+  integer RND3;		RND3 = _RandomInt(3)+1;
+  integer RND4;		RND4 = _RandomInt(3)+1;
+  integer RND5;		RND5 = _RandomInt(3)+1;
+}
+
+  if (RND1 == 1) { FRM_TeleportNearCheckpoint(Tele_1, "TELE1_1", ""); }
+  If (RND1 == 2) { FRM_TeleportNearCheckpoint(Tele_1, "TELE1_2", ""); }
+  If (RND1 == 3) { FRM_TeleportNearCheckpoint(Tele_1, "TELE1_3", ""); }
+  If (RND2 == 1) { FRM_TeleportNearCheckpoint(Tele_2, "TELE2_1", ""); }
+  If (RND2 == 2) { FRM_TeleportNearCheckpoint(Tele_2, "TELE2_2", ""); }
+  If (RND2 == 3) { FRM_TeleportNearCheckpoint(Tele_2, "TELE2_3", ""); }
+  If (RND3 == 1) { FRM_TeleportNearCheckpoint(Tele_3, "TELE3_1", ""); }
+  If (RND3 == 2) { FRM_TeleportNearCheckpoint(Tele_3, "TELE3_2", ""); }
+  If (RND3 == 3) { FRM_TeleportNearCheckpoint(Tele_3, "TELE3_3", ""); }
+  If (RND4 == 1) { FRM_TeleportNearCheckpoint(Tele_4, "TELE4_1", ""); }
+  If (RND4 == 2) { FRM_TeleportNearCheckpoint(Tele_4, "TELE4_2", ""); }
+  If (RND4 == 3) { FRM_TeleportNearCheckpoint(Tele_4, "TELE4_3", ""); }
+  If (RND5 == 1) { FRM_TeleportNearCheckpoint(Tele_5, "TELE5_1", ""); }
+  If (RND5 == 2) { FRM_TeleportNearCheckpoint(Tele_5, "TELE5_2", ""); }
+  If (RND5 == 3) { FRM_TeleportNearCheckpoint(Tele_5, "TELE5_3", ""); }
+

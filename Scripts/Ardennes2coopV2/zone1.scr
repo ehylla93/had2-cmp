@@ -1,0 +1,8 @@
+//Spawn1 (North side hill) and west side story
+Block
+{
+Frame detect;	FRM_FindFrame (detect,"zone1");
+}
+goto end;
+
+label end:

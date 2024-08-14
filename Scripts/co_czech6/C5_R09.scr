@@ -1,0 +1,73 @@
+// C5_R09 - russian soldier attacking bunker
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame r10;	FRM_FindFrame(r10, "C5_R10");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(272, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_TurnAtNearestPlayer();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_Move("C5_R09_03");
+	GoTo end;
+}
+
+OnSignal(1)	// received from C5_objective
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETEVENTS(true);
+	HUMAN_SetOptimized(1);
+	GoTo end;
+}
+
+OnSignal(2)	// received from C5_R08
+{
+	SendSignal(r10, 2);
+	GoTo move;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+FRM_SwitchFaceTexture(me, "e_f057");
+HUMAN_SETEVENTS(false);
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label move:
+	Delay(1000);
+	HUMAN_Move("C5_R09_01");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_Move("C5_R09_02");
+	HUMAN_Move("C5_R09_03");
+
+Label end:

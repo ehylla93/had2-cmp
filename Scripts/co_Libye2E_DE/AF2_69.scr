@@ -1,0 +1,58 @@
+// AF2_69 - boards PAK40_1
+
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+Frame me;
+	FRM_GetMyFrame(me);
+}
+// ---------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// --------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+		aievent=_GetAlarmType();
+	printfnumber("AF2_69 PAK: alarm ", aievent);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_15_A1
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(2);
+	HUMAN_BoardVehicle("PAK40_1", true, 0);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+// ---------------------------
+// Starting pose
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f053");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label end:

@@ -1,0 +1,70 @@
+// Train Crossing Right Guard
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1);   // Close Shooting  
+SetAlarmType(2,1);   // Shooting (Enemy)
+SetAlarmType(4,0);   // Hear Steps
+SetAlarmType(8,0);   // Sounds by "use"
+SetAlarmType(16,1);  // Explosion
+SetAlarmType(32,0);  // See
+SetAlarmType(64,1);  // Gets Hurt
+SetAlarmType(128,1); // From script
+SetAlarmType(256,1); // Friendly fire
+SetAlarmType(512,0); // When sees a dead body
+
+Frame C1;		FRM_FindFrame(C1,"Bedna2");
+Frame C2;		FRM_FindFrame(C2,"Bedna3");
+
+
+
+
+
+
+FRM_SwitchFaceTexture(me,"e_f090");
+}
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Stand();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+
+
+
+Label Patrol:
+Human_SetMode_Guard();
+HUMAN_MoveToFrame(C1, 2);
+HUMAN_MoveToFrame(C2, 2);
+
+
+
+
+goto Patrol;
+
+
+// ----------------------------------------
+
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(30);
+HUMAN_SetOptimized(1);
+goto Patrol;
+
+
+Label END:

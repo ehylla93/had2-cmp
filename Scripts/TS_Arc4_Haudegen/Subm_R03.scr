@@ -1,0 +1,54 @@
+
+  frame OBJ;		FRM_FindFrame(OBJ, "dummy_marine_activator");
+  integer  AIEvent;
+
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+  SetAlarmType(128, False);
+
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+OnSignal(20)
+{						
+  HUMAN_Suspend(False);
+  HUMAN_SetAnim("%%hledam", 400, 400, True);
+}						
+
+OnAlarm()
+{
+  HUMAN_SetAnim("", 300, 300, False);
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Subm_R03: ", AIEvent);
+      HUMAN_Stop();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(511, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetOptimized(1);
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 10);
+printf("Subm_R03 dead");
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

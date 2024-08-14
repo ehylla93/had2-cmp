@@ -1,0 +1,157 @@
+// 1 - zneškodnit snipery na støechách okolo námìstí
+// 2 - kontaktovat skupinu spojencù v bance
+// 3 - zachránit spojence (musí pøežít dostateèný poèet)
+// 4 - Pockej na amíky
+// 5 - prezilo maximum amiku
+// 6 - tank sejnut
+// 7 - vsichni z tymu prezily
+
+Block
+  {
+    SetObjectiveStatus(1, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(2, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(3, 0);	// INPROGRES - start initialization
+    
+     integer counter = 0;
+     integer obj_sniper = 99;
+     Frame MyFRM; 		FRM_GetMyFrame(MyFRM);
+     
+     Frame Sniper2;		FRM_FindFrame(Sniper2, "Sniper_2");
+     Frame Sniper3;		FRM_FindFrame(Sniper3, "Sniper_3");
+     Frame Sniper5;		FRM_FindFrame(Sniper5, "Sniper_5");
+     
+     Frame Ally1;		FRM_FindFrame(Ally1, "Ally_1");
+     Frame Ally2;		FRM_FindFrame(Ally2, "Ally_2");
+     Frame Ally3;		FRM_FindFrame(Ally3, "Ally_3");
+     Frame Ally4;		FRM_FindFrame(Ally4, "Ally_4");
+     Frame Ally5;		FRM_FindFrame(Ally5, "Ally_5");
+      
+     Frame Detektor9;		FRM_FindFrame(Detektor9, 	"Detector_9");
+     Frame Detektor10;		FRM_FindFrame(Detektor10, 	"Detector_10");
+     Frame Detektor11;		FRM_FindFrame(Detektor11, 	"Detector_11");
+  }
+
+///////////////////////////////////////////////////////////////////////////////////////
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(17993401);
+  Delay(4000);
+  SUBTITLES_SetText(17993402);
+  Delay(4000);
+  SUBTITLES_SetText(17993403);
+  Delay(4000);
+  SUBTITLES_SetOn(False);
+////////////////////////////////////////////////////////////////////////////////// - pozdeji do cutsceny
+
+
+OnSignal(1)
+{
+  If (( _ACTOR_GetState(Sniper5) == 1 ))    { Goto TheEnd; }
+  If (( _ACTOR_GetState(Sniper3) == 1 ))    { Goto TheEnd; }
+  If (( _ACTOR_GetState(Sniper2) == 1 ))    { Goto TheEnd; }
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(17993405);
+  Printf("SNIPERI JSOU TUHACI !!!!!!!!OBJ!!!!!!!!!!!");
+  SetObjectiveStatus(1, 1);	// Succes
+  PlayMusic(36);
+  obj_sniper = 1;
+  Delay(4000);
+  SUBTITLES_SetOn(False);  
+}
+
+OnSignal(2)
+{
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(17993406);
+  Printf("Kontakt  !!!!!!!!OBJ!!!!!!!!!!!");
+  SetObjectiveStatus(2, 1);	// Succes
+  PlayMusic(36);
+  Delay(5000);
+  SUBTITLES_SetOn(False);
+}
+
+OnSignal(30)		// AllyX - death
+{
+  counter = 0;
+  If (( _ACTOR_GetState(Ally1) == 1 ))    { counter = counter + 1; }
+  If (( _ACTOR_GetState(Ally2) == 1 ))    { counter = counter + 1; }
+  If (( _ACTOR_GetState(Ally3) == 1 ))    { counter = counter + 1; }
+  If (( _ACTOR_GetState(Ally4) == 1 ))    { counter = counter + 1; }
+  If (( _ACTOR_GetState(Ally5) == 1 ))    { counter = counter + 1; }
+  PrintfNumber("SPOJENCU PRAVE TED PREZIVA :", counter );
+  If (counter < 2)
+    {
+       SUBTITLES_SetOn(True);
+       SUBTITLES_SetText(17993409);
+       Printf("Nezachranils  !!!!!!!!OBJ - FAIL!!!!!!!!!!!");
+       SetObjectiveStatus(3, 3);		// Fail - KO
+       Delay(5000);
+       SUBTITLES_SetOn(False);
+    }
+}
+
+OnSignal(5)  //  start obranne faze - posila to Ally2
+{
+   SUBTITLES_SetOn(True);
+   SUBTITLES_SetText(17993404);
+   Printf("OOOBBBRRRAAANNAA ZZAACCIINNAA ----------- FUUUUUUUUUUJ");
+   SetObjectiveStatus(4, 0);		// INPROGRES - start initialization
+   Block
+     {
+        SendSignal(Ally1, 5);
+        SendSignal(Ally2, 5);
+        SendSignal(Ally3, 5);
+        SendSignal(Ally4, 5);
+        SendSignal(Ally5, 5);
+     }
+
+////////// SCR. pro obanu banky 
+   Delay(500);
+   If ( ( _ACTOR_GetState(Ally1) == 1) )  { ScriptAssign(Ally1, ""); }
+   If ( ( _ACTOR_GetState(Ally1) == 1) )  { ScriptAssign(Ally1, "R_N2_Ally1_End"); }
+   If ( ( _ACTOR_GetState(Ally2) == 1) )  { ScriptAssign(Ally2, ""); }
+   If ( ( _ACTOR_GetState(Ally2) == 1) )  { ScriptAssign(Ally2, "R_N2_Ally2_End"); }
+   If ( ( _ACTOR_GetState(Ally3) == 1) )  { ScriptAssign(Ally3, ""); }
+   If ( ( _ACTOR_GetState(Ally3) == 1) )  { ScriptAssign(Ally3, "R_N2_Ally3_End"); }
+   If ( ( _ACTOR_GetState(Ally4) == 1) )  { ScriptAssign(Ally4, ""); }
+   If ( ( _ACTOR_GetState(Ally4) == 1) )  { ScriptAssign(Ally4, "R_N2_Ally4_End"); }
+   If ( ( _ACTOR_GetState(Ally5) == 1) )  { ScriptAssign(Ally5, ""); }
+   If ( ( _ACTOR_GetState(Ally5) == 1) )  { ScriptAssign(Ally5, "R_N2_Ally5_End"); }
+   Delay(5000);
+   SUBTITLES_SetOn(False);
+}
+
+
+/////// Doplnit OBJ 4 - poslat od prichazejicich amikuuuu - nemci jsou tuzi (krome jednoho)
+//OnSignal(7)
+//{
+//  Printf("TAK A TADY POJEDOU AMIIIIIIIIIIIIIIICI A BUDE KONEC ...");
+//  Delay(15000);
+//  SendSignal(MyFRM, 4);	
+//}
+
+// posila to AmiTankDriver do END_KILLERU a ten sem a tak muze skoncit i mise
+OnSignal(4)  
+{
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(17993408);
+  Printf("Obrana PROVEDENA  !!!!!!!!OBJ!!!!!!!!!!!");
+  If (obj_sniper == 99) {  SetObjectiveStatus(1, 2); }
+  SetObjectiveStatus(4, 1);	// Succes
+  Delay(5000);
+
+  SUBTITLES_SetText(17993407);
+  Printf("Zachrana uspesna  !!!!!!!!OBJ!!!!!!!!!!!");
+  Delay(2500);
+  If (counter == 5) 
+    {
+        SUBTITLES_SetText(17993412);	// NEPOVINNY OBJ. - vsichni prezili
+        Printf("Nepovinny OBJ ---- Zachrana uspesna MAXIMUM");
+        SetObjectiveStatus(5, 1);	// Succes
+     }
+  Delay(2500);
+  IF (( !_IsTeamMemberDead() ) and (_SPGetGameType()!=2)) {SetObjectiveStatus(7, 1);}  // nepov. vsichni prezily
+  SetObjectiveStatus(3, 1);	// Succes
+  Delay(2500);
+  SUBTITLES_SetOn(False);
+}
+label TheEnd:

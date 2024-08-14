@@ -1,0 +1,61 @@
+// TURN OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame E01;	FRM_FindFrame(E01,"AF4_03");
+Frame E02;	FRM_FindFrame(E02,"AF4_04");
+Frame E03;	FRM_FindFrame(E03,"AF4_05");
+Frame E04;	FRM_FindFrame(E04,"AF4_08");
+Frame E05;	FRM_FindFrame(E05,"AF4_09");
+Frame E06;	FRM_FindFrame(E06,"AF4_10");
+Frame E07;	FRM_FindFrame(E07,"AF4_11");
+Frame E08;	FRM_FindFrame(E08,"AF4_12");
+Frame E09;	FRM_FindFrame(E09,"AF4_13");
+Frame E10;	FRM_FindFrame(E10,"AF4_14");
+
+Frame E11;	FRM_FindFrame(E11,"AF4_15");
+Frame E12;	FRM_FindFrame(E12,"AF4_16");
+Frame E13;	FRM_FindFrame(E13,"AF4_17");
+Frame E14;	FRM_FindFrame(E14,"AF4_18");
+Frame E15;	FRM_FindFrame(E15,"AF4_19");
+Frame E16;	FRM_FindFrame(E16,"AF4_20");
+Frame E17;	FRM_FindFrame(E17,"AF4_21");
+Frame E18;	FRM_FindFrame(E18,"AF4_22");
+Frame E19;	FRM_FindFrame(E19,"AF4_23");
+Frame E20;	FRM_FindFrame(E20,"AF4_24");
+
+Frame E21;	FRM_FindFrame(E21,"AF4_25");
+Frame E22;	FRM_FindFrame(E22,"AF4_26");
+Frame E23;	FRM_FindFrame(E23,"AF4_27");
+Frame E24;	FRM_FindFrame(E24,"AF4_28");
+Frame E25;	FRM_FindFrame(E25,"AF4_29");
+Frame E26;	FRM_FindFrame(E26,"AF4_30");
+Frame E27;	FRM_FindFrame(E27,"AF4_31");
+Frame E28;	FRM_FindFrame(E28,"AF4_32");
+Frame E29;	FRM_FindFrame(E29,"AF4_34");
+Frame E30;	FRM_FindFrame(E30,"AF4_35");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+Block {
+SendSignal(E01, 19);SendSignal(E02, 19);SendSignal(E03, 19);
+SendSignal(E04, 19);SendSignal(E05, 19);SendSignal(E06, 19);
+SendSignal(E07, 19);SendSignal(E08, 19);SendSignal(E09, 19);
+SendSignal(E10, 19);SendSignal(E11, 19);SendSignal(E12, 19);
+}
+Block {
+SendSignal(E13, 19);SendSignal(E14, 19);SendSignal(E15, 19);
+SendSignal(E16, 19);SendSignal(E17, 19);SendSignal(E18, 19);
+SendSignal(E19, 19);SendSignal(E20, 19);SendSignal(E21, 19);
+SendSignal(E22, 19);SendSignal(E23, 19);SendSignal(E24, 19);
+}
+Block {
+SendSignal(E25, 19);SendSignal(E26, 19);SendSignal(E27, 19);
+SendSignal(E28, 19);SendSignal(E29, 19);SendSignal(E30, 20);
+}
+EndScript();
+}

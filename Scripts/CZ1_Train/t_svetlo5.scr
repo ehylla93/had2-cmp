@@ -1,0 +1,39 @@
+Frame svetlo5;	FRM_FindFrame(svetlo5, "railroad lamp_5");
+Frame lens16;		FRM_FindFrame(lens16, "l_ndrlamp16.lenz");
+Frame prsk9;		FRM_FindFrame(prsk9, "prsk9");
+Frame lm1;		FRM_FindFrame(lm1, "Object121");
+
+OnSignal(1)
+{
+	Block	{	FRM_SetOn(svetlo5, 0);	FRM_SetOn(lens16, 0);
+			FRM_SetLightMap(lm1, 1);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo5, 1);	FRM_SetOn(lens16, 1);
+			FRM_SetLightMap(lm1, 0);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo5, 0);	FRM_SetOn(lens16, 0);
+			FRM_SetLightMap(lm1, 1);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo5, 1);	FRM_SetOn(lens16, 1);
+			FRM_SetLightMap(lm1, 0);					}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo5, 0);	FRM_SetOn(lens16, 0);
+			FRM_SetLightMap(lm1, 1);					}
+	Delay(300);
+	Block	{	FRM_SetOn(svetlo5, 1);	FRM_SetOn(lens16, 1);
+			FRM_SetLightMap(lm1, 0);					}
+	Block	{	FRM_SetOn(svetlo5, 0);	FRM_SetOn(lens16, 0);
+			FRM_SetLightMap(lm1, 1);					}
+	Block	{	FRM_SetOn(svetlo5, 1);	FRM_SetOn(lens16, 1);
+			FRM_SetLightMap(lm1, 0);					}
+	Block	{	FRM_SetOn(svetlo5, 0);	FRM_SetOn(lens16, 0);
+			FRM_SetLightMap(lm1, 1);					}
+	Block	{	FRM_SetOn(svetlo5, 1);	FRM_SetOn(lens16, 1);
+			FRM_SetLightMap(lm1, 0);					}
+	Block	{	FRM_SetOn(svetlo5, 0);	FRM_SetOn(lens16, 0);
+			FRM_SetLightMap(lm1, 1);					}
+
+	FRM_CreateParticle(62, prsk9);
+}
+
+

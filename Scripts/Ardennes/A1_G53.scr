@@ -1,0 +1,69 @@
+// U Kanonu
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+integer AIEvent;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 500, 1);
+AIEvent =_GetAlarmType();
+
+If ((AIEvent==64) OR (AIEvent==512))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+If ((AIEvent==32) OR (AIEvent==256))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever Player (_PlayerInRange(70)){
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%SedimL3", 500, 500, 1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(81);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

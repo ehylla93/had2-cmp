@@ -1,0 +1,6 @@
+// MISSION settings
+// -------------------------------------------------------
+
+Frame kol;	FRM_FindFrame(kol, "k_opelna_.line01");
+
+FRM_SetOn(kol, 0);

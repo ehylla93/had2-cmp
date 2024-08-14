@@ -1,0 +1,51 @@
+// SF_G36 - Paker
+// ------------------------------------------------
+
+Block
+{
+Frame Cum;	FRM_FindFrame(Cum,"Pak_01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+
+// ------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_TurnAt(Cum);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Pak_04", 1, 0);
+HUMAN_SetOptimized(1);
+goto END;
+}
+
+// ------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(240);
+HUMAN_SETHEARRANGE(240);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

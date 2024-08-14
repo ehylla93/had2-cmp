@@ -1,0 +1,62 @@
+// AF1_13 - T5, 1 - Driver
+// -----------------------------------------------------
+
+Block
+{
+Frame MyTank;	FRM_FindFrame(MyTank, "La_tiger_5"); 
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+goto Ride;
+}
+
+OnAlarmDone(){
+goto Ride;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_5", 1, 0);
+Delay(8000);
+HUMAN_Drive("tank01_02", 45);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+HUMAN_SETSIGHTRANGE(240);
+HUMAN_SETHEARRANGE(240);
+Delay(5000);
+goto Ride;
+}
+
+Label Ride:
+HUMAN_DriveNearPlayer(22);
+goto Ride;
+
+
+Label END:

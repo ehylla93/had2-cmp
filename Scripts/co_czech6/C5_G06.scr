@@ -1,0 +1,67 @@
+// C5_G06 - soldier defending German camp
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Integer position;	position=0;
+Frame me;	FRM_GetMyFrame(me);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from G01
+{
+	HUMAN_Stop();
+	HUMAN_SETSIGHTRANGE(80);
+	If(position==1)
+	{
+		HUMAN_SetOptimized(1);
+		HUMAN_Move("C5_G06_01");
+			position=0;
+	}
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f043");
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Guard();
+
+Label path:
+	HUMAN_Move("C5_G06_01");
+		position=0;
+	HUMAN_Move("C5_G06_02");
+	HUMAN_Move("C5_G06_03");
+	HUMAN_Move("C5_G06_04");
+		position=1;
+	HUMAN_Move("C5_G06_05");
+	GoTo path;
+
+Label end:

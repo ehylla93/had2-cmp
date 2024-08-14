@@ -1,0 +1,105 @@
+// Nasledujici hodnoty se v initu naplni smysluplnou hodnotou
+Integer  unsuspend_range  = 1; 	
+Integer  alarm_sight_range = 1;           
+
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// 1   - blizka strelba    2   - strelba     4     - kroky                    8     - zvuky (OnUse)    16   - exploze
+// 32 - vidim                 64 - zraneni    128 - smrtelny vykrik    256 - friendly fire         512 - vidim mrtvolu
+// -------------------------------------------------------------------------------------------------------------
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+Block
+{ 
+     SetAlarmType( 1023, true );
+     Frame la_OpelFAf_1;		FRM_FindFrame(la_OpelFAf_1,"la_OpelFAf_1"); 
+	 Frame la_ammo_3;		FRM_FindFrame(la_ammo_3,"la_ammo_3");
+	 Frame tiger;		FRM_FindFrame(tiger,"tiger");
+}
+SetAlarmType( 1023, true );
+
+// ----------------------------------------------------------------------------------------------------
+// AKTIVACE ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarm()
+{
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+	  HUMAN_MoveToFrame(tiger, 35);
+      EndScript();
+      GoTo End;
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// KONEC ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarmDone()
+{
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(la_OpelFAf_1, 21);
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(144);
+      SetAlarmType(512, true);
+      SetAlarmType(256, true);
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// SMRT
+// ----------------------------------------------------------------------------------------------------
+OnDeath()
+{
+      Frame   master;    FRM_FindFrame( master, "__CHECKPOINT_REINFO"  );
+      SendSignal ( master, 1 );
+      EndScript( );
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// SIGNALY
+// ----------------------------------------------------------------------------------------------------
+EnableSignal(1, 1);
+OnSignal(1)	// received from master script
+{
+      Block
+      {
+         EnableSignal(1, 0);
+         HUMAN_SETSIGHTRANGE( alarm_sight_range );
+      }  
+	  HUMAN_SETSIGHTRANGE(300);
+      HUMAN_SETHEARRANGE(144);
+	  HUMAN_Suspend(0);
+      HUMAN_MoveToFrame(la_OpelFAf_1, 10);
+      SetAlarmType( 255, true );
+      HUMAN_SETMODE_Crouch();
+      GoTo end;
+}
+
+
+// ----------------------------------------------------------------------------------------------------
+// INIT
+// ----------------------------------------------------------------------------------------------------
+  Delay(300);  // Pro jistotu, at se stihnou nastavit GameValue
+  Block
+  { 
+      unsuspend_range  = _LoadGameValue( 0 );
+      alarm_sight_range = _LoadGameValue( 0 );
+  }
+ HUMAN_Suspend(1);
+ HUMAN_SETAIMODE_Zombie();
+ HUMAN_SetOptimized( 1 );
+ HUMAN_SETMODE_Run();
+
+ // ----------------------------------------------------------------------------------------------------
+ Label End:
+

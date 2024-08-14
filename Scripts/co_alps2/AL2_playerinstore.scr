@@ -1,0 +1,23 @@
+// AL2_playerinstore - detecting if player arrived in store
+
+Block
+{
+Frame al2_03;	FRM_FindFrame(al2_03, "AL2_03");
+Frame obj;		FRM_FindFrame(obj, "AL2_objective");
+
+SetWhenever(player, false);
+}
+
+OnSignal(1)
+{
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(4))
+{
+	SendSignal(al2_03, 1);
+	GoTo end;
+}
+
+Label end:

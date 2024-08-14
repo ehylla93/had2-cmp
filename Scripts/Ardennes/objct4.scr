@@ -1,0 +1,51 @@
+// Obj 4 - Rescue the SAS Commander
+//---------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+Whenever Player (_PlayerInRange(5))
+{
+Delay(3000);
+SetObjectiveStatus(5, 0);
+Delay(500);
+SetObjectiveStatus(4, 1);
+GoTo end;
+}
+
+OnSignal(1)
+{
+
+SetWhenever(Player, 1);
+GoTo end;
+}
+
+OnDeath(){
+Delay(5000);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(5, 4);
+Delay(200);
+SetObjectiveStatus(4, 2);
+EndScript();
+}
+
+//-------------------------------------
+
+SetWhenever(Player, 0);
+HUMAN_SetAnim("%%KUCASEDI", 1000,1000,1);
+goto end;
+
+Label end:

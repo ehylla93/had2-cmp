@@ -1,0 +1,65 @@
+// baxar_E01, baxar_E02 talking
+
+Block
+{
+Frame talker1;		FRM_FindFrame(talker1, "baxar_E01");
+Frame talker2;		FRM_FindFrame(talker2, "baxar_E02");
+
+Integer a;
+}
+
+OnSignal(1)	// signal received from baxar_E01
+{
+	GoTo talk;
+}
+
+OnSignal(2)	// received from baxar_E01, baxar_E02 on death or on alarm
+{
+	FRM_MorphSpeechDelayed(talker1, 0, 0, 0);
+	FRM_MorphSpeechDelayed(talker2, 0, 0, 0);
+	EndScript();
+}
+
+GoTo end;
+
+Label talk:
+a=_RandomInt(3);
+if(a==0) { goto talk1; }
+if(a==1) { goto talk2; }
+if(a==2) { goto talk3; }
+
+Label talk1:
+	FRM_MorphSpeechDelayed(talker1, 23994621, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23994622, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23994623, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23994624, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23994625, 3, 20);
+	GoTo talk;
+	
+Label talk2:
+	FRM_MorphSpeechDelayed(talker1, 23994616, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23994617, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23994618, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23994619, 3, 20);
+	GoTo talk;
+	
+Label talk3:
+	FRM_MorphSpeechDelayed(talker1, 23992438, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992439, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992440, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23992441, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992442, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23992443, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992444, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23992445, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992446, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23992447, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992448, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992449, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23992450, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23992451, 3, 20);
+	FRM_MorphSpeechDelayed(talker2, 23992452, 3, 20);
+	FRM_MorphSpeechDelayed(talker1, 23992453, 3, 20);
+	GoTo talk;
+	
+Label end:

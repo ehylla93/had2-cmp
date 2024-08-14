@@ -1,0 +1,53 @@
+// BU2_xplo19 - explosion effect - right of tank at spawn
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame xplo19;	FRM_FindFrame(xplo19, "x_vybuch_19");
+Frame a01;	FRM_FindFrame(a01, "BU2_Allied01");
+Frame a02;	FRM_FindFrame(a02, "BU2_Allied02");
+Frame a03;	FRM_FindFrame(a03, "BU2_Allied03");
+Frame a04;	FRM_FindFrame(a04, "BU2_Allied04");
+Frame a05;	FRM_FindFrame(a05, "BU2_Allied05");
+Frame a06;	FRM_FindFrame(a06, "BU2_Allied06");
+Frame a07;	FRM_FindFrame(a07, "BU2_Allied07");
+Frame a08;	FRM_FindFrame(a08, "BU2_Allied08");
+Frame tank;	FRM_FindFrame(tank, "Sherman");
+Integer rnd=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+//Whenever player(_MP_IsTeamMemberInRange(1, 22))
+Whenever player(_SignalReceived(1))
+{
+	rnd=_RandomInt(2000);
+	Delay(rnd);
+	SetActorState(xplo19, 1);
+	Delay(700);
+	FRM_SetOn(xplo19, false);
+	//MakeExplosion(xplo19, 200000, 15000);
+	//MakeExplosion(xplo19, 1, 20000);
+	GoTo end;
+}
+
+//Whenever allies((_FrameInRange(a01)<15) OR (_FrameInRange(a02)<15) OR (_FrameInRange(a03)<15) OR (_FrameInRange(a04)<15) OR (_FrameInRange(a05)<15) OR (_FrameInRange(a06)<15) OR (_FrameInRange(a07)<15) OR (_FrameInRange(a08)<15) OR (_FrameInRange(tank)<25))
+//{
+//	SetWhenever(player, false);
+//	GoTo xplo;
+//}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label xplo:
+	Block
+	{
+		SetActorState(xplo19, 1);
+		Delay(700);
+		FRM_SetOn(xplo19, false);
+		//MakeExplosion(xplo19, 200000, 15000);
+	}
+	GoTo end;
+
+Label end:

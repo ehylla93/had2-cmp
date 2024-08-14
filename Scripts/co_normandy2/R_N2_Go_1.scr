@@ -1,0 +1,36 @@
+
+Block {
+SetWhenever(Go, False);
+
+Frame A1;		FRM_FindFrame(A1, "Ally_1");
+Frame A2;		FRM_FindFrame(A2, "Ally_2");
+Frame A3;		FRM_FindFrame(A3, "Ally_3");
+Frame A4;		FRM_FindFrame(A4, "Ally_4");
+Frame A5;		FRM_FindFrame(A5, "Ally_5");
+}
+
+Delay(6000);
+
+OnSignal(5)
+{
+  SetWhenever(Go, True);
+}
+
+OnSignal(15)	
+{
+  SetWhenever(Go, False);
+}
+
+Whenever Go (_PlayerInRange(6))
+{
+Block
+  {
+    SendSignal(A1, 1); 
+    SendSignal(A2, 1); 
+    SendSignal(A3, 1); 
+    SendSignal(A4, 1); 
+    SendSignal(A5, 1); 
+  }
+}
+
+Label end:

@@ -1,0 +1,22 @@
+// door_B22_pchd_01 Trigger (B22_pchd_01 = Door)
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+Frame E27;		FRM_FindFrame(E27,"alp2_E27");
+Frame E28;		FRM_FindFrame(E28,"alp2_E28");
+
+Integer door;
+door=0;	// 2 - opening, 3 - closing
+}
+
+//state=_ACTOR_GetState(me);
+//If (state==1)
+//OnUse()
+Whenever PlayerNear (_MP_IsTeamMemberInRange(1, 4))
+{
+SendSignal(E27, 1);
+SendSignal(E28, 1);
+}

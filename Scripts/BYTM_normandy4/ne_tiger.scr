@@ -1,0 +1,19 @@
+// ne_tiger
+
+Block {
+Frame T01;		FRM_FindFrame(T01, "ne_tiger_E01");
+Frame T02;		FRM_FindFrame(T02, "ne_tiger_E02");
+Frame T03;		FRM_FindFrame(T03, "ne_tiger_E03");
+}
+
+Whenever PIR (_PlayerInRange(65))
+{
+printf("ne_tiger active");
+Block {
+SendSignal(T01, 1);
+SendSignal(T02, 1);
+SendSignal(T03, 1);
+}
+}
+
+label end:

@@ -1,0 +1,294 @@
+// 05_G48 - Officer waiting for papers to be handed in
+// -----------------------------------------------------
+
+Block
+{
+	Frame Obj2;		FRM_FindFrame(Obj2, "obj2");
+	Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+	Frame Papers;	FRM_FindFrame(Papers, "05_Docs_place");
+	Frame Telefon;	FRM_FindFrame(Telefon, "05_Telefon");
+	Frame S1;		FRM_FindFrame(S1, "05_G43");
+	Frame S2;		FRM_FindFrame(S2, "05_G44");
+	Frame me;		FRM_GetMyFrame(me);
+	Frame Player;
+
+	SetAlarmType(1,1); //blizka strelba
+	SetAlarmType(2,1); //slysim strelbu
+	SetAlarmType(4,0); //kroky
+	SetAlarmType(8,0); //zvuky by use
+	SetAlarmType(16,1); //exploze
+	SetAlarmType(32,0); //vidi
+	SetAlarmType(64,1); //jsem zranen
+	SetAlarmType(128,1); //zeskriptu
+	SetAlarmType(256,1); //pratelska strelba
+	SetAlarmType(512,1); //vidim flakotu
+
+	FRM_SwitchFaceTexture(me,"e_f053");
+
+	Integer Docs;		Docs = 0;
+	Integer PSpawn;		PSpawn = 0;
+
+	HUMAN_SETSIGHTRANGE(110);
+	HUMAN_SETHEARRANGE(100);
+	HUMAN_SetOptimized(1);
+	HUMAN_Suspend(1);
+	
+	SetWhenever(Player_Close, 0);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+	SendSignal(Obj2, 7);
+	EndScript();
+}
+
+OnAlarm()
+{
+	If (Docs == 0)
+	{
+	SendSignal(Obj2, 6);
+	}
+	
+	SendSignal(Reinf, 5);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETSIGHTRANGE(265);
+	HUMAN_SETHEARRANGE(80);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETHEARRANGE(180);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETMODE_Run();
+	goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+	HUMAN_Suspend(0);
+	HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+	PSpawn = 1;
+	Delay(1000);
+	HUMAN_TurnAt(Telefon);
+	Delay(300);
+	HUMAN_SetAnim("%%telefon1",300,500,0);
+	Delay(850);
+	HUMAN_SetAnim("%%telefon2",500,300,1);
+	SendSignal(S1, 1);
+	SendSignal(S2, 1);
+	FRM_MorphSpeechDelayed(me, 15993039, 5, 70);
+	HUMAN_SetAnim("%%telefon3",500,300,0);
+	Delay(500);
+	HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+	goto END;
+}
+
+Whenever Player_Close (_PlayerInRange(4))
+{
+	PSpawn = 2;
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_TurnAtNearestPlayer();
+	Delay(500);
+	HUMAN_SetAnim("%%mluvi", 1000, 1000, 1);
+	SUBTITLES_SetOn(1);
+	FRM_MorphSpeechDelayed(me, 09011880, 5, 50);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	SUBTITLES_SetOn(0);
+	
+	HUMAN_TurnAtNearestPlayer();
+	Delay(1000);
+	If(_Actor_GetState(Papers) == 1)
+	{
+		Docs = 1;
+		goto Got_Papers;
+	}
+	
+	If(!_PlayerInRange(5))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		SendSignal(Obj2, 6);
+		FRM_MorphSpeech(me, 15993021, 5, 50);
+		SetAlarmType(44,1);
+		goto END;
+	}
+
+	HUMAN_TurnAtNearestPlayer();
+	Delay(2500);
+	If(_Actor_GetState(Papers) == 1)
+	{
+		Docs = 1;
+		goto Got_Papers;
+	}
+	
+		If(!_PlayerInRange(5))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		SendSignal(Obj2, 6);
+		FRM_MorphSpeech(me, 15993021, 5, 50);
+		SetAlarmType(44,1);
+		goto END;
+	}
+	
+	HUMAN_TurnAtNearestPlayer();
+	Delay(3500);
+	If(_Actor_GetState(Papers) == 1)
+	{
+		Docs = 1;
+		goto Got_Papers;
+	}
+	
+		If(!_PlayerInRange(5))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		SendSignal(Obj2, 6);
+		FRM_MorphSpeech(me, 15993021, 5, 50);
+		SetAlarmType(44,1);
+		goto END;
+	}
+	
+	HUMAN_TurnAtNearestPlayer();
+	Delay(3500);
+	If(_Actor_GetState(Papers) == 1)
+	{
+		Docs = 1;
+		goto Got_Papers;
+	}
+	
+		If(!_PlayerInRange(5))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		SendSignal(Obj2, 6);
+		FRM_MorphSpeech(me, 15993021, 5, 50);
+		SetAlarmType(44,1);
+		goto END;
+	}
+	
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 15993020, 5, 50);
+	
+	HUMAN_TurnAtNearestPlayer();
+	Delay(3500);
+	If(_Actor_GetState(Papers) == 1)
+	{
+		Docs = 1;
+		goto Got_Papers;
+	}
+	
+		If(!_PlayerInRange(5))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		SendSignal(Obj2, 6);
+		FRM_MorphSpeech(me, 15993021, 5, 50);
+		SetAlarmType(44,1);
+		goto END;
+	}
+	
+	HUMAN_TurnAtNearestPlayer();
+	Delay(3500);
+	If(_Actor_GetState(Papers) == 1)
+	{
+		Docs = 1;
+		goto Got_Papers;
+	}
+	
+	HUMAN_TurnAtNearestPlayer();
+	SendSignal(Obj2, 6);
+	FRM_MorphSpeechDelayed(me, 90003034, 5, 50);
+	FRM_MorphSpeech(me, 15993021, 5, 50);
+	SetAlarmType(44,1);
+	goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+	DisableAlarms(1);
+	goto END;
+}
+
+Whenever Soldiers_Near (_SignalReceived(2))
+{
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_TurnAt(S1);
+	goto END;
+}
+
+Whenever Alarm_Boom (_SignalReceived(3))
+{
+SetAlarmType(1023, 1);
+}
+
+Whenever Soldiers_Dismissed (_SignalReceived(3))
+{
+	SendSignal(S1, 2);
+	SendSignal(S2, 2);
+	HUMAN_TurnAt(Telefon);
+	Delay(1500);
+	FRM_MorphSpeech(S2, 19993835, 5, 40);
+	Delay(200);
+	HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+	SetWhenever(Player_Close, 1);
+	goto Waiting;
+}
+
+Label Got_Papers:
+
+If(Docs == 1)
+{
+	If(!_PlayerInRange(5))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		SendSignal(Obj2, 6);
+		FRM_MorphSpeech(me, 15993021, 5, 50);
+		SetAlarmType(44,1);
+		goto END;
+	}
+	
+	FRM_GetNearestPlayer(me, Player); 
+	SUBTITLES_SetOn(1);
+	FRM_MorphSpeechDelayed(Player, 15993052, 5, 50);
+	SUBTITLES_SetOn(0);
+	HUMAN_TurnAt(Papers);
+	Delay(1300);
+	
+	If(!_PlayerInRange(5))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		SendSignal(Obj2, 6);
+		FRM_MorphSpeech(me, 15993021, 5, 50);
+		SetAlarmType(44,1);
+		goto END;
+	}
+	
+	HUMAN_TurnAtNearestPlayer();
+	Delay(500);
+	HUMAN_SetAnim("%%kecy2", 1000, 1000, 1);
+	SUBTITLES_SetOn(1);
+	FRM_MorphSpeechDelayed(me, 15993007, 5, 50);
+	Delay(200);
+	FRM_MorphSpeechDelayed(me, 15993058, 5, 50);
+	SUBTITLES_SetOn(0);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	Delay(500);
+	SendSignal(Obj2, 1);
+	HUMAN_TurnAt(Telefon);
+	HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+	goto END;
+}
+
+
+Label Waiting:
+Delay(180000);
+If (PSpawn == 1)
+{
+	SendSignal(Obj2, 7);
+	SetAlarmType(44,1);
+	goto END;
+}
+
+Label END:

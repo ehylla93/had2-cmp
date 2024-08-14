@@ -1,0 +1,31 @@
+// Obj 5 - Photograph German tactical plans
+// -------------------------------------------------
+
+Block
+{
+	Frame Plany1;	FRM_FindFrame(Plany1,"09_Mapa01");
+	Frame Plany2;	FRM_FindFrame(Plany2,"09_Mapa02");
+	Frame Plany3;	FRM_FindFrame(Plany3,"09_Mapa03");
+	Frame Plany4;	FRM_FindFrame(Plany4,"09_Mapa04");
+	Frame Obj7;		FRM_FindFrame(Obj7, "obj7");
+	
+	SetWhenever(Plans_Photographed, 0);
+}
+
+Whenever Plans_Photographed ((((_Actor_GetState(Plany1) == 1) And (_Actor_GetState(Plany2) == 1)) And (_Actor_GetState(Plany3) == 1)) And (_Actor_GetState(Plany4) == 1))
+{
+	Delay(1000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(52999716);
+	SendSignal(Obj7, 1);
+	Delay(3500);
+	SetObjectiveStatus(5, 1);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}
+
+Whenever Active (_SignalReceived(7))
+{
+	SetObjectiveStatus(5, 0);
+	SetWhenever(Plans_Photographed, 1);
+}

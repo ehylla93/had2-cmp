@@ -1,0 +1,114 @@
+// Countdown of dead enemies for Respawn No. 7 (Zone 9)
+// -------------------------------------------------------
+
+Block
+{
+Frame SpZone;	FRM_FindFrame(SpZone,"Spawnzones");
+
+Frame S01;		FRM_FindFrame(S01,"05_G51");
+Integer Sn1;		Sn1 = 1;
+Frame S02;		FRM_FindFrame(S02,"05_G44");
+Integer Sn2;		Sn2 = 1;
+Frame S03;		FRM_FindFrame(S03,"05_G45");
+Integer Sn3;		Sn3 = 1;
+Frame S04;		FRM_FindFrame(S04,"05_G46");
+Integer Sn4;		Sn4 = 1;
+Frame S05;		FRM_FindFrame(S05,"05_G47");
+Integer Sn5;		Sn5 = 1;
+Frame S06;		FRM_FindFrame(S06,"05_G48");
+Integer Sn6;		Sn6 = 1;
+Frame S07;		FRM_FindFrame(S07,"05_G49");
+Integer Sn7;		Sn7 = 1;
+
+Integer pocitac;
+	pocitac=0;
+}
+
+
+Label Enemy_Countdown:
+
+Block
+{
+If(Sn1 == 1)
+{
+
+If(_Actor_GetState(S01)==0)
+{	
+pocitac=pocitac+1;		
+Sn1=0;	
+}	
+}
+
+If(Sn2 == 1)
+{
+
+If(_Actor_GetState(S02)==0)
+{
+pocitac=pocitac+1;
+Sn2=0;
+}
+}
+
+If(Sn3 == 1)
+{
+
+If(_Actor_GetState(S03)==0)
+{
+pocitac=pocitac+1;
+Sn3=0;
+}
+}
+
+If(Sn4 == 1)
+{
+
+If(_Actor_GetState(S04)==0)
+{
+pocitac=pocitac+1;
+Sn4=0;
+}
+}
+
+If(Sn5 == 1)
+{
+
+If(_Actor_GetState(S05)==0)
+{
+pocitac=pocitac+1;Sn5=0;
+}
+}
+
+If(Sn6 == 1)
+{
+
+If(_Actor_GetState(S06)==0)
+{
+pocitac=pocitac+1;
+Sn6=0;
+}
+}
+
+If(Sn7 == 1)
+{
+
+If(_Actor_GetState(S07)==0)
+{
+pocitac=pocitac+1;
+Sn7=0;
+}
+}
+
+}
+
+If ((pocitac > 6) And (_MP_IsTeamMemberInRange(1, 50)))
+{
+Delay(1000);
+SendSignal(SpZone, 7);
+pocitac = 0;
+EndScript();
+}
+
+goto Enemy_Countdown;
+
+
+Label End:

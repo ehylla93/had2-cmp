@@ -1,0 +1,47 @@
+// Variables definition
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - skriptovy alarm
+// 256 - friendly fire
+
+Frame reinfo;		FRM_FindFrame(reinfo,"dummy_reinforcement");
+Frame dummysit;		FRM_FindFrame(dummysit,"dummy_sit_vila1");
+SetAlarmType(1023,false);
+SetAlarmType(1, true);
+SetAlarmType(2, true);
+SetAlarmType(16, true);
+SetAlarmType(32, true);
+SetAlarmType(512,true);
+
+HUMAN_ACTIVITY_Sit(dummysit);
+
+OnAlarm()
+	{
+
+	HUMAN_SetAnim("", 100,100,0);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETAIMODE_Aggressive();
+	EndScript();
+	}
+	
+OnAlarmDone()
+	{
+	HUMAN_ACTIVITY_Sit(dummysit);
+	}
+
+OnDeath()
+	{
+	SendSignal(reinfo,0);
+	Printf("InViller_1 is DEAD!!!");
+	EndScript();
+	}

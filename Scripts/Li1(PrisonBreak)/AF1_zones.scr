@@ -1,0 +1,96 @@
+//
+Block
+{
+Frame detect;		FRM_FindFrame(detect,"dummy_zone_enabler");
+//Frame txt;			FRM_FindFrame(txt,"Text");
+Frame Reinf_scr;	FRM_FindFrame(Reinf_scr, "Reinf");
+
+Frame EOF3;			FRM_FindFrame(EOF3,"EOF3");
+Frame EG06;			FRM_FindFrame(EG06,"EG06");
+Frame EG07;			FRM_FindFrame(EG07,"EG07");
+Frame EP00;			FRM_FindFrame(EP00,"EP00");
+Frame EP26;			FRM_FindFrame(EP26,"EP26");
+Frame EP27;			FRM_FindFrame(EP27,"EP27");
+Frame EP29;			FRM_FindFrame(EP29,"EP29");
+Frame EP13;			FRM_FindFrame(EP13,"EP13");
+Frame EP14;			FRM_FindFrame(EP14,"EP14");
+
+Frame window01;	FRM_FindFrame(window01, "okenice_p_01");
+Frame window02;	FRM_FindFrame(window02, "okenice_p_02");
+Frame window03;	FRM_FindFrame(window03, "okenice_p_03");
+Frame window04;	FRM_FindFrame(window04, "okenice_p_04");
+Frame window05;	FRM_FindFrame(window05, "okenice_p_05");
+Frame window06;	FRM_FindFrame(window06, "okenice_p_06");
+Frame window07;	FRM_FindFrame(window07, "okenice_p_07");
+Frame window08;	FRM_FindFrame(window08, "okenice_p_08");
+Frame window09;	FRM_FindFrame(window09, "okenice_p_09");
+Frame window10;	FRM_FindFrame(window10, "okenice_p_10");
+Frame window11;	FRM_FindFrame(window11, "okenice_p_11");
+Frame window12;	FRM_FindFrame(window12, "okenice_p_12");
+Frame window13;	FRM_FindFrame(window13, "okenice_p_13");
+Frame window14;	FRM_FindFrame(window14, "okenice_p_14");
+integer rnd1;
+MP_EnableSpawnZone("Zone1", 1);
+}
+goto end;
+//------------------------------------------------
+Whenever Yes(_PlayerInBox(detect))
+{
+printf ("Player In Start Zone");
+SendSignal(Reinf_scr, 2);
+sendsignal (EOF3,1);
+sendsignal (EG06,1);
+sendsignal (EG07,1);
+sendsignal (EP00,1);
+sendsignal (EP13,1);
+sendsignal (EP14,1);
+sendsignal (EP26,1);
+sendsignal (EP27,1);
+sendsignal (EP29,1);
+
+rnd1=(_randomint(2)+1);
+if (rnd1==1) 
+{
+SetActorState(window01, 1);
+SetActorState(window02, 1);
+}
+rnd1=(_randomint(2)+1);
+if (rnd1==1) 
+{
+SetActorState(window03, 1);
+SetActorState(window04, 1);
+}
+rnd1=(_randomint(2)+1);
+if (rnd1==1) 
+{
+SetActorState(window05, 1);
+SetActorState(window06, 1);
+}
+rnd1=(_randomint(2)+1);
+if (rnd1==1) 
+{
+SetActorState(window07, 1);
+SetActorState(window08, 1);
+}
+rnd1=(_randomint(2)+1);
+if (rnd1==1) 
+{
+SetActorState(window09, 1);
+SetActorState(window10, 1);
+}
+rnd1=(_randomint(2)+1);
+if (rnd1==1) 
+{
+SetActorState(window14, 1);
+SetActorState(window12, 1);
+}
+rnd1=(_randomint(2)+1);
+if (rnd1==1) 
+{
+SetActorState(window13, 1);
+SetActorState(window11, 1);
+}
+goto end;
+}
+
+label END:

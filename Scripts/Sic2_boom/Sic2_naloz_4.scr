@@ -1,0 +1,27 @@
+// push Panzer_1
+// -------------
+
+Block
+{
+
+Frame Tiger;		FRM_FindFrame (Tiger,"Tiger");
+
+Frame bridge1;		FRM_FindFrame (bridge1,"d_D02");
+
+}
+
+// ---------------------------
+
+
+Whenever bridge (_Actor_GetState(bridge1)==0) 
+{
+
+delay (450);		//500
+FRM_TeleportNearCheckpoint(Tiger, "Panzer2_end3", "Panzer2_end5");
+delay (10000);
+FRM_TeleportNearCheckpoint(Tiger, "Panzer2_1", "Panzer2_end");
+
+
+EndScript();
+}
+

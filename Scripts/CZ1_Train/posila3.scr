@@ -1,0 +1,77 @@
+// posila3
+
+Block
+{
+Frame posila14;
+	FRM_FindFrame(posila14, "posila14");
+Frame posila15;
+	FRM_FindFrame(posila15, "posila15");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(55);
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f043");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from l_bedny_3.bedny09
+{
+	HUMAN_Suspend(false);
+	HUMAN_SetOptimized(1);
+}
+
+Label hlidka:
+	HUMAN_SETMODE_Guard();
+	HUMAN_Move("posila3_01");
+	HUMAN_LookAround(3);
+	HUMAN_Move("posila3_02");
+	HUMAN_LookAround(0);
+	HUMAN_Move("posila3_03");
+	HUMAN_Move("posila3_04");
+	GoTo hlidka;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_LookAround(4);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila3_04");
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnDeath()
+{
+	SendSignal(posila14, 1);
+	SendSignal(posila15, 1);
+	EndScript();
+}
+
+Label end:

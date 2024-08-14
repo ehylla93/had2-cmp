@@ -1,0 +1,32 @@
+
+Block {
+Frame ge07;		FRM_FindFrame(ge07, "ge_07");
+Frame ge08;		FRM_FindFrame(ge08, "ge_08");
+}
+
+goto end;
+
+Whenever jedem(_SignalReceived(1))
+{
+goto prenos;
+}
+
+
+label prenos:
+
+//if (_GetDistToActivePlayer()>26)
+if (!_PlayerInRange(26))
+{
+block
+{
+FRM_TeleportNearCheckpoint(ge07, "ge45_09", "ge07_01");
+FRM_TeleportNearCheckpoint(ge08, "ge08_03", "ge07_01");
+}
+delay (4000);
+SendSignal (ge07,13);
+goto end;
+}
+delay (3000);
+goto prenos;
+
+label end:

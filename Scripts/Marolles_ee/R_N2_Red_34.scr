@@ -1,0 +1,53 @@
+   
+integer  AIEvent;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red34_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(8)
+{						
+  HUMAN_Suspend(False);			 
+}			
+
+label DeAlarm:
+Block
+  {
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SETMODE_Walk();
+  }
+  HUMAN_Move("Red34_1");				
+  HUMAN_TurnAt(turn);
+				/////////// Animaci na sednuti + do alarmu vstat
+  Delay(500);
+  HUMAN_WeaponOnArm(True);
+  Delay(500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      HUMAN_SETMODE_Stand();
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 34: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

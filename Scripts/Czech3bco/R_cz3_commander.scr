@@ -1,0 +1,133 @@
+// this is outcomming squad coomander
+
+
+block
+{
+
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+  //frame chair;			FRM_FindFrame(chair, "dummy_commander_sit");
+  frame see;			FRM_FindFrame(see, "dummy_commander_see");
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+frame s1;		FRM_FindFrame(s1, "c3wn_vil4");
+frame s2;		FRM_FindFrame(s2, "c3wn_vil3");
+frame s3;		FRM_FindFrame(s3, "c3wn_vil2");
+frame s4;		FRM_FindFrame(s4, "c3wn_vil");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f045");
+
+HUMAN_SetOptimized(2);
+
+integer AIEvent;
+integer a;	a=0;
+Integer sus;	sus=0;
+}
+
+HUMAN_Suspend(True);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto TheEnd;
+
+
+
+Whenever aaa (_PlayerInRange(70); )
+{
+  HUMAN_Suspend(False);
+sus=1;
+HUMAN_SetAnim("%%ctuneco", 1000, 1000, 1);
+goto end;
+}
+
+
+
+
+OnAlarm()
+{
+
+block
+{
+DisableSignals(1);
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("commander: ", AIEvent);
+SetWhenever(aaa, 0);
+}
+
+if (sus==0)
+	{
+	sus=1;
+	HUMAN_Suspend(0);	
+	}
+
+HUMAN_SetAnim("", 10, 10, 0);
+delay (100);
+HUMAN_WeaponOnArm(1);
+
+if (_PlayerInRange(7)==1)
+{
+HUMAN_SetSniper(0, 1);
+ EndScript();
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (a==0)
+{
+
+HUMAN_Move("commander1");
+HUMAN_Attack(s1, 1000);
+HUMAN_Attack(s2,1000);
+HUMAN_Attack(s3, 1000);
+HUMAN_Attack(s4, 1000);
+HUMAN_Reload();
+HUMAN_SetSniper(1, 1);
+a=1;
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (1500);
+SetAlarmType(274,1);
+goto end;
+}
+
+
+  EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(652,0);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("commander1");
+HUMAN_TurnAt(s2);
+
+  Goto end;
+}
+
+
+
+
+OnDeath()
+{
+DisableSignals(1);
+  printf("COMMANDER IS NO MORE");
+  SendSignal(reinfo, 0);
+  EndScript();
+}
+
+label TheEnd:
+label end:

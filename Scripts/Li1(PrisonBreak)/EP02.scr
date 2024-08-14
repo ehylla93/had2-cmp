@@ -1,0 +1,246 @@
+//EP02
+//----------------------Block----------------------
+Block
+{
+frame gd1;			FRM_FindFrame(gd1,"gdummy_1");
+frame gd5;			FRM_FindFrame(gd5,"gdummy_5");
+frame gd6;			FRM_FindFrame(gd6,"gdummy_6");
+frame gd7;			FRM_FindFrame(gd7,"gdummy_7");
+frame gd11;			FRM_FindFrame(gd11,"gdummy11");
+Frame me;			FRM_GetMyFrame(me);
+Frame Player;
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rndcp;
+integer rndpause;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+SetWhenever(InRange, 0);
+SetWhenever(NotInRange, 0);
+}
+goto END;
+//----------------------Spawn/Activity----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+Block
+{
+rnd1=(_randomint(4)+1);
+  if (rnd1==1)
+  {
+printf ("EP02 not spawn");
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+goto END;
+  }
+  else
+  {
+HUMAN_Suspend(0);
+rnd1=(_randomint(8)+1);
+  if (rnd1==1){HUMAN_CreateItemInStore(61, 1);}
+printf ("EP02 spawn");
+  }
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(70);
+HUMAN_WeaponOnArm(0);
+HUMAN_WeaponUp(1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+goto checkpoint1;
+}
+label checkpoint1:
+HUMAN_MoveToFrame(gd1, 2);
+gosub anim;
+HUMAN_TurnAt(gd5);
+gosub delay;
+goto checkpoint2;
+//
+label checkpoint2:
+HUMAN_MoveToFrame(gd7, 2);
+rndcp=(_randomint(2)+1);
+  if (rndcp==1)
+  {
+  goto checkpoint1;
+  }
+  if (rndcp==2)
+  {
+  goto checkpoint3;
+  }
+label checkpoint3:
+HUMAN_MoveToFrame(gd6, 2);
+HUMAN_TurnAt(gd11);
+gosub anim;
+gosub delay;
+HUMAN_MoveToFrame(gd5, 2);
+HUMAN_TurnAt(gd1);
+gosub anim;
+gosub delay;
+rndcp=(_randomint(2)+1);
+  if (rndcp==1)
+  {
+  goto checkpoint2;
+  }
+  if (rndcp==2)
+  {
+HUMAN_MoveToFrame(gd6, 2);
+HUMAN_TurnAt(gd11);
+gosub delay;
+goto checkpoint2;
+  }
+//----------------------Anim
+label anim:
+rnd1=(_randomint(4)+1);
+  if (rnd1==1)
+  {
+HUMAN_MoveRandomRadius(3);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+  }
+  if (rnd1==2)
+  {
+HUMAN_ACTIVITY_Hot();
+HUMAN_MoveRandomRadius(4);
+HUMAN_SetAnim("%%kopkamen1", 1000, 1000, 1);
+  }
+  if (rnd1==3)
+  {
+HUMAN_ACTIVITY_Hot();
+HUMAN_MoveRandomRadius(2);
+  }
+  if (rnd1==4)
+  {
+HUMAN_ACTIVITY_Hot();
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+  }
+return;
+//----------------------Delay
+label delay:
+rndpause=(_randomint(9000)+3000);
+delay(rndpause);
+HUMAN_SetAnim("", 1000, 1000, 1);
+delay(1000);
+return;
+}
+//----------------------Detect Player (After Alarm)----------------------
+Whenever InRange (_PlayerInRange(40))
+{
+SetWhenever(NotInRange, 1);
+rnd1=(_randomint(5)+1);
+  if (rnd1==1)
+  {
+goto follow;
+  }
+  else
+  {
+goto alrmdone;
+  }
+goto END;
+}
+Whenever NotInRange (!_PlayerInRange(40))
+{
+printf ("Player not in range 40");
+SetWhenever(InRange, 1);
+goto alrmdone;
+}
+//----------------------Follow Player----------------------
+label follow:
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+delay(5000);
+FRM_GetNearestPlayer(me, Player);
+HUMAN_MoveToFrame(Player, 10);
+delay(5000);
+HUMAN_MoveToFrame(Player, 6);
+rnd1=(_randomint(3)+1);
+  if ((rnd1==1) or (rnd1==2))
+  {
+goto follow;
+  }
+  else
+  {
+goto alrmdone;
+  }
+//----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+Block
+{
+AIEvent = _GetAlarmType();
+PrintfNumber("EP02 alarm type: ",AIEvent);
+If (AIEvent == 32)
+{
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Defensive();
+}
+If ((AIEvent == 2) or (AIEvent == 256))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+else
+{
+HUMAN_SETMODE_Walk();
+}
+}
+EndScript();
+}
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+printf ("EP02 Alarm done");
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETAIMODE_Defensive();
+SetWhenever(InRange, 1);
+rnd1=(_randomint(2)+1);
+  if (rnd1==1)
+  {
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+  }
+  if (rnd1==2)
+  {
+HUMAN_SETMODE_Crouch();
+  }
+goto alrmdone;
+//
+label alrmdone:
+gosub delay;
+rnd1=(_randomint(30)+5);
+HUMAN_MoveRandomRadius(rnd1);
+goto alrmdone;
+}
+//----------------------Random Items----------------------
+label RndItems:
+rnd1=(_randomint(10)+1);
+  if (rnd1==2){HUMAN_CreateItemInStore(54, 1);}
+  if (rnd1==4){HUMAN_CreateItemInStore(61, 1);}
+  if ((rnd1==6) and (_LoadGameValue(7)==1)) {HUMAN_CreateItemInStore(66, 1);}
+  if (rnd1==8){HUMAN_CreateItemInStore(174, 1);}
+return;
+//----------------------OnDeath----------------------
+OnDeath()
+{
+gosub RndItems;
+printf ("EP02 - Enemy killed");
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+//----------------------END----------------------
+Label END:

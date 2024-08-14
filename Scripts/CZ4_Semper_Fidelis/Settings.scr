@@ -1,0 +1,350 @@
+//----------------------/----------------------
+block
+{
+Frame d1;			FRM_FindFrame(d1, "whbuild816");
+//Frame d2;			FRM_FindFrame(d2, "whbuild790");
+Frame d8;			FRM_FindFrame(d8, "whbuild182");
+Frame d9;			FRM_FindFrame(d9, "whbuild183");
+Frame d18;			FRM_FindFrame(d18, "Yelbld375");
+//Frame d19;			FRM_FindFrame(d19, "Yelbld376");  //Yelbld375
+
+//Frame d11;			FRM_FindFrame(d11, "whbuild812");
+Frame d12;			FRM_FindFrame(d12, "whbuild813");
+//Frame d13;			FRM_FindFrame(d13, "whbuild814");
+Frame d14;			FRM_FindFrame(d14, "whbuild815");
+
+Frame door32;			FRM_FindFrame(door32, "door32");   // rnd
+Frame door33;			FRM_FindFrame(door33, "door33");  // rnd 
+
+Frame door34;			FRM_FindFrame(door34, "door34");   // 1
+Frame door35;			FRM_FindFrame(door35, "door35");   // 1
+
+Frame door_Box18;			FRM_FindFrame(door_Box18, "Box18");  //1
+	
+Frame Box01;	FRM_FindFrame(Box01, "Randombox_01");
+Frame Box02;	FRM_FindFrame(Box02, "Randombox_02");
+Frame Box03;	FRM_FindFrame(Box03, "Randombox_03");
+Frame Box04;	FRM_FindFrame(Box04, "Randombox_04");
+Frame Box05;	FRM_FindFrame(Box05, "Randombox_05");
+Frame Box06;	FRM_FindFrame(Box06, "Randombox_06");
+Frame Box07;	FRM_FindFrame(Box07, "Randombox_07");
+Frame Box08;	FRM_FindFrame(Box08, "Randombox_08");
+Frame Box09;	FRM_FindFrame(Box09, "Randombox_09");
+Frame Box10;	FRM_FindFrame(Box10, "Randombox_10");
+Frame Box11;	FRM_FindFrame(Box11, "Randombox_11");
+Frame Box12;	FRM_FindFrame(Box12, "Randombox_12");
+Frame Box13;	FRM_FindFrame(Box13, "Randombox_13");
+Frame Box14;	FRM_FindFrame(Box14, "Randombox_14");
+Frame Box15;	FRM_FindFrame(Box15, "Randombox_15");
+Frame Box16;	FRM_FindFrame(Box16, "Randombox_16");
+Frame Box17;	FRM_FindFrame(Box17, "Randombox_17");
+Frame Box18;	FRM_FindFrame(Box18, "Randombox_18");
+Frame Box19;	FRM_FindFrame(Box19, "Randombox_19");
+Frame Box20;	FRM_FindFrame(Box20, "Randombox_20");
+
+Frame Tank1;	FRM_FindFrame(Tank1, "panther1");
+Frame Tank2;	FRM_FindFrame(Tank2, "panther2");
+Frame Tank3;	FRM_FindFrame(Tank3, "panther3");
+Frame Tank4;	FRM_FindFrame(Tank4, "panther4");
+Frame Tank5;	FRM_FindFrame(Tank5, "panther5");
+Frame Tank6;	FRM_FindFrame(Tank6, "panther6");
+Frame Tank7;	FRM_FindFrame(Tank7, "panther7");
+
+
+//Frame S1;		FRM_FindFrame(S1, "BMW1");
+Frame S2;		FRM_FindFrame(S2, "PumaTank1");
+Frame S3;		FRM_FindFrame(S3, "Hakl1");
+Frame S4;		FRM_FindFrame(S4, "Hakl2");
+Frame S5;		FRM_FindFrame(S5, "krupp1");
+Frame S6;		FRM_FindFrame(S6, "krupp2");
+Frame S7;		FRM_FindFrame(S7, "krupp3");
+Frame S8;		FRM_FindFrame(S8, "krupp4");
+Frame S9;		FRM_FindFrame(S9, "krupp5");
+Frame S10;		FRM_FindFrame(S10, "kubel1");
+//Frame S11;		FRM_FindFrame(S11, "kubel2");
+//Frame S12;		FRM_FindFrame(S12, "kubel3");
+Frame S13;		FRM_FindFrame(S13, "kubel4");
+Frame S14;		FRM_FindFrame(S14, "Opel1");
+Frame S15;		FRM_FindFrame(S15, "Opel2");
+Frame S16;		FRM_FindFrame(S16, "Opel3");
+Frame S17;		FRM_FindFrame(S17, "Opel4");
+//Frame S18;		FRM_FindFrame(S18, "Opel5");
+Frame S19;		FRM_FindFrame(S19, "Opel6");
+Frame S20;		FRM_FindFrame(S20, "kubel5");
+Frame S21;		FRM_FindFrame(S21, "krupp6");
+Frame S22;		FRM_FindFrame(S22, "krupp7");
+Frame S23;		FRM_FindFrame(S23, "Opelflak1");
+Frame S24;		FRM_FindFrame(S24, "Opelflak2");
+Frame S25;		FRM_FindFrame(S25, "Hakl3");
+Frame S26;		FRM_FindFrame(S26, "Hakl4");
+Frame S27;		FRM_FindFrame(S27, "Hakl5");
+Frame S28;		FRM_FindFrame(S28, "krupp8");
+Frame S29;		FRM_FindFrame(S29, "krupp9");
+Frame S30;		FRM_FindFrame(S30, "kubel6");
+//Frame S31;		FRM_FindFrame(S31, "kubel7");
+Frame S32;		FRM_FindFrame(S32, "Opel7");
+Frame S33;		FRM_FindFrame(S33, "Opel8");
+Frame S34;		FRM_FindFrame(S34, "Opel9");
+
+Frame Txt;		FRM_FindFrame(Txt,"Text");
+Frame me;		FRM_GetMyFrame(me);
+
+Frame barrier1;	FRM_FindFrame(barrier1, "la_strazbud_.zavora");
+SetActorState(barrier1, 0);
+SetActorState(barrier1, 1);
+
+integer rnd1;
+Integer C1;
+MP_EnableSpawnZone("zone2", 1);
+MP_EnableSpawnZone("zone1", 0);
+//SetWhenever(AreaClear, 0);
+SetActorState(d1, 1);
+SetActorState(d8, 1);
+SetActorState(d9, 1);
+SetActorState(d18, 1);
+SetActorState(door34, 1);
+SetActorState(door35, 1);
+SetActorState(door_Box18, 1);
+}
+
+
+// Open some roof dormer hatches just for shit and giggles
+
+rnd1=(_randomint(2));
+if (rnd1==1){SetActorState(d12, 1);}
+
+rnd1=(_randomint(2));
+if (rnd1==1){SetActorState(d14, 1);}
+
+//  
+
+rnd1=(_randomint(2));
+if (rnd1==1){SetActorState(door32, 1);}
+
+rnd1=(_randomint(2));
+if (rnd1==1){SetActorState(door33, 1);}
+
+
+//----------------------Random_Boxes----------------------
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box01, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box02, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box03, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box04, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box05, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box06, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box07, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box08, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box09, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box10, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box11, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box12, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box13, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box14, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box15, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box16, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box17, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box18, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box19, 1);
+}
+rnd1=(_randomint(7));
+if (rnd1==1)
+{
+SetActorState(Box20, 1);
+}
+
+//if (_randomint(2)==1) {Car_SetFuel(S1, 0);}
+//if (_randomint(3)==1) {Car_SetFuel(S2, 0);}
+if (_randomint(3)==1) {Car_SetFuel(S3, 0);}
+if (_randomint(3)==1) {Car_SetFuel(S4, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S5, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S6, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S7, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S8, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S9, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S10, 0);}
+//if (_randomint(2)==1) {Car_SetFuel(S11, 0);}
+//if (_randomint(2)==1) {Car_SetFuel(S12, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S13, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S14, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S15, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S16, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S17, 0);}
+//if (_randomint(2)==1) {Car_SetFuel(S18, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S19, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S20, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S21, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S22, 0);}
+if (_randomint(3)==1) {Car_SetFuel(S25, 0);}
+if (_randomint(3)==1) {Car_SetFuel(S26, 0);}
+if (_randomint(3)==1) {Car_SetFuel(S27, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S28, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S29, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S30, 0);}
+//if (_randomint(2)==1) {Car_SetFuel(S31, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S32, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S33, 0);}
+if (_randomint(2)==1) {Car_SetFuel(S34, 0);}
+
+Car_SetFuel(S23, 0);
+Car_SetFuel(S24, 0);
+
+goto Count;
+
+
+//----------------------Counter----------------------
+Label Count:
+
+Block
+{
+C1=0;
+C1=C1+_ACTOR_GetState(Tank1);
+C1=C1+_ACTOR_GetState(Tank2);
+C1=C1+_ACTOR_GetState(Tank3);
+C1=C1+_ACTOR_GetState(Tank4);
+C1=C1+_ACTOR_GetState(Tank5);
+C1=C1+_ACTOR_GetState(Tank6);
+C1=C1+_ACTOR_GetState(Tank7);
+//C1=C1+_ACTOR_GetState(S1);
+C1=C1+_ACTOR_GetState(S2);
+C1=C1+_ACTOR_GetState(S3);
+C1=C1+_ACTOR_GetState(S4);
+C1=C1+_ACTOR_GetState(S5);
+C1=C1+_ACTOR_GetState(S6);
+C1=C1+_ACTOR_GetState(S7);
+C1=C1+_ACTOR_GetState(S8);
+C1=C1+_ACTOR_GetState(S9);
+C1=C1+_ACTOR_GetState(S10);
+//C1=C1+_ACTOR_GetState(S11);
+//C1=C1+_ACTOR_GetState(S12);
+C1=C1+_ACTOR_GetState(S13);
+C1=C1+_ACTOR_GetState(S14);
+C1=C1+_ACTOR_GetState(S15);
+C1=C1+_ACTOR_GetState(S16);
+C1=C1+_ACTOR_GetState(S17);
+//C1=C1+_ACTOR_GetState(S18);
+C1=C1+_ACTOR_GetState(S19);
+C1=C1+_ACTOR_GetState(S20);
+C1=C1+_ACTOR_GetState(S21);
+C1=C1+_ACTOR_GetState(S22);
+C1=C1+_ACTOR_GetState(S23);
+C1=C1+_ACTOR_GetState(S24);
+C1=C1+_ACTOR_GetState(S25);
+C1=C1+_ACTOR_GetState(S26);
+C1=C1+_ACTOR_GetState(S27);
+C1=C1+_ACTOR_GetState(S28);
+C1=C1+_ACTOR_GetState(S29);
+C1=C1+_ACTOR_GetState(S30);
+//C1=C1+_ACTOR_GetState(S31);
+C1=C1+_ACTOR_GetState(S32);
+C1=C1+_ACTOR_GetState(S33);
+C1=C1+_ACTOR_GetState(S34);
+}
+if (C1==0)
+{
+Block
+{
+SendSignal(Txt, 2);
+//delay(4000);
+SaveGameValue(4, 1); 
+//Printf("No vehicles left...In your future I see a Cab ride");
+C1=99;
+}
+goto END;
+}
+//PrintfNumber("Counter C1: ",C1);
+delay(25000); 
+goto Count;
+
+
+//----------------------Enemy----------------------
+Whenever AreaClear (!_EnemyInRange(me,1000))
+{
+SetObjectiveStatus(5, 1);
+Delay(5000);
+SendSignal(Txt, 2);
+//Printf("You killed them all...War is over ! turn off the lights and go home");
+//goto end;
+if (C1<99)
+{
+goto Count;
+}
+goto END;
+}
+
+
+label end:

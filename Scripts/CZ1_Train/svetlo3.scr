@@ -1,0 +1,21 @@
+// Obj vehicles
+//-----------------
+
+Block
+{
+Frame opelE;	FRM_FindFrame(opelE, "La_OpelE_");
+Frame kubel1;	FRM_FindFrame(kubel1, "la_kubelW_");
+SetObjectiveStatus(5,0);
+}
+
+
+Whenever vehicles ((_Actor_GetState(opelE) == 0) And (_Actor_GetState(kubel1) == 0))
+{
+Delay(1500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999712);
+SetObjectiveStatus(5, 1);
+Delay(3000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

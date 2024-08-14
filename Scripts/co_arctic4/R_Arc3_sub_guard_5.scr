@@ -1,0 +1,61 @@
+
+  integer  AIEvent;
+
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+
+SetAlarmType(8, False);	// zvuky OnUse
+
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+Whenever A (_PlayerInRange(202);)		
+{						
+  HUMAN_Suspend(False);			
+}						
+
+Label DeAlarm:
+  HUMAN_SETMODE_Guard();
+
+label loop:
+  HUMAN_Move("SubG5_1");
+  Delay(2400);
+  HUMAN_Move("SubG5_2");
+  Delay(2400);
+goto loop;
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType();
+      PrintfNumber("Sub guard 5: ", AIEvent);
+      HUMAN_SetAnim("", 300, 300, False);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+      HUMAN_SETAIMODE_Defensive();
+      HUMAN_SETSIGHTRANGE(120);
+      HUMAN_SETHEARRANGE(145);
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(520, False);	  
+  SetAlarmType(503, True);	
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  goto DeAlarm;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

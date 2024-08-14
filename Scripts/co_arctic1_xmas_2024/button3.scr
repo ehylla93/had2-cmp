@@ -1,0 +1,57 @@
+Block
+{
+	FRAME ge3_1;		FRM_FindFrame(ge3_1, "german3_1");
+	FRAME ge3_2;		FRM_FindFrame(ge3_2, "german3_2");
+	FRAME ge3_3;		FRM_FindFrame(ge3_3, "german3_3");
+	FRAME ge3_4;		FRM_FindFrame(ge3_4, "german3_4");
+	FRAME ge3_5;		FRM_FindFrame(ge3_5, "german3_5");
+	FRAME ge3_6;		FRM_FindFrame(ge3_6, "german3_6");
+	FRAME ge3_7;		FRM_FindFrame(ge3_7, "german3_7");  
+	FRAME ge3_8;		FRM_FindFrame(ge3_8, "german3_8");
+	FRAME ge3_9;		FRM_FindFrame(ge3_9, "german3_9");
+	// TANK
+	FRAME ge4_1;		FRM_FindFrame(ge4_1, "german4_1"); 
+	FRAME ge4_2;		FRM_FindFrame(ge4_2, "german4_2");
+	FRAME ge4_3;		FRM_FindFrame(ge4_3, "german4_3");  
+
+	FRAME sw3;			FRM_FindFrame(sw3, "switch3");
+	FRAME ge5_6;		FRM_FindFrame(ge5_6, "ge5_6");
+	FRAME ge5_7;		FRM_FindFrame(ge5_7, "ge5_7");
+	Frame echo3;		FRM_FindFrame(echo3, "echo3");
+	Frame mk3;			FRM_FindFrame(mk3, "mk3");
+	Frame dead_counter;			FRM_FindFrame(dead_counter, "dead_counter");
+
+}
+printf("switch 3 initialized");
+
+OnSignal(1)	
+{
+	printf("switch 3 activated");
+	FRM_SetOn(mk3, true);
+	SendSignal(ge4_1, 3);
+	SendSignal(ge4_2, 3);
+	SendSignal(ge4_3, 3);
+	  Delay(1000);
+	SendSignal(ge3_1, 1);
+	  Delay(2000);
+	SendSignal(ge3_2, 1);
+	  Delay(4000);
+	SendSignal(ge3_3, 1);
+	  Delay(2000);
+	SendSignal(ge3_4, 1);
+	  Delay(4000);
+	SendSignal(ge3_5, 1);
+	  Delay(5000);
+	SendSignal(ge3_6, 1);
+	  Delay(6000);
+	SendSignal(ge3_7, 1);
+	  Delay(5000);
+	SendSignal(ge3_8, 1);
+	  Delay(5000);
+	SendSignal(ge3_9, 1);
+	SendSignal(ge5_6, 1); 
+	SendSignal(ge5_7, 1); 
+	FRM_SetOn(echo3, True);
+	SendSignal(dead_counter, 1);
+	EndScript();
+}

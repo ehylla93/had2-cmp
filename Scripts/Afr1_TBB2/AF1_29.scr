@@ -1,0 +1,93 @@
+// AF1_29
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("03: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(130)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  SetWhenever(player, false);
+  HUMAN_SETMODE_Run();
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("03: ", Atype);
+  }
+
+  if(Atype == 256){
+    HUMAN_SetMODE_Crouch();
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_WeaponOnArm(true);
+    HUMAN_SetAlarm(false);
+    SetAlarmType(256, false);
+    goto END;
+  }
+
+  if(Atype != 4){
+    HUMAN_ACTIVITY_Smoke(false);
+    Delay(200);
+    EndScript();
+  }
+  else{
+    HUMAN_SETMODE_Stand();
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500);
+    HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+    goto ALARM_DONE;
+  }
+
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  goto ALARM_DONE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetAnim("%%sedimL2", 300, 300, true);
+  Delay(300);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true); 
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SETMODE_Stand();
+  goto ALARM_DONE;
+
+Label ALARM_DONE:
+  HUMAN_SetAlarm(false);
+  HUMAN_SetMODE_Stand();
+  HUMAN_WeaponOnArm(true);
+Label LOOPALARMDONE:
+  HUMAN_Move("af1_03_01");
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+  HUMAN_Move("af1_03_04");
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+goto LOOPALARMDONE;
+
+Label END:

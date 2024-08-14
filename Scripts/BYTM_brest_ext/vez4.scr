@@ -1,0 +1,60 @@
+
+Frame cum;		FRM_FindFrame(cum, "vez4cum1");
+integer aievent;
+HUMAN_SETMODE_Guard();
+
+
+SetAlarmType(1023,1);
+SetAlarmType(371,1);
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(80);
+
+
+label chodim:
+HUMAN_Move("vez4_1");
+HUMAN_Move("vez4_2");
+HUMAN_Move("vez4_3");
+HUMAN_TurnAt(cum);
+delay(20000);
+
+goto chodim;
+
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+if((aievent==1) or (aievent==2) or (aievent==32) or (aievent==256))
+{
+SaveGameValue(22, 1);
+PrintfNumber("GameValue 22:",1);
+}
+HUMAN_SetSniper(1, 10);
+HUMAN_SETSIGHTRANGE(50);
+EndScript();
+}
+
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(371,1);
+}
+HUMAN_SETMODE_Stand();
+goto chodim;
+}
+
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

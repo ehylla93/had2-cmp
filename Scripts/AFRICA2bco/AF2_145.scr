@@ -1,0 +1,68 @@
+// AF2_145 - osadka la_krupp_, sedi na korbe
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+	Frame a4;	FRM_FindFrame(a4,"MG42_3");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_BoardVehicle("la_krupp_", false, 4);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_120_A1
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(2)	// received from AF2_141
+{
+	GoTo vystup;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+HUMAN_BoardVehicle("la_krupp_", true, 4);
+FRM_SwitchFaceTexture(me, "e_f055");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label vystup:
+	HUMAN_BoardVehicle("la_krupp_", false, 4);
+	HUMAN_SETMODE_Run();
+	HUMAN_MoveToFrame(a4, 1);
+	HUMAN_SETMODE_Crouch();
+
+Label end:

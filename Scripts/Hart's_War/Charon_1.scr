@@ -1,0 +1,89 @@
+// JED PRO SASIKY
+Block
+{
+Frame JEEP_1;   	FRM_FindFrame(JEEP_1,"JEEP_1");
+Frame Rosenfield;	FRM_FindFrame(Rosenfield,"Cpt. Rosenfield");
+Frame Suman1;   	FRM_FindFrame(Suman1,"Suman1");
+
+Frame me;	FRM_GetMyFrame(me);
+
+HUMAN_Suspend(true);
+
+
+Frame Player;
+
+
+}
+
+
+EnableSignal( 1, true );
+OnSignal( 1 )
+{
+     Human_Suspend( false );
+     HUMAN_BoardVehicle( "JEEP_1",  1, 0 );
+     
+ EnableSignal( 1, false );
+}
+
+
+// JED SE SASIKY ZPET
+EnableSignal( 2, true );
+OnSignal( 2 )
+{
+
+Delay(8000);
+HUMAN_Drive("A43",50);
+HUMAN_Drive("A40",50);
+HUMAN_Drive("A35",50);
+HUMAN_Drive("A30",50);
+HUMAN_Drive("A21",50);
+HUMAN_Drive("B5",30);
+HUMAN_Drive("B10",50);
+HUMAN_Drive("B15",50);
+HUMAN_Drive("B20",50);
+HUMAN_Drive("B25",50);
+HUMAN_Drive("B30",50);
+HUMAN_Drive("Hakl",50);
+
+     HUMAN_Drive("",0);
+	 HUMAN_BoardVehicle( "JEEP_1",  0, 0 );
+	 Car_SetFuel(JEEP_1,0);
+	 delay (1000);
+     HUMAN_WeaponOnArm(False);
+     HUMAN_MoveToFrame(JEEP_1, 1);
+     HUMAN_TurnAt(JEEP_1);
+     HUMAN_SetAnim("%%mechanik", 300, 300, true);
+     Delay(30000);
+     HUMAN_SetAnim("", 1000, 1000, 1);
+	 delay (1000);
+	 DisableSignals(1);
+     goto Follow2; 
+}
+
+Label Follow2:
+      HUMAN_Move("Ge34_1");
+	  HUMAN_WeaponOnArm(false);
+	  HUMAN_TurnAt(Suman1);
+	  delay (1000);
+	  HUMAN_SetAnim("!suppfireKN1a", 200, 200, true);
+	  delay(6000);
+	  HUMAN_SetAnim("", 1000, 1000, 1);
+	  HUMAN_WeaponOnArm(false);
+	  HUMAN_MoveToFrame(Suman1, 2);
+	  HUMAN_SETMODE_Crouch();
+	  HUMAN_WeaponOnArm(true);
+	  HUMAN_TurnAt(Suman1);
+goto end;
+
+Block
+{
+     SetAlarmType( 1023, false );
+}
+HUMAN_Suspend(true);  
+HUMAN_SETMODE_Stand();
+// ----------------------------------------------------------------------------------------------------
+Label End:
+
+
+
+

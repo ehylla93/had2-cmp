@@ -1,0 +1,90 @@
+
+integer  AIEvent;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red5_turn");
+integer poslano = 0;
+//*//Frame R6;		FRM_FindFrame(R6, "Red_6");
+Frame R7;		FRM_FindFrame(R7, "Red_7");
+Frame R8;		FRM_FindFrame(R8, "Red_8");
+Frame R10;		FRM_FindFrame(R10, "Red_10");
+//*//Frame R11;		FRM_FindFrame(R11, "Red_11");
+
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(2)
+{			
+  HUMAN_SETSIGHTRANGE(25);		
+  HUMAN_SETHEARRANGE(30);
+  HUMAN_Suspend(False);	
+  HUMAN_SetAnim("%%nudazed6", 800, 800, true);	 	 
+}			
+
+label DeAlarm:
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Red5_1");				
+  HUMAN_TurnAt(turn);
+  Delay(500);
+  HUMAN_WeaponOnArm(False);
+  Delay(500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  HUMAN_SetAnim("", 100, 100, False);	
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 5: ", AIEvent);
+      HUMAN_SETSIGHTRANGE(50);		
+      HUMAN_SETHEARRANGE(60);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  If ( poslano == 0 )  
+   {
+     Block
+        {
+//*//	SendSignal(R6, 20);
+           SendSignal(R7, 20);
+           SendSignal(R8, 20);
+           SendSignal(R10, 20);
+//*//        SendSignal(R11, 20);
+           poslano = 1;
+        }
+   }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  If ( poslano == 0 )  
+  {
+     Block
+        {
+//*//	    SendSignal(R6, 20);
+           SendSignal(R7, 20);
+           SendSignal(R8, 20);
+           SendSignal(R10, 20);
+//*//           SendSignal(R11, 20);
+           poslano = 1;
+        }
+  }
+  EndScript();
+}
+
+Label TheEND:

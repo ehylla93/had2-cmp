@@ -1,0 +1,59 @@
+// SSgt. Gregory Dean - Jeep Crew
+// ---------------------------------------------
+
+Block
+{
+Frame Ally1;	FRM_FindFrame(Ally1, "Sgt. Siegfried Hirsch");
+Frame Vehicle;	FRM_FindFrame(Vehicle, "Jeep");
+Frame Obj3	;	FRM_FindFrame(Obj3, "obj3");
+Frame me;		FRM_GetMyFrame(me);
+Frame Player;
+
+FRM_SwitchFaceTexture(me,"e_f018");
+
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ---------------------------------------------
+
+Whenever Coming_In (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Jeep", 1, 1);
+}
+
+Whenever Talk (_SignalReceived(2))
+{
+HUMAN_BoardVehicle("Jeep", 0, 1);
+FRM_GetNearestPlayer(me, Player);
+HUMAN_SETMODE_Walk();
+HUMAN_TurnAt(Player);
+HUMAN_TurnAtNearestPlayer();
+Delay(1000);
+FRM_MorphSpeechDelayed(Player, 20994062, 10, 50);
+Delay(500);
+HUMAN_SetAnim("%%kecy2", 300, 300, 0);
+FRM_MorphSpeechDelayed(me, 20994066, 10, 50);
+HUMAN_TurnAtNearestPlayer();
+Delay(500);
+FRM_MorphSpeechDelayed(me, 20994067, 10, 50);
+HUMAN_TurnAtNearestPlayer();
+Delay(600);
+FRM_MorphSpeechDelayed(me, 20994069, 10, 50);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAnim("", 0, 0, 1);
+Delay(400);
+FRM_MorphSpeech(Player, 20994070, 10, 50);
+Delay(500);
+HUMAN_TurnAt(Vehicle);
+Delay(250);
+HUMAN_BoardVehicle("Jeep", 1, 1);
+FRM_MorphSpeechDelayed(me, 90000027, 10, 50);
+Delay(500);
+FRM_MorphSpeech(Ally1, 90000484, 10, 50);
+SendSignal(Obj3, 2);
+SendSignal(Ally1, 2);
+}
+
+Label END:

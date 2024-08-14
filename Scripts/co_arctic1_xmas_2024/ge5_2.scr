@@ -1,0 +1,31 @@
+SetAlarmType(1023, true);				// enable all alarms
+Frame self;						FRM_GetMyFrame(self);	
+HUMAN_Suspend(1);
+DisableAlarms(True);
+HUMAN_SetOptimized(true);
+HUMAN_SETHEARRANGE(2000);
+HUMAN_SETSIGHTRANGE(1000);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+
+goto END;
+
+OnDeath()
+{
+	PlaySound(6, 10);
+	FRM_CreateParticle(53, self);
+	EndScript();
+}
+
+OnSignal(1)
+{
+	HUMAN_Suspend(0);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_AttackMove("dv");
+	HUMAN_AttackMove("dv1");
+	HUMAN_AttackMove("tree");
+	EndScript();
+	goto END;
+}
+
+Label END:

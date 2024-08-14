@@ -1,0 +1,55 @@
+Block
+ {
+    Frame hakl;			FRM_FindFrame(hakl, "hakl");
+    Frame tank;			FRM_FindFrame(tank, "La_tigerEv");
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+Onsignal(1)			// aktivace z OBJ4
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_sherman", true, 2);
+}
+OnSignal(2)
+{
+ label loopT:
+  If ( _ACTOR_GetState(tank) == 1 ) 
+    {
+       HUMAN_TurnAt(tank);
+       Delay(1500);
+       HUMAN_Attack(Tank, 4000); 
+       Goto loopT;
+    } 
+
+ label loop:
+  If ( _ACTOR_GetState(hakl) == 1 ) 
+    {
+       HUMAN_TurnAt(hakl);
+       Delay(1500);
+       HUMAN_Attack(hakl, 4000); 
+       Goto loop;
+    }
+}
+				
+OnAlarm()  
+  {
+      Printf("!!!!!!!!!!!!!!!!!! OKAMZITE HLASIT ----- PRUSER tank s posadkou - MG");
+      Printf("!!!!!!!!!!!!!!!!!! OKAMZITE HLASIT ----- Pokud STRILI US tank tak je to OK");
+  }
+
+OnAlarmDone()  {}
+
+
+Label TheEnd:
+
+//////////////////////////////////// - VYHODIT, ladící
+// frame MyFRM; 	FRM_GetMyFrame(MyFRM);
+// Delay(10100);
+// SendSignal(MYfrm, 1);
+//////////////////////////////

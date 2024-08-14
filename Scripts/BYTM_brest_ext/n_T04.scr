@@ -1,0 +1,64 @@
+//n_T04
+//new soldier
+
+
+block
+{
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(90);
+
+integer aievent;
+frame me;	FRM_GetMyFrame(me);
+Frame pos1;	FRM_FindFrame(pos1, "Mesh191");
+Frame pos2;	FRM_FindFrame(pos2, "ammocoop3");
+Frame pos3;	FRM_FindFrame(pos3, "object06");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("T4 alarm:",aievent);
+}
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("n_tiger2", 1, 2);
+printf("T4 spawned");
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

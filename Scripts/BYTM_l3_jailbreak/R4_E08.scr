@@ -1,0 +1,94 @@
+// R4_E08 Kübelwagen - Driver
+// -----------------------------------------------------
+
+Block {
+Integer alarm_sight_range = 180;
+Frame kw;		FRM_FindFrame(kw, "1_kubel_1");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Integer onboard = 0;
+
+SetAlarmType(1023, 0);
+SetAlarmType(65, 1);	// 1 + 64
+}
+
+FRM_SwitchFaceTexture(MyFRM, "e_f057");
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// -----------------------------------------------------
+
+OnAlarm()
+{
+if(onboard==1) { HUMAN_BoardVehicle("1_kubel_1", 0, 0); onboard = 0; SendSignal(kw, 2); }
+HUMAN_SETSIGHTRANGE(alarm_sight_range);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+goto Action;
+}
+
+OnDeath()
+{
+printf("R4_E08 dead");
+SendSignal(kw, 2);
+EndScript();
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+FRM_TeleportNearCheckpoint(kw, "vE01", "vE02");
+HUMAN_BoardVehicle("1_kubel_1", 1, 0);
+onboard = 1;
+Human_Suspend(0);
+	if(_RandomInt(2) == 0)
+	{
+	HUMAN_Drive("vE03", 80);
+	HUMAN_Drive("vE04", 80);
+	}
+	else     
+	{
+	HUMAN_Drive("vE05", 80);
+	}
+HUMAN_Drive("", 0);
+SendSignal(kw, 2);
+goto end;
+}
+
+OnSignal(2)
+{
+EnableSignal(2, 0);
+Car_SetFuel(kw, 2);
+HUMAN_BoardVehicle("1_kubel_1", 0, 0);
+Block
+{
+onboard = 0;
+SetAlarmType(255, 1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+}
+goto Action;
+}
+
+// -----------------------------------------------------
+
+Label Action:
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("kw_a02");
+
+// -----------------------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// -----------------------------------------------------
+
+Label end:

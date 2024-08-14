@@ -1,0 +1,16 @@
+//civil fail
+FRAME sound3;		FRM_FindFrame(sound3, "zjb001"); //fail sound
+FRAME civil;		FRM_FindFrame(civil, "civil3");
+FRAME civil_d;		FRM_FindFrame(civil_d, "civil_detect");
+FRAME nullfinal;	FRM_FindFrame(nullfinal, "objectives");
+
+Whenever killed ((_ACTOR_GetState(civil) == 0))
+{
+	SendSignal(civil_d, 1);
+	FRM_SetOn(sound3, 1);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(58999914);
+	Delay(17500);
+	SendSignal(nullfinal, 4);
+EndScript();
+}

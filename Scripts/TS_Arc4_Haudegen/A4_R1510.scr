@@ -1,0 +1,45 @@
+// A4_R1510 enemy spawns after gather obj activated
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(128,0);
+
+HUMAN_SETSIGHTRANGE(180);
+HUMAN_SETHEARRANGE(180);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("A4_R1510 dead");
+EndScript();
+}
+
+OnAlarm(){
+
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+printf("A4_R1510 spawn");
+HUMAN_WeaponOnArm(0);
+HUMAN_Suspend(0);
+}
+
+
+// ----------------------------------------
+
+Label END:

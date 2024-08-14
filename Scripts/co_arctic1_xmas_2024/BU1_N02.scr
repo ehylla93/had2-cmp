@@ -1,0 +1,143 @@
+// BU1_N02 - shaman of illness
+Block
+{
+Frame n02p;	FRM_FindFrame(n02p, "BU1_N02_particle");
+Frame ohen;	FRM_FindFrame(ohen, "BU1_N02_ohen");
+Frame chcije;	FRM_FindFrame(chcije, "BU1_N02_chcanie");
+Frame n01;	FRM_FindFrame(n01, "BU1_N01");
+Frame n03;	FRM_FindFrame(n03, "BU1_N03");
+Frame ee;	FRM_FindFrame(ee, "BU1_EE");
+Frame teleport_sky;	FRM_FindFrame(teleport_sky, "teleport_sky");
+Frame me;	FRM_GetMyFrame(me);
+Frame vybuch_teleport_snd;	FRM_FindFrame(vybuch_teleport_snd, "vybuch_teleport_snd");
+integer msg = 12992424;
+integer rnd2 = 0;
+}
+FRM_SwitchFaceTexture(me, "e_f077");
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+
+printf("BU1_N02 initialized.");
+goto loop;
+
+
+
+Whenever Near (_PlayerInRange(2))
+{
+	rnd2 = _randomint(25);
+	rnd2 = msg + rnd2;
+	printfnumber("BU1_N02 speech: ", rnd2);
+	FRM_MorphSpeechDelayed(me, rnd2, 3, 10);
+	SetWhenever(Near, true);
+}
+
+OnSignal(1)	// received from BU1_EE
+{
+		SetWhenever(Near, 0);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_Move("Walker4_start");
+	HUMAN_Move("BU1_Nx2");
+	HUMAN_TurnAt(ee);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(2)	// received from BU1_N01
+{
+	MakeExplosion(me, 0, 30000);
+	FRM_TeleportNearFrame(me,n02p, 1);
+	FRM_SetOn(vybuch_teleport_snd, True);
+	FRM_CreateParticle(48, me);
+	HUMAN_TurnAt(ee);
+	HUMAN_SetAnim("%%chcije", 200, 200, true);
+	SendSignal(chcije, 1);
+	Delay(1500);
+	SendSignal(n02p, 1);
+	Delay(10500);
+	HUMAN_SetAnim("", 200, 200, false);
+	SendSignal(n03, 2);
+	GoTo end;
+}
+
+OnSignal(3)	// received from BU1_N01
+{
+	HUMAN_SetAnim("%%duma", 200, 200, true);
+	SendSignal(n03, 3);
+	Delay(5000);
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(1000);
+	HUMAN_SetAnim("%%couvani", 200, 200, true);
+	GoTo end;
+}
+
+OnSignal(4)	// received from BU1_EE
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(500);
+	GoTo end;
+}
+
+OnSignal(5)	// received from BU1_N01
+{
+	Delay(3000);
+	HUMAN_SetOptimized(2);
+	CheckpointJoin("BU1_Nx2", "BU1_Nu01");
+	HUMAN_SetAnim("%%lenin", 500, 500, true);
+	FRM_CreateParticle(15, ohen);
+		SendSignal(n03, 5);
+	HUMAN_Move("BU1_Nu01");
+			FRM_TeleportNearFrame(me, teleport_sky, 1);
+	MakeExplosion(me, 0, 30000);
+	FRM_CreateParticle(48, me);
+	FRM_SetOn(vybuch_teleport_snd, True);
+	HUMAN_Move("BU1_Nu02");
+				CheckpointSeparate("BU1_Nx2", "BU1_Nu01");
+	HUMAN_Move("BU1_Nu03");
+	HUMAN_Move("BU1_Nu04");
+	HUMAN_Move("BU1_Nu05");
+	Delay(200);
+
+	HUMAN_Move("BU1_Nu05");
+		HUMAN_Suspend(true);
+		EndScript();
+	HUMAN_Move("BU1_Nu06");
+
+
+}
+label loop:
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	rnd2 = _randomint(7);
+	if (rnd2 == 0) {HUMAN_AttackMove("dance_0");}
+	if (rnd2 == 1) {HUMAN_AttackMove("dance_1");}
+	if (rnd2 == 2) {HUMAN_AttackMove("dance_2");}
+	if (rnd2 == 3) {HUMAN_AttackMove("dance_3");}
+	if (rnd2 == 4) {HUMAN_AttackMove("dance_4");}
+	if (rnd2 == 5) {HUMAN_AttackMove("dance_5");}
+	if (rnd2 == 6) {HUMAN_AttackMove("dance_6");}
+	rnd2 = _randomint(3);
+	if (rnd2 == 0)
+		{HUMAN_SetAnim("#_hopfun", 1000, 1000, 1);}
+	if (rnd2 == 1)
+		{HUMAN_SetAnim("%%couvani", 1000, 1000, 1);}
+	if (rnd2 == 2)
+		{HUMAN_SetAnim("%%couvanik", 1000, 1000, 1);}
+	delay(4000);
+
+	goto loop;
+OnDeath()
+{
+	Block
+	{
+	FRM_CreateParticle(36, ohen);
+	MakeExplosion(ohen, 1000000, 30);
+	SendSignal(ee, 31);
+	HUMAN_Kill(n01);
+	HUMAN_Kill(n03);
+	SendSignal(n02p, 2);
+	}
+	EndScript();
+}
+
+Label end:
+
+SetWheneverTime(Near, 5000);

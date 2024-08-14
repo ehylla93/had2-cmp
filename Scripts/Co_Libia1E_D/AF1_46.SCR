@@ -1,0 +1,65 @@
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame look01;		FRM_FindFrame(look01, "AF1_46_look01");
+integer  AIEvent = 0; 
+}
+
+OnAlarm()
+{
+  HUMAN_SetAnim("", 200, 200, false);
+  Block
+  {
+    AIEvent =_GetAlarmType(); 
+    PrintfNumber("Vojak  --46--  jde do AI, alarm: ", AIEvent); 
+    HUMAN_SetOptimized(false);
+  } 
+  EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(true);
+	GoTo end;
+}
+
+OnDeath()
+{
+  Printf("mrtvola ... ---46--- ");
+  EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received from AF1_45_A1, A2
+{
+	HUMAN_Suspend(false);
+	GoTo activity;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(true);
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label activity:
+	HUMAN_TurnAt(look01);
+	Delay(2000);
+	HUMAN_SetAnim("%%nudazed3", 200, 200, true);
+	Delay(30000);
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(30000);
+	HUMAN_SetAnim("%%nudazed4", 200, 200, true);
+	Delay(20000);
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(20000);
+	HUMAN_Move("AF1_46_01");
+	HUMAN_Move("AF1_46_02");
+	GoTo activity;
+
+Label end:

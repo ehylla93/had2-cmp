@@ -1,0 +1,75 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	IT 28 - Chodící hlídka				*
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "dummy_it_28_see"); 
+  integer RND;
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+Whenever XXX ( _PlayerInRange(130) )
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+     SetAlarmType(1023, True);		
+  }
+Label loop:
+  RND = _RandomInt(3) + 1;
+  If (RND == 1)  { HUMAN_Move("it_28_1");}
+  If (RND == 2)  { HUMAN_Move("it_28_2");}
+  If (RND == 3)  { HUMAN_Move("it_28_3");}
+  HUMAN_Move("it_28_end"); 
+goto loop;
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("it_28_end");	
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" --- 28 --- ma alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

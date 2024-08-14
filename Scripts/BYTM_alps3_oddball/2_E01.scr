@@ -1,0 +1,74 @@
+// 2_E01
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 1);
+
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(40);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame talk;		FRM_FindFrame(talk, "talk_2_E01_2_E02");
+
+Integer rdm = 0;
+Integer AImode;
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+
+AImode=_RandomInt(2);
+if(AImode==0) { HUMAN_SETAIMODE_Defensive(); }
+else {
+	AImode=_RandomInt(3);
+	if(AImode==0) { HUMAN_SETAIMODE_Aggressive(); }
+	if(AImode==1) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+}
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+SendSignal(talk, 2);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(talk, 2);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+SendSignal(talk, 1);
+}
+
+Label TALK:
+rdm=_RandomInt(7);
+if(rdm==0) { HUMAN_SetAnim("%%mluvi1", 300, 300, 0); }
+if(rdm==1) { HUMAN_SetAnim("%%mluvi2", 300, 300, 0); }
+if(rdm==2) { HUMAN_SetAnim("%%kecy1", 300, 300, 0); }
+if(rdm==3) { HUMAN_SetAnim("%%kecy2", 300, 300, 0); }
+if(rdm==4) { HUMAN_SetAnim("%%kecy3", 300, 300, 0); }
+if(rdm==5) { HUMAN_SetAnim("%%rozhovor", 300, 300, 0); }
+if(rdm==6) { HUMAN_SetAnim("%%rozhovor2", 300, 300, 0); }
+Delay(7000);
+goto TALK;
+
+// ------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

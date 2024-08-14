@@ -1,0 +1,119 @@
+// Ge_2
+
+Block
+{
+Frame straznik;
+	FRM_FindFrame(straznik, "ge_3");
+Frame doleva1;
+	FRM_FindFrame(doleva1, "l_ndrlamp2.lamp");
+Frame doprava1;
+	FRM_FindFrame(doprava1, "l_ndrlamp8.lamp");
+Frame doleva2;
+	FRM_FindFrame(doleva2, "e_raoh5");
+Frame doprava2;
+	FRM_FindFrame(doprava2, "b_strm6");
+Frame chcanie;
+	FRM_FindFrame(chcanie, "b_strm7");
+Frame me;
+	FRM_GetMyFrame(me);
+Frame moc;
+	FRM_FindFrame(moc, "Ge_2_chcanie");
+Integer look_at;
+	look_at=0;
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f056");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Whenever player(_PlayerInRange(110))
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETSIGHTRANGE(20);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_2_01");
+	HUMAN_Move("Ge_2_02");
+	HUMAN_Move("Ge_2_03");
+	HUMAN_Move("Ge_2_04");
+	HUMAN_SETHEARRANGE(10);
+	HUMAN_Move("Ge_2_05");
+	HUMAN_TurnAt(chcanie);
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("%%chcije",500,500,1);
+	Delay(1000);
+	SendSignal(moc, 1);
+	Delay(30000);
+	HUMAN_SetOptimized(1);
+	HUMAN_SetAnim("%%poklopec", 100, 100, false);
+	HUMAN_SETHEARRANGE(60);
+	HUMAN_Move("Ge_2_06");
+	HUMAN_Move("Ge_2_07");
+	HUMAN_Move("Ge_2_08");
+	HUMAN_Move("sch1");
+	HUMAN_Move("sch2");
+	HUMAN_Move("vymena1");
+	SendSignal(straznik, 1);
+	HUMAN_TurnAt(straznik);
+	HUMAN_SetOptimized(2);
+	HUMAN_ACTIVITY_Salute(1);
+	Delay(1000);
+	SendSignal(straznik, 2);
+	Delay(10000);
+	GoTo hlidka_zs1;
+}
+
+Label hlidka_zs2:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("zs2");
+	HUMAN_SetOptimized(2);
+	HUMAN_SETSIGHTRANGE(20);
+	Delay(5000);
+	HUMAN_TurnAt(doleva1);
+	look_at =_RandomInt(1000) + 5000;
+	Delay(look_at);
+	HUMAN_TurnAt(doprava1);
+	Delay(look_at);
+	GoTo hlidka_zs1;
+
+Label hlidka_zs1:
+	HUMAN_SETSIGHTRANGE(10);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("zs1");
+	HUMAN_SetOptimized(2);
+	Delay(3000);
+	HUMAN_TurnAt(doleva2);
+	Delay(look_at);
+	HUMAN_TurnAt(doprava2);
+	Delay(look_at);
+	GoTo hlidka_zs2;
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_ACTIVITY_Smoke(false);
+	HUMAN_SETSIGHTRANGE(45);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+}
+
+Label end:

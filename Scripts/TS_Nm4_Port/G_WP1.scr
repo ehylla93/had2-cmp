@@ -1,0 +1,53 @@
+// G_WP1 in Hakl
+
+Block
+{
+SetAlarmType(1023, 0);
+HUMAN_SetOptimized(2);
+Frame Hakl;	FRM_FindFrame(Hakl, "Hakl");
+Car_SetFuel(Hakl, 0);
+Frame me;		FRM_GetMyFrame(me);
+
+//FRM_SwitchFaceTexture(me,"e_f045");
+}
+
+HUMAN_BoardVehicle("Hakl", 1, 1);
+HUMAN_SETSIGHTRANGE(110);
+HUMAN_SETHEARRANGE(60);
+
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("G_WP1 dead");
+EndScript();
+}
+
+OnAlarm(){
+//HUMAN_SetAnim("", 1000, 1000, 1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+}
+
+Whenever PlayerNear (_MP_IsTeamMemberInRange(1, 9))
+{
+FRM_MorphSpeechDelayed(me, 90001088, 5, 30); //"Die you swine!"
+HUMAN_BoardVehicle("Hakl",  0, 1);
+HUMAN_SETMODE_Crouch();
+SetAlarmType(1023, True);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+
+// ----------------------------------------
+
+Label END:

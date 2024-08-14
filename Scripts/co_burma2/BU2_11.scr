@@ -1,0 +1,71 @@
+// BU2_11 - guard in the bunkers
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame shot01;	FRM_FindFrame(shot01, "Type97_02_shot01");
+Frame shot02;	FRM_FindFrame(shot02, "Type97_02_shot02");
+Frame shot03;	FRM_FindFrame(shot03, "Type97_02_shot03");
+Frame shot04;	FRM_FindFrame(shot04, "Type97_02_shot04");
+Frame shot05;	FRM_FindFrame(shot05, "Type97_02_shot05");
+Frame shot06;	FRM_FindFrame(shot06, "Type97_02_shot06");
+Frame me;		FRM_GetMyFrame(me);
+Integer aievent;	aievent=0;
+
+SetAlarmType(280, false);	// 8, 16, 256
+}
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(280, false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(60))
+{
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("Type97_02", 1, 0);
+	GoTo shooting;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f046");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label shooting:
+	HUMAN_Attack(shot02, 2000);
+	Delay(1000);
+	HUMAN_Attack(shot03, 3000);
+	Delay(1000);
+	HUMAN_Attack(shot05, 2000);
+	Delay(2000);
+	HUMAN_Attack(shot06, 2000);
+	Delay(1000);
+	HUMAN_Attack(shot04, 2000);
+	Delay(1000);
+	HUMAN_Attack(shot01, 2000);
+	Delay(1000);
+	HUMAN_Attack(shot03, 3000);
+	Delay(3000);
+	GoTo shooting;
+
+Label end:

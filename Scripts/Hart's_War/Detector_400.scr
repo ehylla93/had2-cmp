@@ -1,0 +1,14 @@
+Frame me;		FRM_GetMyFrame(me);
+Frame brana;		FRM_FindFrame(brana, "whbuild182");
+integer Door;		Door = 1;
+SetWhenever(snipercum1, 1);
+
+Whenever snipercum1 (_PlayerInRange(15))
+	{
+	SetActorState(brana,1);
+    DOOR_Lock(brana, 1);
+	Door = 1;
+	Delay(35000);
+	SetWhenever(snipercum1, 1);
+	}
+

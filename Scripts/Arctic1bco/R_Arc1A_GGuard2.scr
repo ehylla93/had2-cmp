@@ -1,0 +1,54 @@
+Block
+  {
+     frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+     integer AIEvent;	AIEvent = 99;
+     SetAlarmType(1023, True); 
+     HUMAN_SetOptimized(2);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Guard();
+  }
+
+HUMAN_SETMODE_Stand();
+
+  HUMAN_Suspend(True);				
+  Goto theEnd;
+
+Whenever A (_PlayerInRange(107);)	
+  {						
+    HUMAN_Suspend(False);				
+  }							
+
+label loop:
+  HUMAN_Move("GGuard2_1");
+  Delay(500);
+  HUMAN_Move("GGuard2_2");
+  Delay(500);
+goto Loop;
+
+
+OnAlarm()
+{
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Gate Guard 2:", AIEvent);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SETMODE_Silence();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("GGuard2_END");
+  HUMAN_SetOptimized(2);
+  Goto TheEnd;
+}
+
+OnDeath()
+{
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+label TheEnd:

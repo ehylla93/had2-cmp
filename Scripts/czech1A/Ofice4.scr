@@ -1,0 +1,101 @@
+// Officer
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame v1;	FRM_FindFrame(v1,"C1_G24");
+Frame v2;	FRM_FindFrame(v2,"C1_G25");
+Frame v3;	FRM_FindFrame(v3,"C1_G26");
+
+Frame kamos;	FRM_FindFrame(kamos,"C1_G21");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(kamos, 1);
+SendSignal(v1, 1);
+SendSignal(v2, 1);
+SendSignal(v3, 1);
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(kamos, 1);
+SendSignal(v1, 1);
+SendSignal(v2, 1);
+SendSignal(v3, 1);
+HUMAN_SetAnim("", 500, 1000, 1);
+HUMAN_Stop();
+HUMAN_SetSniper(True, 5);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever player (_PlayerInRange(5))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("%%kecy2", 500, 1000, 1);
+HUMAN_TurnAt(kamos);
+FRM_MorphSpeechDelayed(me, 14992846, 5, 30); // kecy
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992847, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 14992848, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992849, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992855, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992856, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 14992857, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992858, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 14992859, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992865, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 14992866, 5, 30); //
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992867, 5, 30); //
+Delay(200);
+FRM_MorphSpeechDelayed(me, 14992868, 5, 30); //
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 14992869, 5, 30); //
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

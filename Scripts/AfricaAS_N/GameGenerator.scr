@@ -1,0 +1,56 @@
+// MISSION Generator / Random objects + Start of mission / Spawnzones 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+
+// *** DETEKTORY ***
+
+Frame D1;	FRM_FindFrame(D1,"SpawnZone");
+Frame D2;	FRM_FindFrame(D2,"SnipersSelector");
+Frame D3;	FRM_FindFrame(D3,"S_Hlidka");
+Frame D4;	FRM_FindFrame(D4,"Waffen_SS");
+
+// **** Hlavni Spinace ****
+// 1 = ON / 0 = OFF
+
+Integer S1; // Spawnzones
+	S1=1;
+
+Integer S2; // Snipers
+	S2=1;
+
+Integer S3; // Straze v Oaze
+	S3=1;
+
+Integer S4; // SS Units
+	S4=1;
+}
+
+Whenever Player (_PlayerInRange(1000))
+{
+Delay(12000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(07011403);
+Delay(4000);
+SUBTITLES_SetText(05011001);
+Delay(4000);
+SUBTITLES_SetText(09991803);
+Delay(4000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(500);
+
+If(S4==1){SendSignal(D4, 1);}
+If(S3==1){SendSignal(D3, 1);}
+If(S2==1){SendSignal(D2, 1);}
+If(S1==1){SendSignal(D1, 1);}
+goto END;
+
+
+Label END:
+

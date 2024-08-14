@@ -1,0 +1,48 @@
+Block
+{
+   Frame AllKilled; 		FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+   integer AIEvent;
+   HUMAN_SETAIMODE_Zombie();
+   HUMAN_SetOptimized(2);
+   SetAlarmType(1023, True);	
+}
+
+   HUMAN_SETMODE_Stand();
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;
+Whenever A (_PlayerInRange(101);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+
+label Start:
+  HUMAN_BoardVehicle("w_mg42Crouch_2", True, 0);
+  goto TheEND;  
+
+OnAlarm()
+{
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Kulometcik: ", AIEvent);
+  HUMAN_SetOptimized(1);	
+  EndScript();
+}
+
+OnAlarmDone()
+{
+label DeAlarm:
+  SetAlarmType(1023, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_BoardVehicle("", True, 0);
+  HUMAN_SetOptimized(2);
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+label TheEND:

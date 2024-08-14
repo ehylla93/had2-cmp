@@ -1,0 +1,29 @@
+// AF1_schwade_activator
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME af13;				FRM_FindFrame(af13, "AF1_13");
+FRAME af14;				FRM_FindFrame(af14, "AF1_14");
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever pir (_PlayerInRange(12))
+{
+  printf("ice_ sejvneme value pro talk mechaniku? ");
+  if(_ACTOR_GetState(af13) AND _ACTOR_GetState(af14))
+  {
+    printf("ice_ JO");
+    SaveGameValue(190, 1);
+  }
+  else
+  {
+    printf("ice_ NE");
+  }
+}
+
+Whenever deadmech ((!_ACTOR_GetState(af13)) OR (!_ACTOR_GetState(af14)))
+{
+  printf("ice_ JEDEN Z MECHANIKU JE TUHEJ TAK END ROZHOVOR");
+  SaveGameValue(190, 0);
+}
+
+// -------------------------------------------------------------------------------------------------------------

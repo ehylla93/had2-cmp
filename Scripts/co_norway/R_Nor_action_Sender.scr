@@ -1,0 +1,33 @@
+// Send signals to tirpic guards.  1...HAT    2...BOTTLE   3...COLD   4... WATCH SEA
+
+block
+{
+  integer what_signal=0;
+  integer what_soldier=0;
+  integer waiter=0;
+  frame T3;		FRM_FindFrame(T3, "tirpic_guard_3");
+  frame T5;		FRM_FindFrame(T5, "tirpic_guard_5");
+  frame T8;		FRM_FindFrame(T8, "tirpic_guard_8");
+  frame T9;		FRM_FindFrame(T9, "tirpic_guard_9");
+  frame T11;	FRM_FindFrame(T11, "tirpic_guard_11");
+  frame T14;	FRM_FindFrame(T14, "tirpic_guard_14");
+  frame T15;	FRM_FindFrame(T15, "tirpic_guard_15");
+  frame T18;	FRM_FindFrame(T18, "tirpic_guard_18");
+}
+Delay(10000);
+
+label Newer_ending_sending:
+  what_signal = _RandomInt(12)+1;
+  If (what_signal > 4) {what_signal = 3}  	// signal no. 3 has high priority
+  what_soldier = _RandomInt(8);
+  If (what_soldier==0) { SendSignal(T3, what_signal); }
+  If (what_soldier==2) { SendSignal(T5, what_signal); }
+  If (what_soldier==3) { SendSignal(T8, what_signal); }
+  If (what_soldier==1) { SendSignal(T9, what_signal); }
+  If (what_soldier==4) { SendSignal(T11, what_signal); }
+  If (what_soldier==5) { SendSignal(T14, what_signal); }
+  If (what_soldier==6) { SendSignal(T15, what_signal); }
+  If (what_soldier==7) { SendSignal(T18, what_signal); }
+waiter = _RandomInt(10000)+7000;
+Delay(waiter);
+goto Newer_ending_sending;

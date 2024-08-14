@@ -1,0 +1,81 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	IT 14 z prvni vlny - je na sve pozici u rokliny 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "dummy_it14_see");
+  Frame target;		FRM_FindFrame(target, "NPC_4");
+  frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+// posila to dummy_budicek_vlna1
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+     SetAlarmType(1023, True);		
+   }
+
+HUMAN_IllFire(target, 2500);
+HUMAN_TurnAt(turn);
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("it14_end");
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" IT 14: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+printf("IT_14: death");
+  EndScript();
+}
+
+Label TheEND:

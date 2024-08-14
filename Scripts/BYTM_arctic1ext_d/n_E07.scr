@@ -1,0 +1,173 @@
+//n_E07
+//formation lead - Shotgun
+
+block
+{
+SetAlarmType(1023, 0);
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+
+SetWhenever(PIR, 0);
+
+integer aievent;
+integer mounted=0;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame E08;		FRM_FindFrame(E08, "n_E08");
+frame E09;		FRM_FindFrame(E09, "n_E09");
+frame E10;		FRM_FindFrame(E10, "n_E10");
+
+frame truck;	FRM_FindFrame(truck, "n_truck_4");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent = _GetAlarmType();
+PrintfNumber("E07 alarm:",aievent);
+}
+if(mounted==1)
+{
+SetWhenever(PIR, 0);
+HUMAN_BoardVehicle("n_truck_4",  0, 0);
+mounted=0;
+SendSignal(truck, 2);
+printf("truck passengers alarmed");
+}
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+SendSignal(truck, 2);
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+OnSignal(1)
+{
+EnableSignal(1, false);
+goto drive;
+}
+
+OnSignal(2)
+{
+EnableSignal(2, false);
+goto formation;
+}
+
+OnSignal(3)
+{
+SetWhenever(PIR, 0);
+HUMAN_BoardVehicle("n_truck_4",  0, 0);
+mounted=0;
+goto end;
+}
+
+Label drive:
+  Human_Suspend(0);
+  HUMAN_BoardVehicle( "n_truck_4",  1, 0 );
+  mounted=1;
+  SetWhenever(PIR, 1);
+  SetAlarmType(97,1);		//AI set-up as driver
+  printf("Truck 4 driving");
+  HUMAN_Drive(  "truck4_2" ,  20 );		//airplane
+  HUMAN_Drive("", 0);
+  Delay(4000);
+  HUMAN_Drive(  "truck4_3" ,  20 );
+  HUMAN_Drive("", 0);
+  Delay(4000);
+  SendSignal(truck, 2);		//Get out!
+goto end;
+
+
+Label formation:
+FRM_TeleportNearCheckpoint(MyFRM, "form_1", "");
+SetAlarmType(1023,1);	//AI set-up by foot
+HUMAN_SETMODE_Guard();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+Block {
+SendSignal(E08, 1);
+SendSignal(E09, 1);
+SendSignal(E10, 1);
+}
+
+HUMAN_Move("form_2");
+printf("form_2");
+HUMAN_Move("form_3");
+printf("form_3");
+gosub form1;
+HUMAN_Move("form_3a");
+printf("form_3a");
+gosub form2;
+
+HUMAN_Move("Rebel_6");
+HUMAN_Move("form_4");
+HUMAN_Move("form_5");
+HUMAN_Move("form_6");
+goto end;
+
+Label form1:
+Delay(2500);
+Block {
+SendSignal(E10, 4);
+SendSignal(E08, 4);
+SendSignal(E09, 4);
+}
+HUMAN_SetAnim("!signSTst", 500, 500, 0);
+Delay(3000);
+Block {
+SendSignal(E08, 1);
+SendSignal(E09, 1);
+}
+Return;
+
+Label form2:
+Delay(2500);
+Block {
+SendSignal(E08, 4);
+SendSignal(E09, 4);
+}
+HUMAN_SetAnim("!signSTst", 500, 500, 0);
+Delay(3000);
+SendSignal(E08, 1);
+Return;
+
+Whenever PIR (_PlayerInRange(10))
+{
+SetWhenever(PIR, 0);
+HUMAN_BoardVehicle("n_truck_4",  0, 0);
+mounted=0;
+SetAlarmType(1023,1);	//AI set-up by foot
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

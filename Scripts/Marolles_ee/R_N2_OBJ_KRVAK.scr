@@ -1,0 +1,18 @@
+
+  SetObjectiveStatus(8, 0);
+  
+  SetWhenever(XXX, False);
+  Delay(1000);				// !! KDO na TO HRABNE JE KOKOT!!
+  frame piiiica;		FRM_FindFrame(piiiica, "Sniper_2");
+  SendSignal(piiiica, 2);
+  Delay(1000);				// !! KDO na TO HRABNE JE KOKOT!!
+  SetWhenever(XXX, True);
+
+
+
+Whenever XXX ( _GetCountOfCarnageEnemies() == 0)
+{
+  SetObjectiveStatus(8, 1);
+}
+
+SetWheneverTime(XXX, 1500);

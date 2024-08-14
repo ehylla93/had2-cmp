@@ -1,0 +1,99 @@
+// R3_T01 - Panther driver
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 0);
+
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(40);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame tank4;	FRM_FindFrame(tank4, "tank4");
+Frame T02;		FRM_FindFrame(T02, "R3_T02");
+Frame T03;		FRM_FindFrame(T03, "R3_T03");
+Frame Sherman;	FRM_FindFrame(Sherman, "tank2");
+
+SetWhenever(PIR, 0);
+SaveGameValue(6, 0);
+}
+
+HUMAN_Suspend(1);
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+FRM_SetOn(tank4, true);
+FRM_TeleportNearCheckpoint(tank4, "tank4_01", "tank4_02");
+HUMAN_Suspend(0);
+Block {
+SendSignal(T02, 1);
+SendSignal(T03, 1);
+}
+HUMAN_BoardVehicle("tank4", 1, 0);
+}
+
+// ------------------------------------
+
+HUMAN_Drive("road_01", 15);
+HUMAN_Drive("road_02", 15);
+HUMAN_Drive("road_03", 15);
+HUMAN_Drive("road_04", 15);
+if(_LoadGameValue(1)==1)
+{
+HUMAN_Drive("road_05", 15);
+HUMAN_Drive("road_06", 15);
+
+HUMAN_Drive("road_07", 15);
+HUMAN_Drive("road_08", 15);
+HUMAN_Drive("road_09", 15);
+HUMAN_Drive("road_10", 15);
+HUMAN_Drive("road_11", 15);
+SendSignal(T03, 2);
+SaveGameValue(6, 1);
+}
+HUMAN_Drive("", 0);
+SetWhenever(PIR, true);
+
+// ------------------------------------
+
+Whenever TIR (_FrameInRange(Sherman) < 25)
+{
+SetWhenever(TIR, 0);
+HUMAN_Drive("", 0);
+printf("Sherman closer then 25m");
+SetWhenever(PIR, 1);
+}
+
+Whenever PIR (_PlayerInRange(7))
+{
+FRM_MorphSpeech(MyFRM, 90002006, 0, 30);	//"You're a dead man!"
+HUMAN_BoardVehicle("tank4", 0, 0);
+HUMAN_SetMode_Crouch();
+HUMAN_SETAIMODE_Aggressive();
+SetAlarmType(1023, 1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

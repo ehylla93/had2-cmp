@@ -1,0 +1,98 @@
+// R_Cz2_Ger27 bezi na pomoc ger 9
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+Integer aievent;	aievent=0;
+integer x;
+
+SetAlarmType(908, false);
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+block
+{
+	DisableSignals(1);
+	aievent=_GetAlarmType();
+	HUMAN_SETMODE_Run();
+}
+
+	If(((aievent==1) OR (aievent==32)) OR (aievent==64))	{ EndScript(); }
+
+	If(((aievent==2) OR (aievent==16)) OR (aievent==256))
+	{	
+	SetAlarmType(274,0);
+if (x==0)
+{
+	
+	HUMAN_SetAlarm(false);	
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+	delay (900);
+	HUMAN_Move("ger27_02");
+	x=1;
+}
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	delay (900);
+	SetAlarmType(274,1);
+	goto end;
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(false);
+	SetAlarmType(908, false);
+	SetAlarmType(115, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_PlayerInRange(25))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever kokot(_SignalReceived(1))	//received from ger9
+{
+SetAlarmType(18, false);
+HUMAN_SetAlarm(false);
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ger27_01");
+HUMAN_Move("ger27_02");
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(18, true);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

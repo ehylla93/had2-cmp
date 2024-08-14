@@ -1,0 +1,59 @@
+// Vybira Snipry kteri budou hlidat Oblast Chaty a Kanonu 2  2/7
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"KSnip1");
+Frame S2;	FRM_FindFrame(S2,"KSnip2");
+Frame S3;	FRM_FindFrame(S3,"KSnip3");
+Frame S4;	FRM_FindFrame(S4,"KSnip4");
+Frame S5;	FRM_FindFrame(S5,"KSnip5");
+Frame S6;	FRM_FindFrame(S6,"KSnip6");
+Frame S7;	FRM_FindFrame(S7,"KSnip7");
+
+Frame T1;	FRM_FindFrame(T1,"T2_G01");
+Frame T2;	FRM_FindFrame(T2,"T2_G02");
+Frame T3;	FRM_FindFrame(T3,"T2_G03");
+
+Integer SnipVyber;
+
+Integer Tank;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Player(_PlayerInRange(75))
+{
+SnipVyber =_RandomInt(21);
+If(SnipVyber == 0){ SendSignal(S1, 1);SendSignal(S2, 1);}
+If(SnipVyber == 1){ SendSignal(S1, 1);SendSignal(S3, 1);}
+If(SnipVyber == 2){ SendSignal(S1, 1);SendSignal(S4, 1);}
+If(SnipVyber == 3){ SendSignal(S1, 1);SendSignal(S5, 1);}
+If(SnipVyber == 4){ SendSignal(S1, 1);SendSignal(S6, 1);}
+If(SnipVyber == 5){ SendSignal(S1, 1);SendSignal(S7, 1);}
+If(SnipVyber == 6){ SendSignal(S2, 1);SendSignal(S3, 1);}
+If(SnipVyber == 7){ SendSignal(S2, 1);SendSignal(S4, 1);}
+If(SnipVyber == 8){ SendSignal(S2, 1);SendSignal(S5, 1);}
+If(SnipVyber == 9){ SendSignal(S2, 1);SendSignal(S6, 1);}
+If(SnipVyber == 10){ SendSignal(S2, 1);SendSignal(S7, 1);}
+If(SnipVyber == 11){ SendSignal(S3, 1);SendSignal(S4, 1);}
+If(SnipVyber == 12){ SendSignal(S3, 1);SendSignal(S5, 1);}
+If(SnipVyber == 13){ SendSignal(S3, 1);SendSignal(S6, 1);}
+If(SnipVyber == 14){ SendSignal(S3, 1);SendSignal(S7, 1);}
+If(SnipVyber == 15){ SendSignal(S4, 1);SendSignal(S5, 1);}
+If(SnipVyber == 16){ SendSignal(S4, 1);SendSignal(S6, 1);}
+If(SnipVyber == 17){ SendSignal(S4, 1);SendSignal(S7, 1);}
+If(SnipVyber == 18){ SendSignal(S5, 1);SendSignal(S6, 1);}
+If(SnipVyber == 19){ SendSignal(S5, 1);SendSignal(S7, 1);}
+If(SnipVyber == 20){ SendSignal(S6, 1);SendSignal(S7, 1);}
+
+Tank =_RandomInt(5);
+If(Tank == 0){ Delay(25000);SendSignal(T1, 1);SendSignal(T2, 1);SendSignal(T3, 1);}
+If(Tank == 1){ Delay(50000);SendSignal(T1, 1);SendSignal(T2, 1);SendSignal(T3, 1);}
+If(Tank == 2){ Delay(75000);SendSignal(T1, 1);SendSignal(T2, 1);SendSignal(T3, 1);}
+If(Tank == 3){ Delay(100000);SendSignal(T1, 1);SendSignal(T2, 1);SendSignal(T3, 1);}
+If(Tank == 4){ Delay(125000);SendSignal(T1, 1);SendSignal(T2, 1);SendSignal(T3, 1);}
+goto END;
+}
+
+Label END:

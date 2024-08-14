@@ -1,0 +1,232 @@
+// SF_A12 - kulometcik Shermama (Sherman1)
+// -------------------------------------------
+
+Block
+{
+Frame Cil1;	FRM_FindFrame(Cil1,"Ally_pal01");
+Frame Cil2;	FRM_FindFrame(Cil2,"Ally_pal02");
+Frame Cil3;	FRM_FindFrame(Cil3,"Ally_pal03");
+Frame Cil4;	FRM_FindFrame(Cil4,"MG6");
+Frame Cil5;	FRM_FindFrame(Cil5,"SF_G16");
+
+Frame C01;	FRM_FindFrame(C01,"BR_G01");
+Frame C02;	FRM_FindFrame(C02,"BR_G02");
+Frame C03;	FRM_FindFrame(C03,"BR_G03");
+Frame C04;	FRM_FindFrame(C04,"BR_G04");
+Frame C05;	FRM_FindFrame(C05,"BR_G05");
+Frame C06;	FRM_FindFrame(C06,"BR_G06");
+Frame C07;	FRM_FindFrame(C07,"BR_G07");
+Frame C08;	FRM_FindFrame(C08,"BR_G08");
+Frame C09;	FRM_FindFrame(C09,"BR_G09");
+Frame C10;	FRM_FindFrame(C10,"BR_G10");
+Frame C11;	FRM_FindFrame(C11,"BR_G11");
+Frame C12;	FRM_FindFrame(C12,"BR_G12");
+Frame C13;	FRM_FindFrame(C13,"BR_G13");
+Frame C14;	FRM_FindFrame(C14,"SF_G08");
+Frame C15;	FRM_FindFrame(C15,"SF_G09");
+Frame C16;	FRM_FindFrame(C16,"SF_G12");
+Frame C17;	FRM_FindFrame(C17,"MG2_02");
+Frame C18;	FRM_FindFrame(C18,"MG2_03");
+Frame C19;	FRM_FindFrame(C19,"SF_G10");
+Frame C20;	FRM_FindFrame(C20,"SF_G11");
+
+
+Integer VyberCil;	VyberCil=_RandomInt(20);
+}
+
+// -------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Sherman1", 1, 1);
+HUMAN_SetOptimized(2);
+goto END;
+}
+
+Whenever Jedem_dal (_SignalReceived(3))
+{
+HUMAN_Stop();
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 4000);
+HUMAN_Attack(Cil5, 10000);
+goto END;
+}
+
+OnSignal(2)
+{
+Goto Palba;
+}
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Palba:
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(C01)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C01, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(C02)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C02, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(C03)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C03, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(C04)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C04, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(C05)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C05, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==5)
+{
+If(_Actor_GetState(C06)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C06, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==6)
+{
+If(_Actor_GetState(C07)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C07, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==7)
+{
+If(_Actor_GetState(C08)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C08, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==8)
+{
+If(_Actor_GetState(C09)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C09, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==9)
+{
+If(_Actor_GetState(C10)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C10, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==10)
+{
+If(_Actor_GetState(C11)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C11, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==11)
+{
+If(_Actor_GetState(C12)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C12, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==12)
+{
+If(_Actor_GetState(C13)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C13, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==13)
+{
+If(_Actor_GetState(C14)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C14, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==14)
+{
+If(_Actor_GetState(C15)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C15, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==15)
+{
+If(_Actor_GetState(C16)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C16, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==16)
+{
+If(_Actor_GetState(C17)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C17, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==17)
+{
+If(_Actor_GetState(C18)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C18, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==18)
+{
+If(_Actor_GetState(C19)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_Attack(C19, 4000);
+VyberCil=_RandomInt(20);
+}
+
+If(VyberCil==19)
+{
+If(_Actor_GetState(C20)==0){VyberCil=_RandomInt(19);Goto Palba;}
+
+HUMAN_Attack(C20, 4000);
+VyberCil=_RandomInt(20);
+}
+
+goto Palba;
+
+Label END:

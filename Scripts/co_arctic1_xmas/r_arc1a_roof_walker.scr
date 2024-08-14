@@ -1,0 +1,222 @@
+// Roof walker - does not patrol if team goes through swamp
+Block
+{
+   integer position;
+   integer wait;
+   integer AIEvent;
+   integer RND = 0;
+   integer halo = 0;
+   frame MyFRM;		FRM_GetMyFrame(MyFRM);
+   frame GG;		FRM_FindFrame(GG, "Gate_Guard");
+   frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+   frame fueltank;	FRM_FindFrame(fueltank, "m_nadrz_4");
+   integer PoAlarm = 0;
+   integer a;
+   integer pull=0;
+
+   HUMAN_SETAIMODE_Zombie();
+   HUMAN_SetOptimized(1);
+   HUMAN_WeaponOnArm(False);
+   HUMAN_SETMODE_Guard();
+
+   SetAlarmType(1023, True);	
+   SetAlarmType(264, False);	// 8 + 256 = False
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+Block
+{
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(70);
+AIEvent =_GetAlarmType(); 
+PoAlarm = 1;
+PrintfNumber("AIE Roof walker: ", AIEvent);
+DisableSignals(True);
+HUMAN_SETMODE_Walk();
+}
+HUMAN_SetAnim("", 250, 250, False);  
+HUMAN_Stop();
+If (AIEvent == 1) {goto AIE_1;}		// Close Shooting 
+If (AIEvent == 2) {goto AIE_2;}		// Enemy shots 
+If (AIEvent == 4) {goto AIE_4;}		// Hear steps (not working for clients)
+If (AIEvent == 16) {goto AIE_16;}	// Explosions (not working for clients) 
+If (AIEvent == 32) {goto AIE_32;}	// Sighted
+If (AIEvent == 64) {goto AIE_64;}	// Is injured
+GOTO miss;
+
+Label AIE_4:
+  If (halo == 0)  
+    {
+       Printf("Alaaarm, alaaaaaarm! Be carefull someone is here!");
+       halo = 1;
+     }
+  goto miss;
+Label AIE_2:
+Label AIE_16:
+  HUMAN_SETMODE_Crouch();
+  goto miss;
+Label AIE_32:
+  If (halo == 0)  
+    {
+       Printf("Alaaarm, alaaaaaarm! Be carefull someone is here!");
+       halo = 1;
+     }
+Label AIE_1:
+Label AIE_64:
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Zombie();
+  
+label miss:
+EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(40);
+  HUMAN_SETHEARRANGE(50);
+  SetAlarmType(256, False);
+  DisableSignals(False);
+  HUMAN_SetAlarm(False);
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SETMODE_Stand();
+  Delay(500);
+  goto go; 
+}
+
+OnDeath()
+{
+  SendSignal(GG, 5);
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever PIR (_PlayerInRange(110))
+{
+FRM_TeleportNearCheckpoint(MyFRM, "Roof_6", "");
+HUMAN_TurnAt(fueltank);
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%kourimN", 500, 500, True);
+}
+
+label go:
+  position = _RandomInt(11);
+  wait = _RandomInt(4000) + 3000;
+  HUMAN_SetAnim("", 500, 500, False);
+  If ( position == 0)    
+    { 
+       HUMAN_Move("Roof_0");   
+       FRM_TeleportNearCheckpoint(MyFRM, "Roof_0", "");
+       If (PoAlarm == 0 )  { Gosub Z; }
+    }
+  If ( position == 1)    
+    { 
+       HUMAN_Move("Roof_1");   
+       FRM_TeleportNearCheckpoint(MyFRM, "Roof_1", "");
+       If (PoAlarm == 0 )  { Gosub X; }
+    }
+  If ( position == 2)    
+   {
+       HUMAN_Move("Roof_2");   
+       FRM_TeleportNearCheckpoint(MyFRM, "Roof_2", "");
+       If (PoAlarm == 0 )  { Gosub X; }
+   } 
+  If ( position == 3)    
+    { 
+       HUMAN_Move("Roof_3");   
+       FRM_TeleportNearCheckpoint(MyFRM, "Roof_3", "");
+       If (PoAlarm == 0 )  { Gosub X; }
+    }
+  If ( position == 4)    
+   {
+      HUMAN_Move("Roof_4");   
+      FRM_TeleportNearCheckpoint(MyFRM, "Roof_4", "");
+       If (PoAlarm == 0 )  { Gosub Anim1; }
+   }
+  If ( position == 5)    
+   {
+      HUMAN_Move("Roof_5");   
+      FRM_TeleportNearCheckpoint(MyFRM, "Roof_5", "");
+       If (PoAlarm == 0 )  { Gosub Z; }
+   }
+  If ( position == 6)    
+   {
+      HUMAN_Move("Roof_6");   
+      FRM_TeleportNearCheckpoint(MyFRM, "Roof_6", "");
+       If (PoAlarm == 0 )  { Gosub Anim1; }
+    }
+  If ( position == 7)    
+   {
+       HUMAN_Move("Roof_7");   
+       FRM_TeleportNearCheckpoint(MyFRM, "Roof_7", "");
+       If (PoAlarm == 0 )  { Gosub Anim1; }
+   }
+  If ( position == 8)
+   {
+      HUMAN_Move("Roof_8");   
+      FRM_TeleportNearCheckpoint(MyFRM, "Roof_8", "");
+       If (PoAlarm == 0 )  { Gosub Anim1; }
+    }
+  If ( position == 9)   
+   {
+      HUMAN_Move("Roof_9");   
+      FRM_TeleportNearCheckpoint(MyFRM, "Roof_9", "");
+       If (PoAlarm == 0 )  { Gosub Anim1; }
+   }
+  If ( position == 10)  
+    { 
+       HUMAN_Move("Roof_10");
+       FRM_TeleportNearCheckpoint(MyFRM, "Roof_10", "");
+       If (PoAlarm == 0 )  { Gosub Anim1; }
+    }
+    Delay(3000);
+goto go;
+
+
+Label Anim1:
+pull=0;
+HUMAN_SetAnim("%(koureniB", 500, 500, 0);
+Delay(9000);
+
+Label Anim1b:
+HUMAN_SetAnim("%(koureni5", 500, 500, 0);
+Delay(10000);
+pull=pull+1;
+if(pull==4)
+{
+Delay(2000);
+Return;
+}
+goto Anim1b;
+
+Label Z:
+HUMAN_SetAnim( "%%zabradli1", 450, 500, true);
+wait = (wait * 3);
+delay(wait);
+HUMAN_SetAnim( "", 450, 500, False);
+Delay(1000);
+Return;
+
+Label X:
+HUMAN_SetAnim( "%%neslysim", 450, 500, false);
+wait = (wait * 3);
+delay(wait);
+Return;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Label end:

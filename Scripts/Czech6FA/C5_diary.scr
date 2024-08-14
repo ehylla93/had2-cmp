@@ -1,0 +1,24 @@
+// C5_diary - diary
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Integer players;
+	players=0;
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)	// received from C5_objective
+{
+	If(players==1)
+	{
+		AddDiaryText(43);
+		AddDiaryText(4372);
+		GoTo end;
+	}
+	AddDiaryText(43);
+	AddDiaryText(4371);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Delay(1000);
+players=_GetNumMembersOfClientTeam();
+
+Label end:

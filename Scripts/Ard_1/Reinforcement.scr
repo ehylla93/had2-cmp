@@ -1,0 +1,35 @@
+// Reinforcements
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame R1;	FRM_FindFrame(R1,"Re_G01");
+Frame R2;	FRM_FindFrame(R2,"Re_G02");
+Frame R3;	FRM_FindFrame(R3,"Re_G03");
+Frame R4;	FRM_FindFrame(R4,"Re_G04");
+Frame R5;	FRM_FindFrame(R5,"Re_G05");
+Frame R6;	FRM_FindFrame(R6,"Re_G06");
+Frame R7;	FRM_FindFrame(R7,"Re_G07");
+Frame R8;	FRM_FindFrame(R8,"Re_G08");
+Frame R9;	FRM_FindFrame(R9,"Re_G09");
+Frame R10;	FRM_FindFrame(R10,"Re_G10");
+
+Integer Vyber;
+	Vyber =_RandomInt(8);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Reinforcements (_SignalReceived(1))
+{
+If(Vyber == 0){  Delay(300000);SendSignal(R1, 1);SendSignal(R2, 1);SendSignal(R3, 1);SendSignal(R4, 1);SendSignal(R5, 1);}
+If(Vyber == 1){  Delay(400000);SendSignal(R6, 1);SendSignal(R7, 1);SendSignal(R8, 1);SendSignal(R9, 1);SendSignal(R10, 1);}
+If(Vyber == 2){  Delay(500000);SendSignal(R1, 1);SendSignal(R3, 1);SendSignal(R5, 1);SendSignal(R7, 1);SendSignal(R9, 1);}
+If(Vyber == 3){  Delay(800000);SendSignal(R2, 1);SendSignal(R4, 1);SendSignal(R6, 1);SendSignal(R8, 1);SendSignal(R10, 1);}
+If(Vyber == 4){  Delay(900000);SendSignal(R1, 1);SendSignal(R2, 1);SendSignal(R4, 1);SendSignal(R6, 1);SendSignal(R10, 1);}
+If(Vyber == 5){  Delay(1000000);SendSignal(R5, 1);SendSignal(R6, 1);SendSignal(R8, 1);SendSignal(R9, 1);SendSignal(R3, 1);}
+goto END;
+}
+
+
+Label END:

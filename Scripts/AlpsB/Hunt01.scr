@@ -1,0 +1,47 @@
+// Sedi u Skaly u reky vedle Snipers
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 600, 600, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_WeaponUp(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponOnArm(0);
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%sedimL4", 600, 600, 1);
+goto END;
+
+Label END:

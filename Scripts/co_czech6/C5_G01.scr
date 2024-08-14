@@ -1,0 +1,134 @@
+// C5_G01 - officer talking to G02, G05
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame g02;	FRM_FindFrame(g02, "C5_G02");
+Frame g05;	FRM_FindFrame(g05, "C5_G05");
+Frame g06;	FRM_FindFrame(g06, "C5_G06");
+Frame g07;	FRM_FindFrame(g07, "C5_G07");
+Frame g20;	FRM_FindFrame(g20, "C5_G20");
+Frame g21;	FRM_FindFrame(g21, "C5_G21");
+Frame look01;	FRM_FindFrame(look01, "C5_G01_look01");
+Frame null;		FRM_FindFrame(null, "");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Stand();
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(80);
+	HUMAN_SETMODE_Run();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("C5_G01_01");
+	HUMAN_TurnAt(look01);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(70))
+{
+	HUMAN_SetAnim("", 200, 500, false);
+	Delay(500);
+	SendSignal(g02, 1);
+	SendSignal(g05, 1);
+	GoTo walk;
+}
+
+OnSignal(1)	// received from G20
+{
+	GoTo loop2;
+}
+
+OnSignal(2)	// received from C5_G21
+{
+	If(_FrameInRange(g21)<3)
+	{
+		HUMAN_Stop();
+		HUMAN_TurnAt(g21);
+		HUMAN_SETMODE_Run();
+		HUMAN_Move("C5_G01_02");
+		HUMAN_TurnAtNearestPlayer();
+		HUMAN_SETMODE_Crouch();
+		HUMAN_SetAnim("(ukazovani", 500, 500, false);
+		Delay(2500);
+		HUMAN_SetAnim("", 200, 200, 0);
+		//HUMAN_ACTIVITY_Point(null);
+		HUMAN_SETSIGHTRANGE(80);
+		SendSignal(g02, 2);
+		If(_FrameInRange(g05)<60)	{	SendSignal(g05, 5);	}
+		If(_FrameInRange(g06)<60)	{	SendSignal(g06, 1);	}
+		If(_FrameInRange(g07)<60)	{	SendSignal(g07, 1);	}
+		GoTo end;
+	}
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f021");
+HUMAN_SetOptimized(2);
+}
+
+Label loop:
+	HUMAN_SetAnim("%%kecy2", 200, 500, false);
+	Delay(13400);
+	HUMAN_SetAnim("%%kecy1", 200, 500, false);
+	Delay(11000);
+	HUMAN_SetAnim("%%kecy3", 200, 500, false);
+	Delay(10800);
+	HUMAN_SetAnim("%%rozcilujese", 200, 500, false);
+	Delay(7000);
+	GoTo loop;
+
+Label walk:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("C5_G01_02");
+	HUMAN_Move("C5_G01_03");
+	HUMAN_Move("C5_G01_04");
+	HUMAN_Move("C5_G01_05");
+	HUMAN_Move("C5_G01_06");
+	HUMAN_Move("C5_G01_07");
+	HUMAN_Move("C5_G01_08");
+	HUMAN_TurnAt(g20);
+	HUMAN_SetAnim("!salutovani", 500, 500, 0);
+	Delay(2500);
+	HUMAN_SetAnim("", 500, 500, 0);
+	SendSignal(g20, 2);
+	GoTo end;
+
+Label loop2:
+	HUMAN_SetAnim("%%rozhovor1", 500, 500, false);
+	Delay(7200);
+	HUMAN_SetAnim("%%rozhovor2", 500, 500, false);
+	Delay(11000);
+	HUMAN_SetAnim("%%rozhovor3", 500, 500, false);
+	Delay(11300);
+	HUMAN_SetAnim("%%rozhovor4", 500, 500, false);
+	Delay(7500);
+	SendSignal(g20, 3);
+	GoTo loop2;
+
+Label end:

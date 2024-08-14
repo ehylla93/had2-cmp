@@ -1,0 +1,78 @@
+// V La_tiger_1 (tiger) ridic
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame kulomet;		FRM_FindFrame(kulomet,"N2_G09");
+Frame kanon;		FRM_FindFrame(kanon,"N2_G10");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(32))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("La_tiger_1",  true, 0);
+SendSignal(kulomet, 1);
+SendSignal(kanon, 1);
+Delay(200);
+HUMAN_DriveNearPlayer(25);
+Delay(2000);
+goto vysedam;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label vysedam:
+SetAlarmType(1,1); 
+SetAlarmType(2,1); 
+SetAlarmType(4,1); 
+SetAlarmType(64,1); 
+HUMAN_BoardVehicle("La_tiger_1",  false, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+
+Label END:

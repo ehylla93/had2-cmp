@@ -1,0 +1,42 @@
+// T3_G02
+// ------------------------------------------------------
+
+Block
+{
+HUMAN_BoardVehicle("SF_Panther_01", 1, 2);
+SetAlarmType(867,1);
+HUMAN_SETSIGHTRANGE(95);
+HUMAN_SETHEARRANGE(40);
+HUMAN_SetOptimized(2);
+}
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+
+If(!_PlayerInRange(50))
+{
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETAIMODE_Defensive();
+}
+
+Else
+{
+HUMAN_SETAIMODE_Aggressive();
+}
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

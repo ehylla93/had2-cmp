@@ -1,0 +1,193 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Zombie();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(80);
+
+integer a;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+frame cum1;		FRM_FindFrame(cum1, "x2power pole04");
+frame door1;		FRM_FindFrame(door1, "Object513");
+frame door2;		FRM_FindFrame(door2, "Object511");
+Frame z4_agres4;	FRM_FindFrame(z4_agres4,"z4_agres4");
+SetWhenever(neslysim,0);
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f052");
+
+
+
+}
+
+integer mrd;	mrd=(_SPGetGameType());
+
+if ((mrd==3) or (mrd==7))
+
+{
+DisableWhenevers(1);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+
+
+
+
+HUMAN_Suspend(1);
+suspend=1;
+
+goto end;
+
+Whenever neslysim((_LoadGameValue(5)==0))
+{
+HUMAN_SETEVENTS(0);
+SetWhenever(slysim,1);
+goto end;
+}
+
+
+Whenever slysim((_LoadGameValue(5)==1))
+{
+//detektor hracu
+
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+SetWhenever(neslysim,1);
+
+}
+
+goto end;
+}
+
+
+
+Label vybeh:
+block
+{
+SendSignal(z4_agres4,1);
+DOOR_Lock(door1, 0);
+SetActorState(door1, 1);
+SetActorState(door2, 1);
+HUMAN_SETMODE_Run();
+}
+HUMAN_Move("z4agres3_1");
+SetAlarmType(375,1);
+HUMAN_TurnAt(cum1);
+
+HUMAN_SETMODE_Crouch();
+goto end;
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+aievent=(_GetAlarmType());
+PrintfNumber("z4agres3 alarm c:",aievent);
+}
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	endx=1;
+	EndScript();
+	}
+
+
+
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+if (suspend==1)
+	{
+	
+	//dokud je hrac v zone  tak nic
+
+label je:
+
+if (_LoadGameValue(5)==1)
+	{
+	
+	delay (1000);
+	goto je;
+	}
+
+	suspend=0;
+	HUMAN_Suspend(0);
+	SetAlarmType(1023,0);
+	SetAlarmType(97,1);		//vidim ranen blizka strelba
+	HUMAN_SetAlarm(0);
+	goto vybeh;
+	}
+}
+
+endx=1;
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Silence();
+HUMAN_WeaponUp(1);
+}
+
+label bloud:
+
+HUMAN_MoveRandomRadius(30);
+HUMAN_SetAnim("%%kouka", 300, 300,0);
+delay (5000);
+HUMAN_SetAnim("", 300, 300, 0);
+goto bloud;
+
+
+OnDeath()
+{
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+
+
+
+

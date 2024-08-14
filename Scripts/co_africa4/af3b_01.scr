@@ -1,0 +1,172 @@
+// AF3b_01 - Driver Truck
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME af02;			FRM_FindFrame(af02, "AF3b_02");
+  FRAME af03;			FRM_FindFrame(af03, "AF3b_03");
+  FRAME af04;			FRM_FindFrame(af04, "AF3b_04");
+  FRAME af05;			FRM_FindFrame(af05, "AF3b_05");
+  FRAME Opel;			FRM_FindFrame(Opel, "Opel01"); 
+  INTEGER Atype			= 0;
+
+  FRAME dummy_turnat;	FRM_FindFrame(dummy_turnat, "dummy_group01_turnat");
+  FRAME carcheck;			FRM_FindFrame(carcheck, "dummy_car_checker");
+  INTEGER vcili			= 0;
+  INTEGER pomalu		= 0;
+  INTEGER incar			= 0;
+
+  SetAlarmType(1023, false);
+}
+
+HUMAN_SetSightRange(300);
+HUMAN_Suspend(true);
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(22){			// RETREAT SECTION
+  SetAlarmType(1023, false);
+  DisableSignals(true);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF3b_retreat");
+  goto END;
+}
+
+OnDeath(){
+  SendSignal(af02, 2);
+  SendSignal(af03, 2);
+  SendSignal(af04, 2);
+  SendSignal(af05, 2);
+  EndScript();
+}
+  
+OnAlarm(){
+  if((pomalu) AND (!vcili))
+  {
+    HUMAN_Drive("o1_act1_04", 40);
+    HUMAN_SetAlarm(false);
+    goto ESCAPEVEHICLE;
+  }
+
+  block {
+    HUMAN_Stop();
+    Atype = _GetAlarmType();   
+  }
+
+  If(Atype == 2){
+    EndScript();
+  }
+
+  If(Atype == 256){
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_SetAlarm(false);
+    goto END;
+  }
+
+  if(((Atype != 32) AND (Atype != 64)) AND (Atype != 1)){
+    HUMAN_SetMODE_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    goto END;
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){
+  goto END;
+}
+
+OnSignal(20){
+  SendSignal(af02, 1);
+  SendSignal(af03, 1);
+  SendSignal(af04, 1);
+  SendSignal(af05, 1);
+  goto ACTIVITY1;
+}
+
+OnSignal(21){
+  SendSignal(af02, 1);
+  SendSignal(af03, 1);
+  SendSignal(af04, 1);
+  SendSignal(af05, 1);
+  pomalu = 1;
+  goto ACTIVITY2;
+}
+
+OnSignal(2)
+{
+  goto ESCAPEVEHICLE;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVITY1:
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("Opel01", 1, 0);
+	incar = 1;
+	Delay(2000);
+	HUMAN_Drive("o1_act1_01", 40);
+	HUMAN_Drive("o1_act1_02", 40);
+	SendSignal(carcheck, 1);
+	SendSignal(Opel, 1);
+	printf("CP Opel: o1_act1_02");
+	HUMAN_Drive("o1_act1_03", 40);
+	printf("CP Opel: o1_act1_03");
+	HUMAN_Drive("o1_act1_04", 40);
+	printf("CP Opel: o1_act1_04");
+	HUMAN_Drive("", 0);
+goto ACTIVITYEND;
+
+Label ACTIVITY2:
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("Opel01", 1, 0);
+	incar = 1;
+	Delay(2000);
+	HUMAN_Drive("o1_act1_01", 25);
+	HUMAN_Drive("o1_act1_02", 25);
+	printf("CP Opel: o1_act1_02");
+	SendSignal(Opel, 1);
+	HUMAN_Drive("o1_act1_03", 25);
+	printf("CP Opel: o1_act1_03");
+	HUMAN_Drive("o1_act1_04", 25);
+	printf("CP Opel: o1_act1_04");
+	HUMAN_Drive("", 0);
+
+Label ACTIVITYEND:
+  SendSignal(af02, 2);
+  SendSignal(af03, 2);
+  SendSignal(af04, 2);
+  SendSignal(af05, 2);
+
+Label ESCAPEVEHICLE:
+  HUMAN_WeaponOnArm(1);
+  vcili = 1;
+  if(incar == 1)
+  {
+    HUMAN_Drive("", 0);
+    HUMAN_BoardVehicle("Opel01", 0, 0);
+    incar = 0;
+	SendSignal(Opel, 2);
+  }
+	HUMAN_SetOptimized(1);
+	SetAlarmType(1023, true);
+	SetAlarmType(768, false);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_Move("AF3b_01_01");
+	HUMAN_TurnAt(dummy_turnat);
+	HUMAN_SetMODE_Crouch();
+	HUMAN_LookAround(2);
+	HUMAN_SetOptimized(0);
+goto END;
+
+Label END:

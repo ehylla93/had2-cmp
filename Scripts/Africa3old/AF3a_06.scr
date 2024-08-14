@@ -1,0 +1,145 @@
+// AF3a_06 - soldier walking on fortification
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME synchronizer;	FRM_FindFrame(synchronizer, "AF3a_0506_synchronizer");
+  FRAME dummy_alarm;	FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME look1_01;		FRM_FindFrame(look1_01, "AF3a_06_look1_01");
+  FRAME alarm_wp;		FRM_FindFrame(alarm_wp, "dummy_pristup05");
+  FRAME sit_anim;		FRM_FindFrame(sit_anim, "dummy_06_sit");
+  FRAME sit;			FRM_FindFrame(sit, "dummy_06_sit01");
+  FRAME af05;			FRM_FindFrame(af05, "AF3a_05");
+  FRAME bottle;		FRM_FindFrame(bottle, "");
+  INTEGER rnd 		= 0;
+  INTEGER smokecounter 	= 0;
+  INTEGER state 		= 1;
+  INTEGER Atype		= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("06: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block
+  {
+    DisableSignals(true);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(400);
+    Atype = _GetAlarmType();
+    printfnumber("06: ", Atype);
+  }
+
+  if(Atype != 4){
+    SendSignal(dummy_alarm, 1);
+    printf("signal sender 06");
+  }
+
+//  HUMAN_SETMODE_Crouch();
+//  HUMAN_SetSniper(true, 5);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto ALERT;
+}
+
+OnSignal(1){
+  state = 0;
+  Delay(500);
+//  if(_ACTOR_GetState(af05) == 1){
+    printf("06 :: Nothing, but that weather is trying to kill me...");
+    Delay(5000);
+    state = 1;
+//  }
+  goto ACTIVITY;
+}	
+
+OnSignal(2){
+  state = 0;
+  Delay(500);
+//  if(_ACTOR_GetState(af05) == 1){
+    printf("06 :: I know and I'm proud of him ...");
+    Delay(8000);
+    state = 1;
+//  }
+  goto ACTIVITY;
+}	
+
+OnSignal(20){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETMODE_Run();
+  }
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("AF3a_06_alert");
+LABEL ALERT:
+  DisableSignals(true);
+  HUMAN_SETSIGHTRANGE(400);
+  HUMAN_TurnAt(alarm_wp);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+
+Label ACTIVITY:
+  smokecounter = smokecounter + 1;
+  If(smokecounter == 7){
+    smokecounter = 0;
+    goto PATH_SMOKE;
+  }
+  Else{
+    goto PATH_COMMON;
+  }
+
+Label PATH_COMMON:
+  HUMAN_Move("AF3a_06_02");
+  rnd = _RandomInt(2000) + 2000;
+  Delay(rnd);
+  rnd = _RandomInt(5);
+  if(rnd == 0){
+    HUMAN_ACTIVITY_Hot();
+  }
+  HUMAN_Move("AF3a_06_01");
+  Delay(2000);
+goto ACTIVITY;
+
+Label PATH_SMOKE:
+  HUMAN_Move("AF3a_06_02");
+  HUMAN_TurnAt(look1_01);
+  state = 0;
+  HUMAN_ACTIVITY_Sit(sit);
+  Delay(5000);
+  HUMAN_ACTIVITY_Smoke(true);
+    rnd = _RandomInt(10000) + 20000;
+  Delay(rnd);
+  HUMAN_ACTIVITY_Smoke(false);
+  Delay(5000);
+  HUMAN_SETMODE_Stand();
+  state = 1;
+  HUMAN_Move("AF3a_06_01");
+  Delay(2000);
+goto ACTIVITY;
+
+Label END:

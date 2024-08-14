@@ -1,0 +1,43 @@
+//----------------------objective1----------------------
+// Capture the German control post.
+//--------------------------------------------
+
+goto end;
+block
+{
+goto end;
+//Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame veh15;	FRM_FindFrame(veh15,"Tiger_1");
+Frame veh16;	FRM_FindFrame(veh16,"Tiger_2");
+Frame detect;	FRM_FindFrame (detect,"zone1");
+Integer S1;
+}
+goto end;
+
+//--------------------------------------------
+label loop:
+//printf ("obj1 loop");
+S1=0;
+Block
+{
+//S1=S1+_Actor_GetState(E03);
+//S1=S1+_Actor_GetState(E04);
+//S1=S1+_Actor_GetState(E05);
+//S1=S1+_Actor_GetState(E06);
+//S1=S1+_Actor_GetState(E07);
+}
+PrintfNumber("S1: ",S1);
+If (S1==0)
+{
+Delay(4000);
+//SetObjectiveStatus(1, 1);
+//SendSignal(txt, 1);
+//MP_EnableSpawnZone("zone1", 1);
+//SendSignal(obj, 1);
+goto end;
+}
+delay(15000);
+goto loop;
+
+label end:

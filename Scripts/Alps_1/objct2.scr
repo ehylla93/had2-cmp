@@ -1,0 +1,50 @@
+// Obj 2 - Find the Pilot
+// ----------------------------------------------
+
+Block
+{
+Frame R01;		FRM_FindFrame(R01, "02_G110");
+Frame R02;		FRM_FindFrame(R02, "02_G111");
+Frame R03;		FRM_FindFrame(R03, "02_G112");
+Frame R04;		FRM_FindFrame(R04, "02_G113");
+Frame R05;		FRM_FindFrame(R05, "02_G114");
+Frame R06;		FRM_FindFrame(R06, "02_G115");
+Frame R07;		FRM_FindFrame(R07, "02_G116");
+Frame R08;		FRM_FindFrame(R08, "02_G117");
+Frame R09;		FRM_FindFrame(R09, "02_G118");
+Frame R10;		FRM_FindFrame(R10, "02_G119");
+Frame Reinf;	FRM_FindFrame(Reinf, "Reinforcement");
+
+Frame Obj3;		FRM_FindFrame(Obj3, "obj3");
+Frame Obj4;		FRM_FindFrame(Obj4, "obj4");
+
+SetWhenever(Pilot_Found, 0);
+}
+
+Whenever Pilot_Found (_MP_IsTeamMemberInRange(1, 50))
+{
+SendSignal(R10, 1);SendSignal(Reinf, 1);
+SendSignal(R01, 1);SendSignal(R02, 1);SendSignal(R03, 1);
+SendSignal(R04, 1);SendSignal(R05, 1);SendSignal(R06, 1);
+SendSignal(R07, 1);SendSignal(R08, 1);SendSignal(R09, 1);
+Delay(1000);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(03990621);
+Delay(3500);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetText(03990619);
+Delay(3500);
+SUBTITLES_SetText(05991070);
+Delay(3500);
+SendSignal(Obj3, 1);
+SendSignal(Obj4, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Pilot_Found, 1);
+}

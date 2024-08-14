@@ -1,0 +1,51 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,0);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,0);
+SetAlarmType(512,0);
+
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("%%rozcilujese", 1000, 1000, 1); 
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAnim("%%rozcilujese", 1000, 1000, 1); 
+//*OnAlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//*CustomSection
+
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SetAnim("%%naterac", 1000, 1000, 1);
+HUMAN_SETMODE_Stand();
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(50);
+
+
+//*DefaultLoad
+goto END;
+
+Label END:

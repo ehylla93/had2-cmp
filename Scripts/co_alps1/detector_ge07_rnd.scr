@@ -1,0 +1,58 @@
+
+Block {
+Frame ge07;			Frm_FindFrame (ge07,"ge_07");
+Frame ge08;			Frm_FindFrame (ge08,"ge_08");
+Frame ge09;			Frm_FindFrame (ge09,"ge_09");
+Frame ge10;			Frm_FindFrame (ge10,"ge_10");
+Frame ge11;			Frm_FindFrame (ge11,"ge_11");
+Frame detect1;		Frm_FindFrame (detect1,"detector_forge07_1");
+Frame detect2;		Frm_FindFrame (detect2,"detector_forge07_2");
+integer a;
+}
+
+Whenever ted(_PlayerInRange(40))
+{
+a=_RandomInt(4);
+if (a==0)
+{
+SendSignal (ge07,5);
+SendSignal (ge08,9);
+SendSignal (ge09,5);
+SendSignal (ge10,1);
+SendSignal (ge11,1);
+SendSignal (detect1,1);
+SendSignal (detect2,1);
+goto end;
+}
+
+if (a==1)
+{
+SendSignal (ge07,4);
+SendSignal (ge08,8);
+SendSignal (ge09,4);
+SendSignal (ge10,1);
+SendSignal (ge11,1);
+SendSignal (detect1,1);
+SendSignal (detect2,1);
+goto end;
+}
+
+if (a==2)
+{
+SendSignal (ge07,1);
+SendSignal (ge08,1);
+SendSignal (ge09,1);
+SendSignal (ge10,1);
+SendSignal (ge11,1);
+SendSignal (detect1,1);
+SendSignal (detect2,1);
+goto end;
+}
+
+if (a==3)
+{
+goto end;
+}
+}
+
+label end:

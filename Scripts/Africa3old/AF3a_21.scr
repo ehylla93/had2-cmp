@@ -1,0 +1,101 @@
+// nemec opravujici opl
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME this;				FRM_GetMyFrame(this);
+  FRAME opel1;  			FRM_FindFrame(opel1, "La_OpelAf2.Cylinder02");
+  FRAME opel2;  			FRM_FindFrame(opel2, "dummy_wheelrepair");
+  FRAME chladic2; 			FRM_FindFrame(chladic2, "dummy_opel2_chladic2");
+  FRAME flaska;			FRM_FindFrame(flaska, "");
+  FRAME player;			FRM_FindFrame(player, "");
+  FRAME obj1;				FRM_FindFrame(obj1, "AF3a_obj");
+  INTEGER rnd				= 0;
+  INTEGER Atype 			= 0;
+  INTEGER below_car			= 0;
+  
+  SetAlarmType(1023, true);		
+  SetAlarmType(323, true);		
+}
+ 
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever nadohled (_PlayerInRange(80))
+{
+  HUMAN_Suspend(false);
+  goto ACTIVITY;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_WeaponOnArm(false);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Lie();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(512, false);
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_StandFast();
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Suspend(true);
+//  HUMAN_SETEVENTS(false);
+
+Label ACTIVITY:
+  SaveGameValue(62, 1);
+  gosub RNDACTIVITY;  
+  HUMAN_Move("AF3a_21_01");
+  HUMAN_TurnAt(opel1);
+  rnd = _RandomInt(500) + 500;
+  Delay(rnd);
+  HUMAN_SetAnim("%%mechanik", 300, 300, true);
+  rnd = _RandomInt(5000)+5000;
+  Delay(rnd);
+  HUMAN_SetAnim("", 300, 300, false);
+  Delay(500);
+Label ACTIVITY2:
+  HUMAN_Move("AF3a_21_02");
+  HUMAN_TurnAt(opel2);
+  Delay(200);
+  gosub RNDACTIVITY;  
+  rnd = _RandomInt(500) + 500;
+  Delay(rnd);
+  HUMAN_SetAnim("!manipul1", 300, 300, true);
+  Delay(4500);
+  HUMAN_SetAnim("", 300, 300, false);
+  Delay(500);
+goto ACTIVITY;
+
+Label RNDACTIVITY:
+  rnd = _RandomInt(10);
+  Delay(200);
+  if(rnd == 0)	{ HUMAN_ACTIVITY_Drinkbottle(flaska); }
+  if(rnd == 1)	{ HUMAN_ACTIVITY_Hot(); }
+  Delay(200);
+return;
+
+Label ENABLE_ALARM:
+  SetAlarmType(1023, true);
+  SetAlarmType(323, true);
+return;
+
+Label END:
+  printf("mechanic: now at end");
+  Delay(2000);
+  SUBTITLES_SetON(false);

@@ -1,0 +1,170 @@
+//effect generator
+  block{
+  FRAME tank0;			FRM_FindFrame(tank0, "la_i2_tank0");
+  FRAME tank1;			FRM_FindFrame(tank1, "la_i2_tank1");
+  FRAME tank2;			FRM_FindFrame(tank2, "la_i2_tank2");
+
+  FRAME tank3;			FRM_FindFrame(tank3, "la_i2_tank3");
+  FRAME tank4;			FRM_FindFrame(tank4, "la_i2_tank4");
+  FRAME tank5;			FRM_FindFrame(tank5, "la_i2_tank5");
+  
+  FRAME tank6;			FRM_FindFrame(tank6, "la_i2_tank6");
+  FRAME tank7;			FRM_FindFrame(tank7, "la_i2_tank7");
+  FRAME tank11;			FRM_FindFrame(tank11, "la_i2_tank11");
+  
+  FRAME tank8;			FRM_FindFrame(tank8, "la_i2_tank8");
+  FRAME tank9;			FRM_FindFrame(tank9, "la_i2_tank9");
+  FRAME tank10;			FRM_FindFrame(tank10, "la_i2_tank10");
+
+  FRAME tank0sound;		FRM_FindFrame(tank0sound,"fire_tank0"); //fire effect sound
+  FRAME tank1sound;		FRM_FindFrame(tank1sound,"fire_tank1");
+  FRAME tank2sound;		FRM_FindFrame(tank2sound,"fire_tank2");
+  FRAME tank0fire;		FRM_FindFrame(tank0fire,"tank0_dummy"); //fire effect teleporter
+  FRAME tank1fire;		FRM_FindFrame(tank1fire,"tank1_dummy");
+  FRAME tank2fire;		FRM_FindFrame(tank2fire,"tank2_dummy");
+  
+  FRAME tank3sound;		FRM_FindFrame(tank3sound,"fire_tank3");
+  FRAME tank4sound;		FRM_FindFrame(tank4sound,"fire_tank4");
+  FRAME tank5sound;		FRM_FindFrame(tank5sound,"fire_tank5");
+  FRAME tank3fire;		FRM_FindFrame(tank3fire,"tank3_dummy");
+  FRAME tank4fire;		FRM_FindFrame(tank4fire,"tank4_dummy");
+  FRAME tank5fire;		FRM_FindFrame(tank5fire,"tank5_dummy");
+  
+  FRAME tank6sound;		FRM_FindFrame(tank6sound,"fire_tank6");
+  FRAME tank7sound;		FRM_FindFrame(tank7sound,"fire_tank7");
+  FRAME tank8sound;		FRM_FindFrame(tank8sound,"fire_tank8");
+  FRAME tank6fire;		FRM_FindFrame(tank6fire,"tank6_dummy");
+  FRAME tank7fire;		FRM_FindFrame(tank7fire,"tank7_dummy");
+  FRAME tank8fire;		FRM_FindFrame(tank8fire,"tank8_dummy");
+  
+  FRAME tank9sound;		FRM_FindFrame(tank9sound,"fire_tank9");
+  FRAME tank10sound;	FRM_FindFrame(tank10sound,"fire_tank10");
+  FRAME tank11sound;	FRM_FindFrame(tank11sound,"fire_tank11");
+  FRAME tank9fire;		FRM_FindFrame(tank9fire,"tank9_dummy");
+  FRAME tank10fire;		FRM_FindFrame(tank10fire,"tank10_dummy");
+  FRAME tank11fire;		FRM_FindFrame(tank11fire,"tank11_dummy");
+}
+  
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever d_tank0 ((_ACTOR_GetState(tank0) == 0))
+{
+	FRM_SetOn(tank0fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank0fire, "w_tank0fire", "");
+	Delay(100);
+	FRM_SetOn(tank0sound, 1);
+	goto end;
+}
+
+Whenever d_tank1 ((_ACTOR_GetState(tank1) == 0))
+{
+	FRM_SetOn(tank1fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank1fire, "w_tank1fire", "");
+	Delay(100);
+	FRM_SetOn(tank1sound, 1);
+	goto end;
+}
+
+Whenever d_tank2 ((_ACTOR_GetState(tank2) == 0))
+{
+	FRM_SetOn(tank2fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank2fire, "w_tank2fire", "");
+	Delay(100);
+	FRM_SetOn(tank2sound, 1);
+	goto end;
+}
+
+Whenever d_tank3 ((_ACTOR_GetState(tank3) == 0))
+{
+	FRM_SetOn(tank3fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank3fire, "w_tank3fire", "");
+	Delay(100);
+	FRM_SetOn(tank3sound, 1);
+	goto end;
+}
+
+Whenever d_tank4 ((_ACTOR_GetState(tank4) == 0))
+{
+	FRM_SetOn(tank4fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank4fire, "w_tank4fire", "");
+	Delay(100);
+	FRM_SetOn(tank4sound, 1);
+	goto end;
+}
+
+Whenever d_tank5 ((_ACTOR_GetState(tank5) == 0))
+{
+	FRM_SetOn(tank5fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank5fire, "w_tank5fire", "");
+	Delay(100);
+	FRM_SetOn(tank5sound, 1);
+	goto end;
+}
+
+Whenever d_tank6 ((_ACTOR_GetState(tank6) == 0))
+{
+	FRM_SetOn(tank6fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank6fire, "w_tank6fire", "");
+	Delay(100);
+	FRM_SetOn(tank6sound, 1);
+	goto end;
+}
+
+Whenever d_tank7 ((_ACTOR_GetState(tank7) == 0))
+{
+	FRM_SetOn(tank7fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank7fire, "w_tank7fire", "");
+	Delay(100);
+	FRM_SetOn(tank7sound, 1);
+	goto end;
+}
+
+Whenever d_tank8 ((_ACTOR_GetState(tank8) == 0))
+{
+	FRM_SetOn(tank8fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank8fire, "w_tank8fire", "");
+	Delay(100);
+	FRM_SetOn(tank8sound, 1);
+	goto end;
+}
+
+Whenever d_tank9 ((_ACTOR_GetState(tank9) == 0))
+{
+	FRM_SetOn(tank9fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank9fire, "w_tank9fire", "");
+	Delay(100);
+	FRM_SetOn(tank9sound, 1);
+	goto end;
+}
+
+Whenever d_tank10 ((_ACTOR_GetState(tank10) == 0))
+{
+	FRM_SetOn(tank10fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank10fire, "w_tank10fire", "");
+	Delay(100);
+	FRM_SetOn(tank10sound, 1);
+	goto end;
+}
+
+Whenever d_tank11 ((_ACTOR_GetState(tank11) == 0))
+{
+	FRM_SetOn(tank11fire, 1);
+	Delay(100);
+	FRM_TeleportNearCheckpoint(tank11fire, "w_tank11fire", "");
+	Delay(100);
+	FRM_SetOn(tank11sound, 1);
+	goto end;
+}
+
+Label END:

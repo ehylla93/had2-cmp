@@ -1,0 +1,30 @@
+// Zacatek mapy / Straze
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1a;	FRM_FindFrame(S1a,"S1_G01");
+Frame S1b;	FRM_FindFrame(S1b,"S1_G02");
+Frame S2a;	FRM_FindFrame(S2a,"S2_G01");
+Frame S2b;	FRM_FindFrame(S2b,"S2_G02");
+Frame S3;	FRM_FindFrame(S3,"S3_G01");
+Frame S4;	FRM_FindFrame(S4,"A1_G10");
+
+Frame S5a;	FRM_FindFrame(S5a,"S4_G01");
+Frame S5b;	FRM_FindFrame(S5b,"S4_G02");
+
+Integer Vyber;
+	Vyber =_RandomInt(4);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Zaciname (_SignalReceived(1))
+{
+If(Vyber == 0){  SendSignal(S1a, 1);SendSignal(S1b, 1);SendSignal(S5a, 1);SendSignal(S2a, 1);SendSignal(S2b, 1);}
+If(Vyber == 1){  SendSignal(S2a, 1);SendSignal(S2b, 1);SendSignal(S4, 1);SendSignal(S5b, 1);}
+If(Vyber == 2){  SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5a, 1);SendSignal(S5b, 1);}
+If(Vyber == 3){  SendSignal(S1a, 1);SendSignal(S1b, 1);SendSignal(S3, 1);SendSignal(S4, 1);SendSignal(S5a, 1);SendSignal(S5b, 1);}
+EndScript();
+}
+

@@ -1,0 +1,10 @@
+Block {
+MP_EnableSpawnZone("zone2", 2);
+Frame me;		FRM_GetMyFrame(me);
+}
+
+Whenever ACTIVE ((_PlayerInRange(20)) AND (!_EnemyInRange(me, 50))) {
+SetWhenever(ACTIVE, false);
+MP_EnableSpawnZone("zone2", 1);
+EndScript();
+}

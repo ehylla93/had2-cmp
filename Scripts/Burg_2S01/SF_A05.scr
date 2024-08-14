@@ -1,0 +1,97 @@
+// Cpl. Arthur Muncie - Prisoner (Obj 3)
+// ---------------------------------------------
+
+Block
+{
+Frame Obj3;		FRM_FindFrame(Obj3,"obj3");
+Frame Obj9;		FRM_FindFrame(Obj9,"obj9");
+Frame Truck1;	FRM_FindFrame(Truck1,"S02_Bedford_01");
+Frame Truck2;	FRM_FindFrame(Truck2,"S02_Bedford_02");
+
+Frame P2;		FRM_FindFrame(P2, "Cpl. Simon Finch");
+Frame P3;		FRM_FindFrame(P3, "Cpl. Herbert Bennett");
+Frame Driver1;	FRM_FindFrame(Driver1, "Cpl. David Foreman");
+Frame Driver2;	FRM_FindFrame(Driver2, "Sgt. Siegfried Hirsch");
+Frame me;		FRM_GetMyFrame(me);
+Frame Player;
+
+Integer Odchazime;
+		Odchazime = 0;
+
+FRM_SwitchFaceTexture(me,"e_f0010");
+
+DisableAlarms(1);
+SetWhenever(Player_Is_Rescuing, 0);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ---------------------------------------------
+
+OnDeath(){
+goto END;
+}
+
+Whenever Complex_Secured (_SignalReceived(1))
+{
+SetWhenever(Player_Is_Rescuing, 1);
+goto END;
+}
+
+
+Whenever Player_Is_Close (_PlayerInRange(15))
+{
+HUMAN_Suspend(0);
+Delay(300);
+HUMAN_SetAnim("%%kucasedi", 1000, 1000, 1);
+goto END;
+}
+
+Whenever Player_Is_Rescuing (_PlayerInRange(2))
+{
+SendSignal(P2, 2);SendSignal(P3, 2);
+SendSignal(Driver1, 6);SendSignal(Driver2, 6);
+Delay(500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 52990055, 10, 50);
+Delay(100);
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(P3, 52990056, 10, 50);
+Delay(500);
+HUMAN_TurnAtNearestPlayer();
+Delay(3000);
+HUMAN_SETMODE_Run();
+SendSignal(Obj3, 2);
+Odchazime = 1;
+goto Jdem;
+}
+
+
+Whenever Boarding_Truck (_FrameInRange(Truck1) < 10)
+{
+HUMAN_MoveToFrame(Truck1, 2);
+HUMAN_BoardVehicle("S02_Bedford_01", 1, 2);
+Delay(5000);
+FRM_MorphSpeechDelayed(me, 90000276, 10, 50);
+Delay(400);
+FRM_MorphSpeech(Driver1, 90000237, 10, 50);
+Delay(1000);
+SendSignal(Driver1, 7);SendSignal(Driver2, 7);SendSignal(Obj9, 3);
+goto END;
+}
+
+
+Label Jdem:
+If(Odchazime == 1)
+{
+FRM_GetNearestPlayer(me, Player);
+HUMAN_MoveToFrame(Player, 0);
+}
+goto Jdem;
+
+
+Label END:

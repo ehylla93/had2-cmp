@@ -1,0 +1,15 @@
+//Alarm for ERAD
+//----------------------Block----------------------
+Block
+{
+frame me;			FRM_GetMyFrame(me);
+frame Swgene;		FRM_FindFrame(Swgene,"Swgene");
+frame Reinf;		FRM_FindFrame(Reinf, "Reinf01");
+integer a;			a=0;
+}
+//----------------------OnUse----------------------
+OnUse()
+{
+//printf ("Swalarmradio signal to reinf");
+SendSignal(Reinf, 1);
+}

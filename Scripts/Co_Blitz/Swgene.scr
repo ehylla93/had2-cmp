@@ -1,0 +1,24 @@
+//Generator Switch
+
+Frame Reinf;	FRM_FindFrame(Reinf, "Reinf01");
+integer sw;	sw = 0;
+
+OnUse()
+{
+if (sw == 0)
+{
+block
+{
+SendSignal (Reinf,2);
+sw = 1;
+}
+}
+else
+{
+block
+{
+SendSignal (Reinf,3);
+sw = 0;
+}
+}
+}

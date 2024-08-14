@@ -1,0 +1,41 @@
+// text (signals received from Espawn_3, objective2)
+// -------------------------------------
+
+Frame r3timer;	FRM_FindFrame(r3timer, "reinf3");
+Frame spawn2;	FRM_FindFrame(spawn2, "spawn2");
+Frame spawn3;	FRM_FindFrame(spawn3, "spawn3");
+
+// -------------------------------------
+
+OnSignal(1)
+{
+SetObjectiveStatus(2, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001008);		//"NEW OBJECTIVE: DESTROY THE ROADBLOCK ON THE BRIDGE"
+Delay(5000);
+SendSignal(r3timer, 1);
+SendSignal(spawn2, 1);
+SUBTITLES_SetOn(0);
+}
+
+OnSignal(2)
+{
+SetObjectiveStatus(3, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001009);		//"NEW OBJECTIVE: CROSS THE BRIDGE"
+Delay(5000);
+SendSignal(spawn3, 1);
+SUBTITLES_SetOn(0);
+}
+
+OnSignal(3)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);	//"NEW RESPAWN ZONE AVAILABLE!"
+Delay(3000);
+SUBTITLES_SetOn(0);
+}
+
+// -------------------------------------
+
+Label END:

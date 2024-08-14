@@ -1,0 +1,51 @@
+// AF1_e_01
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  SetAlarmType(1023, false);
+  FRAME this;			FRM_GetMyFrame(this);
+  FRM_SwitchFaceTexture(this, "e_f099");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+  goto ACTIVATE;
+}
+
+OnDeath()
+{
+  PlaySound(6, 10);
+  FRM_CreateParticle(53, this);
+  EndScript();
+}
+
+OnAlarm()
+{
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SetAIMode_Aggressive();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(false);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(2);
+  HUMAN_Move("m_ee_01");
+  HUMAN_SetEvents(true);
+  SetAlarmType(1023, true);
+
+Label END:

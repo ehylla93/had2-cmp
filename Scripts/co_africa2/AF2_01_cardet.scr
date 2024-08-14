@@ -1,0 +1,27 @@
+// AF2_01_cardet - detecting player incoming
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME af2_straz01;		FRM_FindFRAME(af2_straz01, "AF2_straz01");
+FRAME af2_01;			FRM_FindFRAME(af2_01, "AF2_01");
+FRAME af2_02;			FRM_FindFRAME(af2_02, "AF2_02");
+FRAME af2_04;			FRM_FindFRAME(af2_04, "AF2_04");
+FRAME af2_05;			FRM_FindFRAME(af2_05, "AF2_05");
+FRAME af2_06;			FRM_FindFRAME(af2_06, "AF2_06");
+FRAME af2_16;			FRM_FindFRAME(af2_16, "AF2_16");
+FRAME af2_17;			FRM_FindFRAME(af2_17, "AF2_17");
+
+// -------------------------------------------------------------------------------------------------------------
+
+//Whenever detect (_PlayerInRange(30)){
+//  SendSignal(af2_straz01, 1);
+//  SendSignal(af2_01, 1);
+//  SendSignal(af2_02, 1);
+//  SendSignal(af2_04, 1);
+//  SendSignal(af2_05, 1);
+//  SendSignal(af2_06, 1);
+  
+//  SendSignal(af2_16, 1);
+//  SendSignal(af2_17, 1);
+//}
+
+// -------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,13 @@
+// Rainfall Setting
+// ----------------------------------
+
+Block
+{
+WEATHER_SetColorOut(41, 48, 44, 00);
+WEATHER_SetColorIn(37, 37, 37, 128);
+WEATHER_SetSize(650, 28);
+WEATHER_SetSpeed(30000);
+WEATHER_SetCount(10000);
+WEATHER_SetOn(1);
+EndScript();
+}

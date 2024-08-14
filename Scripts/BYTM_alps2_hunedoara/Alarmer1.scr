@@ -1,0 +1,50 @@
+// TURNING OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame E01;	FRM_FindFrame(E01,"alp2_E01");
+Frame E02;	FRM_FindFrame(E02,"alp2_E02");
+Frame E03;	FRM_FindFrame(E03,"alp2_E03");
+Frame E04;	FRM_FindFrame(E04,"alp2_E04");
+
+Frame E06;	FRM_FindFrame(E06,"alp2_E06");
+
+Frame E08;	FRM_FindFrame(E08,"alp2_E08");
+Frame E09;	FRM_FindFrame(E09,"alp2_E09");
+Frame E10;	FRM_FindFrame(E10,"alp2_E10");
+Frame E11;	FRM_FindFrame(E11,"alp2_E11");
+Frame E12;	FRM_FindFrame(E12,"alp2_E12");
+Frame E13;	FRM_FindFrame(E13,"alp2_E13");
+Frame E14;	FRM_FindFrame(E14,"alp2_E14");
+Frame E15;	FRM_FindFrame(E15,"alp2_E15");
+Frame E16;	FRM_FindFrame(E16,"alp2_E16");
+Frame E17;	FRM_FindFrame(E17,"alp2_E17");
+Frame E18;	FRM_FindFrame(E18,"alp2_E18");
+Frame E19;	FRM_FindFrame(E19,"alp2_E19");
+Frame E20;	FRM_FindFrame(E20,"alp2_E20");
+Frame E21;	FRM_FindFrame(E21,"alp2_E21");
+Frame E22;	FRM_FindFrame(E22,"alp2_E22");
+Frame E23;	FRM_FindFrame(E23,"alp2_E23");
+Frame E24;	FRM_FindFrame(E24,"alp2_E24");
+Frame E25;	FRM_FindFrame(E25,"alp2_E25");
+Frame E26;	FRM_FindFrame(E26,"alp2_E26");
+Frame E27;	FRM_FindFrame(E27,"alp2_E27");
+Frame E28;	FRM_FindFrame(E28,"alp2_E28");
+Frame E29;	FRM_FindFrame(E29,"alp2_E29");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(E01, 5);SendSignal(E02, 5);SendSignal(E03, 5);SendSignal(E04, 5);
+SendSignal(E06, 5);SendSignal(E08, 5);
+SendSignal(E09, 5);SendSignal(E10, 5);SendSignal(E11, 5);SendSignal(E12, 5);
+SendSignal(E13, 5);SendSignal(E14, 5);SendSignal(E15, 5);SendSignal(E16, 5);
+SendSignal(E17, 5);SendSignal(E18, 5);SendSignal(E19, 5);SendSignal(E20, 5);
+SendSignal(E21, 5);SendSignal(E22, 5);SendSignal(E23, 5);SendSignal(E24, 5);
+SendSignal(E25, 5);SendSignal(E26, 5);SendSignal(E27, 5);SendSignal(E28, 5);
+SendSignal(E29, 5);
+EndScript();
+}

@@ -1,0 +1,98 @@
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer zone;	zone=1;
+
+frame cum;					FRM_FindFrame (cum,"ge03cum");
+Frame starterforge40;		FRM_FindFrame (starterforge40,"starterforge40");
+SaveGameValue(23, 1);
+}
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+}
+EndScript();
+}
+
+OnDeath()
+{
+SendSignal (starterforge40,1);
+SaveGameValue(23, 0);
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(524,0);
+}
+label zones:
+HUMAN_SETMODE_Silence();
+if (zone==1)	{ goto zone1;	}
+if (zone==2)	{ goto zone2;	}
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+delay (1000);
+label move:
+HUMAN_Move("ge03_01");
+HUMAN_Move("ge03_02");
+zone =2;
+HUMAN_Move("ge03_03");
+HUMAN_Move("ge03_04");
+HUMAN_Move("ge03_05");
+HUMAN_Move("ge03_06");
+HUMAN_Move("ge03_07");
+HUMAN_Move("ge03_08");
+delay (1000);
+HUMAN_Move("ge03_07");
+HUMAN_Move("ge03_06");
+HUMAN_Move("ge03_05");
+HUMAN_Move("ge03_04");
+HUMAN_Move("ge03_03");
+HUMAN_Move("ge03_02");
+zone=1;
+HUMAN_Move("ge03_01");
+delay (1000);
+goto move;
+
+label zone2:
+HUMAN_Move("ge03_a02");
+label zone1:
+HUMAN_Move("ge03_a01");
+HUMAN_TurnAt(cum);
+HUMAN_SETMODE_Crouch();
+
+label end:

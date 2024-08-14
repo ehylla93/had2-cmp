@@ -1,0 +1,145 @@
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+
+integer aievent;
+integer a;	a=0;
+integer b;	b=0;
+
+frame sit;		Frm_FindFrame(sit,"hlidka_ohr_sit");
+frame cum;		Frm_FindFrame(cum,"hlidka_ohr_cum");
+frame cum2;		Frm_FindFrame(cum2,"hlidka_ohr_cum2");
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f054");
+
+
+HUMAN_SETMODE_Guard();
+
+
+}
+
+
+//-----------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("hlidka ohrada1 alarm c:",aievent);
+}
+HUMAN_SETMODE_StandFast();
+HUMAN_ACTIVITY_Smoke(0);
+HUMAN_SetAnim("",50,50,0);
+
+HUMAN_WeaponOnArm(1);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (b==0)
+{
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("hlidka_ohr8");
+b=1;
+
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+
+
+	EndScript();
+	}
+
+
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(0);
+	SetAlarmType(652,0);
+	HUMAN_SETMODE_Silence();
+	HUMAN_Move("hlidka_ohr7");
+	HUMAN_TurnAt(cum2);
+	HUMAN_SETMODE_Crouch();
+
+	goto end;
+	
+	}
+
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+
+
+//-----------------------------------------------------------------------------------------------------
+
+
+
+Label hlidani:
+	
+	a=(_RandomInt(6));
+	if (a==0)	{	HUMAN_Move("hlidka_ohr1");	Gosub rozhled;	}
+	if (a==1)	{	HUMAN_Move("hlidka_ohr2");	Gosub rozhled;	}
+	if (a==2)	{	HUMAN_Move("hlidka_ohr3");	Gosub rozhled;	}
+	if (a==3)	{	HUMAN_Move("hlidka_ohr4");	Gosub rozhled;	}
+	if (a==4)	{	HUMAN_Move("hlidka_ohr4");	Gosub rozhled;	}
+	if (a==5)	
+		{
+			HUMAN_Move("hlidka_ohr6");
+			HUMAN_TurnAt(cum);
+			HUMAN_SetAnim("%%turnleft",200,200,0);
+			Delay(2800);
+			HUMAN_SetAnim("%%turnright",200,200,0);
+			Delay(3700);
+			HUMAN_SetAnim("",200,200,0);
+		if (_RandomInt(3)==0)
+		{
+		HUMAN_ACTIVITY_Sit(sit);
+		HUMAN_ACTIVITY_Smoke(1);
+		delay(50000);
+		HUMAN_ACTIVITY_Smoke(0);
+		HUMAN_SETMODE_Stand();
+		}
+		}
+goto hlidani;
+
+
+label rozhled:
+
+HUMAN_LookAround(1);
+delay (5000);
+Return;
+
+
+label end:
+

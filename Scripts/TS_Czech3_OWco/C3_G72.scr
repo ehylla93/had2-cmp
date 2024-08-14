@@ -1,0 +1,41 @@
+// Enemy near Sd.Kfz 251
+
+block
+{
+SetAlarmType(1023,1); //all
+}
+// ----------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+
+Whenever player (_PlayerInRange(85))
+{
+HUMAN_Suspend(0);
+HUMAN_WeaponOnArm(1);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETMODE_Walk();
+HUMAN_TurnAtNearestPlayer();
+//HUMAN_SetSniper(True, 5);
+goto END;
+}
+
+//---------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

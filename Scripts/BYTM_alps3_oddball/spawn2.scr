@@ -1,0 +1,49 @@
+// spawnzone 2
+// -------------------------------------
+
+Block {
+MP_EnableSpawnZone("zone1", 1);
+MP_EnableSpawnZone("zone2", 2);
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame text;		FRM_FindFrame(text, "text");
+SetWhenever(z2yes, false);
+SetWhenever(z2no, false);
+
+Integer a=0;
+}
+
+goto END;
+
+// -------------------------------------
+
+//received from text
+OnSignal(1)
+{
+SetWhenever(z2yes, true);
+}
+
+Whenever z2no (_EnemyInRange(MyFRM, 25))
+{
+printf("z2no");
+MP_EnableSpawnZone("zone1", 1);
+MP_EnableSpawnZone("zone2", 2);
+SetWhenever(z2yes, true);
+}
+
+Whenever z2yes (!_EnemyInRange(MyFRM, 25))
+{
+SetWhenever(z2yes, 0);
+printf("z2yes");
+if(a==0)
+{
+a=1;
+SendSignal(text, 3);
+}
+MP_EnableSpawnZone("zone2", 1);
+MP_EnableSpawnZone("zone1", 2);
+SetWhenever(z2no, true);
+}
+
+// -------------------------------------
+
+Label END:

@@ -1,0 +1,49 @@
+// ----------------------Zone8----------------------
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone8");
+Frame EP31;			FRM_FindFrame(EP31,"EP31");
+Frame EP32;			FRM_FindFrame(EP32,"EP32");
+Frame EP33;			FRM_FindFrame(EP33,"EP33");
+Frame EP34;			FRM_FindFrame(EP34,"EP34");
+Frame EP35;			FRM_FindFrame(EP35,"EP35");
+Frame EG31;			FRM_FindFrame(EG31,"EG31");
+Frame EG32;			FRM_FindFrame(EG32,"EG32");
+Frame EG33;			FRM_FindFrame(EG33,"EG33");
+Frame EG34;			FRM_FindFrame(EG34,"EG34");
+Frame EG35;			FRM_FindFrame(EG35,"EG35");
+Frame EFT1;			FRM_FindFrame(EFT1,"EFT1");
+Frame ET11;			FRM_FindFrame(ET11,"ET11");
+Frame ET12;			FRM_FindFrame(ET12,"ET12");
+Frame ET14;			FRM_FindFrame(ET14,"ET14");
+}
+goto end;
+
+Whenever Yes(_PlayerInBox(detect))
+{
+printf ("Player in area 51");
+sendsignal (EFT1,1);
+sendsignal (EP31,1);
+sendsignal (EP32,1);
+sendsignal (EP33,1);
+sendsignal (EP34,1);
+sendsignal (EP35,1);
+sendsignal (EG31,1);
+sendsignal (EG32,1);
+sendsignal (EG33,1);
+sendsignal (EG34,1);
+sendsignal (EG35,1);
+sendsignal (ET11,1);
+sendsignal (ET12,1);
+sendsignal (ET14,1);
+
+MP_EnableSpawnZone("zone2", 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);  //NEW RESPAWN ZONE AVAILABLE
+Delay(2000);
+SUBTITLES_SetOn(0);
+goto end;
+}
+
+label end:

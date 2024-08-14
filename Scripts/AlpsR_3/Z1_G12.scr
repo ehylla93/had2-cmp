@@ -1,0 +1,130 @@
+// Z1_G12 - Vybezka 1 - velitel
+// ----------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"Z1_G13");
+Frame S2;	FRM_FindFrame(S2,"Z1_G14");
+Frame S3;	FRM_FindFrame(S3,"Z1_G15");
+Frame S4;	FRM_FindFrame(S4,"Z1_G16");
+Frame S5;	FRM_FindFrame(S5,"Z1_G17");
+
+Frame terc;	FRM_FindFrame(terc,"CilTerc1");
+Frame sedatko;	FRM_FindFrame(sedatko,"Sedadlo_na_strelnici1");
+Frame Chata_Cp;	FRM_FindFrame(Chata_Cp,"Chata_Cp1");
+Frame ChatCum;	FRM_FindFrame(ChatCum,"Chata_Cp2");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+integer AIEvent;
+
+FRM_SwitchFaceTexture(me,"e_f007");
+}
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Run();
+AIEvent =_GetAlarmType();
+
+If (((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Lie();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever jdem (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_Move("ge07_01");
+HUMAN_Move("ge07_02");
+HUMAN_Move("ge07_03");
+HUMAN_Move("ge07_04");
+HUMAN_Move("ge07_05");
+HUMAN_Move("ge07_06");
+HUMAN_Move("ge07_07");
+HUMAN_Move("ge07_08");
+HUMAN_Move("ge07_09");
+HUMAN_Move("ge07_10");
+HUMAN_Move("ge07_11");
+HUMAN_Move("ge07_12");
+HUMAN_Move("ge07_13");
+HUMAN_Move("ge07_14");
+HUMAN_Move("ge07_15");
+HUMAN_Move("ge07_16");
+HUMAN_Move("ge30_06");
+HUMAN_SETMODE_Stand();
+HUMAN_SetAnim("%%turnleft",200,200,1);
+Delay(2800);
+HUMAN_SetAnim("%%turnright",200,200,1);
+Delay(3700);
+HUMAN_SetAnim("",200,200,1);
+HUMAN_Move("ge30_03");
+SendSignal(S1, 2);
+SendSignal(S2, 2);
+SendSignal(S3, 2);
+SendSignal(S4, 2);
+HUMAN_Move("ge30_01");
+HUMAN_TurnAt(terc);
+HUMAN_Attack(terc,10000);
+HUMAN_TurnAt(sedatko);
+HUMAN_MoveToFrame(sedatko, 0);
+HUMAN_TurnAt(terc);
+SendSignal(S1, 3);
+SendSignal(S2, 3);
+SendSignal(S3, 3);
+SendSignal(S4, 3);
+SendSignal(S5, 3);
+Delay(600);
+HUMAN_ACTIVITY_Sit(sedatko);
+Delay(120000);
+SendSignal(S2, 4);  //Z1_G14  ***  Stridani strazi u strelnice , ja jdu do chaty , uz me boli hlava lol ;)
+SendSignal(S4, 4);  //Z1_G16
+SendSignal(S5, 4);  //Z1_G17
+SendSignal(S1, 4);  //Z1_G13
+SendSignal(S3, 4);  //Z1_G15
+HUMAN_SETMODE_Stand();
+HUMAN_WeaponOnArm(0);
+HUMAN_Move("ge36_01");
+HUMAN_MoveToFrame(Chata_Cp, 0);
+HUMAN_TurnAt(ChatCum);
+goto END;
+}
+
+// -------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(40);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

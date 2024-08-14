@@ -1,0 +1,78 @@
+//ta_dr Pak40 port east
+
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "Blue_3"); 
+  SetAlarmType(1023, True);
+  HUMAN_SETSIGHTRANGE(160);
+  HUMAN_SETHEARRANGE(100);
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+OnDeath(){
+printf("Pak40 dead");
+EndScript();
+}
+
+Whenever XXX ( _PlayerInRange(180) )
+{
+  HUMAN_Suspend(False);
+  printf("Pak spawn");
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+     SetAlarmType(1023, True);		
+   }
+ HUMAN_BoardVehicle("PAK40_1", true, 0);
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  	
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+  HUMAN_BoardVehicle("PAK40_1", true, 0);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("pak alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript(); 
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

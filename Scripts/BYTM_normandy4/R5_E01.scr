@@ -1,0 +1,45 @@
+// R5_E01 - 1st floor, bathroom
+
+block
+{
+SetAlarmType(128,0);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("R5_E01 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+Delay(3000);
+FRM_TeleportNearCheckpoint(MyFRM, "pension2_3", "");
+HUMAN_Suspend(0);
+HUMAN_Move("pension2_1");
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

@@ -1,0 +1,64 @@
+// sniper on General
+// ----------------------------
+
+block{
+Frame light; 		FRM_FindFrame(light, "lamp01");
+//frame SAS5;	FRM_FindFrame(SAS5, "NPC_5");
+frame SAS6;	FRM_FindFrame(SAS6, "NPC_6");
+frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+
+//  Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// ----------------------------
+
+OnDeath(){
+SendSignal(SAS1, 14);
+  EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Onsignal(15)	// from traitor
+{
+Delay(8000);
+//HUMAN_Attack(SAS5, 3500);
+HUMAN_Attack(SAS6, 9500);
+SetAlarmType(1023, true);
+}
+
+
+
+// ---------------------------
+
+  HUMAN_SETMODE_Lie();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_TurnAt(light);
+  
+goto END;
+
+Label END:
+

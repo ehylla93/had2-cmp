@@ -1,0 +1,59 @@
+// SF_G43 - Krupp tlacic
+// ---------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f027");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(65))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%hledam1", 1000, 1000, 1);
+goto END;
+}
+
+// ---------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SETHEARRANGE(20);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

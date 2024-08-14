@@ -1,0 +1,13 @@
+// script for opel near cisterns
+//---------------------------------
+Frame oplAM2l;
+	FRM_FindFrame(oplAM2l, "oplAM2l");
+// -------------------------------------------------------------------------------------------------------------
+
+
+Whenever inrange (_PlayerInRange(500)){
+  FRM_CreateParticle(53, oplAM2l);
+  PlaySound(6, 2);
+  MakeExplosion(oplAM2l, 10000000, 5000);
+  EndScript();
+}

@@ -1,0 +1,115 @@
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+
+
+integer aievent;
+integer a;	a=0;
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f055");
+
+frame cum;		Frm_FindFrame(cum,"hlidka_ohr2_cum");
+frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+
+HUMAN_SETMODE_Guard();
+
+
+}
+
+
+//-----------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("hlidka ohrada2 alarm c:",aievent);
+}
+HUMAN_SETMODE_StandFast();
+HUMAN_ACTIVITY_Smoke(0);
+HUMAN_SetAnim("",50,50,0);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+
+	EndScript();
+	}
+
+
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(0);
+	HUMAN_Move("hlidka_ohr2_6");
+	HUMAN_SETMODE_Silence();
+	HUMAN_TurnAt(cum);
+	HUMAN_SETMODE_Crouch();
+
+	goto end;
+	
+	}
+
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+
+
+//-----------------------------------------------------------------------------------------------------
+
+
+
+Label hlidani:
+	
+	a=(_RandomInt(5));
+	if (a==0)	{	HUMAN_Move("hlidka_ohr2_1");	Gosub rozhled;	}
+	if (a==1)	{	HUMAN_Move("hlidka_ohr2_2");	Gosub rozhled;	}
+	if (a==2)	{	HUMAN_Move("hlidka_ohr2_3");	Gosub rozhled;	}
+	if (a==3)	{	HUMAN_Move("hlidka_ohr2_4");	Gosub rozhled;	}
+	if (a==4)	{	HUMAN_Move("hlidka_ohr2_5");	Gosub rozhled;	}
+	
+goto hlidani;
+
+
+label rozhled:
+
+HUMAN_LookAround(1);
+delay (5000);
+Return;
+
+
+label end:
+

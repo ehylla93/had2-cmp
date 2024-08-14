@@ -1,0 +1,35 @@
+// efekt odfouknuteho snehu ze strechy
+
+frame FRM;	FRM_GetMyFrame(FRM);
+frame zvuk;	FRM_FindFrame(zvuk, "S_snih04");	
+integer wait;
+integer counter = 5;
+
+label loop:
+  Delay(2500);
+  SetWhenever(KO, true);
+  Delay(30000);
+goto loop;
+
+Whenever OK ( (_PlayerInRange(40) ) AND  (!_PlayerInRange(15)) )
+{
+  FRM_CreateParticle(30, FRM);
+  if (counter == 5) 
+    {
+          FRM_SetOn(zvuk, true);
+          counter = 0;
+    }
+  counter = counter + 1;
+  wait = _RandomInt(5000) + 5000;
+  Delay(wait);
+  SetWhenever(OK, true);
+  goto loop;
+}
+
+Whenever KO ( (_PlayerInRange(15)) OR (!_PlayerInRange(40)) )
+{
+  SetWhenever(OK, true);
+  goto loop;
+}
+
+

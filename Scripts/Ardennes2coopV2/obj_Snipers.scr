@@ -1,0 +1,112 @@
+//----------------------objective2----------------------
+// Kill the snipers.
+//--------------------------------------------
+
+
+//Enemy short names
+
+//ST = South Trench
+//SH = South Hill
+//NT = North Trench
+//NH = North Hill
+//EF = East Forest
+//WF = West Forest
+//SHF = South Hill Forest
+//SHT = South Hill Trench
+//FH = Field Bomb Holes
+
+
+
+
+block
+{
+//Frame obj;		FRM_FindFrame(obj,"objectives");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame E01;		FRM_FindFrame(E01,"ES0");
+Frame E02;		FRM_FindFrame(E02,"ES1");
+Frame E03;		FRM_FindFrame(E03,"ES2");
+Frame E04;		FRM_FindFrame(E04,"ES3");
+Frame E05;		FRM_FindFrame(E05,"ES4");
+Frame E06;		FRM_FindFrame(E06,"ES5");
+Frame E07;		FRM_FindFrame(E07,"ES6");
+Frame E08;		FRM_FindFrame(E08,"ES7");
+Frame E09;		FRM_FindFrame(E09,"ES8");
+Frame E10;		FRM_FindFrame(E10,"ES9");
+Integer rnd1;
+Integer counter1;
+counter1=0;
+Integer C1;
+//
+Integer S0;
+Integer S1;
+Integer S2;
+Integer S3;
+Integer S4;
+Integer S5;
+Integer S6;
+Integer S7;
+Integer S8;
+Integer S9;
+}
+goto RandomSnipers;
+
+//----------------------Random Snipers----------------------
+Label RandomSnipers:
+//Printf("RandomSnipers");
+gosub Rnd2; S0=rnd1;    //Add rnd1 value to variable
+gosub Rnd2; S1=rnd1;
+gosub Rnd2; S2=rnd1;
+gosub Rnd2; S3=rnd1;
+gosub Rnd2; S4=rnd1;
+gosub Rnd2; S5=rnd1;
+gosub Rnd2; S6=rnd1;
+gosub Rnd2; S7=rnd1;
+gosub Rnd2; S8=rnd1;
+gosub Rnd2; S9=rnd1;
+if (counter1<3) {goto RandomSnipers;}   //if 'counter1' less than 3 = go to next round
+else {goto Send;}
+Label Rnd2:
+rnd1=(_randomint(2));  		//0 or 1, 1 to Spawn sniper / 0 to kill
+counter1=counter1+rnd1;		//Count activated snipers, add 0 or 1, SendSignal(1)=Suspend(0)
+return;
+//--------------------------------------------
+
+
+label Send:
+//Printf("Snipers SEND");
+sendsignal (E01,S0);    //Send 0 or 1, 1 to Spawn sniper / 0 to kill
+sendsignal (E02,S1);
+sendsignal (E03,S2);
+sendsignal (E04,S3);
+sendsignal (E05,S4);
+sendsignal (E06,S5);
+sendsignal (E07,S6);
+sendsignal (E08,S7);
+sendsignal (E09,S8);
+sendsignal (E10,S9);
+goto Count;
+
+
+label Count:
+C1=0;
+C1=C1+_ACTOR_GetState(E01);
+C1=C1+_ACTOR_GetState(E02);
+C1=C1+_ACTOR_GetState(E03);
+C1=C1+_ACTOR_GetState(E04);
+C1=C1+_ACTOR_GetState(E05);
+C1=C1+_ACTOR_GetState(E06);
+C1=C1+_ACTOR_GetState(E07);
+C1=C1+_ACTOR_GetState(E08);
+C1=C1+_ACTOR_GetState(E09);
+C1=C1+_ACTOR_GetState(E10);
+//printfnumber("C1: ",C1);
+if (C1==0)
+{
+SaveGameValue(20, C1);  //Snipers
+//SendSignal(obj, 3);  //BUGS, BUGS EVERYWHERE !!!
+goto end;
+}
+delay(15000);
+goto Count;
+
+label end:

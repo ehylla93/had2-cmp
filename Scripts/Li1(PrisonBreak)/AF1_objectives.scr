@@ -1,0 +1,212 @@
+//----------------------objectives----------------------
+//1. 17066  Destroy the ammunitions store.
+//2. 17075	Eliminate the Gestapo officer.
+//3. 6117	Destroy the radio station.
+//4. 17006	Place the homing transmitter.
+//5. 6165	Destroy the anti-aircraft defence.
+//6. 15519	Photograph plans of the deployment of enemy units.
+//7. 6086	Destroy the heavy German equipment.
+//8. 4675	Kill the snipers.
+//9. 4617	Gather in the escape area.
+//--------------------------------------------
+Block
+{
+Frame me;			FRM_GetMyFrame(me);
+Frame endzone;		FRM_FindFrame (endzone,"DetectZone1");
+Frame txt;			FRM_FindFrame (txt,"Text");
+Frame EOF1;			FRM_FindFrame(EOF1,"EOF1");
+Frame EF01;			FRM_FindFrame(EF01,"EF01");
+Frame EF02;			FRM_FindFrame(EF02,"EF02");
+Frame EF03;			FRM_FindFrame(EF03,"EF03");
+//Frame p8;			FRM_FindFrame(p8,"pdummy_8");
+Frame Beacon;		FRM_FindFrame(Beacon,"Beaconplace");
+Frame Plan1;		FRM_FindFrame(Plan1, "m_mapa_2"); 
+Frame Plan2;		FRM_FindFrame(Plan2, "m_mapa_3"); 
+Frame Plan3;		FRM_FindFrame(Plan3, "m_mapa_4"); 
+Frame dyna1;    	FRM_FindFrame(dyna1, "w_explosive_1"  );
+Frame dyna2;    	FRM_FindFrame(dyna2, "w_explosive_2"  );
+Frame expl_scr;		FRM_FindFrame(expl_scr,"G_F1_SKY_");
+Frame veh_scr;		FRM_FindFrame(veh_scr,"vehicles");
+Integer NumOfObj;
+Integer rnd2;       //0 or 1 (1 to activate Objective)
+Integer counter1;   //counts from 1 to 8 (max 8 random Objectives)
+Integer counter2;   //counts activated Objectives to compare with NumOfObj
+Integer C_counter;
+counter1=0;
+counter2=0;
+C_counter=0;
+NumOfObj=(_randomint(3)+3);  //minimum number of Objectives
+SaveGameValue(1, 0);
+SaveGameValue(2, 0);
+SaveGameValue(3, 0);
+SaveGameValue(4, 0);
+SaveGameValue(5, 0);
+SaveGameValue(6, 0);
+SaveGameValue(7, 0);
+SaveGameValue(8, 0);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(5, 4);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+SetObjectiveStatus(8, 4);
+SetObjectiveStatus(9, 4);
+SetWhenever(OBJ_ammo, 0);
+SetWhenever(OBJ_officer, 0);
+SetWhenever(OBJ_radio, 0);
+SetWhenever(OBJ_beacon, 0);
+SetWhenever(OBJ_aa, 0);
+SetWhenever(OBJ_foto, 0);
+SetWhenever(OBJ_vehicles, 0);
+SetWhenever(OBJ_snipers, 0);
+SetWhenever(EndMission, 0);
+}
+goto ObjLoop;
+//SetObjectiveStatus: 0=Not completed, 1=Success, 2=Failed, 4=Hidden
+
+//----------------------Random Objectives----------------------
+Label ObjLoop:
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+if (counter2<NumOfObj){counter1=0; goto ObjLoop;}
+else {goto SetObjs;}
+//
+Label RndObj:
+counter1=counter1+1;
+rnd2=(_randomint(2));
+if ((rnd2==1)and(_LoadGameValue(counter1)==0))
+{SetObjectiveStatus(counter1, 0); SaveGameValue(counter1, 1); counter2=counter2+1;} 
+return;
+//count each activated Objective only 1 time!!! (counter2)
+//--------------------------------------------
+
+Label SetObjs:
+block
+{
+if (_LoadGameValue(1)==1){SetWhenever(OBJ_ammo, 1); sendsignal(expl_scr,1); printf("Obj 1 active");}
+if (_LoadGameValue(2)==1){SetWhenever(OBJ_officer, 1); printf("Obj 2 active");}
+if (_LoadGameValue(3)==1){SetWhenever(OBJ_radio, 1); printf("Obj 3 active");}
+if (_LoadGameValue(4)==1){SetWhenever(OBJ_beacon, 1); printf("Obj 4 active");}
+if (_LoadGameValue(5)==1){SetWhenever(OBJ_aa, 1); printf("Obj 5 active");}
+if (_LoadGameValue(6)==1){SetWhenever(OBJ_foto, 1); printf("Obj 6 active");}
+if (_LoadGameValue(7)==1){SetWhenever(OBJ_vehicles, 1); printf("Obj 7 active");}
+if (_LoadGameValue(8)==1){SetWhenever(OBJ_snipers, 1); printf("Obj 8 active");}	
+}
+goto end;
+//		
+Whenever OBJ_ammo ((_ACTOR_GetState(dyna1)==2) and (_ACTOR_GetState(dyna2)==2))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(1, 1);
+}
+}
+
+Whenever OBJ_officer (_ACTOR_GetState(EOF1)==0)
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(2, 1);
+}
+}
+
+Whenever OBJ_radio (_SignalReceived(3))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(3, 1);
+}
+}
+
+Whenever OBJ_beacon (_ACTOR_GetState(Beacon)==1)
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(4, 1);
+printf ("Bacon is backed !");
+}
+}
+
+Whenever OBJ_aa (_SignalReceived(5))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(5, 1);
+}
+}
+
+Whenever OBJ_foto (((_Actor_GetState(Plan1)==1) And (_Actor_GetState(Plan2)==1)) And (_Actor_GetState(Plan3)==1))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(6, 1);
+}
+}
+
+Whenever OBJ_vehicles (_SignalReceived(7))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(7, 1);
+}
+}
+
+Whenever OBJ_snipers (_SignalReceived(8))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{SetObjectiveStatus(9, 0); SendSignal(txt, 1); SetWhenever(EndMission, 1);}
+SetObjectiveStatus(8, 1);
+}
+}
+
+//----------------------EndMission----------------------
+Whenever EndMission (_MP_AllTeamMembersAreInRange(1, 25))
+{
+SendSignal(txt, 4);
+Delay(6000);
+SetObjectiveStatus(9, 1);
+goto end;
+}
+
+Label end:
+

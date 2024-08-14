@@ -1,0 +1,8 @@
+frame Radio_sound;	 FRM_FindFrame(Radio_sound_2, "bytm1");		
+
+FRM_SetOn(Radio_sound, true);
+
+OnDeath()
+{
+  FRM_SetOn(Radio_sound, false);
+}

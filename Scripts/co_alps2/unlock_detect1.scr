@@ -1,0 +1,27 @@
+
+block
+{
+Frame al2_09;	FRM_FindFrame(al2_09,"al2_09");
+Frame al2_10;	FRM_FindFrame(al2_10,"al2_10");
+integer a;	a=0;
+
+SetWhenever(stoji,0);
+}
+
+Whenever stoji(_PlayerInRange(1))
+{
+a=a+1;
+if (a==5)
+{
+SendSignal(al2_09,7);
+SendSignal(al2_10,7);
+goto end;
+}
+delay(200);
+SetWhenever(stoji,1);
+delay (300);
+a=0;
+goto end;
+}
+
+Label end:

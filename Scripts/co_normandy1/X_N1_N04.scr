@@ -1,0 +1,146 @@
+// N04 - at the entrance gate
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame look01;
+	FRM_FindFrame(look01, "N04_look01");
+Frame see7;
+	FRM_FindFrame(see7, "dummy_see7");		
+Frame see8;
+	FRM_FindFrame(see8, "dummy_see8");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer wait;
+	wait=0;
+Integer turn;
+	turn=0;
+Integer animenumber;
+	animenumber=0;
+Integer aievent;
+	aievent=0;
+Integer setalarm;
+	setalarm=0;
+	
+SetAlarmType(16, false);
+//SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_Stop();
+	HUMAN_WeaponOnArm(1);
+
+		aievent=_GetAlarmType();
+
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_WeaponOnArm(0);
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_SETMODE_Stand();
+	If(setalarm==1)	{	GoTo alarmed;		}
+	GoTo path;
+}
+
+Whenever player(_SignalReceived(3))	// received from N04_A1
+{
+	HUMAN_Suspend(false);
+	If(setalarm==1)	{	GoTo alarmed;		}
+	GoTo path;
+}
+
+Whenever activ(_SignalReceived(10))	// received from NXY_A2
+{
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+Whenever alarm18(_SignalReceived(4))		// received from Alarm18
+{
+	setalarm=1;
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+SetWhenever(player, false);
+FRM_SwitchFaceTexture(me, "e_f039");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_Move("N04_1");
+	Gosub move_done;
+	HUMAN_Move("N04_2");
+	Gosub move_done;
+	HUMAN_Move("N04_3");
+	Gosub move_done;
+	HUMAN_Move("N04_4");
+	Gosub move_done;
+	HUMAN_Move("N04_5");
+	Delay(5000);
+	GoTo path;
+
+Label move_done:
+		HUMAN_TurnAt(look01);
+		Delay(200);
+		animenumber=_RandomInt(3)+1;
+	If(animenumber==1)
+	{
+		HUMAN_SetAnim("%%kopkamen1", 200, 200, false);
+		Delay(4100);
+		Return;
+	}
+	If(animenumber==2)
+	{
+		HUMAN_SetAnim("%%lenin", 200, 200, false);
+		Delay(9800);
+		Return;
+	}
+	If(animenumber==3)
+	{
+		HUMAN_SetAnim("%%nuda", 200, 200, false);
+		Delay(10700);
+		HUMAN_SetAnim("%%nuda1", 200, 500, false);
+		Delay(4200);
+		Return;
+	}
+	Return;
+	GoTo path;
+
+Label alarmed:
+	HUMAN_Move("N04_1");
+	HUMAN_TurnAt(look01);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SetOptimized(2);
+	HUMAN_SETMODE_Run();
+	GoTo end;
+
+Label end:

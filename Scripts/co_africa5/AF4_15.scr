@@ -1,0 +1,69 @@
+// AF4_15 - guarding airport
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER counter 			= 0;
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(100)){
+  goto ACTIVATE;
+}
+
+OnSignal(1){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  block{
+    SetWhenever(player, false);
+    HUMAN_SETMODE_Stand();
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(1);
+    Atype = _GetAlarmType();
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(512, false);
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(1);
+  goto ACTIVITY;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Suspend(true);
+  HUMAN_SETMODE_Guard();
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+
+Label ACTIVITY:
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SETMODE_Guard();
+  HUMAN_Move("AF4_15_01");
+  HUMAN_Move("AF4_15_02");
+goto ACTIVITY;
+
+Label END:

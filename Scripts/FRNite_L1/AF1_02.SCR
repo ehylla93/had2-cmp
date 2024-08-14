@@ -1,0 +1,72 @@
+// Enemy before middle gate 
+// ----------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+FRAME this;			FRM_GetMyFrame(this);
+//  FRM_SwitchFaceTexture(this, "e_f099");
+
+Frame speech;	FRM_FindFrame(speech, "AF1_02_A1");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+}
+
+// ----------------------------------------
+
+OnAlarm()
+{
+  Block
+  {
+//    SendSignal(speech, 2);	// konec hovoru
+    HUMAN_SetOptimized(false);
+  } 
+  EndScript();
+}
+
+OnDeath()
+{
+  PlaySound(6, 10);
+  FRM_CreateParticle(53, this);
+  SendSignal(speech, 2);	// konec hovoru
+  EndScript();
+}
+
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(200))
+{
+HUMAN_Suspend(0);
+SendSignal(speech, 1);	
+goto END;
+}
+
+
+
+// ----------------------------------------
+
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(85);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

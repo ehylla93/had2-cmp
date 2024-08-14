@@ -1,0 +1,78 @@
+// BU2_Allied09 - allied soldier - treating Frank
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame look;		FRM_FindFrame(look, "BU2_Allied09_incoming");
+Frame look2;	FRM_FindFrame(look2, "BU2_Allied09_turnmedic");
+Frame me;		FRM_GetMyFrame(me);
+	
+HUMAN_SETEVENTS(false);
+SetAlarmType(1023, false);
+}
+
+FRM_SwitchFaceTexture(me, "e_f057");
+HUMAN_Suspend(true);
+
+HUMAN_Suspend(1);
+
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever player(_PlayerInRange(40))
+{
+	HUMAN_Suspend(false);
+	HUMAN_WeaponOnArm(0);
+	HUMAN_TurnAt(look2);
+	HUMAN_SetAnim("%%medik", 200, 200, true);
+	GoTo end;
+}
+
+Whenever playerinsight(_SignalReceived(1))	// received from B2_Allied09_incoming
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_Attack(look, 1);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	GoTo turncykl;
+}
+
+OnSignal(2)	// received from BU2_Allied10 on death
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_TurnAtNearestPlayer();
+	GoTo turncykl;
+}
+
+Whenever playernear(_PlayerInRange(5))
+{
+	HUMAN_SETMODE_Stand();
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 13992603, 3, 20);
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 13992604, 3, 20);
+	HUMAN_WeaponOnArm(0);
+	Delay(500);
+	HUMAN_TurnAt(look2);
+	HUMAN_SetAnim("%%medik", 200, 200, true);
+	GoTo end;
+}
+
+OnDeath()
+{
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label turncykl:
+	HUMAN_TurnAtNearestPlayer();
+	Delay(500);
+	GoTo turncykl;
+
+Label end:

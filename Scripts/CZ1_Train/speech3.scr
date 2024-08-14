@@ -1,0 +1,88 @@
+// speech3 - speech dummy for Ge_5, Ge_11
+Frame ge5;
+	FRM_FindFrame(ge5, "Ge_5");
+Frame ge11;
+	FRM_FindFrame(ge11, "Ge_11");
+Integer rozhovorcounter;
+	rozhovorcounter=1;
+
+SetWhenever(player, false);
+SetWhenever(notplayer, false);
+// -------------------------------------------------------------------------------------------------------------
+Whenever player(_PlayerInRange(10))
+{
+	SetWhenever(notplayer, true);
+	SendSignal(ge5, 2);
+	SendSignal(ge11, 2);
+	If(rozhovorcounter==1)	{	GoTo rozhovor;	}
+	If(rozhovorcounter==2)	{	GoTo rozhovor2;	}
+	If(rozhovorcounter==3)	{	GoTo rozhovor3;	}
+}
+
+Whenever notplayer(!_PlayerInRange(12))
+{
+	rozhovorcounter=rozhovorcounter+1;
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+OnSignal(1)	// received from Ge_5
+{
+	SetWhenever(player, true);
+}
+
+OnSignal(2)	// received from Ge_5, Ge_11 on alarm, on death
+{
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(ge5, 18993618, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993621, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993619, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993622, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993620, 3, 20);
+	GoTo end;
+
+Label rozhovor2:
+	FRM_MorphSpeechDelayed(ge5, 18993813, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993814, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993815, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993816, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993817, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993818, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993819, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993820, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993821, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993822, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993823, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993824, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993825, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993826, 3, 20);
+	GoTo end;
+
+Label rozhovor3:
+	rozhovorcounter=0;
+	FRM_MorphSpeechDelayed(ge5, 18993827, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993828, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993829, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993830, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993831, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993832, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993833, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993834, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993835, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993836, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993837, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993838, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993839, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993840, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993841, 3, 20);
+	FRM_MorphSpeechDelayed(ge5, 18993842, 3, 20);
+	FRM_MorphSpeechDelayed(ge11, 18993843, 3, 20);
+	GoTo end;
+
+
+Label end:

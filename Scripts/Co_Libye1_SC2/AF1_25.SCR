@@ -1,0 +1,73 @@
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame look01;		FRM_FindFrame(look01, "AF1_25_look01");
+integer  AIEvent = 0; 
+}
+
+OnAlarm()
+{
+  HUMAN_SetAnim("", 200, 200, false);
+  Block
+  {
+    AIEvent =_GetAlarmType(); 
+    PrintfNumber("Vojak  --25--  jde do AI, alarm: ", AIEvent); 
+    HUMAN_SetOptimized(false);
+  } 
+  EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(true);
+	HUMAN_WeaponOnArm(False);
+	Delay(750);
+	GoTo activity;
+}
+
+OnDeath()
+{
+  Printf("mrtvola ... ---25--- ");
+  EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received from AF1_25_A3, A4, A6
+{
+	HUMAN_Suspend(false);
+	SetWhenever(activate2, false);
+	GoTo activity;
+}
+
+Whenever activate2(_SignalReceived(2))	// received from AF1_25_A1, A2, A5
+{
+	HUMAN_Suspend(false);
+	SetWhenever(activate, false);
+	GoTo chcanie;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(true);
+HUMAN_Suspend(true);
+GoTo end;
+
+Label chcanie:
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("AF1_25_03");
+	Delay(1000);
+	HUMAN_SetAnim("%%chcije", 200, 200, true);
+	Delay(30000);
+	HUMAN_SetAnim("", 200, 200, false);
+	Delay(1000);
+	HUMAN_SETMODE_Guard();
+
+Label activity:
+	HUMAN_Move("AF1_25_01");
+	HUMAN_Move("AF1_25_02");
+GoTo activity;
+
+Label end:

@@ -1,0 +1,43 @@
+
+block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame kuzel;	FRM_FindFrame(kuzel,"k_tirpicrefl1");
+
+Frame g4;		FRM_FindFrame(g4, "tirpic_guard_4");
+Frame g8;		FRM_FindFrame(g8, "tirpic_guard_8");
+Frame g11;		FRM_FindFrame(g11, "tirpic_guard_11");
+Frame g15;		FRM_FindFrame(g15, "tirpic_guard_15");
+Frame refl;		FRM_FindFrame(refl, "k_tirpicreflx3");
+
+FRM_SetOn(kuzel,0);
+}
+
+goto end;
+
+OnSignal(1)
+{
+Block
+{
+SendSignal (g4,10);
+SendSignal (g8,10);
+SendSignal (g11,10);
+SendSignal (g15,10);
+}
+delay (4000);
+FRM_SetOn(refl,0);
+FRM_SetOn(kuzel,1);
+delay (1000);
+FRM_RotateY(me,-143, 10);
+delay (12000);
+goto svit;
+}
+
+label svit:
+delay (4300);
+FRM_RotateY(me,22, 10);
+delay (4300);
+FRM_RotateY(me,-22, 10);
+goto svit;
+
+Label end:

@@ -1,0 +1,14 @@
+// Ge27b_ activator
+Frame ge27;
+	FRM_FindFrame(ge27, "Ge27b_");
+Frame ge8;
+	FRM_FindFrame(ge8, "Ge_8");
+Frame treb;
+	FRM_FindFrame(treb, "Ci_");
+
+Whenever player(_PlayerInRange(2))
+{
+	SendSignal(treb, 1);
+	SendSignal(ge8, 1);
+	SendSignal(ge27, 1);
+}

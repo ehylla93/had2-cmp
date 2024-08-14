@@ -1,0 +1,114 @@
+// N41 - guard standing in courtyard and smokes
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;
+	aievent=0;
+Integer setalarm;
+	setalarm=0;
+Frame look01;
+	FRM_FindFrame(look01, "N41_look01");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer a = 0;
+	
+SetAlarmType(16, false);
+//SetAlarmType(1023, false);
+//SetAlarmType(1, 1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_WeaponOnArm(1);
+
+	Block
+	{
+		aievent=_GetAlarmType();
+	HUMAN_SETSIGHTRANGE(80);
+	}
+
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+
+	EndScript();
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever player(_SignalReceived(1))	// received from N02N03_A03, N06N07_A1, NXX_A1, NXX_A4
+{
+	HUMAN_Suspend(false);
+	If(setalarm==1)	{	GoTo alarmed;	}
+	GoTo end;
+}
+
+Whenever activ(_SignalReceived(2))	// received from NXY_A2
+{
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+OnSignal(3)	// received from N06
+{
+	GoTo path;
+}
+
+Whenever alarm18(_SignalReceived(4))		// received from Alarm18
+{
+	setalarm=1;
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f054");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_Move("N41_1");
+	HUMAN_SetOptimized(2);
+	
+HUMAN_WeaponOnArm(0);
+Delay(2000);
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 0);		//(Looking Through Pockets Then Lights Fag)
+Delay(10000);
+Label SMOKE:
+a=a+1;
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 0);		//(Brings Hand Up To Smoke)
+Delay(10000);
+
+if(a==10)
+{
+goto end;
+}
+goto SMOKE;
+
+Label alarmed:
+	HUMAN_TurnAt(look01);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+Label end:

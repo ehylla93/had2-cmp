@@ -1,0 +1,100 @@
+// Obj 4 - DESTROY THE SECOND SECTION
+// ------------------------------------
+
+
+Block
+{
+Frame me;		                   FRM_GetMyFrame(me);
+Frame   obj4_frame;                    FRM_FindFrame( obj4_frame, "munice"  );
+Frame   w_explosive_1;         FRM_FindFrame( w_explosive_1, "w_explosive_1"  );
+Frame   particle3;                 FRM_FindFrame( particle3, "__Particle3"  );
+
+Frame Obj1;		    FRM_FindFrame(Obj1, "Obj1"); // to activate find docs 
+Frame AMMO_10;		    FRM_FindFrame(AMMO_10, "AMMO_10");
+Frame A400;		        FRM_FindFrame(A400, "A400");
+Frame A4002;		    FRM_FindFrame(A4002, "A4002");
+Frame A4003;		    FRM_FindFrame(A4003, "A4003");
+Frame A4004;		    FRM_FindFrame(A4004, "A4004");
+Frame A4005;		    FRM_FindFrame(A4005, "A4005");
+Frame A4_R1507;		    FRM_FindFrame(A4_R1507, "A4_R1507");
+Frame sniph;		FRM_FindFrame(sniph,"sniper_hill");
+Frame Charon_1;		    FRM_FindFrame(Charon_1, "Charon_1");
+
+Frame spawnz;		FRM_FindFrame(spawnz,"Spawnzones");
+
+//SetObjectiveStatus(4, 0);
+
+SetActorState( w_explosive_1, 3 );
+
+}
+// ---------------------------
+
+OnDeath(){
+
+EndScript();
+}
+
+OnAlarm(){
+
+EndScript();
+}
+
+OnAlarmDone(){
+
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(2)
+{
+     Delay(5000);
+
+SetObjectiveStatus(4, 0);
+SetActorState( w_explosive_1, 0 );
+
+}
+
+
+
+Whenever "Objective4" ( _ACTOR_GetState(w_explosive_1) == 2 )
+
+{
+      Delay(400);
+	            SUBTITLES_SetOn(true);
+          SUBTITLES_SetText( 57999910 );
+	SetActorState( obj4_frame, 0 );
+      SetObjectiveStatus(4, 1); 
+      FRM_CreateParticle( 125,  particle3 );
+
+SendSignal(spawnz, 2);
+SendSignal(A400, 1);
+SendSignal(A4002, 1);
+SendSignal(A4003, 1);
+SendSignal(A4004, 1);
+SendSignal(A4005, 1);
+SendSignal(A4_R1507, 1);
+SendSignal(AMMO_10, 1);
+SendSignal(sniph, 1);  
+SendSignal(Charon_1, 3);
+
+Delay(4000);
+SUBTITLES_SetOn(True);
+SUBTITLES_SetText(04010806);	//"NEW OBJECTIVE: FIND DOCUMENTS CONTAINING RESEARCH RESULTS."
+Delay(4000);
+SUBTITLES_SetOn(False);
+   
+//  SUBTITLES_SetOn(True);
+//  SUBTITLES_SetText(02990455); 
+  Delay(1000);
+
+SendSignal(Obj1, 4);	// activate find documents
+
+}
+
+
+
+// ---------------------------
+
+goto END;
+
+Label END:

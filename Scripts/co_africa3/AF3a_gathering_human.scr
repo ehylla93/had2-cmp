@@ -1,0 +1,83 @@
+block
+{
+  FRAME look1;		FRM_FindFrame(look1, "m_palma");
+  FRAME look2;		FRM_FindFrame(look2, "m_AF5_ost_dr4");
+  FRAME look3;		FRM_FindFrame(look3, "m_palma10");
+  INTEGER pos		= 0;
+  INTEGER atpos		= 0;
+  INTEGER p			= 0;
+}
+
+goto TOTAL_END;
+
+OnSignal(21)
+{
+  goto PRESUN;
+}
+
+OnAlarm()
+{
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, false);
+  goto PRESUN;
+}
+
+Label PRESUN:
+    HUMAN_SetAnim("", 100, 100, false);
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(1);
+    SetAlarmType(1023, true);
+    SetAlarmType(512, false);
+	
+  if(atpos == 0)
+  {
+    HUMAN_SetMode_Crouch();
+    HUMAN_SetMODE_Walk();
+    HUMAN_WeaponOnArm(true);
+    if(pos == 0)
+    {
+      block
+      {
+        pos = _LoadGameValue(101);
+        p = pos + 1;
+        SaveGameValue(101, p);
+      }
+    }
+
+    if(pos == 1)
+    {
+      HUMAN_Move("AF3a_ls01");
+      HUMAN_TurnAt(look1);
+    }
+    if(pos == 2)
+    {
+      HUMAN_Move("AF3a_ls02");
+      HUMAN_TurnAt(look2);
+    }
+    if(pos == 3)
+    {
+      HUMAN_Move("AF3a_ls03");
+      HUMAN_TurnAt(look3);
+    }
+    if(pos == 4)
+    {
+      HUMAN_Move("AF3a_ls04");
+    }
+    atpos = 1;
+  }
+goto END;
+
+Label END:
+  if(pos == 4)
+  {
+    HUMAN_TurnAtNearestPlayer();
+    Delay(1000);
+    goto END;
+  }
+
+Label TOTAL_END:

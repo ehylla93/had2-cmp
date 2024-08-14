@@ -1,0 +1,5 @@
+//Spawnzone
+
+MP_EnableSpawnZone("zone1", 1);
+MP_EnableSpawnZone("zone2", 0);
+EndScript();

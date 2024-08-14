@@ -1,0 +1,185 @@
+// RC_G06 - Guarding the Radio Station
+// ----------------------------------------
+
+Block
+{
+Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+Frame Radio;	FRM_FindFrame(Radio,"RC_Radio");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f056");
+
+Integer AIEvent;
+Integer Subs;	Subs = 0;
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(110);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+If(Subs == 1)
+{
+SUBTITLES_SetOn(0);
+}
+EndScript();
+}
+
+OnAlarm()
+{
+SendSignal(Reinf, 1);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+
+AIEvent = _GetAlarmType();
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 64) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Radio, 6);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetSniper(1, 1);
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+HUMAN_SETHEARRANGE(100);
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+}
+
+If((((((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32)) OR (AIEvent == 64)) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+}
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 120))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Guard();
+goto WatchPatrol;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Whenever I_Call_Reinf (_SignalReceived(7))
+{
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_Move("C5_G43_01");
+HUMAN_MoveToFrame(Radio, 2);
+Subs = 1;
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(me, 14992877, 10, 40);
+SendSignal(Reinf, 5);
+FRM_MorphSpeechDelayed(me, 14992878, 10, 40);
+FRM_MorphSpeechDelayed(me, 14992879, 10, 40);
+SUBTITLES_SetOn(0);
+HUMAN_SETMODE_Crouch();
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+goto END;
+}
+
+// ----------------------------------------
+
+Label WatchPatrol:
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 1);
+Delay(6500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%turnleft", 1000, 1000, 1);
+Delay(3200);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+Delay(6000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+Delay(4000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+Delay(2500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 1);
+Delay(3000);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+HUMAN_SetAnim("%%dalekohled", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(145);
+Delay(12000);
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(250);
+goto WatchPatrol;
+
+
+Label END:

@@ -1,0 +1,193 @@
+//
+Block
+{
+Frame Flag1;	FRM_FindFrame(Flag1,"D_flagpole_01");
+Frame Flag2;	FRM_FindFrame(Flag2,"D_flagpole_02");
+Frame Flag3;	FRM_FindFrame(Flag3,"D_flagpole_03");
+Frame Flag4;	FRM_FindFrame(Flag4,"D_flagpole_04");
+Frame Flag5;	FRM_FindFrame(Flag5,"D_flagpole_05");
+Frame Flag6;	FRM_FindFrame(Flag6,"D_flagpole_06");
+Frame Flag7;	FRM_FindFrame(Flag7,"D_flagpole_07");
+Frame Flag8;	FRM_FindFrame(Flag8,"D_flagpole_08");
+Frame Flag9;	FRM_FindFrame(Flag9,"D_flagpole_09");
+Frame Flag10;	FRM_FindFrame(Flag10,"D_flagpole_10");
+Frame Flag11;	FRM_FindFrame(Flag11,"D_flagpole_11");
+Frame Flag12;	FRM_FindFrame(Flag12,"D_flagpole_12");
+Frame Flag13;	FRM_FindFrame(Flag13,"D_flagpole_13");
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,0);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+integer Rnd1;
+Integer C1;
+}
+goto END;
+
+
+//----------------------/Spawn/----------------------
+Whenever Spawn (_PlayerInRange(75))
+{
+DisableSignals(1);
+Rnd1=(_randomint(4)); //Activate
+  if (Rnd1==1)
+  {
+HUMAN_Kill(me);
+goto END;
+  }
+  else
+  {  
+Block
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(65);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Zombie();
+}
+//HUMAN_MoveRandomRadius(10);
+//HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+//HUMAN_SETMODE_Stand();
+//
+Goto Attack_Flags;
+}
+}
+
+
+//----------------------/OnSignal/----------------------
+OnSignal(1) 
+{
+DisableWhenevers(1);
+DisableSignals(1);
+Rnd1=(_randomint(4)); //Activate
+  if (Rnd1==1)
+  {
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+HUMAN_Kill(me);
+goto END;
+  }
+  else
+  {  
+Block
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SETHEARRANGE(65);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Zombie();
+}
+//HUMAN_MoveRandomRadius(10);
+//HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+//HUMAN_SETMODE_Stand();
+//
+Goto Attack_Flags;
+}
+}
+
+
+//----------------------/Attack_Flags/----------------------
+label Attack_Flags:
+
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+
+C1=(_LoadGameValue(25));
+//PrintfNumber("Enemy Group #1 target zone: ",C1);
+  if (C1==1)
+  {HUMAN_MoveToFrame(Flag1, 5);}
+  if (C1==2)
+  {HUMAN_MoveToFrame(Flag2, 5);}
+  if (C1==3)
+  {HUMAN_MoveToFrame(Flag3, 5);}
+  if (C1==4)
+  {HUMAN_MoveToFrame(Flag4, 5);}
+  if (C1==5)
+  {HUMAN_MoveToFrame(Flag5, 5);}
+  if (C1==6)
+  {HUMAN_MoveToFrame(Flag6, 5);}
+  if (C1==7)
+  {HUMAN_MoveToFrame(Flag7, 5);}
+  if (C1==8)
+  {HUMAN_MoveToFrame(Flag8, 5);}
+  if (C1==9)
+  {HUMAN_MoveToFrame(Flag9, 5);}
+  if (C1==10)
+  {HUMAN_MoveToFrame(Flag10, 5);}
+  if (C1==11)
+  {HUMAN_MoveToFrame(Flag11, 5);}
+  if (C1==12)
+  {HUMAN_MoveToFrame(Flag12, 5);}
+  if (C1==13)
+  {HUMAN_MoveToFrame(Flag13, 5);}
+  else
+  {  
+HUMAN_MoveRandomRadius(10);
+//C1=(_LoadGameValue(50));
+Rnd1=(_randomint(5000)+5000);
+delay(Rnd1);
+Goto Attack_Flags;
+  }
+Rnd1=(_randomint(5000)+5000);
+delay(Rnd1);
+HUMAN_MoveRandomRadius(10);
+//HUMAN_SETMODE_Crouch();
+Goto Attack_Flags;
+
+
+//----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_WeaponOnArm(1); 
+HUMAN_SETMODE_Crouch();
+Rnd1=(_randomint(11));  //Aggression
+If ((Rnd1 == 1) or (Rnd1 == 2) or (Rnd1 == 3) or (Rnd1 == 4))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+}
+If (Rnd1 == 10)
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+}
+EndScript();
+}
+
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+//HUMAN_SETMODE_Crouch();
+goto Attack_Flags;
+}
+
+//----------------------OnDeath----------------------
+OnDeath()
+{
+Rnd1=(_randomint(10));  //Items
+  if (Rnd1==5){HUMAN_CreateItemInStore(54, 1);}		//First-Aid kit
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+
+//----------------------END----------------------
+Label END:

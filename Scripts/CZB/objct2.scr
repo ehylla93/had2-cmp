@@ -1,0 +1,26 @@
+// obj 2 - destroy the tanks
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+  Frame t1;		FRM_FindFrame(t1, "La_tiger_1");
+  Frame t2;		FRM_FindFrame(t2, "La_tiger_2");
+  Frame t3;		FRM_FindFrame(t3, "La_tiger_3");
+  Frame t4;		FRM_FindFrame(t4, "La_tiger_4");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Tanks_Destroyed ((((_Actor_GetState(t1) == 0) And (_Actor_GetState(t2) == 0)) And (_Actor_GetState(t3) == 0)) And (_Actor_GetState(t4) == 0))
+{
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(09991829);
+  Delay(4000);
+  SetObjectiveStatus(2, 1);
+  SUBTITLES_SetOn(false);
+  EndScript();
+}
+
+Label end:
+
+

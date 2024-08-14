@@ -1,0 +1,321 @@
+// Obj 6 - Defend your position
+// ----------------------------------
+
+Block
+{
+Frame E01;		FRM_FindFrame(E01, "R4_E01");
+Integer E01s;	E01s = 1;
+Frame E02;		FRM_FindFrame(E02, "R4_E02");
+Integer E02s;	E02s = 1;
+Frame E03;		FRM_FindFrame(E03, "R4_E03");
+Integer E03s;	E03s = 1;
+Frame E04;		FRM_FindFrame(E04, "R4_E04");
+Integer E04s;	E04s = 1;
+Frame E05;		FRM_FindFrame(E05, "R4_E05");
+Integer E05s;	E05s = 1;
+Frame E06;		FRM_FindFrame(E06, "R4_E06");
+Integer E06s;	E06s = 1;
+Frame E07;		FRM_FindFrame(E07, "R4_E07");
+Integer E07s;	E07s = 1;
+Frame E08;		FRM_FindFrame(E08, "R4_E08");
+Integer E08s;	E08s = 1;
+Frame E09;		FRM_FindFrame(E09, "R4_E09");
+Integer E09s;	E09s = 1;
+Frame E10;		FRM_FindFrame(E10, "R4_E10");
+Integer E10s;	E10s = 1;
+Frame E11;		FRM_FindFrame(E11, "R4_E11");
+Integer E11s;	E11s = 1;
+Frame E12;		FRM_FindFrame(E12, "R4_E12");
+Integer E12s;	E12s = 1;
+
+Frame V01;		FRM_FindFrame(V01, "01_SdKfz251_01_01");
+Integer V01s;	V01s = 1;
+Frame V02;		FRM_FindFrame(V02, "01_SdKfz251_01_02");
+Integer V02s;	V02s = 1;
+Frame V03;		FRM_FindFrame(V03, "01_SdKfz251_01_03");
+Integer V03s;	V03s = 1;
+Frame V04;		FRM_FindFrame(V04, "01_SdKfz251_01_04");
+Integer V04s;	V04s = 1;
+Frame V05;		FRM_FindFrame(V05, "01_SdKfz251_01_05");
+Integer V05s;	V05s = 1;
+Frame V06;		FRM_FindFrame(V06, "01_SdKfz251_01_06");
+Integer V06s;	V06s = 1;
+
+Frame V07;		FRM_FindFrame(V07, "01_SdKfz251_02_01");
+Integer V07s;	V07s = 1;
+Frame V08;		FRM_FindFrame(V08, "01_SdKfz251_02_02");
+Integer V08s;	V08s = 1;
+Frame V09;		FRM_FindFrame(V09, "01_SdKfz251_02_03");
+Integer V09s;	V09s = 1;
+Frame V10;		FRM_FindFrame(V10, "01_SdKfz251_02_04");
+Integer V10s;	V10s = 1;
+Frame V11;		FRM_FindFrame(V11, "01_SdKfz251_02_05");
+Integer V11s;	V11s = 1;
+Frame V12;		FRM_FindFrame(V12, "01_SdKfz251_02_06");
+Integer V12s;	V12s = 1;
+
+Frame tank;		FRM_FindFrame(tank, "01_tiger_01");
+Integer Ts;		Ts = 1;
+
+Frame jeeps;	FRM_FindFrame(jeeps, "allied_inc");
+Integer counter = 0;
+SetObjectiveStatus(6, 4);
+}
+goto end;
+
+OnSignal(1) {
+EnableSignal(1, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001015);	// "NEW OBJECTIVE: DEFEND THE AREA AROUND THE CHECKPOINT"
+Delay(4000);
+SUBTITLES_SetOn(0);
+}
+
+Label count:
+Block
+{
+
+If(E01s == 1)
+{
+If(_Actor_GetState(E01)==0)
+{
+counter=counter+1;
+E01s=0;
+}
+}
+
+If(E02s == 1)
+{
+If(_Actor_GetState(E02)==0)
+{
+counter=counter+1;
+E02s=0;
+}
+}
+
+If(E03s == 1)
+{
+If(_Actor_GetState(E03)==0)
+{
+counter=counter+1;
+E03s=0;
+}
+}
+
+If(E04s == 1)
+{
+If(_Actor_GetState(E04)==0)
+{
+counter=counter+1;
+E04s=0;
+}
+}
+
+If(E05s == 1)
+{
+If(_Actor_GetState(E05)==0)
+{
+counter=counter+1;
+E05s=0;
+}
+}
+
+If(E06s == 1)
+{
+If(_Actor_GetState(E06)==0)
+{
+counter=counter+1;
+E06s=0;
+}
+}
+
+If(E07s == 1)
+{
+If(_Actor_GetState(E07)==0)
+{
+counter=counter+1;
+E07s=0;
+}
+}
+
+If(E08s == 1)
+{
+If(_Actor_GetState(E08)==0)
+{
+counter=counter+1;
+E08s=0;
+}
+}
+
+If(E09s == 1)
+{
+If(_Actor_GetState(E09)==0)
+{
+counter=counter+1;
+E09s=0;
+}
+}
+
+If(E10s == 1)
+{
+If(_Actor_GetState(E10)==0)
+{
+counter=counter+1;
+E10s=0;
+}
+}
+
+If(E11s == 1)
+{
+If(_Actor_GetState(E11)==0)
+{
+counter=counter+1;
+E11s=0;
+}
+}
+
+If(E12s == 1)
+{
+If(_Actor_GetState(E12)==0)
+{
+counter=counter+1;
+E12s=0;
+}
+}
+
+If(V01s == 1)
+{
+If(_Actor_GetState(V01)==0)
+{
+counter=counter+1;
+V01s=0;
+}
+}
+
+If(V02s == 1)
+{
+If(_Actor_GetState(V02)==0)
+{
+counter=counter+1;
+V02s=0;
+}
+}
+
+If(V03s == 1)
+{
+If(_Actor_GetState(V03)==0)
+{
+counter=counter+1;
+V03s=0;
+}
+}
+
+If(V04s == 1)
+{
+If(_Actor_GetState(V04)==0)
+{
+counter=counter+1;
+V04s=0;
+}
+}
+
+If(V05s == 1)
+{
+If(_Actor_GetState(V05)==0)
+{
+counter=counter+1;
+V05s=0;
+}
+}
+
+If(V06s == 1)
+{
+If(_Actor_GetState(V06)==0)
+{
+counter=counter+1;
+V06s=0;
+}
+}
+
+If(V07s == 1)
+{
+If(_Actor_GetState(V07)==0)
+{
+counter=counter+1;
+V07s=0;
+}
+}
+
+If(V08s == 1)
+{
+If(_Actor_GetState(V08)==0)
+{
+counter=counter+1;
+V08s=0;
+}
+}
+
+If(V09s == 1)
+{
+If(_Actor_GetState(V09)==0)
+{
+counter=counter+1;
+V09s=0;
+}
+}
+
+If(V10s == 1)
+{
+If(_Actor_GetState(V10)==0)
+{
+counter=counter+1;
+V10s=0;
+}
+}
+
+If(V11s == 1)
+{
+If(_Actor_GetState(V11)==0)
+{
+counter=counter+1;
+V11s=0;
+}
+}
+
+If(V12s == 1)
+{
+If(_Actor_GetState(V12)==0)
+{
+counter=counter+1;
+V12s=0;
+}
+}
+
+If(Ts == 1)
+{
+If(_Actor_GetState(tank)==0)
+{
+counter=counter+1;
+Ts=0;
+}
+}
+
+}
+
+If (counter > 24)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(08991602);		// "OBJECTIVE ACCOMPLISHED: ENEMY ASSAULT REPELLED"
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(7, 0);
+SetObjectiveStatus(6, 1);
+SendSignal(jeeps, 1);
+EndScript();
+}
+
+Delay(10000);
+printfnumber("R4 dead counter: ", counter);
+goto count;
+
+Label end:

@@ -1,0 +1,12 @@
+// AL2_13_A1 - activator for AL2_13, AL2_14
+
+Block {
+Frame al2_13;	FRM_FindFrame(al2_13, "AL2_13");
+Frame al2_14;	FRM_FindFrame(al2_14, "AL2_14");
+}
+
+Whenever player(_PlayerInRange(2))
+{
+	SendSignal(al2_13, 1);
+	SendSignal(al2_14, 1);
+}

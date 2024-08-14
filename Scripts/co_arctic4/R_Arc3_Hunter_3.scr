@@ -1,0 +1,78 @@
+
+  integer  AIEvent;
+
+  frame see; 		FRM_FindFrame(see, "dummy_Hunter_1_see");  // DOPLNIT
+  integer alarm = 0;
+
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+
+SetAlarmType(1023, True);	
+SetAlarmType(8, False);	// zvuky OnUse
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(13)		// DOPLNIT jeho poslani
+{			
+  Printf("Hunter 3 GO !!!!!!!!!");					
+  HUMAN_Suspend(False);			
+}						
+
+label Akce:
+  Delay(6000);
+  HUMAN_Move("Hunter1_1"); 	// Hunter1_1 je OK
+  HUMAN_Move("Hunter1_2"); 	// Hunter1_2 je OK
+  Alarm =1;		// uz nepobezi na utes, ale preda se hned AI
+  Delay(20000);
+  HUMAN_Move("DeAlarm_3");
+  goto TheEnd;
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType();
+      PrintfNumber("Hunter 1: ", AIEvent);
+      HUMAN_SetAnim("", 300, 300, False);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+      HUMAN_SETSIGHTRANGE(150);
+      HUMAN_SETHEARRANGE(180);
+    }
+  If (Alarm == 1) { EndScript(); }
+  Delay(1500);
+  HUMAN_Move("Hunter3_fire");
+  HUMAN_SetSniper(True, 1);
+  HUMAN_SETMODE_Crouch();
+  Delay(1000);
+  HUMAN_TurnAt(see);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(512, False);	  
+  SetAlarmType(511, True);	
+  HUMAN_SetSniper(False, 1);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  If (Alarm == 0) 
+    {
+       HUMAN_Move("Hunter1_2");
+       Alarm = 1;
+    }
+  HUMAN_Move("DeAlarm_3");
+  goto TheEnd;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

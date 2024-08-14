@@ -1,0 +1,108 @@
+// Ridic Haklu (Hakl2)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame hakl;    FRM_FindFrame(hakl,"Hakl2");
+Frame p1;    FRM_FindFrame(p1,"C1_G48");
+Frame p2;    FRM_FindFrame(p2,"C1_G49");
+Frame p3;    FRM_FindFrame(p3,"C1_G50");
+Frame p4;    FRM_FindFrame(p4,"C1_G51");
+Frame p5;    FRM_FindFrame(p5,"C1_G52");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_Drive("", 20);
+Delay(2000);
+Car_SetFuel(hakl, 0);
+SendSignal(p1, 2);
+SendSignal(p2, 2);
+SendSignal(p3, 2);
+SendSignal(p4, 2);
+SendSignal(p5, 2);
+HUMAN_BoardVehicle("Hakl2",  false, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_Move("nastenka");
+HUMAN_SETMODE_Crouch();
+
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+SendSignal(p3, 1);
+SendSignal(p4, 1);
+SendSignal(p5, 1);
+HUMAN_BoardVehicle("Hakl2",  true, 0);
+HUMAN_Drive("blitz_02", 50);
+HUMAN_Drive("blitz_01", 20);
+HUMAN_Drive("", 20);
+Delay(2000);
+Car_SetFuel(hakl, 0);
+SendSignal(p1, 2);
+SendSignal(p2, 2);
+SendSignal(p3, 2);
+SendSignal(p4, 2);
+SendSignal(p5, 2);
+HUMAN_BoardVehicle("Hakl2",  false, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_Move("nastenka");
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

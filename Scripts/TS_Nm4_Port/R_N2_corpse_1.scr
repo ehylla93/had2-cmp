@@ -1,0 +1,6 @@
+// Dead Ally
+
+Frame FRM;		FRM_GetMyFrame(FRM);
+
+HUMAN_SetOptimized(2);
+HUMAN_Kill(FRM);

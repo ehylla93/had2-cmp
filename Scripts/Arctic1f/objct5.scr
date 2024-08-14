@@ -1,0 +1,51 @@
+// Obj 5 - poloz bombu
+// ----------------------------------------
+
+Block
+{
+Frame Bomba;	FRM_FindFrame(Bomba,"expl_02");
+Frame Obj6;	FRM_FindFrame(Obj6,"obj6");
+
+SetWhenever(Bomb_Placed, 0);
+SetWhenever(Bomb_Defused, 0);
+}
+
+// ----------------------------------------
+
+Whenever Bomb_Placed (_Actor_GetState(Bomba)==1)
+{
+SetWhenever(Bomb_Defused, 1);
+SetWhenever(Bomb_Placed, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(02990418);
+Delay(3000);
+SendSignal(Obj6, 1);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Whenever Bomb_Defused (_Actor_GetState(Bomba)==0)
+{
+SetWhenever(Bomb_Placed, 1);
+SetWhenever(Bomb_Defused, 0);
+SUBTITLES_SetOn(1);
+SendSignal(Obj6, 2);
+SetObjectiveStatus(5, 0);
+SUBTITLES_SetText(02990419);
+Delay(5000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Whenever TurnOn (_Signalreceived(1))
+{
+SetObjectiveStatus(5, 0);
+SetWhenever(Bomb_Placed, 1);
+goto END;
+}
+
+
+Label END:

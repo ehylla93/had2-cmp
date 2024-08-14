@@ -1,0 +1,148 @@
+// AF3a_03 - guarding the breach
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME lookAF4_2;			FRM_FindFrame(lookAF4_2, "AF3a_03_lookAF4_2");
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME lookat01;			FRM_FindFrame(lookat01, "AF3a_03_lookat01");
+  FRAME lookat02;			FRM_FindFrame(lookat02, "AF3a_03_lookat02");
+  FRAME look_sit;			FRM_FindFrame(look_sit, "dummy_03_look01");
+  FRAME lookAF4;			FRM_FindFrame(lookAF4, "AF3a_03_lookAF4");
+  FRAME look_alert;			FRM_FindFrame(look_alert, "la_prosteradlo2");
+  INTEGER rnd				= 0;
+  INTEGER state 			= 1;		// state = 0 (nema naladu), state = 1 (reaguje na 02)
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("03: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+    printfnumber("03: ", Atype);
+  }
+
+  if(AType == 32){
+    block{
+      HUMAN_Stop();
+      printf("03 :: Stop and don't move!");
+      Delay(2000);
+      EndScript();
+    }
+  }
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SetAlarm(false);
+  HUMAN_SETSIGHTRANGE(60);
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Guard();
+  goto END;
+}
+
+OnSignal(10){
+  if(state == 0){						// jestlize odpociva
+    printf("03 :: Be quiet Thomas, i don't have time for your jokes");
+    goto ODPOCINEK;
+  }  
+  if(state == 1){						// jestlize je na obchuzce
+    HUMAN_Stop();
+    HUMAN_SetAnim("", 300, 300, false);
+    Delay(1500);    
+    printf("03 :: OK Thomas, I'll take a look");
+    HUMAN_SETMODE_Walk();
+    HUMAN_Move("AF3a_03_10");
+    Delay(1000);
+    FRAME checkw02; 	FRM_FindFrame(checkw02, "l_jezek5");
+    Delay(1000);
+    HUMAN_TurnAt(checkw02);
+    Delay(1000);
+    HUMAN_SetAnim("%%turnleft", 300, 300, false);  Delay(2000);
+    HUMAN_SetAnim("%%turnright", 300, 300, false);  Delay(2000);
+    HUMAN_SETMODE_Guard();
+    goto PATH_01;
+  }  
+}
+
+OnSignal(20){
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF3a_03_alert");
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+goto END;
+
+Label PATH_01:
+  HUMAN_Move("AF3a_03_01");
+  HUMAN_TurnAt(lookAF4);
+  rnd = _RandomInt(5);
+  if(rnd == 0){
+    HUMAN_ACTIVITY_Hot();
+  }
+  Delay(1000);
+  HUMAN_TurnAt(lookAF4_2);
+  Delay(10000);
+  HUMAN_Move("AF3a_03_02");
+  HUMAN_Move("AF3a_03_03");
+  Delay(1000);
+  HUMAN_TurnAt(lookat01);
+  Delay(1000);
+  HUMAN_TurnAt(lookat02);
+  Delay(1000);
+  HUMAN_Move("AF3a_03_02");
+  HUMAN_Move("AF3a_03_04");
+  Delay(1000);
+  HUMAN_ACTIVITY_Hat();
+  HUMAN_Move("AF3a_03_sit");
+  HUMAN_TurnAt(look_sit);
+  state = 0;					//jde si odpocinout
+  HUMAN_WeaponOnArm(false);
+  Delay(2000);
+  HUMAN_ACTIVITY_Smoke(true);
+  HUMAN_SetAnim("%%sedimL", 500, 500, true);
+  Delay(2000);
+//  HUMAN_ACTIVITY_Hot();
+Label ODPOCINEK:
+  Delay(25000);				
+  HUMAN_ACTIVITY_Smoke(false);
+  HUMAN_SETMODE_Stand();	
+  state = 1					//pokracuje v obchuzce
+  HUMAN_Move("AF3a_03_01");
+  Delay(500);
+  HUMAN_TurnAt(lookAF4);
+  Delay(500);
+  HUMAN_Move("AF3a_03_02");
+  Delay(500);
+  HUMAN_TurnAt(lookAF4);
+  Delay(500);
+goto PATH_01;
+
+Label END:

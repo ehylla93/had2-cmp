@@ -1,0 +1,49 @@
+// C5_G55
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  Frame alarm;		FRM_FindFrame(alarm,"C5_alarmdistro");
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(alarm, 1);
+EndScript();
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  HUMAN_SETMODE_Lie();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90004026, 5, 30); // got him
+HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(10)){
+  HUMAN_Suspend(false);
+ goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f029");
+HUMAN_SetOptimized(1);
+Delay(500);
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

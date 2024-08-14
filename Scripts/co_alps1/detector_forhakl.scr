@@ -1,0 +1,17 @@
+//SdKfZ Go!
+
+block
+{
+frame hakl_p;		FRM_FindFrame(hakl_p,"hakl_panaci");
+Frame obj_hakl;		FRM_FindFrame(obj_hakl,"obj_hakl");
+}
+
+Whenever c(_PlayerInRange(18))
+{
+delay(3000);
+SendSignal (obj_hakl,1);
+SendSignal (hakl_p,1);
+EndScript();
+}
+
+label end:

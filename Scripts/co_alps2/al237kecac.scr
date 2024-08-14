@@ -1,0 +1,40 @@
+
+Block {
+Frame ge37;		FRM_FindFrame(ge37, "al2_37");
+Frame timer;	FRM_FindFrame(timer,"timer");
+Frame get_player;
+}
+
+OnSignal(1)
+{
+SUBTITLES_SetOn(1);
+delay(200);
+FRM_GetNearestPlayer(ge37, get_player); 
+FRM_MorphSpeech(get_player, 15993051, 5, 20);
+delay (2000);
+FRM_GetNearestPlayer(ge37, get_player);
+FRM_MorphSpeech(get_player, 15993052, 5, 20);
+delay (1500);
+FRM_MorphSpeech(ge37, 15993053, 5, 20);
+delay (3220);
+FRM_MorphSpeech(ge37, 15993054, 5, 20);
+delay (2550);
+FRM_MorphSpeech(ge37, 15993055, 5, 20);
+delay (7220);
+FRM_MorphSpeech(ge37, 15993056, 5, 20);
+delay (4600);
+FRM_MorphSpeech(ge37, 15993057, 5, 20);
+delay (3900);
+FRM_MorphSpeech(ge37, 15993058, 5, 20);		//"You can go now."
+delay (2000);
+SendSignal(timer, 1);
+SUBTITLES_SetOn(0);
+SendSignal(ge37, 1);
+}
+
+OnSignal(2)
+{
+FRM_MorphSpeech(get_player, 0, 0, 0);
+FRM_MorphSpeech(ge37, 0, 0, 0);
+EndScript();
+}

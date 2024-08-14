@@ -1,0 +1,23 @@
+// Objective 1 - Destroy The Fuel Tank
+//=====================================
+
+Block
+{
+Frame F1;	FRM_FindFrame(F1,"m_nadrz_4");
+Frame F2;  	FRM_FindFrame(F2,"m_nadrz_5");
+
+
+SetObjectiveStatus(1, 0);
+}
+
+//-------------------------------
+
+Whenever FuelTanks_Destroyed ((_Actor_GetState(F1)==0) And (_Actor_GetState(F2)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05011015);
+SetObjectiveStatus(1, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

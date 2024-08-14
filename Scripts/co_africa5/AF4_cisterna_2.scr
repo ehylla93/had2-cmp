@@ -1,0 +1,19 @@
+// AF4_cisterna_2 - explosion of cistern
+// -------------------------------------------------------------------------------------------------------------
+
+  FRAME cisterny_organizer;	FRM_FindFrame(cisterny_organizer, "dummy_cisterny_organizer");
+  FRAME expl;			FRM_FindFrame(expl, "m_nadrz3.EXPL00");
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  block
+  {
+    MakeExplosion(expl, 2000000, 10000);
+    SaveGameValue(2, 0);
+    SendSignal(cisterny_organizer, 1);
+  }
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------

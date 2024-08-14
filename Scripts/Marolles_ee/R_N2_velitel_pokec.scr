@@ -1,0 +1,7 @@
+
+Frame A2;		FRM_FindFrame(A2, "Ally_2");
+
+Whenever XXXXXXX (_PlayerInRange(2);)
+{
+  SendSignal(A2, 3);
+}

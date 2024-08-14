@@ -1,0 +1,21 @@
+// 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+INTEGER Fire;
+}
+
+// ------------------------------------------------------------------------------------------------------------- 
+
+
+Label ParticleLoop:
+FRM_CreateIndexedParticle(15, me, Fire);
+Delay(10000);
+FRM_FinishIndexedParticle(Fire);
+goto ParticleLoop;
+
+
+Label END:

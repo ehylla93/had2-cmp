@@ -1,0 +1,49 @@
+// SF_G55 - Tank 1 - Panzer
+// ------------------------------------------------
+
+Block
+{
+SetAlarmType(1023,0);
+
+Integer RideSelect;
+
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn1 (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Panzer_01", 1, 0);
+HUMAN_Drive("Panzer1_1", 80);
+RideSelect = _RandomInt(2);
+
+If (RideSelect == 0)
+{
+HUMAN_Drive("Panzer1_end", 30);
+}
+
+Else
+{
+HUMAN_Drive("Panzer2_end5", 80);
+Delay(80000);
+HUMAN_DriveNearPlayer(20);
+}
+
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

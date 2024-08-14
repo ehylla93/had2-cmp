@@ -1,0 +1,75 @@
+// n_schuman - Hans Schumann
+// -------------------------------------------------------------------------------------------------------------
+
+block {
+FRAME me;		FRM_GetMyFrame(me);
+FRAME obj;		FRM_FindFrame(obj, "n_objschumann");
+FRAME pl;		FRM_GetNearestPlayer(me, pl);
+Integer a;
+Integer b=0;
+
+SetAlarmType(1023, false);
+FRM_SwitchFaceTexture(me, "e_f080");
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+SetWhenever(PIR, false);
+SetWhenever(PIR2, false);
+  
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  DisableWhenevers(1);
+  goto END;
+}
+
+Whenever PIR (_PlayerInRange(30))
+{
+	SetWhenever(PIR2, true);
+	a=_LoadGameValue(37);
+	if(a==1) { printf("Schumann active"); goto SPAWN; }
+	printf("Schumann inactive");
+	DisableWhenevers(1);
+	goto END;
+}
+
+Whenever PIR2 (_PlayerInRange(2)){
+  DisableWhenevers(1);
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SetOptimized(0);
+  SUBTITLES_SetOn(true);
+  HUMAN_TurnAtNearestPlayer();
+  FRM_GetNearestPlayer(me, pl);
+  FRM_MorphSpeechDelayed(pl, 09991951, 3, 9);	//"Colonel Schumann? I have orders to place you under arrest and hand you over to allied command."
+  HUMAN_SetAnim("", 200, 200, false);
+  HUMAN_SetAnim("%%kecy1", 200, 200, false);
+  FRM_MorphSpeechDelayed(me, 09991952, 3, 9);	//"I am Colonel Schumann, but I won’t surrender to the likes of you!"
+  HUMAN_SetAnim("", 200, 200, false);
+  FRM_MorphSpeechDelayed(pl, 09991953, 3, 9);	//"I'm afraid you have no choice, Colonel.  You are now my prisoner."
+  SUBTITLES_SetOn(false);
+  SendSignal(obj, 1);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label SPAWN:
+HUMAN_Suspend(false);
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("%%nuda1", 200, 200, true);
+  
+OnSignal(1)
+{
+EnableSignal(1, false);
+b=_RandomInt(4);
+if(b==0) { FRM_TeleportNearCheckpoint(me, "schumann", ""); }
+if(b==1) { FRM_TeleportNearCheckpoint(me, "schumann2", ""); }
+if(b==2) { FRM_TeleportNearCheckpoint(me, "schumann3", ""); }
+if(b==3) { FRM_TeleportNearCheckpoint(me, "schumann4", ""); }
+SetWhenever(PIR, true);
+}
+
+Label END:

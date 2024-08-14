@@ -1,0 +1,216 @@
+// Obj 1 - Destroy all enemy Planes
+// -------------------------------------
+
+Block
+{
+Frame P01;	FRM_FindFrame(P01,"Bf109_01");
+Integer IntP01;		IntP01=1;
+Frame P02;	FRM_FindFrame(P02,"Bf109_02");
+Integer IntP02;		IntP02=1;
+Frame P03;	FRM_FindFrame(P03,"Bf109_03");
+Integer IntP03;		IntP03=1;
+Frame P04;	FRM_FindFrame(P04,"Bf109_04");
+Integer IntP04;		IntP04=1;
+Frame P05;	FRM_FindFrame(P05,"Bf109_05");
+Integer IntP05;		IntP05=1;
+Frame P06;	FRM_FindFrame(P06,"Bf109_06");
+Integer IntP06;		IntP06=1;
+Frame P07;	FRM_FindFrame(P07,"Bf109_07");
+Integer IntP07;		IntP07=1;
+Frame P08;	FRM_FindFrame(P08,"Bf109_08");
+Integer IntP08;		IntP08=1;
+Frame P09;	FRM_FindFrame(P09,"Bf109_09");
+Integer IntP09;		IntP09=1;
+Frame P10;	FRM_FindFrame(P10,"Bf109_10");
+Integer IntP10;		IntP10=1;
+Frame P11;	FRM_FindFrame(P11,"Junkers_01");
+Integer IntP11;		IntP11=1;
+Frame P12;	FRM_FindFrame(P12,"Junkers_02");
+Integer IntP12;		IntP12=1;
+Frame P13;	FRM_FindFrame(P13,"Junkers_03");
+Integer IntP13;		IntP13=1;
+
+Integer Actor_Eliminated;	Actor_Eliminated = 0;
+
+SetObjectiveStatus(1, 0);
+}
+
+// -------------------------------------
+
+Delay(500);
+goto Planekill;
+
+Label Planekill:
+
+Block
+{
+
+If(IntP01 == 1)
+{
+
+If(_Actor_GetState(P01)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;	
+IntP01=0;
+MakeExplosion(P01, 150000, 5000);
+FRM_CreateParticle(53, P01);
+}	
+}
+
+If(IntP02 == 1)
+{
+
+If(_Actor_GetState(P02)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP02=0;	
+MakeExplosion(P02, 150000, 5000);
+FRM_CreateParticle(53, P02);
+}	
+}
+
+If(IntP03 == 1)
+{
+
+If(_Actor_GetState(P03)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP03=0;	
+MakeExplosion(P03, 150000, 5000);
+FRM_CreateParticle(53, P03);
+}	
+}
+
+If(IntP04 == 1)
+{
+
+If(_Actor_GetState(P04)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP04=0;	
+MakeExplosion(P04, 150000, 5000);
+FRM_CreateParticle(53, P04);
+}	
+}
+
+If(IntP05 == 1)
+{
+
+If(_Actor_GetState(P05)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP05=0;	
+MakeExplosion(P05, 150000, 5000);
+FRM_CreateParticle(53, P05);
+}	
+}
+
+If(IntP06 == 1)
+{
+
+If(_Actor_GetState(P06)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP06=0;	
+MakeExplosion(P06, 150000, 5000);
+FRM_CreateParticle(53, P06);
+}	
+}
+
+If(IntP07 == 1)
+{
+
+If(_Actor_GetState(P07)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP07=0;	
+MakeExplosion(P07, 150000, 5000);
+FRM_CreateParticle(53, P07);
+}	
+}
+
+If(IntP08 == 1)
+{
+
+If(_Actor_GetState(P08)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP08=0;	
+MakeExplosion(P08, 150000, 5000);
+FRM_CreateParticle(53, P08);
+}	
+}
+
+If(IntP09 == 1)
+{
+
+If(_Actor_GetState(P09)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP09=0;	
+MakeExplosion(P09, 150000, 5000);
+FRM_CreateParticle(53, P09);
+}	
+}
+
+If(IntP10 == 1)
+{
+
+If(_Actor_GetState(P10)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP10=0;	
+MakeExplosion(P10, 150000, 5000);
+FRM_CreateParticle(53, P10);
+}	
+}
+
+If(IntP11 == 1)
+{
+
+If(_Actor_GetState(P11)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP11=0;	
+MakeExplosion(P11, 200000, 8000);
+FRM_CreateParticle(53, P11);
+}	
+}
+
+If(IntP12 == 1)
+{
+
+If(_Actor_GetState(P12)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP12=0;	
+MakeExplosion(P12, 200000, 8000);
+FRM_CreateParticle(53, P12);
+}	
+}
+
+If(IntP13 == 1)
+{
+
+If(_Actor_GetState(P13)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP13=0;	
+MakeExplosion(P13, 200000, 8000);
+FRM_CreateParticle(53, P13);
+}	
+}
+
+}
+
+If(Actor_Eliminated > 12)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05991006);
+SetObjectiveStatus(1, 1);
+Delay(3500);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+goto Planekill;

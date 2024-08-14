@@ -1,0 +1,54 @@
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame look01;		FRM_FindFrame(look01, "AF1_43_look01");
+integer  AIEvent = 0; 
+}
+
+OnAlarm()
+{
+  Block
+  {
+    AIEvent =_GetAlarmType(); 
+    PrintfNumber("Vojak  --43--  jde do AI, alarm: ", AIEvent); 
+    HUMAN_SetOptimized(false);
+  } 
+  EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(true);
+	GoTo activity;
+}
+
+OnDeath()
+{
+  Printf("mrtvola ... ---43--- ");
+  EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received od panaka Af1_40
+{
+	HUMAN_Suspend(false);
+	GoTo activity;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+Block
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_SetOptimized(true);
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label activity:
+	HUMAN_Move("AF1_43_01");
+	HUMAN_TurnAt(look01);
+	HUMAN_SETMODE_Crouch();
+
+Label end:

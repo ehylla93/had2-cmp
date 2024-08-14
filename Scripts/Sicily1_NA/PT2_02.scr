@@ -1,0 +1,41 @@
+// Tank 2 Crue
+// ----------------------------------------------------------------
+
+Block
+{
+SetAlarmType(1023,0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+//-----------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Reinf (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Panther2", 1, 1);
+HUMAN_SetOptimized(2);
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(90);
+SetAlarmType(1023,1);
+goto END;
+}
+
+Label END:

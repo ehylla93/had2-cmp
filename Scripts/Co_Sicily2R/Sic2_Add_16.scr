@@ -1,0 +1,119 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Add 14, nebo 15 nebo 16 - dodatek pod mostem vopruzuje pri odminovavani
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  integer  AIEvent;
+  integer RND2 = 1;
+  integer RND1 = 1;
+  Frame see1;  	 	FRM_FindFrame(see1, "dummy_Podmostem1_see");
+  Frame see2;  	 	FRM_FindFrame(see2, "dummy_Podmostem2_see");
+  Frame see3;  	   	FRM_FindFrame(see3, "dummy_Podmostem3_see");
+  Frame see41; 		FRM_FindFrame(see41, "dummy_Podmostem4_see");
+  Frame see42; 		FRM_FindFrame(see42, "dummy_Podmostem4_see2");
+  Frame see51; 		FRM_FindFrame(see51, "dummy_Podmostem5_see");
+  Frame see52; 		FRM_FindFrame(see52, "dummy_Podmostem5_see2");
+  Frame see6;  		FRM_FindFrame(see6, "dummy_Podmostem6_see");
+  Frame see7;  		FRM_FindFrame(see7, "dummy_Podmostem7_see");
+  Frame see8;  	 	FRM_FindFrame(see8, "dummy_Podmostem8_see");
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+// posila aktivator druhe vlny
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SetSniper(true, 30);
+     HUMAN_SETMODE_Stand();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+   }
+SetAlarmType(1023, false);		
+HUMAN_SetOptimized(1);
+
+RND1 = _LoadGameValue(16);
+RND2 = _RandomInt(2) + 1;
+
+
+If ( RND1 == 1)  { HUMAN_Move("Podmostem_1"); }
+If ( RND1 == 2)  { HUMAN_Move("Podmostem_2"); }
+If ( RND1 == 3)  { HUMAN_Move("Podmostem_3"); }
+If ( RND1 == 4)  { HUMAN_Move("Podmostem_4"); }
+If ( RND1 == 5)  { HUMAN_Move("Podmostem_5"); }
+If ( RND1 == 6)  { HUMAN_Move("Podmostem_6"); }
+If ( RND1 == 7)  { HUMAN_Move("Podmostem_7"); }
+If ( RND1 == 8)  { HUMAN_Move("Podmostem_8"); }
+
+If ( RND1 == 1)  { HUMAN_TurnAt(See1); }
+If ( RND1 == 2)  { HUMAN_TurnAt(See2); }
+If ( RND1 == 3)  { HUMAN_TurnAt(See3); }
+If ( RND1 == 4)  
+  {
+     If ( RND2 == 1)  { HUMAN_TurnAt(See41); }
+     If ( RND2 == 2)  { HUMAN_TurnAt(See42); }
+  }
+If ( RND1 == 5)  
+ {
+    If ( RND2 == 1)  { HUMAN_TurnAt(See51); }
+    If ( RND2 == 2)  { HUMAN_TurnAt(See52); }
+ }
+If ( RND1 == 6)  { HUMAN_TurnAt(See6); }
+If ( RND1 == 7)  { HUMAN_TurnAt(See7); }
+If ( RND1 == 8)  { HUMAN_TurnAt(See8); }
+
+
+Block
+{
+  HUMAN_SETMODE_Crouch();
+  If ((RND1 == 3) or (RND1 == 6))  { HUMAN_SETMODE_Lie(); }
+  If ( RND1 == 1 )  { HUMAN_SETMODE_Stand(); }
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(2);
+  SetAlarmType(125, true);  // 1023 -512 -256 -128 -2 = 1023 - 898 = 125
+}
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" --- Add 16 ... mostnik --- : ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:
+
+

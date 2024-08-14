@@ -1,0 +1,256 @@
+//----------------------objectives----------------------
+// 1 - Assemble at the planned location.
+// 2 - Destroy the ammunitions store.
+// 3 - Destroy all enemy tanks.
+// 4 - Damage the radio-station.
+// 5 - Place the homing transmitter.
+// 6 - Destroy the fuel tanks.
+// 7 - Destroy the PAK 40 cannons.
+// 8 - Cause as much damage as possible to enemy vehicles.
+// 9 - Kill the enemy.  (Optional)
+//----------------------objectives----------------------
+block
+{
+Frame txt;			FRM_FindFrame(txt,"Text");
+Frame me;			FRM_GetMyFrame(me);
+Frame explode;		FRM_FindFrame(explode,"obj_Ammo");
+Frame fueltank1;    FRM_FindFrame(fueltank1, "fueltank1");
+Frame fueltank2;    FRM_FindFrame(fueltank2, "fueltank2");
+Frame fueltank3;    FRM_FindFrame(fueltank3, "fueltank3");
+Frame box1;			FRM_FindFrame(box1, "Explbox1");
+Frame box2;			FRM_FindFrame(box2, "Explbox2");
+Frame box3;			FRM_FindFrame(box3, "Explbox3");
+Frame box4;			FRM_FindFrame(box4, "Explbox4");
+Frame box5;			FRM_FindFrame(box5, "Explbox5");
+Frame box6;			FRM_FindFrame(box6, "Explbox6");
+Frame Radio;		FRM_FindFrame(Radio,"obj_Radio");
+Frame PAK40_1;    	FRM_FindFrame(PAK40_1, "PAK40_1");
+Frame PAK40_2;    	FRM_FindFrame(PAK40_2, "PAK40_2");
+Frame PAK40_3;    	FRM_FindFrame(PAK40_3, "PAK40_3");
+Frame PAK40_4;    	FRM_FindFrame(PAK40_4, "PAK40_4");
+Frame Beacon;		FRM_FindFrame(Beacon,"Beaconplace");
+Frame detect;		FRM_FindFrame(detect,"zone1");
+Integer NumOfObj;
+Integer rnd2;       //0 or 1 (1 to activate Objective)
+Integer counter1;   //
+Integer counter2;   //counts activated Objectives to compare with NumOfObj
+Integer C_counter;
+counter1=0;
+counter2=0;
+C_counter=0;
+NumOfObj=(_randomint(5)+2);  //minimum number of Objectives 2+ (0 to 5)  min=2 max=7
+//NumOfObj=7;     //use this to activate all objectives (revove //)
+SaveGameValue(1, 1);   //Set 1 to skip first Obj
+SaveGameValue(2, 0);
+SaveGameValue(3, 0);
+SaveGameValue(4, 0);
+SaveGameValue(5, 0);
+SaveGameValue(6, 0);
+SaveGameValue(7, 0);
+SaveGameValue(8, 0);
+SaveGameValue(9, 0);
+SaveGameValue(21, 0);  //Radio  //Set all to zero (1 = Obj completed)
+SaveGameValue(22, 0);  //Enemy Tanks
+SaveGameValue(23, 0);  //All Vehicles
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(5, 4);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+SetObjectiveStatus(8, 4);
+SetObjectiveStatus(9, 4);
+SetWhenever(OBJ_ammo, 0);
+SetWhenever(OBJ_tanks, 0);
+SetWhenever(OBJ_radio, 0);
+SetWhenever(OBJ_beacon, 0);
+SetWhenever(OBJ_fuel, 0);
+SetWhenever(OBJ_pak40, 0);
+SetWhenever(OBJ_supply, 0);
+SetWhenever(OBJ_enemy, 1);
+SetWhenever(EndMission, 0);
+}
+goto ObjLoop;
+//SetObjectiveStatus: 0=Not completed, 1=Success, 2=Failed, 4=Hidden
+//----------------------Random Objectives----------------------
+Label ObjLoop:
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+gosub RndObj;
+if (counter2<NumOfObj){counter1=0; goto ObjLoop;}
+else {goto SetObjs;}
+//
+Label RndObj:
+counter1=counter1+1;
+rnd2=(_randomint(2));
+if ((rnd2==1)and(_LoadGameValue(counter1)==0))
+{SetObjectiveStatus(counter1, 0); SaveGameValue(counter1, 1); counter2=counter2+1;} 
+return;
+//--------------------------------------------
+
+Label SetObjs:
+block
+{
+if (_LoadGameValue(2)==1){SetWhenever(OBJ_ammo, 1); SendSignal(explode, 1); }
+if (_LoadGameValue(3)==1){SetWhenever(OBJ_tanks, 1); }
+if (_LoadGameValue(4)==1){SetWhenever(OBJ_radio, 1); }
+if (_LoadGameValue(5)==1){SetWhenever(OBJ_beacon, 1); }
+if (_LoadGameValue(6)==1){SetWhenever(OBJ_fuel, 1); }
+if (_LoadGameValue(7)==1){SetWhenever(OBJ_pak40, 1); SendSignal(explode, 2); }
+if (_LoadGameValue(8)==1){SetWhenever(OBJ_supply, 1); }		
+}
+goto end;
+
+//--------------------------------------------
+Whenever OBJ_ammo ((_ACTOR_GetState(box1)==0) and (_ACTOR_GetState(box2)==0) and (_ACTOR_GetState(box3)==0) and (_ACTOR_GetState(box4)==0) and (_ACTOR_GetState(box5)==0) and (_ACTOR_GetState(box6)==0))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{
+SetObjectiveStatus(1, 0);
+SetWhenever(EndMission, 1);
+//Delay(8000);
+SendSignal(txt, 1); 
+}
+SetObjectiveStatus(2, 1);
+}
+}
+
+//--------------------------------------------
+Whenever OBJ_tanks (_LoadGameValue(22)==1)
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{
+SetObjectiveStatus(1, 0);
+SetWhenever(EndMission, 1);
+//Delay(8000);
+SendSignal(txt, 1); 
+}
+SetObjectiveStatus(3, 1);
+}
+}
+
+//--------------------------------------------
+Whenever OBJ_radio (_LoadGameValue(21)==1)
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{
+SetObjectiveStatus(1, 0);
+SetWhenever(EndMission, 1);
+//Delay(8000);
+SendSignal(txt, 1); 
+}
+SetObjectiveStatus(4, 1);
+}
+}
+
+//--------------------------------------------
+Whenever OBJ_beacon (_ACTOR_GetState(Beacon)==1)
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{
+SetObjectiveStatus(1, 0);
+SetWhenever(EndMission, 1);
+//Delay(8000);
+SendSignal(txt, 1); 
+}
+SetObjectiveStatus(5, 1);
+}
+}
+
+//--------------------------------------------
+Whenever OBJ_fuel (((_Actor_GetState(fueltank1)==0) And (_Actor_GetState(fueltank2)==0)) And (_Actor_GetState(fueltank3)==0))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{
+SetObjectiveStatus(1, 0);
+SetWhenever(EndMission, 1);
+//Delay(8000);
+SendSignal(txt, 1); 
+}
+SetObjectiveStatus(6, 1);
+}
+}
+
+//--------------------------------------------
+Whenever OBJ_pak40 ((_ACTOR_GetState(PAK40_1)==2) and (_ACTOR_GetState(PAK40_2)==2) and(_ACTOR_GetState(PAK40_3)==2) and (_ACTOR_GetState(PAK40_4)==2))
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{
+SetObjectiveStatus(1, 0);
+SetWhenever(EndMission, 1);
+//Delay(8000);
+SendSignal(txt, 1); 
+}
+SetObjectiveStatus(7, 1);
+}
+}
+
+//--------------------------------------------
+Whenever OBJ_supply (_LoadGameValue(23)==1)  //All Vehicles
+{
+block
+{
+C_counter=C_counter+1;
+SendSignal(txt, 2);
+if (C_counter==counter2)
+{
+SetObjectiveStatus(1, 0);
+SetWhenever(EndMission, 1);
+//Delay(8000);
+SendSignal(txt, 1); 
+}
+SetObjectiveStatus(8, 1);
+}
+}
+
+//--------------------------------------------
+Whenever OBJ_enemy (!_EnemyInRange(detect,1000))
+{
+block
+{
+SendSignal(txt, 2);
+SetObjectiveStatus(9, 1);
+}
+}
+
+//----------------------EndMission----------------------
+Whenever EndMission (_MP_AllTeamMembersAreInRange(1, 45))
+{
+FRM_CreateParticle(24, me); 	
+SendSignal(txt, 4);
+Delay(5000);
+SetObjectiveStatus(1, 1);
+goto end;
+}
+
+Label end:

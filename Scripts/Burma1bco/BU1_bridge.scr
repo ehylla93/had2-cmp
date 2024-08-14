@@ -1,0 +1,21 @@
+// BU1_bridge - reinforcements activator
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame bu1_32;
+	FRM_FindFrame(bu1_32, "BU1_32");
+Frame bu1_33;
+	FRM_FindFrame(bu1_33, "BU1_33");
+Frame bu1_34;
+	FRM_FindFrame(bu1_34, "BU1_34");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(7))
+{
+	SendSignal(bu1_32, 1);
+	SendSignal(bu1_33, 1);
+	SendSignal(bu1_34, 1);
+}
+// -------------------------------------------------------------------------------------------------------------

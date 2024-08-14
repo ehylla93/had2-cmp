@@ -1,0 +1,137 @@
+// Z1_G16 - Vybezka 1 - vojak
+// -------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame terc;	FRM_FindFrame(terc,"CilTerc8");
+Frame kamos;	FRM_FindFrame(kamos,"Z1_G13");
+Frame sedatko;	FRM_FindFrame(sedatko,"Sedadlo_na_strelnici1");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+integer AIEvent;
+
+FRM_SwitchFaceTexture(me,"e_f031");
+}
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Run();
+AIEvent =_GetAlarmType();
+
+If (((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_Move("ge07_01");
+HUMAN_Move("ge07_02");
+HUMAN_Move("ge07_03");
+HUMAN_Move("ge07_04");
+HUMAN_Move("ge07_05");
+HUMAN_Move("ge07_06");
+HUMAN_Move("ge07_07");
+HUMAN_Move("ge07_08");
+HUMAN_Move("ge07_09");
+HUMAN_Move("ge07_10");
+HUMAN_Move("ge07_11");
+HUMAN_Move("ge07_12");
+HUMAN_Move("ge07_13");
+HUMAN_Move("ge07_14");
+HUMAN_Move("ge07_15");
+HUMAN_Move("ge07_16");
+HUMAN_Move("ge30_06");
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_SETMODE_Stand();
+goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_SETMODE_Guard();
+HUMAN_Move("ge36_02");
+HUMAN_MoveToFrame(sedatko, 5);
+goto patrol;
+}
+
+OnSignal(4)             // Stridam na strelnici Z1_G15
+{
+HUMAN_Stop();
+HUMAN_SETMODE_Walk();
+HUMAN_Move("ge31_01");
+HUMAN_MoveToFrame(sedatko, 2);
+HUMAN_TurnAt(terc);
+Delay(500);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+OnSignal(6)
+{
+HUMAN_SETMODE_StandFast();
+HUMAN_Move("ge31_01");
+HUMAN_TurnAt(terc);
+HUMAN_SETMODE_Crouch();
+Delay(500);
+HUMAN_IllFire(terc,6000);
+Delay(500);
+HUMAN_IllFire(terc,7000);
+SendSignal(kamos, 6);
+HUMAN_MoveToFrame(sedatko, 2);
+HUMAN_TurnAt(terc);
+Delay(500);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+// -------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(40);
+HUMAN_Suspend(1);
+goto END;
+
+Label patrol:
+HUMAN_Move("ge36_02");
+HUMAN_MoveToFrame(sedatko, 5);
+goto patrol;
+
+
+Label END:

@@ -1,0 +1,281 @@
+// Kd_G01 - Kanon 4 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cil1;	FRM_FindFrame(Cil1,"Ka17d_C1_1");
+Frame Cil2;	FRM_FindFrame(Cil2,"Ka17d_C1_2");
+Frame Cil3;	FRM_FindFrame(Cil3,"Ka17d_C2_1");
+Frame Cil4;	FRM_FindFrame(Cil4,"Ka17d_C2_2");
+Frame Cil5;	FRM_FindFrame(Cil5,"Ka17d_C3_1");
+Frame Cil6;	FRM_FindFrame(Cil6,"Ka17d_C3_2");
+Frame Cil7;	FRM_FindFrame(Cil7,"Ka17d_C4_1");
+Frame Cil8;	FRM_FindFrame(Cil8,"Ka17d_C4_2");
+
+Frame Cps;	FRM_FindFrame(Cps,"Cp_Kc_02");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer VyberCil;
+	VyberCil =_RandomInt(6);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Palim (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(87);
+HUMAN_SETHEARRANGE(87);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("Kanon17d", 1, 0);
+goto Palim;
+}
+
+Whenever Alarm (_SignalReceived(2))
+{
+HUMAN_Suspend(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Palim:
+
+If(VyberCil==0){
+HUMAN_TurnAt(Cil5);
+Delay(500);
+HUMAN_Attack(Cil5, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil2);
+Delay(500);
+HUMAN_Attack(Cil2, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil8);
+Delay(500);
+HUMAN_Attack(Cil8, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil3);
+Delay(500);
+HUMAN_Attack(Cil3, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil1);
+Delay(500);
+HUMAN_Attack(Cil1, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil7);
+Delay(500);
+HUMAN_Attack(Cil7, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil6);
+Delay(500);
+HUMAN_Attack(Cil6, 2000);
+Delay(7000);
+}
+
+If(VyberCil==1){
+HUMAN_TurnAt(Cil3);
+Delay(500);
+HUMAN_Attack(Cil3, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil5);
+Delay(500);
+HUMAN_Attack(Cil5, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil7);
+Delay(500);
+HUMAN_Attack(Cil7, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil1);
+Delay(500);
+HUMAN_Attack(Cil1, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil8);
+Delay(500);
+HUMAN_Attack(Cil8, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil2);
+Delay(500);
+HUMAN_Attack(Cil2, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil6);
+Delay(500);
+HUMAN_Attack(Cil6, 2000);
+Delay(7000);
+}
+
+If(VyberCil==2){
+HUMAN_TurnAt(Cil8);
+Delay(500);
+HUMAN_Attack(Cil8, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil2);
+Delay(500);
+HUMAN_Attack(Cil2, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil6);
+Delay(500);
+HUMAN_Attack(Cil6, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil1);
+Delay(500);
+HUMAN_Attack(Cil1, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil5);
+Delay(500);
+HUMAN_Attack(Cil5, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil7);
+Delay(500);
+HUMAN_Attack(Cil7, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil3);
+Delay(500);
+HUMAN_Attack(Cil3, 2000);
+Delay(7000);
+}
+
+If(VyberCil==3){
+HUMAN_TurnAt(Cil6);
+Delay(500);
+HUMAN_Attack(Cil6, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil3);
+Delay(500);
+HUMAN_Attack(Cil3, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil8);
+Delay(500);
+HUMAN_Attack(Cil8, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil5);
+Delay(500);
+HUMAN_Attack(Cil5, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil2);
+Delay(500);
+HUMAN_Attack(Cil2, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil1);
+Delay(500);
+HUMAN_Attack(Cil1, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil7);
+Delay(500);
+HUMAN_Attack(Cil7, 2000);
+Delay(7000);
+}
+
+If(VyberCil==4){
+HUMAN_TurnAt(Cil8);
+Delay(500);
+HUMAN_Attack(Cil8, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil3);
+Delay(500);
+HUMAN_Attack(Cil3, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil7);
+Delay(500);
+HUMAN_Attack(Cil7, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil2);
+Delay(500);
+HUMAN_Attack(Cil2, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil6);
+Delay(500);
+HUMAN_Attack(Cil6, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil1);
+Delay(500);
+HUMAN_Attack(Cil1, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil5);
+Delay(500);
+HUMAN_Attack(Cil5, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 2000);
+Delay(7000);
+}
+
+If(VyberCil==5){
+HUMAN_TurnAt(Cil7);
+Delay(500);
+HUMAN_Attack(Cil7, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil3);
+Delay(500);
+HUMAN_Attack(Cil3, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil6);
+Delay(500);
+HUMAN_Attack(Cil6, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil1);
+Delay(500);
+HUMAN_Attack(Cil1, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil8);
+Delay(500);
+HUMAN_Attack(Cil8, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil2);
+Delay(500);
+HUMAN_Attack(Cil2, 2000);
+Delay(6500);
+HUMAN_TurnAt(Cil5);
+Delay(500);
+HUMAN_Attack(Cil5, 2000);
+Delay(7000);
+}
+
+goto Palim;
+
+Label END:

@@ -1,0 +1,45 @@
+// Obj 7 - Assemble at Spawn with Rosenfield
+// ---------------------------------------------
+
+Block
+{
+Frame Ros;	FRM_FindFrame(Ros,"Cpt. Rosenfield");
+
+Integer Obj_Done;
+	Obj_Done=0;
+
+SetWhenever(Players, 0);
+}
+
+// -----------------------------------------
+
+Whenever Players ((_MP_AllTeamMembersAreInRange(1, 12)) And (_FrameInRange(Ros) < 12))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(12992418);
+Delay(4000);
+SetObjectiveStatus(7, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+OnSignal(1)
+{
+Obj_Done=Obj_Done+1;
+
+If(Obj_Done > 5)
+{
+SetObjectiveStatus(7, 0);
+Delay(8000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(55999704);
+Delay(3000);
+SetWhenever(Players, 1);
+SUBTITLES_SetOn(0);
+}
+goto End;
+}
+
+
+Label End:

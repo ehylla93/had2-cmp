@@ -1,0 +1,87 @@
+// Kecac 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame kamos;		FRM_FindFrame(kamos,"C4_G54");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 1500, 1);
+HUMAN_Stop();
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(100))
+{
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+HUMAN_TurnAt(kamos);
+HUMAN_SetAnim("%%kecy3", 500, 1500, 1);
+FRM_MorphSpeechDelayed(me, 15993030, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993031, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993032, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 15993033, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993034, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 15993035, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993036, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 15993037, 5, 30); // 
+goto kecy;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label kecy:
+FRM_MorphSpeechDelayed(me, 15993030, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993031, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993032, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 15993033, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993034, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 15993035, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(kamos, 15993036, 5, 30); // 
+Delay(200);
+FRM_MorphSpeechDelayed(me, 15993037, 5, 30); // 
+Delay(500);
+goto kecy;
+
+Label END:

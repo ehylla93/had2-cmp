@@ -1,0 +1,88 @@
+// Ridic Pantheru pred banku (La_tiger_2)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame kulomet;		FRM_FindFrame(kulomet,"N2_G34");
+Frame kanon;		FRM_FindFrame(kanon,"N2_G35");
+
+Frame p1;		FRM_FindFrame(p1,"N2_G46");
+Frame p2;		FRM_FindFrame(p2,"N2_G47");
+Frame p3;		FRM_FindFrame(p3,"N2_G48");
+Frame p4;		FRM_FindFrame(p4,"N2_G49");
+Frame p5;		FRM_FindFrame(p5,"N2_G50");
+Frame p6;		FRM_FindFrame(p6,"N2_G51");
+Frame p7;		FRM_FindFrame(p7,"N2_G52");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(p1, 1);
+Delay(120000);
+SendSignal(p2, 1);
+SendSignal(p3, 1);
+SendSignal(p4, 1);
+Delay(300000);
+SendSignal(p5, 1);
+SendSignal(p6, 1);
+Delay(120000);
+SendSignal(p7, 1);
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_2",  true, 0);
+SendSignal(kulomet, 1);
+SendSignal(kanon, 1);
+HUMAN_Drive("GerTank1", 30); 
+HUMAN_Drive("GerTank2", 20); 
+HUMAN_Drive("GerTank3", 20);
+Delay(2000);
+HUMAN_BoardVehicle("La_tiger_2",  false, 0);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

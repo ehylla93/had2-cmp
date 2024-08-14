@@ -1,0 +1,25 @@
+// Obj 2 - Destroy the Enemy Radio Station 
+//-----------------------------------------
+
+Block
+{
+SetObjectiveStatus(2, 0);
+}
+
+//----------------------------------------
+
+OnDeath()
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999801);
+Delay(5000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+//----------------------------------------
+
+
+Label END:

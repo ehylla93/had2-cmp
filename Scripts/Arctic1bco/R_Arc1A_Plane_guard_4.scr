@@ -1,0 +1,67 @@
+
+Block
+  {
+     frame GP1;			FRM_FindFrame(GP1, "Plane_Guard_1");
+     frame GP2;			FRM_FindFrame(GP2, "Plane_Guard_2");
+     frame GP3;			FRM_FindFrame(GP3, "Plane_Guard_3");
+     frame ohnicek;		FRM_FindFrame(ohnicek, "drevo oden01");
+     frame dabing3_4;		FRM_FindFrame(dabing3_4, "dummy_dabing3_4");
+     frame MyFRM;		FRM_GetMyFrame(MyFRM);
+     integer AIEvent;		AIEvent = 99;
+
+     SetAlarmType(1023, True);
+     SetAlarmType(8, False);
+     
+     HUMAN_SETMODE_Walk();
+     HUMAN_SETAIMODE_Defensive();
+  }
+
+  HUMAN_Suspend(True);				
+  Goto TheEnd;
+  Whenever A (_PlayerInRange(30);)			
+  {							
+    HUMAN_Suspend(False);	
+    Delay(5500);
+    HUMAN_Move("PG3_1");		
+    HUMAN_Move("PG3_2");	
+    HUMAN_SETSIGHTRANGE(35);
+    HUMAN_SETHEARRANGE(50);
+    HUMAN_Move("PG3_3");		
+    HUMAN_Move("PG4_4");		
+    HUMAN_TurnAt(ohnicek);	
+  }	
+
+OnAlarm()
+{
+  SendSignal(dabing3_4, 2);	// ruší dabing
+  HUMAN_SETSIGHTRANGE(43);
+  HUMAN_SETHEARRANGE(57);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(38);
+  HUMAN_SETHEARRANGE(43);
+  SetAlarmType(1023, True);	
+  SetAlarmType(8, False);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_Move("PG4_5");			
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  SendSignal(dabing3_4, 2);	// ruší dabing
+  EndScript();
+}
+
+
+Label TheEnd:
+

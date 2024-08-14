@@ -1,0 +1,144 @@
+//----------------------Vehicles----------------------
+Block
+{
+//Frame obj;			FRM_FindFrame(obj,"objectives");
+Frame Jeepsas_1;	FRM_FindFrame(Jeepsas_1,"krupp3");
+Frame opel_01;		FRM_FindFrame(opel_01,"opel_01");
+Frame opel_02;		FRM_FindFrame(opel_02,"opel_02");
+Frame opel_04;		FRM_FindFrame(opel_04,"krupp2");
+Frame opel_05;		FRM_FindFrame(opel_05,"opel_05");
+Frame opel_07;		FRM_FindFrame(opel_07,"opel_07");
+Frame Sherman_1;	FRM_FindFrame(Sherman_1,"Sherman_1");
+Frame Sherman_2;	FRM_FindFrame(Sherman_2,"Sherman_2");
+Frame Sherman_3;	FRM_FindFrame(Sherman_3,"Sherman_3");
+Frame Tiger_1;		FRM_FindFrame(Tiger_1,"Tiger_1");
+Frame Tiger_2;		FRM_FindFrame(Tiger_2,"Tiger_2");
+Frame Tiger_3;		FRM_FindFrame(Tiger_3,"Tiger_3");
+Frame Tiger_4;		FRM_FindFrame(Tiger_4,"Tiger_4");
+Frame Tiger_5;		FRM_FindFrame(Tiger_5,"Tiger_5");
+Frame Tiger_6;		FRM_FindFrame(Tiger_6,"Tiger_6");
+Frame Tiger_7;		FRM_FindFrame(Tiger_7,"Tiger_7");
+Frame Tiger_9;		FRM_FindFrame(Tiger_9,"Tiger_9");
+Frame kubel_1;		FRM_FindFrame(kubel_1,"kubel_1");
+Frame hakl1;		FRM_FindFrame(hakl1,"hakl1");
+Frame krupp1;		FRM_FindFrame(krupp1,"krupp1");
+Integer rnd1;
+Integer C1;
+}
+goto set;
+
+Label set:
+//printf("set fuel");
+//----------------------Fuel----------------------
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(Jeepsas_1, 0);}
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(opel_01, 0);}
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(opel_02, 0);}
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(opel_04, 0);}
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(opel_05, 0);}
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(opel_07, 0);}
+
+rnd1= (_randomint(4));
+if (rnd1==1) {Car_SetFuel(Sherman_1, 0);}
+
+rnd1= (_randomint(4));
+if (rnd1==1) {Car_SetFuel(Sherman_2, 0);}
+
+rnd1= (_randomint(4));
+if (rnd1==1) {Car_SetFuel(Sherman_3, 0);}
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(hakl1, 0);}
+
+rnd1= (_randomint(2));
+if (rnd1==1) {Car_SetFuel(krupp1, 0);}
+
+goto Count;
+
+//----------------------/----------------------
+goto end;
+
+//--------------------------------------------
+Whenever Tank1 (_Actor_GetState(Tiger_1)==0)
+{
+FRM_CreateParticle(83, Tiger_1);
+goto Count;  //goto end;
+}
+Whenever Tank2 (_Actor_GetState(Tiger_2)==0)
+{
+FRM_CreateParticle(83, Tiger_2);
+goto Count;  //goto end;
+}
+Whenever Tank3 (_Actor_GetState(Tiger_3)==0)
+{
+FRM_CreateParticle(83, Tiger_3);
+goto Count;  //goto end;
+}
+Whenever Tank4 (_Actor_GetState(Tiger_4)==0)
+{
+FRM_CreateParticle(83, Tiger_4);
+goto Count;  //goto end;
+}
+Whenever Tank5 (_Actor_GetState(Tiger_5)==0)
+{
+FRM_CreateParticle(83, Tiger_5);
+goto Count;  //goto end;
+}
+Whenever Tank6 (_Actor_GetState(Tiger_6)==0)
+{
+FRM_CreateParticle(83, Tiger_6);
+goto Count;  //goto end;
+}
+Whenever Tank7 (_Actor_GetState(Tiger_7)==0)
+{
+FRM_CreateParticle(83, Tiger_7);
+goto Count;  //goto end;
+}
+Whenever Tank8 (_Actor_GetState(Tiger_9)==0)
+{
+FRM_CreateParticle(83, Tiger_9);
+goto Count;  //goto end;
+}
+
+
+Label Count:
+C1=0;
+C1=C1+(_ACTOR_GetState(Tiger_1));
+C1=C1+(_ACTOR_GetState(Tiger_2));
+C1=C1+(_ACTOR_GetState(Tiger_3));
+C1=C1+(_ACTOR_GetState(Tiger_4));
+C1=C1+(_ACTOR_GetState(Tiger_5));
+C1=C1+(_ACTOR_GetState(Tiger_6));
+C1=C1+(_ACTOR_GetState(Tiger_7));
+C1=C1+(_ACTOR_GetState(Tiger_9));
+C1=C1+(_ACTOR_GetState(Jeepsas_1));
+C1=C1+(_ACTOR_GetState(opel_01));
+C1=C1+(_ACTOR_GetState(opel_02));
+C1=C1+(_ACTOR_GetState(opel_04));
+C1=C1+(_ACTOR_GetState(opel_05));
+C1=C1+(_ACTOR_GetState(opel_07));
+C1=C1+(_ACTOR_GetState(hakl1));
+C1=C1+(_ACTOR_GetState(krupp1));
+C1=C1+(_ACTOR_GetState(kubel_1));
+//PrintfNumber("C1 vehicle counter: ", C1);
+if (C1==0)
+{
+SaveGameValue(23, 1);
+goto END;
+}
+delay(15000); 
+goto Count;
+
+
+label end:

@@ -1,0 +1,85 @@
+// AF2_rozhovor_05 - INACTIVE
+// -------------------------------------------------------------------------------------------------------------
+
+Blcok {
+FRAME af02;			FRM_FindFrame(af02, "AF3a_02");
+FRAME af03;			FRM_FindFrame(af03, "AF3a_03");
+}
+
+OnSignal(1){
+  if(!_LoadGameValue(31))
+  {
+    EndScript();
+  }
+  EnableSignal(1, false);
+  SendSignal(af02, 10);
+  FRM_MorphSpeechDelayed(af02, 07991589, 8, 20);
+  SendSignal(af02, 11);
+
+  SendSignal(af03, 10);
+  FRM_MorphSpeechDelayed(af03, 07991590, 8, 20);
+  SendSignal(af03, 11);
+
+  SendSignal(af02, 10);
+  FRM_MorphSpeechDelayed(af02, 07991591, 8, 20);
+  SendSignal(af02, 11);
+
+  SendSignal(af03, 10);
+  FRM_MorphSpeechDelayed(af03, 07991592, 8, 20);
+  SendSignal(af03, 11);
+
+  SendSignal(af02, 10);
+  FRM_MorphSpeechDelayed(af02, 07991593, 8, 20);
+  Delay(100);
+  FRM_MorphSpeechDelayed(af02, 07991594, 8, 20);
+  SendSignal(af02, 11);
+
+  SendSignal(af03, 10);
+  FRM_MorphSpeechDelayed(af03, 07991595, 8, 20);
+  SendSignal(af03, 11);
+
+  SendSignal(af02, 10);
+  FRM_MorphSpeechDelayed(af02, 07991596, 8, 20);
+  SendSignal(af02, 11);
+
+  SendSignal(af03, 10);
+  FRM_MorphSpeechDelayed(af03, 07991597, 8, 20);
+  SendSignal(af03, 11);
+
+  SendSignal(af02, 10);
+  FRM_MorphSpeechDelayed(af02, 07991598, 8, 20);
+  SendSignal(af02, 11);
+
+  SendSignal(af03, 10);
+  FRM_MorphSpeechDelayed(af03, 07991599, 8, 20);
+  Delay(100);
+  FRM_MorphSpeechDelayed(af03, 07991600, 8, 20);
+  SendSignal(af03, 11);
+
+  SendSignal(af02, 10);
+  FRM_MorphSpeechDelayed(af02, 079915601, 8, 20);
+  SendSignal(af02, 11);
+
+  SendSignal(af03, 10);
+  FRM_MorphSpeechDelayed(af03, 07991602, 8, 20);
+  Delay(100);
+  FRM_MorphSpeechDelayed(af03, 07991603, 8, 20);
+  SendSignal(af03, 11);
+
+  SendSignal(af02, 10);
+  FRM_MorphSpeechDelayed(af02, 079915604, 8, 20);
+  SendSignal(af02, 11);
+
+  SUBTITLES_SetOn(false);
+}
+
+OnSignal(2){
+  block
+  {
+    FRM_MorphSpeech(af02, 0, 0, 0);
+    FRM_MorphSpeech(af03, 0, 0, 0);
+  }
+  EndScript();
+}
+
+Label END:

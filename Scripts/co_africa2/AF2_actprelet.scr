@@ -1,0 +1,77 @@
+// AF2_activator - turns on the enemies
+// -------------------------------------------------------------------------------------------------------------
+
+block {
+  FRAME junk;				FRM_FindFrame(junk, "horicijunkers");
+  FRAME spit01;				FRM_FindFRAME(spit01, "spit01");
+  FRAME mes01;				FRM_FindFRAME(mes01, "mes01");
+  FRAME mes02;				FRM_FindFRAME(mes02, "mes02");
+  FRAME part01;				FRM_FindFRAME(part01, "HoriciJunkers.engine_l00");
+  FRAME bum;				FRM_FindFRAME(bum, "S_bum");
+  INTEGER dymzkridla;
+  FRAME camera;
+
+  FRAME s_air1;				FRM_FindFrame(s_air1, "s_air1");
+  FRAME s_air_death;		FRM_FindFrame(s_air_death, "s_air_death");
+  FRAME s_air_stihac1;		FRM_FindFrame(s_air_stihac1, "s_air_stihac1");
+  FRAME s_air_stihac2;		FRM_FindFrame(s_air_stihac2, "s_air_stihac2");
+  FRAME s_air_stihac3;		FRM_FindFrame(s_air_stihac3, "s_air_stihac3");
+  FRM_SoundAdjustDoppler(s_air1, 1, 100, 1);
+  FRM_SoundAdjustDoppler(s_air_death, 1, 100, 1);
+  FRM_SoundAdjustDoppler(s_air_stihac1, 1, 100, 1);
+  FRM_SoundAdjustDoppler(s_air_stihac2, 1, 100, 1);
+  FRM_SoundAdjustDoppler(s_air_stihac3, 1, 100, 1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  block
+  {
+    FRM_SetOn(junk, true);
+    FRM_SetOn(spit01, true);
+    FRM_SetOn(mes01, true);
+    FRM_SetOn(mes02, true);
+    FRM_SetOn(s_air1, true);
+    FRM_SetOn(s_air_stihac1, true);
+    FRM_SetOn(s_air_stihac2, true);
+    FRM_SetOn(s_air_stihac3, true);
+	FRM_CreateIndexedParticle(16, part01, dymzkridla);
+  }
+
+OnSignal(1) {
+	DisableSignals(1);
+	Delay(1000);
+	FRM_WatchTrack(junk, "fight_stage01");  Delay(400);
+	FRM_WatchTrack(spit01, "fight_stage03");  Delay(1500);
+	FRM_WatchTrack(mes01, "fight_stage01");  Delay(100);
+	FRM_WatchTrack(mes02, "fight_stage01");
+	Delay(2500);
+	FRM_SetOn(s_air_death, true);
+	Delay(19000);
+	FRM_GetActiveCamera(camera);
+	block {
+	FRM_SetOn(junk, false);
+	FRM_SetOn(spit01, false);
+	FRM_SetOn(mes01, false);
+	FRM_SetOn(mes02, false);
+	FRM_SetOn(bum, true);
+	MakeExplosion(camera, 0, 10000);
+	FRM_SetOn(s_air1, false);
+	FRM_SetOn(s_air_death, false);
+	FRM_SetOn(s_air_stihac1, false);
+	FRM_SetOn(s_air_stihac2, false);
+	FRM_SetOn(s_air_stihac3, false);
+	}
+	FRM_FindFrame(camera, "");
+	FRM_FinishIndexedParticle(dymzkridla);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

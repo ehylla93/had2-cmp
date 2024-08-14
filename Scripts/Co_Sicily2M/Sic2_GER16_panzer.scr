@@ -1,0 +1,38 @@
+// Panzer1, driver
+
+frame MyTank;	FRM_FindFrame(MyTank, "Panzer_1");
+
+Block
+{
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+FRM_SetOn(Mytank, False);
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator druhe vlny
+Onsignal(1)		
+{
+  FRM_SetOn(Mytank, true);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Panzer_1", true, 0);	
+} 
+
+// aktivni cast - jede
+HUMAN_Drive("Panzer1_1", 22);
+//HUMAN_Drive("Panzer1_end", 15);
+HUMAN_Drive("", 0);
+
+OnAlarm()  
+  {
+    
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+} 
+
+label TheEnd:

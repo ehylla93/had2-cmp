@@ -1,0 +1,56 @@
+// barrierW_S01
+
+block
+{
+SetAlarmType(128,0);
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+SetWhenever(PIR2, 0);
+
+integer aievent;
+}
+
+HUMAN_Suspend(1);
+HUMAN_SetSniper(1, 65);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("barrierW_S01 alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("barrierW_S01 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(75))
+{
+SetWhenever(PIR, 0);
+SetWhenever(PIR2, 1);
+HUMAN_SetMode_Crouch();
+HUMAN_Suspend(0);
+}
+
+Whenever PIR2 (_PlayerInRange(20))
+{
+SetWhenever(PIR2, 0);
+HUMAN_SetSniper(0, 65);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

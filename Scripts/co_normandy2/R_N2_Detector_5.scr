@@ -1,0 +1,16 @@
+// Detector - looking for player in definned area
+
+frame Red_19;		FRM_FindFrame(Red_19, "Red_19");
+frame Red_20;		FRM_FindFrame(Red_20, "Red_20");
+//*//frame Red_21;		FRM_FindFrame(Red_21, "Red_21");
+
+
+Whenever Det_5 (_PlayerInRange(6) )
+{
+Block
+  {    
+    SendSignal(Red_19,   5);
+    SendSignal(Red_20,   5);
+//*//    SendSignal(Red_21,   5);
+  }
+}

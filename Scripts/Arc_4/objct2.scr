@@ -1,0 +1,39 @@
+// Obj 2 - Photograph plans
+// -------------------------------------------------
+
+Block
+{
+Frame Plany1;	FRM_FindFrame(Plany1,"Mapa_01");
+Frame Plany2;	FRM_FindFrame(Plany2,"Mapa_02");
+Frame Plany3;	FRM_FindFrame(Plany3,"Mapa_03");
+
+SetObjectiveStatus(2, 0);
+}
+
+Whenever Plans_Photographed (((_Actor_GetState(Plany1)==1) And (_Actor_GetState(Plany2)==1)) And (_Actor_GetState(Plany3)==1))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999716);
+Delay(3000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(1000))
+{
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(20994001);
+Delay(3000);
+SUBTITLES_SetText(52999714);
+Delay(3000);
+SUBTITLES_SetText(52999703);
+Delay(3000);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label END:

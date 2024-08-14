@@ -1,0 +1,44 @@
+// 01_tiger_01_03 - MG gunner
+// ----------------------------------------
+
+Integer alarm_sight_range = 200;
+SetAlarmType(512, 0);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnAlarm()
+{
+printf("01_tiger_01 MG gunner alarm");
+HUMAN_SETSIGHTRANGE(alarm_sight_range);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("01_tiger_01_03 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_BoardVehicle("01_tiger_01", 1, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

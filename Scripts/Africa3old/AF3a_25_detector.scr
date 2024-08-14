@@ -1,0 +1,5 @@
+FRAME en25;			FRM_FindFrame(en25, "AF3a_25");
+
+Whenever inrange (_PlayerInRange(8) ){
+  SendSignal(en25, 10);
+}

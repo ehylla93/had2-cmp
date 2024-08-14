@@ -1,0 +1,34 @@
+
+Block {
+Frame ge44;		Frm_FindFrame (ge44,"ge_44");
+Frame ge45;		Frm_FindFrame (ge45,"ge_45");
+integer a;
+}
+
+goto end;
+
+Whenever ted(_PlayerInRange(33))
+{
+a=_RandomInt(2);
+
+if (a==0)
+{
+SendSignal (ge44,4);
+SendSignal (ge45,4);
+goto end;
+}
+
+if (a==1)
+{
+SendSignal (ge44,1);
+SendSignal (ge45,1);
+goto end;
+}
+}
+
+Whenever nic(_SignalReceived(1))
+{
+SetWhenever(ted, 0);
+}
+
+label end:

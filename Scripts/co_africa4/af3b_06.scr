@@ -1,0 +1,176 @@
+// AF3b_06 - driving OPEL2
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  FRAME af07;			FRM_FindFrame(af07, "AF3b_07");
+  FRAME af08;			FRM_FindFrame(af08, "AF3b_08");
+  FRAME af09;			FRM_FindFrame(af09, "AF3b_09");
+  FRAME af10;			FRM_FindFrame(af10, "AF3b_10");
+
+  FRAME SdKfZ;			FRM_FindFrame(SdKfZ, "Opel02"); 
+  FRAME dummy_turnat;	FRM_FindFrame(dummy_turnat, "m_AF3_bar_ohen_17");
+  INTEGER Atype			= 0;
+  INTEGER pomalu		= 0;
+  INTEGER vcili			= 0;
+  INTEGER incar			= 0;
+
+  SetAlarmType(1023, false);
+}
+
+HUMAN_SetSightRange(300); 
+HUMAN_Suspend(true);
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(22){			// RETREAT SECTION
+  SetAlarmType(1023, false);
+  DisableSignals(true);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF3b_retreat");
+  goto END;
+}
+
+OnDeath()
+{
+  SendSignal(af07, 2);
+  SendSignal(af08, 2);
+  SendSignal(af09, 2);
+  SendSignal(af10, 2);
+  EndScript();
+}
+  
+OnAlarm(){
+
+if((pomalu) AND (!vcili))
+{
+  HUMAN_Drive("o2_act1_04", 40);
+  HUMAN_SetAlarm(false);
+  goto ESCAPEVEHICLE;
+}
+
+block{
+  HUMAN_Stop();
+  Atype = _GetAlarmType();   
+}
+
+  If(Atype == 2){
+    EndScript();
+  }
+
+  If(Atype == 256){
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_SetAlarm(false);
+    goto END;
+  }
+
+  if(((Atype != 32) AND (Atype != 64)) AND (Atype != 1)){
+    HUMAN_SetMODE_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    goto END;
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(20){
+printf("af3b_06 signal 20 received");
+  SendSignal(af07, 1);
+  SendSignal(af08, 1);
+  SendSignal(af09, 1);
+  SendSignal(af10, 1);
+  goto ACTIVITY1;
+}
+
+OnSignal(21){
+printf("af3b_06 signal 21 received");
+  SendSignal(af07, 1);
+  SendSignal(af08, 1);
+  SendSignal(af09, 1);
+  SendSignal(af10, 1);
+  pomalu = 1;
+  goto ACTIVITY2;
+}
+
+OnSignal(2)
+{
+  goto ESCAPEVEHICLE;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVITY1:
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("Opel02", 1, 0);
+  incar = 1;
+  Delay(1000);
+  HUMAN_Drive("o2_act1_01", 30);
+  printf("CP: o2_act1_01");
+  HUMAN_Drive("o2_act1_02", 30);
+  printf("CP: o2_act1_02");
+  SendSignal(SdKfZ, 1);
+  // HUMAN_Drive("o2_act1_03", 30);
+  // printf("CP: o2_act1_03");
+  HUMAN_Drive("o2_act1_04", 30);
+  printf("CP: o2_act1_04");
+  HUMAN_Drive("", 0);
+  printf("drive end");
+goto ACTIVITYEND;
+
+Label ACTIVITY2:
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("Opel02", 1, 0);
+  incar = 1;
+  Delay(2000);
+  HUMAN_Drive("o2_act1_01", 15);
+  HUMAN_Drive("o2_act1_02", 15);
+  SendSignal(SdKfZ, 1);
+  // HUMAN_Drive("o2_act1_03", 15);
+  HUMAN_Drive("o2_act1_04", 15);
+  HUMAN_Drive("", 0);
+goto ACTIVITYEND;
+
+Label ACTIVITYEND:
+printf("af3b_06 activity end");
+  SendSignal(af07, 2);
+  SendSignal(af08, 2);
+  SendSignal(af09, 2);
+  SendSignal(af10, 2);
+
+Label ESCAPEVEHICLE:
+  vcili = 1;
+  if(incar == 1)
+  {
+    HUMAN_Drive("", 0);
+    HUMAN_BoardVehicle("Opel02", 0, 0);
+    incar = 0;
+	Car_SetFuel(SdKfZ, 0);
+	SendSignal(SdKfZ, 2);
+  }
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Move("AF3b_06_01");
+  HUMAN_SetMODE_Crouch();
+  Delay(100);
+  HUMAN_TurnAt(dummy_turnat);
+  HUMAN_LookAround(2);
+
+Label END:

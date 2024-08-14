@@ -1,0 +1,95 @@
+//n_E04
+//Guard in southern forest, freezing
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(30);
+
+HUMAN_SetOptimized(1);
+
+integer aievent;
+integer spawn;
+integer a;
+integer time;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+}
+
+HUMAN_Suspend(1);
+spawn = _RandomInt(2);
+if(spawn==0)
+{ SetWhenever(PIR, false); printf("E04 inactive"); }
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent = _GetAlarmType();
+PrintfNumber("E04 alarm:",aievent);
+FRM_MorphSpeech(MyFRM, 90004004, 10, 30);
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+}
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(40))
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%panika1", 200, 200, true);
+}
+
+Label speech:
+a=_RandomInt(3);
+if(a==0) { FRM_MorphSpeech(MyFRM, 90004080, 10, 30); }
+if(a==1) { FRM_MorphSpeech(MyFRM, 90004079, 10, 30); }
+if(a==2) { FRM_MorphSpeech(MyFRM, 90004081, 10, 30); }
+time=(_RandomInt(20000)) + 10000;
+Delay(time);
+goto speech;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

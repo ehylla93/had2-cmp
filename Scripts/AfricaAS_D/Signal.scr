@@ -1,0 +1,72 @@
+// Signalnik
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp;		FRM_FindFrame(Cp,"Weaponbox1");
+Frame Cil;		FRM_FindFrame(Cil,"Sig_Fire");
+Frame Obj4;		FRM_FindFrame(Obj4,"obj4");
+Frame Reinf;		FRM_FindFrame(Reinf,"Reinforcement");
+
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f086");
+
+Integer Nocall;
+	Nocall=1;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+If(Nocall==1){SendSignal(Obj4, 2);}
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+Delay(60000);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp, 5);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(Cil);
+HUMAN_WeaponUp(1);
+Delay(750);
+HUMAN_Attack(Cil, 3000);
+Delay(1000);
+HUMAN_Attack(Cil, 2000);
+SendSignal(Reinf, 3);
+SendSignal(Obj4, 4);
+Nocall=0;
+HUMAN_Attack(Cil, 3000);
+Delay(2000);
+HUMAN_Attack(Cil, 3000);
+Delay(2000);
+HUMAN_Attack(Cil, 3000);
+Delay(2000);
+HUMAN_Attack(Cil, 3000);
+Delay(2000);
+HUMAN_Attack(Cil, 3000);
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETHEARRANGE(130);
+HUMAN_SETSIGHTRANGE(130);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

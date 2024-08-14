@@ -1,0 +1,72 @@
+// AF1_01_A2 - kolona detektor
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame obj5;	FRM_FindFrame(obj5,"obj5");
+Frame af1_04;
+	FRM_FindFrame(af1_04, "AF1_04");
+Frame af1_51;
+	FRM_FindFrame(af1_51, "AF1_cge_posila_01");
+Frame af1_52;
+	FRM_FindFrame(af1_52, "AF1_posila_01");
+Frame af1_53;
+	FRM_FindFrame(af1_53, "AF1_posila_02");
+Frame af1_54;
+	FRM_FindFrame(af1_54, "AF1_posila_03");
+Frame af1_55;
+	FRM_FindFrame(af1_55, "AF1_55");
+Frame af1_56;
+	FRM_FindFrame(af1_56, "AF1_56");
+Frame af1_57;
+	FRM_FindFrame(af1_57, "AF1_57");
+Frame af1_58;
+	FRM_FindFrame(af1_58, "AF1_58");
+Frame af1_59;
+	FRM_FindFrame(af1_59, "AF1_59");
+Frame af1_60;
+	FRM_FindFrame(af1_60, "AF1_60");
+Frame af1_61;
+	FRM_FindFrame(af1_61, "AF1_61");
+	Frame af1_62;
+	FRM_FindFrame(af1_62, "AF1_pobocnik");
+Frame af1_63;
+	FRM_FindFrame(af1_63, "AF1_posila_04");
+Frame af1_64;
+	FRM_FindFrame(af1_64, "AF1_posila_05");
+Frame af1_65;
+	FRM_FindFrame(af1_65, "AF1_posila_06");
+Frame af1_66;
+	FRM_FindFrame(af1_66, "AF1_posila_07");
+}
+// -------------------------------------------------------------------------------------------------------------
+//  
+Whenever AF1_01_A2 (_SignalReceived(1))
+{
+	Block
+	{
+	SendSignal(af1_04, 1);
+	SendSignal(af1_51, 1);
+	SendSignal(af1_52, 1);
+	SendSignal(af1_53, 1);
+	SendSignal(af1_54, 1);
+	SendSignal(af1_55, 1);
+	SendSignal(af1_56, 1);
+	SendSignal(af1_57, 1);
+	SendSignal(af1_58, 1);
+	SendSignal(af1_59, 1);
+	SendSignal(af1_60, 1);
+	SendSignal(af1_61, 1);
+	SendSignal(af1_62, 1);
+	SendSignal(af1_63, 1);
+	SendSignal(af1_64, 1);
+	SendSignal(af1_65, 1);
+	SendSignal(af1_66, 1);
+	 	 
+	}
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose

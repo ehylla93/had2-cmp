@@ -1,0 +1,26 @@
+
+ frame Herman;	FRM_FindFrame(Herman,  "Gate_Inquisitor");
+ frame GG;		FRM_FindFrame(GG,  "Gate_Guard");
+
+// 01990236	Je tam nìkdo?	
+// 01990237	Kdo tam k sakru je?	
+// 01990238	Probuï se Hermanne, nìkdo tady je!	
+// 01990239	Hermanne! Pojï ven! Potøebuju s nìèím pomoci.	
+// 01990240	Promiò kámo, nic to nebylo.	
+// 562	1133	1563	2323	1908	[ms]
+OnSignal(1)
+{
+  FRM_MorphSpeechDelayed(GG, 01990236, 15, 40);    Delay(8);
+  
+  FRM_MorphSpeechDelayed(GG, 01990237, 15, 40);	  Delay(12);
+  FRM_MorphSpeechDelayed(GG, 01990238, 15, 40);	  Delay(16);
+  FRM_MorphSpeechDelayed(GG, 01990239, 15, 40);	  Delay(24);	
+  FRM_MorphSpeechDelayed(GG, 01990240, 15, 40);	  Delay(20);	
+}
+
+// alarm, death ...
+OnSignal(2)
+{
+  Printf("GG kecy ukonceny - TERMINATOR GG");
+  EndScript();
+}

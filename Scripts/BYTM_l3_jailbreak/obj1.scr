@@ -1,0 +1,40 @@
+// Objective 1 - weapon cache
+// ------------------------------------
+
+Block
+{
+Frame obj2;		FRM_FindFrame(obj2, "obj2");
+Frame obj3;		FRM_FindFrame(obj3, "D_ZONE2_FLAG");
+Frame obj4;		FRM_FindFrame(obj4, "obj4");
+Frame box4;		FRM_FindFrame(box4, "05_box_4");	// stealth guns
+Frame box5;		FRM_FindFrame(box5, "05_box_5");	// ammo
+Frame box6;		FRM_FindFrame(box6, "05_box_6");	// panzerfaust, sticky bomb
+
+Frame box;		FRM_FindFrame(box, "d_weaponcache");	//weapon cache
+Frame box2;		FRM_FindFrame(box2, "d_weaponcache_2");	//weapon cache
+
+SetObjectiveStatus(1, 0);
+}
+
+goto end;
+
+Whenever PIB ((_PlayerInBox(box)) or (_PlayerInBox(box2)))
+{
+SetWhenever(PIB, 0);
+}
+
+Label 1:
+MP_EnableSpawnZone("zone1", 2);
+MP_EnableSpawnZone("zone2", 1);
+Delay(500);
+Block {
+SendSignal(obj2, 1);
+SendSignal(obj3, 1);	// activates obj3 PIR
+SendSignal(obj4, 1);	// activates obj4 PIR
+SetActorState(box4, 1);
+SetActorState(box5, 1);
+SetActorState(box6, 1);
+}
+EndScript();
+
+Label end:

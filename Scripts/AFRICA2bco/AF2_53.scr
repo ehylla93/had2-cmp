@@ -1,0 +1,88 @@
+// AF2_53 - osadka Opel2
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame look01;
+	FRM_FindFrame(look01, "AF2_53_look01");
+Frame af54;
+	FRM_FindFrame(af54, "AF2_54");
+Frame af55;
+	FRM_FindFrame(af55, "AF2_55");
+Frame af56;
+	FRM_FindFrame(af56, "AF2_56");
+Frame af57;
+	FRM_FindFrame(af57, "AF2_57");
+Frame me;
+	FRM_GetMyFrame(me);
+	Frame a4;	FRM_FindFrame(a4,"la_kubelAf_");
+Integer invehicle;
+	invehicle=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+SetAlarmType(1023, 0);
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	If(invehicle==1)
+	{
+	HUMAN_Drive("", 10);
+	HUMAN_BoardVehicle("Opel2", true, 0);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAlarm(0);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_53_A1
+{
+	HUMAN_Suspend(false);
+	GoTo move;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+HUMAN_BoardVehicle("Opel2", true, 0);
+invehicle=1;
+FRM_SwitchFaceTexture(me, "e_f054");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label move:
+	printf("idem na uklid_aut");
+	HUMAN_Drive("uklid_aut", 40);
+	SendSignal(af54, 2);
+	HUMAN_BoardVehicle("Opel2", false, 0);
+	invehicle=0;
+	SendSignal(af55, 2);
+	HUMAN_WeaponOnArm(true);
+	SendSignal(af56, 2);
+	Delay(100);
+	HUMAN_SETMODE_Run();
+	SendSignal(af57, 2);
+	HUMAN_MoveToFrame(a4, 1);
+	HUMAN_TurnAt(look01);
+	HUMAN_SETMODE_Crouch();
+	{
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+}
+
+Label end:

@@ -1,0 +1,20 @@
+FRAME me; 			FRM_GetMyFrame(me);
+Frame kost1;		FRM_FindFrame(kost1, "kostej");
+Frame bike;			FRM_FindFrame(bike, "bicykle2");
+
+Whenever range(_PlayerInRange(5))
+{
+FRM_SetAnimation(kost1, "bike_legs", 1); 
+//FRM_SetAnimation(bike, "BP", 1); //
+
+goto end;
+}
+
+Whenever inrange(_PlayerInRange(1))
+{
+FRM_MorphSpeech(kost1, 00990051, 20, 50);
+
+goto end;
+}
+
+label end:

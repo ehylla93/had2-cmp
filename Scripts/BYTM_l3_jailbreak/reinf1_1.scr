@@ -1,0 +1,73 @@
+// reinf1_1 - Infantry
+// -------------------------------------------
+
+Block
+{
+Frame E01;    FRM_FindFrame(E01, "R1_E01");
+Frame E02;    FRM_FindFrame(E02, "R1_E02");
+Frame E03;    FRM_FindFrame(E03, "R1_E03");
+Frame E04;    FRM_FindFrame(E04, "R1_E04");
+Frame E05;    FRM_FindFrame(E05, "R1_E05");
+Frame E06;    FRM_FindFrame(E06, "R1_E06");
+Frame E07;    FRM_FindFrame(E07, "R1_E07");
+Frame E08;    FRM_FindFrame(E08, "R1_E08");
+Frame E09;    FRM_FindFrame(E09, "R1_E09");
+Frame E10;    FRM_FindFrame(E10, "R1_E10");
+Frame E11;    FRM_FindFrame(E11, "R1_E11");
+Frame E12;    FRM_FindFrame(E12, "R1_E12");
+Frame E13;    FRM_FindFrame(E13, "R1_E13");
+
+Integer setup1;
+Integer setup2;
+Integer time;
+
+SaveGameValue(2, 0);
+}
+
+goto end;
+
+// -------------------------------------------
+
+OnSignal(1)
+{
+goto Init;
+}
+
+// -------------------------------------------
+
+Label Init:
+// gosub timer;
+SendSignal(E07, 1);
+Delay(2000);
+SendSignal(E08, 1);
+Delay(2000);
+SendSignal(E09, 1);
+Delay(2000);
+SendSignal(E10, 1);
+Delay(2000);
+SendSignal(E11, 1);
+Delay(2000);
+SendSignal(E12, 1);
+Delay(2000);
+SendSignal(E13, 1);
+
+SendSignal(E01, 1);
+SendSignal(E04, 1);
+Delay(2000);
+SendSignal(E02, 1);
+SendSignal(E05, 1);
+Delay(2000);
+SendSignal(E03, 1);
+SendSignal(E06, 1);
+EndScript();
+
+Label timer:
+time = _RandomInt(120000) + 30000;	// min. 30s, max. 150s
+printfnumber("R1_1 timer: ", time);
+Delay(time);
+Return;
+
+
+// -------------------------------------------
+
+Label end:

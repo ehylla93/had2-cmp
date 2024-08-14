@@ -1,0 +1,16 @@
+
+Frame objectives;	FRM_FindFrame(objectives, "objectives");
+Frame Reinf_scr;	FRM_FindFrame(Reinf_scr, "Reinf");
+goto end;
+  
+  //sector H46_45
+  
+OnDeath()
+{
+printf ("Radio broken !");
+	SendSignal(objectives, 3);
+	SendSignal(Reinf_scr, 1);
+	EndScript();
+}
+
+label end:

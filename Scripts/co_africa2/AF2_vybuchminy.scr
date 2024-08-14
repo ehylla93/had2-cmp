@@ -1,0 +1,42 @@
+// AF1_vybuchcisterny - explosion of cistern
+// -------------------------------------------------------------------------------------------------------------
+
+  FRAME opel;      		FRM_FindFrame(opel, "OpelT_1");
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME kolo;			FRM_FindFRAME(kolo, "OpelT_1.WHL00");
+  FRAME kolo2;		FRM_FindFRAME(kolo2, "OpelT_1.WHL01");
+  FRAME kolo3;		FRM_FindFRAME(kolo3, "OpelT_1.WHR00");
+ 
+  
+  INTEGER i_kolo;
+  INTEGER i_kolo2;
+  INTEGER i_kolo3;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+  block{
+    printf("POSILY GOOOOO");
+    FRM_CreateIndexedParticle(108, kolo2, i_kolo2);
+    FRM_CreateIndexedParticle(108, kolo3, i_kolo3);
+  }
+  Delay(26700);
+  block
+  {
+    printf("EXPLOZEEEEEEEEEEEEEEEEE");
+    PlaySound(6, 2);
+    MakeExplosion(this, 2000000, 8000);
+    FRM_CreateParticle(48, this);
+    FRM_CreateIndexedParticle(110, kolo, i_kolo);
+  }
+  Delay(5000);
+  FRM_FinishIndexedParticle(i_kolo);
+  FRM_FinishIndexedParticle(i_kolo2);
+  Delay(200);
+  FRM_FinishIndexedParticle(i_kolo3);
+  EndScript();
+}
+
+
+// -------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,58 @@
+// sniper bez sniperky
+
+integer  AIEvent;
+Frame turn;		FRM_FindFrame(turn, "dummy_sniper2_turn");
+frame OBJ;		FRM_FindFrame(OBJ, "Objectives");	
+
+SetAlarmType(520, False);
+
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+OnSignal(2)
+{						
+  HUMAN_Suspend(False);			
+  HUMAN_SetSniper(True, 5);
+  DisableSignals(True);	// kvuli karnage dostava od carnage obj skriptu budicek dvakrat
+}						
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETMODE_Walk();
+    }
+  HUMAN_Move("Sniper2_1");			
+  HUMAN_TurnAt(turn);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Sniper 2: ", AIEvent);
+      HUMAN_SETMODE_Stand();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 1);
+  EndScript();
+}
+
+Label TheEND:

@@ -1,0 +1,53 @@
+// Obj 5 - Rescue Cpt. Rosenfield (SAS)
+// -------------------------------------------------
+
+Block
+{
+Frame Ros;		FRM_FindFrame(Ros, "Cpt. Rosenfield");
+Frame Kubel;		FRM_FindFrame(Kubel, "Kubel_01");
+Frame Jeep;		FRM_FindFrame(Jeep, "Jeep_01");
+Frame Hakl;		FRM_FindFrame(Hakl, "Hakl_01");
+
+Car_SetFuel(Kubel, 0);
+Car_SetFuel(Jeep, 0);
+Car_SetFuel(Hakl, 0);
+}
+
+// -------------------------------------------------
+
+Whenever RosDead (_Actor_GetState(Ros)==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(11992211);
+Delay(3000);
+SUBTITLES_SetText(59999908);
+Delay(2500);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(3, 4);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+Delay(200);
+SetObjectiveStatus(5, 2);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(1000))
+{
+Delay(6000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999902);
+Delay(2000);
+SUBTITLES_SetText(58999703);
+Delay(2000);
+SUBTITLES_SetText(58999901);
+Delay(2000);
+SUBTITLES_SetText(23994601);
+Delay(1500);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+Label END:

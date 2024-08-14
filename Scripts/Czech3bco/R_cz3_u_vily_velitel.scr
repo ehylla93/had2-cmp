@@ -1,0 +1,270 @@
+//zacina u beden a na signal se de potkat u vily s ridicem.
+
+
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Aggressive();
+
+frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+frame ridic;		FRM_FindFrame(ridic,"opel_driver");
+frame cum;		FRM_FindFrame(cum,"velitelcum");
+frame cum2;		FRM_FindFrame(cum2,"velitelcum2");
+//frame cum3;		FRM_FindFrame(cum3,"velitelcum3");
+Frame me;		FRM_GetMyFrame(me);
+Frame def2;		FRM_FindFrame(def2, "defender_2");
+Frame radista;		FRM_FindFrame(radista,"radista");
+Frame hledac;		FRM_FindFrame(hledac,"hledac");
+Frame mechanik;	FRM_FindFrame(mechanik, "mechanik");
+integer aievent;
+integer a;	a=0;
+
+
+	FRM_SwitchFaceTexture(me, "e_f059");
+
+}
+
+
+
+//----------------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("velitel c:",aievent);
+}
+HUMAN_ACTIVITY_Smoke(0);
+HUMAN_SetAnim("", 10, 10, 0);
+HUMAN_WeaponOnArm(1);
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+HUMAN_SETMODE_Silence();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToAlarm();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+EndScript();
+
+}
+
+
+
+OnAlarmDone()
+{
+SetAlarmType(652,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+
+OnDeath()
+{
+ SendSignal(reinfo, 0);
+DisableSignals(1);
+  Printf("velitel is DEAD!!!");
+  EndScript();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Whenever prijizdiopel(_SignalReceived(2))
+{
+// od ridice nakladaku
+delay (3000);
+HUMAN_SetAnim("",1000,1000,1);
+HUMAN_Move("velitel1");
+HUMAN_Move("velitel2");
+HUMAN_Move("velitel3");
+HUMAN_Move("velitel4");
+SendSignal (ridic,2);		//pod ven
+HUMAN_Move("velitel6");
+HUMAN_TurnAt(cum);
+goto end;
+}
+
+Whenever ridicprisel(_SignalReceived(3))
+{
+printf ("Dobøe. Jsou vzadu ve stodole.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994014, 5, 30);
+
+HUMAN_SetAnim("",500,500,0);
+sendsignal (ridic,3);		//domluvil sem
+HUMAN_ACTIVITY_Smoke(1);
+delay (5000);
+HUMAN_Move("velitel7");
+HUMAN_TurnAt(cum2);
+
+goto end;
+}
+
+Whenever def2prisel(_SignalReceived(4))
+{
+HUMAN_ACTIVITY_Smoke(0);
+HUMAN_TurnAt(def2);
+goto end;
+}
+
+Whenever def2mlc(_SignalReceived(5))
+{
+printf ("To nevím. Už tu mìl pùl hodiny být a nic. Èert ví co ho zdrželo. ");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994026, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (def2,6);		//mluf
+goto end;
+}
+
+
+Whenever def2mlc2(_SignalReceived(6))
+{
+printf ("Zùstaòte u beden a až bude nìco potøeba tak pro vás pošlu.  Odchod.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994028, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (def2,7);		//odchod
+Delay (10000);
+//de za radistou
+HUMAN_Move("HV1_1");
+HUMAN_Move("opelridic1");
+HUMAN_Move("naschodech1_03");
+HUMAN_Move("velitel8");
+Printf(" Máš nìjaké zprávy nebo rozkazy ??");
+FRM_MorphSpeechDelayed(me, 20994038, 5, 30);
+
+Printf ("Vùbec nic. Samý šum nebo nìjaké šifrované utrzky.  ");
+FRM_MorphSpeechDelayed(radista, 20994039, 5, 30);
+
+Printf ("Sakra. Tohle v plánu nebylo. Tak poslouchej a kdyby nìco, chci to okamžitì vìdìt.");
+FRM_MorphSpeechDelayed(me, 20994040, 5, 30);
+
+HUMAN_Move("naschodech1_03");
+HUMAN_Move("opelridic1");
+//za mechanikem
+HUMAN_Move("velitel4");
+HUMAN_Move("velitel9");
+HUMAN_Move("velitel10");
+SendSignal (mechanik,1);
+goto end;
+}
+
+
+Whenever mechanik(_SignalReceived(7))
+{
+HUMAN_TurnAt(mechanik);
+Printf (" Tak jak to vypadá ?");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994041, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (mechanik,2);		//mluf
+goto end;
+}
+
+
+Whenever mechanik2(_SignalReceived(8))
+{
+Printf (" A co elektrika ve vìži ??");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994043, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (mechanik,3);		//mluf
+goto end;
+}
+
+Whenever mechanik3(_SignalReceived(9))
+{
+Printf (" Hm To nam ale pìknì všechno vychází. Sakra!! Tak pokraèuj a já zjistím");
+HUMAN_SetAnim("%%rozhovor3",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994045, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (mechanik,4);		//bez makat
+//za hledacem civky
+HUMAN_Move("velitel11");
+HUMAN_Move("velitel12");
+SendSignal (hledac,1);
+goto end;
+}
+
+Whenever hledac(_SignalReceived(10))
+{
+HUMAN_TurnAt(hledac);
+Printf ("Už máš tu cívku ??");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994046, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (hledac,2);		//mluf
+goto end;
+}
+
+Whenever hledac2(_SignalReceived(11))
+{
+HUMAN_TurnAt(hledac);
+Printf ("A víš urèitì že má být nìkde tady ?");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994048, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (hledac,3);		//mluf
+goto end;
+}
+
+Whenever hledac3(_SignalReceived(12))
+{
+HUMAN_TurnAt(hledac);
+Printf ("Tak hledej dal");
+HUMAN_SetAnim("%%rozhovor3",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994050, 5, 30);
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (hledac,4);		//hledej dal
+goto end;
+}
+//-------------------------------------------------------------------------------------------------
+
+label funguj:
+
+//HUMAN_Suspend(0);
+HUMAN_SetAnim("%%cumvoda",1000,1000,1);
+goto end;
+
+
+
+
+
+label end:
+

@@ -1,0 +1,62 @@
+// Obj 6 - Contact HQ with radio
+// ------------------------------------------------
+
+Block
+{
+Frame Ros;	FRM_FindFrame(Ros,"Cpt. Rosenfield");
+Frame DZ;	FRM_FindFrame(DZ,"DropZone");
+Frame Radio;	FRM_FindFrame(Radio,"Radio");
+Frame Player;
+
+Integer Obj_Done;
+	Obj_Done=0;
+
+SetActorState(Radio, 0);
+SetWhenever(Contact_HQ, 0);
+}
+
+// ------------------------------------------------
+
+Whenever Contact_HQ (_Actor_GetState(Radio)==2)
+{
+SendSignal(DZ, 1);
+FRM_GetNearestPlayer(Radio, Player);
+Delay(400);
+FRM_MorphSpeechDelayed(Player, 04990882, 3, 20);
+FRM_MorphSpeechDelayed(Player, 04990884, 3, 20);
+FRM_MorphSpeechDelayed(Player, 04990885, 3, 20);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SetObjectiveStatus(5, 0);
+SUBTITLES_SetText(59999902);
+Delay(3000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+SetActorState(Radio, 0);
+SendSignal(Ros, 1);
+goto END;
+}
+
+
+OnSignal(1)
+{
+Obj_Done=Obj_Done+1;
+
+If(Obj_Done > 3)
+{
+SetObjectiveStatus(6, 0);
+Delay(6000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990803);
+Delay(3000);
+SetActorState(Radio, 1);
+SetWhenever(Contact_HQ, 1);
+SUBTITLES_SetOn(0);
+}
+
+goto End;
+}
+
+
+
+Label End:

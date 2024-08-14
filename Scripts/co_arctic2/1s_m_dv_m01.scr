@@ -1,0 +1,51 @@
+//-------------prepinani lightmap od dveri m_dv_m01------------------------
+//  	dvojte 		tyto dvere  
+//	close     0	close	0
+//	close     2	open	1
+//	open      1	close	2
+//	open      1	open	3
+//	roznuto 4	roznuto 4
+
+Block {
+frame m_dv_m01;		FRM_GetMyFrame(m_dv_m01);
+frame m_d_po09;		FRm_FindFrame(m_d_po09, "m_d_po09");
+frame vratnej;		FRM_FindFrame(vratnej,"Static_4");
+integer door;		door=0;
+integer Stav = 0;
+integer Stav2 = 0;
+integer first_use = 1;
+}
+
+OnUse()
+	{
+  If (first_use) 
+      {	 
+          DOOR_Lock(m_dv_m01, false); 
+          first_use = 99;
+      }
+               If ( (_ACTOR_GetState(m_dv_m01)==1)or(_ACTOR_GetState(m_dv_m01)==2) ) {door=1;} else {door=0;}
+               If ( (_ACTOR_GetState(m_d_po09)==1)or(_ACTOR_GetState(m_d_po09)==2) ) {door=door+2;} 
+	   If ((_LoadGameValue(21))==1) {door=4;}               
+               FRM_SetLightMap(m_dv_m01,door); 
+               SendSignal(vratnej, 21);
+	}
+
+OnSignal(5)
+{
+    If (door >1) {door = door - 2;} else {door = door + 2;}
+  Block
+  {
+    FRM_SetLightMap(m_dv_m01, door); 
+  }
+}
+
+OnSignal(21)
+{
+  Block
+    {
+        door = _ACTOR_GetState(m_dv_m01);
+        If (door == 4) {door =0; }
+        If ( _ACTOR_GetState(m_d_po09) ==1 )  {door = door +2;}
+        FRM_SetLightMap(m_dv_m01,door); 
+    }
+}

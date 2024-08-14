@@ -1,0 +1,18 @@
+//Spawn2 (3. from south)
+Block
+{
+Frame detect;	FRM_FindFrame (detect,"zone2");
+Frame txt;		FRM_FindFrame(txt,"Text");
+Frame Tank1;	FRM_FindFrame(Tank1,"Tiger_3");
+}
+goto end;
+
+Whenever Yes ((_Actor_GetState(Tank1)==0) and (!_EnemyInRange(detect,50)))
+{
+Delay(5000);
+MP_EnableSpawnZone("zone2", 1);
+SendSignal(txt, 3);
+goto end;
+}
+
+label end:

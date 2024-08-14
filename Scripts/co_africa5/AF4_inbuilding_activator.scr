@@ -1,0 +1,26 @@
+// AF4_inbuilding_activator - activator for enemies in tactical room (for more FPS)
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME af14;				FRM_FindFrame(af14, "AF4_14");
+FRAME af16;				FRM_FindFrame(af16, "AF4_16");
+FRAME af17;				FRM_FindFrame(af17, "AF4_17");
+FRAME af18;				FRM_FindFrame(af18, "AF4_18");
+FRAME af19;				FRM_FindFrame(af19, "AF4_19");
+INTEGER cnt				= 0;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnUse(){
+  if((cnt == 0) AND (_PlayerInRange(40))){
+    block{
+      cnt = 1;
+      SendSignal(af14, 1);
+      SendSignal(af16, 1);
+      SendSignal(af17, 1);
+      SendSignal(af18, 1);
+      SendSignal(af19, 1);
+    }
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------

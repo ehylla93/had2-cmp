@@ -1,0 +1,14 @@
+  FRAME listy;			FRM_FindFrame(listy, "la_macchi_cut.listy");
+  FRAME bluur;		FRM_FindFrame(bluur, "la_macchi_cut.bluur");
+
+goto END;
+
+OnSignal(1){
+  FRM_RotateY(listy, 36000, 1440);
+  FRM_RotateY(bluur, 36000, 1440);
+}
+
+Delay(50000);
+EndScript();
+
+Label END:

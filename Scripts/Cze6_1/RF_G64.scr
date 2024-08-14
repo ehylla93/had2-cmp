@@ -1,0 +1,39 @@
+// RF_G64 - Reinforcement Panzer (D1_Panzer_01) Driver
+// ------------------------------------------------------
+
+Block
+{
+Integer Cesta;
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+
+Whenever Spawn (_SignalReceived(3))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("D1_Panzer_01", 1, 0);
+HUMAN_Drive("C5_tank04", 20);
+Cesta = _RandomInt(3);
+
+If(Cesta == 1)
+{
+HUMAN_DriveNearPlayer(40);
+HUMAN_DriveNearPlayer(60);
+}
+
+If(Cesta == 2)
+{
+HUMAN_DriveNearPlayer(20);
+HUMAN_DriveNearPlayer(60);
+}
+
+goto END;
+}
+
+Label END:

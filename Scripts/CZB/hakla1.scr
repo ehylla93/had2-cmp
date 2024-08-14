@@ -1,0 +1,79 @@
+// Hakl ridic (2)
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  Frame seda1;		FRM_FindFrame(seda1,"hakla2");
+  Frame seda2;		FRM_FindFrame(seda2,"hakla3");
+  Frame seda3;		FRM_FindFrame(seda3,"hakla4");
+  Frame seda4;		FRM_FindFrame(seda4,"hakla5");
+  Frame seda5;		FRM_FindFrame(seda5,"hakla6");
+  Frame ts;		      FRM_FindFrame(ts,"C5_G38");
+
+  Frame mhakl;		FRM_FindFrame(mhakl,"Hakl2");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnAlarm(){
+SendSignal(ts, 2);
+EndScript();
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90004029, 5, 30); // got him
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnDeath(){
+SendSignal(ts, 2);
+EndScript();
+}
+
+OnSignal(1)  //  Jedem
+{
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("Hakl2",  true, 0);
+  SendSignal(seda1, 2);
+  SendSignal(seda2, 2);
+  SendSignal(seda3, 2);
+  SendSignal(seda4, 2);
+  SendSignal(seda5, 2);
+  Delay(1000);
+  HUMAN_DriveNearPlayer(50);
+  goto END; 
+}
+
+OnSignal(2)  // Utocime
+{
+  HUMAN_Stop();
+  HUMAN_Drive("", 30);
+  Delay(1000);
+  HUMAN_BoardVehicle("Hakl2",  false, 0);
+  Delay(1000);
+  SendSignal(seda1, 1);
+  SendSignal(seda2, 1);
+  SendSignal(seda3, 1);
+  SendSignal(seda4, 1);
+  SendSignal(seda5, 1);
+  HUMAN_SETSIGHTRANGE(100);
+  Car_SetFuel(mhakl, 0);
+  goto END; 
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+  FRM_SwitchFaceTexture(me, "e_f043");
+  HUMAN_Suspend(true);
+  HUMAN_SETSIGHTRANGE(0); 
+  HUMAN_SetOptimized(1);
+  goto END;
+
+  Label END:

@@ -1,0 +1,58 @@
+//nadrazna budova zvonku
+Frame svetlox15;	FRM_FindFrame(svetlox15, "sign help light_3");
+Frame lensx15;	FRM_FindFrame(lensx15, "e_raslmp_19.Rectangle01");
+
+Frame svetlox16;	FRM_FindFrame(svetlox16, "sign lamp_5");
+Frame lensx16;	FRM_FindFrame(lensx16, "e_raslmp_18.Rectangle01");
+
+Frame svetlox17;	FRM_FindFrame(svetlox17, "sign lamp_4");
+Frame lensx17;	FRM_FindFrame(lensx17, "e_raslmp_16.Rectangle01");
+
+Frame svetlox18;	FRM_FindFrame(svetlox18, "sign lamp_3");
+Frame lensx18;	FRM_FindFrame(lensx18, "e_raslmp_17.Rectangle01");
+
+Frame svetlox19;	FRM_FindFrame(svetlox19, "sign help light_2");
+Frame lensx19;	FRM_FindFrame(lensx19, "e_raslmp_20.Rectangle01");
+
+Frame svetlox20;	FRM_FindFrame(svetlox20, "sign lamp_2");
+Frame lensx20;	FRM_FindFrame(lensx20, "e_rasplm3.Rectangle01");
+
+Frame svetlox21;	FRM_FindFrame(svetlox21, "sign lamp_1");
+Frame lensx21;	FRM_FindFrame(lensx21, "e_rasplm2.Rectangle01");
+
+Frame svetlox22;	FRM_FindFrame(svetlox22, "sign lamp_");
+Frame lensx22;	FRM_FindFrame(lensx22, "e_rasplm.Rectangle01");
+
+Frame ostatnesvetla08;	FRM_FindFrame(ostatnesvetla08, "omni help_21");
+Frame ostatnesvetla09;	FRM_FindFrame(ostatnesvetla09, "omni help_20");
+Frame ostatnesvetla10;	FRM_FindFrame(ostatnesvetla10, "omni help_19");
+Frame ostatnesvetla11;	FRM_FindFrame(ostatnesvetla11, "sign help light");
+Frame ostatnesvetla12;	FRM_FindFrame(ostatnesvetla12, "sign help light_");
+Frame ostatnesvetla13;	FRM_FindFrame(ostatnesvetla13, "omni help_22");
+Frame ostatnesvetla14;	FRM_FindFrame(ostatnesvetla14, "omni help_23");
+Frame ostatnesvetla15;	FRM_FindFrame(ostatnesvetla15, "omni help_24");
+
+FRM_SetGroupLightMap("venek", 1);
+
+OnSignal(1)
+{
+	Delay(1000);
+	Block	{	FRM_SetOn(svetlox15, 0);	FRM_SetOn(lensx15, 0);
+			FRM_SetOn(svetlox16, 0);	FRM_SetOn(lensx16, 0);
+			FRM_SetOn(svetlox17, 0);	FRM_SetOn(lensx17, 0);
+			FRM_SetOn(svetlox18, 0);	FRM_SetOn(lensx18, 0);
+			FRM_SetOn(svetlox19, 0);	FRM_SetOn(lensx19, 0);
+			FRM_SetOn(svetlox20, 0);	FRM_SetOn(lensx20, 0);
+			FRM_SetOn(svetlox21, 0);	FRM_SetOn(lensx21, 0);
+			FRM_SetOn(svetlox22, 0);	FRM_SetOn(lensx22, 0);
+			FRM_SetOn(ostatnesvetla08, 0);
+			FRM_SetOn(ostatnesvetla09, 0);
+			FRM_SetOn(ostatnesvetla10, 0);
+			FRM_SetOn(ostatnesvetla11, 0);
+			FRM_SetOn(ostatnesvetla12, 0);
+			FRM_SetOn(ostatnesvetla13, 0);
+			FRM_SetOn(ostatnesvetla14, 0);
+			FRM_SetOn(ostatnesvetla15, 0);
+
+			FRM_SetGroupLightMap("venek", 1);			}
+}

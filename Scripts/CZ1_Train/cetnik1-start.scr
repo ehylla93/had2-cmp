@@ -1,0 +1,212 @@
+// cetnik01
+
+Block
+{
+Frame tree;
+	FRM_FindFrame(tree,"e_tree196");
+Frame cetnik1;
+	FRM_FindFrame(cetnik1,"cetnik_");
+Frame auto;
+	FRM_FindFrame(auto,"blitz1");
+Frame driver;
+	FRM_FindFrame(driver,"ridic nakladaku");
+Frame speech;
+	FRM_FindFrame(speech, "speech1");
+Frame me;
+	FRM_GetMyFrame(me);
+Frame Ge_7;
+	FRM_FindFrame(Ge_7, "Ge_7");
+Frame posila4;
+	FRM_FindFrame(posila4, "posila4");
+Frame posila6;
+	FRM_FindFrame(posila6, "posila6");
+Integer kur;
+	kur=0;
+Integer wait;
+	wait=0;
+Integer smoking_time;
+	smoking_time=0;
+Integer aievent;
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f053");
+}
+
+Label hlidka:
+	HUMAN_SETSIGHTRANGE(28);
+	Delay(6000);
+	Delay(15000);	
+	Integer point=_RandomInt(5);
+	If(point==0)
+	{
+		HUMAN_TurnAt(tree);
+		HUMAN_ACTIVITY_Point(tree);
+	}
+	Delay(5000);
+	HUMAN_TurnAt(cetnik1);
+	Integer kecani=_RandomInt(3);
+	If(kecani==0)
+	{
+		HUMAN_SetAnim("%%kecy1", 500, 1500, false);
+		Delay(12000);
+	}
+	kur=_RandomInt(5) + 1;
+	If(kur==1)
+	{
+		Gosub cigaro;
+	}
+	GoTo hlidka;
+
+Label cigaro:
+	wait =_RandomInt(200) + 50;
+	Delay(wait);
+	HUMAN_ACTIVITY_Smoke(true);
+	smoking_time=_RandomInt(50000) + 150000;
+	Delay(smoking_time);
+	HUMAN_ACTIVITY_Smoke(false);
+	wait =_RandomInt(100) + 50;
+	Delay(wait);
+	Return;
+
+// prvni kontrola nakladaku
+OnSignal(1)	// received from detektorauta
+{
+	HUMAN_SetAnim("", 500, 1500, false);
+	HUMAN_TurnAt(auto);
+	GoTo end;
+}
+
+OnSignal(2)	// received from ridic nakladaku
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("sloup");
+	HUMAN_Move("zadkolo");
+	HUMAN_TurnAt(auto);
+	Delay(1000);
+	HUMAN_Move("zadekauta");
+	HUMAN_TurnAt(auto);
+	Delay(100);
+	HUMAN_SetAnim("%%kontrolaauta", 500, 500, false);
+	Delay(13000);
+	HUMAN_Move("zadkolo2");
+	HUMAN_SETSIGHTRANGE(15);
+	HUMAN_Move("zastavit");
+	HUMAN_TurnAt(auto);
+	Delay(100);
+	HUMAN_SetAnim("%%kontrolaauta", 500, 500, false);
+	Delay(13000);
+	HUMAN_Move("predek");
+	HUMAN_TurnAt(auto);
+	Delay(100);
+	HUMAN_SetAnim("%%kontrolaauta", 500, 500, false);
+	Delay(13000);
+	HUMAN_Move("pozdrav");
+	HUMAN_TurnAt(auto);
+	HUMAN_ACTIVITY_Salute(1);
+	SendSignal(driver, 1);
+	SendSignal(cetnik1, 2);
+	HUMAN_Move("straze2");
+	HUMAN_SetOptimized(2);
+	SendSignal(cetnik1, 3);
+	HUMAN_TurnAt(cetnik1);
+	SendSignal(speech, 1);
+	Delay(100);
+	GoTo hlidka;
+}
+
+OnSignal(3)	// received from speech1
+{
+	HUMAN_Stop();
+	GoTo end;
+}
+
+OnSignal(8)	// received from Ge_7
+{
+	SetAlarmType(1023,1); //all
+	GoTo end;
+}
+
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	printfnumber("Cetnik1: Alarmed na ", aievent);
+	HUMAN_Stop();
+	Block
+	{
+	SendSignal(speech, 2);
+	SendSignal(Ge_7, 7);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	DisableSignals(true);
+	HUMAN_SETMODE_Run();
+	HUMAN_SETSIGHTRANGE(80);
+	}
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_ACTIVITY_Smoke(false);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	DisableSignals(false);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_WeaponOnArm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("straze2");
+	HUMAN_SetOptimized(2);
+	GoTo hlidka;
+}
+
+OnDeath()
+{
+	Block
+	{
+	SendSignal(speech, 2);
+	SendSignal(Ge_7, 7);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	SendSignal(posila4, 2);
+	SendSignal(posila6, 2);
+	}
+	EndScript();
+}
+
+OnSignal(31)	// received from transformator_1
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 100, 100, false);
+	HUMAN_SETMODE_Walk();
+	FRM_MorphSpeech(me, 0, 0, 0);
+	SendSignal(speech, 2);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_Move("cetnik01_01");
+	Delay(2000);
+	HUMAN_Move("straze2");
+	HUMAN_SetOptimized(2);
+	HUMAN_TurnAt(cetnik1);
+	SendSignal(cetnik1, 3);
+	SendSignal(speech, 1);
+	Delay(100);
+	GoTo hlidka;
+}
+
+Label end:

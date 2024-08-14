@@ -1,0 +1,161 @@
+// Opel passenger 1
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+
+frame reinfo;	FRM_FindFrame(reinfo, "dummy_reinforcement");
+frame opel;		FRM_FindFrame(opel, "opel_2");
+frame ridic;	FRM_FindFrame(ridic,"opel_driver");
+Frame me;		FRM_GetMyFrame(me);
+Frame cum;		FRM_FindFrame (cum,"solcar1cum");
+
+FRM_SwitchFaceTexture(me, "e_f052");
+}
+
+HUMAN_Suspend(1);
+
+goto end;
+
+//----------------------------------------------------------------------------------------------
+
+OnAlarm()
+	{
+	HUMAN_BoardVehicle("opel_2",0,2);
+	HUMAN_SetAnim("",0,0,0);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_MoveFromFrame(opel,8);
+	block
+	{
+	aievent=(_GetAlarmType());
+	}
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	SetAlarmType(652,0);
+	HUMAN_SetAlarm(0);
+	HUMAN_SETMODE_Crouch();
+	goto end;
+	}
+
+OnDeath()
+{
+	  SendSignal(reinfo, 0);
+	  EndScript();
+}
+
+Whenever start(_SignalReceived(1))
+	{
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("opel_2",1,2);
+	goto end;
+	}
+	
+Whenever alarm(_SignalReceived(2))
+	{
+	HUMAN_SetOptimized(1);
+	HUMAN_BoardVehicle("opel_2",0,2);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Run();
+	HUMAN_MoveFromFrame(opel,8);
+	block
+	{
+	SetAlarmType(652,1);
+	}
+	EndScript();
+	}
+
+Whenever uvily(_SignalReceived(3))
+	{
+	HUMAN_SetOptimized(1);
+	HUMAN_BoardVehicle("opel_2",0,2);
+	HUMAN_SETMODE_Stand();
+	block
+	{
+	EnableSignal(2, 0);
+	SetAlarmType(652,0);
+	}
+	HUMAN_SETMODE_Stand();
+	HUMAN_Move("solcar1");
+	HUMAN_TurnAt(opel);
+	goto end;
+	}
+	
+Whenever ridic(_SignalReceived(4))
+	{
+	HUMAN_TurnAt(ridic);
+	Delay (2500);
+	//To je dobøe. Nemam z tohodle místa dobrý pocit.
+		HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994016, 5, 30);
+HUMAN_SetAnim("",500,500,0);
+	SendSignal (ridic,4);
+	goto end;
+	}
+	
+Whenever ustodoly(_SignalReceived(5))
+	{
+	HUMAN_Move("solcar2");
+	HUMAN_TurnAt(cum);
+	goto end;
+	}
+	
+Whenever uauta(_SignalReceived(6))
+{
+delay (1500);
+HUMAN_Move("Solcar1");
+HUMAN_WeaponOnArm(0);
+HUMAN_MoveToFrame(opel, 4);
+HUMAN_BoardVehicle("opel_2",1,2);
+EnableSignal(2, 1);
+SendSignal (ridic,6);
+goto end;
+}	
+
+Whenever GoToPrisoner(_SignalReceived(8))
+{
+Delay(1500);
+HUMAN_Move("opelridic5");
+HUMAN_Move("opelridic6");
+HUMAN_Move("opelridic7");
+HUMAN_Move("opelridic8");
+goto end;
+}
+
+Whenever GoToTruck(_SignalReceived(7))
+{
+delay(2500);
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("opelridic7");
+HUMAN_Move("opelridic6");
+HUMAN_Move("opelridic4");
+goto end;
+}
+
+Whenever gone(_SignalReceived(9))
+{
+HUMAN_Suspend(1);
+EndScript();
+}
+	
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

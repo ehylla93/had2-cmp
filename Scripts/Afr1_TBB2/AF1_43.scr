@@ -1,0 +1,79 @@
+// AF1_43 MGcrouch2
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME frm2;				FRM_FindFrame(frm2, "af1_dummy3");
+  FRAME frm3;				FRM_FindFrame(frm3, "af1_dummy4");
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("06: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(130)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(player, false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("06: ", Atype);
+  }
+
+  HUMAN_MOVE("AF1_06_kulomet");
+//  HUMAN_BoardVehicle("w_mg42Crouch_2", true, 0);
+
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  block{
+    SetAlarmType(1023, true);		// all alarm events are on
+    SetAlarmType(768, false);		// 512, 256
+    HUMAN_SETSIGHTRANGE(80);
+    HUMAN_SetOptimized(true);
+    HUMAN_SetAlarm(false);
+  }
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetMODE_Crouch();
+  goto START;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Guard(); 
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+
+Label START:
+  HUMAN_Move("AF1_06_01");
+  HUMAN_TurnAt(frm2);
+  Delay(10000);
+  HUMAN_Move("AF1_06_02");
+  HUMAN_TurnAt(frm3);
+  Delay(10000);
+  HUMAN_Move("AF1_06_03");
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2500);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2500);
+  Delay(5000);
+goto START;
+
+Label end:

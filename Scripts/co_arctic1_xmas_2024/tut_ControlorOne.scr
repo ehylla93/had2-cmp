@@ -1,0 +1,127 @@
+// ControlorOne - tut_ControlorOne.scr
+
+Block
+{
+Frame boss;			FRM_FindFrame(boss, "TUT_Talker_01");
+Frame me;			FRM_GetMyFrame(me);
+
+
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_SETEVENTS(false);
+	HUMAN_SETMODE_Guard();
+}
+
+SetWhenever (PNIR, false);
+SetWhenever (PIR2, false);
+SetWhenever (FIR2, false);
+SetWhenever (PIR, true);
+SetWhenever (PNIR2, false);
+SetWhenever (PIR3, false);
+	HUMAN_SetOptimized(2);
+
+
+
+
+Whenever PIR (_PlayerInRange(4))
+	{
+	HUMAN_SetOptimized(1);
+	SetWhenever (PNIR, true);
+	HUMAN_Stop();
+	HUMAN_TurnAtNEarestPlayer();
+	SUBTITLES_SetOn(true);
+	FRM_MorphSpeechDelayed(me, 00990102, 5, 20);
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990103, 5, 20);
+	HUMAN_TurnAtNearestPlayer();
+	SUBTITLES_SetOn(false);
+	SetWhenever (PIR, false);
+	GoTo loop;
+	}
+
+Whenever PNIR (!_PlayerInRange(4))
+	{
+	HUMAN_SetOptimized(1);
+	SetWhenever (PIR2, true);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	Delay(200);
+	}
+
+Whenever PIR2 (_PlayerInRange(4))
+	{
+	HUMAN_SetOptimized(1);
+	SetWhenever (PIR2, false);
+	SetWhenever (PNIR2, true);
+	HUMAN_Stop();
+	HUMAN_TurnAtNEarestPlayer();
+	SUBTITLES_SetOn(true);
+	FRM_MorphSpeechDelayed(me, 00990104, 5, 20);
+	HUMAN_TurnAtNearestPlayer();
+	SUBTITLES_SetOn(false);
+	GoTo loop;
+	}
+
+Whenever PNIR2 (!_PlayerInRange(4))
+	{
+	HUMAN_SetOptimized(1);
+	SetWhenever (PIR3, true);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	Delay(200);
+	}
+
+	
+Whenever PIR3 (_PlayerInRange(4))
+	{	
+	HUMAN_SetOptimized(1);
+	SetWhenever (PIR3, false);
+	HUMAN_Stop();
+	HUMAN_TurnAtNEarestPlayer();
+	SUBTITLES_SetOn(true);
+	HUMAN_TurnAt(boss);
+	FRM_MorphSpeechDelayed(me, 00990106, 5, 20);
+	SendSignal(boss, 20);
+	SUBTITLES_SetOn(false);
+	Delay(20000);
+	}
+
+Whenever FIR (_FrameInRange(boss)<6)
+	{
+	HUMAN_TurnAt(boss);
+	SetWhenever (FIR2, true);
+	}
+	
+Whenever FIR2 (_FrameInRange(boss)>7)
+	{
+	SetWhenever (PIR, true);
+	}
+OnSignal(1)
+{
+	HUMAN_SetOptimized(2);
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_WeaponUp(true);
+	HUMAN_SETMODE_Run();
+	GOTO LOOP;
+}
+	
+Label loop:
+	HUMAN_AttackMove("Metar_DeAlarm");
+		HUMAN_AttackMove("udrzbar_1d");
+	GoTo loop;
+	
+OnDeath()
+	{
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+	}
+
+Label end:
+
+SetWheneverTime(PIR, 5000);
+SetWheneverTime(PNIR, 5000);
+SetWheneverTime(PIR2, 5000);
+SetWheneverTime(PNIR2, 5000);
+SetWheneverTime(PIR3, 5000);
+SetWheneverTime(FIR, 5000);
+SetWheneverTime(FIR2, 5000);

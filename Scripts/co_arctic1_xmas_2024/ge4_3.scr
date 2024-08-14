@@ -1,0 +1,33 @@
+
+block
+{
+  HUMAN_SETSIGHTRANGE(1500);
+  HUMAN_SETHEARRANGE(1200);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  goto END;
+}
+
+OnSignal(3){
+  HUMAN_Suspend(false);
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_BoardVehicle("la_tigerw", true, 2);
+goto END;
+
+Label END:

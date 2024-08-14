@@ -1,0 +1,23 @@
+// Objective 4 - "Destroy all enemy tanks"
+// -------------------------------------------------------------------------------------------------------------
+
+Frame tank1;	FRM_FindFrame(tank1,"tank1");
+Frame tank4;	FRM_FindFrame(tank4,"tank4");
+
+SetObjectiveStatus(4, 0);
+SaveGameValue(3, 0);	// 1, enemy tanks destroyed
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever TanksDestroyed ((_Actor_GetState(tank1) == 0) and (_Actor_GetState(tank4) == 0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001004);		//"OBJECTIVE ACCOMPLISHED: ALL ENEMY TANKS DESTROYED"
+Delay(5000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(4, 1);
+SaveGameValue(3, 1);
+EndScript();
+}
+
+Label END:

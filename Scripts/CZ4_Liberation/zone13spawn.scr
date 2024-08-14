@@ -1,0 +1,33 @@
+ 
+Frame me;		FRM_GetMyFrame(me);
+//Frame obj;	FRM_FindFrame(obj,"objectives");
+
+
+Whenever detect_player (_PlayerInRange(18) and !_EnemyInRange(me,35))
+{
+block
+{
+printf ("ZONE 13");
+MP_EnableSpawnZone("zone13", 1);
+SaveGameValue(13, 1);
+SetObjectiveStatus(13, 1);
+SetWhenever(detect_enemy, 1);
+}
+}
+
+SetWheneverTime(detect_player, 10000);
+
+
+Whenever detect_enemy (_EnemyInRange(me,18))
+{
+block
+{
+SaveGameValue(13, 0);
+MP_EnableSpawnZone("zone13", 0);
+SetObjectiveStatus(13, 2);
+SetWhenever(detect_player, 1);
+}
+}
+
+SetWhenever(detect_player, 1);
+SetWhenever(detect_enemy, 1);

@@ -1,0 +1,45 @@
+// T2, 3
+// ----------------------------
+
+Block
+{
+SetAlarmType(796,0);
+HUMAN_SETSIGHTRANGE(98);
+HUMAN_SETHEARRANGE(98);
+}
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------
+
+OnDeath(){
+printf("N3_G30 tank dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+// ---------------------------
+
+Whenever PIR (_PlayerInRange(100))
+{
+HUMAN_BoardVehicle("La_tiger_1", 1, 2);
+HUMAN_SetOptimized(2);
+printf("G30 (tiger tank) spawns");
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

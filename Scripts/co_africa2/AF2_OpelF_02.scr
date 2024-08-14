@@ -1,0 +1,48 @@
+// AF2_OpelF_02 - OpelF (Flak)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+SetAlarmType(1023, 1);
+HUMAN_SETSIGHTRANGE(400);
+
+FRAME veh;	FRM_FindFRAME(veh, "opelsflakem2");
+}
+  
+HUMAN_Suspend(1);
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+  
+OnAlarm(){
+  HUMAN_SETMODE_Stand();
+if (!_Actor_GetState(veh)==0)
+ { 
+  HUMAN_SETMODE_Run();
+  HUMAN_MoveToFrame(veh, 7);
+  HUMAN_BoardVehicle("opelsflakem2", true, 2);
+  HUMAN_TurnAtNearestPlayer();
+ }
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(0);
+}
+
+Whenever nadosah (_PlayerInRange(200)){
+  HUMAN_Suspend(0);
+  HUMAN_SETAIMODE_Aggressive();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

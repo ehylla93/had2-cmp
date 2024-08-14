@@ -1,0 +1,61 @@
+// 05_E18 - Guard in 2nd building
+// ----------------------------------------
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f039");
+SetAlarmType(1023,0);
+SetAlarmType(867, 1);
+Integer a;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("05_E18 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 400, 400, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+}
+
+Whenever Spawn (_LoadGameValue(98)==1)
+{
+printf("05_E18 spawns");
+Integer AImode = _RandomInt(99);
+if(AImode > 75) { HUMAN_SETAIMODE_Aggressive(); }
+else {
+	if(AImode < 25) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+	}
+FRM_TeleportNearCheckpoint(MyFRM, "05_E18_01", "05_E18_02");
+HUMAN_Suspend(0);
+}
+
+Label Patrol:
+HUMAN_SETMODE_Guard();
+a = _RandomInt(2);
+if(a==0) { HUMAN_Move("05_E18_03"); }
+else { HUMAN_Move("05_E18_04"); }
+Delay(7000);
+HUMAN_Move("05_E18_01");
+Delay(7000);
+goto Patrol;
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+	
+// ----------------------------------------
+
+Label END:

@@ -1,0 +1,48 @@
+
+Block {
+Frame E20;      	FRM_FindFrame(E20, "n_E20");
+Frame E21;      	FRM_FindFrame(E21, "n_E21");
+Frame E22;      	FRM_FindFrame(E22, "n_E22");
+integer b=0;
+
+SaveGameValue(5, 0);	//if 1, alarm raised in complex, activates R13++, E20++ (see Walker1-4, E19(Sniper), Trafo Guard, E14, E15, E18, gguard2, gguard1)
+}
+
+SetWhenever(PIR2, 0);
+goto end;
+
+Whenever PIR (_PlayerInRange(15))
+{
+SetWhenever(PIR, 0);
+SendSignal(E20, 1);
+SendSignal(E21, 1);
+SendSignal(E22, 1);
+printf("E20-E22 sig1 sent (spawn)");
+SetWhenever(PIR2, 1);
+goto end;
+}
+
+Whenever PIR2 (_PlayerInRange(5))
+{
+
+}
+
+Label check:
+Delay(500);
+if((_LoadGameValue(5)==1) and (b==0))
+{
+b=1;
+SendSignal(E20, 2);
+SendSignal(E21, 2);
+SendSignal(E22, 2);
+printf("E20-E22 sig2 sent (alarm)");
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+SaveGameValue(5, 1);
+printf("sgv5 = 1");
+}
+
+Label end:

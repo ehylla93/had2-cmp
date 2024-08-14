@@ -1,0 +1,82 @@
+// ridic_z_mesta
+
+Block
+{
+Frame velitel;
+	FRM_FindFrame(velitel, "velitel v aute");
+Frame vojak1;
+	FRM_FindFrame(vojak1, "posila v aute1");
+Frame vojak2;
+	FRM_FindFrame(vojak2, "posila v aute2");
+Frame vozidlo;
+	FRM_FindFrame(vozidlo, "blitz_");
+Frame me;
+	FRM_GetMyFrame(me);
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f042");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor1
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETSIGHTRANGE(35);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(2)	// received from velitel v aute
+{
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("dv1");
+	HUMAN_BoardVehicle("blitz_", true, 0);
+	HUMAN_SetOptimized(2);
+	Delay(1000);
+	HUMAN_Drive("blitz_01", 10);
+	HUMAN_Drive("blitz_02", 15);
+	HUMAN_Drive("blitz_03", 10);
+	HUMAN_Drive("blitz_04", 15);
+	HUMAN_Drive("blitz_05", 20);
+	HUMAN_Drive("blitz_06", 40);
+	HUMAN_Drive("blitz_07", 40);
+	HUMAN_Drive("", 0);
+	Delay(1000);
+	SendSignal(vojak1, 3);
+	SendSignal(vojak2, 3);
+	FRM_SetOn(vozidlo, false);
+	HUMAN_Suspend(true);
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	SetAlarmType(256, false);
+	DisableSignals(true);
+	HUMAN_BoardVehicle("blitz_", false, 0);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+}
+
+Label end:

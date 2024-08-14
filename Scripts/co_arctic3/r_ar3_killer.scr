@@ -1,0 +1,85 @@
+
+Block {
+frame FRM;
+frame albert;   		FRM_FindFrame(albert, "Albert");
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetOptimized(1);
+SetAlarmType(1023, False);
+HUMAN_Suspend(true);
+}
+
+goto TheEnd;
+
+Whenever PIIIP (_SignalReceived(1))		
+{
+  Delay(4000);
+  HUMAN_Suspend(false);
+  HUMAN_SETEVENTS(false);
+  HUMAN_Move("albert_4");
+  HUMAN_SETMODE_Lie();
+  Delay(700);
+  HUMAN_TurnAt(Albert);
+  Delay(800);
+  HUMAN_IllFire(albert, 1000);
+  Delay(2500);
+  HUMAN_IllFire(albert, 1000);
+  Delay(2500);
+  HUMAN_IllFire(albert, 1000);
+  Delay(2500);
+  HUMAN_IllFire(albert, 1000);
+  If (_ACTOR_GetState(albert) == 1) 	     { HUMAN_Kill(albert); }
+  if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) ) 
+   {
+     HUMAN_SetSniper(True, 3);
+     FRM_FindFrame(FRM, "Trap1_1");		SendSignal(FRM, 1);
+     FRM_FindFrame(FRM, "Trap1_2");		SendSignal(FRM, 1);
+     FRM_FindFrame(FRM, "Trap1_3");		SendSignal(FRM, 1);
+     FRM_FindFrame(FRM, "Trap1_4");		SendSignal(FRM, 1);
+     FRM_FindFrame(FRM, "Trap1_5");		SendSignal(FRM, 1);
+     Goto TheEnd; 
+   }
+  Delay(1800);
+ 
+LABEL flee:
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("Killer_END");
+  FRM_FindFrame(FRM, "Trap1_1");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_2");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_3");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_4");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_5");		SendSignal(FRM, 1);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Suspend(true);
+  Goto TheEnd;
+}
+
+OnAlarm()
+{
+EndScript();
+}
+
+OnAlarmDone()
+{
+goto flee;
+}
+
+OnDeath()
+{
+  Delay(8000);
+  FRM_FindFrame(FRM, "Trap1_1");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_2");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_3");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_4");		SendSignal(FRM, 1);
+  FRM_FindFrame(FRM, "Trap1_5");		SendSignal(FRM, 1);
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:
+

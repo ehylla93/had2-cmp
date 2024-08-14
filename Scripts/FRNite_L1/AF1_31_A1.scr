@@ -1,0 +1,30 @@
+//talk af27
+
+Frame af27;	FRM_FindFrame(af27, "AF1_27");
+
+Whenever activate(_PlayerInRange(500))
+{
+	GoTo start;
+}
+
+Whenever Death (_SignalReceived(2))
+{
+goto END;
+}
+
+
+
+//------------------------------------------------
+
+goto END;
+
+
+Label start:
+FRM_MorphSpeechDelayed(af27, 90001270, 18, 38); Delay(100);
+FRM_MorphSpeechDelayed(af27, 90001270, 17, 37); Delay(500);
+FRM_MorphSpeechDelayed(af27, 90001270, 14, 34); Delay(150);
+GoTo start;
+
+
+Label END:
+

@@ -1,0 +1,121 @@
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(35);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer a;	a=0;
+integer p;
+
+frame sit;		Frm_FindFrame(sit,"ge23sit");
+frame cum;		Frm_FindFrame(cum,"ge23cum");
+Frame piss;		Frm_FindFrame(piss,"piss");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 0, 0, 0);
+block
+{
+HUMAN_SETSIGHTRANGE(50);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+FRM_DestroyIndexedParticle(p);
+}
+HUMAN_SETMODE_Run();
+HUMAN_SetAnim("",100, 100, 0);
+
+
+if (aievent==4)
+{
+HUMAN_SETMODE_StandFast();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+if (a==0)
+{
+a=1;
+HUMAN_SETMODE_StandFast();
+HUMAN_Move("ge23_01");
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+HUMAN_SetAnim("", 0, 0, 0);
+DisableSignals(1);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))			
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(8,0);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedim1", 1000, 1000, 1);
+goto end;
+}
+
+Whenever chcat(_SignalReceived(2))			
+{
+HUMAN_SetAnim("", 0, 0, 0);
+HUMAN_SetOptimized(1);
+if (_RandomInt(3)==0)	{ goto end; }	
+HUMAN_SETMODE_Stand();
+HUMAN_Move("ge23_02");
+
+HUMAN_SetAnim("%%chcije",900, 900, 1);
+delay (1000);
+FRM_CreateIndexedParticle(21, piss, p);
+delay (20000);
+FRM_DestroyIndexedParticle(p);
+HUMAN_SetAnim("",900, 900, 0);
+delay (1000);
+HUMAN_Move("ge23_03");
+HUMAN_TurnAt(cum);
+delay (1000);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedim1", 1000, 1000, 1);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+//-------------------------------------------------------------------------
+
+label end:

@@ -1,0 +1,109 @@
+// AF2_05 - waiting on player, hiding behind the wrecks
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert01;	FRM_FindFRAME(dummyalert01, "dummy_alert01");
+  FRAME inv01;			FRM_FindFRAME(inv01, "m_bed_d_a17");
+  FRAME inv02;			FRM_FindFRAME(inv02, "m_bed_d_a18");
+  FRAME inv03;			FRM_FindFRAME(inv03, "m_bedna3");
+  INTEGER Atype			= 0;
+  INTEGER rnd				= 0;
+  INTEGER cnt				= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+}
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+
+  goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnSignal(1){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  block{
+    DisableSignals(true); 
+    Atype = _GetAlarmType();
+    SendSignal(dummyalert01, 1);
+  }
+  if(Atype == 256){
+    HUMAN_SetAlarm(false);
+    goto ALERT;
+  }
+  HUMAN_SETSIGHTRANGE(400);
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Guard();
+  HUMAN_SetOptimized(true); 
+  HUMAN_SETMODE_Crouch();
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+Label ALARMDONELOOP:
+  rnd = _RandomInt(2);
+  if(rnd == 1){
+	HUMAN_WeaponOnArm(0);
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(rnd);
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(rnd);
+	HUMAN_WeaponOnArm(1);
+  }
+  goto ALARMDONELOOP;
+}
+
+OnSignal(5){
+  HUMAN_Stop();
+  HUMAN_SetAnim("", 200, 200, false);
+  Delay(200);
+  HUMAN_SetMODE_Run();
+  HUMAN_SetMODE_Crouch();
+  HUMAN_Move("AF2_05_alert");
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SETMODE_Walk();
+
+Label ACTIVITY:
+  HUMAN_Move("AF2_05_inv01");
+  HUMAN_TurnAt(inv01);
+  HUMAN_Move("AF2_05_inv02");
+  HUMAN_TurnAt(inv02);
+  HUMAN_Move("AF2_05_inv02");
+  HUMAN_TurnAt(inv03);
+goto ACTIVITY;
+
+Label ALERT:
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SetMode_Stand();
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF2_05_alert");
+  HUMAN_SetMode_Crouch();
+  HUMAN_SETSIGHTRANGE(400);
+
+Label END:

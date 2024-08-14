@@ -1,0 +1,137 @@
+__SetupAutoLogging(true, "AF3a_16.txt");
+// AF3a_16 - guarding access to minaret
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME look1_01;			FRM_FindFrame(look1_01, "AF3a_16_look1_01");
+  FRAME look1_02;			FRM_FindFrame(look1_02, "AF3a_16_look1_02");
+  FRAME look1_03;			FRM_FindFrame(look1_03, "AF3a_16_look1_03");
+  FRAME look1_04;			FRM_FindFrame(look1_04, "AF3a_16_look1_04");
+  FRAME look1_05;			FRM_FindFrame(look1_05, "AF3a_16_look1_05");
+  FRAME look1_06;			FRM_FindFrame(look1_06, "AF3a_16_look1_06");
+  FRAME sit;  				FRM_FindFrame(sit, "dummy_16_smoke");
+  INTEGER rnd 			= 0;
+  INTEGER Atype			= 0;
+  INTEGER atpos 			= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(640, false);		// 512 + 128
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("16: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+    printfnumber("16: ", Atype);
+  }
+  HUMAN_ACTIVITY_Smoke(false);
+ 
+  if((((Atype != 1) AND (Atype != 64)) AND (Atype != 32)) AND (!atpos)){
+    HUMAN_SetMODE_Run();
+    HUMAN_Move("AF3a_16_05");
+    atpos = 1;
+    HUMAN_TurnAt(look1_05);
+    HUMAN_SETMODE_Crouch();
+    HUMAN_SETAIMODE_Defensive();
+//    HUMAN_SetSniper(true, 5);
+    HUMAN_SetAlarm(false);
+    goto END;
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(512, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(200);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+
+Label ACTIVITY:
+  Delay(20000);
+  HUMAN_Move("AF3a_16_03");
+  HUMAN_TurnAt(look1_02);
+  rnd = _RandomInt(10000) + 10000;  Delay(rnd);
+  HUMAN_Move("AF3a_16_04");
+  HUMAN_TurnAt(look1_03);
+  Delay(2000);
+  HUMAN_Move("AF3a_16_01");
+  HUMAN_TurnAt(look1_01);
+  Delay(2000);
+  HUMAN_Move("AF3a_16_02");
+  HUMAN_TurnAt(look1_04);
+  Delay(1000);
+  HUMAN_TurnAt(look1_05);
+  Delay(1000);
+  gosub SMOKE;
+  HUMAN_Move("AF3a_16_03");
+  HUMAN_TurnAt(look1_02);
+  rnd = _RandomInt(10000) + 10000;  Delay(rnd);
+  HUMAN_WeaponOnArm(0);
+  HUMAN_ACTIVITY_Hot();
+  Delay(1000);
+  HUMAN_Move("AF3a_16_05");
+  Delay(500);
+  HUMAN_TurnAt(look1_06);
+  HUMAN_ACTIVITY_Turk();
+  rnd = _RandomInt(10000) + 20000;  
+  Delay(rnd);
+  HUMAN_SETMODE_Stand();
+  Delay(500);
+  HUMAN_WeaponOnArm(true);
+  Delay(1000);
+  gosub SMOKE;
+goto ACTIVITY;
+
+Label SMOKE:
+  HUMAN_SETMODE_Walk();
+  Human_Move("AF3a_16_smoke");  
+  Delay(500);
+  FRAME turnat01; 	FRM_FindFrame(turnat01, "la_karafa_4");
+  Human_TurnAt(turnat01);
+  Delay(500);
+  HUMAN_WeaponOnArm(false);
+  Delay(1500);
+  HUMAN_ACTIVITY_Sit(sit);
+  Delay(800);
+  HUMAN_ACTIVITY_Hot();
+  Delay(2000);
+  HUMAN_ACTIVITY_Smoke(true);
+  Delay(20000);
+  HUMAN_ACTIVITY_Smoke(false);
+  HUMAN_ACTIVITY_Hot();
+  rnd = _RandomInt(10000) + 5000;
+  Delay(rnd);
+  HUMAN_SETMODE_Stand();
+  HUMAN_WeaponOnArm(true);
+  goto activity;
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1000);
+goto END;

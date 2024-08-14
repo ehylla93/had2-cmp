@@ -1,0 +1,34 @@
+// reinf1_2 - armoured corps
+// -------------------------------------------
+
+Frame sdkfz;	FRM_FindFrame(sdkfz, "05_SdKfz251");
+Frame opelb_d;	FRM_FindFrame(opelb_d, "05_OpelBlitz38AA_01");
+Frame pz3_d;	FRM_FindFrame(pz3_d, "05_pzIII_01_01");
+Integer time;
+goto end;
+
+// -------------------------------------------
+
+OnSignal(1)
+{
+goto Init;
+}
+
+// -------------------------------------------
+
+Label Init:
+SendSignal(opelb_d, 1);
+SendSignal(pz3_d, 1);
+gosub Timer;
+SendSignal(sdkfz, 1);
+EndScript();
+
+Label timer:
+time = _RandomInt(40000) + 10000;	// min. 10s, max. 50s
+printfnumber("R1_2 timer: ", time);
+Delay(time);
+Return;
+
+// -------------------------------------------
+
+Label end:

@@ -1,0 +1,62 @@
+// Obj 10 - Assemble at the escape point 
+// -----------------------------------------
+
+Block
+{
+	Frame B01;		FRM_FindFrame(B01, "04_Bomb_01");
+	Frame B02;		FRM_FindFrame(B02, "04_Bomb_02");
+	
+	Frame B03;		FRM_FindFrame(B03, "06_Bomb_01");
+	Frame B04;		FRM_FindFrame(B04, "06_Bomb_02");
+	Frame B05;		FRM_FindFrame(B05, "06_Bomb_03");
+	Frame B06;		FRM_FindFrame(B06, "06_Bomb_04");
+	
+	Integer Alarmer;	Alarmer = 0;
+	
+	SetWhenever(Assemble, 0);
+	SetWhenever(Other_OBJs_Complete, 0);
+}
+
+Whenever Active (_SignalReceived(1))
+{
+	MP_EnableSpawnZone("zone9", 2);
+	MP_EnableSpawnZone("zone2", 1);
+	SetWhenever(Other_OBJs_Complete, 1);
+}
+
+Whenever Other_OBJs_Complete ((((((_Actor_GetState(B01) == 1) And (_Actor_GetState(B02) == 1)) And (_Actor_GetState(B03) == 1)) And (_Actor_GetState(B04) == 1)) And (_Actor_GetState(B05) == 1)) And (_Actor_GetState(B06) == 1))
+{
+	SetObjectiveStatus(10, 0);
+	Delay(7000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(12992416);
+	Delay(3500);
+	SetWhenever(Assemble, 1);
+	SUBTITLES_SetOn(0);
+}
+
+Whenever Assemble (_MP_AllTeamMembersAreInRange(1, 15))
+{
+	Delay(1000);
+	SUBTITLES_SetOn(1);
+	
+	If(Alarmer == 0)
+	{
+		SUBTITLES_SetText(11992209);
+		Delay(3500);
+		SetObjectiveStatus(1, 1);
+	}
+	
+	SUBTITLES_SetText(02990405);
+	Delay(3000);
+	SUBTITLES_SetText(12992418);
+	Delay(3500);
+	SetObjectiveStatus(10, 1);
+	SUBTITLES_SetOn(0);
+}
+
+
+Whenever Player_Spotted (_SignalReceived(2)) 
+{
+	Alarmer = 1;
+}

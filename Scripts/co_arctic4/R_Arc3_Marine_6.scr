@@ -1,0 +1,59 @@
+
+  frame OBJ;		FRM_FindFrame(OBJ, "dummy_marine_activator");
+  frame sit;		FRM_FindFrame(sit, "dummy_marine6_sit");
+  integer  AIEvent;
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+  SetAlarmType(128, False);
+
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+OnSignal(20)
+{						
+  HUMAN_Suspend(False);	
+  HUMAN_ACTIVITY_Sit(sit);		
+}						
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Marine6: ", AIEvent);
+      HUMAN_Stop();
+    }
+  HUMAN_SETMODE_StandFast();
+  If (AIEvent == 32) 
+    {
+       EndScript();
+    } else {
+       HUMAN_TurnAtNearestPlayer();
+       EndScript();   
+   }  
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(511, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetOptimized(1);
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 10);
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

@@ -1,0 +1,36 @@
+// BU1_timer - timer for mission failed
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame bu1_16;	FRM_FindFrame(bu1_16, "BU1_16");
+
+Integer time=0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever timer(_SignalReceived(1))		// received from BU1_objectives
+{
+time=_RandomInt(3);
+if(time==0)
+{
+Delay(60000);
+}
+if(time==1)
+{
+Delay(40000);
+}
+if(time==2)
+{
+Delay(20000);
+}
+SendSignal(bu1_16, 1);
+}
+
+Whenever signal(_SignalReceived(2))	// received from BU1_objectives
+{
+	SetWhenever(timer, 0);
+}
+
+Label end:

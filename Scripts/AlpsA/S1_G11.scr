@@ -1,0 +1,66 @@
+// Sedi u Skaly u reky vedle Snipers
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame cp1;	FRM_FindFrame(cp1,"BritCum");
+Frame Motocykl;	FRM_FindFrame(Motocykl,"Bmw2");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 600, 600, 1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp1, 2);
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+HUMAN_MoveToFrame(Motocykl, 1);
+HUMAN_BoardVehicle("Bmw2", 1, 0);
+HUMAN_Drive("hakl_10",60);
+HUMAN_Drive("hakl_11",90);
+Delay(5000);
+HUMAN_BoardVehicle("Bmw2", 0, 0);
+Delay(500);
+HUMAN_Suspend(1);
+goto END;
+}
+
+Whenever Player(_PlayerInRange(40))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAnim("%%sedimL4", 600, 600, 1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

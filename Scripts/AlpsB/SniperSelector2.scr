@@ -1,0 +1,40 @@
+// Vybira Snipry kteri budou hlidat Oblast za skalou 2/5
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"ZSnip5");
+Frame S2;	FRM_FindFrame(S2,"ZSnip6");
+Frame S3;	FRM_FindFrame(S3,"ZSnip7");
+Frame S4;	FRM_FindFrame(S4,"ZSnip8");
+Frame S5;	FRM_FindFrame(S5,"ZSnip9");
+Frame S6;	FRM_FindFrame(S6,"SSnip11");
+
+Integer SnipVyber;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(3000);
+goto Vybiram;
+
+Label Vybiram:
+SnipVyber =_RandomInt(15);
+If(SnipVyber == 0){  SendSignal(S1, 1);SendSignal(S2, 1);}
+If(SnipVyber == 1){  SendSignal(S1, 1);SendSignal(S3, 1);}
+If(SnipVyber == 2){  SendSignal(S1, 1);SendSignal(S4, 1);}
+If(SnipVyber == 3){  SendSignal(S1, 1);SendSignal(S5, 1);}
+If(SnipVyber == 4){  SendSignal(S1, 1);SendSignal(S6, 1);}
+If(SnipVyber == 5){  SendSignal(S2, 1);SendSignal(S3, 1);}
+If(SnipVyber == 6){  SendSignal(S2, 1);SendSignal(S4, 1);}
+If(SnipVyber == 7){  SendSignal(S2, 1);SendSignal(S5, 1);}
+If(SnipVyber == 8){  SendSignal(S2, 1);SendSignal(S6, 1);}
+If(SnipVyber == 9){  SendSignal(S3, 1);SendSignal(S4, 1);}
+If(SnipVyber == 10){  SendSignal(S3, 1);SendSignal(S5, 1);}
+If(SnipVyber == 11){  SendSignal(S3, 1);SendSignal(S6, 1);}
+If(SnipVyber == 12){  SendSignal(S4, 1);SendSignal(S5, 1);}
+If(SnipVyber == 13){  SendSignal(S4, 1);SendSignal(S6, 1);}
+If(SnipVyber == 14){  SendSignal(S5, 1);SendSignal(S6, 1);}
+Goto END;
+
+Label END:

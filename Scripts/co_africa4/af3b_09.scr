@@ -1,0 +1,93 @@
+// AF3b_09
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype		= 0;
+  SetAlarmType(1023, false);
+}
+
+HUMAN_SetSightRange(300);
+HUMAN_Suspend(true);
+
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(22){			// RETREAT SECTION
+  SetAlarmType(1023, false);
+  DisableSignals(true);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF3b_retreat");
+  goto END;
+}
+
+OnDeath(){
+  EndScript();
+}
+  
+OnAlarm(){
+  block{
+    HUMAN_Stop();
+    Atype = _GetAlarmType();
+  }
+
+  If(Atype == 2){
+    EndScript();
+  }
+
+  If(Atype == 256){
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_SetAlarm(false);
+    goto END;
+  }
+
+  if(((Atype != 32) AND (Atype != 64)) AND (Atype != 1)){
+    HUMAN_SetMODE_Run();
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    goto END;
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("Opel02", 1, 3);
+  goto END;
+}
+
+OnSignal(2){
+  goto ESCAPEVEHICLE;
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVITY:
+
+Label ESCAPEVEHICLE:
+printf("af3b_09 dismount vehicle");
+  HUMAN_BoardVehicle("Opel02", 0, 3); 
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  Delay(3000);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_Move("AF3b_09_01");
+  HUMAN_SetMODE_Crouch();
+  Delay(100);
+  HUMAN_LookAround(2);
+
+Label END:

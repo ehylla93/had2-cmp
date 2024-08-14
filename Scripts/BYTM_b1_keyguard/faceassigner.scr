@@ -1,0 +1,81 @@
+// BU1a_faceassigner - assigns random faces
+// -------------------------------------------------------------------------------------------------------------
+
+INT Face = 5;		// Number of japanese faces
+
+INT rnd_japan = _RandomInt(Face);
+
+FRAME act;				FRM_FindFrame(act, "");			// actual NPC, which is to assign a face
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_FindFrame(act, "01_G01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "01_G02"); goto JAPAN_FACE;
+
+FRM_FindFrame(act, "02_G01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_J01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_J02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_J03"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_J04"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_J05"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_J06"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_J07"); goto JAPAN_FACE;
+
+FRM_FindFrame(act, "02_S01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_S02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "02_S03"); goto JAPAN_FACE;
+
+FRM_FindFrame(act, "03_S01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "03_S02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "03_S03"); goto JAPAN_FACE;
+
+FRM_FindFrame(act, "04_G01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "04_S01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "04_S02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "04_S03"); goto JAPAN_FACE;
+FRM_FindFrame(act, "04_S04"); goto JAPAN_FACE;
+
+FRM_FindFrame(act, "05_G01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_G02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_G03"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_G04"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_G05"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_G06"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_G07"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_G08"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_J01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_J02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_J03"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_J04"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_J05"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_S01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_S02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_S03"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_S04"); goto JAPAN_FACE;
+FRM_FindFrame(act, "05_S05"); goto JAPAN_FACE;
+
+FRM_FindFrame(act, "06_G01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "06_G02"); goto JAPAN_FACE;
+FRM_FindFrame(act, "06_G03"); goto JAPAN_FACE;
+FRM_FindFrame(act, "06_G04"); goto JAPAN_FACE;
+
+FRM_FindFrame(act, "07_G01"); goto JAPAN_FACE;
+FRM_FindFrame(act, "07_G02"); goto JAPAN_FACE;
+
+EndScript();
+
+// -------------------------------------------------------------------------------------------------------------
+
+
+LABEL JAPAN_FACE:
+  if(rnd_japan == 0){  FRM_SwitchFaceTexture(act, "e_f046"); }
+  if(rnd_japan == 1){  FRM_SwitchFaceTexture(act, "e_f047"); }
+  if(rnd_japan == 2){  FRM_SwitchFaceTexture(act, "e_f048"); }
+  if(rnd_japan == 3){  FRM_SwitchFaceTexture(act, "e_f049"); }
+  if(rnd_japan == 4){  FRM_SwitchFaceTexture(act, "e_f050"); }
+  rnd_japan = rnd_japan + 1;
+  if(rnd_japan == Face){ rnd_japan = 0; }
+return;
+
+
+

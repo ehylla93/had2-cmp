@@ -1,0 +1,18 @@
+Frame tree;
+FRM_GetMyFrame(tree);
+Integer Random;
+
+Label Playing:
+
+FRM_SetOn(tree,0);
+PrintfNumber("play first", Random);
+FRM_SetOn(tree,1);
+Random=_RandomInt(30000)+10000;
+Delay(Random);
+FRM_SetOn(tree,0);
+PrintfNumber("play second", Random);
+FRM_SetOn(tree,1);
+Delay(Random);
+
+Goto Playing;
+

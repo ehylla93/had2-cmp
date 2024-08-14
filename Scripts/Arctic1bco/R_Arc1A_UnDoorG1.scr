@@ -1,0 +1,145 @@
+// stand and do nothing
+
+Block
+ {
+    integer AIEvent;
+    integer waiter;	
+    integer what;	
+    integer animace;
+    frame bottle;		FRM_FindFrame(bottle, "");	// Use default bottle
+    frame see;			FRM_FindFrame(see, "dummy_UnDoorSee");
+    frame kolega;		FRM_FindFrame(kolega, "Undereground_guard_2");
+    frame MyFRM;		FRM_GetMyFrame(MyFRM);
+    frame AllKilled;		FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+    SetAlarmType(1023, True);
+    SetAlarmType(256, False);		// 256 = FALSE
+ }
+
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;
+  Whenever A (_PlayerInRange(101);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+  HUMAN_SetOptimized(2);
+
+OnCutScene(1)
+{
+  HUMAN_Suspend(False);
+  HUMAN_SetAnim("%%straz2", 800, 800, true); 
+  Goto TheEnd;
+}
+OnCutSceneDone(1)
+{
+  HUMAN_SetAnim("", 800, 800, false); 
+  HUMAN_Suspend(True);
+  Delay(1000);
+  Goto TheEnd;
+}
+
+label loop:
+  animace = _RandomInt(2) + 5;
+  IF (animace == 5) { HUMAN_SetAnim("%%nudazed5", 800, 800, true); }
+  IF (animace == 6) { HUMAN_SetAnim("%%nudazed6", 800, 800, true); }  
+  waiter = _RandomInt(20000) + 30000;
+  what = _RandomInt(5) + 1;
+  delay(waiter);
+  HUMAN_SetAnim("", 800, 800, false);
+  Delay(1000);
+//PrintfNumber("cinost", what);
+  IF (what == 1)
+    { 
+      HUMAN_ACTIVITY_DrinkBottle(bottle); 
+      Delay(2500);
+    }
+  IF (what == 2) 
+    { 
+      HUMAN_WeaponOnArm(True);
+      delay(1500);
+      HUMAN_ACTIVITY_CheckWeapon(); 
+      delay(1500);
+      HUMAN_WeaponOnArm(False);
+      delay(3000);
+    }
+  IF (what == 3) 
+   { 
+      HUMAN_ACTIVITY_Cold(); 
+     delay(3000);
+    }
+  IF (what == 4) 
+   { 
+     HUMAN_ACTIVITY_Hat(); 
+     delay(2500);
+   }
+  IF (what == 5) 
+    {
+      HUMAN_WeaponOnArm(True);
+      delay(1500);
+      HUMAN_Reload(); 
+      delay(1500);
+      HUMAN_WeaponOnArm(False);
+      delay(3000);      
+    }
+goto Loop;
+
+
+OnAlarm()
+{
+  Block
+     {
+         SaveGameValue(29, 99);		// skip CSC 3 - roof 
+         AIEvent = _GetAlarmType();
+         PrintfNumber("AIE UnDoor1: ", AIEvent);
+     }
+  DisableSignals(True);
+  HUMAN_SetAnim("", 0, 0, 0);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SETMODE_Run();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  DisableSignals(False);
+  SetAlarmType(1023, True);
+  SetAlarmType(256, False);		//  256 = FALSE
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Stand();
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SetOptimized(2);
+  Delay(500);
+  HUMAN_MOVE("UnDoor_1");
+  HUMAN_TurnAt(See);
+//  FRM_TeleportNearCheckpoint(MyFRM, "UnDoor_1", "");
+//  goto loop;
+}
+
+OnDeath()
+{
+  SendSignal(kolega, 10);
+  Sendsignal(AllKilled, 30);
+  EndScript();  
+}
+
+OnSignal(10)
+{
+  Printf("je tuhej od UG2");
+  HUMAN_SetAnim("", 300, 300, False);
+  Delay(300);
+  HUMAN_WeaponOnArm(True);
+  Delay(300);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetAlarm(False);
+  Delay(60000);
+  HUMAN_WeaponOnArm(False);
+  HUMAN_SETMODE_Stand();
+  goto loop;
+}
+
+Label TheEnd:

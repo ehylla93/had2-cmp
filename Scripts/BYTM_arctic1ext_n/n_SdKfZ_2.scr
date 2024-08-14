@@ -1,0 +1,54 @@
+// n_SdKfZ_2
+
+Block
+{
+    Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+    Frame soldier1;    FRM_FindFrame( soldier1, "n_R07" );
+    Frame soldier2;    FRM_FindFrame( soldier2, "n_R08" );
+    Frame soldier3;    FRM_FindFrame( soldier3, "n_R09" );
+    Frame soldier4;    FRM_FindFrame( soldier4, "n_R10" );
+    Frame soldier5;    FRM_FindFrame( soldier5, "n_R11" );
+    Frame soldier6;    FRM_FindFrame( soldier6, "n_R12" );
+}
+
+GoTo End;
+
+OnSignal( 1 )
+{
+	EnableSignal(1,0);
+	FRM_TeleportNearCheckpoint(MyFRM, "END", "3");
+	SendSignal( soldier2,  1 );
+	Delay(200);
+	SendSignal( soldier3,  1 );
+	SendSignal( soldier4,  1 );
+	Delay(500);
+	SendSignal( soldier5,  1 );
+	Delay(200);
+	SendSignal( soldier6,  1 );
+	Delay(300);
+	SendSignal( soldier1,  1 );
+	GoTo End;
+}
+
+OnSignal( 2 )
+{
+    GoTo GetOut;
+}
+
+Whenever "Player_To_Close" ( _PlayerInRange( 10 )  )
+{
+    GoTo GetOut;
+}
+
+Label  GetOut:
+	 SetWhenever( "Player_To_Close", false );
+     SendSignal( soldier1,  2 );
+     Delay(1500);
+     SendSignal( soldier2,  2 );
+     SendSignal( soldier3,  2 );
+     SendSignal( soldier4,  2 );
+     SendSignal( soldier5,  2 );
+     SendSignal( soldier6,  2 );
+
+Label  End:
+SetWheneverTime( "Player_To_Close", 800 );

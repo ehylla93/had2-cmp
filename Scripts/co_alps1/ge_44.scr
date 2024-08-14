@@ -1,0 +1,231 @@
+//Patrols around spawn2
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+integer a;	a=0;
+integer b;	b=0;
+integer x;	x=0;
+integer zone;		zone=1;
+
+Frame me;	FRM_GetMyFrame(me);
+frame cum1;	FRM_FindFrame(cum1,"ge44cum1");
+frame cum2;	FRM_FindFrame(cum2,"ge44cum2");
+frame ge45;	FRM_FindFrame(ge45,"ge_45");
+
+HUMAN_SetOptimized(1);
+}
+
+SaveGameValue(4, 0);
+HUMAN_Suspend(1);
+
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+}
+HUMAN_WeaponOnArm(1);
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+if (zone==1)	{ goto z1; }
+if (zone==2)	{ goto z2; }
+if (zone==3)	{ goto z3; }
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(8,0);
+}
+HUMAN_SETMODE_Silence();
+label chod2:
+	HUMAN_SETMODE_Stand();
+	HUMAN_MoveRandomRadius(15);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+goto chod2;
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SaveGameValue(4,0);
+
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+SaveGameValue(4, 1);
+SetAlarmType(8,0);
+HUMAN_Move("ge45_001");
+HUMAN_Move("ge45_002");
+HUMAN_Move("ge45_003");
+
+label dup2:
+HUMAN_Move("ge45_004");
+zone=2;
+HUMAN_Move("ge45_01");
+HUMAN_Move("ge45_02");
+
+label dup3:
+HUMAN_Move("ge44_03");
+zone=3;
+HUMAN_Move("ge45_04");
+HUMAN_Move("ge45_05");
+HUMAN_Move("ge45_06");
+HUMAN_Move("ge45_07");
+HUMAN_Move("ge45_08");
+HUMAN_Move("ge45_09");
+HUMAN_Move("ge45_10");
+goto end;
+}
+
+Whenever bez2(_SignalReceived(4))
+{
+SetAlarmType(8,0);
+FRM_TeleportNearCheckpoint(me, "ge44_t1", "ge45_t1");
+delay (2000);
+HUMAN_Suspend(0);
+SaveGameValue(4, 1);
+HUMAN_Move("ge45_004");
+zone=2;
+HUMAN_Move("ge45_01");
+HUMAN_Move("ge45_02");
+HUMAN_Move("ge44_03");
+zone=3;
+HUMAN_Move("ge45_04");
+HUMAN_Move("ge45_05");
+HUMAN_Move("ge45_06");
+HUMAN_Move("ge45_07");
+HUMAN_Move("ge45_08");
+HUMAN_Move("ge45_09");
+HUMAN_Move("ge45_10");
+goto end;
+}
+
+Whenever bez3(_SignalReceived(5))
+{
+SetAlarmType(8,0);
+zone=2;
+FRM_TeleportNearCheckpoint(me, "ge44_t2", "ge45_03");
+delay (2000);
+HUMAN_Suspend(0);
+SaveGameValue(4, 1);
+delay (1000);
+goto dup3;
+}
+
+Whenever sus(_SignalReceived(10))	
+{
+HUMAN_Move("ge44_sus");
+SaveGameValue(4,0);
+HUMAN_Suspend(1);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+label z1:
+	SetAlarmType(274,0);
+	if (a==0)
+	{
+	HUMAN_SetAlarm(0);
+	HUMAN_TurnAtNearestPlayer();
+	delay (1500);
+	HUMAN_SETMODE_Silence();
+	HUMAN_Move("ge44_a1");
+	a=1;
+	HUMAN_TurnAt(cum1);
+	HUMAN_SETMODE_Crouch();
+	SetAlarmType(274,1);
+	}
+	HUMAN_SetAlarm(0);
+	HUMAN_TurnAtNearestPlayer();
+	delay (1500);
+	HUMAN_TurnAt(cum1);
+	SetAlarmType(274,1);
+label rozhled:
+	HUMAN_TurnAt(cum2);
+	delay (6000);
+	HUMAN_TurnAt(cum1);
+	delay (6000);
+	goto rozhled;
+	goto end;
+
+label z2:
+	SetAlarmType(274,0);
+	if (b==0)
+	{
+	HUMAN_SetAlarm(0);
+	HUMAN_TurnAtNearestPlayer();
+	delay (1500);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("ge44_a2");
+	b=1;
+	SetAlarmType(274,1);
+	}
+	HUMAN_SetAlarm(0);
+	HUMAN_TurnAtNearestPlayer();
+	delay (1500);
+	SetAlarmType(274,1);
+	HUMAN_SETMODE_Silence();
+label chod:
+	HUMAN_SETMODE_Stand();
+	HUMAN_MoveRandomRadius(15);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_LookAround(1);
+	delay (5000);
+goto chod;
+	goto end;
+
+label z3:
+	SetAlarmType(274,0);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetAlarm(0);
+	HUMAN_TurnAtNearestPlayer();
+	delay (1500);
+	SetAlarmType(274,1);
+	HUMAN_SETMODE_Silence();
+label chod1:
+	HUMAN_SETMODE_Stand();
+	HUMAN_MoveRandomRadius(15);
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAtNearestPlayer();
+goto chod1;
+goto end;
+
+label end:

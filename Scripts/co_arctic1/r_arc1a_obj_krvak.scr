@@ -1,0 +1,29 @@
+
+if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) ) 
+{
+  SetObjectiveStatus(7, 0);
+ } else {
+  EndScript();
+}
+
+Frame PLOTY;	FRM_findFrame(PLOTY, "dummy_PLOT");
+Frame BRANY;	FRM_findFrame(BRANY, "dummy_BRANY");
+
+Whenever XXX (  _GetCountOfCarnageEnemies() == 0 )
+{
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(01990204);
+  SendSignal(PLOTY, 1);
+  SendSignal(BRANY, 1);
+  Delay(1000);
+  SetObjectiveStatus(7, 1);
+ If ( !_IsTeamMemberDead())  {SetObjectiveStatus(6, 1);}  // nepov. vsichni prezily
+  Delay(3000);
+  SUBTITLES_SetOn(False);
+}
+
+SetWheneverTime(XXX, 1500);
+
+// kvuli carnage použiju text z afriky
+// 05991005	ÚKOL SPLNÌN - NEPØÁTELSKÁ POSÁDKA ZLIKVIDOVÁNA	 -  pro ty v komplexu
+// 01990204	ÚKOL SPLNÌN - NEPØÁTELÉ ZLIKVIDOVÁNI			 -  pro všechny

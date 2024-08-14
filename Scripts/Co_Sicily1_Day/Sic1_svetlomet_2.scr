@@ -1,0 +1,33 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	ovlada svetlomet 2 a jeho "destrukci"	
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+EndScript();	// ZRUSENO
+
+Block
+{
+  frame MyFRM;	FRM_GetMyFrame(MyFRM);
+  frame Svetlo;		FRM_FindFrame(Svetlo, "Svetlomet_2");
+  frame SvetloK;	FRM_FindFrame(SvetloK, "la_kuzelSvetla_2");
+}
+
+// initialization
+ FRM_SetOn(Svetlo, False);
+ FRM_SetOn(SvetloK, False);
+
+OnDeath()
+{
+  FRM_SetOn(Svetlo, False);
+  FRM_SetOn(SvetloK, False);
+  EndScript();
+}
+
+OnSignal(1)
+{
+ FRM_SetOn(Svetlo, True);
+ FRM_SetOn(SvetloK, True);
+}
+

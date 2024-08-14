@@ -1,0 +1,57 @@
+// OpelFlak01 ta_zav west mid
+// ----------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+//printf("Flak script");
+Frame Hakl;	FRM_FindFrame(Hakl, "OpelFlak01");
+Car_SetFuel(Hakl, 0);
+}
+// ----------------------------
+
+
+OnDeath(){
+Printf("Flak dead");
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(142))
+{
+HUMAN_Suspend(0);
+printf("Flak spawn");
+goto END;
+}
+
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -----------------------------
+
+HUMAN_BoardVehicle("OpelFlak01", true, 2);
+HUMAN_SETSIGHTRANGE(148);
+HUMAN_SETHEARRANGE(110);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

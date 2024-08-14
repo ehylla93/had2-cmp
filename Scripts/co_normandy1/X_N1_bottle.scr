@@ -1,0 +1,10 @@
+// X_N1_bottle - broken bottle script
+
+Block {
+Frame ee;	FRM_FindFrame(ee, "N1_EE");
+}
+
+OnDeath()
+{
+	SendSignal(ee, 1);
+}

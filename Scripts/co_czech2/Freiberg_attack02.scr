@@ -1,0 +1,10 @@
+// Freiberg_attack02 - activator for Freiberg to shoot
+
+Block {
+Frame freiberg;		FRM_FindFrame(freiberg, "Big_Boss");
+}
+
+Whenever player(_PlayerInRange(3))
+{
+	SendSignal(freiberg, 4);
+}

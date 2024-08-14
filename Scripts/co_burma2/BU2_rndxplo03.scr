@@ -1,0 +1,31 @@
+// BU2_rndxplo03 - explosion effect
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame rndxplo03;	FRM_FindFrame(rndxplo03, "rndxplo03");
+Frame tank;			FRM_FindFrame(tank, "Sherman");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(1)	// received from BU2_bomber
+{
+	If(_FrameInRange(tank)<25)
+	{
+	Block
+	{
+		SetActorState(rndxplo03, 1);
+		//MakeExplosion(rndxplo03, 800000, 15000);
+	}	
+	GoTo end;
+	}
+}
+
+Whenever player(_PlayerInRange(20))
+{
+	DisableSignals(true);
+	GoTo end;
+}
+
+Label end:

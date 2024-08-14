@@ -1,0 +1,3 @@
+frame OBJ;	FRM_FindFrame(OBJ, "objectives");
+
+  ScriptAssign(OBJ, "R_Ar3_Objectives"); 

@@ -1,0 +1,62 @@
+// F1_G77 - F1 zone guard (Inside Bunker)
+// ----------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f067");
+
+HUMAN_SETSIGHTRANGE(110);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 160))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label END:

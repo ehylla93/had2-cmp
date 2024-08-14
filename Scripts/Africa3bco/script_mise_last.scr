@@ -1,0 +1,80 @@
+
+
+
+// tahle cast kodu by se mela provest pri ukoncovani mise
+
+integer iNumPlayers;
+integer iMenuHumanIDPlayer0;
+integer iMenuHumanIDPlayer1;
+integer iMenuHumanIDPlayer2;
+integer iMenuHumanIDPlayer3;
+
+// vybrat pozice na ktere se maji ukladat ID playeru; musi byt shodne v obou skriptech
+integer SaveGamePosition0 = 200;
+integer SaveGamePosition1 = 201;
+integer SaveGamePosition2 = 202;
+integer SaveGamePosition3 = 203;
+integer SaveGamePositionCampaignTest = 204;
+frame player_frame;
+
+goto Cekej;
+
+OnSignal(1)
+{
+	Printf("Signal 1 received. Saving players info ...");
+}
+
+Block
+{
+	iMenuHumanIDPlayer0 = -1;
+	iMenuHumanIDPlayer1 = -1;
+	iMenuHumanIDPlayer2 = -1;
+	iMenuHumanIDPlayer3 = -1;
+	iNumPlayers = _GetNumMembersOfClientTeam();
+
+	// player 0
+	if(iNumPlayers > 0)
+	{
+		CSC_GetPlayerNum(0, player_frame);
+		iMenuHumanIDPlayer0 = _GetHumanStoreID(player_frame);
+		Printf("players num > 0");
+	}
+	// player 1
+	if(iNumPlayers > 1)
+	{
+		CSC_GetPlayerNum(1, player_frame);
+		iMenuHumanIDPlayer1 = _GetHumanStoreID(player_frame);
+		Printf("players num > 1");
+	}
+	// player 2
+	if(iNumPlayers > 2)
+	{
+		CSC_GetPlayerNum(2, player_frame);
+		iMenuHumanIDPlayer2 = _GetHumanStoreID(player_frame);
+		Printf("players num > 2");
+	}
+	// player 3
+	if(iNumPlayers > 3)
+	{
+		CSC_GetPlayerNum(3, player_frame);
+		iMenuHumanIDPlayer3 = _GetHumanStoreID(player_frame);
+		Printf("players num > 3");
+	}
+
+	// ulozeni hodnot do gamevalues
+	SaveGameValue(SaveGamePosition0, iMenuHumanIDPlayer0);
+	SaveGameValue(SaveGamePosition1, iMenuHumanIDPlayer1);
+	SaveGameValue(SaveGamePosition2, iMenuHumanIDPlayer2);
+	SaveGameValue(SaveGamePosition3, iMenuHumanIDPlayer3);
+	SaveGameValue(SaveGamePositionCampaignTest, 1);
+
+	PrintfNumber("Member0 ID : ", SaveGamePosition0);
+	PrintfNumber("Member1 ID : ", SaveGamePosition1);
+	PrintfNumber("Member2 ID : ", SaveGamePosition2);
+	PrintfNumber("Member3 ID : ", SaveGamePosition3);
+}
+
+label Cekej:
+
+
+//

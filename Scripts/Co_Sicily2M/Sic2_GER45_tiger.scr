@@ -1,0 +1,47 @@
+// Tiger, cannon
+// --------------------------------------------------------------------
+
+Block
+{
+  Frame w_mg42Crouch_1;	FRM_FindFrame( w_mg42Crouch_1, "w_mg42Crouch_1");
+  Frame Sherman_01;		FRM_FindFrame( Sherman_01, "Sherman_01");
+  Frame see;			FRM_FindFrame( see,  "Teren_53");
+  frame SAS2;	FRM_FindFrame(SAS2, "NPC_2");
+ 
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator treti vlny
+Onsignal(1)		// aktivace 
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Tiger", true, 2);	
+} 
+
+Delay(77500);
+SendSignal(SAS2, 9);
+HUMAN_Attack(w_mg42Crouch_1, 3000);
+Delay(1000);
+HUMAN_Attack(Sherman_01, 15000);
+Delay(7000);
+Human_TurnAt(see);
+Delay(1000);
+SetAlarmType(1023, True);
+HUMAN_SETSIGHTRANGE(10000);
+
+
+OnAlarm()  
+  {
+          
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+} 
+
+label TheEnd:

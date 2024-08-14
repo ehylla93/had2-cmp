@@ -1,0 +1,53 @@
+// Hlidac
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+INTEGER Atype				= 0;
+INTEGER rnd					= 0;
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(True, 5);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetOptimized(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever player (_PlayerInRange(110))
+{
+HUMAN_Suspend(0);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

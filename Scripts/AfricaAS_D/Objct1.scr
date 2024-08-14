@@ -1,0 +1,56 @@
+// Obj 1 - Enter the Oasis
+//----------------------------------------------------
+
+Block
+{
+Frame Bomba;	FRM_FindFrame(Bomba,"Bomb_01");
+Frame Obj5;	FRM_FindFrame(Obj5,"obj5");
+Frame Obj4;	FRM_FindFrame(Obj4,"obj4");
+Frame Obj7;	FRM_FindFrame(Obj7,"obj7");
+
+Frame Su1;	FRM_FindFrame(Su1,"Suman1");
+Frame Su2;	FRM_FindFrame(Su2,"Suman2");
+Frame Su3;	FRM_FindFrame(Su3,"Suman3");
+Frame Su4;	FRM_FindFrame(Su4,"Suman4");
+Frame Su5;	FRM_FindFrame(Su5,"Suman5");
+
+Frame SuO1;	FRM_FindFrame(SuO1,"SuO_01");
+Frame SuO2;	FRM_FindFrame(SuO2,"SuO_02");
+
+SetObjectiveStatus(1, 0);
+}
+
+//----------------------------------------------------
+
+Whenever ALARM_BASE (_SignalReceived(3))
+{
+FRM_MorphSpeechDelayed(SuO2, 14992874, 5, 30);
+Delay(100);
+FRM_MorphSpeechDelayed(SuO1, 18023602, 5, 30);
+Delay(100);
+FRM_MorphSpeechDelayed(SuO2, 90003061, 5, 30);
+Delay(500);
+FRM_MorphSpeechDelayed(SuO1, 90004048, 5, 30);
+Delay(100);
+FRM_MorphSpeechDelayed(SuO2, 90002012, 5, 30);
+Delay(500);
+FRM_MorphSpeechDelayed(SuO1, 90004009, 5, 30);
+goto END;
+}
+
+Whenever PlayerIn ((_PlayerInRange(4)) OR (_Actor_GetState(Bomba)==2))
+{
+SetObjectiveStatus(1, 1);
+SendSignal(Obj4, 1);
+SendSignal(Obj5, 7);
+SendSignal(Obj7, 3);
+Delay(2000);
+FRM_MorphSpeechDelayed(Su1, 14992829, 5, 60); // Alaarm!!
+FRM_MorphSpeechDelayed(Su2, 14992829, 5, 60); // Alaarm!!
+FRM_MorphSpeechDelayed(Su3, 14992829, 5, 60); // Alaarm!!
+FRM_MorphSpeechDelayed(Su4, 14992829, 5, 60); // Alaarm!!
+FRM_MorphSpeechDelayed(Su5, 14992829, 5, 60); // Alaarm!!
+goto END;
+}
+
+Label END:

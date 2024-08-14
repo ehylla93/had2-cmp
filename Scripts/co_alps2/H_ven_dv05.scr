@@ -1,0 +1,19 @@
+// 	Flip LightMap Doors
+
+Block {
+integer Door = 1;
+}
+
+OnUse()
+  {
+     Delay(1050);
+     FRM_SetGroupLightMap("H_ven_dv05",Door);
+     if (Door == 0)
+       {
+	Door = 1;
+        }
+    else
+       {
+	Door = 0;
+       }
+  }
