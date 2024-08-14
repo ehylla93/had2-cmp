@@ -1,0 +1,79 @@
+// R_Cz2_Ger36  kleci a ceka
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+block
+{
+Integer aievent;	aievent=0;
+integer a;	a=0;
+integer al;
+
+al=(512+128+16+8);
+SetAlarmType(al, false);
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Silence();
+HUMAN_SETMODE_Crouch();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+block
+{
+	DisableSignals(1);
+	aievent=_GetAlarmType();
+}
+	If((((aievent==2) OR (aievent==16))OR(aievent==4)) OR (aievent==256))
+	{
+	SetAlarmType(278,0);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(false);
+	delay (900);
+	SetAlarmType(278,1);
+	goto end;
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, true);
+	SetAlarmType(al, false);
+}
+goto end;	
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever detector(_SignalReceived(1))
+{
+	HUMAN_Suspend(false);
+	goto chod;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+label chod:
+	HUMAN_MoveRandomRadius(10);
+	delay (2000);
+goto chod;
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

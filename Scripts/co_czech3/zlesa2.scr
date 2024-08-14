@@ -1,0 +1,91 @@
+//Coming out from forest (north)
+
+block
+{
+SetAlarmType(1,1);			//Close shooting
+SetAlarmType(2,1);			//enemy shots
+SetAlarmType(4,1);			//hear steps (dosn't work for clients)
+SetAlarmType(8,0);			//action sounds
+SetAlarmType(16,1);			//explosions
+SetAlarmType(32,1);			//sighted
+SetAlarmType(64,1);			//is injured
+SetAlarmType(128,1);		//from script
+SetAlarmType(256,1);		//friendly shots
+SetAlarmType(512,1);		//sights corpse
+
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETAIMODE_Defensive();
+
+HUMAN_SetOptimized(1);
+
+Frame cum;		FRM_FindFrame(cum,"blocker1cum");
+
+Frame me;			FRM_GetMyFrame(me);
+Frame reinfo;		FRM_FindFrame(reinfo, "dummy_reinforcement");
+Frame tree;			FRM_FindFrame(tree, "listi1_07");
+Frame barrel;		FRM_FindFrame(barrel, "bar_expl_2");
+
+FRM_SwitchFaceTexture(me, "e_f054");
+
+Integer aievent;
+
+HUMAN_SETMODE_Guard();
+}
+
+HUMAN_Suspend(1);
+SetAlarmType(749,0);
+goto end;
+
+//------------------------------------------------------------------------------
+
+OnAlarm()
+{
+HUMAN_SetAnim("",0,0,0);
+HUMAN_WeaponOnArm(1);
+block
+{
+aievent=(_GetAlarmType());
+DisableSignals(1);
+SetAlarmType(1023,1);
+SetAlarmType(140,0);
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+Whenever go(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+SetAlarmType(1023,1);
+SetAlarmType(140,0);
+HUMAN_MoveToFrame(tree, 15);
+HUMAN_TurnAt(barrel);
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+goto end;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//------------------------------------------------------------------------------
+
+Label end:

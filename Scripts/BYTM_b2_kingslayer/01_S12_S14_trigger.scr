@@ -1,0 +1,18 @@
+// 01_S12_S14_trigger
+
+Block
+{
+Frame E02;		FRM_FindFrame(E02, "01_E02");
+Frame E03;		FRM_FindFrame(E03, "01_E03");
+Frame E11;		FRM_FindFrame(E11, "01_E11");
+Frame E12;		FRM_FindFrame(E12, "01_E12");
+}
+
+Whenever Near (_MP_IsTeamMemberInRange(1, 2))
+{
+SendSignal(E02, 1);
+SendSignal(E03, 1);
+SendSignal(E11, 1);
+SendSignal(E12, 1);
+EndScript();
+}

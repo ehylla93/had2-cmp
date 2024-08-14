@@ -1,0 +1,38 @@
+// Vybira Snipry kteri hlidaj S zatactu s MG3  1/6
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S1;	FRM_FindFrame(S1,"S1_S01");
+Frame S2;	FRM_FindFrame(S2,"S1_S02");
+Frame S3;	FRM_FindFrame(S3,"S1_S03");
+Frame S4;	FRM_FindFrame(S4,"S1_S04");
+Frame S5;	FRM_FindFrame(S5,"KSnip8");
+Frame S6;	FRM_FindFrame(S6,"KSnip9");
+
+Frame V1;	FRM_FindFrame(V1,"S1_G17");
+Frame V2;	FRM_FindFrame(V2,"S1_G18");
+Frame V3;	FRM_FindFrame(V3,"S1_G19");
+Frame V4;	FRM_FindFrame(V4,"S1_G20");
+
+Integer SnipVyber;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Briti_Jeli(_SignalReceived(1))
+{
+SnipVyber =_RandomInt(6);
+If(SnipVyber == 0){  SendSignal(S1, 1);}
+If(SnipVyber == 1){  SendSignal(S2, 1);}
+If(SnipVyber == 2){  SendSignal(S3, 1);}
+If(SnipVyber == 3){  SendSignal(S4, 1);}
+If(SnipVyber == 4){  SendSignal(S5, 1);}
+If(SnipVyber == 5){  SendSignal(S6, 1);}
+
+SnipVyber =_RandomInt(1);
+If(SnipVyber == 0){  SendSignal(V1, 1);SendSignal(V2, 1);SendSignal(V3, 1);SendSignal(V4, 1);}
+goto END;
+}
+
+Label END:

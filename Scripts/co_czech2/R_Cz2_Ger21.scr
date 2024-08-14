@@ -1,0 +1,55 @@
+// R_Cz2_Ger21 - soldier waiting for player to shoot him
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Integer aievent;	aievent=0;
+
+SetAlarmType(908, false);
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	HUMAN_SETMODE_Run();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(908, false);
+	SetAlarmType(115, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(15))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

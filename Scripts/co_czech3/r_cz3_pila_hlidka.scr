@@ -1,0 +1,120 @@
+// sawmill guard
+
+block
+{
+SetAlarmType(1,1);			//Close shooting
+SetAlarmType(2,1);			//enemy shots
+SetAlarmType(4,1);			//hear steps (dosn't work for clients)
+SetAlarmType(8,0);			//action sounds
+SetAlarmType(16,1);			//explosions
+SetAlarmType(32,1);			//sighted
+SetAlarmType(64,1);			//is injured
+SetAlarmType(128,0);		//from script
+SetAlarmType(256,1);		//friendly shots
+SetAlarmType(512,0);		//sights corpse
+
+integer AIEvent;
+integer b=0;
+
+frame kuk_right;	FRM_FindFrame(kuk_right, "transfer4");
+frame kuk_left;		FRM_FindFrame(kuk_left, "transfer5");
+frame reinfo;		FRM_FindFrame(reinfo, "dummy_reinforcement");
+Frame me;			FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f056");
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Guard();
+}
+
+//------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+AIEvent =_GetAlarmType(); 
+}
+HUMAN_SetAnim("",200,200,0);
+HUMAN_WeaponOnArm(1);
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+SetAlarmType(274,0);
+if (b==0)
+{
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("Dog_0104");
+b=1;
+}
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto HP_rand;
+}
+
+OnDeath()
+{
+SendSignal(reinfo, 0);
+DisableSignals(1);
+EndScript();
+}
+
+label HP1:
+
+  HUMAN_Move("Dog_0106");
+goto HP_rand;
+
+label HP2:
+
+  HUMAN_Move("HP2_5");  	
+goto HP_rand;
+
+
+label HP3:
+  HUMAN_Move("Dog_0103");
+goto HP_rand;
+
+
+label HP4:
+  HUMAN_Move("HP2_6");
+goto HP_rand;
+
+label HP_rand:
+	Delay(200);
+	HUMAN_WeaponOnArm(0);
+	HUMAN_SetAnim("%%turnleft",200,200,0);
+	Delay(2800);
+	HUMAN_SetAnim("%%turnright",200,200,0);
+	Delay(3700);
+	HUMAN_SetAnim("",200,200,0);
+	Delay(200);
+	HUMAN_WeaponOnArm(1);
+  integer pom;
+  pom=_RandomInt(4);
+  if (pom==0) {goto HP1;}
+  if (pom==1) {goto HP2;}  
+  if (pom==2) {goto HP3;}  
+  if (pom==3) {goto HP4;}
+
+goto HP_rand;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

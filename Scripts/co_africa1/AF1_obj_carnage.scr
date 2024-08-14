@@ -1,0 +1,124 @@
+block
+{
+FRAME en01;			FRM_FindFrame(en01, "AF1_01");
+FRAME en02;			FRM_FindFrame(en02, "AF1_02");
+FRAME en03;			FRM_FindFrame(en03, "AF1_03");
+FRAME en04;			FRM_FindFrame(en04, "AF1_04");
+FRAME en05;			FRM_FindFrame(en05, "AF1_05");
+FRAME en06;			FRM_FindFrame(en06, "AF1_06");
+FRAME en07;			FRM_FindFrame(en07, "AF1_07");
+FRAME en08;			FRM_FindFrame(en08, "AF1_08");
+FRAME en09;			FRM_FindFrame(en09, "AF1_09");
+FRAME en10;			FRM_FindFrame(en10, "AF1_10");
+FRAME en11;			FRM_FindFrame(en11, "AF1_11");
+FRAME en12;			FRM_FindFrame(en12, "AF1_12");
+FRAME en13;			FRM_FindFrame(en13, "AF1_13");
+FRAME en14;			FRM_FindFrame(en14, "AF1_14");
+FRAME en15;			FRM_FindFrame(en15, "AF1_15");
+FRAME en16;			FRM_FindFrame(en16, "AF1_16");
+FRAME en17;			FRM_FindFrame(en17, "AF1_17");
+FRAME en18;			FRM_FindFrame(en18, "AF1_18");
+FRAME en19;			FRM_FindFrame(en19, "AF1_19");
+FRAME en20;			FRM_FindFrame(en20, "AF1_20");
+
+FRAME en22;			FRM_FindFrame(en22, "AF1_22");
+FRAME en23;			FRM_FindFrame(en23, "AF1_23");
+FRAME en24;			FRM_FindFrame(en24, "AF1_24");
+FRAME en25;			FRM_FindFrame(en25, "AF1_25");
+FRAME en26;			FRM_FindFrame(en26, "AF1_26");
+FRAME en27;			FRM_FindFrame(en27, "AF1_27");
+FRAME en28;			FRM_FindFrame(en28, "AF1_posila_01");
+FRAME en29;			FRM_FindFrame(en29, "AF1_posila_02");
+FRAME en30;			FRM_FindFrame(en30, "AF1_posila_03");
+FRAME en31;			FRM_FindFrame(en31, "AF1_posila_04");
+FRAME en32;			FRM_FindFrame(en32, "AF1_posila_05");
+FRAME en33;			FRM_FindFrame(en33, "AF1_posila_06");
+FRAME en34;			FRM_FindFrame(en34, "AF1_posila_07");
+FRAME en35;			FRM_FindFrame(en35, "AF1_posila_08");
+FRAME en36;			FRM_FindFrame(en36, "AF1_posila_09");
+FRAME en37;			FRM_FindFrame(en37, "AF1_posila_10");
+FRAME en38;			FRM_FindFrame(en38, "AF1_tank01_01");
+FRAME en39;			FRM_FindFrame(en39, "AF1_tank01_02");
+FRAME en40;			FRM_FindFrame(en40, "AF1_tank01_03");
+FRAME en41;			FRM_FindFrame(en41, "AF1_pobocnik");
+FRAME en42;			FRM_FindFrame(en42, "AF1_cge_posila_01");
+
+FRAME obj;			FRM_FindFrame(obj, "AF1_obj");
+FRAME reinf;		FRM_FindFrame(reinf, "dummy_posily_detector");
+FRAME act;
+Integer x=41;
+}
+
+Label check:
+Delay(5000);
+x=41;
+
+block
+{
+if (_ACTOR_GetState(en01)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en02)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en03)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en04)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en05)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en06)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en07)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en08)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en09)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en10)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(en11)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en12)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en13)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en14)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en15)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en16)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en17)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en18)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en19)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en20)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(en22)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en23)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en24)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en25)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en26)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en27)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en28)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en29)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en30)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(en31)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en32)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en33)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en34)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en35)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en36)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en37)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en38)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en39)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en40)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(en41)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(en42)==0)	{	x=x-1;	}
+}
+
+if (x<25)
+{
+SendSignal(reinf, 1);
+}
+if (x==0)
+{
+  SendSignal(obj, 2);
+  EndScript();
+}
+goto check;
+
+Label end:

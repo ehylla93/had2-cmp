@@ -1,0 +1,73 @@
+
+block {
+Frame me;			FRM_GetMyFrame(me);
+Frame Get_Player;
+
+Frame b1;		FRM_FindFrame(b1, "BUM1");
+Frame b2;		FRM_FindFrame(b2, "BUM2");
+Frame b3;		FRM_FindFrame(b3, "BUM3");
+Frame b4;		FRM_FindFrame(b4, "BUM4");
+Frame b5;		FRM_FindFrame(b5, "BUM5");
+frame LETADLO;	FRM_FindFrame(LETADLO, "k_let300");
+frame TUNEL;	FRM_FindFrame(TUNEL, "fotoplacebox");
+}
+
+OnSignal(1)
+{
+  FRM_GetNearestPlayer(TUNEL, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990420, 3, 15);   Delay(20);		//"What are they testing here?"
+}
+
+OnSignal(2)
+{
+  FRM_GetNearestPlayer(TUNEL, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990421, 3, 15);   Delay(20);		//"They must be using the models for research."
+}
+
+OnSignal(3)
+{
+  FRM_GetNearestPlayer(LETADLO, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990422, 3, 15);   Delay(20);		//"So, that's what they're doing."
+}
+
+OnSignal(4)
+{
+  FRM_GetNearestPlayer(LETADLO, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990423, 3, 15);   Delay(20);		//"I wonder what the model is for?"
+}
+
+OnSignal(5)
+{
+  FRM_GetNearestPlayer(b1, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990430, 3, 15);   Delay(23);		//"I should place the explosives next to the generator."
+}
+
+OnSignal(6)
+{
+  FRM_GetNearestPlayer(b2, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990431, 3, 15);   Delay(33);		//"A warehouse - we should place explosives here as well."
+}
+
+OnSignal(7)
+{
+  FRM_GetNearestPlayer(b3, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990432, 3, 15);   Delay(39);
+}
+
+OnSignal(8)
+{
+  FRM_GetNearestPlayer(b4, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990433, 3, 15);   Delay(17);		//"This is a good spot for explosives."
+}
+
+OnSignal(9)
+{
+  FRM_GetNearestPlayer(b5, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990434, 3, 15);   Delay(31);		//"And here, I should place explosives here too."
+}
+
+OnSignal(10)
+{
+  FRM_GetNearestPlayer(me, Get_Player);
+  FRM_MorphSpeechDelayed(Get_Player, 02990435, 3, 15);   Delay(20);		//"I should set explosives here as well."
+}

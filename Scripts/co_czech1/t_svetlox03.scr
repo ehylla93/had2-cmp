@@ -1,0 +1,40 @@
+//sklad dalej od nadrazia
+Frame svetlox03;	FRM_FindFrame(svetlox03, "storage outdoor light_");
+Frame lensx03;	FRM_FindFrame(lensx03, "e_raslmp_8.Rectangle01");
+
+Frame svetlox04;	FRM_FindFrame(svetlox04, "storage outdoor light_2");
+Frame lensx04;	FRM_FindFrame(lensx04, "e_raslmp_10.Rectangle01");
+
+Frame svetlox05;	FRM_FindFrame(svetlox05, "storage outdoor light_3");
+Frame lensx05;	FRM_FindFrame(lensx05, "e_raslmp_11.Rectangle01");
+
+Frame svetlox06;	FRM_FindFrame(svetlox06, "storage outdoor light_4");
+Frame lensx06;	FRM_FindFrame(lensx06, "e_raslmp_5.Rectangle01");
+
+Frame svetlox07;	FRM_FindFrame(svetlox07, "storage outdoor light_5");
+Frame lensx07;	FRM_FindFrame(lensx07, "e_raslmp_6.Rectangle01");
+
+Frame svetlox08;	FRM_FindFrame(svetlox08, "storage outdoor light_6");
+Frame lensx08;	FRM_FindFrame(lensx08, "e_raslmp_7.Rectangle01");
+
+Frame ostatnesvetla01;	FRM_FindFrame(ostatnesvetla01, "window in effect_3");
+Frame ostatnesvetla02;	FRM_FindFrame(ostatnesvetla02, "window in effect_");
+Frame ostatnesvetla03;	FRM_FindFrame(ostatnesvetla03, "window in effect_2");
+Frame ostatnesvetla04;	FRM_FindFrame(ostatnesvetla04, "window in effect_4");
+
+OnSignal(1)
+{
+	Delay(1000);
+	Block	{	FRM_SetOn(svetlox03, 0);	FRM_SetOn(lensx03, 0);
+			FRM_SetOn(svetlox04, 0);	FRM_SetOn(lensx04, 0);
+			FRM_SetOn(svetlox05, 0);	FRM_SetOn(lensx05, 0);
+			FRM_SetOn(svetlox06, 0);	FRM_SetOn(lensx06, 0);
+			FRM_SetOn(svetlox07, 0);	FRM_SetOn(lensx07, 0);
+			FRM_SetOn(svetlox08, 0);	FRM_SetOn(lensx08, 0);
+			FRM_SetOn(ostatnesvetla01, 0);
+			FRM_SetOn(ostatnesvetla02, 0);
+			FRM_SetOn(ostatnesvetla03, 0);
+			FRM_SetOn(ostatnesvetla04, 0);
+
+			FRM_SetGroupLightMap("sklad01", 1);			}
+}

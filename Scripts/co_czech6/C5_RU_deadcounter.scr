@@ -1,0 +1,151 @@
+// C5_RU_deadcounter - counter for dead Russian soldiers
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame r01;	FRM_FindFrame(r01, "C5_R01");
+Integer ru01;	ru01=1;
+Frame r02;	FRM_FindFrame(r02, "C5_R02");
+Integer ru02;	ru02=1;
+Frame r03;	FRM_FindFrame(r03, "C5_R03");
+Integer ru03;	ru03=1;
+Frame r04;	FRM_FindFrame(r04, "C5_R04");
+Integer ru04;	ru04=1;
+Frame r05;	FRM_FindFrame(r05, "C5_R05");
+Integer ru05;	ru05=1;
+Frame r06;	FRM_FindFrame(r06, "C5_R06");
+Integer ru06;	ru06=1;
+Frame r07;	FRM_FindFrame(r07, "C5_R07");
+Integer ru07;	ru07=1;
+Frame r08;	FRM_FindFrame(r08, "C5_R08");
+Integer ru08;	ru08=1;
+Frame r09;	FRM_FindFrame(r09, "C5_R09");
+Integer ru09;	ru09=1;
+Frame r10;	FRM_FindFrame(r10, "C5_R10");
+Integer ru10;	ru10=1;
+Frame r11;	FRM_FindFrame(r11, "C5_R11");
+Integer ru11;	ru11=1;
+Frame r12;	FRM_FindFrame(r12, "C5_R12");
+Integer ru12;	ru12=1;
+Frame r13;	FRM_FindFrame(r13, "C5_R13");
+Integer ru13;	ru13=1;
+Frame r14;	FRM_FindFrame(r14, "C5_R14");
+Integer ru14;	ru14=1;
+Frame r15;	FRM_FindFrame(r15, "C5_R15");
+Integer ru15;	ru15=1;
+Frame r16;	FRM_FindFrame(r16, "C5_R16");
+Integer ru16;	ru16=1;
+Frame r17;	FRM_FindFrame(r17, "C5_R17");
+Integer ru17;	ru17=1;
+Frame r18;	FRM_FindFrame(r18, "C5_R18");
+Integer ru18;	ru18=1;
+Frame r19;	FRM_FindFrame(r19, "C5_R19");
+Integer ru19;	ru19=1;
+Frame r20;	FRM_FindFrame(r20, "C5_R20");
+Integer ru20;	ru20=1;
+Frame obj;
+	FRM_FindFrame(obj, "C5_objective");
+Integer counter;
+	counter=0;
+}
+
+GoTo end;
+
+OnSignal(2)	// received from C5_objective
+{
+	GoTo testovanie;
+}
+
+Label testovanie:
+Block
+{
+	If(ru01==1)
+	{
+		If(_ACTOR_GetState(r01)==0)	{	counter=counter+1;	ru01=0;	}
+	}
+	If(ru02==1)
+	{
+		If(_ACTOR_GetState(r02)==0)	{	counter=counter+1;	ru02=0;	}
+	}
+	If(ru03==1)
+	{
+		If(_ACTOR_GetState(r03)==0)	{	counter=counter+1;	ru03=0;	}
+	}
+	If(ru04==1)
+	{
+		If(_ACTOR_GetState(r04)==0)	{	counter=counter+1;	ru04=0;	}
+	}
+	If(ru05==1)
+	{
+		If(_ACTOR_GetState(r05)==0)	{	counter=counter+1;	ru05=0;	}
+	}
+	If(ru06==1)
+	{
+		If(_ACTOR_GetState(r06)==0)	{	counter=counter+1;	ru06=0;	}
+	}
+	If(ru07==1)
+	{
+		If(_ACTOR_GetState(r07)==0)	{	counter=counter+1;	ru07=0;	}
+	}
+	If(ru08==1)
+	{
+		If(_ACTOR_GetState(r08)==0)	{	counter=counter+1;	ru08=0;	}
+	}
+	If(ru09==1)
+	{
+		If(_ACTOR_GetState(r09)==0)	{	counter=counter+1;	ru09=0;	}
+	}
+	If(ru10==1)
+	{
+		If(_ACTOR_GetState(r10)==0)	{	counter=counter+1;	ru10=0;	}
+	}
+	If(ru11==1)
+	{
+		If(_ACTOR_GetState(r11)==0)	{	counter=counter+1;	ru11=0;	}
+	}
+	If(ru12==1)
+	{	
+		If(_ACTOR_GetState(r12)==0)	{	counter=counter+1;	ru12=0;	}
+	}
+	If(ru13==1)
+	{
+		If(_ACTOR_GetState(r13)==0)	{	counter=counter+1;	ru13=0;	}
+	}
+	If(ru14==1)
+	{
+		If(_ACTOR_GetState(r14)==0)	{	counter=counter+1;	ru14=0;	}
+	}
+	If(ru15==1)
+	{
+		If(_ACTOR_GetState(r15)==0)	{	counter=counter+1;	ru15=0;	}
+	}
+	If(ru16==1)
+	{
+		If(_ACTOR_GetState(r16)==0)	{	counter=counter+1;	ru16=0;	}
+	}
+	If(ru17==1)
+	{
+		If(_ACTOR_GetState(r17)==0)	{	counter=counter+1;	ru17=0;	}
+	}
+	If(ru18==1)
+	{
+		If(_ACTOR_GetState(r18)==0)	{	counter=counter+1;	ru18=0;	}
+	}
+	If(ru19==1)
+	{
+		If(_ACTOR_GetState(r19)==0)	{	counter=counter+1;	ru19=0;	}
+	}
+	If(ru20==1)
+	{
+		If(_ACTOR_GetState(r20)==0)	{	counter=counter+1;	ru20=0;	}
+	}
+}
+	If(counter==20)
+	{
+		SendSignal(obj, 9);
+		EndScript();
+	}
+	Delay(5000);
+	GoTo testovanie;
+
+Label end:

@@ -1,0 +1,27 @@
+// Bomb at F2 at main room
+// ----------------------------------------
+
+Block
+{
+Frame me;				FRM_GetMyFrame(me);
+Frame Get_Player;
+
+SetActorState(me, 3);
+SetWhenever(Player, 0);
+}
+
+// ----------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Player, 1);
+}
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 6))
+{
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990434, 5, 30);
+Delay(100);
+SetActorState(me, 0);
+}
+

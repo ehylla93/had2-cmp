@@ -1,0 +1,68 @@
+// convoy_E03 - at ammocrate
+
+block
+{
+SetAlarmType(128,0);
+
+Frame reinf4;	FRM_FindFrame(reinf4, "reinf4");
+
+integer aievent;
+integer time = 0;
+integer a = _RandomInt(4);
+}
+
+if(a==0) { HUMAN_SETAIMODE_Zombie(); }
+if(a==1) { HUMAN_SETAIMODE_Aggressive(); }
+else { HUMAN_SETAIMODE_Defensive(); }
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 200, 200, 0);
+aievent=(_GetAlarmType());
+PrintfNumber("convoy_E03 alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("convoy_E03 dead");
+SendSignal(reinf4, 1);
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(65))
+{
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label ANIM:
+HUMAN_SetAnim("%%nabralvodu", 500, 500, 0);
+time = _RandomInt(15000) + 8000;
+Delay(time);
+HUMAN_SetAnim("%%neslysim", 500, 500, 0);
+time = _RandomInt(15000) + 5000;
+Delay(time);
+HUMAN_SetAnim("%%nuda", 500, 500, 1);
+time = _RandomInt(25000) + 5000;
+Delay(time);
+goto ANIM;
+
+//------------------------------------------------------------------------------------------
+
+label end:

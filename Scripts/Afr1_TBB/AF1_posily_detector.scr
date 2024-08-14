@@ -1,0 +1,60 @@
+// AF1_posily_detector
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(500);
+
+block{
+  FRAME posila01;			FRM_FindFrame(posila01, "AF1_posila_01");
+  FRAME posila02;			FRM_FindFrame(posila02, "AF1_posila_02");
+  FRAME posila03;			FRM_FindFrame(posila03, "AF1_posila_03");
+  FRAME posila04;			FRM_FindFrame(posila04, "AF1_posila_04");
+  FRAME posila05;			FRM_FindFrame(posila05, "AF1_posila_05");
+  FRAME posila06;			FRM_FindFrame(posila06, "AF1_posila_06");
+  FRAME posila07;			FRM_FindFrame(posila07, "AF1_posila_07");
+  FRAME posila08;			FRM_FindFrame(posila08, "AF1_posila_08");
+  FRAME posila09;			FRM_FindFrame(posila09, "AF1_posila_09");
+  FRAME posila10;			FRM_FindFrame(posila10, "AF1_posila_10");
+  FRAME tank01_01;			FRM_FindFrame(tank01_01, "AF1_tank01_01");
+  INTEGER fin_soldiers		= _GetCountOfCarnageEnemies() - _RandomInt(2) - 11;
+  INTEGER act_soldiers;
+  INTEGER sendingsignal		= 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever aktivuj (_GetCountOfCarnageEnemies() < fin_soldiers)
+{
+  printf("_ice_debug: REINFORCEMENTS ACTIVATED");
+  goto SENDSIGNALS;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  SetWheneverTime(aktivuj, 2000);
+goto END;
+
+Label SENDSIGNALS:
+  SendSignal(posila10, 1);
+  SendSignal(posila09, 1);
+  SendSignal(posila01, 1);
+  Delay(500);
+  SendSignal(posila02, 1);
+  Delay(500);
+  SendSignal(posila03, 1);
+  Delay(10000);
+  SendSignal(posila04, 1);
+  Delay(500);
+  SendSignal(posila05, 1);
+  Delay(500);
+  SendSignal(posila06, 1);
+  Delay(10000);
+  SendSignal(posila07, 1);
+  Delay(400);
+  SendSignal(posila08, 1);
+  Delay(400);
+  SendSignal(posila09, 1);
+  SendSignal(posila10, 1);
+  SendSignal(tank01_01, 1);
+EndScript();
+
+Label END:

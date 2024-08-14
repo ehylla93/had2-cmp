@@ -1,0 +1,46 @@
+
+SetWhenever(Go, False);
+
+Delay(6000);		// zpozdeni - at toho neni na zacatku zbytecne moc
+
+Frame A1;		FRM_FindFrame(A1, "Ally_1");
+Frame A2;		FRM_FindFrame(A2, "Ally_2");
+Frame A3;		FRM_FindFrame(A3, "Ally_3");
+Frame A4;		FRM_FindFrame(A4, "Ally_4");
+Frame A5;		FRM_FindFrame(A5, "Ally_5");
+
+  Frame Go10;		FRM_FindFrame(Go10, "Dummy_Go_10");
+  Frame Go11a;	FRM_FindFrame(Go11a, "Dummy_Go_11a");
+  Frame Go11b;	FRM_FindFrame(Go11b, "Dummy_Go_11b");
+  Frame Go13;		FRM_FindFrame(Go13, "Dummy_Go_13");
+  Frame Go14;		FRM_FindFrame(Go14, "Dummy_Go_14");
+
+
+OnSignal(5)	// od Obj
+{
+  SetWhenever(Go, True);
+}
+
+OnSignal(15)	
+{
+  SetWhenever(Go, False);
+}
+
+Whenever Go ( _PlayerInRange(4); )
+{
+Block
+  {
+    SendSignal(A1, 12); 
+    SendSignal(A2, 12); 
+    SendSignal(A3, 12); 
+    SendSignal(A4, 12); 
+    SendSignal(A5, 12); 
+
+    SendSignal(Go10,	15);
+    SendSignal(Go11a,	15);
+    SendSignal(Go11b,	15);
+
+    SendSignal(Go13,	5);
+    SendSignal(Go14,	5);
+  }
+}

@@ -1,0 +1,120 @@
+// Enemy Scientist, room with storage tanks
+
+Block
+{
+integer  AIEvent;
+integer  AIEventCounter = 0;
+frame see1;				FRM_FindFrame(see1, "Dummy_S3_See1");
+frame see2;				FRM_FindFrame(see2, "Dummy_S3_See2");
+frame see3;				FRM_FindFrame(see3, "Dummy_S3_See3");
+frame See_END;			FRM_FindFrame(See_END, "Dummy_S3_END_see");
+frame See_END2;			FRM_FindFrame(See_END2, "Dummy_S3_END2_see");
+frame alarm;			FRM_FindFrame(alarm, "dummy_GlobalAlarm");	
+frame posranej_buton;	FRM_FindFrame(posranej_buton, "m_alarm_5");
+
+SetWhenever(POPLACH, false);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+}
+
+HUMAN_Suspend(true);
+
+goto TheEnd;
+
+Whenever A (_PlayerInRange(30))
+{
+HUMAN_Suspend(False);
+goto Start;
+}
+
+OnAlarm()
+{
+  AIEvent =_GetAlarmType();
+  If ( ( AIEventCounter > 1) AND (AIEvent == 32)) { EndScript(); }
+  If ( ( AIEventCounter > 1) AND (AIEvent != 32)) { HUMAN_SetAlarm(False); Goto TheEnd; }
+  Else {
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetAnim("", 250, 250, False);   
+  Block
+    {
+      AIEventCounter = AIEventCounter +1;
+      HUMAN_Stop();
+      HUMAN_SETMODE_Walk();
+      HUMAN_SETAIMODE_Defensive();
+    }
+  If ((_FrameInRange(Posranej_buton)<5) AND (!_PlayerInRange(6)))
+    {
+       HUMAN_SETMODE_Run();  
+       HUMAN_Move("alarm_5");
+       HUMAN_TurnAt(Posranej_buton);
+		HUMAN_SetAnim("(ukazovani", 500, 500, false);
+		Delay(2500);
+		HUMAN_SetAnim("", 200, 200, 0);
+       If (_LoadGameValue(5) != 666) { SendSignal(alarm , 2); }
+     }
+	else {
+      HUMAN_WeaponOnArm(true);
+      HUMAN_SETMODE_Run();
+      SetWhenever(POPLACH, true);
+      HUMAN_Move("S3_END2");
+      SetWhenever(POPLACH, False);
+      Delay(500);
+      HUMAN_SETMODE_Crouch();
+      HUMAN_TurnAt(See_END2);
+   }
+   }
+  HUMAN_SetAlarm(False);
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_Move("S3_END");
+  HUMAN_TurnAt(See_END);
+}
+
+Whenever POPLACH (( _SeeEnemy()) OR (_PlayerInRange(5)) )
+{
+EndScript();
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+label Start:			
+  HUMAN_Move("S3_1");
+  Delay(500);
+  HUMAN_WeaponOnArm(False);
+  Delay(2500);
+  HUMAN_TurnAt(see1);
+
+Label loop:
+  HUMAN_SetAnim("", 250, 250, 0);   
+  HUMAN_Move("S3_2");
+  HUMAN_TurnAt(see2);
+  HUMAN_SetAnim("%%lenin", 450, 450, True);   
+  delay(10000);
+  HUMAN_SetAnim("", 250, 250, 0);   
+  HUMAN_Move("S3_1");
+  HUMAN_TurnAt(see1);
+  HUMAN_SetAnim("%%nuda", 450, 450, True);  
+  delay(10000);
+  HUMAN_SetAnim("", 250, 250, 0);   
+  HUMAN_Move("S3_3");
+  HUMAN_TurnAt(see3);
+  HUMAN_SetAnim("%%nuda", 450, 450, True);  
+  delay(10000);
+goto loop;
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

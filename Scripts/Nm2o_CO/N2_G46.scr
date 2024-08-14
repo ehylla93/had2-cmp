@@ -1,0 +1,72 @@
+
+// N2_G46 - up in ruins NE near bank
+// ---------------------------
+
+
+Block {
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red36_turn");
+
+SetAlarmType(520, False);	
+}
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Whenever player (_PlayerInRange(55))
+{
+  HUMAN_Suspend(False);
+printf("N2_G46 unsuspend");
+  HUMAN_SetSniper(True, 6);
+}
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Stand();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red36_1");		
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      HUMAN_SETSIGHTRANGE(70);
+      HUMAN_SETHEARRANGE(75);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SETSIGHTRANGE(60);
+  HUMAN_SETHEARRANGE(70);
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath(){
+printf("N2_G46 dead");
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

@@ -1,0 +1,102 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	Tak toto je script hlidajici VSECHNY OBJECTIVY
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////// precislovany oproti singlu ...... fuj
+//Povinné objectivy:   
+//1	zajistit most
+//2	odminovat most	(zadá zranìný)
+//3	ochránit most	(zadá zranìný)
+//Nepovinné objectivy:
+//4	znièeny všechny nepøátelské tanky
+//5	most zùstal „nepoškozen“ (ani jedna z jeho èástí nebyla znièena)
+
+Block
+  {
+    SetObjectiveStatus(1, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(2, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(3, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(4, 0);	// INPROGRES - start initialization
+    SetObjectiveStatus(5, 0);	// INPROGRES - start initialization
+    MP_EnableSpawnZone("zone1", 1);
+  }
+
+Block
+{
+  frame M1;		FRM_FindFrame(M1, "d_D01");
+  frame M2;		FRM_FindFrame(M2, "d_D02");	
+  frame M3;		FRM_FindFrame(M3, "d_D03");	
+  frame M4;		FRM_FindFrame(M4, "d_T01");	
+  frame M5;		FRM_FindFrame(M5, "d_T02");   //malej muze byt znicen	
+
+  integer OBJ1 = 0;
+  integer OBJ2 = 0;
+}
+
+// OBJ 1   -------------    most zajisten
+// posila to sem script obj1_detector
+OnSignal(1)
+{
+  SetObjectiveStatus(1, 1);	
+  OBJ1 = 1;
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(56999905);	// 56999905	ÚKOL SPLNÌN: MOST ZAJIŠTÌN
+  Delay(4000);
+  SUBTITLES_SetOn(False);
+}
+
+// OBJ 2 jen false ----------- most znicen
+// posilaji to sem aktori mostu D01..3, T01
+OnSignal(2)
+{
+  DisableSignals(True); 	// Koncime tak at to nic nevytahne ven.
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(56999907); 	// 56999907	ÚKOL NESPLNÌN: MOST ZNIÈEN
+  Delay(2000);
+  SetObjectiveStatus(1, 2);	
+  SetObjectiveStatus(2, 2);	
+  SetObjectiveStatus(3, 2);
+  SetObjectiveStatus(4, 2);
+  SetObjectiveStatus(5, 2);
+  SUBTITLES_SetOn(False);
+}
+
+// OBJ 3 ------------ odminován
+// posila to ... Sic2_naloze_test.scr
+OnSignal(3)
+{
+  SetObjectiveStatus(2, 1);	// Succes
+  OBJ2 = 1;
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(56999906);	// 56999906	ÚKOL SPLNÌN: MOST ODMINOVÁN
+  Delay(4000);
+  SUBTITLES_SetOn(False);
+}
+
+// OBJ 4 ------------ spojenci prijeli
+Whenever konecna ( ((_LoadGameValue(20)<3) and (OBJ1 == 1)) and (OBJ2 == 1) )
+{
+  DisableSignals(True); 	// Koncime tak at to nic nevytahne ven.
+  SetObjectiveStatus(3, 1);	// Succes
+  SUBTITLES_SetOn(True);
+  SUBTITLES_SetText(56999908);	// 56999908 ÚKOL SPLNÌN: MOST UBRÁNÌN DO PØÍCHODU SPOJENECKÝCH VOJSK
+  IF ( ( _ACTOR_GetState(M5) != 0 )  ) { SetObjectiveStatus(5, 1); } else { SetObjectiveStatus(5, 2); }
+  Delay(4000);
+  SUBTITLES_SetOn(False);
+}
+
+
+// OBJ 7 --------------- nepovinny ----------- vsechny tanky sejmuty
+// posila to sem script  ... Sic2_tanky.scr
+OnSignal(7)
+{
+  SetObjectiveStatus(4, 1);	// Succes
+}
+
+goto TheEnd;
+
+
+Label TheEnd:

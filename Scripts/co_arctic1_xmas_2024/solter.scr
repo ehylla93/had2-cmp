@@ -1,0 +1,33 @@
+Frame vybuch_teleport_snd;	FRM_FindFrame(vybuch_teleport_snd, "vybuch_teleport_snd");
+Frame me;	FRM_GetMyFrame(me);
+Frame ee;	FRM_FindFrame(ee, "BU1_EE");
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+
+OnDeath()
+{
+	EndScript();
+}
+
+
+OnSignal(1)
+{
+	printf("Solter activated.");
+	HUMAN_Suspend(0);
+	FRM_TeleportNearFrame(me, ee, 1);
+	MakeExplosion(me, 0, 30000);
+	FRM_CreateParticle(48, me);
+	FRM_SetOn(vybuch_teleport_snd, True);
+	HUMAN_Stop();
+	HUMAN_SetOptimized(2);
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_WeaponUp(true);
+	HUMAN_SETMODE_Run();
+	HUMAN_AttackMove("tree");
+	EndScript();
+}

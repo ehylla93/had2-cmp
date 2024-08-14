@@ -1,0 +1,169 @@
+// Enemy Soldier, sleeping on desk
+
+Block {
+integer  AIEvent;
+integer Po_bliku = 0;
+integer rnd;
+Frame me;				FRM_GetMyFrame(me);
+frame see;				FRM_FindFrame(see, "Dummy_S4_See");	
+frame sit;				FRM_FindFrame(sit, "Dummy_S4_Sit");		
+frame alarm;			FRM_FindFrame(alarm, "dummy_GlobalAlarm");	
+frame Tlacitko;			FRM_FindFrame(Tlacitko, "m_alarm_");	
+frame Vypinac;			FRM_FindFrame(Vypinac, "g_zasuv47");
+frame Provozni_rad;		FRM_FindFrame(Provozni_rad, "m_AF5_cedulka2");
+frame Chrapani_sound;	FRM_FindFrame(Chrapani_sound, "S_spac");
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+
+SetWhenever(Usni, False);
+SetWhenever(Budicek, False);
+
+SetAlarmType(1023, False);
+SetAlarmType(339, True);
+}
+
+FRM_TeleportNearCheckpoint(me, "S4_sit", "");
+HUMAN_TurnAt(see);
+HUMAN_Suspend(true);
+goto TheEnd;
+
+Whenever A ( _PlayerInRange(6))
+{
+HUMAN_Suspend(False);
+SetAlarmType(12, True);	//action sounds + hear steps
+Goto Init;
+}
+
+Whenever Usni ( _LoadGameValue(74) == 2 )
+{
+  HUMAN_Stop();
+  HUMAN_Suspend(True);
+  SetWhenever(Budicek, true);
+  Goto TheEnd;
+}
+Whenever Budicek ( _LoadGameValue(74) == 1 )
+{
+  HUMAN_Suspend(False);
+  SetWhenever(Usni, true);
+  goto KONEC;
+}
+
+label init:
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%ozralstul", 400, 400, True);
+FRM_SetOn(Chrapani_sound, True);
+goto TheEnd;
+
+OnAlarm()
+{
+  HUMAN_Stop();
+  HUMAN_SetAnim("", 250, 250, False);
+  HUMAN_SETMODE_StandFast();
+	Block
+	{
+	FRM_SetOn(Chrapani_sound, false);
+	DisableWhenevers(true);
+	DisableSignals(true);
+	AIEvent =_GetAlarmType(); 
+	SetAlarmType(36, True);
+	HUMAN_Suspend(False);	
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETSIGHTRANGE(20);  
+	HUMAN_SETHEARRANGE(30);
+	}
+  If ( (AIEvent == 8) OR ( _PlayerInRange(2)) ) { EndScript(); }
+  If ( Po_bliku == 1) { EndScript(); }
+  HUMAN_Move("S4_alarm");
+  HUMAN_TurnAt(Tlacitko);
+	HUMAN_SetAnim("(ukazovani", 500, 500, false);
+	Delay(2000);
+	HUMAN_SetAnim("", 200, 200, 0);
+  SendSignal(alarm, 1);
+  SendSignal(Tlacitko, 1);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+If ( ((AIEvent != 4) AND (AIEvent != 8)) and (AIEvent != 128) )  
+{ SendSignal(alarm , 1); }
+SetAlarmType(1023, true);
+HUMAN_SetAlarm(False);
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+HUMAN_Move("S4_sit");
+Delay(500);
+HUMAN_WeaponOnArm(False);
+Delay(2500);
+HUMAN_TurnAt(see);
+goto TheEnd;
+}
+
+OnDeath()
+{
+FRM_SetOn(Chrapani_sound, false);
+EndScript();
+}
+
+OnSignal(22)
+{
+  DisableWhenevers(True);
+  DisableSignals(True);
+  Delay(5000);
+  rnd=_RandomInt(20000);
+  Delay(rnd);
+  FRM_SetOn(Chrapani_sound, false);
+  HUMAN_SetAnim("", 500, 500, True);
+  Delay(250);
+  HUMAN_LookAround(3); 
+  Delay(250);
+  HUMAN_SetOptimized(2); 
+  HUMAN_SETMODE_Stand();
+  HUMAN_LookAround(0);
+  delay(250);
+  HUMAN_SetAnim("%%protahovani", 500, 500, False);
+  Delay(1000);
+  SetAlarmType(375, True);  
+  Delay(1500);
+  HUMAN_SetAnim("", 200, 200, False);
+  HUMAN_SETMODE_Guard();
+			  HUMAN_Move("S4_alarm");
+			  HUMAN_TurnAt(Vypinac);
+			  HUMAN_SetAnim("%%mechanik", 250, 250, False);
+			  Delay(1250);
+			  HUMAN_SetAnim("", 250, 250, False);
+  Po_bliku=1;
+  HUMAN_Move("S4_vypinac");
+  HUMAN_TurnAt(Vypinac);
+  Delay(500);
+	HUMAN_SetAnim("(ukazovani", 500, 500, false);
+	SendSignal(Vypinac, 21);	//Turns light on
+	Delay(2000);
+  HUMAN_Move("S4_vypinac_End");
+		Delay(500);
+		HUMAN_WeaponOnArm(0);
+		HUMAN_SetAnim("%%turnleft", 1000, 1000, 1);
+		Delay(2500);
+		HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+		Delay(2500);
+		HUMAN_SetAnim("", 200, 200, 0);
+		Delay(8000);
+  		HUMAN_SetAnim("%%turnleft", 1000, 1000, 1);
+		Delay(2500);
+		HUMAN_SetAnim("%%turnright", 1000, 1000, 1);
+		Delay(2500);
+		HUMAN_SetAnim("", 200, 200, 0);
+		HUMAN_WeaponOnArm(1);
+		Delay(500);
+  Label KONEC:
+  HUMAN_Move("S4_Cte");
+  HUMAN_TurnAt(Provozni_rad);
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

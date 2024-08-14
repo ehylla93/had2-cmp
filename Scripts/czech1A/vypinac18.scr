@@ -1,0 +1,11 @@
+// vypinac18
+Block
+{
+Frame svetlo_nic;
+	FRM_FindFrame(svetlo_nic, "la_svetlo_.Mesh01");
+}
+
+OnUse()
+{
+	SendSignal(svetlo_nic, 1);
+}

@@ -1,0 +1,45 @@
+// C5_G22 - soldier in the bunker, occupies the MG42 at main entrance
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;	FRM_GetMyFrame(me);
+
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+FRM_SwitchFaceTexture(me, "e_f045");
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(60))
+{
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("MG42_Stand04", 1, 0);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

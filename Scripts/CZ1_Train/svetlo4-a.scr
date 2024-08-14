@@ -1,0 +1,52 @@
+Block
+{
+
+Frame Ally1;		FRM_FindFrame(Ally1, "AF1_tank01_03");
+Frame Ally2;		FRM_FindFrame(Ally2, "Ge_");
+Frame Ally3;		FRM_FindFrame(Ally3, "posila2b");
+
+SetObjectiveStatus(4, 0);	// civilians
+
+integer civcount; 	civcount = 0; 
+}
+
+////////////////
+
+OnSignal(7)
+{
+//objective Treb ok
+
+civcount=civcount+1;
+goto end;
+}
+
+OnSignal(8)
+{
+//objective vehicles ok
+
+civcount=civcount+1;
+goto end;
+}
+
+OnSignal(9)
+{
+//objective exit ok
+
+civcount=civcount+1;
+goto end;
+}
+
+Whenever alive (((_Actor_GetState(Ally1)==1) And (_Actor_GetState(Ally2)==1) And (_Actor_GetState(Ally3)==1)))
+{
+civcount=civcount+1;
+goto end;
+}
+
+If(civcounter==4)
+{
+Delay(5000);
+SetObjectiveStatus(4, 1);
+EndScript();
+}
+
+Label end:

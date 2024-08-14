@@ -1,0 +1,86 @@
+//ET51 Tank5 Cannnon
+// ----------------------Block----------------------
+Block
+{
+Frame turn1;		FRM_FindFrame(turn1,"Tdummy51");
+Frame turn2;		FRM_FindFrame(turn2,"Tdummy52");
+Frame turn3;		FRM_FindFrame(turn3,"Tdummy53");
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer rnd1;
+integer rndpause;
+integer rndpause2;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_PlayerInRange(500))
+{
+Block
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(75);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_BoardVehicle("Tiger_5", 1, 2);
+goto checkpoint1;
+}
+label checkpoint1:
+rnd1= _randomint(3)+1;
+  if (rnd1==1) 
+  {
+  HUMAN_TurnAt(turn1);
+  rndpause= _randomint(15000)+10000;
+  delay(rndpause);
+  goto checkpoint1;
+  }
+  if (rnd1==2) 
+  {
+  HUMAN_TurnAt(turn2);
+  rndpause= _randomint(15000)+10000;
+  delay(rndpause);
+  goto checkpoint1;
+  }
+  if (rnd1==3) 
+  {
+  HUMAN_TurnAt(turn3);
+  rndpause= _randomint(15000)+10000;
+  delay(rndpause);
+  goto checkpoint1;
+  }
+ }
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+EndScript();
+}
+// ----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto checkpoint2;
+}
+label checkpoint2:
+rndpause2= _randomint(15000)+10000;
+delay(rndpause2);
+goto checkpoint1;
+// ----------------------OnDeath----------------------
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+// ----------------------END----------------------
+Label END:

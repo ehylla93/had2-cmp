@@ -1,0 +1,74 @@
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+Frame speech;	FRM_FindFrame(speech, "AF1_23_AF1_24_speech");
+//integer  AIEvent = 0;
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+}
+
+OnAlarm()
+{
+  Block
+  {
+//    AIEvent =_GetAlarmType(); 
+//    PrintfNumber("Vojak  --24--  jde do AI, alarm: ", AIEvent); 
+    SendSignal(speech, 2);	// konec hovoru
+    FRM_MorphSpeech(me, 0, 0, 0);
+    HUMAN_SetOptimized(false);
+  } 
+  EndScript();
+}
+OnDeath()
+{
+  SendSignal(speech, 2);	// konec hovoru
+  FRM_MorphSpeech(me, 0, 0, 0);
+  Printf("mrtvola ... ---24--- ");
+  EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SetOptimized(true);
+	GoTo activity;
+}
+
+Whenever activate(_SignalReceived(1))	// received from AF1_23_A1, A2, A3, A4
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(2)	// received from AF1_23_AF1_24_speech
+{
+	GoTo activity;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(true);
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label activity:
+	HUMAN_Move("AF1_24_01");
+	HUMAN_Move("AF1_24_02");
+	GoTo activity;
+
+Label end:

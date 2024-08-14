@@ -1,0 +1,107 @@
+// N16 - trying to repair something in the generator room
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame oprav01;	FRM_FindFrame(oprav01, "N16_oprav01");
+Frame oprav02;	FRM_FindFrame(oprav02, "N16_oprav02");
+Frame look01;	FRM_FindFrame(look01, "N16_A1");
+Frame me;		FRM_GetMyFrame(me);
+Integer aievent;	aievent=0;
+Integer setalarm;	setalarm=0;
+	
+SetAlarmType(20, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block {
+	FRM_MorphSpeech(me, 0, 0, 0);
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_WeaponOnArm(1);
+	aievent=_GetAlarmType();
+	}
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_TurnAtNearestPlayer();
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+	HUMAN_TurnAtNearestPlayer();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	SetWhenever(alarm15, true);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_SETMODE_Stand();
+	If(setalarm==1)	{ GoTo alarmed; }
+	HUMAN_Move("N16_1");
+	GoTo end;
+}
+
+Whenever activate(_SignalReceived(1))	// received from N16_A1
+{
+	HUMAN_Suspend(false);
+	If(setalarm==1)	{ GoTo alarmed; }
+	HUMAN_Move("N16_1");
+	GoTo end;
+}
+
+Whenever alarm15(_SignalReceived(2))		// received from Alarm15
+{
+	setalarm=1;
+	SetWhenever(door, false);
+	GoTo end;
+}
+
+Whenever door(_SignalReceived(3))		// received from door m_mdvere_p04
+{
+	FRM_MorphSpeech(me, 16993219, 3, 20);
+	HUMAN_TurnAt(oprav02);
+	Delay(1000);
+	HUMAN_Investigate(oprav02);
+	Delay(1000);
+	HUMAN_TurnAtNearestPlayer();
+	GoTo end;
+}
+
+OnDeath()
+{
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label alarmed:
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("N16_2");
+	HUMAN_Move("N16_3");
+	HUMAN_TurnAt(look01);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+
+Label end:

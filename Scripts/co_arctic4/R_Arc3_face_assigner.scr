@@ -1,0 +1,125 @@
+//  assigns random faces
+Block
+{
+  INTEGER german_faces_count	= 14;		// pocet dostpuných nìmeckých tváøí -  NEMÌNIT
+  INTEGER italian_faces_count	= 5;		// pocet dostpuných italských tváøí -  NEMÌNIT
+  INTEGER japan_faces_count	= 5;		// pocet dostpuných japonských tváøí -  NEMÌNIT
+  INTEGER american_faces_count	= 5;		// pocet dostpuných amerických tváøí -  NEMÌNIT
+  INTEGER russian_faces_count	= 5;		// pocet dostpuných ruských tváøí -  NEMÌNIT
+
+  INTEGER rnd_german	= _RandomInt(german_faces_count);
+  INTEGER rnd_italian		= _RandomInt(italian_faces_count);
+  INTEGER rnd_japan		= _RandomInt(japan_faces_count);
+  INTEGER rnd_american	= _RandomInt(american_faces_count);
+  INTEGER rnd_rusian		= _RandomInt(russian_faces_count);
+  FRAME FRM;		FRM_FindFrame(FRM, "");			// aktuální human, kterému se má pøiøadit face
+}
+
+// TADY SI NAPISTE SEZNAM PANACU, KTERYM SE MAJI XICHTY PRIRADIT
+
+
+// PILOT se "oxichtuje"  ve svem SCR.
+  FRM_FindFrame(FRM, "AG_In_1");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "AG_In_2");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "AG_In_3");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "sub_gunner_1");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "sub_gunner_2");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Sub_Guard_1");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Sub_Guard_2");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_1");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_2");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_3");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_4");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_5");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_6");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_7");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Static_Guard_1");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Static_Guard_2");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Static_Guard_3");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Static_Guard_4");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Static_Guard_5");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Static_Guard_6");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Walking_Guard_1");	gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Walking_Guard_2");	gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Walking_Guard_3");	gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Radio_Guard");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Alkoholik");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Meteorolog");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Sniper_1");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Sniper_2");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Hunter_1");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Hunter_2");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Hunter_3");			gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "AG_Out_1");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "AG_Out_2");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "AG_Out_3");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "Marine_Officer_1");	FRM_SwitchFaceTexture(FRM, "e_f096");
+  FRM_FindFrame(FRM, "AntiSniper_1");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "AntiSniper_2");		gosub GERMAN_FACE;
+  FRM_FindFrame(FRM, "AntiSniper_3");		gosub GERMAN_FACE;
+  Printf("----------- A SOU TAM OBLICEJE ----------");
+
+EndScript();
+
+
+LABEL GERMAN_FACE:
+Block
+{
+  if(rnd_german == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f021"); }
+  if(rnd_german == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f059"); }
+  if(rnd_german == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f024"); }
+  if(rnd_german == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f039"); }
+  if(rnd_german == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f042"); }
+  if(rnd_german == 5)	{  FRM_SwitchFaceTexture(FRM, "e_f043"); }
+  if(rnd_german == 6)	{  FRM_SwitchFaceTexture(FRM, "e_f045"); }
+  if(rnd_german == 7)	{  FRM_SwitchFaceTexture(FRM, "e_f051"); }
+  if(rnd_german == 8)	{  FRM_SwitchFaceTexture(FRM, "e_f052"); }
+  if(rnd_german == 9)	{  FRM_SwitchFaceTexture(FRM, "e_f053"); }
+  if(rnd_german == 10){  FRM_SwitchFaceTexture(FRM, "e_f054"); }
+  if(rnd_german == 11){  FRM_SwitchFaceTexture(FRM, "e_f055"); }
+  if(rnd_german == 12){  FRM_SwitchFaceTexture(FRM, "e_f056"); }
+  if(rnd_german == 13){  FRM_SwitchFaceTexture(FRM, "e_f057"); }
+  rnd_german = rnd_german + 1;
+  if(rnd_german == german_faces_count){ rnd_german = 0; }
+}
+return;
+
+LABEL ITALIAN_FACE:
+  if(rnd_italian == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f031"); }
+  if(rnd_italian == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f036"); }
+  if(rnd_italian == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f044"); }
+  if(rnd_italian == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f058"); }
+  if(rnd_italian == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f060"); }
+  rnd_italian = rnd_italian + 1;
+  if(rnd_italian == italian_faces_count){ rnd_italian = 0; }
+return;
+
+LABEL JAPAN_FACE:
+  if(rnd_japan == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f046"); }
+  if(rnd_japan == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f047"); }
+  if(rnd_japan == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f048"); }
+  if(rnd_japan == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f049"); }
+  if(rnd_japan == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f050"); }
+  rnd_japan = rnd_japan + 1;
+  if(rnd_japan == japan_faces_count){ rnd_japan = 0; }
+return;
+
+LABEL AMERICAN_FACE:
+  if(rnd_american == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f054"); }
+  if(rnd_american == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f055"); }
+  if(rnd_american == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f056"); }
+  if(rnd_american == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f057"); }
+  if(rnd_american == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f059"); }
+  rnd_american = rnd_american + 1;
+  if(rnd_american == american_faces_count){ rnd_american = 0; }
+return;
+
+LABEL RUSIAN_FACE:
+  if(rnd_rusian == 0)	{  FRM_SwitchFaceTexture(FRM, "e_f054"); }
+  if(rnd_rusian == 1)	{  FRM_SwitchFaceTexture(FRM, "e_f055"); }
+  if(rnd_rusian == 2)	{  FRM_SwitchFaceTexture(FRM, "e_f056"); }
+  if(rnd_rusian == 3)	{  FRM_SwitchFaceTexture(FRM, "e_f057"); }
+  if(rnd_rusian == 4)	{  FRM_SwitchFaceTexture(FRM, "e_f059"); }
+  rnd_rusian = rnd_rusian + 1;
+  if(rnd_rusian == russian_faces_count){ rnd_rusian = 0; }
+return;

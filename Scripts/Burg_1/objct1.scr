@@ -1,0 +1,20 @@
+// Obj 1 - Kill the Commander (In_G41)
+// -------------------------------------
+
+Block
+{
+Frame Commander;	FRM_FindFrame(Commander,"In_G41");
+
+SetObjectiveStatus(1, 0);
+}
+
+
+Whenever Commander_Killed (_Actor_GetState(Commander) == 0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(54999611);
+Delay(3500);
+SetObjectiveStatus(1, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

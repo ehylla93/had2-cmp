@@ -1,0 +1,47 @@
+Block
+{
+integer AIEvent;
+frame see;		FRM_FindFrame(see, "dummy_driver_See");
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetOptimized(2);
+SetAlarmType(1023, True);
+}
+  
+HUMAN_Suspend(True);
+goto END;
+
+Whenever NEAR (_PlayerInRange(90))
+{
+  HUMAN_Suspend(False);
+}
+
+OnAlarm()
+{
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Driver_Dealarm");
+  HUMAN_TurnAt(see);
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label END;

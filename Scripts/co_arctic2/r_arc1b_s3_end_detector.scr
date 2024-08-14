@@ -1,0 +1,10 @@
+
+Label Loop:
+  If ( _PlayerInRange(6) )
+    {
+       SaveGameValue(10, 99);
+      } else {
+       SaveGameValue(10, 100);
+    }
+  Delay(1500);
+goto Loop;

@@ -1,0 +1,96 @@
+// R_Cz2_Ger29 ceka na signal a vykloni se
+
+block
+{
+Integer aievent;	aievent=0;
+
+Frame pred;		FRM_FindFrame(pred,"ger29pred");
+Frame zad;		FRM_FindFrame(zad,"ger29zad");
+Frame stred;	FRM_FindFrame(stred,"ger29stred");
+
+SetAlarmType(927, false);
+
+HUMAN_SetOptimized(2);
+}
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_TurnAt(stred);
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+block
+{
+	aievent=_GetAlarmType();
+	HUMAN_WeaponOnArm(1);
+}
+	HUMAN_SetAnim("", 500,500,0);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(1023, true);
+	SetAlarmType(927, false);
+	
+}
+	GoTo end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever player(_PlayerInRange(15))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+OnSignal(1)
+{
+HUMAN_WeaponOnArm(0);
+Delay(500);
+HUMAN_TurnAt(pred);
+delay (100);
+HUMAN_SetAnim("%%vykoukp", 300,300,0);
+delay (1142);
+HUMAN_SetAnim("", 300,300,0);
+HUMAN_TurnAt(stred);
+HUMAN_WeaponOnArm(1);
+Delay(500);
+goto end;
+}
+
+OnSignal(2)
+{
+HUMAN_WeaponOnArm(0);
+Delay(500);
+HUMAN_TurnAt(zad);
+delay (100);
+HUMAN_SetAnim("%%vykoukl", 300,300,0);
+delay (1142);
+HUMAN_SetAnim("", 300,300,0);
+HUMAN_TurnAt(stred);
+HUMAN_WeaponOnArm(1);
+Delay(500);
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

@@ -1,0 +1,25 @@
+
+Frame zx_ven1;	FRM_FindFrame(zx_ven1, "zx_ven1");
+Frame zx_ven2;	FRM_FindFrame(zx_ven2, "zx_ven2");
+Frame zx_ven3;	FRM_FindFrame(zx_ven3, "zx_ven3");
+Frame zx_ven4;	FRM_FindFrame(zx_ven4, "zx_ven4");
+Frame zx_flak1;	FRM_FindFrame(zx_flak1, "zx_flak1");
+Frame zx_flak2;	FRM_FindFrame(zx_flak2, "zx_flak2");
+Frame zx_ven7;	FRM_FindFrame(zx_ven7, "zx_ven7");
+
+
+
+Whenever go(_PlayerInRange(2)==1)
+{
+
+sendsignal (zx_ven1,1);
+sendsignal (zx_ven2,1);
+sendsignal (zx_ven3,1);
+sendsignal (zx_ven4,1);
+sendsignal (zx_ven7,1);
+sendsignal (zx_flak1,1);
+sendsignal (zx_flak2,1);
+}
+
+
+SetWheneverTime(go,100);

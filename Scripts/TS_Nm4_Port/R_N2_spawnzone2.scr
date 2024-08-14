@@ -1,0 +1,41 @@
+// enables new spawn zone
+// --------------------------------------
+
+Block
+{
+Frame en1;	FRM_FindFrame(en1, "Blue_4"); 
+Frame en2;	FRM_FindFrame(en2, "Blue_5"); 
+Frame en3;	FRM_FindFrame(en3, "Blue_6"); 
+Frame en4;	FRM_FindFrame(en4, "Blue_8");
+Frame en5;	FRM_FindFrame(en5, "Blue_17");
+Frame en6;	FRM_FindFrame(en6, "Wave1_3");
+Frame en7;	FRM_FindFrame(en7, "Wave1_5");
+Frame en8;	FRM_FindFrame(en8, "Wave2_1");
+Frame en9;	FRM_FindFrame(en9, "Wave2_2");
+Frame en10;	FRM_FindFrame(en10, "Wave2_3");
+Frame en11;	FRM_FindFrame(en11, "Wave2_4");
+Frame en12;	FRM_FindFrame(en12, "Sniper_3");
+Frame en13;	FRM_FindFrame(en13, "Wave1_1");
+Frame en14;	FRM_FindFrame(en14, "Wave2_5");
+
+MP_EnableSpawnZone("zone2", 0);
+//printf("spawnzone script");
+//SetObjectiveStatus(3, 0);
+
+}
+
+// --------------------------------------
+
+Whenever spawn2 ((((((((((((((_Actor_GetState(en1)==0) And (_Actor_GetState(en2)==0)) And (_Actor_GetState(en3)==0)) And (_Actor_GetState(en4)==0)) And (_Actor_GetState(en5)==0)) And (_Actor_GetState(en6)==0)) And (_Actor_GetState(en7)==0)) And (_Actor_GetState(en8)==0)) And (_Actor_GetState(en9)==0)) And (_Actor_GetState(en10)==0)) And (_Actor_GetState(en11)==0)) And (_Actor_GetState(en12)==0)) And (_Actor_GetState(en13)==0)) And (_Actor_GetState(en14)==0))
+
+{
+SUBTITLES_SetOn(1);
+Delay(2000);
+SUBTITLES_SetText(59995027);
+Delay(4000);
+MP_EnableSpawnZone("zone2", 1);
+SUBTITLES_SetOn(0);
+GoTo end;
+}
+
+Label end:

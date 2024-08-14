@@ -1,0 +1,200 @@
+
+
+
+
+
+block
+{
+
+
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(60);
+
+
+integer a;
+integer b;	b=0;
+integer aievent;
+
+HUMAN_SETAIMODE_Aggressive();
+
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+  frame velitel;		FRM_FindFrame (velitel,"velitel");
+  frame me;		FRM_GetMyFrame(me);
+  frame b1;		FRM_FindFrame(b1,"m_b1_bedL_");
+frame b2;		FRM_FindFrame(b2,"m_b1_bedL_2");
+frame b3;		FRM_FindFrame(b3,"m_b1_bedL_3");
+frame b4;		FRM_FindFrame(b4,"la_bedz_");
+
+
+	FRM_SwitchFaceTexture(me, "e_f021");
+}
+
+HUMAN_Suspend(1);
+goto end;
+//----------------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+
+block
+{
+
+aievent=(_GetAlarmType());
+PrintfNumber("hledac alarm c:",aievent);
+
+}
+
+HUMAN_SetAnim("",10,10,0);
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+SetAlarmType(274,0);
+
+if (b==0)
+{
+
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay(300);
+SetAlarmType(274,1);
+HUMAN_Move("hledac6");
+HUMAN_SETMODE_Crouch();	
+b=1;
+
+}
+
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+
+
+Whenever(_PlayerInRange(70))
+{
+HUMAN_Suspend(0);
+goto funguj;
+}
+
+Whenever velitel(_SignalReceived(1))
+{
+	HUMAN_SetAnim("",1000, 1000,0);
+	HUMAN_Move("hledac5");
+	HUMAN_TurnAt(velitel);
+	SendSignal (velitel,10);	//prisel sem
+	goto end;
+}
+
+Whenever vel2(_SignalReceived(2))
+{
+Printf ("Nemùžu ju najít. V tìch bednach je spousta zbyteèností ale cívka žádná.");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994047, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,11);		//mluf
+goto end;
+}
+
+Whenever vel3(_SignalReceived(3))
+{
+Printf ("V papírech byly ty souèástky napsaný a Hans øíkal že je pøed transp.");
+HUMAN_SetAnim("%%rozhovor3",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994049, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,12);		//mluf
+goto end;
+}
+
+Whenever vel4(_SignalReceived(4))
+{
+goto funguj;
+}
+//----------------------------------------------------------------------------------------------
+
+label funguj:
+
+	a=(_RandomInt(4));
+
+
+if (a==0)
+	{
+	HUMAN_Move("hledac1");
+	HUMAN_TurnAt(b1);
+	HUMAN_SetAnim("%%hledam",1000, 1000,1);
+	delay (40000);
+	HUMAN_SetAnim("",1000, 1000,0);
+	delay (1000);
+	goto funguj;
+	}	
+
+if (a==1)
+	{
+	HUMAN_Move("hledac2");
+	HUMAN_TurnAt(b2);
+	HUMAN_SetAnim("%%hledam",1000, 1000,1);
+	delay (30000);
+	HUMAN_SetAnim("",1000, 1000,0);
+	delay (1000);
+	goto funguj;
+	}
+
+
+if (a==2)
+	{
+	HUMAN_Move("hledac3");
+	HUMAN_TurnAt(b3);
+	HUMAN_SetAnim("%%hledam",1000, 1000,1);
+	delay (40000);
+	HUMAN_SetAnim("",1000, 1000,0);
+	delay (1000);
+	goto funguj;
+	}
+
+if (a==3)
+	{
+	HUMAN_Move("hledac4");
+	HUMAN_TurnAt(b4);
+	HUMAN_SetAnim("%%hledam",1000, 1000,1);
+	delay (40000);
+	HUMAN_SetAnim("",1000, 1000,0);
+	delay (1000);
+	goto funguj;
+	}
+
+label end:

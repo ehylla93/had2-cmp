@@ -1,0 +1,12 @@
+Block
+{
+  integer CO;
+  frame B1;	FRM_FindFrame(B1, "tv5bran24");
+  frame B2;	FRM_FindFrame(B2, "tv5bran35");
+}
+
+Block
+ {
+  CO = _LoadGameValue(250);	SetActorState(B1, CO);
+  CO = _LoadGameValue(251);	SetActorState(B2, CO);
+ }

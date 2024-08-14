@@ -1,0 +1,16 @@
+// spawn zones
+// --------------------------------------
+
+Block
+{
+MP_EnableSpawnZone("zone1", 0);
+MP_EnableSpawnZone("zone3", 1);
+
+printf("spawn script");
+//SetObjectiveStatus(3, 0);
+
+}
+
+// --------------------------------------
+
+Label end:

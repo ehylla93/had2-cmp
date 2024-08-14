@@ -1,0 +1,109 @@
+// Utocnik z mesta
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame u1;    FRM_FindFrame(u1,"Uder01");
+Frame u2;    FRM_FindFrame(u2,"Uder02");
+Frame u3;    FRM_FindFrame(u3,"Uder03");
+Frame u4;    FRM_FindFrame(u4,"Uder04");
+Frame u5;    FRM_FindFrame(u5,"Uder05");
+Frame u6;    FRM_FindFrame(u6,"Uder06");
+Frame u7;    FRM_FindFrame(u7,"Uder07");
+Frame u8;    FRM_FindFrame(u8,"Uder08");
+Frame u9;    FRM_FindFrame(u9,"Uder09");
+Frame u10;    FRM_FindFrame(u10,"Uder10");
+
+Frame u11;    FRM_FindFrame(u11,"Uder11");
+Frame u12;    FRM_FindFrame(u12,"Uder12");
+Frame u13;    FRM_FindFrame(u13,"Uder13");
+Frame u14;    FRM_FindFrame(u14,"Uder14");
+Frame u15;    FRM_FindFrame(u15,"Uder15");
+Frame u16;    FRM_FindFrame(u16,"Uder16");
+Frame u17;    FRM_FindFrame(u17,"Uder17");
+Frame u18;    FRM_FindFrame(u18,"Uder18");
+Frame u19;    FRM_FindFrame(u19,"Uder19");
+Frame u20;    FRM_FindFrame(u20,"Uder20");
+
+Frame u21;    FRM_FindFrame(u21,"Uder21");
+Frame u22;    FRM_FindFrame(u22,"Uder22");
+Frame u23;    FRM_FindFrame(u23,"Uder23");
+Frame u24;    FRM_FindFrame(u24,"Uder24");
+Frame u25;    FRM_FindFrame(u25,"Uder25");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(1)
+{
+SendSignal(u1, 1);
+SendSignal(u2, 1);
+SendSignal(u3, 1);
+SendSignal(u4, 1);
+Delay(1000);
+SendSignal(u5, 1);
+SendSignal(u6, 1);
+SendSignal(u7, 1);
+SendSignal(u8, 1);
+Delay(1000);
+SendSignal(u9, 1);
+SendSignal(u10, 1);
+SendSignal(u11, 1);
+SendSignal(u12, 1);
+Delay(1000);
+SendSignal(u13, 1);
+SendSignal(u14, 1);
+SendSignal(u15, 1);
+SendSignal(u16, 1);
+Delay(1000);
+SendSignal(u17, 1);
+SendSignal(u18, 1);
+SendSignal(u19, 1);
+SendSignal(u20, 1);
+Delay(1000);
+SendSignal(u21, 1);
+SendSignal(u22, 1);
+SendSignal(u23, 1);
+SendSignal(u24, 1);
+SendSignal(u25, 1);
+Delay(500);
+HUMAN_Suspend(0);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_SETSIGHTRANGE(70);
+
+HUMAN_Move("Ge_27_01");
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

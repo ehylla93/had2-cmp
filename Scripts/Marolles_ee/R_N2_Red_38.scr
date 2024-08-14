@@ -1,0 +1,61 @@
+
+integer  AIEvent;
+integer RND = 0;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red38_turn");
+
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(4)
+{						
+  HUMAN_Suspend(False);			
+}						
+
+label DeAlarm:
+  RND = _RandomInt(3);			// 0 --> na alarm pobezi
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Red38_1");	
+  HUMAN_TurnAt(turn);			
+  Delay(1500);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_WeaponOnArm(True);
+  Delay(2500);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 38: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+    }
+  If ( RND == 0) 
+    {
+      HUMAN_Move("Red38_2");			
+      HUMAN_TurnAt(turn);
+    } else {
+      HUMAN_SETMODE_Crouch();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

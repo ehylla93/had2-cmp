@@ -1,0 +1,115 @@
+// C5_G28 - mechanic in the bunker
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame dummy01;		FRM_FindFrame(dummy01, "C5_G28_investigate01");
+Frame kladivo;		FRM_FindFrame(kladivo, "kladivo01");
+Frame kladivo_v;	FRM_FindFrame(kladivo_v, "kladivo01.mi_hamm");
+Frame klic;			FRM_FindFrame(klic, "klic");
+Frame pravaruka;	FRM_FindFrame(pravaruka, "C5_G28.hw1");
+Integer aievent;	aievent=0;
+Frame me;	FRM_GetMyFrame(me);
+Integer phobj=0;
+
+SetAlarmType(12, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+FRM_SetOn(klic, false);
+If(phobj==0)
+{
+	Block
+	{
+	FRM_SetOn(kladivo, false);
+	FRM_CreatePhysicalObject(kladivo_v, 1, true, true);
+	phobj=1;
+	}
+}
+	aievent=_GetAlarmType();
+	HUMAN_SetAnim("", 300, 300, false);
+
+	If((aievent==2) OR (aievent==16) OR (aievent==256) OR (aievent==512))
+	{
+		GoTo aie1;
+	}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+Whenever signal(_SignalReceived(1))	// received from C5_G28_activator01
+{
+	HUMAN_Suspend(false);
+	GoTo activate;
+}
+
+OnDeath()
+{
+FRM_SetOn(klic, false);
+If(phobj==0)
+{
+	Block
+	{
+	FRM_SetOn(kladivo, false);
+	FRM_CreatePhysicalObject(kladivo_v, 1, true, true);
+	phobj=1;
+	}
+}
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+FRM_SwitchFaceTexture(me, "e_f056");
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Run();
+FRM_SetOn(kladivo, false);
+FRM_SetOn(klic, false);
+FRM_TeleportNearFrame(kladivo, pravaruka, true);
+FRM_TeleportNearFrame(klic, pravaruka, true);
+}
+FRM_FindFrame(pravaruka, "");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label activate:
+	HUMAN_SetAnim("%%mechanik", 300, 300, false);
+	Delay(5200);
+	FRM_SetOn(klic, true);
+	Delay(3220);
+	FRM_SetOn(klic, false);
+	Delay(140);
+	FRM_SetOn(kladivo, true);
+	Delay(3700);
+	FRM_SetOn(kladivo, false);
+	FRM_SetOn(klic, true);
+	Delay(3400);
+	FRM_SetOn(klic, false);
+	Delay(200);
+	GoTo activate;
+
+Label aie1:
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetAnim("%%panika", 300, 300, true);
+	GoTo end;
+
+Label end:

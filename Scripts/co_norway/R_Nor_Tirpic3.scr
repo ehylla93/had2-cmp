@@ -1,0 +1,89 @@
+// Tirpic guard number 3
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(259,1);
+
+frame alarm;	FRM_findframe(alarm,"alarmer");
+
+HUMAN_SETSIGHTRANGE(150);
+
+HUMAN_SETMODE_Guard();
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+OnAlarm()
+{
+  HUMAN_SetAnim("",200,200,0);
+  HUMAN_WeaponOnArm(true);
+  SendSignal(alarm, 1);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(0);
+  goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever a (_PlayerInRange(60))
+{
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  goto impish_way;
+}
+
+OnSignal(1)
+{
+  delay(500);
+  HUMAN_SetAnim("%%neslysim", 500, 500, 0);
+  delay(3000);
+  goto go_back;
+}
+
+OnSignal(2)
+{
+  delay(500);
+  HUMAN_SetAnim("(pitiFL", 500, 500, 0);
+  delay(2000);
+  goto go_back;
+}
+
+OnSignal(3)
+{
+  HUMAN_Stop();
+  delay(500);
+  HUMAN_SetAnim("%%kopkamen1", 500, 500, 0);
+  delay(4000);
+  goto go_back;
+}
+
+OnSignal(4)
+{
+  HUMAN_TurnAt(see_pause);
+  pause = _RandomInt(10000) + 20000;
+  delay(pause);
+  goto go_back;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+goto end;
+}
+
+label impish_way:
+    HUMAN_Move("T3_1");
+    HUMAN_Move("T3_2");
+goto impish_way;
+
+label end:

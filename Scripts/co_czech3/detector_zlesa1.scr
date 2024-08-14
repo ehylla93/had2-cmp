@@ -1,0 +1,16 @@
+
+Block {
+Frame zlesa1;		FRM_FindFrame(zlesa1,"zlesa1");
+Frame zlesa2;		FRM_FindFrame(zlesa2,"zlesa2");
+Frame vi1;			FRM_FindFrame(vi1,"commander");
+Frame vi2;			FRM_FindFrame(vi2,"sniper");
+Frame vi3;			FRM_FindFrame(vi3,"NaSchodech_01");
+Frame vi4;			FRM_FindFrame(vi4,"spac");
+}
+
+Whenever Dead (((_Actor_GetState(vi1) == 0) AND (_Actor_GetState(vi2) == 0)) OR ((_Actor_GetState(vi3) == 0) AND (_Actor_GetState(vi4) == 0)))
+{
+SendSignal(zlesa1, 1);
+SendSignal(zlesa2, 1);
+EndScript();
+}

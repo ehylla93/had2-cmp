@@ -1,0 +1,61 @@
+// Keca pod lampou na zacatku s C1_G36
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame kamos;    FRM_FindFrame(kamos,"C1_G36");
+Frame vechtr;    FRM_FindFrame(vechtr,"vechtr");
+Frame sloup;    FRM_FindFrame(sloup,"l_ndrlamp10");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 500, 1500, 1);
+HUMAN_Stop();
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(70);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Delay(5000);
+HUMAN_TurnAt(kamos);
+Delay(3000);
+HUMAN_SetAnim("%%kecy1", 500, 1500, 1);
+Delay(10100);
+HUMAN_SetAnim("", 500, 1500, 1);
+HUMAN_TurnAt(vechtr);
+HUMAN_SETMODE_Walk();
+HUMAN_Move("budkazidla");
+HUMAN_TurnAt(sloup);
+HUMAN_SETMODE_Guard();
+Delay(20000);
+HUMAN_Move("sloup");
+HUMAN_Move("zavora");
+HUMAN_TurnAt(sloup);
+goto END;
+
+Label END:

@@ -1,0 +1,29 @@
+// Tank 4 (La_tiger_4) Ridic
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(10000))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_4", 1, 0);
+goto END;
+}
+
+// -------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

@@ -1,0 +1,65 @@
+// Magor 
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame posila;		FRM_FindFrame(posila,"MG5_02");
+Frame Cil1;	FRM_FindFrame(Cil1,"Ger_pal01");
+Frame Cil2;	FRM_FindFrame(Cil2,"Ger_pal03");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+Delay(70000);
+SendSignal(posila, 1);
+EndScript();
+}
+
+OnAlarm(){
+SetAlarmType(32,1); //vidi
+HUMAN_SETAIMODE_Aggressive();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(69);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("MG5", 1, 0);
+goto Palba;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Palba:
+Delay(5000);
+HUMAN_TurnAt(Cil1);
+Delay(200);
+HUMAN_Attack(Cil1, 2000);
+Delay(10000);
+goto Palba;
+
+
+Label END:

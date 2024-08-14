@@ -1,0 +1,85 @@
+// Z1_G08 - Oprenej o strom 
+// -----------------------------------------------------
+
+Block
+{
+Frame Alarm;	FRM_FindFrame(Alarm,"Alarmer_Zacatek");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+integer AIEvent;
+
+FRM_SwitchFaceTexture(me,"e_f003");
+}
+
+// -----------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(Alarm, 1);
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+// -----------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+goto anim;
+
+Label anim:
+HUMAN_SetAnim("%%protahovaniD", 800,800,1);
+Delay(2500);
+HUMAN_SetAnim("%%protahovaniD1", 800,800,1);
+Delay(2500);
+HUMAN_SetAnim("%%protahovani", 800,800,1);
+Delay(3000);
+HUMAN_SetAnim("%%nuda", 800,800,1);
+Delay(20000);
+HUMAN_SetAnim("%%kopkamen", 800,800,1);
+Delay(3000);
+HUMAN_SetAnim("%%kourimsed1", 800,800,1);
+Delay(4500);
+HUMAN_SetAnim("", 800,800,1);
+Delay(4000);
+HUMAN_SetAnim("%%kourimsed1", 800,800,1);
+Delay(4500);
+HUMAN_SetAnim("", 800,800,1);
+Delay(4000);
+HUMAN_SetAnim("%%kourimsed1", 800,800,1);
+Delay(4500);
+HUMAN_SetAnim("", 800,800,1);
+Delay(4000);
+HUMAN_SetAnim("%%kourimsed1", 800,800,1);
+Delay(4500);
+HUMAN_SetAnim("", 800,800,1);
+Delay(4000);
+HUMAN_SetAnim("%%flus", 800,800,1);
+Delay(3000);
+goto anim;
+
+
+Label END:

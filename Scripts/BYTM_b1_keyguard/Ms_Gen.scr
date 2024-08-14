@@ -1,0 +1,21 @@
+// General setup
+// -------------------------------------------------------
+
+Integer a;
+
+SaveGameValue(1, 0);
+SaveGameValue(2, 0);
+SaveGameValue(3, 0);
+SaveGameValue(4, 0);
+SaveGameValue(99, 0);		//Global Alarm
+
+// -------------------------------------------------------
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+SetWhenever(Spawn, 0);
+// SaveGameValue(99, 1);		// To disable alarms un-comment this line
+a = _LoadGameValue(99);
+printfnumber("Global Alarm Off: ", a);
+EndScript();
+}

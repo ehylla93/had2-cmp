@@ -1,0 +1,241 @@
+// SS Officer - talks with small7
+
+Block
+{
+integer AIEvent;
+integer alm;	alm=0;
+frame sit; 		FRM_FindFrame(sit, "dummy_sit_man5");
+frame alarm;	FRM_findframe(alarm,"alarmer_2");
+frame small7;	FRM_FindFrame(small7,"small7");
+frame cum;		FRM_FindFrame(cum,"small5cum");
+frame abutton;	FRM_findframe(abutton, "m_alar_3");
+frame cum1;		FRM_FindFrame(cum1,"small5cum1");
+frame kecac;	FRM_FindFrame (kecac,"kecac");
+integer a;
+integer k;
+integer d;
+integer alarmed=0;
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Walk();
+SetAlarmType(1,0);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+
+//------------------------------------------------------------------------
+
+Whenever blk (_PlayerInRange(50))
+{
+  HUMAN_Suspend(false);
+  goto guard;
+}
+
+OnSignal(11)
+{
+alm=1;
+HUMAN_SetAnim("", 300,300,0);
+HUMAN_Move("man5_1");
+HUMAN_TurnAt(cum1);
+alm=2;
+goto end;
+}
+
+OnSignal(12)
+{
+a=3;
+HUMAN_TurnAt(small7);
+SendSignal (kecac,1);
+goto end;
+}
+
+OnSignal(17)
+{
+HUMAN_SetAnim("!salutovani", 500, 500, 0);
+Delay(2500);
+HUMAN_SetAnim("", 500, 500, 0);
+HUMAN_TurnAt(cum1);
+HUMAN_SetAnim("(tipnuti",300,300,0);
+delay (2100);
+HUMAN_Move("man5_2");
+goto guard;
+}
+
+OnSignal(13)
+{
+label rozeslani:
+If(alm==0)	{goto guard;}
+If(alm==1)	{goto 1;}
+If(alm==2)	{goto 2;}
+If(alm==3)	{goto 3;}
+}
+
+//------------------------------------------------------------------------------
+
+
+label guard:
+  alm=0;
+  delay(1500);
+ HUMAN_SetAnim("%%panbrada", 300,300,1);
+goto end;
+
+label 1:
+	HUMAN_Move("man5_1");
+label 2:
+	Delay (15000);
+label 3:
+	HUMAN_SetAnim("",200,200,0);
+	delay (1000);
+	HUMAN_Move("man5_2");
+goto guard;
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 100, 100, 0);
+block
+{
+SendSignal (kecac,2);
+DisableSignals(1);
+SendSignal(small7,1);
+AIEvent =_GetAlarmType();
+}
+If((AIEvent==2) or (AIEvent==256))
+{
+if(alarmed==0)
+{
+Block {
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+SetAlarmType(882,0);
+}
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("alarm02");
+HUMAN_TurnAt(abutton);
+HUMAN_WeaponOnArm(0);
+Delay(500);
+HUMAN_SetAnim("(ukazovani", 400, 400, false);
+Delay(2000);
+SendSignal(alarm,1);
+alarmed=1;
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAtNearestPlayer();
+SetAlarmType(882,1);
+}
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+DisableSignals(0);
+HUMAN_SetAlarm(0);
+SetAlarmType(154,0);
+
+}
+goto guard2;
+
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever kokot(_SignalReceived(22))			//Sirena on
+{
+	SendSignal(small7,1);
+	HUMAN_SetAnim("",50,50,0);
+	goto guard2;
+}
+
+label guard2:
+HUMAN_SETMODE_Walk();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("small5alarm"); 
+HUMAN_TurnAt(cum);
+HUMAN_SETSIGHTRANGE(40);
+
+label hled:
+HUMAN_LookAround(1);
+delay (5000);
+goto hled;
+
+
+OnSignal(15)
+{
+HUMAN_SetAnim("",900,900,0);
+goto end;
+}
+
+OnSignal(16)
+{
+goto kecej;
+}
+
+label kecej:
+k=(_RandomInt(6));
+d=(_RandomInt(4000));
+d=(5000+d);
+
+if (k==0)
+{
+HUMAN_SetAnim("%%mluvi3",900,900,1);
+delay (1028);
+goto kecej;
+}
+
+if (k==1)
+{
+HUMAN_SetAnim("%%mluvi4",900,900,1);
+delay (1285);
+goto kecej;
+}
+
+if (k==2)
+{
+HUMAN_SetAnim("%%mluvi5",900,900,0);
+delay (1914);
+goto kecej;
+}
+
+if (k==3)
+{
+HUMAN_SetAnim("%%mluvi6",900,900,1);
+delay (d);
+goto kecej;
+}
+
+if (k==4)
+{
+HUMAN_SetAnim("%%mluvi2",900,900,1);
+delay (d);
+goto kecej;
+}
+
+if (k==5)
+{
+HUMAN_SetAnim("%%mluvi7",900,900,1);
+delay (d);
+goto kecej;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

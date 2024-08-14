@@ -1,0 +1,36 @@
+// AF3a_spawn01	- player at spawn 01
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME opel;				FRM_FindFrame(opel, "la_OpelAfK_01");
+  FRAME lookstart;			FRM_FindFrame(lookstart, "dummy_lookstart");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+goto END;
+
+OnCutscene(1){
+  HUMAN_SETMODE_Walk();
+  HUMAN_WeaponOnArm(true);
+  HUMAN_TurnAt(opel);
+
+  Delay(1000);
+
+  HUMAN_TurnAt(lookstart);
+  Delay(500);
+
+  HUMAN_SETMODE_Crouch();
+  Delay(13500);
+}
+
+OnCutsceneDone(1){
+//  HUMAN_SETMODE_Crouch();
+//  HUMAN_WeaponOnArm(true);
+//  HUMAN_TurnAt(lookstart);
+  EndScript();  
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

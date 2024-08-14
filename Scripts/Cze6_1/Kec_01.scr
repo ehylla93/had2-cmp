@@ -1,0 +1,25 @@
+// Chat between RC_G01 and RC_G02 at the Radio Station
+//------------------------------------------------------
+
+Block
+{
+Frame G1;	FRM_FindFrame(G1, "RC_G01");
+Frame G2;	FRM_FindFrame(G2, "RC_G02");
+}
+
+Whenever Aktivace (_SignalReceived(1))
+{
+Delay(15000);
+goto Kecam;
+}
+
+Whenever Alarm_OR_Dead (_SignalReceived(2))
+{
+EndScript();
+}
+
+//------------------------------------------------
+
+
+Label END:
+

@@ -1,0 +1,57 @@
+// AF4_18 - officer listening to the situation
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype			= 0;
+  
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnSignal(1){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(0);
+    Atype = _GetAlarmType();
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(512, false);
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(1);
+  goto ACTIVATE;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetAnim("%%kecy1", 100, 100, true);
+
+Label ACTIVITY:
+
+Label END:

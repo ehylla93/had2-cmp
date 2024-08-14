@@ -1,0 +1,112 @@
+// Rs_H66 - Reinf by Halftruck
+// ------------------------------------------------
+
+Block
+{
+Frame Hakl;		FRM_FindFrame(Hakl, "Hakl_01");
+Frame P1;		FRM_FindFrame(P1, "RS_H67");
+Frame P2;		FRM_FindFrame(P2, "RS_H68");
+Frame P3;		FRM_FindFrame(P3, "RS_H69");
+Frame P4;		FRM_FindFrame(P4, "RS_H70");
+Frame P5;		FRM_FindFrame(P5, "RS_H71");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1023,0);
+
+FRM_SwitchFaceTexture(me,"e_f078");
+
+Integer AIEvent;
+Integer RideSelect;
+
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SETSIGHTRANGE(200);
+HUMAN_SETHEARRANGE(200);
+
+AIEvent = _RandomInt(1000);
+
+If(AIEvent > 700)
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+}
+
+If((AIEvent > 100) And (AIEvent < 701))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+}
+
+If(AIEvent < 101)
+{
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Lie();
+}
+
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Hakl_01", 1, 0);
+RideSelect = _RandomInt(2);
+
+If(RideSelect == 0)
+{
+HUMAN_Drive("hakl3x", 100);
+Delay(2000);
+}
+
+If(RideSelect == 1)
+{
+HUMAN_Drive("bmv1", 90);
+HUMAN_Drive("gumkar1", 50);
+}
+
+Delay(500);
+HUMAN_Drive("", 0);
+Delay(1000);
+SendSignal(P1, 2);
+SendSignal(P2, 2);
+SendSignal(P3, 2);
+SendSignal(P4, 2);
+SendSignal(P5, 2);
+Delay(500);
+HUMAN_BoardVehicle("Hakl_01", 0, 0);
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(150);
+SetAlarmType(1023,1);
+HUMAN_SETMODE_Run();
+HUMAN_MoveFromFrame(Hakl, 20);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+
+Label END:

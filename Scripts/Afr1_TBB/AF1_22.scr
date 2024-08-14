@@ -1,0 +1,94 @@
+// AF1_22 - walking on the runway to plane and back
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME look;				FRM_FindFrame(look, "la_macchi08");
+  FRAME af01;				FRM_FindFrame(af01, "AF1_01");
+  INTEGER Atype			= 0;
+ 
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+Label ALERT:
+  HUMAN_SetMODE_Stand();
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetMODE_Run();  
+  HUMAN_WeaponOnArm(true);
+  goto END;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(220)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  SetWhenever(player, false);
+  HUMAN_SETMODE_Stand();
+  Delay(100);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(150);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("22: ", Atype);
+  }
+  HUMAN_ACTIVITY_Smoke(false);
+
+  if((Atype == 512) OR (Atype == 256)){
+    SetAlarmType(256, false);
+    HUMAN_SetAlarm(false);
+    goto ALERT;
+  }
+
+  SendSignal(dummyalert, 1);
+  HUMAN_TurnAtNearestPlayer();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SETSIGHTRANGE(100);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  HUMAN_SetMODE_Run();
+  HUMAN_SetMODE_Crouch();  
+  HUMAN_Move("AF1_22_ad");
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+
+Label START:
+  HUMAN_Move("AF1_22_odpoc");
+  HUMAN_TurnAt(look);
+  HUMAN_ACTIVITY_Turk();
+  HUMAN_ACTIVITY_Smoke(true);
+  Delay(120000);
+  HUMAN_ACTIVITY_Smoke(false);
+  HUMAN_Move("AF1_22_letadlo"); 
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+  //HUMAN_Move("dummy_22_sit");
+goto START;
+
+Label END:

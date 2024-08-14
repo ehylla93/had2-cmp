@@ -1,0 +1,166 @@
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SETAIMODE_Defensive();
+
+HUMAN_SetOptimized(2);
+
+
+Frame cum;		FRM_FindFrame(cum,"blocker1cum");
+Frame bl2;		FRM_FindFrame (bl2,"blocker_02");
+Frame zles2;		FRM_FindFrame(zles2,"zlesa2");
+Frame me;		FRM_GetMyFrame(me);
+Frame zrusformaci;	FRM_FindFrame(zrusformaci, "zlesa_zrusformaci");
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+
+
+
+	FRM_SwitchFaceTexture(me, "e_f055");
+
+Integer aievent;
+Integer sus;	sus=1;
+Integer b;	b=0;
+integer alarmpos;	alarmpos=0;
+Integer form;		form=0;		
+HUMAN_SETMODE_Guard();
+}
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+SetAlarmType(749,0);
+goto end;
+
+//------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+SetAlarmType(1023,1);
+SetAlarmType(140,0);
+aievent=(_GetAlarmType());
+PrintfNumber("zlesa alarm c:",aievent);
+//SendSignal (zrusformaci,1);
+//FORMATION_Destroy(me);
+}
+
+
+if (sus==1)
+	{
+	sus=0;
+	HUMAN_Suspend(0);
+	}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+SetAlarmType(274,0);
+
+if (b==0)
+{
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay(900);
+SetAlarmType(274,1);
+HUMAN_Move("zlesa_03");
+HUMAN_SETMODE_Crouch();	
+b=1;
+
+}
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+goto end;
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+
+HUMAN_SetAlarm(0);
+SetAlarmType(652,0);
+}
+goto end;
+
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+
+
+
+Whenever go(_SignalReceived(1))
+{
+//od detectoru
+HUMAN_Suspend(0);
+block
+{
+SetAlarmType(1023,1);
+SetAlarmType(140,0);
+sus=0;
+SendSignal (zles2,1);
+}
+delay (500);
+block
+{
+FORMATION_Create(me);
+FORMATION_AddMember(zles2, me);
+FORMATION_SetTypeLine(me);
+SendSignal (zles2,2);
+}
+goto chod;
+}
+
+
+//------------------------------------------------------------------------------
+
+
+Label chod:
+HUMAN_Move("zlesa_01");
+Label chod2:
+HUMAN_Move("zlesa_02");
+HUMAN_Move("zlesa_03");
+b=1;
+HUMAN_Move("zlesa_04");
+HUMAN_Move("zlesa_05");
+HUMAN_Move("zlesa_06");
+HUMAN_Move("zlesa_07");
+HUMAN_Move("zlesa_08");
+HUMAN_Move("zlesa_09");
+HUMAN_Move("zlesa_10");
+HUMAN_Move("zlesa_11");
+goto chod2;
+
+
+
+Label end:

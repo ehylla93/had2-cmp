@@ -1,0 +1,108 @@
+// enables zone9 again
+//----------------------------------
+
+Block
+{
+
+Frame A4_S01;		FRM_FindFrame(A4_S01,"A4_S01");
+Frame A4_S02;		FRM_FindFrame(A4_S02,"A4_S02");
+Frame A4_S03;		FRM_FindFrame(A4_S03,"A4_S03");
+
+Frame A4_S04;		FRM_FindFrame(A4_S04,"A4_S04");
+Frame A4_S05;		FRM_FindFrame(A4_S05,"A4_S05");
+Frame A4_S06;		FRM_FindFrame(A4_S06,"A4_S06");
+Frame A4_S07;		FRM_FindFrame(A4_S07,"A4_S07");
+Frame A4_S08;		FRM_FindFrame(A4_S08,"A4_S08");
+Frame A4_S09;		FRM_FindFrame(A4_S09,"A4_S09");
+
+Frame A4_S10;		FRM_FindFrame(A4_S10,"A4_S10");
+Frame A4_S11;		FRM_FindFrame(A4_S11,"A4_S11");
+Frame A4_S12;		FRM_FindFrame(A4_S12,"A4_S12");
+Frame A4_S13;		FRM_FindFrame(A4_S13,"A4_S13");
+
+Frame A400;		    FRM_FindFrame(A400, "A400");
+Frame A4002;		    FRM_FindFrame(A4002, "A4002");
+Frame A4003;		    FRM_FindFrame(A4003, "A4003");
+Frame A4004;		    FRM_FindFrame(A4004, "A4004");
+Frame A4005;		    FRM_FindFrame(A4005, "A4005");
+
+Frame spawnz;		FRM_FindFrame(spawnz, "Spawnzones");
+
+
+Integer officer;
+	officer=0;
+}
+
+
+// ---------------------------
+
+
+Whenever Oficers1 (( (_Actor_GetState(A4_S01)==0) And (_Actor_GetState(A4_S02)==0) ) And (_Actor_GetState(A4_S03)==0) ) 
+{
+officer=officer+1;
+
+If(officer==6)
+{
+SendSignal(spawnz, 3);
+}
+GoTo end;
+}
+
+
+Whenever Oficers2 (( (_Actor_GetState(A4_S04)==0) And (_Actor_GetState(A4_S05)==0) ) And (_Actor_GetState(A4_S06)==0) ) 
+{
+officer=officer+1;
+
+If(officer==6)
+{
+SendSignal(spawnz, 3);
+}
+GoTo end;
+}
+
+Whenever Oficers3 (( (_Actor_GetState(A4_S07)==0) And (_Actor_GetState(A4_S08)==0) ) And (_Actor_GetState(A4_S09)==0) ) 
+{
+officer=officer+1;
+
+If(officer==6)
+{
+SendSignal(spawnz, 3);
+}
+GoTo end;
+}
+
+Whenever Oficers4 (( (_Actor_GetState(A4_S10)==0) And (_Actor_GetState(A4_S11)==0) ) And (_Actor_GetState(A4_S12)==0) ) 
+{
+officer=officer+1;
+
+If(officer==6)
+{
+SendSignal(spawnz, 3);
+}
+GoTo end;
+}
+
+Whenever Oficers5 (( (_Actor_GetState(A4_S13)==0) And (_Actor_GetState(A400)==0) ) And (_Actor_GetState(A4002)==0) ) 
+{
+officer=officer+1;
+
+If(officer==6)
+{
+SendSignal(spawnz, 3);
+}
+GoTo end;
+}
+
+Whenever Oficers6 (( (_Actor_GetState(A4003)==0) And (_Actor_GetState(A4004)==0) ) And (_Actor_GetState(A4005)==0) ) 
+{
+officer=officer+1;
+
+If(officer==6)
+{
+SendSignal(spawnz, 3);
+}
+GoTo end;
+}
+
+
+Label end:

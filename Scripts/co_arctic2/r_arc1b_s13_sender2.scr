@@ -1,0 +1,9 @@
+
+Block {
+frame S13;		FRM_FindFrame(S13, "Static_13");
+}
+
+Whenever Near (_PlayerInRange(3))
+{
+	SendSignal(S13, 3);
+}

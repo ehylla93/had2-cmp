@@ -1,0 +1,76 @@
+// AF3a_31 - soldier outside
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  INTEGER Atype			= 0;
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("31: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(player, false);
+    HUMAN_Suspend(false);
+    Atype = _GetAlarmType();
+    printfnumber("31: ", Atype);
+  }
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto GUARD_START;
+}
+
+Whenever player (_PlayerInRange(30)){
+  goto ACTIVATE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_Suspend(true);
+//  HUMAN_SetEvents(true);
+goto  END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetMODE_Stand();
+  HUMAN_SetAnim("%%sedimL", 100, 100, true);
+  HUMAN_TurnAtNearestPlayer();
+goto END;
+
+Label GUARD_START:
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetMODE_Guard();
+  HUMAN_SetMODE_Crouch();
+Label GUARD:
+  HUMAN_MOVE("AF3a_31_01");
+  HUMAN_LookAround(4);
+  Delay(2000);
+  HUMAN_LookAround(0);
+  HUMAN_MOVE("AF3a_31_02");
+  HUMAN_MOVE("AF3a_31_03");
+  HUMAN_LookAround(4);
+  Delay(2000);
+  HUMAN_LookAround(0);
+  HUMAN_MOVE("AF3a_31_04");
+  HUMAN_MOVE("AF3a_31_05");
+goto GUARD;
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+goto END;

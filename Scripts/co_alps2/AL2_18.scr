@@ -1,0 +1,47 @@
+// AL2_18 - soldier - reinforcement after alarm - Moves silently to archives
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+
+Frame cum;		FRM_FindFrame(cum,"al218cum");
+frame dvr;		FRM_FindFrame(dvr, "S11_jv_05");
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever alarmed(_SignalReceived(1))	// received from alarm
+{
+	HUMAN_Suspend(false);
+	GoTo mode2;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label mode2:			// after alarm
+	HUMAN_SETMODE_Silence();
+	HUMAN_Move("AL2_18_02");
+	SetActorState(dvr, 0);
+	SetAlarmType(274, 1);
+	HUMAN_Move("AL2_18_01");
+	HUMAN_SETMODE_Crouch();
+	HUMAN_TurnAt(cum);
+	GoTo end;
+
+Label end:

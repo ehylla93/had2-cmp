@@ -1,0 +1,23 @@
+// Obj 2 - Destroy the fuel store
+// ----------------------------------------------
+
+Block
+{
+Frame B1;	FRM_FindFrame(B1, "06_Bomb_01");
+Frame B2;	FRM_FindFrame(B2, "06_Bomb_02");
+Frame B3;	FRM_FindFrame(B3, "06_Bomb_03");
+Frame B4;	FRM_FindFrame(B4, "06_Bomb_04");
+
+SetObjectiveStatus(2, 0);
+}
+
+Whenever FuelStore_Planted ((((_Actor_GetState(B1) == 1) And (_Actor_GetState(B2) == 1)) And (_Actor_GetState(B3) == 1)) And (_Actor_GetState(B4) == 1))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(55999804);
+Delay(3500);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

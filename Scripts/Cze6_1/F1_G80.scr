@@ -1,0 +1,66 @@
+// F1_G80 - F1 Officer
+// ----------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f070");
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+EndScript();
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 12))
+{
+HUMAN_Suspend(0);
+goto Anim;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label Anim:
+HUMAN_SetAnim("%%studmapu", 1000, 1000, 1);
+Delay(40000);
+HUMAN_SetAnim("%%rozcilujese", 1000, 1000, 1);
+Delay(5000);
+HUMAN_SetAnim("%%divase", 1000, 1000, 1);
+Delay(6000);
+goto Anim;
+
+
+Label END:

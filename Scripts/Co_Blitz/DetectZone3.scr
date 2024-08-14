@@ -1,0 +1,21 @@
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone3");
+Frame EH3;		FRM_FindFrame(EH3,"EH03");
+Frame EH11;		FRM_FindFrame(EH11,"EH11");
+Frame EH19;		FRM_FindFrame(EH19,"EH19");
+Frame EG20;		FRM_FindFrame(EG20,"EG20");
+Frame EG21;		FRM_FindFrame(EG21,"EG21");
+Frame EG63;		FRM_FindFrame(EG63, "EG63");
+}
+Whenever Yes(_PlayerInBox(detect))
+{
+sendsignal(EH3,1);
+sendsignal(EH11,1);
+sendsignal(EH19,1);
+sendsignal(EG20,1);
+sendsignal(EG21,1);
+sendsignal(EG63,1);
+goto end;
+}
+label end:

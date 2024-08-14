@@ -1,0 +1,22 @@
+// Obj 3 - Mine the cannons
+// ---------------------------------------------
+
+Block
+{
+Frame B1;	FRM_FindFrame(B1, "BUM_D1");
+Frame B2;	FRM_FindFrame(B2, "BUM_D2");
+Frame B3;	FRM_FindFrame(B3, "BUM_D3");
+
+SetObjectiveStatus(3, 0);
+}
+
+Whenever Planted (((_Actor_GetState(B1) == 1) And (_Actor_GetState(B2) == 1)) And (_Actor_GetState(B3) == 1))
+{	
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999703);
+Delay(3500);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

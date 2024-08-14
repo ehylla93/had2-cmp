@@ -1,0 +1,23 @@
+// on spawn
+// -------------------------------------------------------
+
+Frame driver;	FRM_FindFrame(driver,"opel_driver");
+Frame carrier1;	FRM_FindFrame(carrier1,"nosic1");
+Frame carrier2;	FRM_FindFrame(carrier2,"nosic2");
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+SetWhenever(Spawn, false);
+Delay(2000);
+Block {
+SendSignal(driver, 1);
+SendSignal(carrier1, 1);
+SendSignal(carrier2, 1);
+}
+Delay(5000);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(20994001);
+Delay(5000);
+SUBTITLES_SetOn(False);
+EndScript();
+}

@@ -1,0 +1,67 @@
+// Cpl. John Glesby - Jeep Driver (Obj 2)
+// ---------------------------------------------
+
+Block
+{
+Frame P1;		FRM_FindFrame(P1,"SSgt. Gregory Dean");
+Frame Obj2;		FRM_FindFrame(Obj2,"obj2");
+Frame Jeep;		FRM_FindFrame(Jeep,"S01_Jeep_01");
+Frame me;		FRM_GetMyFrame(me);
+Frame Player;
+
+FRM_SwitchFaceTexture(me,"e_f0065");
+
+DisableAlarms(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ---------------------------------------------
+
+OnDeath(){
+goto END;
+}
+
+Whenever Come_In (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+Delay(200);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("S01_Jeep_01", 1, 0);
+HUMAN_Drive("path02_06", 100);  
+HUMAN_Drive("path02_05", 100);
+HUMAN_Drive("path02_02", 100);
+SendSignal(P1, 1);
+HUMAN_Drive("path02_01", 65);
+goto END;
+}
+
+Whenever STOP (_SignalReceived(3))
+{
+Delay(700);
+HUMAN_Drive("", 65);
+goto END;
+}
+
+Whenever Come_Out (_SignalReceived(2))
+{
+Delay(200);
+SendSignal(Obj2, 2);
+HUMAN_Drive("path02_03", 100);
+HUMAN_Drive("path02_04", 180);
+HUMAN_Drive("path02_05", 180);
+HUMAN_Drive("posila_enable", 180);
+goto END;
+}
+
+Whenever BOOM (_SignalReceived(4))
+{
+Delay(1000);
+SendSignal(Obj2, 3);
+HUMAN_BoardVehicle("S01_Jeep_01", 0, 0);
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+Label END:

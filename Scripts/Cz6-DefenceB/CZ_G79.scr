@@ -1,0 +1,65 @@
+// SW_G01 (Ridic Tigru 1 - La_tiger_1)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame t1;		FRM_FindFrame(t1,"La_tiger_4");
+Frame t2;		FRM_FindFrame(t2,"La_tiger_5");
+
+Frame p1;		FRM_FindFrame(p1,"SW_G02");
+Frame p2;		FRM_FindFrame(p2,"SW_G03");
+
+Frame tigr2;	FRM_FindFrame(tigr2,"Tigar1");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+//--------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(tigr2, 4);
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+Whenever Panzers_Destroyed ((_Actor_GetState(t1)==0) And (_Actor_GetState(t2)==0) ) 
+{
+Delay(70000);
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("La_tiger_1" , true, 0);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+SendSignal(tigr2, 3);
+Delay(1000);
+HUMAN_Drive("C5_kubel_tele", 30);
+SendSignal(p2, 2);
+HUMAN_Drive("C5_isu_tele", 10);
+Delay(100000);
+SendSignal(p2, 3);
+HUMAN_Drive("C5_tank11", 10);
+goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(10);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

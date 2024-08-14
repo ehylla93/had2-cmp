@@ -1,0 +1,67 @@
+// AF3a_29 - soldier hidden in the house
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME dummy_rozhovor;			FRM_FindFrame(dummy_rozhovor, "dummy_rozhovor_03");
+  INTEGER Atype				= 0;
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SaveGameValue(32, 0);
+  SendSignal(dummy_rozhovor, 2);
+  printf("30: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SaveGameValue(32, 0);
+    SendSignal(dummy_rozhovor, 2);
+    HUMAN_Suspend(false);
+    Atype = _GetAlarmType();
+    printfnumber("30: ", Atype);
+  }
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto GUARD_START;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetAnim("%%sedimL", 100, 100, true);
+  HUMAN_SetOptimized(1);
+//  HUMAN_TurnAtNearestPlayer();
+goto END;
+
+Label GUARD_START:
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetMODE_Guard();
+  HUMAN_SetMODE_Crouch();
+Label GUARD:
+  HUMAN_MOVE("AF3a_30_01");
+  HUMAN_LookAround(4);
+  Delay(2000);
+  HUMAN_LookAround(0);
+  HUMAN_MOVE("AF3a_30_02");
+  HUMAN_MOVE("AF3a_30_03");
+  HUMAN_LookAround(4);
+  Delay(2000);
+  HUMAN_LookAround(0);
+  HUMAN_MOVE("AF3a_30_04");
+  HUMAN_MOVE("AF3a_30_05");
+goto GUARD;
+
+Label END:

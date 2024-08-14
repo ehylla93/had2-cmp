@@ -1,0 +1,84 @@
+
+block
+{
+frame hakl;	FRM_FindFrame(hakl, "la_hakl_2");
+Frame cum;	FRM_FindFrame(cum, "MG42_4");  
+integer aievent;
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Aggressive();
+}
+
+
+
+HUMAN_Suspend(1);
+
+goto end;
+
+
+Whenever go(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(0);
+HUMAN_BoardVehicle("la_hakl_2", 1, 4);
+goto end;
+}
+
+
+
+Whenever alarm(_SignalReceived(2))
+{
+HUMAN_BoardVehicle("la_hakl_2", 0, 4);
+
+block
+{
+HUMAN_SETEVENTS(1);
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+}
+HUMAN_MoveFromFrame(hakl,4);
+HUMAN_TurnAt(cum);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+
+//------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+
+}
+
+EndScript();
+}
+
+//------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+label end:

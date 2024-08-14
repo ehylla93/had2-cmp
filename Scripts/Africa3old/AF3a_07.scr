@@ -1,0 +1,90 @@
+// AF3a_07 - operating the machinegun
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME turnat;			FRM_FindFrame(turnat, "MINARET03");
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(4, false);					// 4
+  HUMAN_SETSIGHTRANGE(100);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("07: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableSignals(true);
+    HUMAN_Stop();
+    HUMAN_SETSIGHTRANGE(300);
+    Atype = _GetAlarmType();
+    printfnumber("07 ", Atype);
+  }
+
+  HUMAN_SETMODE_Crouch();
+  //HUMAN_Use(biggun, true);  		// doplnit az budou fungovat staticke zbrane
+  HUMAN_TurnAtNearestPlayer();
+ 
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SetAlarm(false);
+  goto ALERT;
+}
+
+OnSignal(20){
+LABEL ALERT:
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SetMODE_Run();
+    HUMAN_SetSightRange(400);
+  }
+  HUMAN_Move("AF3a_07_alert");
+  HUMAN_TurnAt(turnat);
+  HUMAN_SetMODE_Lie();
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Guard();
+  HUMAN_SetOptimized(2);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetSniper(true, 5);
+  HUMAN_SetAnim("%%sedimL4", 300, 300, true);
+goto END;
+
+Label ALARM_DONE:
+  HUMAN_WeaponOnArm(false);
+  HUMAN_Move("AF3a_07_01");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF3a_07_02");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF3a_07_03");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF3a_07_04");
+  gosub LOOKAROUND;
+goto ALARM_DONE;
+
+Label LOOKAROUND:
+  HUMAN_SetAnim("%%turnleft", 300, 300, false);  Delay(2500);
+  HUMAN_SetAnim("%%turnright", 300, 300, false);  Delay(2500);
+  HUMAN_SetAnim("", 300, 300, false);
+  Delay(300);
+return;
+
+Label END:

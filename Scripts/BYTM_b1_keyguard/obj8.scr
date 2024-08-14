@@ -1,0 +1,16 @@
+// Obj 8 - Destroy Bridge
+// ----------------------------------
+
+Frame sound1;	FRM_FindFrame(sound1,"success_obj");
+FRM_SetOn(sound1, 0);
+
+Whenever Bridge_Down (_SignalReceived(1))
+{
+FRM_SetOn(sound1, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(12992417);	// "OBJECTIVE ACCOMPLISHED: YOU DESTROYED THE TRANSPORT BRIDGE."
+Delay(4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(8, 1);
+EndScript();
+}

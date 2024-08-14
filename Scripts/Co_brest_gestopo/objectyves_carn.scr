@@ -1,0 +1,253 @@
+//1 - ponorky
+//2 - radio
+//3 - nadrze
+//4 - navrat
+//5- generatory
+//6 - kill all
+//7 - kokoti prezili
+
+
+
+block
+{
+SetObjectiveStatus(1, 0);
+SetObjectiveStatus(2, 0);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(6, 0);
+
+SetWhenever (endx,0);
+
+integer ponorky;
+integer radio;
+integer nadrze;
+integer navrat;
+integer vypis;
+integer plnum;
+integer detx;
+
+frame alldetvypis;	FRM_Findframe(alldetvypis,"alldetvypis");
+frame zvuk_deste;	FRM_FindFrame(zvuk_deste, "S_dest_primar");
+
+frame endcut;		FRM_FindFrame(endcut, "endcut");
+frame endcut2;	FRM_FindFrame(endcut2, "endcut2");
+}
+
+  Delay(4000);
+plnum=_GetNumMembersOfClientTeam()		//kolik je playeru
+
+goto end;
+
+
+Whenever DET(_GetCountOfCarnageEnemies()==0)
+
+{
+
+block
+{
+if((((radio==1) and (nadrze==1)) and (navrat==0)) and (ponorky==1))
+{
+PlayMusic(36);
+SetObjectiveStatus(4, 0);
+SetWhenever (endx,1);
+navrat=1;
+}
+printf("Sendsignal carnage VYPIS 1, delay aspon 5 sekund");
+SendSignal (alldetvypis,1);
+SetObjectiveStatus(6, 1);
+detx=1;
+}
+
+}
+
+
+
+OnSignal(1)
+{
+printf("Dosiel signal 1");
+
+block
+{
+if((((radio==1) and (nadrze==1)) and (navrat==0)) and (detx==1))
+{
+SetObjectiveStatus(4, 0);
+SetWhenever (endx,1);
+navrat=1;
+}
+SetObjectiveStatus(1, 1);
+ponorky=1;
+}
+}
+
+OnSignal(3)
+{
+printf("Dosiel signal 3");
+
+//radio ok
+block
+{
+if((((ponorky==1) and (nadrze==1)) and (navrat==0)) and (detx==1))
+
+{
+SetObjectiveStatus(4, 0);
+SetWhenever (endx,1);
+navrat=1;
+}
+SetObjectiveStatus(2, 1);
+radio=1;
+}
+}
+
+OnSignal(5)
+{
+printf("Dosiel signal 5");
+
+//nadrze ok
+block
+{
+if((((ponorky==1) and (radio==1)) and (navrat==0)) and (detx==1))
+
+{
+SetObjectiveStatus(4, 0);
+SetWhenever (endx,1);
+navrat=1;
+}
+SetObjectiveStatus(3, 1);
+nadrze=1;
+}
+}
+
+//------------------------------------------------------------------------
+
+if ((navrat==1) and (vypis==0))
+{
+delay (2000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999902);
+vypis=1;
+//tahnete naspatky
+delay (5000);
+SUBTITLES_SetOn(0);
+goto end;
+}
+//------------------------------------------------------------------------
+
+OnSignal(2)
+{
+printf("Dosiel signal 2");
+
+block
+{
+ponorky=0;
+SetObjectiveStatus(1, 0);
+}
+goto end;
+}
+
+OnSignal(4)
+{
+printf("Dosiel signal 4");
+
+//radio ne
+block
+{
+radio=0;
+SetObjectiveStatus(2, 0);
+}
+goto end;
+}
+
+OnSignal(6)
+{
+printf("Dosiel signal 6");
+
+//nadrze ne
+block
+{
+nadrze=0;
+SetObjectiveStatus(3, 0);
+}
+goto end;
+}
+
+
+
+Whenever endx(_AllPlayersInRange(20))
+{
+printf ("JOPOOOOOOO");
+DisableSignals(1);
+SetPlayerInput(0);
+
+if (ponorky==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999905);
+delay (4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(1, 3);
+goto end;
+}
+
+
+if (radio==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999909);
+delay (4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(2, 3);
+goto end;
+}
+
+if (nadrze==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999805);
+delay (4000);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(3, 3);
+goto end;
+}
+
+AddDiaryText(16010);	//meno mise
+
+if (plnum>1)
+{
+Printf("pridawam diary text pro tym");
+AddDiaryText(17605);
+}
+
+else
+
+{
+Printf("pridawam diary text pro jednoho");
+AddDiaryText(17600);
+}
+
+If((_IsTeamMemberDead())==0)
+{
+SetObjectiveStatus(7, 0);				//Nekdo z tymu chcipl
+SetObjectiveStatus(7, 1);
+}
+
+
+CSC_FadeOut(100);
+FRM_SetOn(zvuk_deste, false);
+Delay (100);
+FRM_SetActiveCamera(endcut);
+PlayAvi("D_OutFrance1.bik");
+FRM_SetActiveCamera(endcut2);
+FRM_SetOn(zvuk_deste, true);
+CSC_Fadein(100);
+SetObjectiveStatus(4, 1);
+
+}
+
+
+
+
+
+
+
+
+
+label end:

@@ -1,0 +1,5 @@
+Frame FRM;		FRM_GetMyFrame(FRM);
+
+HUMAN_SetOptimized(2);
+delay(3000);
+HUMAN_Kill(FRM);

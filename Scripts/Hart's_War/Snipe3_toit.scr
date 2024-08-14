@@ -1,0 +1,117 @@
+// a coter de la cheminer au plus pret de la route
+// dummy_objectives2    
+ Block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+SetAlarmType(1023,1);
+    FRAME this;			FRM_GetMyFrame(this);
+    FRM_SwitchFaceTexture(this, "e_f080");
+//    SetWhenever (PIR, true);
+//    SetWhenever (PNIR, true);
+       SetWhenever (PIR, false);
+       SetWhenever (PNIR, false);
+//	HUMAN_SETMODE_Stand();
+//  HUMAN_SETMODE_Walk();
+    HUMAN_Suspend(1);
+	HUMAN_SETMODE_Lie();
+	HUMAN_SETAIMODE_Aggressive();
+//	HUMAN_SETAIMODE_Defensive();
+HUMAN_SETSIGHTRANGE(180);
+HUMAN_SETHEARRANGE(100);
+	HUMAN_SetSniper(1, 5); 
+	HUMAN_SetOptimized(1);
+//^Block
+
+}
+GoTo end;
+
+//=======================================================================================
+
+Whenever go(_SignalReceived(1))
+{   
+	SetWhenever (PNIR, true);
+	SetWhenever (PNIR, true);
+	SetAlarmType(1023,1);
+	Delay(500);
+	SetWhenever(go,0);
+}
+goto end;
+//=======================================================================================
+
+Whenever PIR (_PlayerInRange(100))
+	{
+	SetWhenever (PIR, false);
+	SetWhenever (PNIR, true);
+	HUMAN_Suspend(false);
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+	goto chodim;
+	}
+
+//=======================================================================================	
+	
+	
+Whenever PNIR (!_PlayerInRange(100))
+	{
+	SetWhenever (PNIR, false);
+	SetWhenever (PIR, true);
+	HUMAN_Suspend(true);		
+	}
+
+//=======================================================================================
+
+
+OnAlarm()
+	{	
+HUMAN_SETSIGHTRANGE(180);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetSniper(1, 5);	
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETAIMODE_Aggressive();	
+HUMAN_SETMODE_Crouch();
+HUMAN_SetOptimized(1);
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+EndScript();
+	}
+
+//=======================================================================================
+
+	
+OnAlarmDone()
+	{
+	HUMAN_SETSIGHTRANGE(180);
+    HUMAN_SETHEARRANGE(100);
+	HUMAN_SETMODE_Lie();
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+	goto chodim;
+	}
+
+//=======================================================================================
+
+label chodim:
+    HUMAN_SetAlarm(1);
+    SetAlarmType(768, 1);
+    SetAlarmType(1023,1);
+HUMAN_SETSIGHTRANGE(180);
+HUMAN_SETHEARRANGE(100);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Lie();
+goto chodim;
+
+
+goto end;
+Label END:

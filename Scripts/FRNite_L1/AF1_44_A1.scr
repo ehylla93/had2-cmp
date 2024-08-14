@@ -1,0 +1,32 @@
+//talk af40
+
+Frame af40;	FRM_FindFrame(af40, "AF1_40");
+
+Whenever activate(_PlayerInRange(250))
+{
+	GoTo start;
+}
+
+Whenever Death (_SignalReceived(2))
+{
+goto END;
+}
+
+
+
+//------------------------------------------------
+
+goto END;
+
+
+Label start:
+FRM_MorphSpeechDelayed(af40, 90006004, 18, 38); Delay(800);
+FRM_MorphSpeechDelayed(af40, 90006000, 17, 37); Delay(1000);
+FRM_MorphSpeechDelayed(af40, 90006004, 14, 34); Delay(950);
+FRM_MorphSpeechDelayed(af40, 90006000, 14, 34); Delay(4500);
+GoTo start;
+
+
+Label END:
+
+

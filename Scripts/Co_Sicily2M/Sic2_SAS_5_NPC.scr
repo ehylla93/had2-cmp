@@ -1,0 +1,67 @@
+// the Don
+
+Block
+{
+
+Frame me;		FRM_GetMyFrame(me);
+frame la_Jeepsas_1;	FRM_FindFrame(la_Jeepsas_1, "la_Jeepsas_1");
+frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+frame SAS2;	FRM_FindFrame(SAS2, "NPC_2");
+frame SAS3;	FRM_FindFrame(SAS3, "NPC_3");
+frame SAS6;	FRM_FindFrame(SAS6, "NPC_6");
+frame it12;	FRM_FindFrame(it12, "IT_12");
+frame it15;	FRM_FindFrame(it15, "IT_15");
+frame fuck2;	FRM_FindFrame(fuck2, "fuck_bum_2");
+frame Add_4;	FRM_FindFrame(Add_4, "Add_4");
+frame Add_6;	FRM_FindFrame(Add_6, "Add_6");
+frame SAS10;	FRM_FindFrame(SAS10, "zraneny_10");
+frame doctor_1;	FRM_FindFrame(doctor_1, "doctor_1");
+frame vlna;	FRM_FindFrame(vlna, "dummy_druha_vlna");
+frame light;	FRM_FindFrame(light, "lamp01");
+FRM_SwitchFaceTexture(me,"e_f034");
+}
+
+Whenever inrange ( _PlayerInRange(87))
+{
+  HUMAN_BoardVehicle("la_Jeepsas_1", true, 2);
+	
+}
+
+OnDeath(){
+SendSignal(SAS1, 14);
+goto TheEnd;
+}
+
+
+Onsignal(1)	// from driver citroen
+{
+SendSignal(vlna, 5);
+SendSignal(SAS10, 6);
+SendSignal(SAS2, 7);
+SendSignal(SAS3, 8);
+Delay(3000);
+HUMAN_BoardVehicle("la_Jeepsas_1", false, 2);
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAt(fuck2);
+HUMAN_SETMODE_Walk();
+HUMAN_MoveToFrame(fuck2, 1);
+HUMAN_TurnAt(SAS6);
+FRM_MorphSpeechDelayed(me, 05991033, 15, 45);
+SendSignal(SAS6, 4);
+Delay(1400);
+FRM_MorphSpeechDelayed(SAS6, 56990009, 15, 45);
+SendSignal(Add_4, 9);
+//Delay(2500);
+//FRM_MorphSpeechDelayed(me, 09991957, 15, 45);
+Delay(2000);
+HUMAN_MoveToFrame(light, 1);
+HUMAN_TurnAt(light);
+Delay(90);
+SendSignal(it15, 15);
+SendSignal(doctor_1, 16);
+SendSignal(it12, 19);
+Delay(7200);
+HUMAN_Move("Add_8_end");
+}
+
+label TheEnd:

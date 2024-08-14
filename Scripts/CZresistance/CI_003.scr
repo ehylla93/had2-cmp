@@ -1,0 +1,56 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+FRM_SwitchFaceTexture(me,"e_f031");
+Frame B1;		FRM_FindFrame(B1,"CI_011");
+
+//*Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//*OnDeath
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_TurnAt(B1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+//*OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//*AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+
+
+
+//*CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+HUMAN_SetOptimized(1);
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(50);
+//*DefaultLoad
+goto END;
+
+Label END:

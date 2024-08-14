@@ -1,0 +1,39 @@
+// Utoci na Brity - Nemel by alarmovat !!!!!
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame cp1;	FRM_FindFrame(cp1,"BK1_Cp");
+Frame cp2;	FRM_FindFrame(cp2,"BK2_Cp");
+Frame cp3;	FRM_FindFrame(cp3,"BK3_Cp");
+Frame cil;	FRM_FindFrame(cil,"NemecCum");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Run();
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(cp2, 0);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_Attack(cil, 50000);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

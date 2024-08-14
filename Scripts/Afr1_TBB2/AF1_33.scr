@@ -1,0 +1,79 @@
+// AF1_33 goes into hangar
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME alarm_look;			FRM_FindFrame(alarm_look, "m_dvr_h01");
+  FRAME turn1;			FRM_FindFrame(turn1, "af1_dummy16");
+  FRAME turn2;			FRM_FindFrame(turn2, "af1_dummy23");
+  FRAME turn;				FRM_FindFrame(turn, "af1_dummy15");
+  //  FRAME pick;			FRM_FindFrame(pick, "la_bedynka_");
+  INTEGER Atype			= 0;
+  INTEGER moved			= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("17: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(215)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SaveGameValue(90, 0);
+    SetWhenever(player, false);
+    Atype = _GetAlarmType();
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("17: ", Atype);
+  }
+
+  if(!moved)
+  {
+    HUMAN_SetAnim("", 100, 100, false);
+    HUMAN_SetMODE_Run();
+    HUMAN_Move("AF1_17_alarm");
+    HUMAN_SetSniper(true, 1);
+    moved = 1;
+    HUMAN_SetMode_Crouch();
+    HUMAN_TurnAtNearestPlayer();
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(768, false);		// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SetOptimized(true);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetAnim("%%opravletadlo", 200, 200, true);
+goto END;
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1000);
+goto END;

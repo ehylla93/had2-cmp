@@ -1,0 +1,77 @@
+// posila v aute1
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f045");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor1
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETSIGHTRANGE(35);
+	HUMAN_SetAnim("%%nudazed5", 100, 100,true);
+	GoTo end;
+}
+
+OnSignal(2)	// received from velitel v aute
+{
+	HUMAN_SetAnim("", 100, 100,false);
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posauto1_01");
+	HUMAN_BoardVehicle("blitz_", true, 3);
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnSignal(3)	// received from ridic z mesta
+{
+	HUMAN_Suspend(true);
+	GoTo end;
+}
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	DisableSignals(true);
+	HUMAN_SetAnim("", 100, 100,false);
+	HUMAN_BoardVehicle("blitz_", false, 3);
+	SetAlarmType(256, false);	// friendly fire
+	HUMAN_SETSIGHTRANGE(80);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETSIGHTRANGE(30);
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_Move("posauto1_02");
+	HUMAN_SetOptimized(2);
+}
+
+Label end:

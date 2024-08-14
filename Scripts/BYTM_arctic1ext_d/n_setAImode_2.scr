@@ -1,0 +1,57 @@
+//n_SetAImode_2
+printf("SetAImode_2 works");
+integer a;
+integer b=0;
+integer c=0;
+FRAME FRM;	FRM_FindFrame(FRM, "");
+goto end;
+
+OnSignal(1)
+{
+b=1;
+EnableSignal(1, false);
+printf("setAImode_2_R1 running");
+a=_RandomInt(3);
+FRM_FindFrame(FRM, "n_R01"); gosub AImode;
+FRM_FindFrame(FRM, "n_R02"); gosub AImode;
+FRM_FindFrame(FRM, "n_R03"); gosub AImode;
+FRM_FindFrame(FRM, "n_R04"); gosub AImode;
+FRM_FindFrame(FRM, "n_R05"); gosub AImode;
+FRM_FindFrame(FRM, "n_R06"); gosub AImode;
+printf("setAImode_2_R1 done");
+goto check;
+}
+
+OnSignal(2)
+{
+c=1;
+EnableSignal(2, false);
+printf("setAImode_2_R2 running");
+a=_RandomInt(3);
+FRM_FindFrame(FRM, "n_R07"); gosub AImode;
+FRM_FindFrame(FRM, "n_R08"); gosub AImode;
+FRM_FindFrame(FRM, "n_R09"); gosub AImode;
+FRM_FindFrame(FRM, "n_R10"); gosub AImode;
+FRM_FindFrame(FRM, "n_R11"); gosub AImode;
+FRM_FindFrame(FRM, "n_R12"); gosub AImode;
+printf("setAImode_2_R2 done");
+goto check;
+}
+
+Label AImode:
+Block {
+if(a==0) { FRAME_SETAIMODE_Zombie(FRM); }
+if(a==1) { FRAME_SETAIMODE_Defensive(FRM); }
+if(a==2) { FRAME_SETAIMODE_Aggressive(FRM); }
+a=a+1;
+if(a==3){ a=0; }
+}
+Return;
+
+Label check:
+if((b==1) and (c==1))
+{
+EndScript();
+}
+
+Label end:

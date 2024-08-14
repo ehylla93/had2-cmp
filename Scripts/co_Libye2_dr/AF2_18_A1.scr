@@ -1,0 +1,33 @@
+// AF2_18_A1 - 3. stanoviste detektor
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame af2_18;
+	FRM_FindFrame(af2_18, "AF2_18");
+Frame af2_19;
+	FRM_FindFrame(af2_19, "AF2_19");
+Frame af2_20;
+	FRM_FindFrame(af2_20, "AF2_20");
+Frame opel1;
+	FRM_FindFrame(opel1, "Opel1");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(60))
+{
+	Block
+	{
+		SendSignal(af2_18, 1);
+		SendSignal(af2_19, 1);
+		SendSignal(af2_20, 1);
+	}
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+
+Label end:

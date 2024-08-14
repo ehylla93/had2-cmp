@@ -1,0 +1,148 @@
+block
+{   
+Frame E_MP44_1; FRM_FindFrame(E_MP44_1, "E_MP44_1");
+Frame E_MP44_2; FRM_FindFrame(E_MP44_2, "E_MP44_2");
+Frame E_MP44_3; FRM_FindFrame(E_MP44_3, "E_MP44_3");
+Frame E_MP44_4; FRM_FindFrame(E_MP44_4, "E_MP44_4");
+Frame E_MP44_5; FRM_FindFrame(E_MP44_5, "E_MP44_5");
+Frame E_MP44_6; FRM_FindFrame(E_MP44_6, "E_MP44_6");
+Frame E_MP44_7; FRM_FindFrame(E_MP44_7, "E_MP44_7");
+Frame E_MP44_8; FRM_FindFrame(E_MP44_8, "E_MP44_8");
+Frame E_MP44_9; FRM_FindFrame(E_MP44_9, "E_MP44_9");
+Frame E_MP44_10; FRM_FindFrame(E_MP44_10, "E_MP44_10");
+
+Frame E_MP40_6; FRM_FindFrame(E_MP40_6, "E_MP40_6");
+Frame E_MP40_7; FRM_FindFrame(E_MP40_7, "E_MP40_7");
+
+Frame E_MP40_16; FRM_FindFrame(E_MP40_16, "E_MP40_16");
+Frame E_MP40_17; FRM_FindFrame(E_MP40_17, "E_MP40_17");
+Frame E_MP40_18; FRM_FindFrame(E_MP40_18, "E_MP40_18");
+Frame E_MP40_19; FRM_FindFrame(E_MP40_19, "E_MP40_19");
+
+
+integer Rnd1;
+integer C1;
+integer C_A;
+integer C_B;
+integer C_C;
+integer C_D;
+SaveGameValue(21, 0);
+}
+goto end;
+
+
+
+//----------------------/OnSignal/----------------------
+OnSignal(1) // Signal from zone_1
+{
+printf("Group_1 signal input");
+goto Start_1;
+}
+
+
+//----------------------/label timers/----------------------
+
+
+//----------------------1----------------------
+label Enemy_group_1:
+
+SaveGameValue(21, 0);
+Rnd1=(_randomint(13));
+block
+{
+C_A=(_LoadGameValue(22));
+C_B=(_LoadGameValue(23));
+C_C=(_LoadGameValue(24));
+C_D=(_LoadGameValue(25)); 
+  if ((Rnd1==0) and (_LoadGameValue(1)==1) and (C_A<>1) and (C_B<>1) and (C_C<>1) and (C_D<>1))
+  {SaveGameValue(21, 1);}
+  if ((Rnd1==1) and (_LoadGameValue(2)==1) and (C_A<>2) and (C_B<>2) and (C_C<>2) and (C_D<>2))
+  {SaveGameValue(21, 2);}
+  if ((Rnd1==2) and (_LoadGameValue(3)==1) and (C_A<>3) and (C_B<>3) and (C_C<>3) and (C_D<>3))
+  {SaveGameValue(21, 3);}
+  if ((Rnd1==3) and (_LoadGameValue(4)==1) and (C_A<>4) and (C_B<>4) and (C_C<>4) and (C_D<>4))
+  {SaveGameValue(21, 4);}
+  if ((Rnd1==4) and (_LoadGameValue(5)==1) and (C_A<>5) and (C_B<>5) and (C_C<>5) and (C_D<>5))
+  {SaveGameValue(21, 5);}
+  if ((Rnd1==5) and (_LoadGameValue(6)==1) and (C_A<>6) and (C_B<>6) and (C_C<>6) and (C_D<>6))
+  {SaveGameValue(21, 6);}
+  if ((Rnd1==6) and (_LoadGameValue(7)==1) and (C_A<>7) and (C_B<>7) and (C_C<>7) and (C_D<>7))
+  {SaveGameValue(21, 7);}
+  if ((Rnd1==7) and (_LoadGameValue(8)==1) and (C_A<>8) and (C_B<>8) and (C_C<>8) and (C_D<>8))
+  {SaveGameValue(21, 8);}
+  if ((Rnd1==8) and (_LoadGameValue(9)==1) and (C_A<>9) and (C_B<>9) and (C_C<>9) and (C_D<>9))
+  {SaveGameValue(21, 9);}
+  if ((Rnd1==9) and (_LoadGameValue(10)==1) and (C_A<>10) and (C_B<>10) and (C_C<>10) and (C_D<>10))
+  {SaveGameValue(21, 10);}
+  if ((Rnd1==10) and (_LoadGameValue(11)==1) and (C_A<>11) and (C_B<>11) and (C_C<>11) and (C_D<>11))
+  {SaveGameValue(21, 11);}
+  if ((Rnd1==11) and (_LoadGameValue(12)==1) and (C_A<>12) and (C_B<>12) and (C_C<>12) and (C_D<>12))
+  {SaveGameValue(21, 12);}
+  if ((Rnd1==12) and (_LoadGameValue(13)==1) and (C_A<>13) and (C_B<>13) and (C_C<>13) and (C_D<>13))
+  {SaveGameValue(21, 13);}
+}
+if (_LoadGameValue(21)==0)
+  {
+goto Enemy_group_1;
+  }
+C1=(_LoadGameValue(21));
+//PrintfNumber("Group #1 go to zone: ",C1);
+delay(20000);
+goto Enemy_group_1;
+
+
+
+//----------------------/label timer/----------------------
+label Start_1:
+
+// Start first enemy group
+
+Rnd1=(_randomint(10000)+5000);
+delay(Rnd1);
+sendsignal (E_MP44_1,1);
+Delay(1500);
+sendsignal (E_MP44_2,1);
+Delay(1500);
+sendsignal (E_MP44_3,1);
+Delay(1500);
+sendsignal (E_MP44_4,1);
+Delay(1500);
+sendsignal (E_MP44_5,1);
+Delay(1500);
+sendsignal (E_MP44_6,1);
+Delay(1500);
+sendsignal (E_MP44_7,1);
+Delay(1500);
+sendsignal (E_MP44_8,1);
+Delay(1500);
+sendsignal (E_MP44_9,1);
+Delay(1500);
+sendsignal (E_MP44_10,1);
+
+Delay(1000);
+sendsignal (E_MP40_16,1);
+Delay(1000);
+sendsignal (E_MP40_17,1);
+Delay(1000);
+sendsignal (E_MP40_18,1);
+Delay(1000);
+sendsignal (E_MP40_19,1);
+
+Delay(1000);
+sendsignal (E_MP40_6,1);
+Delay(1000);
+sendsignal (E_MP40_7,1);
+
+
+
+goto Enemy_group_1;   
+
+
+goto end;
+
+
+
+
+
+//----------------------/END/----------------------
+label end:

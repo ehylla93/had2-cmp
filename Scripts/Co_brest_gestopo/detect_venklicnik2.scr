@@ -1,0 +1,16 @@
+Frame ven_klicnik;	FRM_FindFrame (ven_klicnik,"ven_klicnik");
+
+
+
+
+
+Whenever je(_PlayerInRange(4))
+{
+printf ("signal ven_klicnik");
+SendSignal (ven_klicnik,2);
+
+
+}
+
+
+SetWheneverTime(je, 100);

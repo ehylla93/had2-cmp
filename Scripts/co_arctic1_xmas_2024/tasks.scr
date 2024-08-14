@@ -1,0 +1,36 @@
+
+SaveGameValue(0, 0); //pilot not found
+SetObjectiveStatus(1, 0);  // find pilot
+SetObjectiveStatus(2, 4); // hidden turn on generator
+SetObjectiveStatus(3, 4); // hidden kill enemy
+printf("task init");
+goto loop;
+
+label loop:
+	printf("task loop");
+	if (_LoadGameValue(0) == 0)
+	{
+		SetObjectiveStatus(1, 0);  
+		SetObjectiveStatus(2, 4); 
+		SetObjectiveStatus(3, 4); 
+	}
+	if (_LoadGameValue(0) == 1)
+	{
+		SetObjectiveStatus(2, 0);	
+		SetObjectiveStatus(1, 1);
+
+		MP_EnableSpawnZone("zone1", 0);
+		MP_EnableSpawnZone("zone2", 1);
+	}
+	if (_LoadGameValue(1) == 1)
+	{
+		SetObjectiveStatus(3, 0);
+		SetObjectiveStatus(2, 1);
+
+	}
+	if (_LoadGameValue(2) == 3)
+	{
+		SetObjectiveStatus(3, 1);
+	}
+	delay(10000);
+	goto loop;

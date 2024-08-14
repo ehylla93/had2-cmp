@@ -1,0 +1,32 @@
+// Objective 2 - "Destroy the roadblock on the bridge"
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+FRAME barrier;	FRM_FindFrame(barrier, "tank_barrier");
+FRAME tnt;		FRM_FindFrame(tnt, "tnt_01");
+Frame text;		FRM_FindFrame(text, "text");
+
+SaveGameValue(1, 0);
+SetObjectiveStatus(2, 4);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Boom (_ACTOR_GetState(barrier) == 0)
+{
+printf("sgv1=1");
+SetActorState(tnt, 3);
+CheckpointJoin("barrier_CP_v1", "barrier_CP_v2");
+CheckpointJoin("barrier_CP_h1", "barrier_CP_h2");
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(27001010);		//"OBJECTIVE ACCOMPLISHED: ROADBLOCK DESTROYED"
+Delay(4000);
+SetObjectiveStatus(2, 1);
+SaveGameValue(1, 1);
+Delay(4000);
+SendSignal(text, 2);				//Cross the bridge
+EndScript();
+}
+
+Label END:

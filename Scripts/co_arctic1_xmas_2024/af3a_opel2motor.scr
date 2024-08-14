@@ -1,0 +1,14 @@
+FRAME this;				FRM_GetMyFrame(this);
+
+Car_SetFuel(this, 0);
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnSignal(1)
+{
+	Car_SetFuel(this, 100);
+	Endscript();
+}

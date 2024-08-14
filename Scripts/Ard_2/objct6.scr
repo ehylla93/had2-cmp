@@ -1,0 +1,19 @@
+// Obj 6 - Destroy the Enemy Radio Station 
+// -----------------------------------------
+
+Block
+{
+SetObjectiveStatus(6, 0);
+}
+
+// ----------------------------------------
+
+OnDeath()
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999801);
+Delay(3000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

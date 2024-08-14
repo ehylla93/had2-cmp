@@ -1,0 +1,53 @@
+// alp2_E15_E16_speech - Dummy for alp2_E15, alp2_E16
+
+Block
+{
+Frame E15;	FRM_FindFrame(E15, "alp2_E15");
+Frame E16;	FRM_FindFrame(E16, "alp2_E16");
+}
+
+// ----------------------------------------
+
+Whenever Close (_MP_IsTeamMemberInRange(1, 15))
+{
+SendSignal(E15, 1);
+SendSignal(E16, 1);
+goto END;
+}
+
+Whenever Closer (_MP_IsTeamMemberInRange(1, 10))
+{
+Label Speak:
+SendSignal(E15, 3);
+SendSignal(E16, 3);
+FRM_MorphSpeechDelayed(E15, 15993059, 3, 20);
+FRM_MorphSpeechDelayed(E16, 15993060, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993061, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993062, 3, 20);
+FRM_MorphSpeechDelayed(E16, 15993063, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993064, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993065, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993066, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993067, 3, 20);
+FRM_MorphSpeechDelayed(E16, 15993068, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993069, 3, 20);
+FRM_MorphSpeechDelayed(E16, 15993070, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993071, 3, 20);
+FRM_MorphSpeechDelayed(E16, 15993072, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993073, 3, 20);
+FRM_MorphSpeechDelayed(E16, 15993074, 3, 20);
+FRM_MorphSpeechDelayed(E15, 15993075, 3, 20);
+SendSignal(E15, 2);
+SendSignal(E16, 2);
+Delay(20000);
+GoTo Speak;
+}
+
+OnSignal(1)	// received from E15, E16 on death or on alarm
+{
+SetWhenever(Closer, 0);
+}
+
+// ----------------------------------------	
+	
+Label END:

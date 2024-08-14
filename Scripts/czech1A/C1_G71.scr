@@ -1,0 +1,71 @@
+// Hlidkuje okolo skladu
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame lampa;    FRM_FindFrame(lampa, "l_ndrlamp8.lamp");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(True, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto hlidka;
+}
+
+Whenever player (_PlayerInRange(80))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(65);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Guard();
+goto hlidka;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label hlidka:
+HUMAN_SETMODE_Guard();
+HUMAN_Move("h1");
+HUMAN_Move("h2");
+HUMAN_Move("h3");
+HUMAN_Move("h4");
+HUMAN_LookAround(4);
+HUMAN_TurnAt(lampa);
+HUMAN_SetOptimized(2);
+HUMAN_SetAnim("%%nudazed2", 1000, 3000,false);
+Delay(11000);
+HUMAN_SetOptimized(1);
+HUMAN_Move("h5");
+HUMAN_Move("h6");
+HUMAN_Move("h7");
+HUMAN_LookAround(3);
+GoTo hlidka;
+
+Label END:

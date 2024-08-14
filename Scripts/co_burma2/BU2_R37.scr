@@ -1,0 +1,73 @@
+// BU2_R37 - reinforcement
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(792, false);	// 8, 16, 256, 512
+
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f049");
+
+SetWhenever(machinegun, false);
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+OnAlarm()
+{
+	HUMAN_SETSIGHTRANGE(30);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(792, false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+Whenever machinegun(_SignalReceived(1))	// received from BU2_Type97_04
+{
+	SetWhenever(captured, false);
+	HUMAN_Suspend(false);
+	HUMAN_Move("BU2_R37_01");
+	HUMAN_Move("BU2_R37_02");
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+}
+
+Whenever captured(_SignalReceived(3))	// received from BU2_text
+{
+	SetWhenever(machinegun, false);
+	HUMAN_Suspend(false);
+	HUMAN_Move("BU2_R37_01");
+	HUMAN_Move("BU2_R37_02");
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+}
+
+Whenever activate(_SignalReceived(2))	// received from BU2_Type97_04
+{
+	SetWhenever(machinegun, true);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

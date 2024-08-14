@@ -1,0 +1,77 @@
+
+integer AIEvent;
+frame see;		FRM_FindFrame(see, "dummy_Sq4_See");
+
+
+  SetAlarmType(1023, False);
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(True);
+  goto TheEnd;
+
+
+Whenever XXX ( _SignalReceived(1); )		///////////////////////// DOPLNIT POSLANI 
+{
+  HUMAN_Suspend(False);
+  Delay(100);
+  HUMAN_SETSIGHTRANGE(40);
+  HUMAN_SETHEARRANGE(50);
+  Delay(5000);
+  SetAlarmType(511, True);
+  
+  HUMAN_Move("S1_1"); 
+  HUMAN_Move("S1_2");
+  HUMAN_Move("S1_3");
+  HUMAN_Move("S1_4");
+  HUMAN_Move("Sq1_Dealarm");
+  HUMAN_TurnAt(see);  
+  
+  Goto TheEnd;  		// nic - jsou v grupe s leaderem S1
+}
+  SetWheneverTime(XXX, 2000);
+
+
+OnAlarm()
+{
+  Block
+    {
+      DisableSignals(True);
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Squad2 - 4: ", AIEvent);
+      HUMAN_SETSIGHTRANGE(60);
+      HUMAN_SETHEARRANGE(70);
+    }
+  HUMAN_Stop();
+  EndScript();
+}
+
+OnSignal(5)
+{
+  Goto DeAlarm;
+}
+
+OnAlarmDone()
+{
+Label DeAlarm:
+  DisableSignals(False);
+  SetAlarmType(511, True);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("Sq4_Dealarm");
+  HUMAN_TurnAt(see);
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(7))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

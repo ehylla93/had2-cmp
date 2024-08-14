@@ -1,0 +1,27 @@
+// Opel 4
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame plachta;		FRM_FindFrame(plachta, "Opel_4.Box15");
+}
+
+//------------------------------------------------------------------------
+
+OnDeath()
+{
+Block
+{
+FRM_SetOn(plachta, False);
+}
+EndScript();
+}
+
+Block
+{
+FRM_SetOn(plachta, false);
+}
+goto END;
+
+
+Label END:

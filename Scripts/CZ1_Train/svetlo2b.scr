@@ -1,0 +1,126 @@
+// la_svetlo2.Mesh01 (+svetlonicb)
+Block
+{
+Frame svetlo2b;
+	FRM_FindFrame(svetlo2b, "la_svetlo2.Rectangle01");
+Frame svetlonicb;
+	FRM_FindFrame(svetlonicb, "la_svetlo.Rectangle01");
+Frame light1;
+	FRM_FindFrame(light1, "inner lamp omni_11");
+Frame light2;
+	FRM_FindFrame(light2, "inner lamp omni_12");
+Frame omni1;
+	FRM_FindFrame(omni1, "omni help_25");
+Frame omni2;
+	FRM_FindFrame(omni2, "omni help_26");
+Frame out1;
+	FRM_FindFrame(out1, "window out light effect_4");
+Frame out2;
+	FRM_FindFrame(out2, "window out light effect_5");
+Frame out3;
+	FRM_FindFrame(out3, "window out light effect_6");
+Frame object119;
+	FRM_FindFrame(object119, "Object119");
+Integer zapnute;
+	zapnute=1;
+}
+
+OnHit()
+{
+	Block
+	{
+	DisableSignals(true);
+	FRM_SetOn(svetlo2b, false);
+	FRM_SetOn(light1, false);
+	SendSignal(svetlonicb, 1);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(light2, false);
+	FRM_SetOn(omni1, false);
+	FRM_SetOn(omni2, false);
+	FRM_SetOn(out1, false);
+	FRM_SetOn(out2, false);
+	FRM_SetOn(out3, false);
+	FRM_SetGroupLightMap("nadrazi3", 1);
+	SendSignal(object119, 3);
+	}
+	GoTo end;
+}
+
+OnSignal(1)	// received from vypinac13, 14
+{
+	If(zapnute==1)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo2b, false);
+		FRM_SetOn(svetlonicb, false);
+		FRM_SetOn(light1, false);
+		FRM_SetOn(light2, false);
+		FRM_SetOn(omni1, false);
+		FRM_SetOn(omni2, false);
+		FRM_SetOn(out1, false);
+		FRM_SetOn(out2, false);
+		FRM_SetOn(out3, false);
+		FRM_SetGroupLightMap("nadrazi3", 1);
+		SendSignal(object119, 3);
+			zapnute=0;
+		}
+		GoTo end;
+	}
+	If(zapnute==0)
+	{
+		Block
+		{
+		FRM_SetOn(svetlo2b, true);
+		FRM_SetOn(svetlonicb, true);
+		FRM_SetOn(light1, true);
+		FRM_SetOn(light2, true);
+		FRM_SetOn(omni1, true);
+		FRM_SetOn(omni2, true);
+		FRM_SetOn(out1, true);
+		FRM_SetOn(out2, true);
+		FRM_SetOn(out3, true);
+		FRM_SetGroupLightMap("nadrazi3", 0);
+		SendSignal(object119, 4);
+			zapnute=1;
+		}
+		GoTo end;
+	}
+}
+
+OnSignal(2)	// received from svetlonicb
+{
+	Block
+	{
+	FRM_SetOn(svetlo2b, false);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(omni1, false);
+	FRM_SetOn(omni2, false);
+	FRM_SetOn(out1, false);
+	FRM_SetOn(out2, false);
+	FRM_SetOn(out3, false);
+	FRM_SetGroupLightMap("nadrazi3", 1);
+	SendSignal(object119, 3);
+	DisableSignals(true);
+	}
+	GoTo end;
+}
+
+OnSignal(31)	// received from transformator_2
+{
+	Block
+	{
+	FRM_SetOn(svetlo2b, false);
+	FRM_SetOn(light1, false);
+	FRM_SetOn(omni1, false);
+	FRM_SetOn(omni2, false);
+	FRM_SetOn(out1, false);
+	FRM_SetOn(out2, false);
+	FRM_SetOn(out3, false);
+	FRM_SetGroupLightMap("nadrazi3", 1);
+	SendSignal(object119, 3);
+	DisableSignals(true);
+	}
+}
+
+Label end:

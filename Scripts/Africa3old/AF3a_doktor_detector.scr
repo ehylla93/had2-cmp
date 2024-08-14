@@ -1,0 +1,14 @@
+// AF3a_doctor_detector - when player enters mosque
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME doktor; 		FRM_FindFrame(doktor, "AF3a_doktor");
+FRAME pacient02;		FRM_FindFrame(pacient02, "AF3a_pacient02");
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever detect (_PlayerInRange(2)){
+  SendSignal(pacient02, 16);
+  SendSignal(doktor, 16);
+}
+
+// -------------------------------------------------------------------------------------------------------------

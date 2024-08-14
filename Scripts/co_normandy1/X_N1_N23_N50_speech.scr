@@ -1,0 +1,36 @@
+// X_N23_N50_speech - speech dummy for N23, N50
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame n23;
+	FRM_FindFrame(n23, "N23");
+Frame n50;
+	FRM_FindFrame(n50, "N50");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever speak(_SignalReceived(1))	// signal received from N50
+{
+	GoTo rozhovor;
+}
+
+OnSignal(2)	// received from N23, N50 on death or on alarm
+{
+	EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(n23, 16993234, 3, 20);
+	FRM_MorphSpeechDelayed(n50, 16993235, 3, 20);
+	FRM_MorphSpeechDelayed(n23, 16993236, 3, 20);
+	FRM_MorphSpeechDelayed(n23, 16993237, 3, 20);
+	FRM_MorphSpeechDelayed(n50, 16993238, 3, 20);
+	FRM_MorphSpeechDelayed(n23, 16993239, 3, 20);
+	SendSignal(n23, 2);
+	SendSIgnal(n50, 3);
+	GoTo end;
+
+Label end:

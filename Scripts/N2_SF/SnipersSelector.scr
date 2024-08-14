@@ -1,0 +1,157 @@
+// Sniper Selector
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame S01;	FRM_FindFrame(S01,"SF_S01");
+	Integer Es01;	Es01=1;
+Frame S02;	FRM_FindFrame(S02,"SF_S02");
+	Integer Es02;	Es02=1;
+Frame S03;	FRM_FindFrame(S03,"SF_S03");
+	Integer Es03;	Es03=1;
+Frame S04;	FRM_FindFrame(S04,"SF_S04");
+	Integer Es04;	Es04=1;
+Frame S05;	FRM_FindFrame(S05,"SF_S05");
+	Integer Es05;	Es05=1;
+Frame S06;	FRM_FindFrame(S06,"SF_S06");
+	Integer Es06;	Es06=1;
+Frame S07;	FRM_FindFrame(S07,"SF_S07");
+	Integer Es07;	Es07=1;
+
+Integer SnipVyber;
+	SnipVyber =_RandomInt(2);
+
+Integer pocitac;
+	pocitac=0;
+
+SetObjectiveStatus(4, 0);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Mission_Start (_SignalReceived(1))
+{
+
+If(Snipvyber==0)
+{
+SendSignal(S01, 1);
+SendSignal(S04, 1);
+SendSignal(S06, 1);
+}
+
+If(Snipvyber==1)
+{
+SendSignal(S04, 1);
+SendSignal(S02, 1);
+SendSignal(S05, 1);
+SendSignal(S06, 1);
+}
+
+If(Snipvyber==2)
+{
+SendSignal(S03, 1);
+SendSignal(S04, 1);
+SendSignal(S05, 1);
+}
+goto Front;
+}
+
+// ----------------------------------------------
+
+Label Front:
+
+
+Block
+{
+If(Es01 == 1)
+{
+
+If(_Actor_GetState(S01)==0)
+{	
+pocitac=pocitac+1;
+Es01=0;	
+}	
+}
+
+If(Es02 == 1)
+{
+
+If(_Actor_GetState(S02)==0)
+{
+pocitac=pocitac+1;
+Es02=0;
+}
+}
+
+If(Es03 == 1)
+{
+
+If(_Actor_GetState(S03)==0)
+{
+pocitac=pocitac+1;
+Es03=0;
+}
+}
+
+If(Es04 == 1)
+{
+
+If(_Actor_GetState(S04)==0)
+{
+pocitac=pocitac+1;
+Es04=0;
+}
+}
+
+If(Es05 == 1)
+{
+
+If(_Actor_GetState(S05)==0)
+{
+pocitac=pocitac+1;
+Es05=0;
+}
+}
+
+If(Es06 == 1)
+{
+
+If(_Actor_GetState(S06)==0)
+{
+pocitac=pocitac+1;
+Es06=0;
+}
+}
+
+If(Es07 == 1)
+{
+
+If(_Actor_GetState(S07)==0)
+{
+pocitac=pocitac+1;
+Es07=0;
+}
+}
+
+}
+
+
+If ((pocitac == 4) OR (pocitac > 4))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993405);
+SetObjectiveStatus(4, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+Delay(200);
+goto END;
+}
+
+Delay(1000);
+
+goto Front;
+
+
+
+Label END:

@@ -1,0 +1,103 @@
+// Obj 3 - Plant explosives in suitable locations.
+// ------------------------------------
+
+Block
+{
+Frame B1;		FRM_FindFrame(B1, "01_dynamite_01");
+Frame B2;		FRM_FindFrame(B2, "01_dynamite_02");
+Frame B3;		FRM_FindFrame(B3, "01_dynamite_03");
+Frame B4;		FRM_FindFrame(B4, "02_dynamite_01");
+Frame B5;		FRM_FindFrame(B5, "02_dynamite_02");
+Frame Obj5;		FRM_FindFrame(Obj5,"obj5");
+Frame Reinf;	FRM_FindFrame(Reinf, "Reinf2");
+Frame text;		FRM_FindFrame(text,"text");
+
+Integer gv1 = 0;
+Integer gv2 = 0;
+Integer gv4 = 0;
+}
+
+SetWhenever(Planted, 1);
+SetWhenever(Planted2, 0);
+SetObjectiveStatus(3, 0);
+goto END;
+
+// ------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Planted, 1);
+SendSignal(B1, 1);
+SendSignal(B2, 1);
+SendSignal(B3, 1);
+SendSignal(B4, 1);
+SendSignal(B5, 1);
+}
+
+Whenever Planted (((((_ACTOR_GetState(B1) == 1) And (_ACTOR_GetState(B2) == 1))  And (_ACTOR_GetState(B3) == 1)) And (_ACTOR_GetState(B4) == 1)) And (_ACTOR_GetState(B5) == 1))
+{	
+SendSignal(text, 6);
+
+gv1 =_LoadGameValue(1);
+printfnumber("GameValue1: ", gv1);
+if(gv1==1)
+{
+	gv2 =_LoadGameValue(2);
+	printfnumber("GameValue2: ", gv2);
+	if(gv2==1)
+	{
+		gv4 =_LoadGameValue(4);
+		printfnumber("GameValue1: ", gv4);
+		if(gv4==1)
+		{
+		SetObjectiveStatus(5, 0); SendSignal(Obj5, 1);
+		}
+	}
+}
+
+SetObjectiveStatus(3, 1);
+SaveGameValue(3, 1);
+SendSignal(Reinf, 2);
+goto END;
+}
+
+Whenever TNT_removed (_SignalReceived(2))
+{
+SetWhenever(Planted2, 1);
+Delay(500);
+SendSignal(text, 7);
+SetObjectiveStatus(3, 0);
+SaveGameValue(3, 2);
+SendSignal(Obj5, 2);
+goto END;
+}
+
+Whenever Planted2 ((_ACTOR_GetState(B1) == 1) And (_ACTOR_GetState(B2) == 1))
+{
+SendSignal(text, 6);
+
+gv1 =_LoadGameValue(1);
+printfnumber("GameValue1: ", gv1);
+if(gv1==1)
+{
+	gv2 =_LoadGameValue(2);
+	printfnumber("GameValue2: ", gv2);
+	if(gv2==1)
+	{
+		gv4 =_LoadGameValue(4);
+		printfnumber("GameValue1: ", gv4);
+		if(gv4==1)
+		{
+		SetObjectiveStatus(5, 0); SendSignal(Obj5, 1);
+		}
+	}
+}
+
+SetObjectiveStatus(3, 1);
+SaveGameValue(3, 1);
+EndScript();
+}
+
+// ----------------------------------------
+
+Label END:

@@ -1,0 +1,64 @@
+// 01_G26 - A1 MG post attacker
+// ----------------------------------------
+
+Block
+{
+Frame MG;		FRM_FindFrame(MG, "01_G24");
+Frame Cp;		FRM_FindFrame(Cp, "01_G22");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f026");
+
+HUMAN_SETSIGHTRANGE(115);
+HUMAN_SETHEARRANGE(70);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+FRM_MorphSpeech(me, 90002046, 10, 50);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever Spawn (_Actor_GetState(MG) == 0)
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_WeaponUp(1);
+HUMAN_MoveToFrame(Cp, 0);
+SetAlarmType(1023, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

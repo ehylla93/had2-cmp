@@ -1,0 +1,95 @@
+// AF4_35
+// -------------------------------------------------------------------------------------------------------------
+
+block {
+  INTEGER Atype	= 0;
+  FRAME dummy_rozhovor;			FRM_FindFRAME(dummy_rozhovor, "dummy_rozhovor1");
+  FRAME this;					FRM_GetMyFrame(this);
+
+  SetAlarmType(1023, true);
+  SetAlarmType(14, false);
+  FRAME dustojnik;				FRM_FindFrame(dustojnik, "AF4_34");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnSignal(1){  
+  SetAlarmType(2, true);
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SendSignal(dummy_rozhovor, 2);
+    Atype = _GetAlarmType();
+    HUMAN_Stop();
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(0);
+    HUMAN_SetMODE_Crouch();
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(512, false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(11){
+  HUMAN_SetAnim("%%rozhovor1", 200, 200, true);
+  Delay(2000);
+  HUMAN_SetAnim("", 200, 200, false);
+  goto END;
+}
+
+OnSignal(15){
+  HUMAN_SetAnim("%%rozhovor1", 200, 200, true);
+  Delay(2000);
+  HUMAN_SetAnim("", 200, 200, false);
+  goto END;
+}
+
+OnSignal(17){
+  HUMAN_SetAnim("%%rozhovor1", 200, 200, true);
+  Delay(2000);
+  HUMAN_SetAnim("", 200, 200, false);
+  goto END;
+}
+
+OnSignal(19){
+  HUMAN_SetAnim("%%rozhovor1", 200, 200, true);
+  Delay(2000);
+  HUMAN_SetAnim("", 200, 200, false);
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(09991828);		//"OPTIONAL OBJECTIVE ACCOMPLISHED: INFORMATION ON DEPLOYMENT OF GERMAN REINFORCEMENTS OBTAINED."
+  Delay(3500);
+  SUBTITLES_SetOn(false);
+  SetObjectiveStatus(9, 1);
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+
+Label END:

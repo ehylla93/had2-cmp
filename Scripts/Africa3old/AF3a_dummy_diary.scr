@@ -1,0 +1,43 @@
+AddDiaryText(27);  
+Delay(1000);
+INTEGER num_players = _GetNumMembersOfClientTeam();
+INTEGER odvisilali;
+
+// MORE PLAYERS – WARNING SENT
+// 4131 "Ve stejném duchu, v jakém se nám štestí vyhýbá po celou dobu našeho pobytu v Africe, jsme dopadli i s ukoristeným vozem. Po chvíli jízdy se mu prehrál motor a nebyl schopen pokracovat v ceste. Na dohled od nás byla oáza. Po krátkém pruzkumu dalekohledem bylo jasné, že je obsazena jednotkami Africa Corps a nám opet nezbylo nic jiného než vyzvat Osud a zahrát si o naše životy s pouštní pevností plnou Nemcu. Nádavkem k výhre jsme dostali nákladní auto, které opravil nemecký mechanik. Z nemeckého spojare jsme už takovou radost nemeli, možná se mu podarilo podat zprávu a zavolat posily, cekáme je nejdríve v noci."
+
+// MORE PLAYERS – WARNING NOT SENT
+// 4132 "Ve stejném duchu, v jakém se nám štestí vyhýbá po celou dobu našeho pobytu v Africe, jsme dopadli i s ukoristeným vozem. Po chvíli jízdy se mu prehrál motor a nebyl schopen pokracovat v ceste. Na dohled od nás byla oáza. Po krátkém pruzkumu dalekohledem bylo jasné, že je obsazena jednotkami Africa Corps a nám opet nezbylo nic jiného než vyzvat Osud a zahrát si o naše životy s pouštní pevností plnou Nemcu. Nádavkem k výhre jsme dostali nákladní auto, které opravil nemecký mechanik. Nemeckého spojare jsme umlceli dríve, než stacil odeslat zprávu o prepadení.
+
+// LONE WOLF – WARNING SENT
+// 4133 "Ve stejném duchu, v jakém se mi štestí vyhýbá po celou dobu našeho pobytu v Africe, jsem dopadl i s ukoristeným vozem. Po chvíli jízdy se mu prehrál motor a nebyl schopen pokracovat v ceste. Na dohled ode mne byla oáza. Po krátkém pruzkumu dalekohledem bylo jasné, že je obsazena jednotkami Africa Corps a mne nezbylo nic jiného než vyzvat Osud a zahrát si o život s pouštní pevností plnou Nemcu. Nádavkem k výhre jsem dostal nákladní auto, které opravil nemecký mechanik. Z nemeckého spojare jsem už takovou radost nemel, možná se mu podarilo podat zprávu a zavolat posily, cekám je nejdríve v noci. Zacínám si myslet, že jsem elitní voják, sám proti pevnosti – snad to stihnu nekomu vyprávet."
+
+// LONE WOLF – WARNING NOT SENT
+// 4134 "Ve stejném duchu, v jakém se mi štestí vyhýbá po celou dobu našeho pobytu v Africe, jsem dopadl i s ukoristeným vozem. Po chvíli jízdy se mu prehrál motor a nebyl schopen pokracovat v ceste. Na dohled ode mne byla oáza. Po krátkém pruzkumu dalekohledem bylo jasné, že je obsazena jednotkami Africa Corps a mne nezbylo nic jiného než vyzvat Osud a zahrát si o život s pouštní pevností plnou Nemcu. Nádavkem k výhre jsem dostal nákladní auto, které opravil nemecký mechanik. Nemeckého spojare jsem umlcel dríve, než stacil poslat zprávu o prepadení. Zacínám si myslet, že jsem elitní voják, sám proti pevnosti – snad to stihnu nekomu vyprávet."
+
+OnExit()
+{
+  odvisilali = _LoadGameValue(20);
+  if(num_players == 1)
+  {
+    if(odvisilali)
+    {
+      AddDiaryText(4133);  
+    }
+    else
+    {
+      AddDiaryText(4134);  
+    }
+  }
+  else
+  {
+    if(odvisilali)
+    {
+      AddDiaryText(4131);  
+    }
+    else
+    {
+      AddDiaryText(4132);  
+    }
+  }
+}

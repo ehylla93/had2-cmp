@@ -1,0 +1,21 @@
+Block
+{
+
+Frame Ally1;		FRM_FindFrame(Ally1, "AF1_tank01_03");
+Frame Ally2;		FRM_FindFrame(Ally2, "Ge_");
+Frame Ally3;		FRM_FindFrame(Ally3, "posila2b");
+
+SetObjectiveStatus(4, 4);	// civilians
+
+}
+
+////////////////
+
+Whenever alive (((_Actor_GetState(Ally1)==1) And (_Actor_GetState(Ally2)==1) And (_Actor_GetState(Ally3)==1)))
+{
+Delay(5000);
+SetObjectiveStatus(4, 1);
+EndScript();
+}
+
+Label end:

@@ -1,0 +1,85 @@
+// AL2_19 - soldier - moves stairs up and down (loop)
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Integer aievent = 0;
+integer a = 1;
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Silence();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+}
+if ((((aievent==2) or (aievent==16)) or (aievent==256)) or (aievent==4))
+{
+SetAlarmType(278,0);
+HUMAN_Stop();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(278,1);
+goto mode1;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+	SetAlarmType(648,0);
+	HUMAN_SetAlarm(false);
+	GoTo mode1;
+}
+
+Whenever alarmed(_SignalReceived(1))	// received from detectors after archivalarm
+{
+	GoTo mode0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label mode0:
+	HUMAN_Suspend(false);
+	SetAlarmType(648,0);
+Label mode1:			// after alarm
+	if (a==2)	{	goto 2;	}
+
+label 1:
+	a=1;
+	HUMAN_Move("al2_19_02");
+	a=2;
+	delay(2000);
+	
+label 2:
+	HUMAN_Move("al2_19_01");
+	a=1;
+	delay(2000);
+	GoTo 1;
+
+Label end:

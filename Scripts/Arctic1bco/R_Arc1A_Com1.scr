@@ -1,0 +1,117 @@
+	
+	Frame l_sed1;		
+	Frame l_sed1b;
+	Frame vysadek;
+	Frame endCUTSCENE;		FRM_FindFrame(endCUTSCENE, "dummy_endCUT1");
+	Frame player;
+	Frame duplicated_player;
+	Frame padak;
+	Frame joint;
+	Frame guncover;
+	Frame guncover_b;
+	Frame padak_zahrabany;		FRM_FindFrame(padak_zahrabany, "l_pdk_zhr_");
+
+
+
+
+OnCutscene(1)
+{
+
+	Block
+	{
+		FRM_FindFrame(l_sed1,"dummy_s1");
+		FRM_GetMyFrame(player);
+		CSC_DuplicateHuman(player, duplicated_player,"_PLAYER_cuts_sasik1");
+		FRM_TeleportNearFrame(duplicated_player, l_sed1, true);
+		CSC_FreeHands(duplicated_player);
+		CSC_FreeBackPack(duplicated_player);
+
+
+		FRM_FindFrame(padak,"d_padak_.padak" );
+		FRM_FindChildFrame(joint, "d", duplicated_player);
+		FRM_TeleportNearFrame(padak, joint, true);	
+		FRM_FindFrame(guncover,"d_guncover_" );
+		FRM_FindFrame(guncover_b,"d_guncover_b" );
+		FRM_SetOn(guncover, false);
+		FRM_SetOn(guncover_b, true);
+		FRM_SetOn(padak, true);
+		FRM_SetOn(padak_zahrabany, true);
+
+	}
+
+FRM_SetAnimation(duplicated_player, "%%sasSED1.i3d",true);
+
+Delay(35600);
+
+
+	Block
+	{
+	FRM_SetOn(guncover, true);
+	FRM_SetAnimation(duplicated_player, "%%sasSED1.i3d",true);
+	}
+Delay(23000);
+FRM_SetAnimation(duplicated_player, "",true);
+FRM_SetAnimation(duplicated_player, "%%sedisvetlo.i3d",true);
+Delay(6000);
+FRM_SetAnimation(duplicated_player, "",true);
+
+	Block
+	{
+	FRM_FindFrame(l_sed1b,"dummy_s1b");
+////	FRM_TeleportNearFrame(duplicated_player, l_sed1, false);	
+	FRM_TeleportNearFrame(duplicated_player, l_sed1b, true);
+	}
+
+Delay(3000);
+
+	Block
+	{
+	FRM_SetOn(guncover, true);
+	FRM_SetOn(guncover_b, false);
+	
+	FRM_TeleportNearFrame(guncover, joint, true);
+	FRM_SetAnimation(duplicated_player, "%%vysadek1n.I3D",true);
+	}
+Delay(12000);
+
+
+Block
+	{
+	FRM_SetAnimation(duplicated_player, "",true);
+
+	
+	FRM_TeleportNearFrame(duplicated_player, endCUTSCENE, true);
+	}
+Delay(19000);
+FRM_SetAnimation(duplicated_player, "%%balpadak.i3d",true);
+
+Delay(5000);
+
+}
+
+
+OnCutsceneDone(1)
+{
+	Block
+	{
+////	FRM_SetOn(guncover, false);
+////	FRM_SetOn(padak, false);
+
+	FRM_SetAnimation(duplicated_player, "",true);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	FRM_TeleportNearFrameBack(padak);
+	FRM_FindFrame(joint, "");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+	CSC_ReleaseHuman(duplicated_player);
+	FRM_FindFrame(duplicated_player, "");
+	FRM_SetOn(padak_zahrabany, false);
+	}
+EndScript();
+}
+
+// MO : ???
+//HUMAN_SETSIGHTRANGE(40, 40);

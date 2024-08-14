@@ -1,0 +1,50 @@
+block
+{
+Frame hrom1;		FRM_FindFrame(hrom1, "s_hrom1");
+Frame hrom2;		FRM_FindFrame(hrom2, "s_hrom2");
+
+
+FRM_SetOn(hrom1, 0);
+FRM_SetOn(hrom2, 0);
+
+
+integer bzuch;	
+integer delayx;			
+}
+
+
+
+OnSignal(1)
+{
+bzuch =_RandomInt(4);
+delayx = (1000+_RandomInt(3000));
+
+if (bzuch==0)
+{
+delay (delayx);
+block
+{
+FRM_SetOn(hrom1, 1);
+
+}
+}
+
+
+if (bzuch==2)
+{
+delay (delayx);
+block
+{
+FRM_SetOn(hrom2, 1);
+
+}
+}
+
+
+
+}
+
+
+
+
+

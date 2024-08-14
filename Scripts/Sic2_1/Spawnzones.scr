@@ -1,0 +1,28 @@
+// Spawnzones
+// ----------------------------------------------
+
+Block
+{
+Frame Key_Box;		FRM_FindFrame(Key_Box, "Keybox_01");
+Frame Key;
+
+SetWhenever(Key_Lost, 0);
+}
+
+Whenever Zone2_TurnOff (_SignalReceived(1))
+{
+MP_EnableSpawnZone("zone2", 0);
+MP_EnableSpawnZone("zone1", 1);
+EndScript();
+}
+
+Whenever Key_Found (_MP_IsItemInTeamInventory(1, 241, Key))
+{
+SetWhenever(Key_Lost, 1);
+}
+
+Whenever Key_Lost (!_MP_IsItemInTeamInventory(1, 241, Key))
+{
+SetWhenever(Key_Found, 1);
+SetActorState(Key_Box, 1);
+}

@@ -1,0 +1,22 @@
+//Truck dummies (n_truck_d1, n_truck_d2)
+
+Frame E07;		FRM_FindFrame(E07, "n_E07");
+Frame truck;	FRM_FindFrame(truck, "n_truck_4");
+frame timer;	FRM_FindFrame(timer, "n_E03_timer");
+integer a;
+goto end;
+
+Whenever PIR (_PlayerInRange(35))
+{
+SetWhenever(PIR, false);
+printf("Formation active");
+}
+
+Label formation:
+SendSignal(timer, 1);
+a=_RandomInt(2);
+if(a==0){ printf("by truck"); SendSignal(truck, 1); }
+if(a==1){ printf("by foot"); SendSignal(E07, 2); }
+EndScript();
+
+Label end:

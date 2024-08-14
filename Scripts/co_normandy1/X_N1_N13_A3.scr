@@ -1,0 +1,10 @@
+// N13_A3 - activator
+
+Block {
+Frame N13;	FRM_FindFrame(N13, "N13");
+}
+
+Whenever activate(_PlayerInRange(2))
+{
+	SendSignal(N13, 1);
+}

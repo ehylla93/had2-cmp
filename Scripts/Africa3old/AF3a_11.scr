@@ -1,0 +1,244 @@
+// AF3a_11 - walking on the fortification
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME synchronizer;  	FRM_FindFrame(synchronizer, "dummy_1113_detector");
+  FRAME alarm_01;  		FRM_FindFrame(alarm_01, "dummy_11_alarm01");
+  FRAME alarm_02;  		FRM_FindFrame(alarm_02, "dummy_11_alarm02");
+  FRAME alarm_wp;  		FRM_FindFrame(alarm_wp, "dummy_pristup01");
+  FRAME look1_01;  		FRM_FindFrame(look1_01, "AF3a_11_look1_01");
+  FRAME look1_02;		FRM_FindFrame(look1_02, "AF3a_11_look1_02");
+  FRAME look2_01;		FRM_FindFrame(look2_01, "AF3a_11_look2_01");
+  FRAME look3_01;		FRM_FindFrame(look3_01, "AF3a_11_look3_01");
+  FRAME look4_01;		FRM_FindFrame(look4_01, "AF3a_11_look4_01");
+  FRAME look4_02;		FRM_FindFrame(look4_02, "AF3a_11_look4_02");
+  FRAME en13;			FRM_FindFrame(en13, "AF3a_13");
+  FRAME dummy_alarm;	FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME bottle;		FRM_FindFrame(bottle, "");
+  INTEGER cnt 			= 0;
+  INTEGER rnd 		= 0;
+  INTEGER torally		= 1;
+  INTEGER Atype		= 0;
+  INTEGER atalertpos		= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("11: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    DisableSignals(true);
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+    printfnumber("11: ", Atype);
+  }
+
+  If((Atype == 4)){
+    HUMAN_SetAlarm(false);
+    SetAlarmType(4, False);	// kroky     
+    SendSignal(synchronizer, 1);
+    SendSignal(en13, 10);
+    if(torally == 1){
+      goto TORALLYPOINT;
+    }
+  }
+
+  If(!atalertpos){
+    goto ALERT;
+  }
+
+  printf("signal sender 11");
+  SendSignal(dummy_alarm, 1);
+  HUMAN_SetSniper(true, 5);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  DisableSignals(false);
+  HUMAN_SETSIGHTRANGE(70);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto ALERT;
+}
+
+OnSignal(1){
+  HUMAN_Stop();
+  Delay(200);
+  printf(" Karl :: Hey Helmut, I have heard some rustle down there....");
+  Delay(4000);
+  printf(" Karl :: I suppose...");
+  Delay(1000);
+}
+
+OnSignal(2){
+  HUMAN_Stop();
+  Delay(2000);
+  printf(" Karl :: I don't know, I heard nothing...");
+  Delay(2000);
+}
+
+OnSignal(4){
+  HUMAN_Stop();
+  Delay(200);
+  printf(" Karl :: Absolutely, something rustled along the wall ...");
+  Delay(4000);
+  printf(" Karl :: I'll take a look ...");
+  Delay(100);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetAlarm(false);
+  HUMAN_Move("AF3a_13_alarm");
+  Delay(1000);
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+  HUMAN_SETMODE_Walk();
+  goto ACTIVITY;
+}
+
+OnSignal(10){
+Label TORALLYPOINT:
+  if(torally == 1){
+    torally = 0;
+    HUMAN_Stop();
+    HUMAN_SETMODE_Walk();
+    HUMAN_Move("AF3a_11_03");		// prejde rychleji na misto pobliz AF13 (aby mohli kecat)
+    HUMAN_SETMODE_Guard();
+    Delay(20000);
+    SetAlarmType(4, True);	// kroky     
+    torally = 1;
+    HUMAN_SETMODE_Guard();
+    HUMAN_SetAlarm(false);
+    goto ACTIVITY;
+  }
+}
+
+OnSignal(20){
+Label ALERT:
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableSignals(true);
+    HUMAN_Stop();
+    HUMAN_SETSIGHTRANGE(400);
+  }
+  DisableSignals(false);
+  HUMAN_SetMODE_Run();
+  HUMAN_SetMODE_Crouch();
+  HUMAN_Move("AF3a_11_alert");
+  HUMAN_TurnAt(alarm_wp);
+  atalertpos = 1;
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();			//guard
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  SetAlarmType(4, True);	// kroky     
+
+Label ACTIVITY:
+  cnt = cnt + 1;
+  If(cnt == 3){
+    goto PATH_DRINK;
+  }
+
+Label PATH_COMMON:
+  HUMAN_Move("AF3a_11_01");
+  Delay(1000);
+  HUMAN_TurnAt(look1_01);
+  Delay(1500);
+  HUMAN_TurnAt(look1_02);
+  Delay(1500);
+  HUMAN_TurnAt(look4_01);
+  Delay(1000);
+  HUMAN_Move("AF3a_11_05");
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_11_02");
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("AF3a_11_03");
+  Delay(5000);
+  HUMAN_TurnAt(look4_01);
+  Delay(1500);
+  HUMAN_TurnAt(look4_02);
+  Delay(1500);
+  HUMAN_Move("AF3a_11_02");
+  HUMAN_TurnAt(look2_01);
+  Delay(1500);
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_11_05");
+  HUMAN_SetOptimized(1);
+goto ACTIVITY;
+
+Label PATH_DRINK:
+  HUMAN_Move("AF3a_11_01");
+  Delay(1000);
+  HUMAN_TurnAt(look1_01);
+  Delay(1500);
+  HUMAN_TurnAt(look1_02);
+  HUMAN_ACTIVITY_Hot();
+  Delay(1500);
+  HUMAN_Move("AF3a_11_03");
+  Delay(5000);
+  HUMAN_TurnAt(look4_01);
+  HUMAN_ACTIVITY_Hot();
+  Delay(1500);
+  HUMAN_TurnAt(look4_02);
+  Delay(1500);
+  HUMAN_Move("AF3a_11_04");
+  HUMAN_TurnAt(look3_01);
+  HUMAN_ACTIVITY_Hot();
+  Delay(1000);
+//  HUMAN_ACTIVITY_Turk();
+  HUMAN_SetAnim("%%sedimL4", 500, 500, true);
+  Delay(4000);
+//  HUMAN_ACTIVITY_DrinkBottle(bottle);
+  Delay(3000);
+
+  HUMAN_SetAnim("", 500, 500, false);
+  HUMAN_Move("AF3a_11_05");
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_11_02");
+  HUMAN_TurnAt(look2_01);
+  HUMAN_SetOptimized(1);
+  HUMAN_ACTIVITY_Smoke(true);
+    rnd = _RandomInt(10000) + 15000;
+  Delay(rnd);
+  HUMAN_ACTIVITY_Smoke(false);
+  HUMAN_SetOptimized(0);
+  HUMAN_Move("AF3a_11_03");
+  Delay(5000);
+  HUMAN_Move("AF3a_11_02");
+  Delay(500);
+  HUMAN_ACTIVITY_Hat();
+  HUMAN_Move("AF3a_11_04");
+  HUMAN_TurnAt(look3_01);
+  HUMAN_WeaponOnArm(0);
+  Delay(500);
+  HUMAN_SetOptimized(1);
+  HUMAN_ACTIVITY_Turk();
+    rnd = _RandomInt(10000) + 20000;
+  Delay(rnd);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SetOptimized(0);
+  Delay(500);
+  HUMAN_WeaponOnArm(1);
+  HUMAN_Move("AF3a_11_05");
+  HUMAN_SetOptimized(1);
+goto ACTIVITY;
+
+Label END:

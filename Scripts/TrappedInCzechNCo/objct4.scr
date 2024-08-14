@@ -1,0 +1,25 @@
+// Obj 4 - Destroy the Enemy Heavy Equipment
+// -----------------------------------------
+
+Block
+{
+Frame K1;	FRM_FindFrame(K1,"La_tiger_1");
+Frame K2;	FRM_FindFrame(K2,"La_tiger_2");
+Frame K3;	FRM_FindFrame(K3,"La_tiger_3");
+Frame K4;	FRM_FindFrame(K4,"La_tiger_4");
+Frame K5;	FRM_FindFrame(K5,"La_tiger_5");
+Frame K6;	FRM_FindFrame(K6,"La_tiger_6");
+Frame K7;	FRM_FindFrame(K7,"La_tiger_7");
+Frame Obj4;	FRM_FindFrame(Obj4,"obj4");
+
+SetObjectiveStatus(4, 0);
+}
+
+// -----------------------------------------
+
+Whenever Heavy_Equipment_Destroyed (((((((_Actor_GetState(K1)==0) And (_Actor_GetState(K2)==0)) And (_Actor_GetState(K3)==0)) And (_Actor_GetState(K4)==0)) And (_Actor_GetState(K5)==0)) And (_Actor_GetState(K6)==0)) And (_Actor_GetState(K7)==0))
+{
+Delay(2500);
+SetObjectiveStatus(4, 1);
+EndScript();
+}

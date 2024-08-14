@@ -1,0 +1,54 @@
+// Obj 2, Seize the Western Machinegun position
+// --------------------------------------------------
+
+Block
+{
+Frame s1;	FRM_FindFrame(s1,"S0_G05");
+Frame s2;	FRM_FindFrame(s2,"S0_G06");
+Frame s3;	FRM_FindFrame(s3,"S0_H01");
+Frame s4;	FRM_FindFrame(s4,"S0_H02");
+Frame s5;	FRM_FindFrame(s5,"S0_H03");
+Frame s6;	FRM_FindFrame(s6,"S0_H04");
+Frame s7;	FRM_FindFrame(s7,"S0_H05");
+Frame s8;	FRM_FindFrame(s8,"S0_H06");
+Frame s9;	FRM_FindFrame(s9,"CZ_S01");
+Frame s10;	FRM_FindFrame(s10,"CZ_S02");
+Frame s11;	FRM_FindFrame(s11,"CZ_S03");
+Frame s12;	FRM_FindFrame(s12,"CZ_S04");
+Frame s13;	FRM_FindFrame(s13,"CZ_S05");
+Frame s14;	FRM_FindFrame(s14,"CZ_S06");
+Frame s15;	FRM_FindFrame(s15,"CZ_S07");
+Frame s16;	FRM_FindFrame(s16,"CZ_S08");
+Frame s17;	FRM_FindFrame(s17,"CZ_S09");
+Frame s18;	FRM_FindFrame(s18,"CZ_S10");
+Frame s19;	FRM_FindFrame(s19,"T3_E05");
+Frame s20;	FRM_FindFrame(s20,"T3_E06");
+
+
+SetWhenever(CountDead, 0);
+SetWhenever(Player, 0);
+}
+
+// --------------------------------------------------
+
+Whenever CountDead ((((((((((((((((((((_Actor_GetState(s1)==0) And (_Actor_GetState(s2)==0)) And (_Actor_GetState(s3)==0)) And (_Actor_GetState(s4)==0)) And (_Actor_GetState(s5)==0)) And (_Actor_GetState(s6)==0)) And (_Actor_GetState(s7)==0)) And (_Actor_GetState(s8)==0)) And (_Actor_GetState(s9)==0)) And (_Actor_GetState(s10)==0)) And (_Actor_GetState(s11)==0)) And (_Actor_GetState(s12)==0)) And (_Actor_GetState(s13)==0)) And (_Actor_GetState(s14)==0)) And (_Actor_GetState(s15)==0)) And (_Actor_GetState(s16)==0)) And (_Actor_GetState(s17)==0)) And (_Actor_GetState(s18)==0)) And (_Actor_GetState(s19)==0)) And (_Actor_GetState(s20)==0))
+{
+SetWhenever(Player, 1);
+goto END;
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(CountDead, 1);
+SetObjectiveStatus(2, 0);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(300))
+{
+SetObjectiveStatus(2, 1);
+EndScript();
+}
+
+
+Label END:

@@ -1,0 +1,84 @@
+// posila16
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+FRAME Salter; 			FRM_FindFrame(Salter, "AF1_tank01_03");
+FRAME radio; 			FRM_FindFrame(radio, "m_b1_radio_");
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+FRM_SwitchFaceTexture(me, "e_f039");
+}
+HUMAN_Suspend(true);
+
+OnSignal(1)	// received from suspend detektor2 whenever player in range 45
+{
+	Block
+	{
+//	DisableSignals(true);
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Walk();
+	HUMAN_SETAIMODE_Zombie();
+	HUMAN_SETSIGHTRANGE(15);
+	}
+	HUMAN_Move("posila16_01");
+	HUMAN_SetOptimized(2);
+}
+
+OnSignal(5)	// received from Salter
+{
+	Block
+	{
+	SetAlarmType(1023,1);
+	HUMAN_SETSIGHTRANGE(35);
+	HUMAN_SETHEARRANGE(35);
+	}
+	HUMAN_TurnAt(Salter);
+  	HUMAN_IllFire(Salter, 1500);
+	SendSignal(Salter, 1);
+	HUMAN_IllFire(Salter, 1500);
+	HUMAN_IllFire(radio, 2500);
+	Delay(850);
+	HUMAN_IllFire(Salter, 10000);
+	HUMAN_IllFire(radio, 7500);
+}
+
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETSIGHTRANGE(35);
+//	HUMAN_TurnAt(Salter);
+//  	HUMAN_IllFire(Salter, 1500);
+//	HUMAN_IllFire(radio, 2500);
+//	Delay(850);
+	SendSignal(Salter, 1);
+//	HUMAN_IllFire(Salter, 10000);
+//	HUMAN_IllFire(radio, 7500);
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("posila16_01");
+	HUMAN_SetOptimized(2);
+}
+

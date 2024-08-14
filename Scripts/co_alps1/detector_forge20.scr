@@ -1,0 +1,18 @@
+
+Block {
+Frame ge20;		Frm_FindFrame (ge20,"ge_20");
+Frame ge21;		Frm_FindFrame (ge21,"ge_21");
+Frame ge22;		Frm_FindFrame (ge22,"ge_22");
+Frame ge10;		Frm_FindFrame (ge10,"ge_10");
+Frame ge11;		Frm_FindFrame (ge11,"ge_11");
+}
+
+Whenever ted(_PlayerInRange(8))
+{
+SendSignal (ge20,1);
+SendSignal (ge21,1);
+SendSignal (ge22,1);
+//SendSignal (ge10,1);
+//SendSignal (ge11,1);
+}
+

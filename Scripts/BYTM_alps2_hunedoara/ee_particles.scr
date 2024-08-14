@@ -1,0 +1,122 @@
+// Easteregg - Particles
+// ------------------------------------
+
+Block
+{
+Frame ee1;			FRM_FindFrame(ee1, "ee_particle_01");
+Frame ee2;			FRM_FindFrame(ee2, "ee_particle_02");
+Frame ee3;			FRM_FindFrame(ee3, "ee_particle_03");
+Frame ee4;			FRM_FindFrame(ee4, "ee_particle_04");
+Frame ee5;			FRM_FindFrame(ee5, "ee_particle_05");
+Frame ee6;			FRM_FindFrame(ee6, "ee_particle_06");
+Frame ee7;			FRM_FindFrame(ee7, "ee_particle_07");
+Frame ee8;			FRM_FindFrame(ee8, "ee_particle_08");
+Frame ee2_1;		FRM_FindFrame(ee2_1, "ee_particle2_01");
+Frame ee2_2;		FRM_FindFrame(ee2_2, "ee_particle2_02");
+Frame ee2_3;		FRM_FindFrame(ee2_3, "ee_particle2_03");
+Frame ee2_4;		FRM_FindFrame(ee2_4, "ee_particle2_04");
+Frame ee2_5;		FRM_FindFrame(ee2_5, "ee_particle2_05");
+Frame ee2_6;		FRM_FindFrame(ee2_6, "ee_particle2_06");
+Frame ee2_7;		FRM_FindFrame(ee2_7, "ee_particle2_07");
+Frame ee2_8;		FRM_FindFrame(ee2_8, "ee_particle2_08");
+Frame ee2_9;		FRM_FindFrame(ee2_9, "ee_particle2_09");
+Frame ee2_10;		FRM_FindFrame(ee2_10, "ee_particle2_10");
+Frame ee2_11;		FRM_FindFrame(ee2_11, "ee_particle2_11");
+Frame ee2_12;		FRM_FindFrame(ee2_12, "ee_particle2_12");
+Frame ee2_13;		FRM_FindFrame(ee2_13, "ee_particle2_13");
+Frame ee2_14;		FRM_FindFrame(ee2_14, "ee_particle2_14");
+Frame ee3_1;		FRM_FindFrame(ee3_1, "ee_particle3_01");
+Frame ee3_2;		FRM_FindFrame(ee3_2, "ee_particle3_02");
+Frame ee3_3;		FRM_FindFrame(ee3_3, "ee_particle3_03");
+Frame ee3_4;		FRM_FindFrame(ee3_4, "ee_particle3_04");
+Frame ee3_5;		FRM_FindFrame(ee3_5, "ee_particle3_05");
+Frame ee3_6;		FRM_FindFrame(ee3_6, "ee_particle3_06");
+Frame ee3_7;		FRM_FindFrame(ee3_7, "ee_particle3_07");
+Frame ee3_8;		FRM_FindFrame(ee3_8, "ee_particle3_08");
+Frame ee3_9;		FRM_FindFrame(ee3_9, "ee_particle3_09");
+Frame ee3_10;		FRM_FindFrame(ee3_10, "ee_particle3_10");
+Frame ee4_1;		FRM_FindFrame(ee4_1, "ee_particle4_01");
+Frame ee4_2;		FRM_FindFrame(ee4_2, "ee_particle4_02");
+Frame ee4_3;		FRM_FindFrame(ee4_3, "ee_particle4_03");
+Frame ee4_4;		FRM_FindFrame(ee4_4, "ee_particle4_04");
+Frame ee4_5;		FRM_FindFrame(ee4_5, "ee_particle4_05");
+Frame ee4_6;		FRM_FindFrame(ee4_6, "ee_particle4_06");
+Frame ee4_7;		FRM_FindFrame(ee4_7, "ee_particle4_07");
+Frame ee4_8;		FRM_FindFrame(ee4_8, "ee_particle4_08");
+Frame ee4_9;		FRM_FindFrame(ee4_9, "ee_particle4_09");
+Frame ee4_10;		FRM_FindFrame(ee4_10, "ee_particle4_10");
+Frame ee4_11;		FRM_FindFrame(ee4_11, "ee_particle4_11");
+Frame ee4_12;		FRM_FindFrame(ee4_12, "ee_particle4_12");
+Frame ee4_13;		FRM_FindFrame(ee4_13, "ee_particle4_13");
+Frame ee4_14;		FRM_FindFrame(ee4_14, "ee_particle4_14");
+Frame ee5_1;		FRM_FindFrame(ee5_1, "ee_particle5_01");
+Frame ee5_2;		FRM_FindFrame(ee5_2, "ee_particle5_02");
+Frame ee5_3;		FRM_FindFrame(ee5_3, "ee_particle5_03");
+Frame ee5_4;		FRM_FindFrame(ee5_4, "ee_particle5_04");
+Frame ee5_5;		FRM_FindFrame(ee5_5, "ee_particle5_05");
+Frame ee5_6;		FRM_FindFrame(ee5_6, "ee_particle5_06");
+Frame ee5_7;		FRM_FindFrame(ee5_7, "ee_particle5_07");
+Frame ee5_8;		FRM_FindFrame(ee5_8, "ee_particle5_08");
+}
+
+OnSignal(1)
+{
+Block
+{
+FRM_CreateParticle(15, ee1);
+FRM_CreateParticle(15, ee2);
+FRM_CreateParticle(15, ee3);
+FRM_CreateParticle(15, ee4);
+FRM_CreateParticle(15, ee5);
+FRM_CreateParticle(15, ee6);
+FRM_CreateParticle(15, ee7);
+FRM_CreateParticle(15, ee8);
+FRM_CreateParticle(15, ee2_1);
+FRM_CreateParticle(15, ee2_2);
+FRM_CreateParticle(15, ee2_3);
+FRM_CreateParticle(15, ee2_4);
+FRM_CreateParticle(15, ee2_5);
+FRM_CreateParticle(15, ee2_6);
+FRM_CreateParticle(15, ee2_7);
+FRM_CreateParticle(15, ee2_8);
+FRM_CreateParticle(15, ee2_9);
+FRM_CreateParticle(15, ee2_10);
+FRM_CreateParticle(15, ee2_11);
+FRM_CreateParticle(15, ee2_12);
+FRM_CreateParticle(15, ee2_13);
+FRM_CreateParticle(15, ee2_14);
+FRM_CreateParticle(15, ee3_1);
+FRM_CreateParticle(15, ee3_2);
+FRM_CreateParticle(15, ee3_3);
+FRM_CreateParticle(15, ee3_4);
+FRM_CreateParticle(15, ee3_5);
+FRM_CreateParticle(15, ee3_6);
+FRM_CreateParticle(15, ee3_7);
+FRM_CreateParticle(15, ee3_8);
+FRM_CreateParticle(15, ee3_9);
+FRM_CreateParticle(15, ee3_10);
+FRM_CreateParticle(15, ee4_1);
+FRM_CreateParticle(15, ee4_2);
+FRM_CreateParticle(15, ee4_3);
+FRM_CreateParticle(15, ee4_4);
+FRM_CreateParticle(15, ee4_5);
+FRM_CreateParticle(15, ee4_6);
+FRM_CreateParticle(15, ee4_7);
+FRM_CreateParticle(15, ee4_8);
+FRM_CreateParticle(15, ee4_9);
+FRM_CreateParticle(15, ee4_10);
+FRM_CreateParticle(15, ee4_11);
+FRM_CreateParticle(15, ee4_12);
+FRM_CreateParticle(15, ee4_13);
+FRM_CreateParticle(15, ee4_14);
+FRM_CreateParticle(15, ee5_1);
+FRM_CreateParticle(15, ee5_2);
+FRM_CreateParticle(15, ee5_3);
+FRM_CreateParticle(15, ee5_4);
+FRM_CreateParticle(15, ee5_5);
+FRM_CreateParticle(15, ee5_6);
+FRM_CreateParticle(15, ee5_7);
+FRM_CreateParticle(15, ee5_8);
+}
+
+}

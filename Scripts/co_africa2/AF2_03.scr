@@ -1,0 +1,124 @@
+// AF2_03 - waiting on player, heavy gunner
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert01;		FRM_FindFRAME(dummyalert01, "dummy_alert01");
+  FRAME turnat;				FRM_FindFRAME(turnat, "AF2_03_turnat");
+  INTEGER Atype			= 0;
+  INTEGER rnd			= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+}
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Guard();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+  
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  goto ALERT;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+OnSignal(1){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  block{
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(false);
+    HUMAN_SETSIGHTRANGE(400);
+    HUMAN_SetMODE_Crouch();
+    HUMAN_SetMODE_Run();
+    AType = _GetAlarmType();
+  }
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  SendSignal(dummyalert01, 1);
+  if(Atype == 256){
+    HUMAN_SetAlarm(false);
+    goto ALERT;
+  }
+  if(!_PlayerInRange(40)){
+    HUMAN_SETALARM(false);
+    HUMAN_MoveToAlarm();
+    goto END;  
+  } 
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Guard();
+  HUMAN_SetOptimized(true); 
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+  goto ACTIVITY;
+}
+
+OnSignal(5){
+  HUMAN_Stop();
+  HUMAN_SetAnim("", 200, 200, false);
+  Delay(200);
+  HUMAN_SetMODE_Run();
+  HUMAN_SetMODE_Crouch();
+  HUMAN_Move("AF2_03_alert");
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("AF2_03_01");
+  HUMAN_SETMODE_Crouch();
+
+Label ACTIVITY: 
+  HUMAN_Move("AF2_03_02");    gosub LOOKAROUND;
+  HUMAN_Move("AF2_03_03");    gosub LOOKAROUND;
+  HUMAN_Move("AF2_03_04");    gosub LOOKAROUND;
+  HUMAN_Move("AF2_03_05");    gosub LOOKAROUND;
+  HUMAN_Move("AF2_03_06");    gosub LOOKAROUND;
+goto ACTIVITY;
+
+Label LOOKAROUND:
+  rnd = _RandomInt(2);
+  if(rnd == 1){
+    HUMAN_WeaponOnArm(0);
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(rnd);
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(rnd);
+	HUMAN_WeaponOnArm(1);
+  }
+return;
+
+Label ALERT:
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SetMode_Stand();
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(0);
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF2_03_alert");
+  HUMAN_SetMode_Crouch();
+  HUMAN_SETSIGHTRANGE(400);
+
+Label END:

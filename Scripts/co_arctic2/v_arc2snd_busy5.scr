@@ -1,0 +1,15 @@
+
+Block {
+frame sound1;		frm_findframe(sound1,"S_pip10");
+frame sound2;		frm_findframe(sound2,"S_pip12");
+
+integer rnd_pause;
+}
+
+label loop:
+rnd_pause= _randomint(7000) + 10000;
+delay(rnd_pause);
+FRM_SetOn(sound1, true);
+delay(2000);
+FRM_SetOn(sound2, true);
+goto loop;

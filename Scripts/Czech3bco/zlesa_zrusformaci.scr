@@ -1,0 +1,8 @@
+Frame zles1;		FRM_FindFrame(zles1,"zlesa1");
+
+
+Whenever zrus(_SignalReceived(1))
+{
+Printf("rusim formaci");
+FORMATION_Destroy(zles1);
+}

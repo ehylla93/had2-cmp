@@ -1,0 +1,77 @@
+Block
+{
+	Frame me;	FRM_GetMyFrame(me);
+	frame stul;	FRM_FindFrame(stul,"k_shodstulnv_");
+	frame leo;	FRM_FindFrame(leo,"k_leo_");
+	Frame pryc;	FRM_FindFrame(pryc, "la_tepich9");
+	Frame ruka;	//FRM_FindFrame(ruka,"small10.hw1");
+	Frame sit;	FRM_FindFrame(sit, "sit_cptn");
+	integer msg = 90001000;
+	integer rnd1 = 0;
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SetOptimized(2);
+			HUMAN_SETHEARRANGE(7);
+		HUMAN_SetSniper(1, 1);
+}
+HUMAN_WeaponOnArm(0);
+printf("kaptn initialized.");
+
+goto hlidej;
+//-------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------
+Whenever Near (_PlayerInRange(5))
+{
+			//FRM_TeleportNearCheckpoint(me, "gg1", "gg2");
+
+	rnd1 = _randomint(1355);
+	rnd1 = msg + rnd1;
+	FRM_MorphSpeechDelayed(me, rnd1, 3, 10);
+	Delay(2100);
+	SetWhenever(Near, true);
+	goto hlidej;
+}
+
+
+//-------------------------------------------------------------------------------------------------
+label hlidej:
+	HUMAN_ACTIVITY_Sit(sit);
+	block
+	{
+		FRM_FindFrame(ruka,"small10.hw1");
+		FRM_TeleportNearFrame(leo, ruka, 1);
+		FRM_FindFrame(ruka,"");
+	}
+	HUMAN_SetAnim("%%predstul",100,100,1);
+
+	goto end;
+//-------------------------------------------------------------------------------------------------
+
+
+
+OnDeath()
+{
+	DisableSignals(1);
+	FRM_TeleportNearFrame(leo, pryc,0);
+	EndScript();
+}
+
+
+OnSignal(1)			//Sirena on
+{
+	HUMAN_Stop();
+	HUMAN_SetSniper(1, 1);
+	FRM_TeleportNearFrame(leo, pryc,0);
+	HUMAN_SETAIMODE_Aggressive();
+	SendSignal(stul,1);
+	delay(50);
+	HUMAN_SetAnim("%%shodstul1",100,100,0);
+	delay (876);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_StandFast();
+	EndScript();
+}
+label end:
+
+
+SetWheneverTime(Near, 5000);

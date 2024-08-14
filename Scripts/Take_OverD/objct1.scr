@@ -1,0 +1,27 @@
+// Obj 1 - Zatkni Freiberga
+//------------------------------------
+
+Block
+{
+Frame Freib;	FRM_FindFrame(Freib, "C4_G76"); 
+Frame obj5;	FRM_FindFrame(obj5, "obj5");
+
+SetObjectiveStatus(1, 0);
+}
+
+//------------------------------------
+
+Whenever Freiberg_Captured (_Actor_GetState(Freib)==0)  
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993804);
+Delay(4000);
+SendSignal(obj5, 1);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(1, 1);
+GoTo end;
+}
+
+//--------------------------------------------------------
+
+Label end:

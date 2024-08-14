@@ -1,0 +1,104 @@
+// TURNING OFF GLOBAL ALARM (2)
+// -------------------------------------------------------
+
+Block
+{
+Frame G60;	FRM_FindFrame(G60,"07_G69");
+Frame G61;	FRM_FindFrame(G61,"07_G70");
+Frame G62;	FRM_FindFrame(G62,"07_G71");
+Frame G63;	FRM_FindFrame(G63,"07_G72");
+Frame G64;	FRM_FindFrame(G64,"07_G73");
+Frame G65;	FRM_FindFrame(G65,"07_G74");
+Frame G66;	FRM_FindFrame(G66,"07_G75");
+Frame G67;	FRM_FindFrame(G67,"07_G76");
+Frame G68;	FRM_FindFrame(G68,"07_G77");
+Frame G69;	FRM_FindFrame(G69,"07_G78");
+Frame G70;	FRM_FindFrame(G70,"07_G79");
+
+Frame G71;	FRM_FindFrame(G71,"07_G80");
+Frame G72;	FRM_FindFrame(G72,"08_G81");
+Frame G73;	FRM_FindFrame(G73,"08_G82");
+Frame G74;	FRM_FindFrame(G74,"08_G83");
+Frame G75;	FRM_FindFrame(G75,"08_G84");
+Frame G76;	FRM_FindFrame(G76,"08_G85");
+Frame G77;	FRM_FindFrame(G77,"08_G86");
+Frame G78;	FRM_FindFrame(G78,"08_G87");
+Frame G79;	FRM_FindFrame(G79,"08_G88");
+Frame G80;	FRM_FindFrame(G80,"08_G89");
+
+Frame G81;	FRM_FindFrame(G81,"08_G90");
+Frame G82;	FRM_FindFrame(G82,"08_G91");
+Frame G83;	FRM_FindFrame(G83,"08_G92");
+Frame G84;	FRM_FindFrame(G84,"08_G93");
+Frame G85;	FRM_FindFrame(G85,"08_G94");
+Frame G86;	FRM_FindFrame(G86,"08_G95");
+Frame G87;	FRM_FindFrame(G87,"08_G96");
+Frame G88;	FRM_FindFrame(G88,"08_G97");
+Frame G89;	FRM_FindFrame(G89,"08_G98");
+Frame G90;	FRM_FindFrame(G90,"09_G99");
+
+Frame G100;	FRM_FindFrame(G100,"09_G100");
+Frame G101;	FRM_FindFrame(G101,"09_G101");
+Frame G102;	FRM_FindFrame(G102,"09_G102");
+Frame G103;	FRM_FindFrame(G103,"09_G103");
+Frame G104;	FRM_FindFrame(G104,"09_G104");
+Frame G105;	FRM_FindFrame(G105,"09_G105");
+Frame G106;	FRM_FindFrame(G106,"09_G106");
+Frame G107;	FRM_FindFrame(G107,"09_G107");
+Frame G108;	FRM_FindFrame(G108,"09_G108");
+Frame G109;	FRM_FindFrame(G109,"09_G109");
+Frame G110;	FRM_FindFrame(G110,"09_G110");
+
+Frame G111;	FRM_FindFrame(G111,"09_G111");
+Frame G112;	FRM_FindFrame(G112,"09_G112");
+Frame G113;	FRM_FindFrame(G113,"09_G113");
+Frame G114;	FRM_FindFrame(G114,"09_G114");
+Frame G115;	FRM_FindFrame(G115,"09_G115");
+Frame G116;	FRM_FindFrame(G116,"09_G116");
+Frame G117;	FRM_FindFrame(G117,"09_G117");
+Frame G118;	FRM_FindFrame(G118,"09_G118");
+Frame G119;	FRM_FindFrame(G119,"09_G119");
+Frame G120;	FRM_FindFrame(G120,"09_G120");
+
+Frame G121;	FRM_FindFrame(G121,"09_G121");
+Frame G122;	FRM_FindFrame(G122,"09_G122");
+Frame G123;	FRM_FindFrame(G123,"09_G123");
+Frame G124;	FRM_FindFrame(G124,"09_G124");
+Frame G125;	FRM_FindFrame(G125,"09_G125");
+Frame G126;	FRM_FindFrame(G126,"09_G126");
+Frame G127;	FRM_FindFrame(G127,"10_G127");
+Frame G128;	FRM_FindFrame(G128,"10_G128");
+Frame G129;	FRM_FindFrame(G129,"10_G129");
+Frame G130;	FRM_FindFrame(G130,"11_G130");
+
+Frame G131;	FRM_FindFrame(G131,"11_G131");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(G60, 5);SendSignal(G61, 5);
+SendSignal(G62, 5);SendSignal(G63, 5);SendSignal(G64, 5);
+SendSignal(G65, 5);SendSignal(G66, 5);SendSignal(G67, 5);
+SendSignal(G68, 5);SendSignal(G69, 5);SendSignal(G70, 5);
+SendSignal(G71, 5);SendSignal(G72, 5);SendSignal(G73, 5);
+SendSignal(G74, 5);SendSignal(G75, 5);SendSignal(G76, 5);
+SendSignal(G77, 5);SendSignal(G78, 5);SendSignal(G79, 5);
+SendSignal(G80, 5);SendSignal(G81, 5);SendSignal(G82, 5);
+SendSignal(G83, 5);SendSignal(G84, 5);SendSignal(G85, 5);
+SendSignal(G86, 5);SendSignal(G87, 5);SendSignal(G88, 5);
+SendSignal(G89, 5);SendSignal(G90, 5);SendSignal(G100, 5);
+SendSignal(G101, 5);SendSignal(G102, 5);SendSignal(G103, 5);
+SendSignal(G104, 5);SendSignal(G105, 5);SendSignal(G106, 5);
+SendSignal(G107, 5);SendSignal(G108, 5);SendSignal(G109, 5);
+SendSignal(G110, 5);SendSignal(G111, 5);SendSignal(G112, 5);
+SendSignal(G113, 5);SendSignal(G114, 5);SendSignal(G115, 5);
+SendSignal(G116, 5);SendSignal(G117, 5);SendSignal(G118, 5);
+SendSignal(G119, 5);SendSignal(G120, 5);SendSignal(G121, 5);
+SendSignal(G122, 5);SendSignal(G123, 5);SendSignal(G124, 5);
+SendSignal(G125, 5);SendSignal(G126, 5);SendSignal(G127, 5);
+SendSignal(G128, 5);SendSignal(G129, 5);SendSignal(G130, 5);
+SendSignal(G131, 5);
+EndScript();
+}

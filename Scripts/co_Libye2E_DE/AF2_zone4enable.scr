@@ -1,0 +1,66 @@
+// AF2_zone4enable - 30 meters
+// ---------------------------
+// Variables definition
+Block
+{
+Frame add_15;
+	FRM_FindFrame(add_15, "Add_15");
+Frame add_16;
+	FRM_FindFrame(add_16, "Add_16");
+Frame add_17;
+	FRM_FindFrame(add_17, "Add_17");
+Frame add_18;
+	FRM_FindFrame(add_18, "Add_18");
+Frame add_19;
+	FRM_FindFrame(add_19, "Add_19");
+Frame af2_53;
+	FRM_FindFrame(af2_53, "AF2_53");
+Frame af2_54;
+	FRM_FindFrame(af2_54, "AF2_54");
+Frame af2_55;
+	FRM_FindFrame(af2_55, "AF2_55");
+Frame af2_56;
+	FRM_FindFrame(af2_56, "AF2_56");
+Frame af2_61;
+	FRM_FindFrame(af2_61, "AF2_61");
+Frame af2_62;
+	FRM_FindFrame(af2_62, "AF2_62");
+Frame af2_63;
+	FRM_FindFrame(af2_63, "AF2_63");
+Frame af2_64;
+	FRM_FindFrame(af2_64, "AF2_64");
+
+Frame af2_93;
+	FRM_FindFrame(af2_93, "AF2_93");
+Frame af2_94;
+	FRM_FindFrame(af2_94, "AF2_94");
+Frame af2_95;
+	FRM_FindFrame(af2_95, "AF2_95");
+
+Frame af2_98;
+	FRM_FindFrame(af2_98, "AF2_98");
+
+Frame texty;
+	FRM_FindFrame(texty, "AF2_texty");
+//printf("zone4 script working");
+
+}
+// --------------------------
+// Whenever keywords and signals
+Whenever enable(_PlayerInRange(30) AND (_ACTOR_GetState(af2_53)==0) AND 
+(_ACTOR_GetState(add_15)==0) AND (_ACTOR_GetState(add_16)==0) AND
+(_ACTOR_GetState(add_17)==0) AND (_ACTOR_GetState(add_18)==0) AND
+(_ACTOR_GetState(add_19)==0) AND 
+(_ACTOR_GetState(af2_54)==0) AND (_ACTOR_GetState(af2_55)==0) AND
+(_ACTOR_GetState(af2_61)==0) AND (_ACTOR_GetState(af2_62)==0) AND
+(_ACTOR_GetState(af2_63)==0) AND (_ACTOR_GetState(af2_64)==0) AND 
+(_ACTOR_GetState(af2_56)==0) AND 
+(_ACTOR_GetState(af2_93)==0) AND (_ACTOR_GetState(af2_94)==0) AND 
+(_ACTOR_GetState(af2_95)==0) AND 
+(_ACTOR_GetState(af2_98)==0))
+{
+	MP_EnableSpawnZone("zone4", 1);
+	SendSignal(texty, 7);
+}
+// ---------------------------
+// Starting pose

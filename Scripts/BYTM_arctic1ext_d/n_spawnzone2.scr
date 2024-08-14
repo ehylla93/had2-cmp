@@ -1,0 +1,34 @@
+//Spawnzone 2
+
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+MP_EnableSpawnZone("zone2", 2);
+SetWhenever(z2yes, false);
+SetWhenever(z2no, false);
+goto end;
+
+OnSignal(1)
+{
+	SUBTITLES_SetOn(True);
+	SUBTITLES_SetText(59995027);	//"NEW RESPAWN ZONE AVAILABLE!"
+	Delay(3500);
+	SUBTITLES_SetOn(False);
+	MP_EnableSpawnZone("zone2", 1);
+	SetWhenever(z2no, true);
+}
+
+Whenever z2no (_EnemyInRange(MyFRM, 50))
+{
+printf("z2no");
+MP_EnableSpawnZone("zone2", 2);
+SetWhenever(z2yes, true);
+}
+
+Whenever z2yes (!_EnemyInRange(MyFRM, 50))
+{
+printf("z2yes");
+MP_EnableSpawnZone("zone2", 1);
+SetWhenever(z2no, true);
+}
+
+Label end:

@@ -1,0 +1,59 @@
+Block
+{
+    Frame soldier1;    FRM_FindFrame( soldier1, "HAMMER1_SMG_1" );
+
+    Frame soldier2;    FRM_FindFrame( soldier2, "HAMMER1_SMG_2" );
+    Frame soldier3;    FRM_FindFrame( soldier3, "HAMMER1_SMG_3" );
+    Frame soldier4;    FRM_FindFrame( soldier4, "HAMMER1_SMG_4" );
+    Frame soldier5;    FRM_FindFrame( soldier5, "HAMMER1_LMG_1" );
+    Frame soldier6;    FRM_FindFrame( soldier6, "HAMMER1_RIF_1" );
+} 
+
+
+// -------------------------------------------------------------
+// CHLAPI, NASTUPUJEME DO VOZIDLA
+// -------------------------------------------------------------
+OnSignal( 1 )   
+{
+     SendSignal( soldier1,  1 );
+     SendSignal( soldier2,  1 );
+     SendSignal( soldier3,  1 );
+     SendSignal( soldier4,  1 );
+     SendSignal( soldier5,  1 );
+     SendSignal( soldier6,  1 );
+     GoTo End;
+}
+
+
+// -------------------------------------------------------------
+// BORCI, VYSTUPOVAT!
+// -------------------------------------------------------------
+OnSignal( 2 )   
+{
+    GoTo GetOut;
+}
+GoTo End;
+
+
+// -------------------------------------------------------------
+// PLAYER JE BLIZKO, VYSTUPOVAT!
+// -------------------------------------------------------------
+Whenever "Player_To_Close" ( _PlayerInRange( 20 )  )
+{
+    GoTo GetOut;
+}
+SetWheneverTime( "Player_To_Close", 800 );
+GoTo End;
+
+Label  GetOut:
+     SendSignal ( soldier1,  2 );
+     SendSignal( soldier2,  2 );
+     Delay(1500); 
+     SendSignal( soldier3,  2 );
+     SendSignal( soldier4,  2 );
+     Delay(1500); 
+     SendSignal( soldier5,  2 );
+     Delay(500); 
+     SendSignal( soldier6,  2 );
+
+Label  End:

@@ -1,0 +1,112 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	aktivator druhe vlny
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+Block
+{
+  frame Ger16;		FRM_FindFrame(Ger16, "GER_16");
+  frame Ger17;		FRM_FindFrame(Ger17, "GER_17");
+  frame Ger18;		FRM_FindFrame(Ger18, "GER_18");
+  frame Ger19;		FRM_FindFrame(Ger19, "GER_19");
+  frame Ger20;		FRM_FindFrame(Ger20, "GER_20");
+  frame Ger21;		FRM_FindFrame(Ger21, "GER_21");
+  frame Ger22;		FRM_FindFrame(Ger22, "GER_22");
+  frame Ger23;		FRM_FindFrame(Ger23, "GER_23");
+  frame Ger24;		FRM_FindFrame(Ger24, "GER_24");
+  frame Ger25;		FRM_FindFrame(Ger25, "GER_25");
+  frame Ger26;		FRM_FindFrame(Ger26, "GER_26");
+  frame Ger27;		FRM_FindFrame(Ger27, "GER_27");
+  frame Ger28;		FRM_FindFrame(Ger28, "GER_28");
+  frame Ger29;		FRM_FindFrame(Ger29, "GER_29");
+  frame Ger30;		FRM_FindFrame(Ger30, "GER_30");
+  frame Ger31;		FRM_FindFrame(Ger31, "GER_31");
+
+  Frame N1;		FRM_FindFrame(N1, "naloz_1");
+  Frame N2;		FRM_FindFrame(N2, "naloz_2");
+  Frame N3;		FRM_FindFrame(N3, "naloz_3");
+  Frame N4;		FRM_FindFrame(N4, "naloz_4");
+  Frame N5;		FRM_FindFrame(N5, "naloz_5");
+  Frame N6;		FRM_FindFrame(N6, "naloz_6");
+
+  frame Add12;		FRM_FindFrame(Add12, "Add_12");
+  frame Add13;		FRM_FindFrame(Add13, "Add_13");
+
+  Frame X;		FRM_FindFrame(X, "dummy_budicek_vlna1");
+}
+
+////////////////////////// testy
+//  DisableWhenevers(true);
+//  delay(2000);
+//  SendSignal(Ger16, 1);	
+//  SendSignal(Ger19, 1);	
+//  SendSignal(Ger17, 1);	
+//  SendSignal(Ger18, 1);	
+//  SendSignal(Ger20, 1);	
+//  SendSignal(Ger21, 1);	
+//  goto TheEnd;
+/////////////////////////
+
+Whenever gogogo ( ( ((((((_ACTOR_GetState(N1)==3) + (_ACTOR_GetState(N2)==3)) + (_ACTOR_GetState(N3)==3)) + (_ACTOR_GetState(N4)==3)) + (_ACTOR_GetState(N5)==3)) + (_ACTOR_GetState(N6)==3)) == 3  ) )
+{
+  Printf("DRUHA VLNA pustena - nalozema");
+  goto tak;
+}
+
+// upraveno 31+ 6(7) = 37(4)
+Whenever HracJeKiller ( _LoadGameValue(20) < 41 )  
+{
+  Printf("Druha VLNA pustena - na pocet enemy");
+  goto tak;
+}
+
+
+Whenever near (_PlayerInRange(150) )
+{
+  Printf("DRUHA VLNA pustena - range");
+  goto tak;
+}
+SetWheneverTime(near, 1500);
+
+Whenever SpustTime (_PlayerInRange(260) )	
+{ 
+  Printf("DRUHA VLNA --- aktivace TIMELIMITU"); 
+  SendSignal(X, 1);	// posila to do budicku 1 vlny ... za 2 min jdou it5..7 odpalit most
+  Delay(360000);	//    dohromady 6 minut po prichodu k mostu prijde druha vlna
+  Printf("DRUHA VLNA pustena - time limit");
+  goto tak;
+}
+SetWheneverTime(SpustTime, 1500);
+
+Goto TheEnd;
+
+Label tak:
+  SendSignal(Ger17, 1);		
+  SendSignal(Ger18, 1);	
+  SendSignal(Ger20, 1);		
+  SendSignal(Ger21, 1);		
+Block
+{
+  SendSignal(Ger16, 1);			
+  SendSignal(Ger19, 1);		
+}  
+  SendSignal(Ger22, 1);		
+  SendSignal(Ger23, 1);		
+  SendSignal(Ger24, 1);		
+  SendSignal(Ger25, 1);		
+  SendSignal(Ger26, 1);		
+  SendSignal(Ger27, 1);
+  SendSignal(Ger28, 1);		
+  SendSignal(Ger29, 1);		
+  SendSignal(Ger30, 1);
+  SendSignal(Ger31, 1);		
+  SendSignal(Add12, 1);		
+  SendSignal(Add13, 1);
+  
+  SaveGameValue(115, 2);
+
+
+EndScript();
+
+Label TheEnd:

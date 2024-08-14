@@ -1,0 +1,36 @@
+// AF2_53_A1 - posily na 3. stanoviste detektor
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------
+// Variables definition
+Block
+{
+Frame af2_53;
+	FRM_FindFrame(af2_53, "AF2_53");
+Frame af2_55;
+	FRM_FindFrame(af2_55, "AF2_55");
+Frame af2_56;
+	FRM_FindFrame(af2_56, "AF2_56");
+Frame af2_57;
+	FRM_FindFrame(af2_57, "AF2_57");
+Frame opel2;
+	FRM_FindFrame(opel2, "Opel2");
+}
+// -------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(100))
+{
+	Block
+	{
+		SendSignal(af2_53, 1);
+		SendSignal(af2_55, 1);
+		SendSignal(af2_56, 1);
+		SendSignal(af2_57, 1);
+	}
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose
+
+Label end:

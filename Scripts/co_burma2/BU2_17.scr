@@ -1,0 +1,46 @@
+// BU2_17 - guard in the bunkers
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(280, false);	// vypnute 8, 16, 256
+}
+
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	SetAlarmType(280, false);
+	GoTo end;
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(40))
+{
+	HUMAN_Suspend(false);
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f047");
+HUMAN_Suspend(true);
+
+Label end:

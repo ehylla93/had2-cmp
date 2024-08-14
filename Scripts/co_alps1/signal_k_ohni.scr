@@ -1,0 +1,14 @@
+
+block {
+Frame ge33;		Frm_FindFrame (ge33,"ge_33");
+Frame ge34;		Frm_FindFrame (ge34,"ge_34");
+Frame ge35;		Frm_FindFrame (ge35,"ge_35");
+}
+
+Whenever plc(_SignalReceived(1))	//received from ge30 on alarm
+{
+delay (10000);
+SendSignal (ge33,3);
+SendSignal (ge34,3);
+SendSignal (ge35,3);
+}

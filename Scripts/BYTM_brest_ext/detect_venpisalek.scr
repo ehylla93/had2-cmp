@@ -1,0 +1,9 @@
+Frame ven_pisalek;	FRM_FindFrame (ven_pisalek,"ven_pisalek");
+Frame ven_spac;	FRM_FindFrame (ven_spac,"ven_spac");
+
+Whenever je(_PlayerInRange(2))
+{
+printf ("signal ven_pisalek");
+SendSignal (ven_pisalek,1);
+SendSignal (ven_spac,1);
+}

@@ -1,0 +1,46 @@
+// Kecy Britu pri boji s nemci
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame B1;		FRM_FindFrame(B1,"Brit01");
+Frame B2;		FRM_FindFrame(B2,"Brit02");
+Frame B3;		FRM_FindFrame(B3,"Brit03");
+Frame B4;		FRM_FindFrame(B4,"Brit04");
+Frame B5;		FRM_FindFrame(B5,"Brit05");
+Frame B6;		FRM_FindFrame(B6,"Brit06");
+Frame B7;		FRM_FindFrame(B7,"Brit07");
+Frame B8;		FRM_FindFrame(B8,"Brit08");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+FRM_MorphSpeechDelayed(B1, 01990290, 5, 30);  // Move out !!
+goto END;
+}
+
+OnSignal(2)
+{
+FRM_MorphSpeechDelayed(B7, 90000950, 5, 30);  // There they are!!
+Delay(500);
+FRM_MorphSpeechDelayed(B3, 90000674, 5, 30);  // got him!!
+Delay(300);
+FRM_MorphSpeechDelayed(B6, 90000845, 5, 30);  // got him!!
+FRM_MorphSpeechDelayed(B8, 90000563, 5, 30);  // Blow them out!!
+Delay(4000);
+FRM_MorphSpeechDelayed(B8, 90000414, 5, 30);  // got him!!
+Delay(2500);
+FRM_MorphSpeechDelayed(B2, 90000676, 5, 30);  // got him!!
+Delay(16000);
+FRM_MorphSpeechDelayed(B1, 90000233, 5, 30);  // Move there!!
+Delay(200);
+SendSignal(B3, 15);
+SendSignal(B7, 15);
+SendSignal(B8, 15);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

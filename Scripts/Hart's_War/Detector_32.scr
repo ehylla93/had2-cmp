@@ -1,0 +1,66 @@
+// explosion en bas
+
+Block
+{SetWhenever(Playersexplos1, 0);
+Frame me;		FRM_GetMyFrame(me);
+Frame Detector_32;	FRM_FindFrame(Detector_32,"Detector_32");
+//^Block
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+
+}
+Whenever Playersexplos1 (_PlayerInRange(10))
+{
+SetWhenever(Playersexplos1, 1);
+goto chodim;
+
+}
+
+//----------------------------------------------------------------------------------------
+
+label chodim: 
+
+	MakeExplosion(Detector_32, 6000000, 20000);
+goto END;
+
+//----------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+
+Whenever go4(_SignalReceived(10))
+{
+SetWhenever(Playersexplos1, 1);
+goto end;
+}
+
+//----------------------------------------------------------------------------------------------
+
+Whenever go3(_SignalReceived(11))
+{
+SetWhenever(Playersexplos1, 0);
+goto end;
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+
+
+//^DefaultLoad
+goto END;
+
+Label END:

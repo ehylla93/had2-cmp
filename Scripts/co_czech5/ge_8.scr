@@ -1,0 +1,49 @@
+//North - barricaded room
+
+Frame count;	FRM_FindFrame(count, "dead_counter");
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_Suspend(true);
+
+Whenever PIR (_PlayerInRange(20))
+	{
+	SetWhenever (PIR, false);
+	SetWhenever (PNIR, true);
+	HUMAN_Suspend(false);
+	}
+
+Whenever PNIR (!_PlayerInRange(20))
+	{
+	SetWhenever (PNIR, false);
+	SetWhenever (PIR, true);
+	HUMAN_Suspend(true);
+	}
+
+
+OnAlarm()
+	{
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SetSniper(1,5);
+	EndScript();
+	}
+
+OnAlarmDone()
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	}
+	
+OnDeath()
+{
+SendSignal(count, 1);
+EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(20))
+{
+DisableAlarms(1);
+}
+
+

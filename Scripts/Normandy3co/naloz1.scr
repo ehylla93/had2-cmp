@@ -1,0 +1,15 @@
+// Explosives 1
+//-------------------------------------
+
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+
+//-------------------------------------
+
+Whenever Defused (_ACTOR_GetState(MyFRM) == 0)
+{
+SetActorState(MyFRM, 3);
+EndScript();
+}
+
+
+

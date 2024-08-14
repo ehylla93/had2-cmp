@@ -1,0 +1,48 @@
+// AF2_osetrujici02 - heals wounded friend.
+// -------------------------------------------------------------------------------------------------------------
+
+SetAlarmType(1023, true);
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inrange (_PlayerInRange(200)){
+  HUMAN_Suspend(false);
+  goto ACTIVITY;
+}
+
+OnDeath(){
+  HUMAN_SetAnim("", 200, 200, false);
+  SetWhenever(inrange, false);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(inrange, false);
+    HUMAN_Suspend(false);
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetMODE_Crouch();
+  goto END;  
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SetAiMODE_Defensive();
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVITY:
+  HUMAN_SetAnim("%%obvazovani", 200, 200, true);
+
+Label END:

@@ -1,0 +1,41 @@
+//vez7 w_mg42MP4 
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f021");
+SetAlarmType(1023, 1);
+}
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("w_mg42MP4", 1, 0);
+HUMAN_Suspend(0);
+// -------------------------------------------------------------------------------------------------------------
+OnAlarm()
+{
+Printf("Alarmed");
+HUMAN_SETSIGHTRANGE(300);
+HUMAN_SETHEARRANGE(300);
+HUMAN_BoardVehicle("w_mg42MP4", 1, 0);
+EndScript();
+}
+// -------------------------------------------------------------------------------------------------------------
+OnAlarmDone()
+{
+Printf("Alarm done");
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(300);
+HUMAN_BoardVehicle("w_mg42MP4", 1, 0);
+}
+// -------------------------------------------------------------------------------------------------------------
+OnDeath()
+{
+FRM_MorphSpeech(me,  56990055, 2, 80);
+Delay(200);
+FRM_CreateParticle(124, me);
+EndScript();
+}

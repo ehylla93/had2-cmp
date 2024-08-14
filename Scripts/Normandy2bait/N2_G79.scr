@@ -1,0 +1,46 @@
+// MG Panzer III (La_tiger_4)
+// -----------------------------------------------
+
+Block
+{
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+// -----------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+
+// -----------------------------------------------
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(90);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_BoardVehicle("La_tiger_4",  1, 1);
+
+goto END;
+
+
+Label END:

@@ -1,0 +1,250 @@
+//Zone 2
+
+Block {
+MP_EnableSpawnZone("zone2", 2);
+Frame detect;		FRM_FindFrame(detect, "povolzonu1_1");
+
+Frame soldier1;		FRM_FindFrame(soldier1, "z4_flak1");
+Frame soldier2;		FRM_FindFrame(soldier2, "z4_nadrz1");	//41
+Frame soldier3;		FRM_FindFrame(soldier3, "z4_nadrz2");	//42
+Frame soldier4;		FRM_FindFrame(soldier4, "z4_nadrz3");
+Frame soldier5;		FRM_FindFrame(soldier5, "z4_nadrz4");	//43
+Frame soldier6;		FRM_FindFrame(soldier6, "n_E24");		//46
+Frame soldier7;		FRM_FindFrame(soldier7, "n_E25");		//46*
+Frame soldier8;		FRM_FindFrame(soldier8, "n_E26");		//45
+Frame soldier9;		FRM_FindFrame(soldier9, "n_E27");		//45*
+Frame soldier10;	FRM_FindFrame(soldier10, "z4_ven2");	//44
+Frame soldier11;	FRM_FindFrame(soldier11, "z4_venkur2");
+
+integer a=11;
+integer b;
+integer s2=1;
+integer s3=1;
+integer s5=1;
+integer s10=1;
+integer s6=1;
+integer s7=1;
+integer s8=1;
+integer s9=1;
+
+integer if1=1;
+integer if2=1;
+integer if3=1;
+integer if4=1;
+integer if5=1;
+integer if6=1;
+integer if7=1;
+integer if8=1;
+integer if9=1;
+integer if10=1;
+integer if11=1;
+
+SetWhenever(PIR, false);
+}
+
+goto end;
+
+Whenever PIR(_PlayerInRange(20))
+{
+printf ("Zone2 active");
+MP_EnableSpawnZone("zone2", 1);
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(59995027);	//"NEW RESPAWN ZONE AVAILABLE"
+  Delay(5000);
+  SUBTITLES_SetOn(false);
+  EndScript();
+}
+
+OnSignal(1)
+{
+goto count;
+}
+
+Label check:
+
+If(if1 == 1)
+{
+If(s2 == 1)
+{
+If(_Actor_GetState(soldier2)==0)
+{
+if1=0;
+a=a-1;
+printfnumber("check s2 a:", a);
+}
+}
+}
+
+If(if2 == 1)
+{
+If(s3 == 1)
+{
+If(_Actor_GetState(soldier3)==0)
+{
+if2=0;
+a=a-1;
+printfnumber("check s3 a:", a);
+}
+}
+}
+
+If(if3 == 1)
+{
+If(s5 == 1)
+{
+If(_Actor_GetState(soldier5)==0)
+{
+if3=0;
+a=a-1;
+printfnumber("check s5 a:", a);
+}
+}
+}
+
+If(if4 == 1)
+{
+If(s10 == 1)
+{
+If(_Actor_GetState(soldier10)==0)
+{
+if4=0;
+a=a-1;
+printfnumber("check s10 a:", a);
+}
+}
+}
+
+If(if5 == 1)
+{
+If(s6 == 1)
+{
+If(_Actor_GetState(soldier6)==0)
+{
+if5=0;
+a=a-1;
+printfnumber("check s6 a:", a);
+}
+}
+}
+
+If(if6 == 1)
+{
+If(s7 == 1)
+{
+If(_Actor_GetState(soldier7)==0)
+{
+if6=0;
+a=a-1;
+printfnumber("check s7 a:", a);
+}
+}
+}
+
+If(if7 == 1)
+{
+If(s8 == 1)
+{
+If(_Actor_GetState(soldier8)==0)
+{
+if7=0;
+a=a-1;
+printfnumber("check s8 a:", a);
+}
+}
+}
+
+If(if8 == 1)
+{
+If(s9 == 1)
+{
+If(_Actor_GetState(soldier9)==0)
+{
+if8=0;
+a=a-1;
+printfnumber("check s9 a:", a);
+}
+}
+}
+
+
+
+If(if9 == 1)
+{
+If(_Actor_GetState(soldier1)==0)
+{
+if9=0;
+a=a-1;
+printfnumber("check s1 a:", a);
+}
+}
+
+If(if10 == 1)
+{
+If(_Actor_GetState(soldier4)==0)
+{
+if10=0;
+a=a-1;
+printfnumber("check s4 a:", a);
+}
+}
+
+If(if11 == 1)
+{
+If(_Actor_GetState(soldier11)==0)
+{
+if11=0;
+a=a-1;
+printfnumber("check s11 a:", a);
+}
+}
+
+if(a==0)
+{
+printf("Zone2 PIR active");
+SetWhenever(PIR, true);
+goto end;
+}
+printfnumber("check done! a:", a);
+goto check;
+
+
+
+Label count:
+a=11;
+
+b=_LoadGameValue(41);
+If(b==1)
+{
+a=a-1; s2=0; printfnumber("counter s2 a:", a);
+}
+b=_LoadGameValue(42);
+If(b==1)
+{
+a=a-1; s3=0; printfnumber("counter s3 a:", a);
+}
+b=_LoadGameValue(43);
+If(b==1)
+{
+a=a-1; s5=0; printfnumber("counter s5 a:", a);
+}
+b=_LoadGameValue(44);
+If(b==1)
+{
+a=a-1; s10=0; printfnumber("counter s10 a:", a);
+}
+b=_LoadGameValue(45);
+If(b==1)
+{
+a=a-2; s8=0; s9=0; printfnumber("counter s8s9 a:", a);
+}
+b=_LoadGameValue(46);
+If(b==1)
+{
+a=a-2; s6=0; s7=0; printfnumber("counter s6s7 a:", a);
+}
+goto check;
+
+
+Label end:
+
+SetWheneverTime(PIR, 1000);

@@ -1,0 +1,16 @@
+// i2_foil_2
+// -------------------------------------------------------------------------------------------------------------
+
+	Frame fo_2;
+	FRM_FindFrame(fo_2, "foil_2");
+	
+OnDeath()
+{
+  	FRM_CreateParticle(53, fo_2);
+	MakeExplosion(fo_1, 9000000, 15000);
+	SetActorState(fo_1, 0);
+	
+EndScript();
+}
+
+

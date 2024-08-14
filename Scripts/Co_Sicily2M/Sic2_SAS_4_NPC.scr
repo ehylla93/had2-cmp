@@ -1,0 +1,30 @@
+// the Don's driver
+
+frame la_Jeepsas_1;	FRM_FindFrame(la_Jeepsas_1, "la_Jeepsas_1");
+frame SAS5;	FRM_FindFrame(SAS5, "NPC_5");
+frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+
+Whenever inrange ( _PlayerInRange(107))
+{
+  HUMAN_BoardVehicle("la_Jeepsas_1", true, 0);
+}
+
+OnDeath(){
+SendSignal(SAS1, 14);
+goto TheEnd;
+}
+
+
+Onsignal(2)	// from general
+{
+	Delay(2000);
+	HUMAN_Drive("Panzer1_1", 35);
+	HUMAN_Drive("", 0);
+	Delay(6000);	
+	SendSignal(SAS5, 1);
+	Delay(17000);
+	HUMAN_Drive("Panzer2_end", 15);
+	HUMAN_Drive("", 0);
+}
+
+label TheEnd:

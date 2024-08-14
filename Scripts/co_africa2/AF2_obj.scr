@@ -1,0 +1,64 @@
+// AF2_obj - objectives detector
+// -------------------------------------------------------------------------------------------------------------
+block
+{
+  FRAME this;				FRM_GetMyFrame(this);
+  FRAME tank1;				FRM_FindFrame(tank1, "Panzer01");
+  FRAME tank2;				FRM_FindFrame(tank2, "Tiger01");
+  SetObjectiveStatus(1, 0);		// primary objective - make your way through the desert1
+  SetObjectiveStatus(2, 4);		// secondary objective - destroy tank/s
+  SetObjectiveStatus(3, 4);		// secondary objective - all team members must survive
+  
+  SetWhenever(destroyed1, false);
+  SetWhenever(destroyed2, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+goto END;
+
+OnSignal(1) {
+SetWhenever(destroyed2, true);
+SetWhenever(destroyed1, false);
+goto END;
+}
+
+OnSignal(2) {
+SetWhenever(destroyed2, false);
+SetWhenever(destroyed1, true);
+goto END;
+}
+
+Whenever inrange((_MP_AllTeamMembersAreInRange(1, 50)) AND (!_EnemyInRange(this, 30)))
+{
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(06011202);
+  Delay(3500);
+  SUBTITLES_SetOn(false);
+  SetObjectiveStatus(1, 1); 
+  goto END;
+}
+
+Whenever destroyed1 (_ACTOR_GetState(tank1) == 0)
+{
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(06011205);		//"OPTIONAL OBJECTIVE ACCOMPLISHED: DESTROYED THE ENEMY ARMOURED VEHICLE DESTROYED."
+  Delay(3500);
+  SUBTITLES_SetOn(false);
+  SetObjectiveStatus(2, 1); 
+  goto END;
+}
+
+Whenever destroyed2 ((_ACTOR_GetState(tank1) == 0) AND (_ACTOR_GetState(tank2) == 0))
+{
+  SUBTITLES_SetOn(true);
+  SUBTITLES_SetText(06011205);		//"OPTIONAL OBJECTIVE ACCOMPLISHED: DESTROYED THE ENEMY ARMOURED VEHICLE DESTROYED."
+  Delay(3500);
+  SUBTITLES_SetOn(false);
+  SetObjectiveStatus(2, 1); 
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label END:

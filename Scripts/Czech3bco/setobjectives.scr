@@ -1,0 +1,31 @@
+block
+{
+Frame obj;	FRM_FindFrame(obj, "objectyves");
+Frame ridic;		FRM_FindFrame(ridic, "opel_driver");	
+Frame solcar1;		FRM_FindFrame(solcar1, "solcar_1");
+Frame mrtvoler;		FRM_FindFrame (mrtvoler,"mrtvoler");
+integer mrd;	mrd=(_SPGetGameType());
+}
+
+if ((mrd==3) or (mrd==7))
+{
+block
+{
+ScriptAssign(obj,"R_Cz3_objectives_carn.scr");
+ScriptAssign(ridic,"");
+ScriptAssign(ridic,"opel_driver_carn.scr");
+ScriptAssign(solcar1,"");
+ScriptAssign(solcar1,"solcar_1_carn.scr");
+ScriptAssign(mrtvoler,"");
+ScriptAssign(mrtvoler,"mrtvoler_carn.scr");
+}
+goto end;
+}
+
+ScriptAssign(obj,"R_Cz3_objectives.scr");
+
+
+
+
+
+label end:

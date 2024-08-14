@@ -1,0 +1,57 @@
+// Opel Muli 01 Flak(0)
+// ---------------------------
+
+block{
+//  INTEGER Atype				= 0;
+//  INTEGER rnd					= 0;
+FRAME me; 			FRM_GetMyFrame(me);
+Frame Muli;	FRM_FindFrame(Muli, "la_Opel_Muli_01");
+Frame MG42_5;	FRM_FindFrame(MG42_5, "MG42_5");
+
+  SetAlarmType(1023, true);
+//  SetAlarmType(768, true);
+}
+// --------------------------
+
+Whenever inrange ( _PlayerInRange(800))
+{
+  HUMAN_SETSIGHTRANGE(800);
+  HUMAN_SETHEARRANGE(350);
+//  HUMAN_SETAIMODE_Defensive();
+  HUMAN_BoardVehicle("la_Opel_Muli_01",  true, 0);
+  HUMAN_TurnAt(MG42_5);
+  HUMAN_SetOptimized(2);
+//  SetAlarmType(1023, true);
+//  SetAlarmType(768, true);
+  goto END;
+}
+
+OnDeath()
+	{
+  
+  
+	EndScript();
+	}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+//  SetAlarmType(1023, true);
+//  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// ---------------------------
+
+  HUMAN_SETSIGHTRANGE(400);
+  HUMAN_SETHEARRANGE(300);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(2);
+  HUMAN_BoardVehicle("la_Opel_Muli_01",  true, 1);
+  Car_SetFuel(Muli, 0);
+goto END;
+
+Label END:

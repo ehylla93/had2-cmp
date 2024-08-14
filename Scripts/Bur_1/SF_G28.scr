@@ -1,0 +1,57 @@
+// SF_G28 - Vojak Hlidajici Most
+// ----------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f084");
+}
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Stand();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_PlayerInRange(60))
+{
+HUMAN_Suspend(0);
+goto END;
+}
+
+// ----------------------------------------
+
+HUMAN_SETSIGHTRANGE(45);
+HUMAN_SETHEARRANGE(45);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+HUMAN_SetSniper(1, 5);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

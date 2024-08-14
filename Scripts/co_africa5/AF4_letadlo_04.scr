@@ -1,0 +1,16 @@
+// AF4_letadlo_04 - zniceni letadla
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME letadla_organizer;	FRM_FindFrame(letadla_organizer, "dummy_letadla_organizer");
+}
+
+OnDeath(){
+  FRM_CreateParticle(53, this);
+  PlaySound(6, 2);
+  MakeExplosion(this, 10000, 30000);
+  SaveGameValue(24, 0);
+  SendSignal(letadla_organizer, 1);
+  EndScript();
+}

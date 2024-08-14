@@ -1,0 +1,8 @@
+// X_N1_spawnzone3 trigger
+
+MP_EnableSpawnZone("zone3", 2);
+
+Whenever PIR (_PlayerInRange(2))
+{
+MP_EnableSpawnZone("zone3", 1);
+}

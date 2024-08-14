@@ -1,0 +1,21 @@
+// AF1_cut10_detector - detector on door
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME oficir;			FRM_FindFrame(oficir, "AF1_21");
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inrange (((_PlayerInRange(1)) AND (_ACTOR_GetState(oficir)))  AND (_GetDistToActivePlayer() < 1)){
+  if(_ACTOR_GetState(oficir))
+  {
+    CSC_RunCutscene(10);
+  }
+}
+
+OnCutSceneDone(10){
+    EndScript();
+}
+
+SetWheneverTime(inrange, 200);
+
+// -------------------------------------------------------------------------------------------------------------

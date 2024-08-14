@@ -1,0 +1,54 @@
+// 07_G65 - T2, 3 - Gunner
+// -----------------------------------------------------
+
+Block
+{
+Frame MyTank;	FRM_FindFrame(MyTank, "07_Panther_02"); 
+Frame Tgt;		FRM_FindFrame(Tgt, "04_Bomb_01");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_BoardVehicle("07_Panther_02", 1, 3);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+EndScript();
+}
+
+OnAlarmDone()
+{
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_BoardVehicle("07_Panther_02", 1, 2);
+HUMAN_SETSIGHTRANGE(280);
+HUMAN_SETHEARRANGE(280);
+SetAlarmType(1023,1);
+Delay(20000);
+HUMAN_TurnAt(Tgt);
+goto END;
+}
+
+Label END:

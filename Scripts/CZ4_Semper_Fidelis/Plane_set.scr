@@ -1,0 +1,113 @@
+//----------------------/----------------------
+block
+{   
+Frame plane1;			FRM_FindFrame(plane1,"Plane1fly");
+Frame plane2;			FRM_FindFrame(plane2,"Plane2fly");
+Frame plane3;			FRM_FindFrame(plane3,"Plane3fly");
+Frame plane4;			FRM_FindFrame(plane4,"Plane4fly");
+Frame plane5;			FRM_FindFrame(plane5,"Plane5fly");
+FRAME sound_plane_1;	 FRM_FindFrame(sound_plane_1, "FlyPlane_1");
+FRAME sound_plane_2;	 FRM_FindFrame(sound_plane_2, "FlyPlane_2");
+FRAME sound_plane_3;	 FRM_FindFrame(sound_plane_3, "FlyPlane_3");
+FRAME sound_plane_4;	 FRM_FindFrame(sound_plane_4, "FlyPlane_4");
+FRAME sound_plane_5;	 FRM_FindFrame(sound_plane_5, "FlyPlane_5");
+integer Rnd1;
+integer Rnd_pause;
+SaveGameValue(41, 0);
+SaveGameValue(42, 0);
+SaveGameValue(43, 0);
+SaveGameValue(44, 0);
+SaveGameValue(45, 0);
+//goto looping;
+}
+goto end;
+
+
+//----------------------/----------------------
+Whenever InRange (_PlayerInRange(500))
+{
+//Printf("go to plane loop");
+goto looping;
+}
+
+
+//----------------------/----------------------
+label looping:
+Rnd_pause=(_randomint(95000)+95000);
+delay(Rnd_pause);
+//Printf("Plane Loop");
+
+if ((_LoadGameValue(41)==1) and (_LoadGameValue(42)==1) and (_LoadGameValue(43)==1) and (_LoadGameValue(44)==1) and (_LoadGameValue(45)==1))
+{
+//Printf("all planes crash");
+goto end;
+}	
+
+Rnd1=(_randomint(15));
+if ((Rnd1==1) and (_LoadGameValue(41)==0))
+{
+//Printf("Plane 1 start");
+FRM_SetOn(plane1,1);
+SetActorState(plane1, 1);
+FRM_SetOn(sound_plane_1,1);
+}
+
+Rnd1=(_randomint(15));
+if ((Rnd1==2) and (_LoadGameValue(42)==0))
+{
+//Printf("Plane 2 start");
+FRM_SetOn(plane2,1);
+SetActorState(plane2, 1);
+FRM_SetOn(sound_plane_2,1);
+}
+
+Rnd1=(_randomint(15));
+if ((Rnd1==3) and (_LoadGameValue(43)==0))
+{
+//Printf("Plane 3 start");
+FRM_SetOn(plane3,1);
+SetActorState(plane3, 1);
+FRM_SetOn(sound_plane_3,1);
+}
+
+Rnd1=(_randomint(15));
+if ((Rnd1==4) and (_LoadGameValue(44)==0))
+{
+//Printf("Plane 4 start");
+FRM_SetOn(plane4,1);
+SetActorState(plane4, 1);
+FRM_SetOn(sound_plane_4,1);
+}
+
+Rnd1=(_randomint(15));
+if ((Rnd1==5) and (_LoadGameValue(45)==0))
+{
+//Printf("Plane 5 start");
+FRM_SetOn(plane5,1);
+SetActorState(plane5, 1);
+FRM_SetOn(sound_plane_5,1);
+}
+
+//Reset
+delay(50000);
+FRM_SetOn(sound_plane_1,0);
+FRM_SetOn(sound_plane_2,0);
+FRM_SetOn(sound_plane_3,0);
+FRM_SetOn(sound_plane_4,0);
+FRM_SetOn(sound_plane_5,0);
+FRM_SetOn(plane1,0);
+FRM_SetOn(plane2,0);
+FRM_SetOn(plane3,0);
+FRM_SetOn(plane4,0);
+FRM_SetOn(plane5,0);
+SetActorState(plane1, 0);
+SetActorState(plane2, 0);
+SetActorState(plane3, 0);
+SetActorState(plane4, 0);
+SetActorState(plane5, 0);
+delay(15000);
+goto looping;
+
+
+//----------------------/----------------------
+label end:

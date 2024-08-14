@@ -1,0 +1,38 @@
+// enemy at Pak40_1
+// ---------------------------
+
+block{
+  
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// ---------------------------
+
+
+OnDeath(){
+    EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// ---------------------------
+
+  HUMAN_SETSIGHTRANGE(200);
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("PAK40_1",  true, 0);
+goto END;
+
+Label END:
+
+

@@ -1,0 +1,43 @@
+// BU1_obj_04 - the bridge - left
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame obj;
+	FRM_FindFrame(obj, "BU_obj");
+Frame diary;
+	FRM_FindFrame(diary, "BU1_diary");
+Frame liana1;
+	FRM_FindFrame(liana1, "m_B_liana_233");
+Frame liana2;
+	FRM_FindFrame(liana2, "m_B_liana_234");
+Frame liana3;
+	FRM_FindFrame(liana3, "m_B_liana_235");
+Frame liana4;
+	FRM_FindFrame(liana4, "m_B_liana_236");
+Frame ckpjoiner;
+	FRM_FindFrame(ckpjoiner, "BU1_checkpoint_joiner");
+Frame soundfall;
+	FRM_FindFrame(soundfall, "BU1_soundfall_left");
+Frame help;
+	FRM_FindFrame(help, "Most_lefth");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnDeath()
+{
+	SendSignal(diary, 1);
+	SendSignal(obj, 4);
+	Block
+	{
+	SendSignal(liana1, 1);
+	SendSignal(liana2, 1);
+	SendSignal(liana3, 1);
+	SendSignal(liana4, 1);
+	SendSignal(ckpjoiner, 1);
+	SendSignal(soundfall, 1);
+	SetActorState(help, 1);
+	printf("SETACTORSTATE LEFT 1");
+	}
+}
+// -------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,63 @@
+// Posatka Haklu 2
+// ------------------------------------
+
+Block
+{
+Frame Hakl;	FRM_FindFrame(Hakl,"Hakl");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,0); //vidi
+SetAlarmType(64,0); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+
+// ------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)  // Nasedame
+{
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("Hakl", 1, 2);
+goto END;
+}
+
+OnSignal(2)    // Vysedame
+{
+HUMAN_BoardVehicle("Hakl", 0, 2);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETSIGHTRANGE(150);
+SetAlarmType(191,1);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveFromFrame(Hakl, 30);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

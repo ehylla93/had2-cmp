@@ -1,0 +1,22 @@
+frame Radio_sound_1;	 FRM_FindFrame(Radio_sound_1, "l_haydn_");		// zvuk uvnitr
+frame Radio_sound_2;	 FRM_FindFrame(Radio_sound_2, "l_haydn_2");		// zvuk venku
+integer hraje = 1;
+
+OnUse()
+{
+  If (hraje == 1)
+    {
+        FRM_SetOn(Radio_sound_1, false);
+        FRM_SetOn(Radio_sound_2, false);
+        hraje = 0; 
+      }else{
+        FRM_SetOn(Radio_sound_1, True);
+        FRM_SetOn(Radio_sound_2, True);
+        hraje = 1;
+    }
+}
+
+OnSignal(1)
+{
+  Endscript();
+}

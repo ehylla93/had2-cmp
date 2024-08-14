@@ -1,0 +1,69 @@
+// alp2_E18 - Patrol - East upper corridor
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1,1);		//Close Shooting
+SetAlarmType(2,1);		//Enemy Shots
+SetAlarmType(4,1);		//Hear Steps
+SetAlarmType(8,1);		//Action Sounds
+SetAlarmType(16,1);		//Explosions
+SetAlarmType(32,1);		//Sighted
+SetAlarmType(64,1);		//Is Injured
+SetAlarmType(128,0);	//From Script
+SetAlarmType(256,1);	//Friendly Shots
+SetAlarmType(512,1);	//Sight Corpse
+
+Integer Int;
+Int = _RandomInt(2);
+
+	If (Int == 0)
+	{
+	HUMAN_SETAIMODE_Zombie();
+	}
+
+	If (Int == 1)
+	{
+	HUMAN_SETAIMODE_Defensive();
+	}
+
+Frame me;		FRM_GetMyFrame(me);
+
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+}
+
+goto Patrol;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label Patrol:
+HUMAN_SETMODE_Guard();
+HUMAN_Move("al2_35_01");
+HUMAN_Move("al2_35_02");
+HUMAN_Move("al2_35_03");
+goto Patrol;
+
+// ----------------------------------------
+
+Label END:

@@ -1,0 +1,29 @@
+// Obj 10 - Player escape detector
+// ------------------------------------------------------------
+
+Block
+{
+Frame Truck;			FRM_FindFrame(Truck,"G1_Bedford_01");
+Frame Prisoner1;		FRM_FindFrame(Prisoner1,"Cpl. William Broadhurst");
+Frame Prisoner2;		FRM_FindFrame(Prisoner2,"SSgt. Gregory Dean");
+Frame Obj10;			FRM_FindFrame(Obj10,"obj10");
+
+SetWhenever(Player_Detected, 0);
+}
+
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Player_Detected, 1);
+}
+
+Whenever Player_Detected (((_FrameInRange(Prisoner1) < 25)) And (_FrameInRange(Prisoner2) < 25))
+{
+SendSignal(Obj10, 2);
+EndScript();
+}
+
+Whenever Truck_Teleport (_SignalReceived(2))
+{
+FRM_TeleportNearCheckpoint(Truck, "C5_kubel_tele", "C5_kubel01");
+}

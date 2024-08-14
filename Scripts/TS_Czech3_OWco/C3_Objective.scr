@@ -1,0 +1,16 @@
+// C3_objective
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetObjectiveStatus(1, 0);     // Eliminate all enemy officers - ok
+SetObjectiveStatus(2, 0);     // Eliminate all Armoured vehicles - ok
+SetObjectiveStatus(3, 0);     // Rescue the prisoners - ok
+SetObjectiveStatus(4, 0);     // Eliminate all Snipers - ok
+SetObjectiveStatus(5, 0);     // Kill the traitor - ok
+SetObjectiveStatus(6, 0);     // Aquire documents - ok
+}
+
+//-------------------------------------------------------------------------------------
+
+Label end:

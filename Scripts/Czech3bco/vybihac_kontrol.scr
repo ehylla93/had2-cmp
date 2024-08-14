@@ -1,0 +1,44 @@
+
+Frame f1;	FRM_FindFrame(f1, "vybihac1");
+Frame podschod;	FRM_FindFrame(podschod,"vybihac2_kontrol");
+Integer x;	x=0;
+SaveGameValue(1, 0);
+goto end;
+
+
+Whenever cek(_SignalReceived(1))
+
+{
+Printf ("vybihac  checkuje");
+SaveGameValue(1, 1);		//uz se neozivis
+
+goto check;
+}
+
+
+Whenever zij(_SignalReceived(2))
+
+{
+//funguju
+x=1;
+goto end;
+}
+
+
+
+Label check:
+
+if (x==0)
+{
+SendSignal (podschod,1);
+goto end;
+}
+
+if (_ACTOR_GetState(f1)==0)	{	x=x-1;	}
+
+
+delay (1000);
+goto check;
+
+
+Label end:

@@ -1,0 +1,48 @@
+// TURNING OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame E01;	FRM_FindFrame(E01,"GE_1");
+Frame E02;	FRM_FindFrame(E02,"GE_2");
+Frame E03;	FRM_FindFrame(E03,"GE_3");
+Frame E04;	FRM_FindFrame(E04,"GE_4");
+Frame E05;	FRM_FindFrame(E05,"GE_5");
+Frame E06;	FRM_FindFrame(E06,"GE_6");
+Frame E07;	FRM_FindFrame(E07,"GE_7");
+Frame E08;	FRM_FindFrame(E08,"GE_8");
+Frame E09;	FRM_FindFrame(E09,"GE_9");
+Frame E10;	FRM_FindFrame(E10,"GE_10");
+Frame E11;	FRM_FindFrame(E11,"GE_11");
+Frame E12;	FRM_FindFrame(E12,"GE_12");
+Frame E13;	FRM_FindFrame(E13,"GE_13");
+Frame E14;	FRM_FindFrame(E14,"GE_14");
+Frame E15;	FRM_FindFrame(E15,"GE_15");
+Frame E16;	FRM_FindFrame(E16,"GE_16");
+Frame E17;	FRM_FindFrame(E17,"GE_17");
+Frame E18;	FRM_FindFrame(E18,"GE_18");
+Frame E19;	FRM_FindFrame(E19,"GE_19");
+Frame E20;	FRM_FindFrame(E20,"GE_20");
+Frame E21;	FRM_FindFrame(E21,"GE_21");
+Frame E22;	FRM_FindFrame(E22,"GE_22");
+Frame E23;	FRM_FindFrame(E23,"GE_23");
+Frame E24;	FRM_FindFrame(E24,"GE_24");
+Frame E25;	FRM_FindFrame(E25,"GE_26");
+Frame E26;	FRM_FindFrame(E26,"GE_27");
+Frame E27;	FRM_FindFrame(E27,"GE_T1");
+Frame E28;	FRM_FindFrame(E28,"GE_T2");
+
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(E01, 20);SendSignal(E02, 20);SendSignal(E03, 20);SendSignal(E04, 20);SendSignal(E05, 20);
+SendSignal(E06, 20);SendSignal(E07, 20);SendSignal(E08, 20);SendSignal(E09, 20);SendSignal(E10, 20);
+SendSignal(E11, 20);SendSignal(E12, 20);SendSignal(E13, 20);SendSignal(E14, 20);SendSignal(E15, 20);
+SendSignal(E16, 20);SendSignal(E17, 20);SendSignal(E18, 20);SendSignal(E19, 20);SendSignal(E20, 20);
+SendSignal(E21, 20);SendSignal(E22, 20);SendSignal(E23, 20);SendSignal(E24, 20);SendSignal(E25, 20);
+SendSignal(E26, 20);SendSignal(E27, 20);SendSignal(E28, 20);
+EndScript();
+}

@@ -1,0 +1,68 @@
+// Obj 10 - Assemble at the planned location (with a vehicle)
+// ------------------------------------------------------------
+
+Block
+{
+Frame Obj4;				FRM_FindFrame(Obj4,"obj4");
+Frame Obj6;				FRM_FindFrame(Obj6,"obj6");
+Frame Obj7;				FRM_FindFrame(Obj7,"obj7");
+Frame Truck;			FRM_FindFrame(Truck,"G1_Bedford_01");
+
+Frame Prisoner1;		FRM_FindFrame(Prisoner1,"Cpl. William Broadhurst");
+Frame Prisoner2;		FRM_FindFrame(Prisoner2,"SSgt. Gregory Dean");
+Frame TruckDriver;		FRM_FindFrame(TruckDriver,"Sgt. Siegfried Hirsch");
+
+Integer Obj_Count;
+		Obj_Count = 0;
+		
+SetWhenever(Player_Assembling, 0);
+}
+
+OnSignal(1)
+{
+Obj_Count = Obj_Count + 1;
+}
+
+Whenever Obj_Update (Obj_Count > 2)
+{
+SetObjectiveStatus(10, 0);
+
+Delay(5000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(51999902);
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetWhenever(Player_Assembling, 1);
+}
+
+Whenever Player_Assembling (((_MP_IsTeamMemberInRange(1, 40)) And (_FrameInRange(Prisoner1) < 50)) And (_FrameInRange(Prisoner2) < 50))
+{
+SendSignal(TruckDriver, 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(56999903);
+Delay(2500);
+SUBTITLES_SetOn(0);
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(54999703);
+Delay(3500);
+SUBTITLES_SetOn(0);
+}
+
+Whenever Player_Escaped (_SignalReceived(2))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999710);
+Delay(3500);
+SetObjectiveStatus(10, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Driver_Dead (_SignalReceived(4))
+{
+SetObjectiveStatus(10, 2);
+EndScript();
+}

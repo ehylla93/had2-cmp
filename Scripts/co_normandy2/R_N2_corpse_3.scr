@@ -1,0 +1,7 @@
+Frame FRM;		FRM_GetMyFrame(FRM);
+
+HUMAN_SetOptimized(2);
+FRM_TeleportNearCheckpoint(FRM, "Teleport_Ally", "");
+HUMAN_Kill(FRM);
+
+

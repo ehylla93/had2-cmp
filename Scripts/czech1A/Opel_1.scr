@@ -1,0 +1,29 @@
+// Opel 1
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame plachta;		FRM_FindFrame(plachta, "Opel_1.Box15");
+Frame hakl;		FRM_FindFrame(hakl, "C1_G05");
+}
+
+//--------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+Block
+{
+FRM_SetOn(plachta, False);
+SendSignal(hakl, 5);
+}
+EndScript();
+}
+
+Block
+{
+FRM_SetOn(plachta, false);
+}
+goto END;
+
+
+Label END:

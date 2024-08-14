@@ -1,0 +1,52 @@
+Block
+{
+Frame D5;		FRM_FindFrame(D5,"ammocooprad");
+Frame D1;		FRM_FindFrame(D1,"03_box_guns_1");
+Frame D2;		FRM_FindFrame(D2, "03_box_guns_2");
+Frame D3;		FRM_FindFrame(D3,"03_box_ammo");
+Frame D4;		FRM_FindFrame(D4,"bednakey");
+
+Frame me;		FRM_GetMyFrame(me);
+Frame Player;
+SetWhenever(go, 1);
+
+
+//^Block
+
+}
+
+Whenever go(_SignalReceived(10))
+{
+
+
+Delay(1000);
+
+SetActorState(D1, 1);
+Delay(1000);
+
+SetActorState(D2, 1);
+Delay(1000);
+
+SetActorState(D3, 1);
+Delay(1000);
+
+SetActorState(D4, 1);
+
+Delay(1000);
+SetActorState(D5, 1);
+
+SetWhenever(go, 1);
+goto END;
+}
+
+//--------------------------------------------------------------------------------------
+
+
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:

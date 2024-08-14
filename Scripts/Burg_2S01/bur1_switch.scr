@@ -1,0 +1,4 @@
+OnUse()
+{
+    SaveGameValue(70, 0);
+}

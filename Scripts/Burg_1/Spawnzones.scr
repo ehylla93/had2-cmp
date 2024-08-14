@@ -1,0 +1,18 @@
+// Spawnzones
+// ----------------------------------------------
+
+Block
+{
+MP_EnableSpawnZone("zone1", 1);
+MP_EnableSpawnZone("zone2", 1);
+}
+
+// ----------------------------------------------
+
+Whenever Zone2_TurnOff (_SignalReceived(1))
+{
+MP_EnableSpawnZone("zone2", 0);
+EndScript();
+}
+
+

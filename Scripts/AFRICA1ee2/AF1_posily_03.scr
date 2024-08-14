@@ -1,0 +1,70 @@
+// AF1_posily - reinforcement
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME me;				FRM_GetMyFrame(me);
+  INTEGER namiste			= 0;
+  INTEGER Atype 			= 0;
+
+  SetAlarmType(1023, false);		// all off
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever plinrange(_PlayerInRange(70)){
+  SetAlarmType(511, true);
+  HUMAN_SetAlarm(false);
+  goto PRESUN2;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    Atype = _GetAlarmType(); 
+    printfnumber("poslila03 :: ", Atype);
+    HUMAN_Stop();
+  }
+
+  if(((Atype != 1) AND (Atype != 32)) AND (Atype != 64)){
+    HUMAN_SetAlarm(false);
+    HUMAN_SetMODE_Run();
+    HUMAN_MoveToAlarm();
+    goto PRESUN2;
+  }
+//  HUMAN_SetOptimized(false);
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  goto PRESUN2;
+}
+
+OnSignal(1){
+Label PRESUN:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("AF1_posily_0103");
+  HUMAN_Move("AF1_posily_0203");
+Label PRESUN2:
+  if(!namiste){
+    HUMAN_SetMODE_Run();
+    HUMAN_Move("AF1_p03_end");
+    namiste = 1;
+    HUMAN_SETMODE_Crouch();
+  }
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Run();
+  HUMAN_Suspend(true);
+
+Label END:

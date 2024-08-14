@@ -1,0 +1,158 @@
+// Vybezka 1 - vojak
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame terc;	FRM_FindFrame(terc,"CilTerc1");
+Frame kamos;	FRM_FindFrame(kamos,"Z1_G15");
+Frame kamos2;	FRM_FindFrame(kamos2,"Z1_G16");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+integer AIEvent;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+FORMATION_DelMember(me);
+HUMAN_SetAnim("", 0, 0, 1);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+AIEvent =_GetAlarmType();
+
+If (((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==32))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Stand();
+EndScript();
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+goto END;
+}
+
+OnSignal(2)
+{
+FORMATION_DelMember(me);
+goto END;
+}
+
+OnSignal(3)
+{
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_StandFast();
+HUMAN_Move("ge30_01");
+HUMAN_TurnAt(terc);
+Delay(200);
+HUMAN_Attack(terc,6000);
+Delay(1000);
+HUMAN_WeaponOnArm(0);
+HUMAN_Move("ge30_03");
+SendSignal(kamos, 5);
+HUMAN_TurnAt(terc);
+Delay(500);
+HUMAN_SetAnim("%%nuda1", 100, 100, 1);
+goto END;
+}
+
+OnSignal(5)
+{
+HUMAN_SetAnim("", 100, 100, 1);
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ge30_01");
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(terc);
+Delay(500);
+HUMAN_Attack(terc,6000);
+Delay(1500);
+HUMAN_Attack(terc,6000);
+HUMAN_SETMODE_Stand();
+SendSignal(kamos, 5);
+HUMAN_WeaponOnArm(0);
+HUMAN_Move("ge30_03");
+HUMAN_TurnAt(terc);
+Delay(500);
+HUMAN_SetAnim("%%nuda1", 100, 100, 1);
+goto END;
+}
+
+OnSignal(4)
+{
+HUMAN_SetAnim("", 100, 100, 1);
+HUMAN_SETMODE_StandFast();
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ge30_01");
+HUMAN_TurnAt(terc);
+Delay(200);
+HUMAN_Attack(terc,6000);
+Delay(1500);
+HUMAN_Attack(terc,6000);
+SendSignal(kamos2, 6);
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(0);
+HUMAN_Move("ge30_03");
+HUMAN_TurnAt(terc);
+Delay(500);
+HUMAN_SetAnim("%%nuda1", 100, 100, 1);
+goto END;
+}
+
+OnSignal(6)
+{
+HUMAN_SetAnim("", 100, 100, 1);
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ge30_01");
+HUMAN_TurnAt(terc);
+Delay(200);
+HUMAN_Attack(terc,6000);
+Delay(1500);
+HUMAN_Attack(terc,6000);
+SendSignal(kamos2, 6);
+HUMAN_SETMODE_StandFast();
+HUMAN_WeaponOnArm(0);
+HUMAN_Move("ge30_03");
+HUMAN_TurnAt(terc);
+Delay(500);
+HUMAN_SetAnim("%%nuda", 100, 100, 1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(20);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

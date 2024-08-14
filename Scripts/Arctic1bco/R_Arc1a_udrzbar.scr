@@ -1,0 +1,85 @@
+Block 
+{
+   integer AIEvent;	AIEvent = 0;
+   integer AI_OK;	AI_OK = 0;
+   frame terc;		FRM_FindFrame(terc, "m_AF5_archiv_");
+   frame door;		FRM_FindFrame(door, "m_dv_st");
+   frame see;		FRM_FindFrame(see, "dummy_udrzbar_see");
+   frame AllKilled;	FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+
+   HUMAN_SETAIMODE_Zombie();
+   HUMAN_SetOptimized(2);
+   HUMAN_SETMODE_Walk();
+
+   SetAlarmType(1023, False);
+}
+
+HUMAN_SETMODE_Stand();
+
+
+HUMAN_Suspend(True);				
+goto TheEND;
+
+// nekdo se priblizil ke dverim				
+  OnSignal(1)	
+{					
+  HUMAN_Suspend(False);
+  HUMAN_Move("udrzbar_1a");
+  HUMAN_TurnAt(door);
+  Delay(500);
+  Goto TheEND;
+}		
+
+// nekdo pouzil dvere
+  OnSignal(2)	
+{		
+   SetAlarmType(544, True);	    // 512 + 32 = True			
+}		
+
+OnAlarm()
+{
+  DisableSignals(true);
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Udrzbar: ", AIEvent);
+  If (AI_OK == 1)
+    {
+       SetAlarmType(127, True);		// 64 + 32 + 16 + 8 + 4 + 2 + 1
+       EndScript();
+    }
+  HUMAN_Attack(terc, 1000);
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("udrzbar_2");
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("udrzbar_3");
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_TurnAt(see);
+  HUMAN_SETMODE_Crouch();
+  Delay(800);
+  AI_OK = 1;
+  HUMAN_SetAlarm(False);
+  goto TheEND;
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, False);
+  SetAlarmType(99, True);		// 64 + 32 + 2 + 1
+  HUMAN_SetAlarm(False);
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("udrzbar_1d");
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAt(door);
+  Delay(800);
+  goto TheEND;
+}
+
+OnDeath()
+{
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+Label TheEND:
+

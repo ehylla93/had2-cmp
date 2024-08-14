@@ -1,0 +1,83 @@
+Block {
+Integer counter1 = 0;
+Integer counter2 = 0;
+Integer counter3 = 0;
+Integer counter4 = 0;
+Integer counter5 = 0;
+Integer counter = 0;
+Integer status = 0;
+
+frame OBJ;		FRM_FindFrame(OBJ, "dummy_KRVEPROLITI");
+frame text;		FRM_FindFrame(text, "text");
+
+SetWhenever (tnt4, false);
+SetWhenever (tnt5, false);
+SetWhenever (tnt5removed, false);
+}
+
+goto END;
+
+OnSignal(1) {  counter1 = 1; Goto SKIPER; }		//Signal 1 & 2 from Bombplace 1		Charged = Signal 1, Discharged = Signal 2;
+OnSignal(2) {  counter1 = 0; Goto SKIPER; }
+
+OnSignal(3) {  counter2 = 1; Goto SKIPER; }		//Signal 3 & 4 from Bombplace 2
+OnSignal(4) {  counter2 = 0; Goto SKIPER; }
+
+OnSignal(5) {  counter3 = 1; Goto SKIPER; }		//Signal 5 & 6 from Bombplace 1
+OnSignal(6) {  counter3 = 0; Goto SKIPER; }
+
+OnSignal(7) {  counter4 = 1; Goto SKIPER; }		//Signal 7 & 8 from Bombplace 1
+OnSignal(8) {  counter4 = 0; Goto SKIPER; }
+
+OnSignal(9)   {  counter5 = 1; Goto SKIPER; }	//Signal 9 & 10 from Bombplace 1
+OnSignal(10)  {  counter5 = 0; Goto SKIPER; }
+
+Whenever tnt4 ((counter < 4))
+{
+SetWhenever (tnt4, 0);
+SetWhenever (tnt5, 0);
+SendSignal(OBJ, 13);
+SendSignal(text, 2);
+SetObjectiveStatus(3, 0);
+SetObjectiveStatus(4, 4);
+goto END;
+}
+
+Whenever tnt5 ((counter == 5))
+{
+SetWhenever (tnt5, 0);
+SetWhenever (tnt5removed, 1);
+SendSignal(OBJ, 14);
+SendSignal(text, 3);
+SetObjectiveStatus(5, 1);
+goto END;
+}
+
+Whenever tnt5removed ((counter < 5))
+{
+SetWhenever (tnt5removed, 0);
+SetWhenever (tnt5, 1);
+SetObjectiveStatus(5, 4);
+goto END;
+}
+
+Label SKIPER:
+counter=0;
+counter = counter1 + counter2 + counter3 + counter4 + counter5;
+  If (counter == 4)
+  {
+  SendSignal(OBJ, 12);
+  SendSignal(text, 1);
+  SetWhenever (tnt4, true);
+  SetWhenever (tnt5, true);
+  goto END;
+  }
+  Else {goto END;}
+
+  
+Whenever SUCCESFUL ( _SignalReceived(17))
+{
+EndScript();
+}
+
+Label END:

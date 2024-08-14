@@ -1,0 +1,46 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Osadka Panzeru 1 (strelec z kanonu) Add3_Tank1 - strili  AI
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Frame X1;	FRM_FindFrame(X1, "ker_63");
+Frame X2;	FRM_FindFrame(X2, "ker_34");
+
+Block
+{
+  HUMAN_SetOptimized(2);
+  HUMAN_SETEVENTS(False);
+  SetAlarmType(1023, False); 
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator druhe vlny
+Onsignal(1)		
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("Tank1", true, 2);	
+  SetAlarmType(1023, True); 
+} 
+
+OnAlarm()  
+  {
+    Printf("Strelec z kanonu od Panzeru 1 presel do alarmu");      
+    EndScript();
+  }
+OnAlarmDone()  
+{
+  HUMAN_SetAlarm(False);
+  SetAlarmType(1023, True); 
+} 
+
+label loop:
+  Human_TurnAt(X1);
+  Delay(8000);
+  Human_TurnAt(X2);
+  Delay(8000);
+goto loop;
+
+label TheEnd:

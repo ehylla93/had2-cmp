@@ -1,0 +1,204 @@
+// Trafo near spawn (door is locked)
+// Turns out lights following the railway line
+
+Block
+{
+Integer firsttime;	firsttime=1;
+
+Frame svetlo17;	FRM_FindFrame(svetlo17, "railroad lamp_17");
+Frame lens17;	FRM_FindFrame(lens17, "l_ndrlamp17.lenz");
+
+Frame svetlo16;	FRM_FindFrame(svetlo16, "railroad lamp_16");
+Frame lens10;	FRM_FindFrame(lens10, "l_ndrlamp10.lenz");
+
+Frame svetlo15;	FRM_FindFrame(svetlo15, "railroad lamp_15");
+Frame lens3;	FRM_FindFrame(lens3, "l_ndrlamp3.lenz");
+
+Frame svetlo_nic;	FRM_FindFrame(svetlo_nic, "railroad lamp_");
+Frame lensnic;		FRM_FindFrame(lensnic, "l_ndrlamp.lenz");
+
+Frame svetlo2;	FRM_FindFrame(svetlo2, "railroad lamp_2");
+Frame lens2;	FRM_FindFrame(lens2, "l_ndrlamp2.lenz");
+
+Frame svetlo3;	FRM_FindFrame(svetlo3, "railroad lamp_3");
+Frame lens9;	FRM_FindFrame(lens9, "l_ndrlamp9.lenz");
+
+Frame svetlo4;	FRM_FindFrame(svetlo4, "railroad lamp_4");
+Frame lens8;	FRM_FindFrame(lens8, "l_ndrlamp8.lenz");
+
+Frame svetlo8;	FRM_FindFrame(svetlo8, "railroad lamp_8");
+Frame lens7;	FRM_FindFrame(lens7, "l_ndrlamp7.lenz");
+
+Frame svetlo7;	FRM_FindFrame(svetlo7, "railroad lamp_7");
+Frame lens6;	FRM_FindFrame(lens6, "l_ndrlamp6.lenz");
+
+Frame svetlo5;	FRM_FindFrame(svetlo5, "railroad lamp_5");
+Frame lens16;	FRM_FindFrame(lens16, "l_ndrlamp16.lenz");
+
+Frame svetlo6;	FRM_FindFrame(svetlo6, "railroad lamp_6");
+Frame lens5;	FRM_FindFrame(lens5, "l_ndrlamp5.lenz");
+
+Frame svetlo12;	FRM_FindFrame(svetlo12, "railroad lamp_12");
+Frame lens4;	FRM_FindFrame(lens4, "l_ndrlamp4.lenz");
+
+Frame svetlo11;	FRM_FindFrame(svetlo11, "railroad lamp_11");
+Frame lens11;	FRM_FindFrame(lens11, "l_ndrlamp11.lenz");
+
+Frame svetlo10;	FRM_FindFrame(svetlo10, "railroad lamp_10");
+Frame lens12;	FRM_FindFrame(lens12, "l_ndrlamp12.lenz");
+
+Frame svetlo9;	FRM_FindFrame(svetlo9, "railroad lamp_9");
+Frame lens15;	FRM_FindFrame(lens15, "l_ndrlamp15.lenz");
+
+Frame svetlo18;	FRM_FindFrame(svetlo18, "railroad lamp_18");
+Frame lens_nic;	FRM_FindFrame(lens_nic, "l_ndrlamp_.lenz");
+
+Frame svetlo13;	FRM_FindFrame(svetlo13, "railroad lamp_13");
+Frame lens14;	FRM_FindFrame(lens14, "l_ndrlamp14.lenz");
+
+Frame svetlo14;	FRM_FindFrame(svetlo14, "railroad lamp_14");
+Frame lens13;	FRM_FindFrame(lens13, "l_ndrlamp13.lenz");
+
+Frame svetlox01;	FRM_FindFrame(svetlox01, "rail house lamp_");
+Frame lensx01;		FRM_FindFrame(lensx01, "e_raslmp_2.Rectangle01");
+
+Frame svetlox02;	FRM_FindFrame(svetlox02, "rail house lamp_2");
+Frame lensx02;		FRM_FindFrame(lensx02, "e_raslmp_3.Rectangle01");
+
+Frame svetlox03;	FRM_FindFrame(svetlox03, "storage outdoor light_");
+Frame lensx03;		FRM_FindFrame(lensx03, "e_raslmp_8.Rectangle01");
+
+Frame svetlox09;	FRM_FindFrame(svetlox09, "storage outdoor light_7");
+Frame lensx09;		FRM_FindFrame(lensx09, "e_raslmp_13.Rectangle01");
+
+Frame svetlox15;	FRM_FindFrame(svetlox15, "sign help light_3");
+Frame lensx15;		FRM_FindFrame(lensx15, "e_raslmp_19.Rectangle01");
+
+Frame vojak01;	FRM_FindFrame(vojak01, "cetnik01");
+Frame vojak02;	FRM_FindFrame(vojak02, "cetnik_");
+Frame vojak03;	FRM_FindFrame(vojak03, "posila4");
+Frame vojak04;	FRM_FindFrame(vojak04, "posila6");
+Frame vojak05;	FRM_FindFrame(vojak05, "Ge_11");
+Frame vojak06;	FRM_FindFrame(vojak06, "Ge_5");
+Frame vojak07;	FRM_FindFrame(vojak07, "posila1");
+Frame vojak08;	FRM_FindFrame(vojak08, "posila1b");
+
+Frame object119;	FRM_FindFrame(object119, "Object119");
+Frame object120;	FRM_FindFrame(object120, "Object120");
+Frame object132;	FRM_FindFrame(object132, "Object132");
+
+Frame prsk1;		FRM_FindFrame(prsk1, "trafo1_01");
+Frame prsk2;		FRM_FindFrame(prsk2, "trafo1_02");
+Frame prsk3;		FRM_FindFrame(prsk3, "trafo1_03");
+
+Frame zvuk1;		FRM_FindFrame(zvuk1, "S_trafoA_1");
+Frame zvuk2;		FRM_FindFrame(zvuk2, "S_trafoA_2");
+}
+
+GoTo end;
+
+OnHit()
+{
+	If(firsttime==1)
+	{
+		firsttime=0;	
+		GoTo zhasinanie;
+	}
+goto prskavky;
+}
+
+Label zhasinanie:
+SendSignal(svetlo15, 1);
+Delay(100);
+SendSignal(svetlo16, 1);
+Delay(100);
+SendSignal(svetlox01, 1);
+Delay(100);
+SendSignal(svetlo_nic, 1);
+Delay(100);
+SendSignal(svetlo17, 1);
+Delay(100);
+SendSignal(svetlo2, 1);
+Delay(100);
+SendSignal(svetlo3, 1);
+Delay(100);
+SendSignal(svetlo14, 1);
+Delay(100);
+SendSignal(svetlox02, 1);
+Delay(100);
+SendSignal(svetlo4, 1);
+Delay(100);
+SendSignal(svetlo13, 1);
+Delay(100);
+SendSignal(svetlo18, 1);
+Delay(100);
+SendSignal(svetlox15, 1);
+Delay(100);
+SendSignal(svetlox03, 1);
+Delay(100);
+SendSignal(svetlo8, 1);
+Delay(100);
+SendSignal(svetlo7, 1);
+Delay(100);
+SendSignal(svetlo9, 1);
+Delay(100);
+SendSignal(svetlo5, 1);
+Delay(100);
+SendSignal(svetlox09, 1);
+Delay(100);
+SendSignal(svetlo6, 1);
+Delay(100);
+SendSignal(svetlo10, 1);
+Delay(100);
+SendSignal(svetlo12, 1);
+Delay(100);
+SendSignal(svetlo11, 1);
+
+SendSignal(object119, 1);
+SendSignal(object120, 1);
+SendSignal(object132, 1);
+
+Delay(1000);
+SendSignal(vojak01, 31);
+SendSignal(vojak02, 31);
+SendSignal(vojak03, 31);
+SendSignal(vojak04, 31);
+SendSignal(vojak05, 31);
+SendSignal(vojak06, 31);
+SendSignal(vojak07, 31);
+SendSignal(vojak08, 31);
+
+Label prskavky:
+FRM_CreateParticle(72, prsk1);
+FRM_SetOn(zvuk1, true);
+Delay(2000);
+FRM_CreateParticle(72, prsk2);
+FRM_SetOn(zvuk2, true);
+Delay(1500);
+FRM_CreateParticle(72, prsk3);
+FRM_SetOn(zvuk2, true);
+Delay(5000);
+FRM_CreateParticle(72, prsk2);
+FRM_SetOn(zvuk2, true);
+Delay(1000);
+FRM_CreateParticle(72, prsk3);
+FRM_SetOn(zvuk1, true);
+Delay(500);
+FRM_CreateParticle(72, prsk1);
+FRM_SetOn(zvuk1, true);
+Delay(1500);
+FRM_CreateParticle(72, prsk2);
+FRM_SetOn(zvuk2, true);
+Delay(3000);
+FRM_CreateParticle(72, prsk1);
+FRM_SetOn(zvuk1, true);
+Delay(500);
+FRM_CreateParticle(72, prsk3);
+FRM_SetOn(zvuk2, true);
+Delay(1500);
+FRM_CreateParticle(72, prsk1);
+FRM_SetOn(zvuk1, true);
+Delay(6000);
+GoTo prskavky;
+
+Label end:

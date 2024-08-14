@@ -1,0 +1,31 @@
+// convoy_E07 takling
+
+Block
+{
+Frame c1;	FRM_FindFrame(c1, "convoy_E07");
+Integer rdm = 0;
+}
+
+Whenever PIR (_PlayerInRange(70))
+{
+SetWhenever(PIR, 0);
+//OnSignal(1)	// signal received from convoy_E07
+	GoTo talk;
+}
+
+OnSignal(2)	// received from convoy_E07 on death or on alarm
+{
+	FRM_MorphSpeechDelayed(c1, 0, 0, 0);
+	EndScript();
+}
+
+GoTo end;
+
+Label talk:
+	rdm=_RandomInt(20000);
+	Delay(7000);
+	Delay(rdm);
+	FRM_MorphSpeechDelayed(c1, 07021400, 3, 20);
+	GoTo talk;
+
+Label end:

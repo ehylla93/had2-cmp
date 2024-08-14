@@ -1,0 +1,39 @@
+// T3_E02 - Tank_03 - MG
+// ----------------------------------------
+
+SetAlarmType(640,0);
+
+HUMAN_Suspend(1);
+HUMAN_SETSIGHTRANGE(50);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("T3_E02 dead");
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(False);
+goto END;
+}
+
+OnSignal(1)		//received from Reinf4
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Tank_03", true, 1);
+} 
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

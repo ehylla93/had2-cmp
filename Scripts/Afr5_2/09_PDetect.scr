@@ -1,0 +1,30 @@
+// Player Detector at Planning room
+// ----------------------------------------
+
+Block
+{
+Frame G107;		FRM_FindFrame(G107, "09_G107");
+Frame G108;		FRM_FindFrame(G108, "09_G108");
+Frame G109;		FRM_FindFrame(G109, "09_G109");
+Frame G110;		FRM_FindFrame(G110, "09_G110");
+Frame G111;		FRM_FindFrame(G111, "09_G111");
+Frame G112;		FRM_FindFrame(G112, "09_G112");
+
+Frame me;		FRM_GetMyFrame(me);
+Frame Get_Player;
+}
+
+// ----------------------------------------
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 3))
+{
+SendSignal(G107, 1);SendSignal(G108, 1);
+SendSignal(G109, 1);SendSignal(G110, 1);
+SendSignal(G111, 1);SendSignal(G112, 1);
+FRM_GetNearestPlayer(me, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990420, 5, 30);
+EndScript();
+}
+
+
+

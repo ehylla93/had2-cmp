@@ -1,0 +1,30 @@
+// Easteregg - Artillery
+// ------------------------------------
+
+Block
+{
+Frame radio;	FRM_FindFrame(radio,"radio");
+
+Frame me;			FRM_GetMyFrame(me);
+Frame Get_Player;
+
+Integer skulls;
+	skulls=0;
+}
+
+OnSignal(1)		// received from skull_01, skull_02, skull_03, skull_04
+{
+	skulls=skulls+1;
+	If(skulls==4)
+	{
+	FRM_GetNearestPlayer(me, Get_Player);
+	FRM_MorphSpeech(Get_Player, 09991922, 5, 30);		//"Hahaha..."
+	SendSignal(radio, 1);
+	EndScript();
+	}
+	goto END;
+}
+
+// ------------------------------------
+
+Label END:

@@ -1,0 +1,70 @@
+// "U potoka" Officer
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame t1;		FRM_FindFrame(t1,"C4_G82");
+Frame t2;		FRM_FindFrame(t2,"C4_G83");
+Frame t3;		FRM_FindFrame(t3,"C4_G84");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+Integer Al;
+	Al=0;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+
+If(Al==0)
+{
+SendSignal(t1, 1);
+SendSignal(t2, 1);
+SendSignal(t3, 1);
+}
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(t1, 1);
+SendSignal(t2, 1);
+SendSignal(t3, 1);
+Al=Al+1;
+HUMAN_SetAnim("", 500, 1000, 1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+HUMAN_SETMODE_Crouch();
+goto END;
+}
+
+Whenever Player (_PlayerInRange(80))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETSIGHTRANGE(160);
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("nuda1", 500, 1000, 1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

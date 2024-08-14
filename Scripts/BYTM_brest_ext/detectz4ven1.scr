@@ -1,0 +1,27 @@
+Frame z4_ven1;		FRM_FindFrame (z4_ven1,"z4_ven1");
+Frame z4_nadrz1;	FRM_FindFrame (z4_nadrz1,"z4_nadrz1");
+Frame z4_nadrz2;	FRM_FindFrame (z4_nadrz2,"z4_nadrz2");
+Frame z4_nadrz3;	FRM_FindFrame (z4_nadrz3,"z4_nadrz3");
+Frame z4_nadrz4;	FRM_FindFrame (z4_nadrz4,"z4_nadrz4");
+Frame z4_flak1;		FRM_FindFrame (z4_flak1,"z4_flak1");
+Frame z4_ven2;		FRM_FindFrame (z4_ven2,"z4_ven2");
+Frame E26;			FRM_FindFrame (E26,"n_E26");
+Frame E24;			FRM_FindFrame (E24,"n_E24");
+
+Whenever je(_PlayerInRange(17))
+{
+printf ("signal z4_ven1");
+SendSignal (z4_ven1,1);
+SendSignal (z4_ven2,1);
+SendSignal (z4_nadrz1,1);
+SendSignal (z4_nadrz2,1);
+SendSignal (z4_nadrz3,1);
+SendSignal (z4_nadrz4,1);
+SendSignal (z4_flak1,1);
+SendSignal (E26,1);
+SendSignal (E24,1);
+}
+
+
+
+SetWheneverTime(je, 100);

@@ -1,0 +1,13 @@
+// BU2_14_explode - BU2_14 explosion effect
+
+Frame me;	FRM_GetMyFrame(me);
+
+OnSignal(1)	// received from BU2_14
+{
+	SetActorState(me, 1);
+	//MakeExplosion(me, 1000000, 15000);
+	//FRM_CreateParticle(49, me);
+	//PlaySound(6, 2);
+}
+
+Label end:

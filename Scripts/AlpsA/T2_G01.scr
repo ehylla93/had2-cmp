@@ -1,0 +1,38 @@
+// Ridic Panzeru (La_Tiger_2) - nemel by alarmovat
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Kulomet;	FRM_FindFrame(Kulomet,"T2_G02");
+Frame Kanon;	FRM_FindFrame(Kanon,"T2_G03");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_2", 1, 0);
+SendSignal(Kulomet, 1);
+SendSignal(Kanon, 1);
+Delay(2000);
+HUMAN_Drive("opel05",40);
+HUMAN_Drive("opel04",30);
+HUMAN_Drive("opel03",20);
+HUMAN_Drive("opel02",20);
+HUMAN_Drive("opel01",10);
+HUMAN_Drive("", 0);
+HUMAN_BoardVehicle("La_tiger_2", 1, 3);
+Delay(2500);
+SendSignal(Kanon, 3);
+goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

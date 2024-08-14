@@ -1,0 +1,23 @@
+// Kecy mezi B1_G14 a B1_G15
+//------------------------------------------------
+
+Block
+{
+Frame G11;	FRM_FindFrame(G11, "B1_G14");
+Frame G12;	FRM_FindFrame(G12, "B1_G15");
+}
+
+Whenever Aktivace (_SignalReceived(1))
+{
+Delay(15000);
+goto Kecam;
+}
+
+Whenever Alarm (_SignalReceived(2))
+{
+goto END;
+}
+
+//------------------------------------------------
+
+Label END:

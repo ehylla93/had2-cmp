@@ -1,0 +1,56 @@
+// BF2_06 - static in bunker
+
+// Variables definition
+
+Block
+{
+Integer aievent;
+	aievent=0;
+Frame me;
+	FRM_GetMyFrame(me);
+}
+
+// --------------------------------------------------------
+
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	printfnumber("BF2_06 Bunker: alarm", aievent);
+	HUMAN_SETSIGHTRANGE(80);
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_36_A1
+{
+	HUMAN_Suspend(false);
+	printf("BF2_06 spawn");
+	//HUMAN_SetOptimized(2);
+	GoTo end;
+}
+
+OnDeath()
+{
+	printf("BF2_06 dead");
+	EndScript();
+}
+
+//-------------------------------------
+// Starting pose
+
+HUMAN_SETSIGHTRANGE(20);
+HUMAN_SETHEARRANGE(20);
+HUMAN_SETAIMODE_Zombie();
+SetAlarmType(1023, true);
+HUMAN_SetOptimized(1);
+FRM_SwitchFaceTexture(me, "e_f021");
+HUMAN_Suspend(true);
+
+Label end:

@@ -1,0 +1,82 @@
+// S_Al01 - Alarmer od chaty
+// ---------------------------------------------
+
+Block
+{
+Frame cp1;	FRM_FindFrame(cp1,"Kanon3");
+Frame cp2;	FRM_FindFrame(cp2,"BritCum");
+Frame cp3;	FRM_FindFrame(cp3,"SkalSit1");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+Integer bezim;
+	bezim = _RandomInt(3);
+
+FRM_SwitchFaceTexture(me,"e_f033");
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+
+If(bezim == 0)
+{
+HUMAN_MoveToFrame(cp1, 6);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+}
+
+If(bezim == 1)
+{
+HUMAN_MoveToFrame(cp2, 3);
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+}
+
+If(bezim == 2)
+{
+HUMAN_MoveToFrame(cp1, 6);
+HUMAN_SetSniper(1, 5);
+}
+goto END;
+}
+
+// ---------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

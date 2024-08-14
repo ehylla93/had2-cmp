@@ -1,0 +1,93 @@
+// X_N10_N11_speech - speech dummy for N10, N11
+
+Block
+{
+Frame n10;	FRM_FindFrame(n10, "N10");
+Frame n11;	FRM_FindFrame(n11, "N11");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)	// received from N10
+{
+	GoTo rozhovor;
+}
+
+OnSignal(2)	// received from N10, N11 on death or on alarm
+{
+	EndScript();
+}
+
+OnSignal(3)	// received from N10
+{
+	GoTo rozhovor2;
+}
+
+OnSignal(4)	// received from N10
+{
+	GoTo rozhovor3;
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(n10, 16993240, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993241, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993242, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993243, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993244, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993245, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993246, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993247, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993248, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993249, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993250, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993251, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993252, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993253, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993254, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993255, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993256, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993257, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993258, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993259, 3, 20);
+	SendSignal(n10, 2);
+	GoTo end;
+
+Label rozhovor2:
+	FRM_MorphSpeechDelayed(n11, 16993260, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993261, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993262, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993263, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993264, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993265, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993266, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993267, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993268, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993269, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993270, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993271, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993272, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993273, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993274, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993275, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993276, 3, 20);
+	SendSignal(n10, 3);
+	SendSignal(n11, 3);
+
+Label rozhovor3:
+	FRM_MorphSpeechDelayed(n10, 16993224, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993229, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993225, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993230, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993226, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993231, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993227, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993232, 3, 20);
+	FRM_MorphSpeechDelayed(n10, 16993228, 3, 20);
+	FRM_MorphSpeechDelayed(n11, 16993233, 3, 20);
+	SendSignal(n10, 4);
+	SendSIgnal(n11, 4);
+	GoTo end;
+
+Label end:

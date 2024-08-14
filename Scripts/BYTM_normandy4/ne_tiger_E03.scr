@@ -1,0 +1,68 @@
+// ne_tiger_E03 - Position: CANNON
+
+block
+{
+SetAlarmType(128,0);
+
+Frame d1;	FRM_FindFrame(d1, "ne_tiger_d1");
+Frame d2;	FRM_FindFrame(d2, "ne_tiger_d2");
+
+integer aievent;
+integer a;
+
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SETHEARRANGE(35);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+PrintfNumber("ne_tiger_E03 GUN alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto turnCannon;
+}
+
+OnDeath()
+{
+printf("ne_tiger_E03 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("ne_tiger",  1, 2);
+goto turnCannon;
+}
+
+Label turnCannon:
+HUMAN_TurnAt(d1);
+a=_RandomInt(7000)+3000;
+Delay(a);
+HUMAN_TurnAt(d2);
+a=_RandomInt(7000)+3000;
+Delay(a);
+goto turnCannon;
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//------------------------------------------------------------------------------------------
+
+label end:

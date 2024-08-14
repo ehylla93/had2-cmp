@@ -1,0 +1,108 @@
+// AF3a_29 - soldier hidden in the house
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME roz;		FRM_FindFrame(roz, "dummy_rozhovor_03");
+  FRAME af28;		FRM_FindFrame(af28, "AF3a_28");
+  INTEGER Atype	= 0;
+  INTEGER rnd;
+
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(true);
+goto  END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(roz, 2);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SendSignal(roz, 2);
+    HUMAN_Suspend(false);
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+  }
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETAIMODE_Defensive();
+  goto END;
+}
+
+Whenever player (_PlayerInRange(15)){
+  goto ACTIVATE;
+}
+
+OnSignal(10)
+{
+  HUMAN_Stop();
+  rnd = _RandomInt(7);
+  if(rnd == 0)
+  {
+    HUMAN_SetAnim("%%rozhovor2", 200, 200, true);
+  }
+  if(rnd == 1)
+  {
+    HUMAN_SetAnim("%%rozhovor3", 200, 200, true);
+  }
+  if(rnd == 2)
+  {
+    HUMAN_SetAnim("%%rozhovor4", 200, 200, true);
+  }
+  if(rnd == 3)
+  {
+    HUMAN_SetAnim("%%mluvi", 200, 200, true);
+  }
+  if(rnd == 4)
+  {
+    HUMAN_SetAnim("%%mluvi1", 200, 200, true);
+  }
+  if(rnd == 5)
+  {
+    HUMAN_SetAnim("%%mluvi4", 200, 200, true);
+  }
+  if(rnd == 6)
+  {
+    HUMAN_SetAnim("%%mluvi5", 200, 200, true);
+  }
+  goto END;
+}
+
+OnSignal(11)
+{
+  HUMAN_Stop();
+  HUMAN_SetAnim("", 200, 200, true);
+  goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetMODE_Stand();
+  HUMAN_TurnAt(af28);
+  SendSignal(roz, 1);
+goto END;
+
+Label END:

@@ -1,0 +1,56 @@
+// AF3b_tankista05 - Tiger 2
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+FRAME radio;		FRM_FindFrame(radio, "m_prist_a03b_01");
+INTEGER gt			= 4;
+INTEGER see_val		= 60 + (gt * (30));
+INTEGER hear_val	= 40 + (gt * (30));
+HUMAN_SETSIGHTRANGE(see_val);
+HUMAN_SETHEARRANGE(hear_val);
+SetAlarmType(1023, true);
+}
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_BoardVehicle("Tiger02", true, 2);
+HUMAN_Suspend(true);
+HUMAN_SETEVENTS(true);
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+  
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, true);
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+Label ACTIVITY:
+HUMAN_TurnAt(radio);
+printf("tank2 cannon turning");
+Delay(10000);
+goto ACTIVITY;
+
+Label END:

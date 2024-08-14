@@ -1,0 +1,54 @@
+// Obj 7 - Capture Hans Schuman
+//-----------------------------------------------
+
+Block
+{
+Frame Oasis;	FRM_FindFrame(Oasis,"SpawnZone");
+
+Integer Survived;
+	Survived=0;
+}
+
+SetWhenever(SUCCESS, 0);
+SetWhenever(FAIL, 0);
+
+Whenever SUCCESS (_SignalReceived(1))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993804);
+Delay(4000);
+SUBTITLES_SetText(20994001);
+Delay(3500);
+SendSignal(Oasis, 2);
+SetObjectiveStatus(7, 1);
+SUBTITLES_SetOn(0);
+
+If(Survived==0)
+{
+SetObjectiveStatus(8, 0);
+goto END;
+}
+
+goto END;
+}
+
+Whenever FAIL (_SignalReceived(2))
+{
+Delay(2000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993803);
+Delay(3000);
+SetObjectiveStatus(8, 2);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever TurnOn (_SignalReceived(3))
+{
+SetWhenever(SUCCESS, 1);
+SetWhenever(FAIL, 1);
+
+SetObjectiveStatus(7, 0);
+}
+
+Label END:

@@ -1,0 +1,16 @@
+// i2_fbarrel_8
+// -------------------------------------------------------------------------------------------------------------
+
+	Frame fbar_8;
+	FRM_FindFrame(fbar_8, "fbarrel_8");
+	
+OnDeath()
+{
+  	FRM_CreateParticle(53, fbar_8);
+	MakeExplosion(fbar_8, 9000000, 15000);
+	SetActorState(fbar_8, 0);
+	
+EndScript();
+}
+
+

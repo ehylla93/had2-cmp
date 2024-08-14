@@ -1,0 +1,23 @@
+FRAME letadlo;		FRM_FindFrame(letadlo, "#MchEscape_");
+FRAME damac;		FRM_FindFrame(damac, "mchescaped");
+FRAME timer;			FRM_FindFrame(timer, "dummy_let_timer");
+
+OnSignal(1)
+{
+  Delay(37000);
+  FRM_StopAnimation(letadlo, 1);
+  FRM_StopAnimation(damac, 1);
+//  FRM_SetAnimation(letadlo, "", 1);
+//  FRM_SetAnimation(damac, "", 1);
+  FRAME macoun;		FRM_FindFrame(macoun, "macchi_nalet");
+  SaveGameValue(80, 1);
+  ScriptAssign(macoun, "AF2_macchi_attack.scr");    
+  FRM_SetOn(letadlo, false);
+  FRM_SetOn(damac, false);
+  SendSignal(timer, 1);
+}
+
+OnSignal(2)
+{
+
+}

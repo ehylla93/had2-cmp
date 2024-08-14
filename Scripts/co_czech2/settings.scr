@@ -1,0 +1,40 @@
+// MISSION settings
+// -------------------------------------------------------
+
+Block
+{
+Frame Al1;	FRM_FindFrame(Al1, "set_alarm1");
+Frame Al2;	FRM_FindFrame(Al2, "set_alarm2");
+
+Frame gerS;	FRM_FindFrame(gerS, "Ger_");
+Frame ger3;	FRM_FindFrame(ger3, "Ger_3");
+Frame ger5;	FRM_FindFrame(ger5, "Ger_5");
+
+// **** GLOBAL ALARM ****
+// 1 = ON | 0 = OFF
+
+Integer S1;		S1 = 1;
+}
+
+// -------------------------------------------------------
+
+Whenever Player_In (_MP_IsTeamMemberInRange(1, 1000))
+{
+Delay(2000);
+If(S1 == 0)
+{
+SendSignal(Al1, 1);
+SendSignal(Al2, 1);
+}
+Block {
+SendSignal(ger3, 1);
+SendSignal(gerS, 5);
+SendSignal(ger5, 5);
+}
+Delay(5000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(19993801);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

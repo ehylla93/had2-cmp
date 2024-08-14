@@ -1,0 +1,41 @@
+Delay(300);
+block
+{
+  INTEGER diff = _SPGetGameDifficulty();
+  printfnumber("_ice_debug - Dificulty: ", diff);
+  INTEGER ubytek;
+  ubytek = diff * 10;
+  
+  INTEGER maxrnd				= _GetNumMembersOfClientTeam();
+  INTEGER health = ubytek * (-1);
+
+  FRAME pl01;	FRM_FindFrame(pl01, "_PLAYER_ 0");
+  if(maxrnd > 1)
+  {
+    FRAME pl02; FRM_FindFrame(pl02, "_PLAYER_ 1");
+  }
+  if(maxrnd > 2)
+  {
+    FRAME pl03; FRM_FindFrame(pl03, "_PLAYER_ 2");
+  }
+  if(maxrnd > 3)
+  {
+    FRAME pl04; FRM_FindFrame(pl04, "_PLAYER_ 3");
+  }
+
+if(_LoadGameValue(51) == 3)
+{
+  AddHumanHealth(pl01, health);
+  if(maxrnd > 1){
+    AddHumanHealth(pl02, health);
+  }
+  if(maxrnd > 2){
+    AddHumanHealth(pl03, health);
+  }
+  if(maxrnd > 3){
+    AddHumanHealth(pl04, health);
+  }
+}
+
+}
+

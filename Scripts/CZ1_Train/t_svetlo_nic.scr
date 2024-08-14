@@ -1,0 +1,24 @@
+Frame svetlo_nic;	FRM_FindFrame(svetlo_nic, "railroad lamp_");
+Frame lensnic;	FRM_FindFrame(lensnic, "l_ndrlamp.lenz");
+Frame prsk;		FRM_FindFrame(prsk, "prsk10");
+
+OnSignal(1)
+{
+	Block	{	FRM_SetOn(svetlo_nic, 0);	FRM_SetOn(lensnic, 0);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo_nic, 1);	FRM_SetOn(lensnic, 1);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo_nic, 0);	FRM_SetOn(lensnic, 0);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo_nic, 1);	FRM_SetOn(lensnic, 1);	}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlo_nic, 0);	FRM_SetOn(lensnic, 0);	}
+	Delay(300);
+	Block	{	FRM_SetOn(svetlo_nic, 1);	FRM_SetOn(lensnic, 1);	}
+	Block	{	FRM_SetOn(svetlo_nic, 0);	FRM_SetOn(lensnic, 0);	}
+	Block	{	FRM_SetOn(svetlo_nic, 1);	FRM_SetOn(lensnic, 1);	}
+	Block	{	FRM_SetOn(svetlo_nic, 0);	FRM_SetOn(lensnic, 0);	}
+	Block	{	FRM_SetOn(svetlo_nic, 1);	FRM_SetOn(lensnic, 1);	}
+	Block	{	FRM_SetOn(svetlo_nic, 0);	FRM_SetOn(lensnic, 0);	}
+	FRM_CreateParticle(62, prsk);
+}

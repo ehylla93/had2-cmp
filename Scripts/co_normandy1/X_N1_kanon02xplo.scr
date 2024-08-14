@@ -1,0 +1,83 @@
+// X_N1_kanon02xplo - cannon explosions
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame uzaver2;	FRM_FindFrame(uzaver2, "la_N_kanon_9.Ucpavka01");
+Frame soldier1;	FRM_FindFrame(soldier1, "N33");
+Frame soldier2;	FRM_FindFrame(soldier2, "N34");
+Integer random;	random=0;
+Frame zvuk1;	FRM_FindFrame(zvuk1, "s_fire_nad2");
+Frame zvuk2;	FRM_FindFrame(zvuk2, "s_mech2");
+Frame zvuk3;	FRM_FindFrame(zvuk3, "s_echo2");
+Frame zvuk4;	FRM_FindFrame(zvuk4, "s_fire_pod1");
+Frame zvuk5;	FRM_FindFrame(zvuk5, "s_fire_int");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(2)	// received from soldier1 (nabijac)
+{
+	GoTo soldier1;
+}
+
+OnSignal(3)	// received from soldier2 (strelec)
+{
+	GoTo soldier2;
+}
+
+OnSignal(4)	// received from soldier1 (nabijac)
+{
+	FRM_RotateY(uzaver2, -130, 130);
+	GoTo end;
+}
+
+OnSignal(5)	// received from N_kanon02obj, N34
+{
+	GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Label shoot:
+		random=_RandomInt(15000);
+		random=random+15000;
+	Block
+	{
+	FRM_SetOn(zvuk1, true);
+	FRM_SetOn(zvuk2, true);
+	FRM_SetOn(zvuk3, true);
+	FRM_SetOn(zvuk4, true);
+	FRM_SetOn(zvuk5, true);
+
+	FRM_CreateParticle(80, me);
+	MakeExplosion(me, 0, 10000);
+	}
+	Delay(random);
+	GoTo shoot;
+
+Label soldier1:
+	FRM_RotateY(uzaver2, 130, 250);
+	Delay(1000);
+	SendSignal(soldier2, 2);
+	GoTo end;
+
+Label soldier2:
+	Block
+	{
+	FRM_SetOn(zvuk1, true);
+	FRM_SetOn(zvuk2, true);
+	FRM_SetOn(zvuk3, true);
+	FRM_SetOn(zvuk4, true);
+	FRM_SetOn(zvuk5, true);
+
+	FRM_CreateParticle(80, me);
+	MakeExplosion(me, 0, 10000);
+	}
+	SendSignal(soldier1, 3);
+	SendSignal(soldier2, 3);
+	GoTo end;
+
+Label end:

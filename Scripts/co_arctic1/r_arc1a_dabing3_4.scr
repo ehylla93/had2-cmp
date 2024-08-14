@@ -1,0 +1,29 @@
+
+frame PG3;		FRM_FindFrame(PG3, "Plane_guard_3");
+frame PG4;		FRM_FindFrame(PG4, "Plane_guard_4");
+
+// 01990262 Come on, hurry, we're late.  You know Karl, he'll be moaning.
+// 01990263 I'm coming, I'm just putting the water on the stove.
+
+// 01990264 God, it's cold.  I'll never get used to it.
+// 01990265 I've survived worse.  You will too.  How long are you posted here?
+// 01990266 For almost another month.
+// 01990267 Lucky you, I have another six months to go. I guess we'll both have to deal with the cold for a while longer.
+// 	3747	1944	2937	3552	1311	6013	
+
+OnSignal(1)
+{
+  FRM_MorphSpeechDelayed(PG3, 01990262, 15, 45);
+  FRM_MorphSpeechDelayed(PG4, 01990263, 15, 45);
+  Delay(10000);
+  FRM_MorphSpeechDelayed(PG4, 01990264, 15, 45);
+  FRM_MorphSpeechDelayed(PG3, 01990265, 15, 45);
+  FRM_MorphSpeechDelayed(PG4, 01990266, 15, 45);
+  FRM_MorphSpeechDelayed(PG3, 01990267, 15, 45);
+}
+
+OnSignal(2)
+{
+  Printf("dabing 3_4 cancelled");
+  EndScript();
+}

@@ -1,0 +1,153 @@
+// Sgt. Julian Cunningham
+// -------------------------------------------
+
+Block
+{
+Frame Cum;	FRM_FindFrame(Cum,"Ally_pal03");
+
+Frame C1;	FRM_FindFrame(C1,"MG3_03");
+Frame C2;	FRM_FindFrame(C2,"MG5_03");
+Frame C3;	FRM_FindFrame(C3,"MG3_02");
+Frame C4;	FRM_FindFrame(C4,"MG5_02");
+Frame C5;	FRM_FindFrame(C5,"BR_G08");
+Frame C6;	FRM_FindFrame(C6,"BR_G10");
+Frame C7;	FRM_FindFrame(C7,"BR_G11");
+Frame C8;	FRM_FindFrame(C8,"BR_G12");
+Frame C9;	FRM_FindFrame(C9,"BR_G13");
+
+Integer VyberCil;	VyberCil=0;
+}
+
+// --------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_Suspend(0);
+HUMAN_WeaponOnArm(1);
+Delay(300);
+HUMAN_SETMODE_Run();
+HUMAN_Move("Ally5_2");
+HUMAN_TurnAt(Cum);
+HUMAN_WeaponUp(1);
+goto Palba;
+}
+
+Whenever Suspend (_SignalReceived(9))
+{
+HUMAN_Stop();
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Palba:
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(C1)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C1);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C1, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(C2)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C2);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C2, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(C3)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C3);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C3, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(C4)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C4);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C4, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(C5)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C5);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C5, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==5)
+{
+If(_Actor_GetState(C6)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C6);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C6, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==6)
+{
+If(_Actor_GetState(C7)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C7);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C7, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==7)
+{
+If(_Actor_GetState(C8)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C8);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C8, 3000);
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==8)
+{
+If(_Actor_GetState(C9)==0){VyberCil=_RandomInt(8);Goto Palba;}
+
+HUMAN_TurnAt(C9);
+HUMAN_WeaponUp(1);
+Delay(200);
+HUMAN_Attack(C9, 3000);
+VyberCil=_RandomInt(9);
+}
+
+goto Palba;
+
+Label END:

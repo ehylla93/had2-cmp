@@ -1,0 +1,19 @@
+
+Block {
+Frame ge33;		Frm_FindFrame (ge33,"ge_33");
+}
+
+Whenever mluv(_SignalReceived(1))
+{
+FRM_MorphSpeech(ge33,14992832,0,20);
+delay (26681);
+goto end;
+}
+
+Whenever alarm(_SignalReceived(2))
+{
+FRM_MorphSpeech(ge33,0,0,0);
+goto end;
+}
+
+label end:

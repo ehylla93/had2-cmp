@@ -1,0 +1,60 @@
+
+Block
+{
+  integer  AIEvent;
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+Whenever XXX ( _PlayerInRange(105) )
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Guard();
+     SetAlarmType(1023, True);		
+   }
+label loop:
+  HUMAN_Move("Add12_1");	
+  Delay(500);
+  HUMAN_Move("Add12_2");	
+  Delay(500);
+goto Loop;	
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Walk();
+    }
+goto loop;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" --- ADD 12 --- ma alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SetSniper(true, 25);
+    }
+  EndScript();  
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

@@ -1,0 +1,70 @@
+// N38 - action guard behind the edge
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer aievent;	aievent=0;
+Frame me;	FRM_GetMyFrame(me);
+	
+SetAlarmType(16, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+	EndScript();
+}
+
+OnDeath()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from N38_A1
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("N38_1");
+	GoTo end;
+}
+
+OnSignal(2)	// received from N38_A2
+{
+	HUMAN_Suspend(false);
+	HUMAN_Move("N38_2");
+	GoTo end;
+}
+
+OnSignal(3)	// received from N38_A3
+{
+	HUMAN_Suspend(false);
+	FRM_TeleportNearCheckpoint(me, "N38_4", "N38_3");
+	HUMAN_Move("N38_3");
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETAIMODE_Aggressive();
+FRM_SwitchFaceTexture(me, "e_f051");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label end:

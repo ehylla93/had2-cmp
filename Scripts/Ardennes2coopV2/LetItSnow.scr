@@ -1,0 +1,22 @@
+//             Let It Snow Let It Snow Let It Snow...
+Block
+{
+integer rnd1;
+integer rnd2;
+integer rnd3;
+integer rnd4;
+integer rnd5;
+rnd1=_randomint(15)+20;
+rnd2=_randomint(5)+5;
+rnd3=_randomint(5)+10;
+rnd4=_randomint(250)+500;
+rnd5=_randomint(10000)+20000;
+WEATHER_SetColorOut(190, 190, 190, 1);
+WEATHER_SetColorIn(150, 150, 150, 60);
+WEATHER_SetSize(rnd1, rnd1);
+WEATHER_SetSpace(rnd2, rnd3);
+WEATHER_SetSpeed(rnd4);
+WEATHER_SetCount(rnd5);
+WEATHER_SetOn(1);
+WEATHER_SetMode(2);
+}

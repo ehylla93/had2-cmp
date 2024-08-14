@@ -1,0 +1,245 @@
+block
+{
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+
+Frame opel_2;		FRM_FindFrame(opel_2,"opel_2");
+Frame solcar_1;		FRM_FindFrame(solcar_1,"solcar_1");
+Frame solcar_2;		FRM_FindFrame(solcar_2,"solcar_2");
+frame reinfo;		FRM_FindFrame(reinfo, "dummy_reinforcement");
+Frame velitel;		FRM_FindFrame (velitel,"velitel");
+Frame me;		FRM_GetMyFrame(me);
+Frame def1;		FRM_FindFrame(def1, "defender_1");
+Frame def2;		FRM_FindFrame(def2, "defender_2");
+Frame ci1;		FRM_FindFrame (ci1,"ci1");
+Frame ci2;		FRM_FindFrame (ci2,"ci2");
+Frame opeler;		FRM_FindFrame (opeler,"opeler");
+
+
+	FRM_SwitchFaceTexture(me, "e_f045");
+
+integer a;		a=0;
+integer b;		b=0;
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(30);
+
+HUMAN_SETAIMODE_Defensive();
+}
+SendSignal(solcar_1,1);
+SendSignal(solcar_2,1);
+
+//!!!!!!!!!
+//goto pryc;
+//!!!!!!!!!!!!!
+
+HUMAN_BoardVehicle("opel_2", 1,0);
+Delay(8000);
+
+
+HUMAN_Drive("BMW_1",20);
+HUMAN_Drive("BMW_2",20);
+HUMAN_Drive("BMW_3",30);
+
+HUMAN_Drive("BMW_5",30);
+
+HUMAN_Drive("BMW_7",40);
+
+HUMAN_Drive("BMW_9",40);
+
+HUMAN_Drive("BMW_11",40);
+
+HUMAN_Drive("BMW_13",30);
+
+HUMAN_Drive("BMW_15",10);
+//HUMAN_Drive("BMW_16",5);
+//HUMAN_Drive("couvej1",5);
+HUMAN_Drive("opelbrzdi",12);
+HUMAN_Drive("",0);
+delay (2000);
+//HUMAN_Drive("couvej1",-3);
+HUMAN_Drive("couvej2",-3);
+//HUMAN_Drive("couvej3",-3);
+HUMAN_Drive("couvej4",-5);
+HUMAN_Drive("",0);
+delay(2000);
+sendsignal (velitel,2);
+HUMAN_Drive("BMW_15",5);
+HUMAN_Drive("",0);
+delay (1000);
+HUMAN_SetOptimized(1);
+HUMAN_BoardVehicle("opel_2",0,0);
+Delay (500);
+
+//!!!!!!!!!!!!!!!!
+//goto pryc;
+//!!!!!!!!!!!!!!!!!!
+
+SendSignal(solcar_1,3);
+SendSignal(solcar_2,3);
+HUMAN_Move("HV1_1");
+HUMAN_Move("opelridic1");
+HUMAN_Move("opelridic2");
+//pocka na signal ze ma jit ven
+goto end;
+
+OnAlarm()
+	{
+block
+{
+HUMAN_SETMODE_Run();
+SendSignal(solcar_1,2);
+SendSignal(solcar_2,2);
+}
+HUMAN_BoardVehicle("opel_2", 0,0);	
+HUMAN_MoveFromFrame(opel_2, 3);
+	EndScript();
+	}
+
+
+OnAlarmDone()
+{
+SetAlarmType(652,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+
+OnDeath()
+{
+	  SendSignal(reinfo, 0);
+  	  Printf("Solcar_1 is DEAD!!!");
+	DisableSignals(1);
+	  EndScript();
+}
+
+
+
+Whenever zavelitelem(_SignalReceived(2))
+{
+
+HUMAN_Move("opelridic1");
+HUMAN_Move("opelridic3");
+HUMAN_ACTIVITY_Salute(1);
+delay (1000);
+printf ("prijeli sme pro zajatce");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+delay (2000);
+HUMAN_SetAnim("",500,500,0);
+sendsignal (velitel,3);		//domluvil sem
+goto end;
+}
+
+Whenever veliteldomluv(_SignalReceived(3))
+{
+HUMAN_ACTIVITY_Salute(1);
+delay (1000);
+HUMAN_Move("opelridic4");
+
+SendSignal (solcar_1,4);		//cum na mne
+HUMAN_TurnAt(solcar_1);
+printf ("Pojï se mnou. Naložíme ty èechy a mizíme odsud.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994015, 5, 30);
+
+HUMAN_SetAnim("",500,500,0);
+goto end;
+}
+
+Whenever solcardomluv(_SignalReceived(4))
+{
+FORMATION_Create(me);
+FORMATION_AddMember(solcar_1, me);
+FORMATION_SetTypeColumn(me);
+//FORMATION_SetScale(me, 2000);
+
+HUMAN_Move("opelridic5");
+HUMAN_Move("opelridic6");
+SendSignal (def1,1);
+HUMAN_Move("opelridic7");
+HUMAN_Move("opelridic8");
+FORMATION_Destroy(me);
+SendSignal (solcar_1,5);	//stoupni a cum
+HUMAN_TurnAt(def2);	//mrdka cistici pistol
+SendSignal (def2,1);	//vstan
+printf ("Odvážíme zajatce takže si mùžete dát pohov.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994017, 5, 30);
+
+SendSignal (def2,2);	//mluv
+HUMAN_SetAnim("",500,500,0);
+delay (2000);
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("Defender_01_02");
+printf ("ODJÍŽDÍME!! Vstávat,ruce za hlavu a pojïte za mnou!!");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994019, 5, 30);
+
+HUMAN_SetAnim("",500,500,0);
+Delay (500);
+SendSignal (ci1,1);
+SendSignal (ci2,1);
+HUMAN_Move("opelridic9");
+HUMAN_TurnAt(def2);
+goto end;
+}
+
+
+OnSignal (5)		//civili vylezli
+{
+a=a+1;
+if (a<2)	{ goto end;	}
+
+FORMATION_Create(me);
+FORMATION_AddMember(ci1, me);
+FORMATION_AddMember(ci2, me);
+FORMATION_AddMember(solcar_1, me);
+FORMATION_SetTypeColumn(me);
+HUMAN_Move("opelridic7");
+SendSignal (def2,3);			//odesli sme
+HUMAN_Move("opelridic6");
+HUMAN_Move("opelridic4");
+FORMATION_Destroy(me);
+SendSignal (ci1,2);
+SendSignal (ci2,2);
+SendSignal (solcar_1,6);
+SendSignal (solcar_2,4);
+goto end;
+}
+
+OnSignal (6)		//nastup na korbu
+{
+b=b+1;
+if (b<4)	{ goto end;	}
+//move ke kabine
+
+//!!!!!!!!!!!!!!!!!!!!1
+label pryc:
+delay (3000);
+
+HUMAN_BoardVehicle("opel_2", 1,0);
+delay (2000);
+HUMAN_Drive("BMW_11",40);
+HUMAN_Drive("BMW_5",40);
+HUMAN_Drive("BMW_3",30);
+HUMAN_Drive("BMW_1",20);
+HUMAN_Drive("BMW_0",20);
+SendSignal (opeler,2);
+HUMAN_Drive("BMW_01",30);
+HUMAN_Drive("",0);
+FRM_SetOn(opel_2, 0);
+
+}
+label end:

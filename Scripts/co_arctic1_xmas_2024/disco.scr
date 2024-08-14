@@ -1,0 +1,88 @@
+block
+{
+	frame light_red;				FRM_FindFrame(light_red,	"light_red"); 
+	frame light_green;				FRM_FindFrame(light_green,	"light_green"); 
+	frame light_blue;				FRM_FindFrame(light_blue,	"light_blue"); 
+	frame light_yellow;				FRM_FindFrame(light_yellow,	"light_yellow"); 
+	frame light_pink;				FRM_FindFrame(light_pink,	"light_pink"); 
+	frame light_cyan;				FRM_FindFrame(light_cyan, "light_cyan"); 
+	Integer d = 200;
+}
+
+GoSub off;
+goto END;
+
+
+OnSignal(0)
+{
+	d = 200;
+	goto loop;
+}
+
+OnSignal(2)
+{
+	d = 800;
+	goto loop;
+}
+
+OnSignal(3)
+{
+	d = 400;
+	goto loop;
+}
+OnSignal(4)
+{
+	d = 1000;
+	goto loop;
+}
+
+OnSignal(5)
+{
+	d = 600;
+	goto loop;
+}
+OnSignal(1)
+{
+	GoSub off;
+	goto END;
+}
+
+
+Label off:
+	FRM_SetOn(light_red, false);
+	FRM_SetOn(light_green, false);
+	FRM_SetOn(light_blue, false);
+	FRM_SetOn(light_yellow, false);
+	FRM_SetOn(light_pink, false);
+	FRM_SetOn(light_cyan, false);
+	Return;
+	
+Label loop:
+	FRM_SetOn(light_cyan, false);
+	FRM_SetOn(light_red, True);
+	Delay(d);
+	FRM_SetOn(light_red, false);
+	FRM_SetOn(light_green, True);
+
+	Delay(d);
+	FRM_SetOn(light_green, false);
+	FRM_SetOn(light_blue, True);
+
+	Delay(d);
+	FRM_SetOn(light_blue, false);
+	FRM_SetOn(light_yellow, True);
+
+	Delay(d);
+	FRM_SetOn(light_yellow, false);
+	FRM_SetOn(light_pink, True);
+
+	Delay(d);
+	FRM_SetOn(light_pink, false);
+	FRM_SetOn(light_cyan, True);
+
+	Delay(d);
+	goto loop;
+	
+	
+Label END:
+

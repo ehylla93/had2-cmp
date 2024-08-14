@@ -1,0 +1,38 @@
+block{
+	integer rnd1 = 0;
+}
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+
+printf("dj initialized.");
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath()
+{
+  EndScript();
+}
+
+
+
+
+label loop:
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	rnd1 = _randomint(3);
+	if (rnd1 == 0)
+		{HUMAN_SetAnim("%%couvani", 1000, 1000, 1);}
+	if (rnd1 == 1)
+		{HUMAN_SetAnim("%%couvanik", 1000, 1000, 1);}	
+	if (rnd1 == 2)
+		{HUMAN_SetAnim("%%mluvi", 1000, 1000, 1);}		
+	Delay(4000);
+	goto loop;
+	
+OnSignal(1)
+{
+	  HUMAN_SetAnim("", 100, 100, false);
+	    HUMAN_SETAIMODE_Zombie();
+	 HUMAN_Move("dj1");
+    HUMAN_SetAnim("%%panika", 800, 800, true);
+}
+

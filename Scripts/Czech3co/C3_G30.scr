@@ -1,0 +1,5 @@
+
+HUMAN_Suspend(1);
+goto End;
+
+Label END:

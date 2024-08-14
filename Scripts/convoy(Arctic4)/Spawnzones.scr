@@ -1,0 +1,103 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+MP_EnableSpawnZone("zone1", 0);
+MP_EnableSpawnZone("zone2", 0);
+MP_EnableSpawnZone("zone3", 0);
+MP_EnableSpawnZone("zone4", 0);
+MP_EnableSpawnZone("zone5", 0);     // point le plus haut
+MP_EnableSpawnZone("zone6", 0);     // panzer vrac
+MP_EnableSpawnZone("zone7", 0);
+MP_EnableSpawnZone("zone8", 0);
+MP_EnableSpawnZone("zone9", 0);      // au milieu du camp
+MP_EnableSpawnZone("zone10", 1);   // sous marin
+MP_EnableSpawnZone("zone11", 0);    //   derriere  le camp
+MP_EnableSpawnZone("zone12", 0);     // au fond en face le sous marin
+MP_EnableSpawnZone("zone13", 0);
+
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+OnSignal(1)
+{
+MP_EnableSpawnZone("zone9", 1);
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+//^Zone2
+}
+
+OnSignal(2)
+{
+MP_EnableSpawnZone("zone6", 1);
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+//^zone3
+}
+
+OnSignal(3)
+{
+MP_EnableSpawnZone("zone6", 1);
+MP_EnableSpawnZone("zone9", 1);
+MP_EnableSpawnZone("zone10", 1);
+MP_EnableSpawnZone("zone11", 0);
+MP_EnableSpawnZone("zone12", 0);
+Delay(3000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+
+//^zone4
+}
+
+OnSignal(4)
+{
+MP_EnableSpawnZone("zone1", 0);
+MP_EnableSpawnZone("zone2", 0);
+MP_EnableSpawnZone("zone3", 0);
+MP_EnableSpawnZone("zone4", 0);
+MP_EnableSpawnZone("zone5", 0);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+//^zone5
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:
+
+

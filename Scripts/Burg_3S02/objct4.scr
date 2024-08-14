@@ -1,0 +1,21 @@
+// Obj 4 - Destroy enemy radio station
+// ----------------------------------------------
+
+Block
+{
+Frame Sps;			FRM_FindFrame(Sps, "Spawnzones");
+
+SetobjectiveStatus(4, 0);
+}
+
+Whenever Radio_Destroyed (_SignalReceived(1))
+{
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999711);
+SendSignal(Sps, 1);
+Delay(3500);
+SetobjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

@@ -1,0 +1,209 @@
+// Cpl. Herbert Bennett - Allied Reinforcement
+// ---------------------------------------------
+
+Block
+{
+Frame C1;	FRM_FindFrame(C1,"SF_G20");
+Frame C2;	FRM_FindFrame(C2,"SF_G31");
+Frame C3;	FRM_FindFrame(C3,"SF_G21");
+Frame C4;	FRM_FindFrame(C4,"SF_G22");
+Frame C5;	FRM_FindFrame(C5,"SF_G23");
+Frame C6;	FRM_FindFrame(C6,"SF_G24");
+Frame C7;	FRM_FindFrame(C7,"SF_G25");
+Frame C8;	FRM_FindFrame(C8,"SF_G26");
+Frame C9;	FRM_FindFrame(C9,"SF_G27");
+Frame C10;	FRM_FindFrame(C10,"SF_G28");
+Frame Cp;	FRM_FindFrame(Cp,"SB_G11");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f020");
+
+Integer VyberCil;
+		VyberCil = 0;
+
+HUMAN_SETSIGHTRANGE(95);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+Goto END;
+}
+
+OnAlarm()
+{
+HUMAN_Stop();
+HUMAN_MoveFromFrame(Cp, 0);
+goto Palba;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Cp, 2);
+goto END;
+}
+
+// ----------------------------------------------
+
+Label Palba:
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(C1)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C1);
+Delay(100);
+HUMAN_Attack(C1, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(C2)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C2);
+Delay(100);
+HUMAN_Attack(C2, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(C3)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C3);
+Delay(100);
+HUMAN_Attack(C3, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(C4)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C4);
+Delay(100);
+HUMAN_Attack(C4, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(C5)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C5);
+Delay(100);
+HUMAN_Attack(C5, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==5)
+{
+If(_Actor_GetState(C6)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C6);
+Delay(100);
+HUMAN_Attack(C6, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==6)
+{
+If(_Actor_GetState(C7)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C7);
+Delay(100);
+HUMAN_Attack(C7, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==7)
+{
+If(_Actor_GetState(C8)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C8);
+Delay(100);
+HUMAN_Attack(C8, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==8)
+{
+If(_Actor_GetState(C9)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C9);
+Delay(100);
+HUMAN_Attack(C9, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+If(VyberCil==9)
+{
+If(_Actor_GetState(C10)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(C10);
+Delay(100);
+HUMAN_Attack(C10, 2500);
+VyberCil=_RandomInt(10);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_SetAlarm(0);
+HUMAN_MoveToFrame(Cp, 2);
+}
+
+goto Palba;
+
+
+Label END:

@@ -1,0 +1,95 @@
+// Hakl ridic (2)
+// -------------------------------------------------------------------------------------------------------------
+
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  
+
+  Frame posadka1;		FRM_FindFrame(posadka1,"C5_G18");
+  Frame posadka2;		FRM_FindFrame(posadka2,"C5_G19");
+  Frame posadka3;		FRM_FindFrame(posadka3,"C5_G20");
+  Frame posadka4;		FRM_FindFrame(posadka4,"C5_G21");
+  Frame posadka5;		FRM_FindFrame(posadka5,"C5_G22");
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+
+OnSignal(8)  // Advance!!
+{
+  HUMAN_Suspend(false);
+  HUMAN_BoardVehicle("Hakl2n",  true, 0);
+  
+  SendSignal(posadka1, 1);
+  SendSignal(posadka2, 1);
+  SendSignal(posadka3, 1);
+  SendSignal(posadka4, 1);
+  SendSignal(posadka5, 1);
+  
+  Delay(1000);
+  HUMAN_Drive("BMW_1",50);
+  HUMAN_Drive("BMW_2",50);
+  HUMAN_Drive("BMW_3",50);
+  HUMAN_DriveNearPlayer(30);
+  goto END; 
+}
+
+OnSignal(9)    // ALLARMMMM!!!!
+{
+  HUMAN_Stop();
+  HUMAN_Drive("", 30);
+  Delay(1000);
+  HUMAN_BoardVehicle("Hakl2n",  false, 0);
+  Delay(1000);
+  SendSignal(posadka1, 2);
+  SendSignal(posadka2, 2);
+  SendSignal(posadka3, 2);
+  SendSignal(posadka4, 2);
+  SendSignal(posadka5, 2);
+  goto END; 
+}
+
+Whenever player (_PlayerInRange(60)) // FEEEEEIND!!!
+{
+  HUMAN_Stop();
+  HUMAN_Drive("", 30);
+  Delay(1000);
+  HUMAN_BoardVehicle("Hakl2n",  false, 0);
+  Delay(1000);
+  SendSignal(posadka1, 2);
+  SendSignal(posadka2, 2);
+  SendSignal(posadka3, 2);
+  SendSignal(posadka4, 2);
+  SendSignal(posadka5, 2);
+  HUMAN_SETSIGHTRANGE(100);
+  goto END; 
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_Suspend(true);
+  HUMAN_SETSIGHTRANGE(10);
+  HUMAN_SETAIMODE_Aggressive();   
+  HUMAN_SetOptimized(2);
+  goto END;
+
+  Label END:

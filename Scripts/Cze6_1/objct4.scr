@@ -1,0 +1,52 @@
+// Obj 4 - Aquire the Documents 
+// ------------------------------------
+
+Block
+{
+Frame Documents;
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+SetWhenever(Found, 0);
+}
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetObjectiveStatus(4, 0);
+SetWhenever(Found, 1);
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(14992804);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);
+Delay(3500);
+SetObjectiveStatus(4, 0);
+SUBTITLES_SetOn(0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Label END:

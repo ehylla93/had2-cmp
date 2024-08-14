@@ -1,0 +1,58 @@
+// MGnest_E01
+
+block
+{
+SetAlarmType(128,0);
+
+integer a = 0;
+integer aievent;
+HUMAN_SETAIMODE_Defensive();
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+aievent=(_GetAlarmType());
+PrintfNumber("MGnest_E01 alarm:",aievent);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("MGnest_E01 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label TALKING:
+a=_RandomInt(7);
+if(a==0) { HUMAN_SetAnim("%%mluvi1", 300, 300, 0); }
+if(a==1) { HUMAN_SetAnim("%%mluvi2", 300, 300, 0); }
+if(a==2) { HUMAN_SetAnim("%%kecy1", 300, 300, 0); }
+if(a==3) { HUMAN_SetAnim("%%kecy2", 300, 300, 0); }
+if(a==4) { HUMAN_SetAnim("%%kecy3", 300, 300, 0); }
+if(a==5) { HUMAN_SetAnim("%%rozhovor", 300, 300, 0); }
+if(a==6) { HUMAN_SetAnim("%%rozhovor2", 300, 300, 0); }
+Delay(7000);
+goto TALKING;
+
+Label end:

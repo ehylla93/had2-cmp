@@ -1,0 +1,37 @@
+// AF3a_dummy_alarm - sending guards when alarm occured (received from AF3a_18 and AF3a_19)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME en02;			FRM_FindFrame(en02, "AF3a_02");
+  FRAME en03;			FRM_FindFrame(en03, "AF3a_03");	
+  FRAME en07;			FRM_FindFrame(en07, "AF3a_07");
+  FRAME en05;			FRM_FindFrame(en05, "AF3a_05");
+  FRAME en06;			FRM_FindFrame(en06, "AF3a_06");
+  FRAME en11;			FRM_FindFrame(en11, "AF3a_11");
+  FRAME en13;			FRM_FindFrame(en13, "AF3a_13");
+  FRAME en14;			FRM_FindFrame(en14, "AF3a_14");
+  FRAME en15;			FRM_FindFrame(en15, "AF3a_15");
+  FRAME en18;			FRM_FindFrame(en18, "AF3a_18");
+  FRAME en20;			FRM_FindFrame(en20, "AF3a_20");
+  FRAME en26;			FRM_FindFrame(en26, "AF3a_26");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever globalalarm (_SignalReceived(1)){
+    SendSignal(en02, 20);
+    SendSignal(en03, 20);
+    SendSignal(en05, 20);
+    SendSignal(en06, 20);
+    SendSignal(en07, 20);
+    SendSignal(en11, 20);
+    SendSignal(en13, 20);
+    SendSignal(en14, 20);
+    SendSignal(en15, 20);
+    SendSignal(en18, 20);
+    SendSignal(en20, 20);
+    SendSignal(en26, 20); 
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------

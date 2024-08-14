@@ -1,0 +1,101 @@
+// N02 - guard at the lighthouse (first one)
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame see1;	FRM_FindFrame(see1, "dummy_see1");
+Frame see2;	FRM_FindFrame(see2, "dummy_see2");
+Frame see3;	FRM_FindFrame(see3, "dummy_see3");
+Frame see4;	FRM_FindFrame(see4, "dummy_see4");
+Frame lookalarm;	FRM_FindFrame(lookalarm, "dummy_see8");
+Frame n3;	FRM_FindFrame(n3, "N03");
+Frame me;	FRM_GetMyFrame(me);
+Integer aievent;	aievent=0;
+	
+SetAlarmType(16, false);
+//SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+
+	Block
+	{
+		aievent=_GetAlarmType();
+	HUMAN_SETSIGHTRANGE(80);
+	}
+
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+Whenever activate(_PlayerInRange(30))
+{
+	SetWhenever(activate2, false);
+	HUMAN_Suspend(false);
+	GoTo path;
+}
+
+Whenever activate2(_SignalReceived(3))	// received from NXX_A4, N02N03_A01, N02N03_A02, N02N03_A03
+{
+	SetWhenever(activate, false);
+	HUMAN_Suspend(false);
+	GoTo path;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+FRM_SwitchFaceTexture(me, "e_f053");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_Move("N02_1");
+	HUMAN_TurnAt(see2);
+	Delay(500);
+	HUMAN_SetAnim("%%kopkamen1", 200, 500, false);
+	Delay(4500);
+	HUMAN_Move("N02_2");
+	HUMAN_TurnAt(see3);
+	HUMAN_SetAnim("%%lenin", 500, 500, false);
+	Delay(10000);
+	HUMAN_Move("N02_3");
+	Delay(200);
+	HUMAN_TurnAt(see4);
+	Delay(500);
+	HUMAN_Move("N02_4");
+	HUMAN_Move("N02_5");
+	HUMAN_Move("N02_6");
+	Delay(100);
+	HUMAN_TurnAt(see1);
+	Delay(200);
+	HUMAN_SetAnim("%%lenin", 500, 500, false);
+	Delay(10000);
+	GoTo path;
+
+Label end:

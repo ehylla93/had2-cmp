@@ -1,0 +1,66 @@
+// pobìží od vraku k protìjší stìnì
+
+integer  AIEvent;
+integer RND = 0;
+Frame turn; 		FRM_FindFrame(turn, "dummy_Red24_turn");
+
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(30)				
+{						
+  HUMAN_Suspend(False);			
+}						
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("Red24_1");		
+  HUMAN_TurnAt(turn);
+  Delay(500);
+  HUMAN_ACTIVITY_Turk();
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  HUMAN_SETMODE_StandFast();
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 24: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+      RND = _RandomInt(3);
+    }
+  IF (RND == 0)  
+    { 
+       HUMAN_Move("Red24_2");	 	
+       HUMAN_SETMODE_Crouch();
+       EndScript();
+    }
+  IF (RND == 2)  
+   { 
+      HUMAN_Move("Red24_3");	
+   }
+  HUMAN_SETMODE_Crouch();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Crouch();
+}
+
+Label TheEnd:

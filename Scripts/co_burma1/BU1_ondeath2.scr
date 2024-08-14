@@ -1,0 +1,20 @@
+// BU1_ondeath2 - on death - send signal to objective counter
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame obj03;
+	FRM_FindFrame(obj03, "BU1_obj03");
+Frame obj01;
+	FRM_FindFrame(obj01, "BU1_explosion");
+	}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnDeath()
+{
+	Delay(200);
+	SendSignal(obj03, 1);
+	SendSignal(obj01, 2);
+}
+// -------------------------------------------------------------------------------------------------------------

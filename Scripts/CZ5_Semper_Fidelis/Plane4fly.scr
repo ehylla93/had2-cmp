@@ -1,0 +1,42 @@
+//Detect hit on target
+block
+{ 
+Frame me;				FRM_GetMyFrame(me);
+integer Effect_Value;
+integer Rnd1;
+}
+goto end;
+
+
+OnHit()
+{
+//Printf("Plane 4 hit");
+gosub Effect;
+FRM_CreateParticle(Effect_Value, me);
+//PrintfNumber("Effect_Value: ",Effect_Value);
+SaveGameValue(44, 1);
+EndScript();
+GoTo end;
+}
+
+
+//16 40 75 78 79 110
+Label Effect:
+Rnd1=(_randomint(6));
+//PrintfNumber("Rnd1: ", Rnd1);
+if (Rnd1==0)
+{Effect_Value=40;}
+if (Rnd1==1)
+{Effect_Value=75;}
+if (Rnd1==2)
+{Effect_Value=78;}
+if (Rnd1==3)
+{Effect_Value=79;}
+if (Rnd1==4)
+{Effect_Value=110;}
+if (Rnd1==5)
+{Effect_Value=16;}
+return;
+
+
+label end:

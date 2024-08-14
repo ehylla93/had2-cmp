@@ -1,0 +1,96 @@
+// B07 sniper on hills west
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "la_kan17mmW_02");
+  frame MyFRM;	    FRM_GetMyFrame(MyFRM); 
+
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+
+Whenever Spawn (_PlayerInRange(120))
+{
+  HUMAN_Suspend(False);
+printf("B07 spawn");
+}
+
+Block
+  {
+     SetAlarmType(1023, False);
+     SetAlarmType(100, True);		
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Lie();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+     HUMAN_SetSniper(true, 3);
+	 HUMAN_SETSIGHTRANGE(300);
+     HUMAN_SETHEARRANGE(300);
+   }
+HUMAN_TurnAt(turn);
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_walk();
+    }
+
+  HUMAN_SETMODE_Lie();
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      SetWhenever(BACHA, false);
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" B07: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+	  HUMAN_SETSIGHTRANGE(160);
+      HUMAN_SETHEARRANGE(160);
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  Block
+   { 
+      SetAlarmType(1023, False);
+      SetAlarmType(36, True);	
+      HUMAN_SetAlarm(False);
+      HUMAN_SetSniper(true, 3);
+      SetWhenever(BACHA, true);
+	  HUMAN_SETSIGHTRANGE(150);
+      HUMAN_SETHEARRANGE(150);
+	HUMAN_TurnAtNearestPlayer();
+//	   HUMAN_TurnAt(turn);
+    }
+  goto DeAlarm;
+}
+
+Whenever BACHA ( _PlayerInRange(12) )
+{
+     SetAlarmType(1023, True);
+     HUMAN_SetSniper(False, 3);
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+	printf("B07 dead");
+  EndScript();
+}
+
+Label TheEND:

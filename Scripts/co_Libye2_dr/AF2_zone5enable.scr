@@ -1,0 +1,94 @@
+// AF2_zone5enable - moved zone east, 30 meters
+// --------------------------------------------
+// Variables definition
+Block
+{
+Frame add_20;
+	FRM_FindFrame(add_20, "Add_20");
+Frame add_21;
+	FRM_FindFrame(add_21, "Add_21");
+Frame add_22;
+	FRM_FindFrame(add_22, "Add_22");
+Frame add_23;
+	FRM_FindFrame(add_23, "Add_23");
+Frame add_24;
+	FRM_FindFrame(add_24, "Add_24");
+Frame af2_28;
+	FRM_FindFrame(af2_28, "AF2_28");
+Frame af2_29;
+	FRM_FindFrame(af2_29, "AF2_29");
+Frame af2_30;
+	FRM_FindFrame(af2_30, "AF2_30");
+Frame af2_38;
+	FRM_FindFrame(af2_38, "AF2_38");
+Frame af2_39;
+	FRM_FindFrame(af2_39, "AF2_39");
+Frame af2_40;
+	FRM_FindFrame(af2_40, "AF2_40");
+Frame af2_41;
+	FRM_FindFrame(af2_41, "AF2_41");
+Frame af2_42;
+	FRM_FindFrame(af2_42, "AF2_42");
+Frame af2_43;
+	FRM_FindFrame(af2_43, "AF2_43");
+Frame af2_58;
+	FRM_FindFrame(af2_58, "AF2_58");
+
+Frame af2_60;
+	FRM_FindFrame(af2_60, "AF2_60");
+
+Frame af2_85;
+	FRM_FindFrame(af2_85, "AF2_85");
+Frame af2_87;
+	FRM_FindFrame(af2_87, "AF2_87");
+Frame af2_88;
+	FRM_FindFrame(af2_88, "AF2_88");
+Frame af2_93;
+	FRM_FindFrame(af2_93, "AF2_93");
+Frame af2_94;
+	FRM_FindFrame(af2_94, "AF2_94");
+Frame af2_95;
+	FRM_FindFrame(af2_95, "AF2_95");
+Frame af2_96;
+	FRM_FindFrame(af2_96, "AF2_96");
+Frame af2_97;
+	FRM_FindFrame(af2_97, "AF2_97");
+
+Frame bf2_13;
+	FRM_FindFrame(bf2_13, "BF2_13");
+Frame bf2_14;
+	FRM_FindFrame(bf2_14, "BF2_14");
+Frame bf2_15;
+	FRM_FindFrame(bf2_15, "BF2_15");
+Frame bf2_16;
+	FRM_FindFrame(bf2_16, "BF2_16");
+Frame bf2_17;
+	FRM_FindFrame(bf2_17, "BF2_17");
+
+Frame texty;
+	FRM_FindFrame(texty, "AF2_texty");
+}
+// --------------------------------------------
+// Whenever keywords and signals
+Whenever enable(_PlayerInRange(30) AND (_ACTOR_GetState(add_20)==0) AND (_ACTOR_GetState(add_21)==0) AND (_ACTOR_GetState(add_22)==0) AND 
+(_ACTOR_GetState(add_23)==0) AND (_ACTOR_GetState(add_24)==0) AND
+(_ACTOR_GetState(af2_28)==0) AND 
+(_ACTOR_GetState(af2_29)==0) AND (_ACTOR_GetState(af2_30)==0) AND
+(_ACTOR_GetState(af2_38)==0) AND (_ACTOR_GetState(af2_39)==0) AND
+(_ACTOR_GetState(af2_40)==0) AND (_ACTOR_GetState(af2_41)==0) AND
+(_ACTOR_GetState(af2_42)==0) AND (_ACTOR_GetState(af2_43)==0) AND
+(_ACTOR_GetState(af2_58)==0) AND
+(_ACTOR_GetState(af2_85)==0) AND (_ACTOR_GetState(af2_87)==0) AND
+(_ACTOR_GetState(af2_88)==0) AND (_ACTOR_GetState(af2_93)==0) AND
+(_ACTOR_GetState(af2_94)==0) AND (_ACTOR_GetState(af2_95)==0) AND
+(_ACTOR_GetState(af2_96)==0) AND (_ACTOR_GetState(af2_97)==0) AND
+(_ACTOR_GetState(bf2_13)==0) AND (_ACTOR_GetState(bf2_14)==0) AND
+(_ACTOR_GetState(bf2_15)==0) AND (_ACTOR_GetState(bf2_16)==0) AND 
+(_ACTOR_GetState(bf2_17)==0) AND 
+(_ACTOR_GetState(af2_60)==0))
+{
+	MP_EnableSpawnZone("zone5", 1);
+	SendSignal(texty, 7);
+}
+// --------------------------------------------
+// Starting pose

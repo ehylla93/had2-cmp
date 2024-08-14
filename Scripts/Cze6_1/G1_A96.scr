@@ -1,0 +1,45 @@
+// Sgt. Siegfried Hirsch - Escape Truck Driver
+// ------------------------------------------------------------
+
+Block
+{
+Frame Truck;			FRM_FindFrame(Truck,"G1_Bedford_01");
+Frame Obj10;			FRM_FindFrame(Obj10,"obj10");
+Frame Obj10D;			FRM_FindFrame(Obj10D,"obj10_detect");
+
+SetWhenever(Boarded, 0);
+
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(1);
+}
+goto END;
+
+OnDeath()
+{
+SendSignal(Obj10, 4);
+EndScript();
+}
+
+Whenever Lets_Go (_SignalReceived(1))
+{
+SendSignal(Obj10D, 2);
+Car_SetFuel(Truck, 9000);
+Delay(1000);
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("G1_Bedford_01", 1, 0);
+HUMAN_Drive("C5_isu01", 50);
+HUMAN_Drive("C5_isu02", 20);
+HUMAN_Drive("", 20);
+SendSignal(Obj10D, 1);
+SetWhenever(Boarded, 1);
+goto END;
+}
+
+Whenever Boarded (_SignalReceived(2))
+{
+HUMAN_Drive("C5_tank06", 35);
+HUMAN_Drive("C5_tank04", 40);
+}
+
+
+Label END:

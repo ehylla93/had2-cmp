@@ -1,0 +1,90 @@
+// reinf 1
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		        FRM_FindFrame(turn, "Offic1");
+  frame MyFRM;	            FRM_GetMyFrame(MyFRM);
+  Frame OpelFlak;		    FRM_FindFrame(OpelFlak, "la_OpelFAf_1");
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+// when photos taken
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+  printf("A4_T16 spawn");
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Aggressive();
+     HUMAN_SETMODE_Stand();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+	 HUMAN_SETSIGHTRANGE(300);
+     HUMAN_SETHEARRANGE(300);
+   }
+
+SetAlarmType(1023, false);	
+SetAlarmType(69, true);		// 1+ 4 + 64 = 69
+HUMAN_SetOptimized(1);
+HUMAN_MoveToFrame(OpelFlak, 0);
+SetAlarmType(1023, true);
+HUMAN_SetOptimized(2);
+
+HUMAN_TurnAt(turn);
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+	   HUMAN_SETSIGHTRANGE(300);
+       HUMAN_SETHEARRANGE(300);
+	   HUMAN_SETAIMODE_Aggressive();
+    }
+  HUMAN_MoveToFrame(OpelFlak, 0);
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" A4_T16 alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  printf("A4_T16 dead");
+  EndScript();
+}
+
+
+
+
+Label TheEND:
+
+

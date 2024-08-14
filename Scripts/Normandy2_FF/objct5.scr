@@ -1,0 +1,27 @@
+// Obj 5 - Photograph tactical plans
+// ---------------------------------
+
+Block
+{
+Frame Plan1;	FRM_FindFrame(Plan1,"m_mapa_1");
+Frame Plan2;	FRM_FindFrame(Plan2,"m_mapa_2");
+Frame Plan3;	FRM_FindFrame(Plan3,"m_mapa_3");
+
+
+
+SetObjectiveStatus(5, 0);
+}
+
+
+Whenever Plans_Photographed (((_Actor_GetState(Plan1) == 1) And (_Actor_GetState(Plan2) == 1)) And (_Actor_GetState(Plan3) == 1))
+{
+Delay(500);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999716);
+Delay(3500);
+SUBTITLES_SetOn(0);
+SetObjectiveStatus(5, 1);
+Delay(3500);
+
+EndScript();
+}

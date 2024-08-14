@@ -1,0 +1,45 @@
+// mission_timer - time to rescue Trebissky
+
+Block {
+Frame obj;			FRM_FindFrame(obj, "objectives");
+Frame treb;			FRM_FindFrame(treb, "Ci_");
+Integer time;		time=0;
+Integer difficulty;	difficulty=0;
+}
+
+OnSignal(2)
+{
+difficulty=_RandomInt(4);
+
+If(difficulty==0)
+{
+time=_RandomInt(300000);	// max 5min
+time=time+1800000;			// + 30min
+Delay(time);
+HUMAN_Kill(treb);
+}
+If(difficulty==1)
+{
+time=_RandomInt(300000);	// max 5min
+time=time+1200000;			// + 20min
+Delay(time);
+HUMAN_Kill(treb);
+}
+If(difficulty==2)
+{
+time=_RandomInt(300000);	// max 5min
+time=time+900000;			// + 15min
+Delay(time);
+HUMAN_Kill(treb);
+}
+If(difficulty==3)
+{
+Delay(600000);				// 10min
+HUMAN_Kill(treb);
+}
+}
+
+OnSignal(1)	// received from objectives
+{
+	EndScript();
+}

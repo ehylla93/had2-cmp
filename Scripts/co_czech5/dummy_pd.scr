@@ -1,0 +1,18 @@
+//OBJ - Enemy escaped
+
+Block {
+Frame tiger;			FRM_FindFrame(tiger, "la_TigerEv_1");
+Frame me;				FRM_GetMyFrame(me);
+Frame cam;				FRM_FindFrame(cam, "camera_2");
+Frame obj;				FRM_FindFrame(obj, "dummy_objectives");
+Frame dummy;			FRM_FindFrame(dummy, "dummy_detector_failure");
+}
+
+Whenever EIR ((_EnemyInRange(me, 25)) OR (_FrameInRange(tiger)<25))
+	{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(22994404);	//"OBJECTIVE FAILED: ENEMY ESCAPED."
+	Delay(10000);
+	SUBTITLES_SetOn(false);
+	SendSignal(obj, 16);
+	}

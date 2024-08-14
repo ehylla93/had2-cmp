@@ -1,0 +1,87 @@
+// Obj 2 - eliminate all enemy snipers
+// ----------------------------------------
+
+Block
+{
+Frame Sn1;	FRM_FindFrame(Sn1, "Snipe1"); 
+Frame Sn2;	FRM_FindFrame(Sn2, "Snipe2"); 
+Frame Sn3;	FRM_FindFrame(Sn3, "Snipe3"); 
+Frame Sn4;	FRM_FindFrame(Sn4, "N2_G53"); 
+Frame Sn5;	FRM_FindFrame(Sn5, "N2_G54"); 
+Frame Sn6;	FRM_FindFrame(Sn6, "N2_G57");
+Frame Sn7;	FRM_FindFrame(Sn7, "N2_G62"); 
+Frame Sn8;	FRM_FindFrame(Sn8, "N2_G88"); 
+Frame Sn9;	FRM_FindFrame(Sn9, "N2_G97"); 
+
+Frame Sn10;	FRM_FindFrame(Sn10, "Snipe4"); 
+Frame Sn11;	FRM_FindFrame(Sn11, "Snipe5"); 
+Frame Sn12;	FRM_FindFrame(Sn12, "Snipe6");
+  
+Integer snipers;
+	snipers=0;
+
+SetObjectiveStatus(2, 0);
+}
+
+Whenever Snipers1 (( (_Actor_GetState(Sn1)==0) And (_Actor_GetState(Sn2)==0) ) And (_Actor_GetState(Sn3)==0) ) 
+{
+snipers=snipers+1;
+
+If(snipers > 3)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993405);
+Delay(4000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+}
+GoTo end;
+}
+
+Whenever Snipers2 (( (_Actor_GetState(Sn4)==0) And (_Actor_GetState(Sn5)==0) ) And (_Actor_GetState(Sn6)==0) ) 
+{
+snipers=snipers+1;
+
+If(snipers > 3)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993405);
+Delay(4000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+}
+GoTo end;
+}
+
+Whenever Snipers3 (( (_Actor_GetState(Sn7)==0) And (_Actor_GetState(Sn8)==0) ) And (_Actor_GetState(Sn9)==0) ) 
+{
+snipers=snipers+1;
+
+If(snipers > 3)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993405);
+Delay(4000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+}
+GoTo end;
+}
+
+Whenever Snipers4 (( (_Actor_GetState(Sn10)==0) And (_Actor_GetState(Sn11)==0) ) And (_Actor_GetState(Sn12)==0) ) 
+{
+snipers=snipers+1;
+
+If(snipers > 3)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(17993405);
+Delay(4000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+}
+GoTo end;
+}
+
+
+Label end:

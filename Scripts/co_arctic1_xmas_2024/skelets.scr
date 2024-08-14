@@ -1,0 +1,40 @@
+Block
+{
+Frame kw;
+integer i = 0;
+string s = "";
+string name = "kw";
+}
+printf("wesak initialized.");
+goto init;
+label init:
+	s = name + i;
+	FRM_FindFrame(kw, s);
+	printfnumber("wesak: ", i);
+	FRM_SetOn(kw, false);
+	FRM_CreateParticle(114, kw);
+	i = i + 1;
+	if (i == 14) {goto loop;}
+	goto init;
+
+label show:
+	s = name + i;
+	FRM_FindFrame(kw, s);
+	FRM_SetOn(kw, true);
+	FRM_CreateParticle(114, kw);
+	i = i + 1;
+	if (i == 14) {goto loop;}
+	goto show;
+	
+OnSignal(1)	// received from button1
+{
+	i = 0;
+	goto show;
+}
+
+label loop:
+	delay(10000);
+	i = 0;
+	if (_LoadGameValue(4) == 0) {goto init;}
+	else {goto show;}
+label End:

@@ -1,0 +1,20 @@
+// Obj 5 - Save Trebissky
+//------------------------------------
+
+Block
+{
+SetObjectiveStatus(5, 0);
+}
+
+//------------------------------------
+
+
+Whenever SUCCESS(_SignalReceived(1))
+{
+SetObjectiveStatus(5, 1);
+goto END;
+}
+
+
+
+Label end:

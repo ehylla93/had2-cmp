@@ -1,0 +1,71 @@
+// AF4_22 - guard, walking on the first floor
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME inv;			FRM_FindFrame(inv, "m_AF5_skrink13b7");
+  INTEGER cnt 			= 0;
+  INTEGER Atype		= 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(20)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  block{
+    SetWhenever(player, false);
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(0);
+    Atype = _GetAlarmType();
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(512, false);
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(1);
+  goto ACTIVATE;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+
+Label LOOKNACHODBU:
+  HUMAN_Move("AF4_22_01");
+  HUMAN_Move("AF4_22_02");
+  HUMAN_SetAnim("%%turnright", 300, 300, false);
+  Delay(300);
+  HUMAN_SetAnim("%%turnleft", 300, 300, false);
+  Delay(300);
+goto ACTIVITY;
+
+Label ACTIVITY:
+  HUMAN_TurnAt(inv);
+  HUMAN_Investigate(inv);
+goto ACTIVITY;
+
+Label END:

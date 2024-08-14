@@ -1,0 +1,71 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	bur3_09 (straz v nejblizsim bunkru) - obcas se rozhlizi a chodi v zakopu
+//	Vytvoril:		Iceman
+//	Zodpovida:		Dzodzo
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+FRAME turnat;			FRM_FindFrame(turnat, "Snip01");
+Frame canon3;	    	FRM_FindFrame(canon3,"THOR2");
+
+Whenever inrange (_PlayerInRange(1015))
+{
+  goto ACTIVATE;
+}
+
+OnAlarm()
+{
+  HUMAN_Suspend(false);
+  block
+  {
+    HUMAN_SETSIGHTRANGE(300);
+    HUMAN_SETHEARRANGE(300);
+    HUMAN_SETMODE_Run();
+    HUMAN_SetOptimized(0);
+  }
+  HUMAN_MoveToFrame(canon3, 5);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, true);		// all alarm events are on
+  HUMAN_SetAlarm(false);
+  goto ACTIVITY;
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+  SetAlarmType(1023, true);
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetMode_Run();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(2);
+  goto ACTIVITY;
+
+Label ACTIVITY:
+  HUMAN_MoveToFrame(canon3, 5);
+  HUMAN_MoveToFrame(canon3, 20);
+  Delay(2000);
+  HUMAN_MoveToFrame(canon3, 5);
+  Delay(2000);
+goto ALARMDONE;
+
+Label ALARMDONE:
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetMode_Run();
+  HUMAN_SetMode_Crouch();
+ HUMAN_MoveToFrame(canon3, 5);
+  HUMAN_TurnAt(turnat);
+   Delay(10000);
+  goto ACTIVITY;
+
+Label END:

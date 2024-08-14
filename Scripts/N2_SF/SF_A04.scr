@@ -1,0 +1,231 @@
+// Sgt. Siegfried Hirsch (Sniper)
+// ------------------------------------------
+
+Block
+{
+Frame C1;	FRM_FindFrame(C1,"SF_G06");
+Frame C2;	FRM_FindFrame(C2,"MG5_01");
+Frame C3;	FRM_FindFrame(C3,"SF_G04");
+Frame C4;	FRM_FindFrame(C4,"SF_G05");
+Frame C5;	FRM_FindFrame(C5,"SF_G06");
+Frame C6;	FRM_FindFrame(C6,"SF_G07");
+Frame C7;	FRM_FindFrame(C7,"SF_G03");
+Frame C8;	FRM_FindFrame(C8,"BR_G11");
+Frame C9;	FRM_FindFrame(C9,"BR_G13");
+
+Frame Cum;	FRM_FindFrame(Cum,"Ally_pal02");
+Frame Kamos;	FRM_FindFrame(Kamos,"MG1");
+
+Integer VyberCil;	VyberCil=0;
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_SETSIGHTRANGE(60);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(0);
+Delay(12000);
+goto Palba;
+}
+
+Whenever Tank_Coming_In (_SignalReceived(2))
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_Move("Ally1_1");
+goto END;
+}
+
+Whenever Reinforcements_Arrived (_SignalReceived(3))
+{
+HUMAN_SETMODE_Stand();
+HUMAN_MoveToFrame(Kamos, 1);
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAt(Cum);
+HUMAN_WeaponUp(1);
+goto END;
+}
+
+Whenever Suspend (_SignalReceived(9))
+{
+HUMAN_Stop();
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+// ----------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Palba:
+Delay(2000);
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(C1)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C1);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C1, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(C2)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C2);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C2, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(C3)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C3);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C3, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(C4)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C4);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C4, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(C5)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C5);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C5, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==5)
+{
+If(_Actor_GetState(C6)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C6);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C6, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==6)
+{
+If(_Actor_GetState(C7)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C7);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C7, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==7)
+{
+If(_Actor_GetState(C8)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C8);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C8, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+If(VyberCil==8)
+{
+If(_Actor_GetState(C9)==0){VyberCil=_RandomInt(8);Goto Palba;}
+
+Delay(1000);
+HUMAN_TurnAt(C9);
+HUMAN_Move("Ally1_2");
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_SETMODE_StandFast();
+Delay(500);
+HUMAN_Attack(C9, 4000);
+HUMAN_SETMODE_Crouch();
+HUMAN_Move("Ally1_1");
+VyberCil=_RandomInt(9);
+}
+
+Delay(8000);
+goto Palba;
+
+Label END:

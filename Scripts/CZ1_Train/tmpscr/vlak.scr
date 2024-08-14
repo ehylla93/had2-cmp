@@ -1,0 +1,31 @@
+Frame vlak; 
+	FRM_FindFrame(vlak, "lokotka");
+	Frame vechtr;     //zavorar 
+	FRM_FindFrame(vechtr,"vechtr");
+
+
+Delay(60000);
+
+label run_train:
+  block
+  {
+    FRM_SetOn(vlak, true);
+  }
+	SendSignal(vechtr, 2);
+	Delay(35000);
+	FRM_WatchTrack(vlak, "vlak1"); // seems to cause MP server crash
+	Delay(12000);
+	SetActorState(vlak, 0);
+	Delay(25000);
+	SetActorState(vlak, 1);
+	Delay(2000);
+	SetActorState(vlak, 6);
+	Delay(75000);
+block
+  {
+    FRM_SetOn(vlak, false);
+  }
+Delay(1500);
+goto run_train;
+
+Label END:

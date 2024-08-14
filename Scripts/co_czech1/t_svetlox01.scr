@@ -1,0 +1,34 @@
+//zavorarova budka
+Frame svetlox01;	FRM_FindFrame(svetlox01, "rail house lamp_");
+Frame lensx01;	FRM_FindFrame(lensx01, "e_raslmp_2.Rectangle01");
+
+OnSignal(1)
+{
+	Block	{	FRM_SetOn(svetlox01, 0);	FRM_SetOn(lensx01, 0);
+			FRM_SetGroupLightMap("domek1", 1);			}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox01, 1);	FRM_SetOn(lensx01, 1);
+			FRM_SetGroupLightMap("domek1", 0);			}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox01, 0);	FRM_SetOn(lensx01, 0);
+			FRM_SetGroupLightMap("domek1", 1);			}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox01, 1);	FRM_SetOn(lensx01, 1);
+			FRM_SetGroupLightMap("domek1", 0);			}
+	Delay(100);
+	Block	{	FRM_SetOn(svetlox01, 0);	FRM_SetOn(lensx01, 0);
+			FRM_SetGroupLightMap("domek1", 1);			}
+	Delay(300);
+	Block	{	FRM_SetOn(svetlox01, 1);	FRM_SetOn(lensx01, 1);
+			FRM_SetGroupLightMap("domek1", 0);			}
+	Block	{	FRM_SetOn(svetlox01, 0);	FRM_SetOn(lensx01, 0);
+			FRM_SetGroupLightMap("domek1", 1);			}
+	Block	{	FRM_SetOn(svetlox01, 1);	FRM_SetOn(lensx01, 1);
+			FRM_SetGroupLightMap("domek1", 0);			}
+	Block	{	FRM_SetOn(svetlox01, 0);	FRM_SetOn(lensx01, 0);
+			FRM_SetGroupLightMap("domek1", 1);			}
+	Block	{	FRM_SetOn(svetlox01, 1);	FRM_SetOn(lensx01, 1);
+			FRM_SetGroupLightMap("domek1", 0);			}
+	Block	{	FRM_SetOn(svetlox01, 0);	FRM_SetOn(lensx01, 0);
+			FRM_SetGroupLightMap("domek1", 1);			}
+}

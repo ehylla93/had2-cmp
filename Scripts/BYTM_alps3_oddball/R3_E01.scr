@@ -1,0 +1,116 @@
+// R3_E01
+// -------------------------------------
+
+Block
+{
+SetAlarmType(1023, 0);
+
+HUMAN_SETSIGHTRANGE(70);
+HUMAN_SETHEARRANGE(40);
+
+Frame SdKfZ;	FRM_FindFrame(SdKfZ, "SdKfZ_1");
+Frame Panther;	FRM_FindFrame(Panther, "tank4");
+Frame tank2;	FRM_FindFrame(tank2, "tank2");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+SetWhenever(TIR, 0);
+Integer aboard = 0;
+}
+
+HUMAN_Suspend(1);
+HUMAN_SetOptimized(1);
+goto END;
+
+// -------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+if(aboard==1)
+{
+SendSignal(SdKfZ, 2);	//Get out!
+}
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("SdKfZ_1", 1, 0);
+aboard = 1;
+SetWhenever(TIR, 1);
+goto DRIVE;
+}
+
+OnSignal(2)
+{
+EnableSignal(2, 0);
+HUMAN_BoardVehicle("SdKfZ_1", 0, 0);
+aboard = 0;
+SetAlarmType(1023, 1);
+goto sherman;
+}
+
+OnSignal(3)
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Opel_1", 1, 0);
+aboard = 1;
+SetWhenever(TIR, 1);
+goto DRIVE;
+}
+
+OnSignal(4)
+{
+EnableSignal(4, 0);
+HUMAN_BoardVehicle("Opel_1", 0, 0);
+aboard = 0;
+SetAlarmType(1023, 1);
+goto sherman;
+}
+
+// ------------------------------------
+
+Label sherman:
+HUMAN_MoveToFrame(tank2, 10);
+goto END;
+
+Label DRIVE:
+SetAlarmType(99, 1);	//Close shooting (1) + Enemy shooting (2) + Enemy sighted (32) + Is injured (64)
+HUMAN_Drive("road_01", 15);
+HUMAN_Drive("road_02", 15);
+HUMAN_Drive("road_03", 15);
+HUMAN_Drive("road_04", 15);
+if(_LoadGameValue(1)==1)
+{
+HUMAN_Drive("road_05", 15);
+HUMAN_Drive("road_06", 15);
+}
+HUMAN_Drive("", 0);
+SendSignal(SdKfZ, 2);	//Get out!
+
+// ------------------------------------
+
+Whenever TIR (_FrameInRange(Panther) < 15)
+{
+printf("Panther closer then 15m");
+EnableSignal(2, 1);
+EnableSignal(4, 1);
+DisableWhenevers(1);
+HUMAN_Drive("", 0);
+SendSignal(SdKfZ, 2);	//Get out!
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label END:

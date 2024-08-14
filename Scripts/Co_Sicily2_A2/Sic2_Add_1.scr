@@ -1,0 +1,62 @@
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "dummy_Add1_see");
+
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+// posila to dummy_budicek_vlna1
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     SetAlarmType(1023, True);
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Walk();
+   }
+HUMAN_TurnAt(turn);
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_walk();
+    }
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" ----  Add 1 ---- : ", AIEvent);	
+      HUMAN_Stop();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  Block
+   { 
+      SetAlarmType(1023, True);
+      HUMAN_SetAlarm(False);
+    }
+  goto DeAlarm;
+}
+
+Label TheEND:

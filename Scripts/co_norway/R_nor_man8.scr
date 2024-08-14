@@ -1,0 +1,176 @@
+// Guard - standing on top deck
+
+Block
+{
+frame cuc4;	FRM_FindFrame(cuc4,"cum4");
+frame kuk;	FRM_FindFrame(kuk,"small8kuk");
+frame kuk2;	FRM_FindFrame(kuk2,"small8kuk2");
+
+HUMAN_SETSIGHTRANGE(16);
+
+SetAlarmType(1,1);		// close shooting
+SetAlarmType(2,1);		// enemy shots
+SetAlarmType(4,1);		// hear steps
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);		// sighted
+SetAlarmType(64,1);		// is injured
+SetAlarmType(128,0);
+SetAlarmType(256,1);	// friendly shots
+SetAlarmType(512,0);
+
+HUMAN_SetOptimized(2);
+
+integer ctr=0;
+integer AIEvent;
+integer hrac;
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Guard();
+}
+
+//---------------------------------------------------------------
+
+label guard:
+HUMAN_Move("man8_1");
+
+hrac=_LoadGameValue(1);
+if (hrac==1)
+{
+gosub smoke;
+}
+
+ delay(1000);
+ HUMAN_Move("man8_3");
+ delay(1000);
+If((_RandomInt(3))==0)
+{
+HUMAN_Move("man8_5");
+HUMAN_TurnAt(cuc4);
+HUMAN_SetAnim("%%rozhlizeni1",300,300,0);
+delay(6000);
+}
+
+HUMAN_Move("man8_cum1");
+HUMAN_TurnAt(kuk2);
+HUMAN_SetAnim("%%rozhlizeni1",300,300,1);
+delay(20000);
+HUMAN_SetAnim("",300,300,0);
+
+If((_RandomInt(2))==0)
+{
+HUMAN_Move("man8_4");
+	HUMAN_WeaponOnArm(0);
+	Delay(1000);
+HUMAN_SetAnim("%%turnleft",200,200,0);
+Delay(2800);
+HUMAN_SetAnim("%%turnright",200,200,0);
+Delay(3700);
+goto guard;
+}
+
+label guard2:
+HUMAN_Move("small8al1");
+HUMAN_TurnAt(kuk);
+HUMAN_LookAround(1);
+delay(6000);
+HUMAN_Move("small8al2");
+HUMAN_TurnAt(kuk);
+HUMAN_LookAround(1);
+delay(6000);
+goto guard2;
+
+//---------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+	DisableSignals(1);
+  	AIEvent =_GetAlarmType(); 
+}
+HUMAN_SetAnim("",100,100,0);
+If(AIEvent==32)
+{
+  HUMAN_SETAIMODE_Aggressive();
+  EndScript();
+}
+If(AIEvent==4)
+{
+HUMAN_WeaponOnArm(1);
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_LookAround(2);
+delay (4000);
+SetAlarmType(4,1);
+HUMAN_WeaponOnArm(0);
+goto guard;
+}
+
+If(((aievent==2) OR (aievent==256)) or (aievent==16))
+{
+SetAlarmType(274,0);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+delay (900);
+SetAlarmType(274,1);
+HUMAN_SETMODE_Walk();
+goto guard2;
+}
+HUMAN_SETAIMODE_Defensive();
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+DisableSignals(0);
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,0);
+SetAlarmType(118,1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Walk();
+HUMAN_SETSIGHTRANGE(30);
+SetAlarmType(4,1);
+}
+goto guard2;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever kokot(_SignalReceived(22))			//Sirens on
+{
+	HUMAN_SetAnim("",50,50,0);
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETSIGHTRANGE(30);
+	goto guard2;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+goto guard;
+}
+
+Label smoke:
+HUMAN_SetAnim("%(koureniB", 1000, 1000, 0);		//(Looking Through Pockets Then Lights Fag)
+Delay(10000);
+Label smoke2:
+ctr=ctr+1;
+if(ctr==4)
+{
+ctr=0;
+Return;
+}
+HUMAN_SetAnim("%(koureni5", 1000, 1000, 0);		//(Brings Hand Up To Smoke)
+Delay(10000);
+goto smoke2;
+
+Label end:

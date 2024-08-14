@@ -1,0 +1,66 @@
+// SdKfZ_1 (R3 E01-E06)
+
+Block
+{
+Frame MyFRM;
+Frame R01;		FRM_FindFrame(R01, "R3_E01");
+Frame R02;		FRM_FindFrame(R02, "R3_E02");
+Frame R03;		FRM_FindFrame(R03, "R3_E03");
+Frame R04;		FRM_FindFrame(R04, "R3_E04");
+Frame R05;		FRM_FindFrame(R05, "R3_E05");
+Frame R06;		FRM_FindFrame(R06, "R3_E06");
+
+Integer vehicle;
+Integer a;
+Integer b;
+
+SaveGameValue(5, 0);
+SetWhenever("Player_To_Close", false);
+}
+
+vehicle=_RandomInt(2);
+if(vehicle==0) { FRM_GetMyFrame(MyFRM); a=1; b=2; }
+else { SaveGameValue(5, 1); FRM_FindFrame(MyFRM, "Opel_1"); a=3; b=4; }
+
+goto END;
+
+// -------------------------------------
+
+OnSignal(1)
+{
+if(vehicle==0) { printf("r3 incoming, taking SdKfZ"); }
+else { printf("r3 incoming, taking Opel truck"); }
+
+FRM_TeleportNearCheckpoint(MyFRM, "SdKfZ1_1", "SdKfZ1_2");
+SendSignal(R02, a);
+SendSignal(R03, a);
+SendSignal(R04, a);
+SendSignal(R05, a);
+SendSignal(R06, a);
+SendSignal(R01, a);
+SetWhenever("Player_To_Close", true);
+goto END;
+}
+
+OnSignal(2)
+{
+EnableSignal(2, 0);
+goto GetOut;
+}
+
+Whenever "Player_To_Close" (_PlayerInRange(10))
+{
+goto GetOut;
+}
+
+Label GetOut:
+	SetWhenever("Player_To_Close", false);
+	SendSignal(R01, b);
+	Delay(1500);
+	SendSignal(R02, b);
+	SendSignal(R03, b);
+	SendSignal(R04, b);
+	SendSignal(R05, b);
+	SendSignal(R06, b);
+
+Label  END:

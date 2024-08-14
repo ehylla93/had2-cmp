@@ -1,0 +1,220 @@
+// ENGLISH
+// 56990016	Take cover! There’s a tank over there!	
+// 56990017	The tank is shelling us!	
+// 56990018	Somebody take out that tank! We’re trapped here!	
+// 56990019	Destroy that tank!	
+
+// 56990020	Look out, a sniper!	
+// 56990021	I got him! I can’t hold on here!	
+// 56990022	Look out to your right! He’s trying to get around us!	
+// 56990023	Look out to your left! He’s trying to get around us!	
+// 56990024	Damn it, I’m hit! I need a medic!	
+// 56990025	Where’s that medic! I need a doctor!	
+// 56990026	Over here! I need reinforcements!	
+// 56990027	I need ammunition! Somebody bring me some shells!	
+
+// ITALIAN
+// 56990028	Look out, a sniper!	
+// 56990029	I’m wounded! I can’t hold out here!	
+// 56990030	Look out to your right! He’s trying to get around us!	
+// 56990031	Look out to your left! He’s trying to get around us!	
+// 56990032	Damn it, I’m hit! I need a medic!	
+// 56990033	Where’s that medic! I need a doctor!	
+// 56990034	Over here! I need reinforcements!	
+// 56990035	I need ammunition! Somebody bring me some shells!	
+// 56990036	Reinforcements! Where are those reinforcements!	
+// 56990037	Take cover! Grenade!	
+// 56990038	There are more over there! Fire!	
+
+// GERMAN
+// 56990039	Look out, a sniper!	
+// 56990040	I’m wounded! I can’t hold on here!	
+// 56990041	Look out to your right! He’s trying to get around us!	
+// 56990042	Look out to your left! He’s trying to get around us!	
+// 56990043	Damn it, I’m hit! I need a medic!	
+// 56990044	Where’s that medic! I need a doctor!	
+// 56990045	Over here! I need reinforcements!	
+// 56990046	I need ammunition! Somebody bring me some shells!	
+// 56990047	Reinforcements! Where are those reinforcements!	
+// 56990048	Take cover! Grenade!	
+// 56990049	There are more over there! Fire!	
+
+  SaveGameValue(115, 0); 
+
+Frame Kecac;
+integer KecacNum;
+integer cislo;
+integer site;
+
+
+Label NewerEndingStory:
+  Delay(5000);
+  site =  _RandomInt(5) + 1;
+  If ( _LoadGameValue(115) == 0 ) {goto NewerEndingStory;}
+  If (site == 1) {goto ANG;}
+  If (site == 2) {goto IT1;}
+  If (site == 3) {goto IT1;}
+  If ( _LoadGameValue(115) == 1 ) {goto NewerEndingStory;}
+  If (site == 4) {goto GER;}
+  If ( _LoadGameValue(115) == 2 ) {goto NewerEndingStory;}
+  If (site == 5) {goto IT3;}
+
+
+Label ANG:
+  cislo = _RandomInt(8);
+  KecacNum = _RandomInt(7) + 2;
+  If (KecacNum == 2) { FRM_FindFrame(Kecac, "NPC_2"); }
+  If (KecacNum == 3) { FRM_FindFrame(Kecac, "NPC_3"); }
+  If (KecacNum == 4) { FRM_FindFrame(Kecac, "NPC_4"); }
+  If (KecacNum == 5) { FRM_FindFrame(Kecac, "NPC_5"); }
+  If (KecacNum == 6) { FRM_FindFrame(Kecac, "NPC_6"); }
+  If (KecacNum == 7) { FRM_FindFrame(Kecac, "NPC_7"); }
+  If (KecacNum == 8) { FRM_FindFrame(Kecac, "NPC_8"); }
+  cislo = cislo +   56990020;
+  If (_ACTOR_GetState(Kecac) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(kecac, cislo, 1, 75);  
+         PrintfNumber("Anglan pacha KECY ... ",cislo);
+     }
+Goto NewerEndingStory;
+
+Label IT1:
+  cislo = _RandomInt(11);
+  KecacNum = _RandomInt(20) + 1;
+  If (KecacNum == 1) { FRM_FindFrame(Kecac, "IT_1"); }
+  If (KecacNum == 2) { FRM_FindFrame(Kecac, "IT_2"); }
+  If (KecacNum == 3) { FRM_FindFrame(Kecac, "IT_3"); }
+  If (KecacNum == 4) { FRM_FindFrame(Kecac, "IT_4"); }
+  If (KecacNum == 5) { FRM_FindFrame(Kecac, "IT_6"); }
+  If (KecacNum == 6) { FRM_FindFrame(Kecac, "IT_8"); }
+  If (KecacNum == 7) { FRM_FindFrame(Kecac, "IT_9"); }
+  If (KecacNum == 8) { FRM_FindFrame(Kecac, "IT_10"); }
+  If (KecacNum == 9) { FRM_FindFrame(Kecac, "IT_11"); }
+  If (KecacNum == 10) { FRM_FindFrame(Kecac, "IT_12"); }
+  If (KecacNum == 11) { FRM_FindFrame(Kecac, "IT_13"); }
+  If (KecacNum == 12) { FRM_FindFrame(Kecac, "IT_14"); }
+  If (KecacNum == 13) { FRM_FindFrame(Kecac, "IT_15"); }
+  If (KecacNum == 14) { FRM_FindFrame(Kecac, "Add_1"); }
+  If (KecacNum == 15) { FRM_FindFrame(Kecac, "Add_2"); }
+  If (KecacNum == 16) { FRM_FindFrame(Kecac, "Add_3"); }
+  If (KecacNum == 17) { FRM_FindFrame(Kecac, "Add_4"); }
+  If (KecacNum == 18) { FRM_FindFrame(Kecac, "Add_5"); }
+  If (KecacNum == 19) { FRM_FindFrame(Kecac, "Add_6"); }
+  If (KecacNum == 20) { FRM_FindFrame(Kecac, "Add_7"); }
+  cislo = cislo +   56990028;
+  If (_ACTOR_GetState(Kecac) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(kecac, cislo, 1, 75);  
+         PrintfNumber("Ital prvni vlny pacha KECY ... ",cislo);
+     }
+Goto NewerEndingStory;
+
+
+LABEL GER:
+  cislo = _RandomInt(11);
+  KecacNum = _RandomInt(12) + 1;
+  If (KecacNum == 1) { FRM_FindFrame(Kecac, "GER_22"); }
+  If (KecacNum == 2) { FRM_FindFrame(Kecac, "GER_23"); }
+  If (KecacNum == 3) { FRM_FindFrame(Kecac, "GER_24"); }
+  If (KecacNum == 4) { FRM_FindFrame(Kecac, "GER_25"); }
+  If (KecacNum == 5) { FRM_FindFrame(Kecac, "GER_26"); }
+  If (KecacNum == 6) { FRM_FindFrame(Kecac, "GER_27"); }
+  If (KecacNum == 7) { FRM_FindFrame(Kecac, "GER_28"); }
+  If (KecacNum == 8) { FRM_FindFrame(Kecac, "GER_29"); }
+  If (KecacNum == 9) { FRM_FindFrame(Kecac, "GER_30"); }
+  If (KecacNum == 10) { FRM_FindFrame(Kecac, "GER_31"); }
+  If (KecacNum == 11) { FRM_FindFrame(Kecac, "Add_12"); }
+  If (KecacNum == 12) { FRM_FindFrame(Kecac, "Add_13"); }
+  cislo = cislo +   56990039;
+  If (_ACTOR_GetState(Kecac) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(kecac, cislo, 1, 75);  
+         PrintfNumber("Nemec pacha KECY ... ",cislo);
+     }
+Goto  NewerEndingStory;
+
+
+LABEL IT3:
+  cislo = _RandomInt(11);
+  KecacNum = _RandomInt(15) + 1;
+  If (KecacNum == 1) { FRM_FindFrame(Kecac, "IT_32"); }
+  If (KecacNum == 2) { FRM_FindFrame(Kecac, "IT_33"); }
+  If (KecacNum == 3) { FRM_FindFrame(Kecac, "IT_34"); }
+  If (KecacNum == 4) { FRM_FindFrame(Kecac, "IT_35"); }
+  If (KecacNum == 5) { FRM_FindFrame(Kecac, "IT_36"); }
+  If (KecacNum == 6) { FRM_FindFrame(Kecac, "IT_37"); }
+  If (KecacNum == 7) { FRM_FindFrame(Kecac, "IT_38"); }
+  If (KecacNum == 8) { FRM_FindFrame(Kecac, "IT_39"); }
+  If (KecacNum == 9) { FRM_FindFrame(Kecac, "IT_40"); }
+  If (KecacNum == 10) { FRM_FindFrame(Kecac, "IT_41"); }
+  If (KecacNum == 11) { FRM_FindFrame(Kecac, "IT_42"); }
+  If (KecacNum == 12) { FRM_FindFrame(Kecac, "Add_8"); }
+  If (KecacNum == 13) { FRM_FindFrame(Kecac, "Add_9"); }
+  If (KecacNum == 14) { FRM_FindFrame(Kecac, "Add_10"); }
+  If (KecacNum == 15) { FRM_FindFrame(Kecac, "Add_11"); }
+  cislo = cislo +   56990028;
+  If (_ACTOR_GetState(Kecac) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(kecac, cislo, 1, 75);  
+         PrintfNumber("Ital prvni vlny pacha KECY ... ",cislo);
+     }
+Goto  NewerEndingStory;
+
+
+
+// Tank jede .... 
+OnSignal(1)
+{
+  cislo = _RandomInt(4);
+  KecacNum = _RandomInt(7) + 2;
+  If (KecacNum == 2) { FRM_FindFrame(Kecac, "NPC_2"); }
+  If (KecacNum == 3) { FRM_FindFrame(Kecac, "NPC_3"); }
+  If (KecacNum == 4) { FRM_FindFrame(Kecac, "NPC_4"); }
+  If (KecacNum == 5) { FRM_FindFrame(Kecac, "NPC_5"); }
+  If (KecacNum == 6) { FRM_FindFrame(Kecac, "NPC_6"); }
+  If (KecacNum == 7) { FRM_FindFrame(Kecac, "NPC_7"); }
+  If (KecacNum == 8) { FRM_FindFrame(Kecac, "NPC_8"); }
+  cislo = cislo +   56990016;
+  If (_ACTOR_GetState(Kecac) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(kecac, cislo, 1, 75);  
+         PrintfNumber("Anglan pacha KECY na Tank... ",cislo);
+     }
+  Delay(2500);
+
+  cislo = _RandomInt(4);
+  KecacNum = _RandomInt(7) + 2;
+  If (KecacNum == 2) { FRM_FindFrame(Kecac, "NPC_2"); }
+  If (KecacNum == 3) { FRM_FindFrame(Kecac, "NPC_3"); }
+  If (KecacNum == 4) { FRM_FindFrame(Kecac, "NPC_4"); }
+  If (KecacNum == 5) { FRM_FindFrame(Kecac, "NPC_5"); }
+  If (KecacNum == 6) { FRM_FindFrame(Kecac, "NPC_6"); }
+  If (KecacNum == 7) { FRM_FindFrame(Kecac, "NPC_7"); }
+  If (KecacNum == 8) { FRM_FindFrame(Kecac, "NPC_8"); }
+  cislo = cislo +   56990016;
+  If (_ACTOR_GetState(Kecac) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(kecac, cislo, 1, 75);  
+         PrintfNumber("Anglan pacha KECY na Tank... ",cislo);
+     }
+  Delay(3000);
+
+  cislo = _RandomInt(4);
+  KecacNum = _RandomInt(7) + 2;
+  If (KecacNum == 2) { FRM_FindFrame(Kecac, "NPC_2"); }
+  If (KecacNum == 3) { FRM_FindFrame(Kecac, "NPC_3"); }
+  If (KecacNum == 4) { FRM_FindFrame(Kecac, "NPC_4"); }
+  If (KecacNum == 5) { FRM_FindFrame(Kecac, "NPC_5"); }
+  If (KecacNum == 6) { FRM_FindFrame(Kecac, "NPC_6"); }
+  If (KecacNum == 7) { FRM_FindFrame(Kecac, "NPC_7"); }
+  If (KecacNum == 8) { FRM_FindFrame(Kecac, "NPC_8"); }
+  cislo = cislo +   56990016;
+  If (_ACTOR_GetState(Kecac) == 1) 
+     { 
+         FRM_MorphSpeechDelayed(kecac, cislo, 1, 75);  
+         PrintfNumber("Anglan pacha KECY na Tank... ",cislo);
+     }
+
+Goto NewerEndingStory;
+}
+

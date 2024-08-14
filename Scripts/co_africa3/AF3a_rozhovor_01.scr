@@ -1,0 +1,12 @@
+block
+{
+  FRAME doktor;				FRM_FindFrame(doktor, "AF3a_doktor");
+}
+
+Whenever player_in_range (_PlayerInRange(4))
+{
+  FRM_MorphSpeech(doktor, 07991507, 5, 10);		//"It's going to be okay, just lay there and try not to move..."
+  goto END;
+}
+
+Label END:

@@ -1,0 +1,48 @@
+// Kecy mezi SF_G20 a SF_G21
+//------------------------------------------------
+
+Block
+{
+Frame G11;	FRM_FindFrame(G11, "SF_G20");
+Frame G12;	FRM_FindFrame(G12, "SF_G21");
+}
+
+Whenever Aktivace (_SignalReceived(1))
+{
+goto Kecam;
+}
+
+
+Whenever Alarm (_SignalReceived(2))
+{
+goto END;
+}
+
+//------------------------------------------------
+
+goto END;
+
+Label Kecam:
+FRM_MorphSpeechDelayed(G11, 07991595, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991596, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991597, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991598, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991599, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991600, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991601, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991602, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991603, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991604, 5, 10);
+goto Kecam;
+
+
+Label END:

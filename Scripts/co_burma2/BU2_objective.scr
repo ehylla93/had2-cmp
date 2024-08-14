@@ -1,0 +1,101 @@
+// BU2_objective - objectives
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block
+{
+Integer x = 21;
+Frame xplo;		FRM_FindFrame(xplo, "rndxplo01");
+Frame reinf;	FRM_FindFrame(reinf, "BU2_reinf");
+
+Frame E01;	FRM_FindFrame(E01,"BU2_06");
+Frame E02;	FRM_FindFrame(E02,"BU2_22");
+Frame E03;	FRM_FindFrame(E03,"BU2_01");
+Frame E04;	FRM_FindFrame(E04,"BU2_02");
+Frame E05;	FRM_FindFrame(E05,"BU2_04");
+Frame E06;	FRM_FindFrame(E06,"BU2_07");
+Frame E07;	FRM_FindFrame(E07,"BU2_08");
+Frame E08;	FRM_FindFrame(E08,"BU2_09");
+Frame E09;	FRM_FindFrame(E09,"BU2_12");
+Frame E10;	FRM_FindFrame(E10,"BU2_15");
+Frame E11;	FRM_FindFrame(E11,"BU2_16");
+Frame E12;	FRM_FindFrame(E12,"BU2_17");
+Frame E13;	FRM_FindFrame(E13,"BU2_19");
+Frame E14;	FRM_FindFrame(E14,"BU2_20");
+Frame E15;	FRM_FindFrame(E15,"BU2_21");
+
+Frame E16;	FRM_FindFrame(E16,"BU2_03");
+Frame E17;	FRM_FindFrame(E17,"BU2_05");
+Frame E18;	FRM_FindFrame(E18,"BU2_10");
+Frame E19;	FRM_FindFrame(E19,"BU2_11");
+Frame E20;	FRM_FindFrame(E20,"BU2_13");
+Frame E21;	FRM_FindFrame(E21,"BU2_14");
+	
+SetObjectiveStatus(1, 0);	// capture the bunker
+SetObjectiveStatus(2, 4);	// gather your troops at the exit point
+}
+
+Label check:
+x=21;
+block
+{
+if (_ACTOR_GetState(E01)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E02)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E03)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E04)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E05)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E06)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E07)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E08)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E09)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E10)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E11)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(E12)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E13)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E14)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E15)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E16)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E17)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E18)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E19)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E20)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(E21)==0)	{	x=x-1;	}
+}
+
+if (x==0)
+{
+SendSignal(reinf, 1);
+SetObjectiveStatus(2, 0);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(13992606);	//"OBJECTIVE COMPLETED: BUNKER CAPTURED."
+Delay(4000);
+SetObjectiveStatus(1, 1);
+PlayMusic(36);
+SUBTITLES_SetOn(false);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(13992732);	//"NEW OBJECTIVE: ASSEMBLE YOUR SOLDIERS AT THE EXTRACTION POINT."
+Delay(4000);
+SUBTITLES_SetOn(false);
+SendSignal(xplo, 2);			//BU2_rndxplo01 activates gather-obj
+goto end;
+}
+else {
+delay (5000);
+goto check;
+}
+
+// received from rndxplo01
+OnSignal(3)
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(13992733);	//"OBJECTIVE COMPLETED: SQUAD GATHERED AT THE EXTRACTION POINT."
+	Delay(4000);
+	SetObjectiveStatus(2, 1);
+	SUBTITLES_SetOn(false);
+	EndScript();
+}
+
+Label end:

@@ -1,0 +1,87 @@
+// PRE_01 - presoner
+// ----------------------------------------
+
+block
+{
+Frame me;       FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //Close shooting (si ferit, ataca)
+SetAlarmType(2,0); //Hear shooting
+SetAlarmType(4,0); //steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explozion
+SetAlarmType(32,0); //see
+SetAlarmType(64,0); //I´m wounded
+SetAlarmType(128,0); //from script
+SetAlarmType(256,0); //Friendly fire
+SetAlarmType(512,0); //I see a dead body
+
+FRM_SwitchFaceTexture(me,"e_f043");
+}
+
+goto END;
+
+
+OnSignal(13)	// received from GTR6
+{
+	Delay(2000);
+	FRM_MorphSpeech(me, 90004100, 5, 20);		//"Advance (s)"
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("FUIG0");
+	HUMAN_Move("FUIG2");
+	HUMAN_Move("RESISTENCIA0");
+	GoTo end;
+}
+
+OnSignal(14)	// received from skull
+{
+FRM_SwitchFaceTexture(me,"e_f099");
+Delay(10000);
+	HUMAN_SETMODE_Run();
+HUMAN_Move("PRE00");
+HUMAN_Move("PUNT_VENEN3");
+HUMAN_Move("APARTB");
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAnim("!salutovani", 500, 500, 0);
+Delay(2000);
+		FRM_MorphSpeech(me, 57990023, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990024, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990025, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990026, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990027, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990028, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990029, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990030, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990031, 5, 20);		//"bye"
+		Delay(2000);
+		FRM_MorphSpeech(me, 57990021, 5, 20);		//"bye"
+		Delay(2000);
+HUMAN_SetAnim("%%ozrala", 1000, 1000, 1);
+	GoTo end;
+}
+
+
+OnDeath(){
+goto END;
+}
+
+OnAlarm(){
+}
+
+OnAlarmDone(){
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 360))
+{
+HUMAN_Suspend(0);
+}
+
+Label END:

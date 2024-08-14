@@ -1,0 +1,61 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+  integer  AIEvent;
+
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+       HUMAN_SetSniper(False, 5);
+       HUMAN_SETAIMODE_Aggressive(); 
+       HUMAN_SETSIGHTRANGE(1000);
+       HUMAN_SETHEARRANGE(1000);
+
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETSIGHTRANGE(1000);
+HUMAN_SETHEARRANGE(1000);
+HUMAN_SetSniper(True, 5);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Stand();
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_SETSIGHTRANGE(1000);
+HUMAN_SETHEARRANGE(1000);
+HUMAN_SetSniper(True, 5);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(2);
+HUMAN_SETMODE_Stand();
+//^DefaultLoad
+goto END;
+
+Label END:

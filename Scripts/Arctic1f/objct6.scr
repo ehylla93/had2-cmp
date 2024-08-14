@@ -1,0 +1,100 @@
+// Obj 7,8 - Radio
+// ------------------------------------------------
+
+Block
+{
+Frame Obj7;	FRM_FindFrame(Obj7,"obj7");
+Frame Radio;	FRM_FindFrame(Radio,"Radio");
+Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+Frame GetPlayer;
+
+Integer Obj_Done;
+	Obj_Done=0;
+
+Integer HQ_done;
+	HQ_done=0;
+
+SetObjectiveStatus(9, 0);
+
+SetActorState(Radio, 0);
+SetWhenever(Contact_HQ, 0);
+SetWhenever(Radio_Found, 0);
+}
+
+// ------------------------------------------------
+
+Whenever Contact_HQ (_Actor_GetState(Radio)==2)
+{
+FRM_GetNearestPlayer(Radio,GetPlayer);  
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(GetPlayer, 04990882, 3, 20);
+FRM_MorphSpeechDelayed(GetPlayer, 04990884, 3, 20);
+FRM_MorphSpeechDelayed(GetPlayer, 04990885, 3, 20);
+Delay(2000);
+SUBTITLES_SetText(04990812);
+Delay(4000);
+SetObjectiveStatus(8, 1);
+SetObjectiveStatus(6, 0);
+SUBTITLES_SetText(18993607);
+Delay(5000);
+SendSignal(Obj7, 1);
+SetActorState(Radio, 0);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Whenever Radio_Found (_PlayerInRange(3))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990811);
+Delay(2000);
+SetObjectiveStatus(7, 1);
+SetWhenever(Contact_HQ, 1);
+SetActorState(Radio, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+OnSignal(1)
+{
+Obj_Done=Obj_Done+1;
+
+If(Obj_Done > 4)
+{
+
+If(HQ_done == 0)
+{
+SendSignal(Reinf, 2);
+Delay(2000);
+SetObjectiveStatus(7, 0);
+SetObjectiveStatus(8, 0);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990802);
+Delay(4000);
+SUBTITLES_SetText(04990803);
+Delay(4000);
+SetWhenever(Radio_Found, 1);
+SUBTITLES_SetOn(0);
+HQ_done=1;
+}
+}
+goto End;
+}
+
+OnSignal(2)
+{
+If(HQ_done==0)
+{
+Obj_Done=Obj_Done-1;
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+SetObjectiveStatus(8, 4);
+HQ_done=0;
+}
+goto End;
+}
+
+
+Label End:

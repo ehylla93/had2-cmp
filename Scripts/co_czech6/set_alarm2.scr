@@ -1,0 +1,63 @@
+// TURN OFF GLOBAL ALARM (2)
+// -------------------------------------------------------
+
+Block
+{
+Frame E31;	FRM_FindFrame(E31,"C5_G31");
+Frame E32;	FRM_FindFrame(E32,"C5_G32");
+Frame E33;	FRM_FindFrame(E33,"C5_G33");
+Frame E34;	FRM_FindFrame(E34,"C5_G34");
+Frame E35;	FRM_FindFrame(E35,"C5_G35");
+Frame E36;	FRM_FindFrame(E36,"C5_G36");
+Frame E37;	FRM_FindFrame(E37,"C5_G37");
+Frame E38;	FRM_FindFrame(E38,"C5_G38");
+Frame E39;	FRM_FindFrame(E39,"C5_G39");
+Frame E40;	FRM_FindFrame(E40,"C5_G40");
+
+Frame E41;	FRM_FindFrame(E41,"C5_G41");
+Frame E42;	FRM_FindFrame(E42,"C5_G42");
+Frame E43;	FRM_FindFrame(E43,"C5_G43");
+Frame E44;	FRM_FindFrame(E44,"C5_G44");
+Frame E45;	FRM_FindFrame(E45,"C5_G45");
+Frame E46;	FRM_FindFrame(E46,"C5_R01");
+Frame E47;	FRM_FindFrame(E47,"C5_R02");
+Frame E48;	FRM_FindFrame(E48,"C5_R03");
+Frame E49;	FRM_FindFrame(E49,"C5_R04");
+Frame E50;	FRM_FindFrame(E50,"C5_R05");
+
+Frame E51;	FRM_FindFrame(E51,"C5_R06");
+Frame E52;	FRM_FindFrame(E52,"C5_R07");
+Frame E53;	FRM_FindFrame(E53,"C5_R08");
+Frame E54;	FRM_FindFrame(E54,"C5_R09");
+Frame E55;	FRM_FindFrame(E55,"C5_R10");
+Frame E56;	FRM_FindFrame(E56,"C5_R11");
+Frame E57;	FRM_FindFrame(E57,"C5_R12");
+Frame E58;	FRM_FindFrame(E58,"C5_R13");
+Frame E59;	FRM_FindFrame(E59,"C5_R14");
+Frame E60;	FRM_FindFrame(E60,"C5_R15");
+
+Frame E61;	FRM_FindFrame(E61,"C5_R16");
+Frame E62;	FRM_FindFrame(E62,"C5_R17");
+Frame E63;	FRM_FindFrame(E63,"C5_R18");
+Frame E64;	FRM_FindFrame(E64,"C5_R19");
+Frame E65;	FRM_FindFrame(E65,"C5_R20");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(E31, 19);SendSignal(E32, 19);SendSignal(E33, 19);
+SendSignal(E34, 19);SendSignal(E35, 19);SendSignal(E36, 19);
+SendSignal(E37, 19);SendSignal(E38, 19);SendSignal(E39, 19);
+SendSignal(E40, 19);SendSignal(E41, 19);SendSignal(E42, 19);
+SendSignal(E43, 19);SendSignal(E44, 19);SendSignal(E45, 19);
+SendSignal(E46, 19);SendSignal(E47, 19);SendSignal(E48, 19);
+SendSignal(E49, 19);SendSignal(E50, 19);SendSignal(E51, 19);
+SendSignal(E52, 19);SendSignal(E53, 19);SendSignal(E54, 19);
+SendSignal(E55, 19);SendSignal(E56, 19);SendSignal(E57, 19);
+SendSignal(E58, 19);SendSignal(E59, 19);SendSignal(E60, 19);
+SendSignal(E61, 19);SendSignal(E62, 19);SendSignal(E63, 19);
+SendSignal(E64, 19);SendSignal(E65, 19);
+EndScript();
+}

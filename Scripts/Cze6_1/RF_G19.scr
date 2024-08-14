@@ -1,0 +1,103 @@
+// RF_G19 - Reinforcement from Hilltop B1
+// ------------------------------------------------
+
+Block
+{
+Frame SubG1;	FRM_FindFrame(SubG1, "RF_G24");
+Frame SubG2;	FRM_FindFrame(SubG2, "RF_G29");
+Frame me;		FRM_GetMyFrame(me);
+Frame Player;
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f069");
+
+Integer AIEvent;
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(80);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+AIEvent = _GetAlarmType();
+
+If((AIEvent == 1) OR (AIEvent == 2))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 4) OR (AIEvent == 8)) OR (AIEvent == 32))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+}
+
+If(((AIEvent == 64) OR (AIEvent == 256)) OR (AIEvent == 512))
+{
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+
+If (!_MP_IsTeamMemberInRange(1, 80))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Run();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponUp(1);
+FRM_GetNearestPlayer(me, Player);
+HUMAN_MoveToFrame(Player, 20);
+}
+Else
+{
+SendSignal(SubG1, 1);SendSignal(SubG2, 1);
+}
+
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

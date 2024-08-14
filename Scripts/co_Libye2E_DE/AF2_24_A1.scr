@@ -1,0 +1,66 @@
+// AF2_24_A1 - Activator enemy zone5
+// ---------------------------
+// Variables definition
+Block
+{
+Frame Add_20;
+	FRM_FindFrame(Add_20, "Add_20");
+Frame Add_21;
+	FRM_FindFrame(Add_21, "Add_21");
+Frame Add_22;
+	FRM_FindFrame(Add_22, "Add_22");
+Frame Add_23;
+	FRM_FindFrame(Add_23, "Add_23");
+Frame Add_24;
+	FRM_FindFrame(Add_24, "Add_24");
+Frame af2_24;
+	FRM_FindFrame(af2_24, "AF2_24");
+Frame af2_28;
+	FRM_FindFrame(af2_28, "AF2_28");
+Frame af2_29;
+	FRM_FindFrame(af2_29, "AF2_29");
+Frame af2_30;
+	FRM_FindFrame(af2_30, "AF2_30");
+Frame af2_60;
+	FRM_FindFrame(af2_60, "AF2_60");
+Frame af2_96;
+	FRM_FindFrame(af2_96, "AF2_96");
+Frame af2_97;
+	FRM_FindFrame(af2_97, "AF2_97");
+Frame bf2_13;
+	FRM_FindFrame(bf2_13, "BF2_13");
+Frame opelflak1;
+	FRM_FindFrame(opelflak1, "Opelflak1");
+Frame opelflak2;
+	FRM_FindFrame(opelflak2, "Opelflak2");
+}
+// --------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(140))	//70
+{
+	Block
+	{
+//		SendSignal(af2_24, 1);
+//		SendSignal(af2_25, 1);
+//		SendSignal(af2_26, 1);
+//		SendSignal(af2_27, 1);
+		SendSignal(Add_20, 1);
+		SendSignal(Add_21, 1);
+		SendSignal(Add_22, 1);
+		SendSignal(Add_23, 1);
+		SendSignal(Add_24, 1);
+		SendSignal(af2_24, 1);
+		SendSignal(af2_28, 1);
+		SendSignal(af2_29, 1);
+		SendSignal(af2_30, 1);
+		SendSignal(af2_60, 1);
+		SendSignal(af2_96, 1);
+		SendSignal(af2_97, 1);
+		SendSignal(bf2_13, 1);
+	}
+	GoTo end;
+}
+// ---------------------------
+// Starting pose
+
+Label end:

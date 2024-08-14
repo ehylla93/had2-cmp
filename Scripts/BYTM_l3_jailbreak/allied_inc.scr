@@ -1,0 +1,35 @@
+// allied_inc
+
+Block
+{
+Frame A01;		FRM_FindFrame(A01, "Cpt. Marek Antol");
+Frame A02;		FRM_FindFrame(A02, "Col. Bill Shaw");
+Frame obj7;		FRM_FindFrame(obj7, "obj7");
+
+SetWhenever(Obj4, 0);
+}
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+SetWhenever(Obj4, 1);
+}
+
+OnSignal(2)
+{
+EnableSignal(2, 0);
+SendSignal(A01, 2);
+Delay(2000);
+SendSignal(A02, 2);
+}
+
+Whenever Obj4 (_LoadGameValue(8)==1)
+{
+SetWhenever(Obj4, 0);
+SendSignal(obj7, 1);
+SendSignal(A01, 1);
+SendSignal(A02, 1);
+}
+SetWheneverTime(Obj4, 10000);
+
+Label end:

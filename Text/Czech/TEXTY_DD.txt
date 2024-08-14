@@ -1,0 +1,674 @@
+; ***** TABLE DESCRIPTION *****
+1183	"Munice - svìtlice"
+6701	"P08 s tlumièem"
+6702	"Flare gun"
+6703	"G43"
+6704	"MAS MLE 36"
+6705	"Panzerschreck"
+6706	"Guerrilla fighter"
+6707	"Guerrilla fighter"
+6708	"Italian soldier"
+6709	"Italian soldier"
+6710	"Wounded SAS"
+6711	"Wounded SAS"
+6712	"Nìmeckı voják"
+6713	"Francouzskı odbojáø"
+6714	"Francouzskı odbojáø"
+6715	"Francouzskı odbojáø"
+6716	"Civilista"
+6717	"Šifrovací tabulky"
+6730	"Munice - Panzerschreck"
+6731	"Munice - G43"
+6732	"Munice - MAS MLE 36"
+6733	"PAK 40"
+6734	"Italská helma"
+6735	"Italská dùstojnická èepice"
+6736	"Místo pro nav. zaøízení"
+6737	"Vrak bombardéru"
+6738	"Náklad"
+6739	"Okno"
+6740	"Navádìcí zaøízení"
+6741	"Místo pro nav. zaøízení"
+6742	"Turban"
+6743	"Zadret dech"
+6744	"Zbıvající èas:"
+6745	"Bodovı limit:"
+
+
+7209	"Tactical orders"
+; messages
+7290	"Ano!"
+7291	"Ne!"
+7292 	"Nepøítel!"
+7293	"Vozidla!"
+7294	"Potøebuju posily!"
+7295	"Potøebuju svézt!"
+7296	"Medik!"
+7297	"Sniper!"
+
+
+;Alps 3_zonovka
+8750	"ZONA 1 - AXIS"
+8751	"ZONA 2"
+8752	"ZONA 3"
+8753	"ZONA 4"
+8754	"ZONA 5 - ALIED"
+
+
+
+
+;Alps3_obj 
+
+15001	"Pøekonat kaòon s poškozenım tankem"
+15002	"Zabránit nepøíteli v pøekonání kaòonu"
+15003	"Znièit zátaras na mostì"
+15004	"Pøekroèit most"
+ 
+15010	"Zabraòte nepøíteli v prùniku kaòonem"
+15011	"Zabraòte nepøíteli ve znièení zátarasu"
+15012	"Zniète Hakl è.1"
+15013	"Zniète Hakl è.2"
+
+;Ardeny1_objectivovka
+15020	"Znièit vıchodní 170mm dìlo"
+15021	"Znièit centrální 170mm dìlo"
+15022	"Znièit západní 170mm dìlo"
+
+15030	"Ubraòte vıchodní 170mm dìlo"
+15031	"Ubraòte centrální 170mm dìlo"
+15032	"Ubraòte západní 170mm dìlo"
+
+
+; Normandy 4 popis zon
+15300	"ZONA 1 - AXIS"
+15301	"ZONA 2"
+15302	"ZONA 3"
+15303	"ZONA 4"
+15304	"ZONA 5 - ALIED"
+
+
+
+;******** OBJECTIVES *******
+;******** SP OBJECT. + carnage *******
+;france - brest
+
+15500	"Podminujte ponorky v docích"
+15501	"Shromádìte se na plánovaném místì"
+15502	"Zlikvidujte všechny nepøátele"
+15503	"Podminujte nádre s palivem"
+15504	"Podminujte generátory"
+15505	"Všichni èlenové jednotky musí pøeít"
+15506	"Umístìte navádìcí zaøízení pro bombardéry na vhodné místo"
+
+;africa 1
+15509	"Zneškodnìte odstøelovaèe"
+15510	"Osvoboïte vìznì"
+15511	"Zajistìte vìzòùm bezpeènı doprovod k jednotce LRDG"
+15512	"Opuste mìsto do støídání stráí"
+15513	"Zlikvidujte všechny nepøátele"
+15514	"Zniète nepøátelskou radiostanici"
+15515	"Poškoïte nìmecká zásobovací vozidla"
+15516	"Všichni èlenové jednotky musí pøeít"
+15517   "Zajistìte vìzòùm bezpeènı odchod do centra mìsta"
+15518	"Zneškodnìte všechny nepøátelské dùstojníky"
+15519	"Vyfote plány rozmístìní nepøátelskıch jednotek"
+
+;africa 2
+15520	"Proniknìte kaòonem"
+15521	"Shromádìte se s vozidlem na plánovaném místì"
+15522	"Zlikvidujte všechny nepøátele"
+15523	"Zpùsobte co nejvìtší škodu na vozidlech nepøítele"
+15524	"Všichni èlenové jednotky musí pøeít"
+
+;africa 3
+15530	"Zniète vrak Liberatoru"
+15531	"Zniète druhou èást zaøízení"
+15532	"Shromádìte se s funkèním vozidlem na plánovaném místì"
+15533	"Zlikvidujte všechny nepøátele"
+15534	"Všichni èlenové jednotky musí pøeít"
+15535	"Dobyjte nìmecké kontrolní stanovištì"
+15536	"Udrte stanovištì po dobu 3 minut"
+15537	"Zniète zakopanı tank Tiger"
+15538	"Zabijte velitele nìmecké posádky"
+15539	"Zniète barely s pohonnımi hmotami"
+
+
+;sicily - battery
+15540	"Zniète dìlo è.1"
+15541	"Zniète dìlo è.2"
+15542	"Zniète dìlo è.3"
+15543	"Opuste oblast"
+15544	"Zlikvidujte všechny nepøátele"
+15545	"Zniète munièní sklad"
+15546	"Zniète zbranì protiletadlové obrany (Flak 88)"
+15547	"Zniète dìla PaK 40"
+15548	"Zniète zásoby paliva"
+
+;sicily - bridge
+15550	"Zajistìte most"
+15551	"Zniète most"
+15552	"Zlikvidujte všechny nepøátele"
+15553	"Odminujte most"
+15554	"Ubraòte most"
+15555	"Všichni èlenové jednotky musí pøeít"
+15556	"Zniète všechny nepøátelské tanky"
+15557	"Most musí zùstat nepoškozen"
+15558	"Pøipojte se k ostatním vojákùm SAS"
+
+;burgundy - ammo
+15560	"Shromádìte se na plánovaném místì"
+15561	"Zniète munièní sklad"
+15562	"Zniète sklad pohonnıch hmot"
+15563	"Kontaktujte odbojáøe na pøedem dohodnutém místì"
+15564	"Zlikvidujte všechny nepøátele"
+15565	"Všichni èlenové jednotky musí pøeít"
+15566	"Proniknìte do prostor skladištì nepozorováni"
+15567	"Polote náloe bez vyvolání poplachu"
+
+;burgundy - statek
+15570	"Zlikvidujte dùstoníka Gestapa"
+15571	"Zajmìte francouzského kolaboranta"
+15572	"Zlikvidujte všechny nepøátele a vyèistìte oblast"
+15573	"Nikdo nesmí uniknout"
+15574	"Zlikvidujte všechny nepøátele"
+15575	"Tım se musí shromádit u zajatého kolaboranta"
+15576	"Získejte seznam kolaborantù"
+15577	"Všichni èlenové jednotky musí pøeít"
+
+;burgundy - zachrana
+15580	"Zachraòte vojáka SAS a lokalizujte ostatní"
+15581	"Zachraòte velitele SAS"
+15582	"Zachraòte zbytek skupiny SAS"
+15583	"Zlikvidujte všechny nepøátele"
+15584	"Poškoïte radiostanici"
+15585	"Zajistìte šifrovací tabulky"
+15586	"Zachraòte všechny zajatce"
+15587	"Všichni èlenové jednotky musí pøeít"
+15588	"Zachraòte co nejvíce zajatcù"
+
+15600	"Najdìte klíè u nìkterého z nepøátel."
+15650	"Èas:"
+
+
+;****** campaign names ******
+
+16000	"OPERACE AMMOBOX"
+16001	"OPERACE HEAT"
+16002	"OPERACE HUSKY"
+16003	"OPERACE HOUNDSMITH"
+
+
+;****** mission names *******
+
+16010	"OP. AMMOBOX - LOV NA RALOKA"
+16011	"OP. HEAT - KURİR"
+16012	"OP. HEAT - UŠTKNUTÍ"
+16013	"OP. HEAT - HYENY"
+16014	"OP. HUSKY - CHESTNUT"
+16015	"OP. HUSKY - MOST"
+16016	"OP. HOUNDSMITH - DVOJITİ ÚDER"
+16017	"OP. HOUNDSMITH - NA OSTØÍ NOE"
+16018	"OP. HOUNDSMITH - STRÁNÍ ANDÌLÉ"
+
+
+; movie names
+16100	"Zajati v Libyi"
+16101	"Nebezpeènı náklad"
+16102	"Klid pøed bouøí"
+16103	"Kolaborant"
+16104	"Doky"
+16105	"Pobøení dìlostøelectvo"
+16106	"Sabre Squadron Outro"
+
+;****** MISSION INFO *******
+
+17001	"Operace Ammobox - Lov na raloka"
+17002	"Brest - 20. duben 1942 - èas 4:50"
+17003	"Musíme uèinit pøítr øádìní nìmeckıch ponorek. Pronikneme do základny a do ponorkovıch dokù, kde umístíme náloe na jednotlivé ponorky. Základna je plná hlídek, musíme tedy postupovat nadmíru opatrnì. Po splnìní úkolu se shromádíme v únikové oblasti."
+17004	"Úkoly mise:"
+17005	"	- zaminujte ponorky v docích"
+17006	"	- umístìte navádìcí zaøízení"
+17007	"	- shromádìte se na plánovaném místì"
+17008	""
+17009	""
+
+
+17011	"Operace Heat - Kurır"
+17012	"Darnis Zarine - 11. øíjen 1942 - 05:11"
+17013	"Nìmci ve mìstì zadrují a vyslıchají posádku sestøeleného bombardéru. Mìsto je zcela obsazeno nepøátelskımi vojáky, jediná monost je probít se a k vìzení a posádku osvobodit døíve, ne muèení podlehne."
+17014	"Úkoly mise:"
+17015	"	- osvoboïte vìznì"
+17016	"	- zajistìte vìzòùm bezpeènı doprovod k jednotce LRDG"
+17017	"	- opuste mìsto do støídání stráí"
+17018	""
+17019	""
+
+
+17021	"Operace Heat - Uštknutí"
+17022	"Kaòon u Ain Mara - 11. øíjen 1942 - 12:24"
+17023	"Pøed námi leí kaòon obsazenı Nìmeckımi jednotkami, které se úèastní bojù na nedaleké frontì a zde se jen pøeskupují, ne se opìt vrátí do bitvy. Postaráme se, aby se jich vrátilo co nejménì."
+17024	"Úkoly mise:"
+17025	"	- proniknìte kaòonem"
+17026	"	- shromádìte se s vozidlem na plánovaném místì"
+17027	""
+17028	""
+17029	""
+
+
+
+17031	"Operace Heat - Hyeny"
+17032	"Pouš poblí Ain Mara - 11. øíjen 1942 - 17:30"
+17033	"Jsme na místì, kde nouzovì pøistál poškozenı Liberator. Musíme najít jeho vrak a znièit veškeré vybavení, které má na palubì, aby nepadlo do rukou Nìmeckıch expertù."
+17034	"Úkoly mise:"
+17035	"	- zniète vrak Liberatoru"
+17036	"	- zniète druhou èást zaøízení"
+17037	"	- shromádìte se s funkèním vozidlem na plánovaném místì"
+17038	""
+17039	""
+
+
+
+17041	"Operace Husky - Chestnut"
+17042	"Pobøeí Syrakuzského zálivu - 9. èervenec 1943 - 21:23"
+17043	"Naše jednotka se podílí na pøípravách vylodìní likvidací pobøeních baterií. Znièíme tøi dìla pobøení baterie a shromádíme se v únikové oblasti."
+17044	"Úkoly mise:"
+17045	"	- zniète dìlo è.1"
+17046	"	- zniète dìlo è.2"
+17047	"	- zniète dìlo è.3"
+17048	"	- shromádìte se na plánovaném místì"
+17049	""
+
+
+17051	"Operace Husky - Most"
+17052	"Ponde Grande - 11. èervenec 1943 - 10:15"
+17053	"Tento most pøes nesjízdnou rokli je pøíliš velkou hrozbou pro spojence, musíme se k nìmu probojovat a znièit jej."
+17054	"Úkoly mise:"
+17055	"	- pøipojte se k ostatním vojákùm SAS"
+17056	""
+17057	""
+17058	""
+17059	""
+
+
+
+17061	"Operace Houndsmith - Dvojitı úder"
+17062	"Les poblí Champagne - 4. èervenec 1944 - 05:13"
+17063	"Po seskoku se musíme shromádit na seøadišti a spoleènì se pokusíme vyhodit do povìtøí nìmeckı munièní sklad a sklad pohonnıch hmot. Potom nás èeká malé rendez-vous s francouzskımi odbojáøi."
+17064	"Úkoly mise:"
+17065	"	- shromádìte se na plánovaném místì"
+17066	"	- zniète munièní sklad"
+17067	"	- kontaktujte odbojáøe na pøedem dohodnutém místì"
+17068	""
+17069	""
+
+
+
+17071	"Operace Houndsmith - Na ostøí noe"
+17072	"Statek poblí Champagne - 6. èervenec 1944 - 16:10"
+17073	"Naším úkolem je zlikvidovat dùstojníka Gestapa, kterı povede vıslech našich zajatıch kamarádù. Má se zde na statku sejít s francouzskım kolaborantem, toho zajmeme a pøedáme partyzánùm. Je nutné všechny Nìmce zlikvidovat, naše akce nepotøebuje svìdky."
+17074	"Úkoly mise:"
+17075	"	- zlikvidujte dùstoníka Gestapa"
+17076	"	- zajmìte francouzského kolaboranta"
+17077	"	- zlikvidujte všechny nepøátele a vyèistìte oblast"
+17078	"	- nikdo nesmí uniknout"
+17079	""
+
+
+
+17081	"Operace Houndsmith - Strání andìlé"
+17082	"Les poblí Champagne - 7.èervenec 1944 - 20:04"
+17083	"Mnoho našich kamarádù z SAS padlo do zajetí pøi této operaci. Naším úkolem je osvobodit je všechny z nìmeckého zajetí."
+17084	"Úkoly mise:"
+17085	"	- zachraòte vojáka SAS a lokalizujte ostatní"
+17086	"	- zachraòte velitele SAS"
+17087	"	- zachraòte co nejvíce SAS"
+17088	""
+17089	""
+
+
+
+; ***** NPC NAMES ****
+17500	""
+17501	""
+17502	""
+17503	""
+17504	""
+17505	""
+17506	""
+17507	""
+17508	""
+17509	""
+17510	""
+17511	""
+17512	""
+17513	""
+17514	""
+17515	""
+
+; ***** DIARY ENTRIES *****
+; ***** BREST - LONEWOLF*****
+
+17600	"Dostal jsem se na místo, kde se vùbec necítím dobøe. Z jedné strany mohutné ponorkové servisní doky, z druhé strany nìmecká kasárna, všude desítky hlídek, svìtlometù, psù, ostnaté dráty a zase hlídky. Proniknout a dovnitø dokù se zdálo bıt nemoné, ale èasem se mi to pøeci povedlo a poloil jsem náloe ke všem ponorkám, které se v docích právì nalézaly. Nastavil jsem na èasovaèích vìtší zpodìní, aby náloe explodovaly tehdy, a budu pryè alespoò z tìch nejvíce hlídanıch míst na základnì. Kdyby vybuchly døíve, Nìmci by celou oblast proèesali a moje šance na únik by byla mizivá. Zùstala jim tam na mne památka v podobì navádìcího zaøízení pro bombardéry a hoøící zásoby paliva, snad budou mít radost."
+17601	""
+17602	""
+17603	""
+17604	""
+
+; ***** BREST - MORE PLAYERS *****
+
+17605	"Dostali jsme se na místo, kde se vùbec necítíme dobøe. Z jedné strany mohutné ponorkové servisní doky, z druhé strany nìmecká kasárna, všude desítky hlídek, svìtlometù, psù, ostnaté dráty a zase hlídky. Proniknout a dovnitø dokù se zdálo bıt nemoné, ale èasem se nám to pøeci povedlo a poloili jsme náloe ke všem ponorkám, které se v docích právì nalézaly. Nastavili jsem na èasovaèích vìtší zpodìní, aby náloe explodovaly tehdy, a budeme pryè alespoò z tìch nejvíce hlídanıch míst na základnì. Kdyby vybuchly døíve, Nìmci by celou oblast proèesali a naše šance na únik by byla mizivá. Zùstala jim tam na nás památka v podobì navádìcího zaøízení pro bombardéry a hoøící zásoby paliva, snad budou mít radost."
+17606	""
+17607	""
+17608	""
+17609	""
+
+
+; ***** LIBYA 1 - LONEWOLF *****
+
+17610	"V Africe jsem teprve krátkou dobu, ale rozhodnì se tady nenudím. I kdy opomenu èasté vıjezdy do akcí, hlídkování a neustálé pøesuny tábora, stejnì je poøád co dìlat, musíme udrovat svou vıstroj, vızbroj a techniku neustále v provozuschopném stavu, ale v podmínkách, které tady máme, to není vùbec jednoduché."
+17611	"Jednoho dne jsme dostali zprávu, e nad pouští byl sestøelen americkı bombardér B-24 Liberator. Byl jsem vyslán, abych ve mìstì Darnis - Zarine našel a osvobodil posádku bombardéru drenou v mìstské vìznici a pøedal ji kamarádùm od Long Range Desert Group, kteøí èekali za mìstem. Vstoupil jsem do mìsta jednou z bran v hradbách a ulicemi jsem se dostal a k vìznici. Našel jsem tam dva amíky, rádi mì vidìli, ale na dlouhé povídání nebyl èas, tak jsme se spoleènì vydali na cestu za chlapci z LRDG, kteøí u èekali za hradbami."
+17612	""
+17613	""
+17614	""
+
+; ***** LIBYA 1 - MORE PLAYERS *****
+17615	"V Africe jsme teprve krátkou dobu, ale rozhodnì se tady nenudíme. I kdy opomeneme èasté vıjezdy do akcí, hlídkování a neustálé pøesuny tábora, stejnì je poøád co dìlat, musíme udrovat svou vıstroj, vızbroj a techniku neustále v provozuschopném stavu, ale v podmínkách, které tady máme, to není vùbec jednoduché."
+17616	"Jednoho dne jsme dostali zprávu, e nad pouští byl sestøelen americkı bombardér B-24 Liberator. Byli jsem vysláni, abychom ve mìstì Darnis - Zarine našli a osvobodili posádku bombardéru drenou v mìstské vìznici a pøedali ji kamarádùm od Long Range Desert Group, kteøí èekali za mìstem. Vstoupili jsem do mìsta jednou z bran v hradbách a ulicemi jsme se dostali a k vìznici. Našli jsme tam dva amíky, rádi nás vidìli, ale na dlouhé povídání nebyl èas, tak jsme se spoleènì vydali na cestu za chlapci z LRDG, kteøí u èekali za hradbami."
+17617	""
+17618	""
+17619	""
+
+
+; ***** LIBYA 2 - LONEWOLF *****
+17620	"Moje další cesta vedla z mìsta pøímo do pusté pouštì, do kaòonu, kterı jak se záhy ukázalo, tak úplnì pustı nebyl. Narazil jsem tady na nìkolik skupin nìmeckıch vojákù, kteøí se tudy pøesunovali neznámo kam a rozhodli se, e na chvíli zastaví právì v místech, kde jsem je nemohl minout. Nemìl jsem èasu nazbyt, take jediná monost jak se dostat dál, byla prostøílet si cestu. Lhal bych, kdybych øekl, e to byla hraèka."
+17621	""
+17622	""
+17623	""
+17624	""
+
+
+; ***** LIBYA 2 - MORE PLAYERS *****
+17625	"Naše další cesta vedla z mìsta pøímo do pusté pouštì, do kaòonu, kterı jak se záhy ukázalo, tak úplnì pustı nebyl. Narazili jsem tady na nìkolik skupin nìmeckıch vojákù, kteøí se tudy pøesunovali neznámo kam a rozhodli se, e na chvíli zastaví právì v místech, kde jsme je nemohli minout. Nemìli jsem èasu nazbyt, take jediná monost jak se dostat dál, byla prostøílet si cestu. Lhal bych, kdybych øekl, e to byla hraèka."
+17626	""
+17627	""
+17628	""
+17629	""
+
+
+; ***** LIBYA 3 - LONEWOLF *****
+17630	"Koneènì jsem se dostal a do oblasti, kde se mìl nacházet sestøelenı Liberator. Nìmci tady bohuel byli o nìco døíve ne já a kromì toho, e okolí vraku kompletnì obsadili poèetnou jednotkou, stihli ještì odmontovat nìkteré souèástky z vraku a shromádili je v troskách pouštního mìsta. Jak jinak, mìsto obsadili hlídkami a aby toho nebylo málo, kdy jsem znièil souèástky sloené v bednách, vıbuch zalarmoval nepøátelskou jednotku, která mi zablokovala cestu na pobøeí. Pøesto se mi podaøilo z oblasti uniknout a dostat se na cestu vedoucí k severu, k místu evakuace."
+17631	""
+17632	""
+17633	""
+17634	""
+
+; ***** LIBYA 3 - MORE PLAYERS *****
+
+17635	"Koneènì jsme se dostali a do oblasti, kde se mìl nacházet sestøelenı Liberator. Nìmci tady bohuel byli o nìco døíve ne my a kromì toho, e okolí vraku kompletnì obsadili poèetnou jednotkou, stihli ještì odmontovat nìkteré souèástky z vraku a shromádili je v troskách pouštního mìsta. Jak jinak, mìsto obsadili hlídkami a aby toho nebylo málo, kdy jsme znièili souèástky sloené v bednách, vıbuch zalarmoval nepøátelskou jednotku, která nám zablokovala cestu na pobøeí. Pøesto se nám podaøilo z oblasti uniknout a dostat se na cestu vedoucí k severu, k místu evakuace."
+17636	""
+17637	""
+17638	""
+17639	""
+
+; ***** SICILY 1 - LONEWOLF *****
+
+17640	"Spojenci pøipravují vylodìní na Sicílii a protoe chtìjí minimalizovat ztráty na moøi, vyslali nìkolik jednotek, aby zlikvidovaly nebo alespoò poškodily zbranì pobøeního dìlostøelectva. V mém úseku se nacházela tøi dalekonosná dìla a baterie protiletecké obrany. Jako všude na pobøeí v tìchto dnech, i tady byla poèetná posádka, se kterou jsem se musel vypoøádat."
+17641	""
+17642	""
+17643	""
+17644	""
+
+; ***** SICILY 1 - MORE PLAYERS *****
+
+17645	"Spojenci pøipravují vylodìní na Sicílii a protoe chtìjí minimalizovat ztráty na moøi, vyslali nìkolik jednotek, aby zlikvidovaly nebo alespoò poškodily zbranì pobøeního dìlostøelectva. V našem úseku se nacházela tøi dalekonosná dìla a baterie protiletecké obrany. Jako všude na pobøeí v tìchto dnech, i tady byla poèetná posádka, se kterou jsme se museli vypoøádat."
+17646	""
+17647	""
+17648	""
+17649	""
+
+; ***** SICILY 2 - LONEWOLF *****
+
+17650	"Pùvodnì jsem mìl za úkol znièit most pøes širokou roklinu, ale kdy jsem dorazil na místo, kde jsem se mìl setkat s dalšími vojáky, jeden z nich mi prozradil, e byly znièeny všechny mosty v okolí, tenhle je poslední a musí bıt zajištìn za kadou cenu. Take role se obrátily, zatímco my jsme se snaili probojovat na protìjší stranu mostu, Italové nás vytrvale zahánìli palbou zpátky a pokoušeli se odpálit náloe na pilíøích. Chvílemi se zdálo, e tam na druhé stranì mají snad hnízdo, protoe dostávali neustále posily, ale po nìjaké dobì se podaøilo je zatlaèit a deaktivovat náloe. V téhle akci dostali naši chlapci poøádnì zabrat, spousta jich tam zùstala, jen doufám, e to stálo za to a nezemøeli zbyteènì."
+17651	""
+17652	""
+17653	""
+17654	""
+
+; ***** SICILY 2 - MORE PLAYERS *****
+
+17655	"Pùvodnì jsme mìli za úkol znièit most pøes širokou roklinu, ale kdy jsme dorazili na místo, kde jsme se mìli setkat s dalšími vojáky, jeden z nich nám prozradil, e byly znièeny všechny mosty v okolí, tenhle je poslední a musí bıt zajištìn za kadou cenu. Take role se obrátily, zatímco my jsme se snaili probojovat na protìjší stranu mostu, Italové nás vytrvale zahánìli palbou zpátky a pokoušeli se odpálit náloe na pilíøích. Chvílemi se zdálo, e tam na druhé stranì mají snad hnízdo, protoe dostávali neustále posily, ale po nìjaké dobì se podaøilo je zatlaèit a deaktivovat náloe. V téhle akci dostali naši chlapci poøádnì zabrat, spousta jich tam zùstala, jen doufám, e to stálo za to a nezemøeli zbyteènì."
+17656	""
+17657	""
+17658	""
+17659	""
+
+; ***** BURGUNDY 1 - LONEWOLF *****
+
+17660	"Po celém okolí vesnice Champagne seskoèilo nìkolik desítek vojákù SAS, kteøí mìli za úkol podniknout sabotání akce pøímo na území nepøítele. Najít nìmeckı munièní sklad nebyl problém, horší bylo proniknout dovnitø ostøe hlídaného areálu a poloit náloe na ta správná místa. Zvuk exploze se nesl po lesích a širokém okolí a signalizoval místním partyzánùm, e nadešel èas se sejít na dohodnutém místì a domluvit se na dalším postupu."
+17661	""
+17662	""
+17663	""
+17664	""
+
+; ***** BURGUNDY 1 - MORE PLAYERS *****
+
+17665	"Po celém okolí vesnice Champagne seskoèilo nìkolik desítek vojákù SAS, kteøí mìli za úkol podniknout sabotání akce pøímo na území nepøítele. Najít nìmeckı munièní sklad nebyl problém, horší bylo proniknout dovnitø ostøe hlídaného areálu a poloit náloe na ta správná místa. Zvuk exploze se nesl po lesích a širokém okolí a signalizoval místním partyzánùm, e nadešel èas se sejít na dohodnutém místì a domluvit se na dalším postupu."
+17666	""
+17667	""
+17668	""
+17669	""
+
+; ***** BURGUNDY 2 - LONEWOLF *****
+
+17670	"Situace se komplikuje. Partyzáni mne poádali o pomoc pøi nalezení a zadrení francouzského kolaboranta. Tento mu, tuším, e se jmenoval Mourier, informoval po celou dobu nìmecké okupace Gestapo o lidech, kteøí sympatizují se spojenci, provádìjí sabotání akce a poslouchají spojeneckı rozhlas, není tedy divu, e partyzáni chtìjí jeho hlavu na støíbrném podnosu. Mourier se setkal na statku s dùstojníkem Gestapa, kterı se zde zastavil cestou k vıslechùm našich zajatıch kamarádù z SAS. Poblí statku u jsem èekal já a poté co zaèala jejich schùzka jsem na statek vniknul, zlikvidoval hlídky a zajmul Mouriera. Toho jsem po chvíli pøedal partyzánùm a myslím si, e ádnı soud by s ním nenaloil lépe, ne právì oni."
+17671	""
+17672	""
+17673	""
+17674	""
+
+; ***** BURGUNDY 2 - MORE PLAYERS *****
+
+17675	"Situace se komplikuje. Partyzáni nás poádali o pomoc pøi nalezení a zadrení francouzského kolaboranta. Tento mu, tuším, e se jmenoval Mourier, informoval po celou dobu nìmecké okupace Gestapo o lidech, kteøí sympatizují se spojenci, provádìjí sabotání akce a poslouchají spojeneckı rozhlas, není tedy divu, e partyzáni chtìjí jeho hlavu na støíbrném podnosu. Mourier se setkal na statku s dùstojníkem Gestapa, kterı se zde zastavil cestou k vıslechùm našich zajatıch kamarádù z SAS. Poblí statku u jsme èekali my a poté co zaèala jejich schùzka jsme na statek vniknuli, zlikvidovali hlídky a zajali Mouriera. Toho jsme po chvíli pøedali partyzánùm a myslím si, e ádnı soud by s ním nenaloil lépe, ne právì oni."
+17676	""
+17677	""
+17678	""
+17679	""
+
+; ***** BURGUNDY 3 - LONEWOLF *****
+
+17680	"Zabitím dùstojníka Gestapa jsem získal tolik potøebnı èas a mohl jsem se vydat k táboru SAS, donedávna ukrytému v lesích. Nìmci jej však našli a koho nezabili, toho zajali. Kamarády dreli v táboøe a vyslıchali je, nemohl jsem tedy vyèkávat a dal jsem vıstøelem ze signální pistole pokyn partyzánùm, aby vyhodili do vzduchu zásoby paliva a odlákali tak pozornost od mé akce. Co nejrychleji jsem vyhledal zajatce a zároveò likvidoval hlídky, aby mi nevpadly do zad, ve chvíli, kdy se to bude nejménì hodit."
+17681	""
+17682	""
+17683	""
+17684	""
+
+; ***** BURGUNDY 3 - MORE PLAYERS *****
+
+17685	"Zabitím dùstojníka Gestapa jsme získali tolik potøebnı èas a mohli jsme se vydat k táboru SAS, donedávna ukrytému v lesích. Nìmci jej však našli a koho nezabili, toho zajali. Kamarády dreli v táboøe a vyslıchali je, nemohli jsme tedy vyèkávat a dali jsem vıstøelem ze signální pistole pokyn partyzánùm, aby vyhodili do vzduchu zásoby paliva a odlákali tak pozornost od naší akce. Co nejrychleji jsme vyhledali zajatce a zároveò likvidovali hlídky, aby nám nevpadly do zad, ve chvíli, kdy se to bude nejménì hodit."
+17686	""
+17687	""
+17688	""
+17689	""
+
+; ****************************
+; ***** CAMPAIGN SCREENS *****
+; ****************************
+
+; LOFOTS
+17750	"Daleko na severu, 1350km od vıznamné bristké námoøní základny Scapa Flow, se rozkládá Lofotské souostroví, které bylo v prùbìhu 2. svìtové války okupováno nìmeckımi jednotkami. Na první pohled se tato oblast mùe jevit jako strategicky nezajímavá, avšak skuteènost je taková, e Lofoty se po dobu války staly pro Nìmecko zdrojem dùleitıch surovin. Nelze se tedy divit, e poslouily jako cíl pro jedny z prvních vısadkù speciálních jednotek, které zde mìly za úkol poškodit prùmyslové objekty a navázat kontakt s místním hnutím odboje."
+
+; AFRICA
+17751	"Severní Afrika je místem, kde se kapitánu Davidu Stirlingovi podaøilo zformovat základ jednotky nazıvané SAS, neboli Special Air Serice. Po poèáteèních neúspìšnì naplánovanıch a realizovanıch akcích ji tato jednotka slavila jeden triumf za druhım. Pùsobila jako uragán na nìmeckıch letištích, kde likvidovala desítky letadel na stojánkách, vyhazovala do povìtøí dùleité budovy a v neposlední øadì pùsobila chaos a paniku v øadách nìmeckıch vojákù, kteøí si od této chvíle nemohli bıt nikde jisti, e jsou v bezpeèí. "
+
+; NORWAY
+17752	"Na konci roku 1941 se stal novı nìmeckı køiník Tirpitz (sesterská loï Bismarcka) skuteènou hrozbou pro arktické konvoje a spojenecké námoønictvo, které zde muselo po dlouhou dobu vázat své zdroje pøi pronásledování køiníku. Pro britské váleèné lodi byl po dobu svého krıvání v norskıch fjordech nedostiitelnım cílem a ani útoky bombardérù nepøinesly oèekávanı vısledek. A v záøí 1943 se podaøilo britskım miniponorkám typu X proniknout do Altenfjordu a pøipevnit na trup lodi náloe, které zpùsobily váné poškození strojovny. "
+
+; BURMA
+17753	"Tzv. zemì Osy spolupracovaly nejen po stránce politické, ale také obchodní a prùmyslové. Barma pøedstavovala pro obì válèící strany strategicky dùleitou oblast, nebo tudy proudilo mnoství dodávek mechanickıch souèástí a jiného materiálu smìøujícího k japonskım jednotkám. Speciální jednotky se zde vylodily v bøeznu 1944 do palby tìkıch zbraní nepøítele, kterı pro nì reprezentova zcela odlišnı zpùsob myšlení a boje. Britští vojáci, pøipraveni na všechno jen ne na nesnesitelná vedra, vlhkost a 40C ve stínu, se poprvé støetli s Japonci v dungli poblí hory Arakan Joma na pomezí Barmy a Bengálského zálivu." 
+
+; ALPS
+17754	"Rakouské Alpy nepatøí mezi ty oblasti Evropy, na jejich území byly vedeny nejtìší bitvy, takováto místa však èasto hrají jinou a neménì dùleitou roli pro jednotky operující v tılu nepøítele a speciálnì školené agenty. Nacistická koncepce poèítala s tímto pohoøím jako s pøírodní pevností a posledním útoèištìm v pøípadì pádu Øíše, èemu odpovídají i doposud zjištìná fakta o tom, co všechno rùzná zákoutí Alp skrıvají. Pøíkladem budi jezero Toplitz See, v jeho hlubinách byly nalezeny padìlané Libry a souèástky na vırobu raket V1 a V2 "
+
+; NORMANDY
+17755	"Vylodìní v Normandii bylo vısledkem dvouletého intenzivního vıcviku, pøíprav a plánování. Jako obvykle, spojenecké speciální jednotky byly mezi prvními, které se dotkly nepøátelského pobøeí a zastavily se a po 83 dnech intenzivního taení. Plnily vesmìs velice obtíné a sebevraedné úkoly, zhostily se však své role se ctí a odvahou do té doby nevidìnou. Ji po 17 hodinách od hodiny H dne D mìli Spojenci na pobøeí 132 750 muù a 6000 tankù a dìl. Úspìch operace OVerlord pøedznamenal celı další vıvoj na evropském bojišti."
+
+; BREST
+17756	"Poèátek roku 1942 byl zkouškou ohnìm pro morálku britského civilního obyvatelstva, které zapojilo všechny své síly a rezervy do podpory domácí ekonomiky a váleèného prùmyslu, na kterém závisela existence vojenskıch jednotek roztroušenıch po Evropì, Asii i Africe. Velká Británie utrpìla veliké ztráty na moøi, kdy pomalé a zranitelné konvoje, které dopravovaly zásoby munice, potravin a lékù, byly systematicky likvidovány smeèkami ponorek admirála Doenitze. Spojenecká vojska v té dobì nedisponovala úèinnou zbraní èi taktikou, která by hrozbu ponorek sniovala. Existovala však monost poslat speciálnì vycvièenou jednotku, která se vylodí v blízkosti dokù a pomocí náloí zlikviduje zaøízení dokù."
+
+; LIBYA
+17757	"Jednotky SAS zaèaly pøi svém pùsobení na bojištích severní Afriky efektivnì vyuívat monosti spolupráce s dalšími jednotkami podpùrného charakteru. Mezi nì patøí i jednotka LRDG neboli Long Range Desert Group, která díky kvalitnímu vozovému parku, obsahujícímu speciálnì upravená vozidla, mohla dopravovat tımy SAS daleko za nepøátelské linie a zrovna tak zajistit vojákùm SAS rychlı a bezpeènı návrat na základnu."
+
+; SICILY
+17758	"Nutnost rozšíøení fronty vedla Spojence k pøípravì vylodìní invazních vojsk také na Italském území, konkrétnì na Sicílii. Operaci byl pøidìlen krycí název Husky a probìhla 10, èervence 1943. Vylodìní však bezprostøednì pøedcházely a doprovázely jej sabotání akce, jejich cílem bylo poškodit nepøátelské tılové instalace, pøerušit zásobování a komunikaèní uzly. Souèástí samotné invaze byla i operace s krycím názvem Chestnut, jí se zùèastnily dva tımy SAS vysazené na severu Sicílie. Jejich úkolem bylo de facto odøíznout Sicílii od Itálie."
+
+; BURGUNDY
+17759	"144 muù speciálních jednotek bylo vysazeno za bitevní linii na nepøátelské území poblí francouzského Dijonu. Operace nesla krycí název Houndsmith. Úkolem jednotek SAS bylo pùsobit v øadách nepøátel chaos, nièit sklady zbraní a støeliva, pøerušovat dùleitá eleznièní spojení a brát do zajetí nìmecké dùstojníky a jiné dùleité osoby spolupracující s øíší."
+
+; TUTORIAL
+17760 "Vıcvik jednotek SAS patøí bezesporu k tìm nejnároènìjším na svìtì. Od zahájení do absolvování vydrí nadmìrnou fyzickou i psychickou zátì jen zlomek  tìch, kteøí se k jednotce pøihlásili. Ti ostatní jsou pøeveleni zpìt ke svım kmenovım útvarùm. Kromì vısadkáøského kurzu obsahuje základní vıcvik také rozšíøenı støeleckı kurz, nácvik pøeití a celkové zocelení adepta po všech stránkách."
+
+
+; ***** LOADING SCREENS *****
+
+; AMMOBOX - DEADFISH
+17801	"Nìmecké ponorkové loïstvo je trnem v oku spojenecké admiralitì. Stíhání ponorek na otevøeném moøi skonèilo katastrofou, nálety na ponorkové doky byly velice ztrátové a neefektivní. Nejvyšší èas povolat pìchotu - a ne ledajakou. Naše akce musí bıt blesková a bez chyb, celı areál v okolí ponorkovıch dokù je jedna velká nìmecká základna."
+
+; HEAT - MOUSE IN THE HOUSE
+17802	"Jsme pøed branami pouštního mìsta Darnis - Zarine, té známého jako Derna, obsazeného nìmeckımi jednotkami, která zde drí v zajetí posádku sestøeleného bombardéru. Pronikneme do vìzení, a u skrytì nebo otevøenım bojem, dostaneme naše kamarády ven a spoleènì s nimi se dostaneme mìsta, kde na nás bude èekat jednotka LRDG."
+
+; HEAT - SNAKEBITE
+17803	"Kaòon poblí Darnis - Zarine je nejkratší cestou mezi vıchozím bodem naší mise a místem, kde pøistál Liberator. V tìchto místech probìhly prudké boje mezi spojenci a jednotkami Africa-corps. K naší smùle v oblasti zùstaly právì nìmecké jednotky a protoe se vracíme z tılu nepøítele, musíme se pøes nì probít za kadou cenu, nechceme-li zùstat odøíznuti."
+
+; HEAT - SITTING DUCK
+17804	"Jsme na místì, kde kaòon pozvolna pøechází v otevøenou pouš. Nìkde tady je vrak letounu, kterı musíme znièit. V oblasti by mìl bıt klid, je však bìnou praxí, e Nìmci vyšlou tım expertù k demontái vraku, pokud na nìm objeví nìco neobvyklého, musíme se tedy pøipravit na nejhorší. Oni také."
+
+; HUSKY - CHESTNUT
+17805	"Do této oblasti jsme byli vysláni jako pøedvoj hlavních invazních sil a naším úkolem je v krátké dobì zpùsobit nepøíteli co nejvìtší škody na pobøením dìlostøelectvu. Do zálivu je namíøeno mnoho nìmeckıch dìl, pokusíme se, aby nìkterá z nich u nepøedstavovala hrozbu pro spojenecké lodì pøiplouvající k vyloïovacím pláím."
+
+; HUSKY - PONTE GRANDE
+17806	"Postupujeme dále podle plánu. Jeho souèástí je znièit jeden z mostù, kterı pøeklenuje nìkolik mil dlouhou rokli a je natolik pevnı, e jej mùe vyuít nìmecká obrnìná technika. To poslední co teï potøebujeme, je mít nìmecké Panzery za zády, jediná monost, jak tomu zabránit, je vyhodit most do povìtøí."
+
+; HOUNDSMITH - DOUBLE ACTION
+17807	"Pøi seskoku nad cílovou oblastí byla naše jednotka a mnoho dalších rozptılena po celém okolí. Zabere nìjakı èas ne se všechny tımy setkají na vytyèenıch pozicích a pustí se do plnìní úkolù. Toté èeká naši jednotku, která se z vıchozího bodu pokusí pøiblíit k ostøe hlídanému muniènímu skladu a vyhodit jej do povìtøí, nejlépe i s jeho stráci."
+
+; HOUNDSMITH - RAZOR BLADE
+17808	"Na statku poblí vesnice Champagne se má setkat dùstojník Gestapa s francouzskım kolaborantem. Od místních lidí jsme se dozvìdìli, e dùstojník je tentı, kterı má vyslechnout naše zajaté kamarády a následnì zorganizovat jejich popravu. Urèitì netuší, e poprava, která se dnes odehraje, se bude tıkat nìkoho úplnì jiného."
+
+; HOUNDSMITH - ANGELS FROM ABOVE
+17809	"Jsme v blízkosti bıvalého utajeného tábora SAS, kterı byl napaden nìmeckımi jednotkami a vojáci z øad SAS byli zajati. Teï jsou dreni v buovách v táboøe, kde je èekají vıslechy a popravy. Pokud se nám nepodaøí je osvobodit, bude to naše nejvìtší selhání."
+
+; **** LOADING SCREENS FOR COOPERATIVE *****
+
+17820	"Nìmecké ponorkové loïstvo je trnem v oku spojenecké admiralitì. Stíhání ponorek na otevøeném moøi skonèilo katastrofou, nálety na ponorkové doky byly velice ztrátové a neefektivní. Nejvyšší èas povolat pìchotu - a ne ledajakou. Naše akce musí bıt blesková a bez chyb, celı areál v okolí ponorkovıch dokù je jedna velká nìmecká základna."
+
+17821	"Jsme pøed branami pouštního mìsta Darnis - Zarine, té známého jako Derna, obsazeného nìmeckou posádkou, která zde drí v zajetí posádku sestøeleného bombardéru. Pronikneme do vìzení, a u skrytì nebo otevøenım bojem, dostaneme naše kamarády ven a poskytneme jim ochranu, dokud se nedostanou do bezpeènìjší zóny."
+
+17822	"Kaòon mezi Darnis - Zarine je nejkratší cestou mezi vıchozím bodem naší mise a místem, kde pøistál Liberator. V tìchto místech probìhly prudké boje mezi spojenci a jednotkami Africa-corps. K naší smùle v oblasti zùstaly právì nìmecké jednotky, které se pøeskupují a èekají na posily. Jestli se jich doèkají, záleí na nás."
+
+17823	"Jsme na místì, kde kaòon pozvolna pøechází v otevøenou pouš. Nìkde tady je vrak letounu, kterı musíme znièit. V oblasti by mìl bıt klid, je však bìnou praxí, e Nìmci vyšlou tım expertù k demontái vraku, pokud na nìm objeví nìco neobvyklého, musíme se tedy pøipravit na nejhorší. Oni také."
+
+17824	"Do této oblasti jsme byli vysláni jako pøedvoj hlavních invazních sil a naším úkolem je v krátké dobì zpùsobit nepøíteli co nejvìtší škody na pobøením dìlostøelectvu. Do zálivu je namíøeno mnoho nìmeckıch dìl, pokusíme se, aby nìkterá z nich u nepøedstavovala hrozbu pro spojenecké lodì pøiplouvající k vyloïovacím pláím."
+
+17825	"Postupujeme dále podle plánu. Jeho souèástí je znièit jeden z mostù, kterı pøeklenuje nìkolik mil dlouhou rokli a je natolik pevnı, e jej mùe vyuít nìmecká obrnìná technika. To poslední co teï potøebujeme, je mít nìmecké Panzery za zády, jediná monost, jak tomu zabránit, je vyhodit most do povìtøí."
+
+17826	"Pøi seskoku nad cílovou oblastí byla naše jednotka a mnoho dalších rozptılena po celém okolí. Zabere nìjakı èas ne se všechny tımy setkají na vytyèenıch pozicích a pustí se do plnìní úkolù. Toté èeká naši jednotku, která se z vıchozího bodu pokusí pøiblíit k ostøe hlídanému muniènímu skladu a vyhodit jej do povìtøí, nejlépe i s jeho stráci."
+
+17827	"Na statku poblí vesnice Champagne se má setkat dùstojník Gestapa s francouzskım kolaborantem. Od místních lidí jsme se dozvìdìli, e dùstojník je tentı, kterı má vyslechnout naše zajaté kamarády a následnì zorganizovat jejich popravu. Urèitì netuší, e poprava, která se dnes odehraje, se bude tıkat nìkoho úplnì jiného."
+
+17828	"Jsme v blízkosti bıvalého utajeného tábora SAS, kterı byl napaden nìmeckımi jednotkami a vojáci z øad SAS byli zajati. Teï jsou dreni v buovách v táboøe, kde je èekají vıslechy a popravy. Pokud se nám nepodaøí je osvobodit, bude to naše nejvìtší selhání."
+
+17850 "KAMPAÒ DOKONÈENA"
+
+17851 "TOTO JE JEN TESTOVACI TEXT, KTERY BUDE VE FINALE OBSAHOVAT INFORMACE O HISTORICKEM POZADI KONKRETNI KAMPANE. TEST TEST, TRALALA."
+
+
+
+
+;[20000 - 21000] reserved for menu
+
+20001    "KOOPERATIVA"
+20002	 "KOOPERATIVNÍ SKÓRE"
+; MULTIPLAYER MENU
+20100    "OBLÍBENÉ"
+20101    "CELİ SEZNAM"
+
+20102    "PØIDAT K OBLÍBENİM"
+20103    "ODSTRANIT Z OBLÍBENİCH"
+
+; CREATE SERVER MENU
+20200    "V POØADÍ"
+20201    "VLASTNÍ 1"
+20202    "VLASTNÍ 2"
+20203    "VLASTNÍ 3"
+20204    "VLASTNÍ 4"
+
+20205    "MAPLIST PRESET"
+20206    "MAPLIST"
+
+20210    "OBTÍNOST"
+20211    "IVOTY PRO TİM"
+20212    "POVOLIT ZAMÌØOVAÈ"
+20213    "POÈET RESPAWNÙ"
+20214    "SPAWNÙ NA ZAÈÁTKU"
+
+; cooperative DIFFICULTY
+20220    "SNADNÁ"
+20221    "NORMÁLNÍ"
+20222    "OBTÍNÁ"
+20223    "VELMI OBTÍNÁ"
+
+
+
+
+; INGAME MENU - PLAYER SCREEN
+20300   "STATUS HRÁÈE"
+20301	"pøíprava ke høe"
+20302	"èeká se na respawn"
+20303	"hraje se"
+
+20310	"Poèet ivotù vyèerpán - pøepínám do spectator módu"
+20311	"Hra u probíhá - pøepínám do spectator módu"          
+20312 	"èeká se na respawn - pøepínám do spectator módu"          
+20313	"Ochrana pøi spawnu" 
+
+
+
+; SINGLEPLAYER MENU
+20400	"HD2 Originál"
+20401	"HD2 Datadisk"
+
+
+
+; SERVERGAMEINFO MENU
+20501    "Snadná"
+20502    "Normální"
+20503    "Obtíná"
+20504    "Velmi obtíná"
+
+20510    "Obtínost"
+20511    "ivoty pro tım"
+20512    "ivoty"
+
+20513    "Povolit zamìøovaè"
+20514    "Povolit vozidla"
+20515    "Vzájemné poškození"
+
+20520	 "Vybavení Osy"
+20521	 "Vybavení spojencù"
+
+
+; CUSTOM EDITS
+
+; ***** LOADING SCREENS *****
+; BURMA2 KINGSLAYER
+17901	"Our position is north of a japanese bunker complex. First we have to capture and destroy the bunker, then fight our way down the hill and elimiate every resistance."
+; BURMA1 KEYGUARD
+17902	"To fulfill the objectives you need to find keys first so you can unlock the bunker doors. The positions of the keys are marked on the map."
+; LIBYA3 JAILBREAK
+17903	"We got captured by the local german forces. Fortunately a british spy let us know to unlock the prison door in an unobserved moment. We cannot blow his cover therefore he can't help us any further. We have to fight our way to the control post south-west of our position and radio for pickup. Hopefully we make it out of here alive.."
+
+
+; ***** OBJECTIVES *****
+21004	"Make your way to the weapons store."
+21005	"Defend the area around the checkpoint."
+21006	"Use the radio at the checkpoint to call for pickup."

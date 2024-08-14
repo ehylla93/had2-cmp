@@ -1,0 +1,70 @@
+// TURN OFF GLOBAL ALARM (2)
+// -------------------------------------------------------
+
+Block
+{
+Frame E31;	FRM_FindFrame(E31,"AF4_36");
+Frame E32;	FRM_FindFrame(E32,"AF4_37");
+Frame E33;	FRM_FindFrame(E33,"AF4_38");
+Frame E34;	FRM_FindFrame(E34,"AF4_39");
+Frame E35;	FRM_FindFrame(E35,"AF4_40");
+Frame E36;	FRM_FindFrame(E36,"AF4_41");
+Frame E37;	FRM_FindFrame(E37,"AF4_42");
+Frame E38;	FRM_FindFrame(E38,"AF4_43");
+Frame E39;	FRM_FindFrame(E39,"AF4_44");
+Frame E40;	FRM_FindFrame(E40,"AF4_45");
+
+Frame E41;	FRM_FindFrame(E41,"AF4_46");
+Frame E42;	FRM_FindFrame(E42,"AF4_47");
+Frame E43;	FRM_FindFrame(E43,"AF4_48");
+Frame E44;	FRM_FindFrame(E44,"AF4_49");
+Frame E45;	FRM_FindFrame(E45,"AF4_50");
+Frame E46;	FRM_FindFrame(E46,"AF4_51");
+Frame E47;	FRM_FindFrame(E47,"AF4_52");
+Frame E48;	FRM_FindFrame(E48,"AF4_Sklad01");
+Frame E49;	FRM_FindFrame(E49,"AF4_sklad02");
+Frame E50;	FRM_FindFrame(E50,"AF4_sklad03");
+
+Frame E51;	FRM_FindFrame(E51,"AF4_sklad04");
+Frame E52;	FRM_FindFrame(E52,"AF4_sklad05");
+Frame E53;	FRM_FindFrame(E53,"AF4_sklad06");
+Frame E54;	FRM_FindFrame(E54,"AF4_sklad07");
+Frame E55;	FRM_FindFrame(E55,"AF4_mechanic_01");
+Frame E56;	FRM_FindFrame(E56,"AF4_mechanic_02");
+Frame E57;	FRM_FindFrame(E57,"AF4_mechanic_03");	
+Frame E58;	FRM_FindFrame(E58,"AF4_tank2_01");
+Frame E59;	FRM_FindFrame(E59,"AF4_tank2_03");
+Frame E60;	FRM_FindFrame(E60,"AF4_tank2_driver");
+
+Frame E61;	FRM_FindFrame(E61,"AF4_tank3_01");
+Frame E62;	FRM_FindFrame(E62,"AF4_tank3_02");
+Frame E63;	FRM_FindFrame(E63,"AF4_tank3_driver");
+Frame E64;	FRM_FindFrame(E64,"AF4_new_01");
+Frame E65;	FRM_FindFrame(E65,"AF4_new_02");
+Frame E66;	FRM_FindFrame(E66,"AF4_new_03");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+Block {
+SendSignal(E31, 19);SendSignal(E32, 19);SendSignal(E33, 19);
+SendSignal(E34, 19);SendSignal(E35, 19);SendSignal(E36, 19);
+SendSignal(E37, 19);SendSignal(E38, 19);SendSignal(E39, 19);
+SendSignal(E40, 19);SendSignal(E41, 19);SendSignal(E42, 19);
+}
+Block {
+SendSignal(E43, 19);SendSignal(E44, 19);SendSignal(E45, 19);
+SendSignal(E46, 19);SendSignal(E47, 19);SendSignal(E48, 19);
+SendSignal(E49, 19);SendSignal(E50, 19);SendSignal(E51, 19);
+SendSignal(E52, 19);SendSignal(E53, 19);SendSignal(E54, 19);
+}
+Block {
+SendSignal(E55, 19);SendSignal(E56, 19);SendSignal(E57, 19);
+SendSignal(E58, 19);SendSignal(E59, 19);SendSignal(E60, 19);
+SendSignal(E61, 19);SendSignal(E62, 19);SendSignal(E63, 19);
+SendSignal(E64, 19);SendSignal(E65, 19);SendSignal(E66, 19);
+}
+EndScript();
+}

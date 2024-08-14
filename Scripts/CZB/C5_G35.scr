@@ -1,0 +1,131 @@
+// C5_G35
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd				= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  Frame kamos;	FRM_FindFrame(kamos,"C5_G34");
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  SendSignal(kamos, 20);
+  HUMAN_Stop();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnSignal(20)
+{
+HUMAN_Stop();
+HUMAN_SetAlarm(true);
+goto END;
+}
+
+OnSignal(1)
+{
+FRM_MorphSpeechDelayed(me, 07991516, 5, 30); //
+FRM_MorphSpeechDelayed(me, 07991517, 5, 30); //
+Delay(500);
+SendSignal(kamos, 2);
+goto END;
+}
+
+OnSignal(3)
+{
+FRM_MorphSpeechDelayed(me, 07991519, 5, 30); //
+Delay(500);
+SendSignal(kamos, 4);
+goto END;
+}
+
+OnSignal(5)
+{
+FRM_MorphSpeechDelayed(me, 07991521, 5, 30); //
+Delay(500);
+SendSignal(kamos, 6);
+goto END;
+}
+
+OnSignal(7)
+{
+FRM_MorphSpeechDelayed(me, 07991523, 5, 30); //
+Delay(500);
+SendSignal(kamos, 8);
+goto END;
+}
+
+OnSignal(9)
+{
+FRM_MorphSpeechDelayed(me, 07991525, 5, 30); //
+Delay(500);
+SendSignal(kamos, 10);
+goto END;
+}
+
+OnSignal(11)
+{
+FRM_MorphSpeechDelayed(me, 07991527, 5, 30); //
+Delay(500);
+SendSignal(kamos, 12);
+goto END;
+}
+
+OnSignal(13)
+{
+FRM_MorphSpeechDelayed(me, 07991529, 5, 30); //
+Delay(500);
+SendSignal(kamos, 14);
+goto END;
+}
+
+
+OnSignal(15)
+{
+FRM_MorphSpeechDelayed(me, 07991531, 5, 30); //
+FRM_MorphSpeechDelayed(me, 07991532, 5, 30); //
+Delay(500);
+SendSignal(kamos, 16);
+goto END;
+}
+
+OnSignal(17)
+{
+FRM_MorphSpeechDelayed(me, 07991534, 5, 30); //
+Delay(500);
+SendSignal(kamos, 18);
+goto END;
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90004024, 5, 30); // got him
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(10)){
+  HUMAN_Suspend(false);
+  // kecy 
+  HUMAN_TurnAt(kamos);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+Delay(1000);
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

@@ -1,0 +1,140 @@
+// AF3a_08 - walking on the fortification
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME look1_01;			FRM_FindFrame(look1_01, "AF3a_08_look1_01");
+  FRAME look1_02;			FRM_FindFrame(look1_02, "AF3a_08_look1_02");
+  FRAME sit;				FRM_FindFrame(sit, "dummy_08_sit");			//doplnit az bude fungovat
+  FRAME bottle;			FRM_FindFrame(bottle, "");
+  INTEGER Atype			= 0;
+  INTEGER rnd 			= 0;
+  INTEGER cnt 				= 0;
+  INTEGER at_alert_pos		= 0;
+  
+  SetAlarmType(1023, true);					// enable all alarms
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("08: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(400);
+    Atype = _GetAlarmType();
+    printfnumber("08: ", Atype);
+  }
+
+  if(Atype == 4){
+    HUMAN_SetAlarm(false);
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+    HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+    goto ACTIVITY;
+  }
+  else{
+    HUMAN_SETAIMODE_Defensive();
+  }
+
+  SendSignal(dummy_alarm, 1);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(100);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  goto ALERT;
+}
+
+OnSignal(20){
+  goto ALERT;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label START:
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+
+Label ACTIVITY:
+  cnt =  cnt + 1;
+  If(cnt == 10){
+    cnt = 0;
+    goto PATH_DRINK;
+  }
+  If(cnt == 5){
+    goto PATH_CWEAPON;
+  }
+  Else{
+    goto PATH_COMMON;
+  }
+
+Label PATH_COMMON:
+  HUMAN_Move("AF3a_08_01");
+  Delay(300);
+  HUMAN_TurnAt(look1_02);
+  rnd = _RandomInt(10);
+  if(rnd == 0){
+    HUMAN_ACTIVITY_DrinkBottle(bottle);
+  }
+  Delay(1000);
+  HUMAN_Move("AF3a_08_02");
+  Delay(1000);
+goto ACTIVITY;
+
+Label PATH_DRINK:
+  HUMAN_Move("AF3a_08_01");
+  HUMAN_Move("AF3a_08_02");
+  HUMAN_ACTIVITY_Hot();
+  Delay(500);
+  HUMAN_Move("AF3a_08_04");
+  HUMAN_Move("AF3a_08_03");
+  HUMAN_TurnAt(look1_01);
+  Delay(1000);
+  HUMAN_ACTIVITY_Turk();
+  Delay(2000);
+  HUMAN_ACTIVITY_DrinkBottle(bottle);
+  Delay(5000);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("AF3a_08_04");
+  goto ACTIVITY;
+
+Label PATH_CWEAPON:
+  HUMAN_Move("AF3a_08_01");
+  HUMAN_TurnAt(look1_02);
+  HUMAN_ACTIVITY_Sit(sit);
+  Delay(2000);
+//  HUMAN_ACTIVITY_CheckWeapon();	doplnit az bude fungovat
+  Delay(3000);
+//  HUMAN_ACTIVITY_CheckWeapon();	doplnit az bude fungovat
+  Delay(5000);
+  HUMAN_SETMODE_Stand();
+goto ACTIVITY;
+
+Label ALERT:
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_Stop();
+  HUMAN_SetMODE_Stand();
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF3a_08_alert");
+  HUMAN_SetMODE_Crouch();
+  at_alert_pos = 1;
+Label ALERTLOOP:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1000);
+goto ALERTLOOP;
+
+Label END:

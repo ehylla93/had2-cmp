@@ -1,0 +1,70 @@
+// 02_E02
+// ----------------------------------------
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f056");
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+Integer alarm_sight_range = 180;
+SetAlarmType(512, 0);
+SetAlarmType(256, 0);
+goto end;
+
+// ----------------------------------------
+
+OnAlarm()
+{
+Block { DisableSignals(1); DisableWhenevers(1); }
+HUMAN_SETSIGHTRANGE(alarm_sight_range);
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(512, 0);
+SetAlarmType(256, 0);
+Block { DisableSignals(0); DisableWhenevers(0); }
+goto Guard;
+}
+
+OnDeath()
+{
+printf("02_E02 dead");
+EndScript();
+}
+
+Whenever PIR (_PlayerInRange(150))
+{
+Integer AImode = _RandomInt(99);
+if(AImode > 65) { HUMAN_SETAIMODE_Aggressive(); }
+else {
+	if(AImode < 25) { HUMAN_SETAIMODE_Zombie(); }
+	else { HUMAN_SETAIMODE_Defensive(); }
+	}
+printf("02_E02 spawns");
+HUMAN_Suspend(0);
+}
+
+// ----------------------------------------
+
+Label Guard:
+HUMAN_SETMODE_Guard();
+Label Patrol:
+HUMAN_Move("SMG1_1");
+HUMAN_Move("SMG1_2");
+HUMAN_Move("SMG1_3");
+HUMAN_Move("SMG1_4");
+goto Patrol;
+
+// ----------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

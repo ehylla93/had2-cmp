@@ -1,0 +1,11 @@
+Frame FRM;		FRM_FindFrame(FRM, "Kra_2");
+
+
+
+Whenever Near (_PlayerInRange(45);)
+{ 
+  Printf("KRA 2 ------ signal");
+  Sendsignal(FRM, 1);
+  
+  // a taky panakum animacum okolo - DOPLNIT
+}

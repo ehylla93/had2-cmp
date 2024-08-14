@@ -1,0 +1,56 @@
+// T1_G82 - Panzer MG (Reinf)
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1023,0);
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+Whenever Nasedam_Route1 (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A1_Panzer", 1, 1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(60);
+SetAlarmType(1023,1);
+}
+
+Whenever Nasedam_Route2 (_SignalReceived(2))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A2_Panzer", 1, 1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(60);
+SetAlarmType(1023,1);
+}
+
+OnAlarmDone(){
+HUMAN_TurnAtNearestPlayer();
+Goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

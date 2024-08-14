@@ -1,0 +1,240 @@
+//EG9 Guard
+// ----------------------Block----------------------
+Block
+{
+frame me;			FRM_GetMyFrame(me);
+frame gd24;			FRM_FindFrame(gd24,"gdummy24");
+frame gd25;			FRM_FindFrame(gd25,"gdummy25");
+frame gd26;			FRM_FindFrame(gd26,"gdummy26");
+frame gd27;			FRM_FindFrame(gd27,"gdummy27");
+frame gd28;			FRM_FindFrame(gd28,"gdummy28");
+frame gd29;			FRM_FindFrame(gd29,"gdummy29");
+frame gd30;			FRM_FindFrame(gd30,"gdummy30");
+frame Radio;		FRM_FindFrame(Radio,"Radio");
+frame gd14;			FRM_FindFrame(gd14,"gdummy14");
+frame gd23;			FRM_FindFrame(gd23,"gdummy23");
+frame hd7;			FRM_FindFrame(hd7,"hdummy07");
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rnd2;
+integer rnd3;
+integer rnd4;
+integer rndpause;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+//----------------------Spawn----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+Block
+{
+//printf ("EG9 spawn");
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(95);
+HUMAN_SETHEARRANGE(80);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+goto checkpoint26;
+}
+label checkpoint26:
+HUMAN_MoveToFrame(gd26, 1);
+rnd1= _randomint(3)+1;
+  if (rnd1==1)
+  {
+  //printf ("cp25");
+  goto checkpoint25;
+  }
+  if (rnd1==2)
+  {
+  //printf ("cp27");
+  goto checkpoint27;
+  }
+  if (rnd1==3)
+  {
+  //printf ("cp28");
+  goto checkpoint28;
+  }
+  
+label checkpoint25:
+HUMAN_MoveToFrame(gd25, 1);
+HUMAN_MoveToFrame(gd24, 1);
+HUMAN_TurnAt(hd7);
+delay(5500);
+HUMAN_MoveToFrame(gd25, 1);
+goto checkpoint26;
+
+label checkpoint27:
+HUMAN_MoveToFrame(gd27, 1);
+HUMAN_TurnAt(gd26);
+delay(2500);
+goto checkpoint26;
+
+label checkpoint28:
+HUMAN_MoveToFrame(gd28, 1);
+rnd4= _randomint(3)+1;
+  if ((rnd4==1) OR (rnd4==2))
+  {
+  //printf ("cp26");
+  goto checkpoint26;
+  }
+  if (rnd4==3) 
+  {
+  //printf ("cph");
+  goto checkpointh;
+  }
+
+label checkpointh:
+HUMAN_MoveToFrame(Radio, 1);
+rndpause= _randomint(20000)+20000;
+delay(rndpause);
+HUMAN_MoveToFrame(gd28, 1);
+goto checkpoint26;
+}
+
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+//printf ("EG9 Alarm");
+HUMAN_Stop();
+Block
+{
+AIEvent = _GetAlarmType();
+
+If(AIEvent == 1)
+{
+//printf ("Alarm Type 1");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive(); 
+}
+If(AIEvent == 2)
+{
+//printf ("Alarm Type 2");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Aggressive();
+
+}
+If(AIEvent == 4)
+{
+//printf ("Alarm Type 4");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 8)
+{
+//printf ("Alarm Type 8");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 16)
+{
+//printf ("Alarm Type 16");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 32)
+{
+//printf ("Alarm Type 32");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 64)
+{
+//printf ("Alarm Type 64");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 128)
+{
+//printf ("Alarm Type 128");
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 256)
+{
+//printf ("Alarm Type 256");
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 512)
+{
+//printf ("Alarm Type 512");
+HUMAN_Stop();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+}
+}
+EndScript();
+}
+// ----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+//printf ("Alarm done");
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+goto alrmdone;
+}
+
+label alrmdone:
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveRandomRadius(10);
+delay(1500);
+HUMAN_MoveRandomRadius(10);
+delay(3000);
+HUMAN_MoveRandomRadius(15);
+delay(5000);
+HUMAN_MoveRandomRadius(10);
+delay(1000);
+HUMAN_MoveRandomRadius(10);
+delay(2500);
+HUMAN_MoveRandomRadius(10);
+delay(3500);
+HUMAN_MoveRandomRadius(10);
+
+goto alrmdone;
+
+// ----------------------OnDeath----------------------
+OnDeath()
+{
+//printf ("EG9 - Enemy killed");
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+// ----------------------END----------------------
+Label END:

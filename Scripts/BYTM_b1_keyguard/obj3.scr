@@ -1,0 +1,84 @@
+// Obj 3 Aquire the Documents
+// ------------------------------------
+
+Block
+{
+Frame Documents;
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+SetWhenever(Found, 1);
+
+Frame Obj7;			FRM_FindFrame(Obj7, "obj7");
+Frame debug;		FRM_FindFrame(debug, "debug");
+Integer gv1 = 0;
+Integer gv2 = 0;
+Integer gv4 = 0;
+
+SetObjectiveStatus(3, 0);
+}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(debug, 1);
+
+gv1 =_LoadGameValue(1);
+printfnumber("GameValue1: ", gv1);
+if(gv1==1)
+{
+	gv2 =_LoadGameValue(2);
+	printfnumber("GameValue2: ", gv2);
+	if(gv2==1)
+	{
+		gv4 =_LoadGameValue(4);
+		printfnumber("GameValue4: ", gv4);
+		if(gv4==1)
+		{
+		SetObjectiveStatus(7, 0); SendSignal(Obj7, 1);
+		}
+	}
+}
+
+SetObjectiveStatus(3, 1);
+SaveGameValue(3, 1);
+SetWhenever(Lost, 1);
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(debug, 2);
+SetObjectiveStatus(3, 0);
+SaveGameValue(3, 2);
+SendSignal(Obj7, 3);
+SetWhenever(Found2, 1);
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(debug, 3);
+
+gv1 =_LoadGameValue(1);
+printfnumber("GameValue1: ", gv1);
+if(gv1==1)
+{
+	gv2 =_LoadGameValue(2);
+	printfnumber("GameValue2: ", gv2);
+	if(gv2==1)
+	{
+		gv4 =_LoadGameValue(4);
+		printfnumber("GameValue4: ", gv4);
+		if(gv4==1)
+		{
+		SetObjectiveStatus(7, 0); SendSignal(Obj7, 2);
+		}
+	}
+}
+
+SetObjectiveStatus(3, 1);
+SaveGameValue(3, 1);
+SetWhenever(Lost, 1);
+}
+
+Label END:

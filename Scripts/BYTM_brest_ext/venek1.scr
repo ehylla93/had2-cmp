@@ -1,0 +1,275 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+
+integer a;
+integer b=0;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+frame cum1;		FRM_FindFrame(cum1, "venek1cum1");
+frame cum2;		FRM_FindFrame(cum2, "venek1cum2");
+frame puf;		FRM_FindFrame(puf, "venek1puf");
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f053");
+}
+
+//---------------------------------------------------------
+if ((_LoadGameValue(3)==0))
+{
+DisableWhenevers(1);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+//---------------------------------------------------------
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+Whenever go(_SignalReceived(1))
+{
+EnableSignal(1, false);
+HUMAN_Suspend(0);
+suspend=0;
+SetAlarmType(887,1);	
+goto 3;
+}
+
+//-------------------------------------------------------------------------------------------------------------
+
+label chodim:
+
+a=1;
+HUMAN_Move("venek1_01");
+
+a=2;
+
+label 2:
+HUMAN_Move("venek1_02");
+a=3;
+HUMAN_SetAnim("%%kouka", 300, 300, 0);
+delay (4285);
+HUMAN_SetAnim("", 300, 300, 0);
+label 3:
+HUMAN_Move("venek1_03");
+a=4;
+delay (600);
+label 4:
+HUMAN_Move("venek1_04");
+a=1;
+goto chodim;
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+label rozdel:
+if (a==1)	{ goto chodim; }
+if (a==2)	{ goto 2; }
+if (a==3)	{ goto 3; }
+if (a==4)	{ goto 4; }
+
+
+goto end;
+
+
+//---------------------------------------------------------------------------------------------------------
+
+label hlidejroh:
+
+HUMAN_TurnAt(cum1);
+//HUMAN_SetAnim("%%koukadrep", 300, 300, 0);
+delay (6000);
+HUMAN_TurnAt(cum2);
+//HUMAN_SetAnim("%%koukadrep", 300, 300, 0);
+delay (6000);
+
+goto hlidejroh;
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(512,0);
+SetAlarmType(375,1);
+aievent=(_GetAlarmType());
+PrintfNumber("venek1 alarm c:",aievent);
+b=_LoadGameValue(22);
+}
+
+if(((aievent==1) or (aievent==2) or (aievent==32) or (aievent==256)) and (b==2))
+{
+b=1;
+SaveGameValue(22, 1);
+PrintfNumber("GameValue 22:",1);
+}
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	endx=1;
+	EndScript();
+	}
+
+
+if (aievent==4)
+{
+
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+
+HUMAN_Stop();
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+SetAlarmType(4,1);
+
+if (alarmpos==1)
+	{
+	goto hlidejroh;
+	}
+goto rozdel;
+}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+
+
+if (suspend==1)
+	{
+	SetAlarmType(278,0);
+	suspend=0;
+	//dokud neni hrac v zone tak nic
+label cekej:
+
+if (_LoadGameValue(1)==0)
+	
+	{
+	
+	delay (1000);
+	goto cekej;
+	}
+
+
+	HUMAN_Suspend(0);
+	SetAlarmType(278,1);
+	endx=1;
+	EndScript();
+	}
+
+
+
+
+
+	if (alarmpos==0)
+	{
+	HUMAN_Stop();
+	SetAlarmType(278,0);				//strelba a kroky
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SetAlarm(0);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("venek1_hlidej");
+	block
+	{
+	alarmpos=1;
+	SetAlarmType(278,1);
+	}
+	
+	HUMAN_SETMODE_Crouch();
+	}
+
+HUMAN_SetAlarm(0);
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+SetAlarmType(278,1);				//strelba a kroky
+goto hlidejroh;
+
+}
+
+if (aievent==512)
+{
+SetAlarmType(512,0);
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+//HUMAN_Attack(puf, 3000);
+endx=1;
+EndScript();
+}
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("venek1_hlidej");
+HUMAN_SETMODE_Crouch();
+goto hlidejroh;
+}
+
+OnDeath()
+{
+b=_LoadGameValue(61);
+if(b==0)
+{ HUMAN_CreateItemInStore(240, 1); }
+EndScript();
+goto end;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+
+label end:
+
+
+
+
+//chodi dokola .. na kroky se podiva na  nejblisiho a rozhlidne...
+// na strelbu pokud neni hrac in range bezi na roh, cupne a hlida.
+//		       je in r. tak endscript

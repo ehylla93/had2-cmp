@@ -1,0 +1,85 @@
+// AF3a_22 - installing mines round the mosque
+// -------------------------------------------------------------------------------------------------------------
+
+Block{
+  FRAME dummy_alarm;		FRM_FindFrame(dummy_alarm, "dummy_alarm");
+  FRAME af23; 				FRM_FindFrame(af23, "AF3a_23");
+  INTEGER Atype			= 0;
+  INTEGER atad			= 0;
+  INTEGER rnd				= 0;
+
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(512, false);		// disable see corpse
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("22: dead");
+  FRAME dd; FRM_FindFrame(dd, "dummy_deathdetector");
+  SendSignal(dd, 1);
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    HUMAN_SetAnim("", 100, 100, false);
+    DisableSignals(true);
+    SetWhenever(player, false);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Stand();
+    HUMAN_SETSIGHTRANGE(200);
+    Atype = _GetAlarmType();
+    printfnumber("22: ", Atype);
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+
+  EndScript(); 
+}
+
+OnAlarmDone(){ 
+  SetAlarmType(1023, true);					// enable all alarms
+  SetAlarmType(768, false);					// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAlarm(false);
+  if(!atad){
+    HUMAN_SetMODE_Crouch();
+    HUMAN_SetMODE_Run();
+    HUMAN_Move("AF3a_22_ad");
+    atad = 1;
+    HUMAN_TurnAtNearestPlayer();
+  }
+  goto END;
+}
+
+Whenever player(_PlayerInRange(30)){
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1); 
+  goto END;
+}
+
+OnSignal(20){
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SETSIGHTRANGE(400);
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SETMODE_Crouch();  
+  HUMAN_SETMODE_Run();  
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+Label LOOP:
+  HUMAN_SetAnim("%%mina", 200, 200, true);
+  rnd = _RandomInt(20000)+10000;
+  Delay(rnd);
+  HUMAN_SetAnim("(teplous", 200, 200, true);
+  Delay(2000);
+goto LOOP;
+
+Label END:

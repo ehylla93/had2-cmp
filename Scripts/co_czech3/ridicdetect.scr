@@ -1,0 +1,18 @@
+
+Frame driver;		FRM_FindFrame(driver, "opel_driver");	
+SetWhenever(go, 0);	
+
+Whenever go (_PlayerInRange(3))
+{
+SendSignal (driver, 7);
+goto end;
+}
+
+SetWheneverTime(go, 200);
+
+Whenever Sig1 (_SignalReceived(1))
+{
+SetWhenever(go, 1);
+}
+
+label end:

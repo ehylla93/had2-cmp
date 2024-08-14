@@ -1,0 +1,442 @@
+// Obj 6 - Defend your position
+// ----------------------------------
+
+Block
+{
+Frame E01;		FRM_FindFrame(E01, "05_E01");
+Integer E01s = 1;
+Frame E02;		FRM_FindFrame(E02, "05_E02");
+Integer E02s = 1;
+Frame E03;		FRM_FindFrame(E03, "05_E03");
+Integer E03s = 1;
+Frame E04;		FRM_FindFrame(E04, "05_E04");
+Integer E04s = 1;
+Frame E05;		FRM_FindFrame(E05, "05_E05");
+Integer E05s = 1;
+Frame E06;		FRM_FindFrame(E06, "05_E06");
+Integer E06s = 1;
+Frame E07;		FRM_FindFrame(E07, "05_E07");
+Integer E07s = 1;
+Frame E08;		FRM_FindFrame(E08, "05_E08");
+Integer E08s = 1;
+Frame E09;		FRM_FindFrame(E09, "05_E09");
+Integer E09s = 1;
+Frame E10;		FRM_FindFrame(E10, "05_E10");
+Integer E10s = 1;
+Frame E11;		FRM_FindFrame(E11, "05_E11");
+Integer E11s = 1;
+Frame E12;		FRM_FindFrame(E12, "05_E12");
+Integer E12s = 1;
+Frame E13;		FRM_FindFrame(E13, "05_E13");
+Integer E13s = 1;
+Frame E14;		FRM_FindFrame(E14, "05_E14");
+Integer E14s = 1;
+Frame E15;		FRM_FindFrame(E15, "05_E15");
+Integer E15s = 1;
+Frame E16;		FRM_FindFrame(E16, "05_E16");
+Integer E16s = 1;
+Frame E17;		FRM_FindFrame(E17, "05_E17");
+Integer E17s = 1;
+Frame E18;		FRM_FindFrame(E18, "05_E18");
+Integer E18s = 1;
+Frame E19;		FRM_FindFrame(E19, "05_E21");
+Integer E19s = 1;
+Frame E20;		FRM_FindFrame(E20, "05_E22");
+Integer E20s = 1;
+
+Frame P01;		FRM_FindFrame(P01, "05_P01");
+Integer P01s = 1;
+Frame P02;		FRM_FindFrame(P02, "05_P02");
+Integer P02s = 1;
+Frame P03;		FRM_FindFrame(P03, "05_P03");
+Integer P03s = 1;
+Frame P04;		FRM_FindFrame(P04, "05_P04");
+Integer P04s = 1;
+Frame P05;		FRM_FindFrame(P05, "05_P05");
+Integer P05s = 1;
+Frame P06;		FRM_FindFrame(P06, "05_P06");
+Integer P06s = 1;
+
+Frame S01;		FRM_FindFrame(S01, "05_S01");
+Integer S01s = 1;
+Frame S02;		FRM_FindFrame(S02, "05_S02");
+Integer S02s = 1;
+Frame S03;		FRM_FindFrame(S03, "05_S03");
+Integer S03s = 1;
+Frame S04;		FRM_FindFrame(S04, "05_S04");
+Integer S04s = 1;
+Frame S05;		FRM_FindFrame(S05, "05_S05");
+Integer S05s = 1;
+Frame S06;		FRM_FindFrame(S06, "05_S06");
+Integer S06s = 1;
+
+Frame Mg1;		FRM_FindFrame(Mg1, "05_MG_E01");
+Integer Mg1s = 1;
+Frame Mg2;		FRM_FindFrame(Mg2, "05_MG_E02");
+Integer Mg2s = 1;
+Frame Mg3;		FRM_FindFrame(Mg3, "05_MG_E03");
+Integer Mg3s = 1;
+
+Frame reinf1;	FRM_FindFrame(reinf1, "reinf1_1");
+Frame reinf2;	FRM_FindFrame(reinf2, "reinf1_2");
+Frame door;		FRM_FindFrame(door, "HV01_174");
+Integer counter = 0;
+}
+goto end;
+
+OnSignal(2) {
+printf("R1 counter disabled");
+EndScript();
+}
+
+OnSignal(1) {
+printf("R1 counter activated");
+EnableSignal(1, 0);
+}
+
+Label count:
+Block
+{
+
+If(E01s == 1)
+{
+If(_Actor_GetState(E01)==0)
+{
+counter=counter+1;
+E01s=0;
+}
+}
+
+If(E02s == 1)
+{
+If(_Actor_GetState(E02)==0)
+{
+counter=counter+1;
+E02s=0;
+}
+}
+
+If(E03s == 1)
+{
+If(_Actor_GetState(E03)==0)
+{
+counter=counter+1;
+E03s=0;
+}
+}
+
+If(E04s == 1)
+{
+If(_Actor_GetState(E04)==0)
+{
+counter=counter+1;
+E04s=0;
+}
+}
+
+If(E05s == 1)
+{
+If(_Actor_GetState(E05)==0)
+{
+counter=counter+1;
+E05s=0;
+}
+}
+
+If(E06s == 1)
+{
+If(_Actor_GetState(E06)==0)
+{
+counter=counter+1;
+E06s=0;
+}
+}
+
+If(E07s == 1)
+{
+If(_Actor_GetState(E07)==0)
+{
+counter=counter+1;
+E07s=0;
+}
+}
+
+If(E08s == 1)
+{
+If(_Actor_GetState(E08)==0)
+{
+counter=counter+1;
+E08s=0;
+}
+}
+
+If(E09s == 1)
+{
+If(_Actor_GetState(E09)==0)
+{
+counter=counter+1;
+E09s=0;
+}
+}
+
+If(E10s == 1)
+{
+If(_Actor_GetState(E10)==0)
+{
+counter=counter+1;
+E10s=0;
+}
+}
+
+If(E11s == 1)
+{
+If(_Actor_GetState(E11)==0)
+{
+counter=counter+1;
+E11s=0;
+}
+}
+
+If(E12s == 1)
+{
+If(_Actor_GetState(E12)==0)
+{
+counter=counter+1;
+E12s=0;
+}
+}
+
+If(E13s == 1)
+{
+If(_Actor_GetState(E13)==0)
+{
+counter=counter+1;
+E13s=0;
+}
+}
+
+If(E14s == 1)
+{
+If(_Actor_GetState(E14)==0)
+{
+counter=counter+1;
+E14s=0;
+}
+}
+
+If(E15s == 1)
+{
+If(_Actor_GetState(E15)==0)
+{
+counter=counter+1;
+E15s=0;
+}
+}
+
+If(E16s == 1)
+{
+If(_Actor_GetState(E16)==0)
+{
+counter=counter+1;
+E16s=0;
+}
+}
+
+If(E17s == 1)
+{
+If(_Actor_GetState(E17)==0)
+{
+counter=counter+1;
+E17s=0;
+}
+}
+
+If(E18s == 1)
+{
+If(_Actor_GetState(E18)==0)
+{
+counter=counter+1;
+E18s=0;
+}
+}
+
+If(E19s == 1)
+{
+If(_Actor_GetState(E19)==0)
+{
+counter=counter+1;
+E19s=0;
+}
+}
+
+If(E20s == 1)
+{
+If(_Actor_GetState(E20)==0)
+{
+counter=counter+1;
+E20s=0;
+}
+}
+
+If(E20s == 1)
+{
+If(_Actor_GetState(E20)==0)
+{
+counter=counter+1;
+E20s=0;
+}
+}
+
+If(P01s == 1)
+{
+If(_Actor_GetState(P01)==0)
+{
+counter=counter+1;
+P01s=0;
+}
+}
+
+If(P02s == 1)
+{
+If(_Actor_GetState(P02)==0)
+{
+counter=counter+1;
+P02s=0;
+}
+}
+
+If(P03s == 1)
+{
+If(_Actor_GetState(P03)==0)
+{
+counter=counter+1;
+P03s=0;
+}
+}
+
+If(P04s == 1)
+{
+If(_Actor_GetState(P04)==0)
+{
+counter=counter+1;
+P04s=0;
+}
+}
+
+If(P05s == 1)
+{
+If(_Actor_GetState(P05)==0)
+{
+counter=counter+1;
+P05s=0;
+}
+}
+
+If(P06s == 1)
+{
+If(_Actor_GetState(P06)==0)
+{
+counter=counter+1;
+P06s=0;
+}
+}
+
+If(S01s == 1)
+{
+If(_Actor_GetState(S01)==0)
+{
+counter=counter+1;
+S01s=0;
+}
+}
+
+If(S02s == 1)
+{
+If(_Actor_GetState(S02)==0)
+{
+counter=counter+1;
+S02s=0;
+}
+}
+
+If(S03s == 1)
+{
+If(_Actor_GetState(S03)==0)
+{
+counter=counter+1;
+S03s=0;
+}
+}
+
+If(S04s == 1)
+{
+If(_Actor_GetState(S04)==0)
+{
+counter=counter+1;
+S04s=0;
+}
+}
+
+If(S05s == 1)
+{
+If(_Actor_GetState(S05)==0)
+{
+counter=counter+1;
+S05s=0;
+}
+}
+
+If(S06s == 1)
+{
+If(_Actor_GetState(S06)==0)
+{
+counter=counter+1;
+S06s=0;
+}
+}
+
+If(Mg1s == 1)
+{
+If(_Actor_GetState(Mg1)==0)
+{
+counter=counter+1;
+Mg1s=0;
+}
+}
+
+If(Mg2s == 1)
+{
+If(_Actor_GetState(Mg2)==0)
+{
+counter=counter+1;
+Mg2s=0;
+}
+}
+
+If(Mg3s == 1)
+{
+If(_Actor_GetState(Mg3)==0)
+{
+counter=counter+1;
+Mg3s=0;
+}
+}
+
+}
+
+If (counter > 15)
+{
+Block {
+SendSignal(reinf1, 1);
+SendSignal(reinf2, 1);
+SendSignal(door, 1);
+printf("R1 triggered by counter");
+}
+goto end;
+}
+
+Delay(10000);
+printfnumber("R1 counter: ", counter);
+goto count;
+
+Label end:

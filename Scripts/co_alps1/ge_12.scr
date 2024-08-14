@@ -1,0 +1,223 @@
+//ge_12 - SdKfZ Driver
+
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,0);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(30);
+
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+
+integer aievent;
+integer a;	a=0;
+integer x;	x=0;
+integer venku;	venku=0;
+integer mrt;
+
+SaveGameValue(1, 0);
+
+Frame ge_13;	FRM_FindFrame(ge_13, "ge_13");
+Frame ge_14;	FRM_FindFrame(ge_14, "ge_14");
+Frame ge_15;	FRM_FindFrame(ge_15, "ge_15");
+Frame ge29;		Frm_FindFrame (ge29,"ge_29");
+frame hakl;		FRM_FindFrame(hakl,"haklbum");
+frame haklx;	FRM_FindFrame(haklx,"hakl");
+
+frame hakl2;		FRM_FindFrame(hakl2,"hakl_na");
+frame obj;			FRM_FindFrame(obj,"objectives");
+frame hakl_panaci;	FRM_FindFrame(hakl_panaci,"hakl_panaci");
+frame spawn;		FRM_FindFrame(spawn,"spawnzones");
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent=(_GetAlarmType());
+x=1;
+EnableSignal(6, 0);
+}
+if (venku==1)		{  EndScript(); }
+SetAlarmType(1023,0);
+HUMAN_Drive("",0);
+delay(1500);
+SendSignal(hakl_panaci,6);
+HUMAN_SetAlarm(0);
+goto test;
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+if (venku==0)
+{
+HUMAN_BoardVehicle("hakl",0,0);
+}
+EndScript();
+}
+
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(685,0);
+SetAlarmType(2,0);
+delay (100);
+HUMAN_BoardVehicle("hakl",1,0);
+delay(2000);
+a=1;
+goto jizda;
+}
+
+Whenever mizime(_SignalReceived(2))
+{
+delay (7000);
+if (a==2)	{ goto 2; }
+if (a==3)	{ goto 3; }
+if (a==4)	{ goto 4; }
+if (a==5)	{ goto 5; }
+if (a==6)	{ goto 6; }
+}
+
+Whenever mrtvo(_SignalReceived(6))
+{
+HUMAN_Drive("",0);
+SetAlarmType(1023,0);
+SetAlarmType(652,0);
+DisableSignals(1);
+SendSignal(hakl_panaci,6);
+delay(500);
+HUMAN_BoardVehicle("hakl",0,0);
+block
+{
+SendSignal (hakl,1);
+venku=1;
+SaveGameValue(1, 1);
+HUMAN_SETMODE_Run();
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(60);
+}
+HUMAN_WeaponOnArm(1);
+delay (100);
+HUMAN_MoveFromFrame(hakl, 6);
+SetAlarmType(1023,1);
+SetAlarmType(652,0);
+HUMAN_SETMODE_Crouch();
+delay (200);
+HUMAN_TurnAtNearestPlayer();
+goto end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//------------------------------------------------------------------------------------------
+
+label jizda:
+HUMAN_Drive("hakl_001",50);
+block
+{
+SetAlarmType(35,1);
+PlayMusic(35);
+a=2;
+}
+HUMAN_Drive("hakl_01",30);
+
+label 2:
+HUMAN_Drive("hakl_02",30);
+a=3;
+
+label 3:
+HUMAN_Drive("hakl_03",40);
+a=4;
+
+label 4:
+HUMAN_Drive("hakl_04",30);
+a=5;
+
+label 5:
+HUMAN_Drive("hakl_05",50);
+SendSignal(spawn, 1);
+a=6;
+
+label 6:
+HUMAN_Drive("hakl_06",70);
+HUMAN_Drive("hakl_09",50);
+HUMAN_SETEVENTS(0);
+HUMAN_Drive("hakl_07",80);
+HUMAN_Drive("hakl_08",80);
+HUMAN_Drive("hakl_11",80);
+HUMAN_Drive("",0);
+
+SendSignal(hakl2,12);
+delay (2000);
+FRM_TeleportNearCheckpoint(haklx,"h3", "h4");
+FRM_SetOn(hakl,0);
+if (x==1)
+{
+delay(20000);
+SendSignal (obj,7);
+}
+HUMAN_Suspend(1);
+goto end;
+
+label test:
+mrt=3;
+
+if (_ACTOR_GetState(ge_13)==0)	{	mrt=mrt-1;	}
+if (_ACTOR_GetState(ge_14)==0)	{	mrt=mrt-1;	}
+if (_ACTOR_GetState(ge_15)==0)	{	mrt=mrt-1;	}
+
+if (mrt >1)	{ goto test;  }
+if (_RandomInt(2)==3)		{  goto end;  }
+DisableSignals(1);
+SetAlarmType(1023,0);
+HUMAN_SetAlarm(0);
+HUMAN_BoardVehicle("hakl",0,0);
+SendSignal (hakl,1);
+block
+{
+venku=1;
+SaveGameValue(1, 1);
+}
+HUMAN_SETMODE_Run();
+delay (100);
+HUMAN_WeaponOnArm(1);
+HUMAN_MoveFromFrame(hakl, 6);
+SetAlarmType(652,1);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+
+label end:

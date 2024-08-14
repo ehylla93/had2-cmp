@@ -1,0 +1,43 @@
+// AF3a_spawn02	- player at spawn 02
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME opel;				FRM_FindFrame(opel, "la_OpelAfK_01");
+  FRAME lookstart;			FRM_FindFrame(lookstart, "dummy_lookstart");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+//HUMAN_TurnAt(opel);
+goto END;
+
+OnCutscene(1){
+  HUMAN_SETMODE_Walk();
+  HUMAN_WeaponOnArm(false);
+  Delay(1500);
+
+  HUMAN_TurnAt(opel);
+  Delay(5000);
+
+  HUMAN_SetAnim("%%kecy3", 500, 500, false);
+  printf("Hey boys, we have to get a new vehicle somewhere...");
+  Delay(5500);
+  printf("Let's explore that oasis");
+  Delay(2500);
+  HUMAN_SetAnim("", 500, 500, true);
+  Delay(500);
+  HUMAN_TurnAt(lookstart);
+  Delay(1000);
+}
+
+OnCutsceneDone(1){
+  HUMAN_SetAnim("", 0, 0, false);
+//  HUMAN_SETMODE_Crouch();
+//  HUMAN_WeaponOnArm(true);
+//  HUMAN_TurnAt(lookstart);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------+
+
+LABEL END:

@@ -1,0 +1,91 @@
+//n_mg_E02 - sits down
+
+Block {
+Frame Sit;		FRM_FindFrame(Sit, "dummy_kanisternik_sit");
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame sgv6;		FRM_FindFrame(sgv6, "n_sgv6");
+
+integer pull=0;
+integer aievent;
+
+SetAlarmType(1023, true);
+
+HUMAN_SETSIGHTRANGE(40);
+}
+
+HUMAN_Suspend(true);
+goto TheEnd;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+	Block
+	{
+	aievent =_GetAlarmType(); 
+	PrintfNumber("mg_E03: ", aievent);
+	HUMAN_Stop();
+	}
+	HUMAN_SetAnim("", 250, 250, false);
+  	if(((aievent==2) or (aievent==256)) and (_LoadGameValue(6)==0))
+	{
+	SendSignal(sgv6, 1);
+	}
+  HUMAN_WeaponOnArm(true);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(False);
+HUMAN_SETMODE_Run();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever PIR (_PlayerInRange(105))
+{
+HUMAN_Suspend(false);
+HUMAN_SetOptimized(1);
+}
+
+FRM_TeleportNearCheckpoint(MyFRM, "Kanisternik_3", "");
+HUMAN_TurnAtNearestPlayer();
+
+Label Anim1:
+pull=0;
+HUMAN_SetAnim("%(koureniB", 500, 500, 0);
+Delay(9000);
+
+Label Anim1b:
+HUMAN_SetAnim("%(koureni5", 500, 500, 0);
+Delay(10000);
+pull=pull+1;
+if(pull==3)
+{
+Delay(2000);
+goto Anim2;
+}
+else { goto Anim1b; }
+
+Label Anim2:
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_ACTIVITY_Sit(Sit);
+HUMAN_SetAnim("%%kourimsed1", 450, 450, true);
+printf("jerrycan soldier sits down");
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//---------------------------------------------------------------------------------------------------
+
+label TheEnd:

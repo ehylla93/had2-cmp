@@ -1,0 +1,22 @@
+// AF1_letadlo_10 - aircraft on the airport
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME this;			FRM_GetMyFrame(this);
+  FRAME letcnt;		FRM_FindFrame(letcnt, "dummy_letcnt");
+  FRAME expl;			FRM_FindFrame(expl, "w_explosive_16");
+}
+
+SaveGameValue(40, 0);
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  block
+  {
+    MakeExplosion(this, 1500000, 8000);
+    SaveGameValue(40, 1);
+    FRM_SetOn(expl, false);
+  }
+  SendSignal(letcnt, 1);
+}

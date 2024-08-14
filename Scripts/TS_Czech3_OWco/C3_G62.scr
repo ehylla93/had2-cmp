@@ -1,0 +1,15 @@
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame Tiger;		FRM_FindFrame (Tiger,"la_tiger_1");
+}
+
+//delay (60000);
+FRM_TeleportNearCheckpoint(Tiger, "BMW_5", "BMW_9");
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

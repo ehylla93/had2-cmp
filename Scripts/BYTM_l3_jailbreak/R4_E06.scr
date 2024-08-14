@@ -1,0 +1,93 @@
+// R4_E06
+
+Block
+{
+Integer part = 1;
+Integer alarm_sight_range = 180;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f055");
+SetAlarmType(1023, 0);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+HUMAN_SETAIMODE_Aggressive();
+goto end;
+
+// ----------------------------------------
+
+OnAlarm()
+{
+Block { DisableSignals(1); DisableWhenevers(1); }
+HUMAN_SETSIGHTRANGE(alarm_sight_range);
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023, 0);
+SetAlarmType(255, 1);
+Block { DisableSignals(0); }
+goto Action1;
+}
+
+OnDeath()
+{
+printf("R4_E06 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+Block
+{
+DisableSignals(1);
+DisableWhenevers(1);
+}
+FRM_TeleportNearCheckpoint(MyFRM, "r4_1_01", "r4_1_02");
+Human_Suspend(0);
+SetAlarmType(255, 1);
+goto Action1;
+}
+
+OnSignal(2)
+{
+Block
+{
+DisableSignals(1);
+DisableWhenevers(1);
+}
+FRM_TeleportNearCheckpoint(MyFRM, "r4_9_01", "r4_9_02");
+Human_Suspend(0);
+SetAlarmType(255, 1);
+goto Action2;
+}
+
+// ----------------------------------------
+
+Label Action1:
+HUMAN_SETMODE_Run();
+if(part == 1) { HUMAN_Move( "r4_1_03" ); part = 2; }
+if(part == 2) { HUMAN_Move( "r4_1_04" ); part = 3; }
+if(part == 3) { HUMAN_Move( "r4_1_05" ); }
+goto end;
+
+Label Action2:
+HUMAN_SETMODE_Run();
+if(part == 1) { HUMAN_Move( "r4_9_02" ); part = 2; }
+if(part == 2) { HUMAN_Move( "r4_9_03" ); part = 3; }
+if(part == 3) { HUMAN_Move( "r4_9_04" ); part = 4; }
+if(part == 4) { HUMAN_Move( "r4_9_05" ); }
+goto end;
+
+// ----------------------------------------
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label end:

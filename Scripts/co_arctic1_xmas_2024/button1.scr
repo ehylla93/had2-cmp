@@ -1,0 +1,109 @@
+Block
+{
+	FRAME ge1_1;		FRM_FindFrame(ge1_1, "german1_1");
+	FRAME ge1_2;		FRM_FindFrame(ge1_2, "german1_2");
+	FRAME ge1_3;		FRM_FindFrame(ge1_3, "german1_3");
+	FRAME ge1_4;		FRM_FindFrame(ge1_4, "german1_4");
+	FRAME ge1_5;		FRM_FindFrame(ge1_5, "german1_5");
+	FRAME ge1_6;		FRM_FindFrame(ge1_6, "german1_6");
+	FRAME ge1_7;		FRM_FindFrame(ge1_7, "german1_7");  
+	FRAME ge1_8;		FRM_FindFrame(ge1_8, "german1_8");
+	FRAME ge1_9;		FRM_FindFrame(ge1_9, "german1_9");
+	FRAME ci11;			FRM_FindFrame(ci11, "ci11");
+	FRAME me;			FRM_GetMyFrame(me);
+	FRAME ally5;		FRM_FindFrame(ally5, "ally5");
+	FRAME sigurd;		FRM_FindFrame(sigurd, "sigurd");
+	FRAME ally3;		FRM_FindFrame(ally3, "ally3");
+	FRAME ally2;		FRM_FindFrame(ally2, "ally2");
+	FRAME ally1;		FRM_FindFrame(ally1, "ally1");
+	FRAME TUT_Instructor1;		FRM_FindFrame(TUT_Instructor1, "TUT_Instructor1");
+	FRAME T_panak2;		FRM_FindFrame(T_panak2, "T_panak_2");
+	FRAME T_panak1;		FRM_FindFrame(T_panak1, "T_panak_1");
+	FRAME T_panak3;		FRM_FindFrame(T_panak3, "T_panak_3");
+	FRAME ControlorOne;		FRM_FindFrame(ControlorOne, "ControlorOne");
+	FRAME TUT_Talker_01;		FRM_FindFrame(TUT_Talker_01, "TUT_Talker_01");
+	FRAME ge5_1_sniper;		FRM_FindFrame(ge5_1_sniper, "ge5_1_sniper");
+	FRAME ge5_2;		FRM_FindFrame(ge5_2, "ge5_2");
+	FRAME ge5_3;		FRM_FindFrame(ge5_3, "ge5_3");
+	FRAME pilotek;		FRM_FindFrame(pilotek, "pilotek");
+	FRAME la_opelwin1;		FRM_FindFrame(la_opelwin1, "la_opelwin1");
+	FRAME mexanik;		FRM_FindFrame(mexanik, "mexanik");
+	FRAME doktor;		FRM_FindFrame(doktor, "doktor");
+	FRAME shumann;		FRM_FindFrame(shumann, "shumann");
+	FRAME friberg;		FRM_FindFrame(friberg, "big_boss");
+	FRAME dj;			FRM_FindFrame(dj, "dj");
+	FRAME BU1_EE;		FRM_FindFrame(BU1_EE, "BU1_EE");
+	Frame god;			FRM_FindFrame(god, "Goddess");
+	Frame PARTY;		FRM_FindFrame(PARTY, "m_radiog02");
+	Frame kaptn;		FRM_FindFrame(kaptn, "small10");
+	Frame bartender;	FRM_FindFrame(bartender, "Bartender");
+	Frame echo1;		FRM_FindFrame(echo1, "echo1");
+	FRAME sw2;			FRM_FindFrame(sw2, "switch2");
+	Frame mk1;			FRM_FindFrame(mk1, "mk1");
+	integer used = 0;
+}
+
+OnUse()
+{
+	used = used + 1;
+	if (used == 1)
+	{
+		SaveGameValue(1, 1);
+		FRM_SetOn(mk1, true);
+		SendSignal(BU1_EE, 1);
+		SendSignal(PARTY, 2);
+	}
+}
+
+OnSignal(1)
+{
+	SendSignal(ge1_1, 1);
+	Delay(1000);
+	SendSignal(ge1_2, 1);
+	Delay(1000);
+	SendSignal(ge1_3, 1);
+	Delay(1000);
+	SendSignal(ge1_4, 1);
+	Delay(1000);
+	SendSignal(ge1_5, 1);
+	Delay(1000);
+	SendSignal(ge1_6, 1);
+	Delay(1000);
+	SendSignal(ge1_7, 1);
+	Delay(1000);
+	SendSignal(ge1_8, 1);
+	Delay(1000);
+	SendSignal(ge1_9, 1);
+	Delay(1000);
+
+	SendSignal(ge5_1_sniper, 1);
+	SendSignal(ge5_2, 1);
+	SendSignal(ge5_3, 1);
+	SendSignal(ci11, 1);
+	SendSignal(bartender, 1);
+	SendSignal(kaptn, 1);
+	SendSignal(ally5, 1);
+	SendSignal(sigurd, 1);
+	SendSignal(ally3, 1);
+	SendSignal(ally2, 1);
+	SendSignal(ally1, 1);
+	SendSignal(TUT_Instructor1, 1);
+	SendSignal(T_panak1, 1);
+	SendSignal(T_panak2, 1);
+	SendSignal(T_panak3, 1);
+	SendSignal(TUT_Talker_01, 1);
+	SendSignal(ControlorOne, 1);
+	SendSignal(pilotek, 1);
+	SendSignal(la_opelwin1, 1);
+	SendSignal(mexanik, 1);
+	SendSignal(doktor, 1);
+	SendSignal(shumann, 1);
+	SendSignal(friberg, 1);
+	SendSignal(dj, 1);
+	SendSignal(PARTY, 1);
+
+	FRM_SetOn(echo1, True);
+	SendSignal(sw2, 1);
+	FRM_SetOn(me, false);
+	EndScript();
+}

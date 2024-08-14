@@ -1,0 +1,166 @@
+// AF1_15 hits alarm sirena
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetAnim("", 0,0,false);
+block{
+  FRAME look_alarm;				FRM_FindFrame(look_alarm, "m_dvr_h01");
+  FRAME look1;				FRM_FindFrame(look1, "la_macchi04");
+  FRAME look2;				FRM_FindFrame(look2, "m_palma19");
+  FRAME sirena;				FRM_FindFrame(sirena, "m_af1_sirena_k_2");
+
+  FRAME m_tyc;				FRM_FindFrame(m_tyc, "sirena_tyc");
+  FRAME v_tyc;				FRM_FindFrame(v_tyc, "sirena_tyc.m_af1_sirena_k02");
+
+  INTEGER schovalse				= 0;
+  INTEGER Atype				= 0;
+  INTEGER zvoneni				= 0;
+
+
+ SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+LABEL ALERT:
+  if(!zvoneni)
+  {
+    HUMAN_WeaponOnArm(false);
+    HUMAN_SetAnim("", 100, 100, false);
+    SetAlarmType(1023, false);
+    HUMAN_SetAlarm(false);
+    HUMAN_SetMode_Run();
+    HUMAN_Move("15_zvoneni");
+    FRAME ruka;					FRM_FindFrame(ruka, "AF1_15.hw1");
+    FRM_TeleportNearFrame(m_tyc, ruka, true);
+    FRM_FindFrame(ruka, "");
+    HUMAN_TurnAt(sirena);
+    HUMAN_SetAnim("%%poplachN", 100, 100, true);
+    Delay(10000); 
+    zvoneni = 1;
+    FRM_CreatePhysicalObject(v_tyc, 3, false, false);
+    FRM_SetOn(m_tyc, false);
+    SetAlarmType(1023, true);
+  }
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  HUMAN_SetMODE_Stand();
+  HUMAN_Move("af1_15_alert");
+  HUMAN_WeaponOnArm(true);
+  HUMAN_SetSightRange(250);
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+OnDeath(){
+  printf("15: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(210)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableSignals(true);
+    SetWhenever(player, false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("15: ", Atype);
+  }
+
+  if(!zvoneni)
+  {
+    goto ALERT;
+  }
+
+  if(Atype == 256){
+    HUMAN_SetMODE_Crouch();
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_SetAlarm(false);
+    SetAlarmType(256, false);
+    goto END;
+  }
+
+  if((Atype == 1) OR ((Atype == 64) OR (Atype == 32))){
+    EndScript();
+  }
+  else{
+    if(!schovalse){
+      HUMAN_SetMode_Run();
+      HUMAN_Move("AF1_15_alarm");
+      HUMAN_TurnAt(look_alarm);
+      HUMAN_SETAIMODE_Zombie();
+      schovalse = 1;
+      HUMAN_TurnAtNearestPlayer();
+      HUMAN_SetAlarm(false);
+      goto END;
+    }
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  
+///  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, true);
+  HUMAN_WeaponOnArm(true);
+  Delay(1500);
+  if(schovalse){
+    goto END;  
+  }
+  goto START;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETSIGHTRANGE(1000);
+  HUMAN_SETHEARRANGE(350);
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto end;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAnim("%%sedimL", 200, 200, true);
+goto END;
+
+Label START:
+  HUMAN_Move("af1_15_01");
+  HUMAN_Move("af1_15_02");
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+  Delay(4000);
+  HUMAN_Move("af1_15_01");
+  HUMAN_TurnAt(look1);
+  Delay(4000);
+  HUMAN_Move("af1_15_03");
+  HUMAN_TurnAt(look2);
+  Delay(3000); 
+  HUMAN_Move("AF1_15_04");
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+  Delay(2000);
+  goto START;
+
+Label END:

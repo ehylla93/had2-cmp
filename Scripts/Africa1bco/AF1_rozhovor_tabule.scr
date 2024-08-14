@@ -1,0 +1,64 @@
+// AF2_rozhovor_02 - rozhovor mezi trema vojakama v hangaru
+// -------------------------------------------------------------------------------------------------------------
+
+SaveGameValue(89, 2);
+FRAME af07;				FRM_FindFrame(af07, "AF1_07");
+FRAME af08;				FRM_FindFrame(af08, "AF1_08");
+FRAME af09;				FRM_FindFrame(af09, "AF1_09");
+INTEGER v_min				= 8;
+INTEGER v_max				= 30;
+INTEGER v_del				= 200;
+
+//	AF1_09	05991018	NOSUB We have no units in this area.  I propose to transfer the 4th platoon to the oasis.	
+//	AF1_07	05991019	NOSUB I agree, it's an important food storage area and it is poorly protected.	
+//	AF1_08	05991020	NOSUB I'd concentrate on the area around the oasis.  The supply convoy has been attacked there several times already.	
+//	AF1_09	05991021	NOSUB All right, we'll send them to follow the supply convoy in the morning.	
+//	AF1_07	05991022	NOSUB How about the ammunition, sir?  We don't have enough to resupply the 4th platoon.	
+//	AF1_08	05991023	NOSUB That's true, we don't have much left here.	
+//	AF1_09	05991024	There's nothing I can do about that. They'll take what they have on them and will have to get more at the oasis.	
+//	AF1_07	05991025	NOSUB But sir...	
+//	AF1_09	05991026	NOSUB What did I say?	
+//	AF1_09	05991027	NOSUB And what about the German reinforcements, they're overdue. They should have been here yesterday!	
+//	AF1_07	05991028	NOSUB I don't know, sir.  It's possible they were attacked on the way.	
+//	AF1_09	05991029	NOSUB Damn it, nothing is going well. Why am surrounded by idiots?!	
+//	AF1_09	05991030	NOSUB Contact the 4th platoon and arrange their transfer.	
+//	AF1_08	05991031	NOSUB Yes, sir.	
+//	AF1_09	05991032	NOSUB You're dismissed.	
+
+Whenever begin_chat (_LoadGameValue(89) == 1){
+  printf("BEGIN TALK BETWEEN MECHS");
+  SUBTITLES_SetOn(true);
+
+  FRM_MorphSpeechDelayed(af09, 05991018, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991019, v_min, v_max);
+  FRM_MorphSpeechDelayed(af08, 05991020, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991021, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991022, v_min, v_max);
+  FRM_MorphSpeechDelayed(af08, 05991023, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991024, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991025, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991026, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af09, 05991027, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991028, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991029, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af09, 05991030, v_min, v_max);
+  FRM_MorphSpeechDelayed(af08, 05991031, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991032, v_min, v_max);
+
+  SUBTITLES_SetOn(false);
+}
+
+Whenever end_chat (_LoadGameValue(89) == 0){
+  block
+  {
+    FRM_MorphSpeech(af07, 0, 0, 0);
+    FRM_MorphSpeech(af08, 0, 0, 0);
+    FRM_MorphSpeech(af09, 0, 0, 0);
+    SUBTITLES_SetOn(false);
+  }
+  EndScript();
+}
+
+Label END:

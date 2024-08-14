@@ -1,0 +1,50 @@
+// Jeep1, attacker
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  frame B1;	FRM_FindFrame(B1, "AF2_B04");
+  frame B2;	FRM_FindFrame(B2, "AF2_B05");
+  frame B3;	FRM_FindFrame(B3, "AF2_B06");
+  SetAlarmType(1023, false);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inrange ( _PlayerInRange(2300))
+{
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(B1, 1);
+HUMAN_Attack(B1, 4000);
+HUMAN_Attack(B2, 4000);
+HUMAN_Attack(B3, 4000);
+SetAlarmType(1023, true);
+  goto END;
+}
+
+
+
+OnDeath(){
+
+EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  SetAlarmType(1023, false);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  //HUMAN_SetOptimized(1);
+
+goto END;
+
+Label END:

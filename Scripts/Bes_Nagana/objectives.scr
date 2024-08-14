@@ -1,0 +1,190 @@
+// Objectives
+
+Block
+{
+Frame zavorar;	FRM_FindFrame(zavorar, "CIV_02");
+Frame treb;		FRM_FindFrame(treb, "CIV_01");
+Frame gestapo;	FRM_FindFrame(gestapo, "OFI_05");
+Frame exit;		FRM_FindFrame(exit, "exitpoint");
+Frame timer;	FRM_FindFrame(timer, "mission_timer");
+
+SetObjectiveStatus(1, 0);	// Reunirse con vehiculo
+SetObjectiveStatus(2, 4);	// Contactar Resistencia
+SetObjectiveStatus(3, 4);	// Liberar a los prisioneros
+SetObjectiveStatus(4, 4);	// Rescue Trebissky
+SetObjectiveStatus(5, 4);	// Matar Oficial Gestapo
+SetObjectiveStatus(6, 4);	// Trobar documents ss
+SetObjectiveStatus(7, 4);	// Trobar Colaborador
+SetObjectiveStatus(8, 4);	// Destruir Ràdio
+SetObjectiveStatus(9, 4);	// Trobar Tresor
+SetObjectiveStatus(10, 4);	// Destruir opel1
+SetObjectiveStatus(11, 4);	// Destruir opel2
+SetObjectiveStatus(12, 4);	// Destruir vehiculos
+}
+
+	MP_EnableSpawnZone("zone2", 2);		// default 2 (off)
+	
+	SUBTITLES_SetOn(true);
+SUBTITLES_SetText(51999702);		//"NEW OBJECTIVE: ASSEMBLE AT THE PLANNED LOCATION
+Delay(6000);
+SUBTITLES_SetOn(false);
+
+OnSignal(1)	// received from Trebis
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(58999701);	//"NUEVO OBJETIVO: MATAR AL OFICIAL DE LA GESTAPO"
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(5, 0);
+	SUBTITLES_SetText(23994601);	//"NUEVO OBJETIVO: OBTAIN DOCUMENTS.
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(6, 0);
+	Delay(4000);
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(58999702);		//"CAPTURAR AL COLABORADOR FRANCÉS"
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(7, 0);
+	Delay(4000);
+	MP_EnableSpawnZone("zone2", 1);		// default 2 (off)
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(59995027);	//"NEW RESPAWN ZONE AVAILABLE!"
+	Delay(4000);
+	SUBTITLES_SetOn(0);
+	Delay(4000);
+	SetObjectiveStatus(4, 1);
+GoTo end;
+}
+
+OnSignal(2)	// received from Gestapo
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(58999705);	//"OBJETIVO CUMPLIDO: OFICIAL DE LA GESTAPO MUERTO"
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(3, 1);
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(58999702);		//"CAPTURAR AL COLABORADOR FRANCÉS"
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+OnSignal(3)
+{
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(18023602);		//"OBJECTIVE FAILED: TREBISSKY HAS BEEN KILLED"
+Delay(4000);
+SUBTITLES_SetOn(false);
+SetObjectiveStatus(2, 3);
+GoTo end;
+}
+
+Whenever signal(_SignalReceived(4))	// signal de resistencia
+{	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(52999701);	//NUEVO OBJETIVO: LIBERAR A LOS PRISIONEROS	
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(18993606);		//"NUEVO OBJETIVO: RESCUE TREBISSKY"
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	SetObjectiveStatus(3, 0);
+	SetObjectiveStatus(4, 0);
+	SetObjectiveStatus(2, 1);	//"Contact the switchman."OK
+	SendSignal(zavorar, 5);
+	GoTo end;
+}
+
+
+OnSignal(6)	// mort de personatge vital (dona i colaborador)
+{
+	SetObjectiveStatus(1, 2);
+	SetObjectiveStatus(2, 2);
+	SetObjectiveStatus(3, 2);
+	SetObjectiveStatus(4, 2);
+	SetObjectiveStatus(5, 2);
+	SetObjectiveStatus(6, 2);
+	SetObjectiveStatus(7, 2);
+	SetObjectiveStatus(8, 2);
+	SetObjectiveStatus(9, 2);
+	SetObjectiveStatus(10, 2);
+	SetObjectiveStatus(11, 2);
+	SetObjectiveStatus(12, 2);
+	GoTo end;
+}
+
+OnSignal(7)	// received from obj4(DocumentsOK)
+{
+	SetObjectiveStatus(6, 1);
+	GoTo end;
+}
+
+OnSignal(8)	// received from obj4(DocumentsPerduts)
+{
+	SetObjectiveStatus(6, 0);
+	GoTo end;
+}
+
+OnSignal(9)	// received from ss
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(58999702);		//"CAPTURAR AL COLABORADOR FRANCÉS"
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+}
+
+
+OnSignal(10)	// received from caixa
+{
+	SetObjectiveStatus(9, 1);
+	GoTo end;
+}
+
+
+OnSignal(11)	// received from obj3
+{
+	SetObjectiveStatus(12, 1);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(53999601);	//"maximo daño!"
+	Delay(4000);
+	SUBTITLES_SetOn(0);
+	GoTo end;
+}
+
+OnSignal(12)	// received from camio1
+{
+	SetObjectiveStatus(10, 1);
+	GoTo end;
+}
+
+OnSignal(13)	// received from opel
+{
+	SetObjectiveStatus(11, 1);
+	GoTo end;
+}
+
+
+OnSignal(14)	// received from GTR6
+{
+	SUBTITLES_SetOn(true);
+	SetObjectiveStatus(3, 1);
+	SUBTITLES_SetText(52999907);		//"OBJETIVO CUMPLIDO: PRISIONEROS LIBERADOS"
+	Delay(8000);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+
+Whenever signalx((_SignalReceived(15)) And (_SignalReceived(16)))
+{
+	SetObjectiveStatus(12, 1);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(53999601);	//"maximo daño!"
+	Delay(4000);
+	SUBTITLES_SetOn(0);
+	GoTo end;
+}
+
+Label end:

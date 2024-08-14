@@ -1,0 +1,162 @@
+// Tank01 (Ridic Panzeru 1 - La_tiger_5)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame p1;		FRM_FindFrame(p1,"Tank02");
+Frame p2;		FRM_FindFrame(p2,"Tank03");
+Frame t2;		FRM_FindFrame(t2,"Tank11");
+
+Frame s1;		FRM_FindFrame(s1,"CZ_G01");
+Frame s2;		FRM_FindFrame(s2,"CZ_G02");
+Frame s3;		FRM_FindFrame(s3,"CZ_G03");
+Frame s4;		FRM_FindFrame(s4,"CZ_G04");
+Frame s5;		FRM_FindFrame(s5,"CZ_G05");
+Frame s6;		FRM_FindFrame(s6,"CZ_G06");
+Frame s7;		FRM_FindFrame(s7,"CZ_G07");
+Frame s8;		FRM_FindFrame(s8,"CZ_G08");
+Frame s9;		FRM_FindFrame(s9,"CZ_G09");
+Frame s10;		FRM_FindFrame(s10,"CZ_G10");
+Frame s11;		FRM_FindFrame(s11,"CZ_G11");
+Frame s12;		FRM_FindFrame(s12,"CZ_G12");
+Frame s13;		FRM_FindFrame(s13,"CZ_G13");
+Frame s14;		FRM_FindFrame(s14,"CZ_G14");
+Frame s15;		FRM_FindFrame(s15,"CZ_G15");
+Frame s16;		FRM_FindFrame(s16,"CZ_G16");
+Frame s17;		FRM_FindFrame(s17,"CZ_G17");
+Frame s18;		FRM_FindFrame(s18,"CZ_G18");
+Frame s19;		FRM_FindFrame(s19,"CZ_G19");
+Frame s20;		FRM_FindFrame(s20,"CZ_G20");
+
+Integer pechota;
+	pechota=0;
+}
+
+//--------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(t2, 2);
+
+If(pechota==0)
+{
+SendSignal(s1, 1);
+SendSignal(s2, 1);
+SendSignal(s3, 1);
+SendSignal(s4, 1);
+Delay(2000);
+SendSignal(s5, 1);
+SendSignal(s6, 1);
+SendSignal(s7, 1);
+SendSignal(s8, 1);
+Delay(2000);
+SendSignal(s9, 1);
+SendSignal(s10, 1);
+SendSignal(s11, 1);
+SendSignal(s12, 1);
+Delay(2000);
+SendSignal(s13, 1);
+SendSignal(s14, 1);
+SendSignal(s15, 1);
+SendSignal(s16, 1);
+Delay(2000);
+SendSignal(s17, 1);
+SendSignal(s18, 1);
+SendSignal(s19, 1);
+SendSignal(s20, 1);
+}
+EndScript();
+}
+
+OnAlarm(){
+
+If(pechota==0)
+{
+SendSignal(s1, 1);
+SendSignal(s2, 1);
+SendSignal(s3, 1);
+SendSignal(s4, 1);
+Delay(2000);
+SendSignal(s5, 1);
+SendSignal(s6, 1);
+SendSignal(s7, 1);
+SendSignal(s8, 1);
+Delay(2000);
+SendSignal(s9, 1);
+SendSignal(s10, 1);
+SendSignal(s11, 1);
+SendSignal(s12, 1);
+Delay(2000);
+SendSignal(s13, 1);
+SendSignal(s14, 1);
+SendSignal(s15, 1);
+SendSignal(s16, 1);
+Delay(2000);
+SendSignal(s17, 1);
+SendSignal(s18, 1);
+SendSignal(s19, 1);
+SendSignal(s20, 1);
+pechota=pechota+1;
+}
+
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(12)
+{
+Delay(40000);
+SendSignal(s1, 1);
+SendSignal(s2, 1);
+SendSignal(s3, 1);
+SendSignal(s4, 1);
+Delay(2000);
+SendSignal(s5, 1);
+SendSignal(s6, 1);
+SendSignal(s7, 1);
+SendSignal(s8, 1);
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("La_tiger_5" , true, 0);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+Delay(1000);
+SendSignal(t2 , 1);
+Delay(500);
+HUMAN_Drive("C5_kubel_tele", 35);
+
+
+If(pechota==0)
+{
+Delay(2000);
+SendSignal(s9, 1);
+SendSignal(s10, 1);
+SendSignal(s11, 1);
+SendSignal(s12, 1);
+Delay(2000);
+SendSignal(s13, 1);
+SendSignal(s14, 1);
+SendSignal(s15, 1);
+SendSignal(s16, 1);
+Delay(2000);
+SendSignal(s17, 1);
+SendSignal(s18, 1);
+SendSignal(s19, 1);
+SendSignal(s20, 1);
+pechota=pechota+1;
+}
+
+HUMAN_Drive("C5_tank11", 30);
+HUMAN_Drive("", 30);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(10);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

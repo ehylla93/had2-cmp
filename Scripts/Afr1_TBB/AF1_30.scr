@@ -1,0 +1,93 @@
+// AF1_30
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME frm;				FRM_FindFrame(frm, "af1_dummy1");
+  FRAME frm1;				FRM_FindFrame(frm1, "af1_dummy2");
+  INTEGER Atype			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("02: dead");
+  EndScript();
+}
+
+Whenever inrange(_PlayerInRange(100)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 300, 300, false);
+  block{
+    HUMAN_Stop();
+    SetWhenever(inrange, false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(150);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("26: ", Atype);
+  }
+//  HUMAN_TurnAtNearestPlayer();
+  
+  if(Atype != 32){
+    SetAlarmType(1023, false);
+    SetAlarmType(99, true);
+    HUMAN_SetAlarm(false);
+    HUMAN_MoveToAlarm();
+    SetAlarmType(1023, true);
+    goto END;
+  }
+
+  EndScript();
+}
+
+OnAlarmDone(){
+  block{
+    HUMAN_SetAlarm(false);
+    SetAlarmType(1023, true);		// all alarm events are on
+    SetAlarmType(512, false);		// 512, 256
+    HUMAN_SETSIGHTRANGE(80);
+    HUMAN_SetOptimized(true);
+  }
+  goto START;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Guard();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetAnim("%%sedimL2", 200, 200, true);
+  goto END;
+
+Label START:
+  HUMAN_Move("af1_02_01");
+  HUMAN_TurnAt(frm1);
+  Delay(2000);
+  HUMAN_TurnAt(frm);
+  Delay(2000);
+  HUMAN_TurnAt(frm1);
+  Delay(2000);
+  HUMAN_Move("af1_02_03");
+  HUMAN_Move("af1_02_04");
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+  Delay(5000);
+  HUMAN_ACTIVITY_Turk(); 
+  Delay(40000);
+  HUMAN_SETMODE_Stand();
+goto START;
+
+Label END:

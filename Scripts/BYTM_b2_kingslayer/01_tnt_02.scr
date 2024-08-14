@@ -1,0 +1,29 @@
+// 01_tnt_02 Bunker 01 Explosives(TNT) 02
+
+Block
+{
+Frame this;			FRM_GetMyFrame(this);
+Frame Get_Player;
+
+SetActorState(this, 3);
+SetWhenever(Player, 0);
+}
+
+// ----------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Player, 1);
+}
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 2))
+{
+FRM_GetNearestPlayer(this, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990434, 5, 30);		//"And here, I should place explosives here too."
+Delay(1000);
+SetActorState(this, 0);
+}
+
+// ----------------------------------------
+
+Label END:

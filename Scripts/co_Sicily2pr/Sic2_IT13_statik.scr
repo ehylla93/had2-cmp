@@ -1,0 +1,71 @@
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "dummy_it13_see");
+  
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+	
+}
+goto TheEnd;				
+
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Zombie();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+ //    SetAlarmType(1023, True);		
+   }
+
+HUMAN_TurnAt(turn);
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("it13_end");
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+	
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" IT 13: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+	HUMAN_BoardVehicle("w_mg42Crouch_4", True, 0);
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

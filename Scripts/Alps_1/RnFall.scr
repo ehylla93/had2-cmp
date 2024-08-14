@@ -1,0 +1,201 @@
+// Rainfall Setting
+// ----------------------------------
+
+Block
+{
+Integer count;
+	count=0;
+Integer Dest;
+	Dest =_RandomInt(3);
+}
+
+// ----------------------------------
+
+Delay(5000);
+Block
+{
+WEATHER_SetCount(0);
+WEATHER_SetColorOut(41, 48, 44, 00);
+WEATHER_SetColorIn(37, 37, 37, 128);
+}
+goto Vybiram;
+
+Label Vybiram:
+If(Dest == 0){  Delay(225000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest1A;}
+
+If(Dest == 1){  Delay(450000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest2A;}
+
+If(Dest == 2){  Delay(675000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest3A;}
+
+If(Dest == 3){  Delay(900000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest4A;}
+Goto END;
+
+// ***** TADY JSOU TYPY DESTU  1 , 2 , 3 , 4 *****
+
+// ** DEST 1 **
+
+
+Label Dest1A:
+
+Block
+{
+Delay(2000);
+count=count+100;
+WEATHER_SetCount(count);
+}
+
+If(count==4000)
+{
+WEATHER_SetCount(count);
+Delay(150000);            // tady to chce pauzu aby dest aspon chvili vydrzel - 2.5 minuty
+goto Dest1B;
+}
+goto Dest1A;
+
+
+
+
+Label Dest1B:
+
+Delay(1250);
+Block
+{
+WEATHER_SetCount(count);
+count=count-200;
+}
+
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(1200000);            // tady to chce pauzu aby to bez deste aspon chvili vydrzelo 20 minut
+Block{  WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest3A;
+}
+goto Dest1B;
+
+// ** DEST 2 **
+
+Label Dest2A:
+
+Block
+{
+Delay(2000);
+count=count+125;
+WEATHER_SetCount(count);
+}
+
+If(count==2500)
+{
+WEATHER_SetCount(count);
+Delay(300000);            // tady to chce pauzu aby dest aspon chvili vydrzel - 5 minut
+goto Dest2B;
+}
+goto Dest2A;
+
+
+
+
+Label Dest2B:
+
+Delay(1250);
+Block
+{
+WEATHER_SetCount(count);
+count=count-125;
+}
+
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(960000);            // tady to chce pauzu aby to bez deste aspon chvili vydrzelo 16 minut
+Block{  WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest4A;
+}
+goto Dest2B;
+
+// ** DEST 3 **
+
+Label Dest3A:
+
+Block
+{
+Delay(2000);
+count=count+150;
+WEATHER_SetCount(count);
+}
+
+If(count==6000)
+{
+WEATHER_SetCount(count);
+Delay(300000);            // tady to chce pauzu aby dest aspon chvili vydrzel - 5 minut
+goto Dest3B;
+}
+goto Dest3A;
+
+
+
+
+Label Dest3B:
+
+Delay(1250);
+Block
+{
+WEATHER_SetCount(count);
+count=count-250;
+}
+
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(720000);            // tady to chce pauzu aby to bez deste aspon chvili vydrzelo 12 minut
+Block{  WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest2A;
+}
+goto Dest3B;
+
+
+// ** DEST 4 **
+
+Label Dest4A:
+
+Block
+{
+Delay(2000);
+count=count+250;
+WEATHER_SetCount(count);
+}
+
+If(count==8000)
+{
+WEATHER_SetCount(count);
+Delay(300000);            // tady to chce pauzu aby dest aspon chvili vydrzel - 5 minut
+goto Dest4B;
+}
+goto Dest4A;
+
+
+
+
+Label Dest4B:
+
+Delay(1250);
+Block
+{
+count=count-400;
+WEATHER_SetCount(count);
+}
+
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(600000);            // tady to chce pauzu aby to bez deste aspon chvili vydrzelo 10 minut
+Block{  WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest1A;
+}
+goto Dest4B;
+
+Label end:

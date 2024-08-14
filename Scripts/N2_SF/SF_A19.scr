@@ -1,0 +1,113 @@
+// Cpl. William Broadhurst
+// -------------------------------------------
+
+Block
+{
+Frame Cum;	FRM_FindFrame(Cum,"Ally_pal03");
+
+Frame C1;	FRM_FindFrame(C1,"MG2");
+Frame C2;	FRM_FindFrame(C2,"MG3");
+Frame C3;	FRM_FindFrame(C3,"MG5");
+
+Frame T1;	FRM_FindFrame(T1,"MG2_03");
+Frame T2;	FRM_FindFrame(T2,"MG3_02");
+Frame T3;	FRM_FindFrame(T3,"MG3_03");
+Frame T4;	FRM_FindFrame(T4,"MG5_02");
+Frame T5;	FRM_FindFrame(T5,"MG5_03");
+
+Integer VyberCil;	VyberCil=0;
+}
+
+// --------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+DisableAlarms(1);
+HUMAN_Suspend(0);
+Delay(300);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_TurnAt(Cum);
+HUMAN_WeaponUp(1);
+Delay(1000);
+HUMAN_Move("Ally1_2");
+HUMAN_SETMODE_Stand();
+HUMAN_TurnAt(Cum);
+HUMAN_WeaponUp(1);
+HUMAN_Attack(C1, 3000);
+Delay(1000);
+HUMAN_Attack(C2, 3000);
+HUMAN_Attack(C3, 3000);
+goto Palba;
+}
+
+Whenever Suspend (_SignalReceived(9))
+{
+HUMAN_Stop();
+HUMAN_Suspend(1);
+goto END;
+}
+
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label Palba:
+
+If(VyberCil==0)
+{
+If(_Actor_GetState(T1)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T1);
+Delay(200);
+HUMAN_Attack(T1, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==1)
+{
+If(_Actor_GetState(T2)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T2);
+Delay(200);
+HUMAN_Attack(T2, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==2)
+{
+If(_Actor_GetState(T3)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T3);
+Delay(200);
+HUMAN_Attack(T3, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==3)
+{
+If(_Actor_GetState(T4)==0){VyberCil=VyberCil+1;Goto Palba;}
+
+HUMAN_TurnAt(T4);
+Delay(200);
+HUMAN_Attack(T4, 3000);
+VyberCil=_RandomInt(5);
+}
+
+If(VyberCil==4)
+{
+If(_Actor_GetState(T5)==0){VyberCil=_RandomInt(4);Goto Palba;}
+
+HUMAN_TurnAt(T5);
+Delay(200);
+HUMAN_Attack(T5, 3000);
+VyberCil=_RandomInt(5);
+}
+
+goto Palba;
+
+
+Label END:

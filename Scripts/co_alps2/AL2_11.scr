@@ -1,0 +1,147 @@
+// AL2_11 - Officer - speaks with AL2_12
+
+Block
+{
+Integer aievent = 0;
+Integer c;
+Integer x = 0;
+
+Frame alarm;		FRM_FindFrame(alarm, "AL2_alarm");
+Frame morph;		FRM_FindFrame(morph, "AL211kecac");
+Frame cum1;			FRM_FindFrame(cum1, "AL211cum");
+Frame me;			FRM_GetMyFrame(me);
+Frame al2_12;		FRM_FindFrame(al2_12, "AL2_12");
+Frame cum;			FRM_FindFrame (cum,"al211cum1");
+Frame shotalarm;	FRM_FindFrame (shotalarm,"shotalarm");
+
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);		//Detects player!
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+}
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_Suspend(true);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+block
+{
+	aievent=_GetAlarmType();
+	SendSignal (morph,3);
+	SetWhenever(alarmed1,0);
+	SetWhenever(begin,0);
+}
+HUMAN_SetAnim("", 50, 50, false);
+if (((aievent==32) or (aievent==2)) or (aievent==256))
+{
+	SetAlarmType(274,0);
+	HUMAN_WeaponOnArm(1);
+	SendSignal(shotalarm,1);
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SetAlarm(0);
+	delay (900);
+	HUMAN_TurnAt(cum);
+	SetAlarmType(274,0);
+If (x==0)	{ goto mode2; }
+	goto end;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnDeath()
+{
+FRM_MorphSpeech(me, 0, 0, 0);
+SendSignal (morph,3);
+DisableSignals(1);
+EndScript();
+}
+
+Whenever activate(_SignalReceived(1))	// received from AL2_11_A1, AL2_11_A2
+{
+	HUMAN_Suspend(false);
+	GoTo activated;
+}
+
+Whenever begin(_SignalReceived(2))	// received from B18_sc_21, B18_sc_20
+{
+	SendSignal (morph,1);
+	GoTo end;
+}
+
+Whenever dokecano(_SignalReceived(4))	// received from morph
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	GoTo mode1;
+}
+
+Whenever alarmed1(_SignalReceived(3))	// received from AL2_alarm
+{
+	GoTo mode2;
+}
+
+OnSignal(5)	// received from morph-pustit anim
+{
+c=_RandomInt(1);
+if (c==0)
+	{
+		HUMAN_SetAnim("%%rozhovor", 200, 200, true);
+		goto end;
+	}
+HUMAN_SetAnim("%%rozhovor3", 200, 200, true);
+goto end;
+}
+
+OnSignal(6)	// received from morph-utit anim
+{
+HUMAN_SetAnim("", 200, 200, 0);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label activated:
+	HUMAN_SetAnim("%%rozhovor", 200, 200, true);
+	GoTo end;
+
+Label mode1:			// before alarm	
+	SendSignal(al2_12, 2);
+	delay (300);
+	HUMAN_Move("AL2_11_01");
+	HUMAN_Move("AL2_11_02");
+	HUMAN_TurnAt(cum);
+	delay (400);
+	HUMAN_SetAnim("%%ctuneco", 500, 500, 1);
+	goto end;
+
+Label mode2:			// after alarm
+	SendSignal (morph,3);
+	DisableSignals(1);
+	HUMAN_Suspend(false);
+	SetAlarmType(1011, true);
+	HUMAN_SETMODE_StandFast();
+	HUMAN_SetAnim("", 50, 50, false);
+	HUMAN_WeaponOnArm(1);
+	HUMAN_Move("AL2_11_03");
+	HUMAN_TurnAt(cum1);
+	HUMAN_SETMODE_Crouch();
+	x=1;
+	GoTo end;
+
+Label end:

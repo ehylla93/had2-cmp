@@ -1,0 +1,24 @@
+// Sherman French crew, MG
+
+Block
+ {
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_shermanAf_3", true, 1);
+  printf("SherF MG board");
+}
+				
+OnAlarm()	{}
+
+OnAlarmDone()  {}
+
+Label TheEnd:

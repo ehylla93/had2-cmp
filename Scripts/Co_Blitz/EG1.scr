@@ -1,0 +1,218 @@
+//EG0 Guard
+// ----------------------Block----------------------
+Block
+{
+frame gd0;			FRM_FindFrame(gd0,"gdummy00");
+frame gd1;			FRM_FindFrame(gd1,"gdummy01");
+frame gd2;			FRM_FindFrame(gd2,"gdummy02");
+frame gd3;			FRM_FindFrame(gd3,"gdummy03");
+frame gd4;			FRM_FindFrame(gd4,"gdummy04");
+frame gd5;			FRM_FindFrame(gd5,"gdummy05");
+frame gd6;			FRM_FindFrame(gd6,"gdummy06");
+frame hd0;			FRM_FindFrame(hd0,"hdummy00");
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+integer AIEvent;
+integer rnd1;
+integer rnd2;
+integer rndpause;
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+//----------------------Spawn----------------------
+Whenever Spawn (_SignalReceived(1))
+{
+Block
+{
+//printf ("EG1 spawn");
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(75);
+HUMAN_SETHEARRANGE(80);
+HUMAN_WeaponOnArm(0);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+goto checkpoint2;
+}
+//----------------------2----------------------
+label checkpoint2:
+HUMAN_MoveToFrame(gd2, 1);
+rnd1= _randomint(5)+1;
+  if ((rnd1==1) OR (rnd1==2))
+  {
+  goto checkpoint31;
+  }
+  if ((rnd1==3) OR (rnd1==4))
+  {
+  goto checkpoint32;
+  }
+  if (rnd1==5) 
+  {
+  goto checkpointh;
+  } 
+//----------------------3-1----------------------
+label checkpoint31:
+HUMAN_MoveToFrame(gd4, 1);
+HUMAN_MoveToFrame(gd3, 1);
+goto checkpoint3;
+//----------------------3-2----------------------
+label checkpoint32:
+HUMAN_MoveToFrame(gd1, 1);
+HUMAN_MoveToFrame(gd3, 1);
+goto checkpoint3;
+//----------------------3----------------------
+label checkpoint3:
+HUMAN_MoveToFrame(gd3, 1);
+rnd2= _randomint(2)+1;
+  if (rnd2==1)
+  {
+  goto checkpoint21;
+  }
+  if (rnd2==2)
+  {
+  goto checkpoint22;
+  }
+//----------------------2-1----------------------
+label checkpoint21:
+HUMAN_MoveToFrame(gd1, 1);
+HUMAN_MoveToFrame(gd2, 1);
+goto checkpoint2;
+//----------------------2-2----------------------
+label checkpoint22:
+HUMAN_MoveToFrame(gd4, 1);
+HUMAN_MoveToFrame(gd2, 1);
+goto checkpoint2;
+//----------------------h----------------------
+label checkpointh:
+HUMAN_MoveToFrame(gd0, 1);
+HUMAN_MoveToFrame(hd0, 1);
+HUMAN_SETMODE_Crouch();
+rndpause=_randomint(45000)+15000;
+delay(rndpause);
+HUMAN_SETMODE_Stand();
+goto checkpoint2;
+}
+// ----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_Stop();
+Block
+{
+AIEvent = _GetAlarmType();
+If(AIEvent == 1)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Aggressive();
+}
+If(AIEvent == 2)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Silence();
+}
+If(AIEvent == 4)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 8)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 16)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 32)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Aggressive(); 
+}
+If(AIEvent == 64)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 128)
+{
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 256)
+{
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Silence();
+HUMAN_SETAIMODE_Defensive();
+}
+If(AIEvent == 512)
+{
+HUMAN_Stop();
+HUMAN_SETMODE_Crouch();
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Defensive();
+}
+}
+EndScript();
+}
+// ----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+//printf ("Alarm done");
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETAIMODE_Defensive();
+goto alrmdone;
+}
+label alrmdone:
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveRandomRadius(15);
+delay(5000);
+HUMAN_MoveRandomRadius(10);
+HUMAN_TurnAtNearestPlayer();
+delay(4000);
+HUMAN_MoveRandomRadius(25);
+delay(6000);
+HUMAN_MoveRandomRadius(20);
+delay(7000);
+HUMAN_MoveRandomRadius(15);
+HUMAN_TurnAtNearestPlayer();
+goto alrmdone;
+// ----------------------OnDeath----------------------
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+// ----------------------END----------------------
+Label END:

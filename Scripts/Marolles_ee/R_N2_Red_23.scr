@@ -1,0 +1,72 @@
+// pobìží od vraku k protìjší stìnì
+
+integer  AIEvent;
+integer PoAlarmu =0;
+integer RND = 0;
+Frame turn1;		FRM_FindFrame(turn1, "dummy_Red23_turn_1");
+Frame turn2;		FRM_FindFrame(turn2, "dummy_Red23_turn_2");
+
+
+RND = _RandomInt(4);
+If (RND == 0) { PoAlarmu =99; }
+SetAlarmType(520, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(6)
+{						
+  HUMAN_Suspend(False);			
+}						
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Stand();
+       HUMAN_SETMODE_Run();
+    }
+  If ( PoAlarmu == 0 )
+    {
+       HUMAN_Move("Red23_1");			
+       HUMAN_TurnAt(turn1);
+    } else {
+       HUMAN_Move("Red23_2");			
+       HUMAN_TurnAt(turn2);
+    }
+  Delay(1000);
+  HUMAN_SETMODE_Crouch();
+  Delay(2500);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 22: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+    }
+  If ( PoAlarmu == 0 )
+    {
+       HUMAN_Move("Red23_2");			
+       HUMAN_TurnAt(turn2);
+    } 
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  PoAlarmu = 1;
+  goto DeAlarm;
+}
+
+Label TheEND:

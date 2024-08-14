@@ -1,0 +1,54 @@
+HUMAN_Suspend(true);
+Frame reinfo;		FRM_FindFrame(reinfo,"dummy_reinforcement");
+OnSignal(1)
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("Dog_0101");
+	HUMAN_Move("HP1_2");
+	HUMAN_Move("Dog_0103");
+	HUMAN_Move("Dog_0106");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETAIMODE_Aggressive();
+	EndScript();
+}
+
+OnSignal(2)
+{	
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("Dog_0101");
+	HUMAN_Move("HP1_2");
+	HUMAN_Move("Dog_0103");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETAIMODE_Aggressive();
+	EndScript();
+
+}
+
+OnSignal(3)
+{
+	HUMAN_Suspend(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("Dog_0101");
+	HUMAN_Move("HP1_2");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETAIMODE_Aggressive();
+	EndScript();
+
+}
+
+OnAlarm()
+{
+}
+
+OnAlarmDone()
+{
+}
+
+OnDeath()
+{
+	SendSignal(reinfo, 0);
+	Printf("Plotman_01 is DEAD!!!");
+	EndScript();
+}

@@ -1,0 +1,52 @@
+// C5_G23 - soldier in the bunker, occupies the MG42 at main entrance (separate room)
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Frame me;		FRM_GetMyFrame(me);
+Frame door;		FRM_FindFrame(door, "bunker144");
+
+FRM_SwitchFaceTexture(me, "e_f051");
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Run();
+}
+
+HUMAN_Suspend(true);
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever player(_PlayerInRange(60))
+{
+	HUMAN_Suspend(false);
+	HUMAN_BoardVehicle("MG42_Stand02", 1, 0);
+	GoTo end;
+}
+
+Whenever dooropen (_ACTOR_GetState(door)==1)
+{
+HUMAN_BoardVehicle("MG42_Stand02", 0, 0);
+HUMAN_TurnAt(door);
+GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label end:

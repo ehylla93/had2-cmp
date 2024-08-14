@@ -1,0 +1,66 @@
+// R3_S01 - disabled check reinf3.scr
+
+block
+{
+SetAlarmType(1023,0);
+
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+HUMAN_SETMODE_Stand();
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnDeath()
+{
+printf("R3_S01 dead");
+EndScript();
+}
+
+OnSignal(1)
+{
+FRM_TeleportNearCheckpoint(MyFRM, "sniper5_01", "");
+HUMAN_Suspend(0);
+HUMAN_Move("sniper5_02");
+HUMAN_SetSniper(1, 70);
+SetAlarmType(1023, 1);
+}
+
+OnSignal(2)
+{
+FRM_TeleportNearCheckpoint(MyFRM, "sniper5_01", "");
+HUMAN_Suspend(0);
+HUMAN_Move("sniper5_03");
+HUMAN_SetSniper(1, 70);
+SetAlarmType(1023, 1);
+}
+
+OnSignal(3)
+{
+FRM_TeleportNearCheckpoint(MyFRM, "sniper6_01", "");
+HUMAN_Suspend(0);
+HUMAN_Move("sniper6_02");
+HUMAN_SetSniper(1, 70);
+SetAlarmType(1023, 1);
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+Label end:

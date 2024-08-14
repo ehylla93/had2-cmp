@@ -1,0 +1,33 @@
+
+frame PG1;		FRM_FindFrame(PG1, "Plane_Guard_1");
+frame PG2;		FRM_FindFrame(PG2, "Plane_Guard_2");
+frame PG3;		FRM_FindFrame(PG3, "Plane_guard_3");
+frame PG4;		FRM_FindFrame(PG4, "Plane_guard_4");
+
+
+// 01990262 No tak, pospìš si, máme zpoždìní. Znáš Karla, ten zase bude mít øeèí.
+// 01990263 Už bìžím, jen jsem dával vodu na kamna. 
+
+// 01990264 Brr, to je zima. Já si na to poøád nemùžu zvyknout.
+// 01990265 Zažil jsem horší. Tebe to taky èeká. Jak dlouho tady vlastnì máš být?
+// 01990266 Už jen necelý mìsíc.
+// 01990267 Tak to máš dobré, já ještì více než pùl roku. Ale ty mrazy co mají být do konce týdne si ještì užiješ.
+// 	3747	1944	2937	3552	1311	6013	
+
+OnSignal(1)
+{
+  FRM_MorphSpeechDelayed(PG3, 01990262, 15, 45);	  Delay(38);
+  FRM_MorphSpeechDelayed(PG4, 01990263, 15, 45);	  Delay(20);
+  Delay(10000);
+  FRM_MorphSpeechDelayed(PG4, 01990264, 15, 45);	  Delay(30);
+  FRM_MorphSpeechDelayed(PG3, 01990265, 15, 45);	  Delay(36);	
+  FRM_MorphSpeechDelayed(PG4, 01990266, 15, 45);	  Delay(14);
+  FRM_MorphSpeechDelayed(PG3, 01990267, 15, 45);	  Delay(61);
+}
+
+OnSignal(2)
+{
+  // konec - alarm, death ...
+  printf("KONEC DABINGU 3_4... TERMINATOR ");
+  EndScript();
+}

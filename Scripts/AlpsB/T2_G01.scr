@@ -1,0 +1,25 @@
+// Ridic Panzeru (La_Tiger_2) - nemel by alarmovat
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Aktivace (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("La_tiger_2", 1, 0);
+Delay(500);
+HUMAN_Drive("opel05",40);
+HUMAN_Drive("opel04",30);
+HUMAN_Drive("opel03",20);
+HUMAN_Drive("opel02",20);
+HUMAN_Drive("opel01",10);
+HUMAN_Drive("", 0);
+HUMAN_Stop();
+goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(0);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

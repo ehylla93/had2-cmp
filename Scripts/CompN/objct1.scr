@@ -1,0 +1,14 @@
+// SnowFall
+// ---------------------------------
+
+Block
+{
+WEATHER_SetColorOut(110, 110, 110, 1);
+WEATHER_SetColorIn(120, 120, 120, 60);
+WEATHER_SetSize(30, 40);
+WEATHER_SetSpace(12, 12);
+WEATHER_SetSpeed(1250);
+WEATHER_SetCount(8000);
+WEATHER_SetOn(1);
+}
+

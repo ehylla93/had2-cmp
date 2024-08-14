@@ -1,0 +1,11 @@
+// Easteregg script
+
+Frame me;		FRM_GetMyFrame(me);
+
+Whenever go(_SignalReceived(1))
+{
+FRM_CreateParticle(115, me);
+goto end;
+}
+
+label end:

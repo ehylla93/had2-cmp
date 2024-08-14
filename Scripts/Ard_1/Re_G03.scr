@@ -1,0 +1,60 @@
+// Reinforement
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp1;	FRM_FindFrame(Cp1,"Zatarasa60");
+Frame Cp2;	FRM_FindFrame(Cp2,"Zatarasa55");
+Frame Cp3;	FRM_FindFrame(Cp3,"Cp_Zl_01");
+Frame Cp4;	FRM_FindFrame(Cp4,"Cp_Zl_02");
+Frame Cp5;	FRM_FindFrame(Cp5,"Cp_Zl_03");
+Frame Cp6;	FRM_FindFrame(Cp6,"Cp_Z_01");
+Frame Cp7;	FRM_FindFrame(Cp7,"Cp_Z_02");
+Frame Cp8;	FRM_FindFrame(Cp8,"Cp_Z_03");
+Frame Cp9;	FRM_FindFrame(Cp9,"Cp_Z_04");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Cp3, 1);
+goto END;
+}
+
+OnSignal(1){
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(87);
+HUMAN_SETHEARRANGE(90);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveToFrame(Cp3, 1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

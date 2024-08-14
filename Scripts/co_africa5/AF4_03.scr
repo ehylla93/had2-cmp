@@ -1,0 +1,92 @@
+// AF4_03 - guarding the entrance
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER rnd		= 0;
+  INTEGER Atype		= 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(100)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(player, false);
+    HUMAN_Suspend(0);
+    HUMAN_SetOptimized(0);
+    HUMAN_SETMODE_Run();
+    Atype = _GetAlarmType();
+  }
+  HUMAN_Activity_Smoke(false);
+  HUMAN_Move("AF4_03_01");
+  HUMAN_SETMODE_Crouch();
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(512, false);
+  HUMAN_SetAlarm(false);
+  HUMAN_SetOptimized(1);
+  goto ACTIVATE;
+}
+
+OnSignal(1){
+  HUMAN_Stop();
+  HUMAN_TurnAtNearestPlayer();
+  Delay(500);
+  HUMAN_SetAnim("!salutovani", 300, 300, false);
+  Delay(2000);
+  HUMAN_SetAnim("%%couvani", 800, 800, false);
+  Delay(1300);
+  HUMAN_SetAnim("", 800, 0, false);
+  Delay(2000);
+  HUMAN_Move("AF4_03_04");
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+
+Label ACTIVITY:
+  HUMAN_Move("AF4_03_02");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_03_03");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_03_04");
+  gosub LOOKAROUND;
+goto ACTIVITY;
+
+Label LOOKAROUND:
+  rnd = _RandomInt(2);
+  if(rnd == 1){
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(rnd);
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(rnd);
+  }
+return;
+
+Label END:

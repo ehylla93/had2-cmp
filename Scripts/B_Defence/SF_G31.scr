@@ -1,0 +1,26 @@
+// SF_G31 - Ridic Panzeru (La_tiger_3)
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+DisableAlarms(1);
+HUMAN_BoardVehicle("La_tiger_3", 1, 0);
+HUMAN_Drive("C5_tank07", 60);
+HUMAN_Drive("C5_isu_tele", 50);
+HUMAN_Drive("C5_isu01", 20);
+HUMAN_Drive("", 0);
+goto END;
+}
+
+// ---------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

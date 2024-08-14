@@ -1,0 +1,57 @@
+// Guard 07_G02
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1022,0);
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(50);
+Frame this;		FRM_GetMyFrame(this);
+}
+
+// ----------------------------------------
+
+OnDeath(){
+printf("07_G02 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_ACTIVITY_Smoke(false);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Label start:
+	HUMAN_Move("BU1_13_04");
+	HUMAN_ACTIVITY_Smoke(true);
+	HUMAN_SetAnim("%%turnright", 200, 200, false);
+	Delay(3700);
+	HUMAN_SetAnim("%%turnleft", 200, 200, false);
+	Delay(7000);
+	HUMAN_SetAnim("%%turnright", 200, 200, false);
+	Delay(3700);
+	HUMAN_SetAnim("%%turnleft", 200, 200, false);
+	Delay(5000);
+	HUMAN_ACTIVITY_Smoke(false);
+	HUMAN_Move("BU1_13_03");
+	HUMAN_Move("BU1_13_02");
+	Delay(1000);
+	HUMAN_SetAnim("%%turnright", 200, 200, false);
+	Delay(3700);
+	HUMAN_Move("BU1_13_01");
+	Delay(5700);
+	HUMAN_Move("BU1_13_02");
+	HUMAN_Move("BU1_13_03");
+	HUMAN_ACTIVITY_Smoke(true);
+	Delay(5000);
+GoTo start;
+
+// ----------------------------------------
+
+Label END:

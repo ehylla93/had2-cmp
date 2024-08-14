@@ -1,0 +1,17 @@
+//AF1_prelet_macchi_activator - activates flying macchies at certain time
+
+FRAME this;			FRM_GetMyFrame(this);
+
+Delay(10000);
+printf("flying macchies activated");
+
+FRM_WatchTrack(this, "prelet03");
+
+Label loop:
+  PlaySound(8, 8);
+  Delay(500);
+  PlaySound(8, 8);
+  Delay(500);
+goto loop;
+
+EndScript();

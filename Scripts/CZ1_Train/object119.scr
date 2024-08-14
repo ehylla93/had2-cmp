@@ -1,0 +1,132 @@
+// object119 - lightmap switching
+Integer stav;
+	stav=0;
+Frame me;
+	FRM_GetMyFrame(me);
+Frame object118;
+	FRM_FindFrame(object118, "Object118");
+
+OnSignal(1)	// received from transformator_1
+{
+	If(stav==0)
+	{
+		FRM_SetLightMap(me, 1);
+		FRM_SetLightMap(object118, 1);
+		stav=1;
+		GoTo end;
+	}
+}
+
+OnSignal(2)	// received from transformator_2
+{
+	If(stav==1)
+	{
+		FRM_SetLightMap(me, 4);
+		stav=4;
+		GoTo end;
+	}
+	If(stav==2)
+	{
+		FRM_SetLightMap(me, 4);
+		FRM_SetLightMap(object118, 4);
+		stav=4;
+		GoTo end;
+	}
+	If(stav==3)
+	{
+		FRM_SetLightMap(me, 4);
+		FRM_SetLightMap(object118, 4);
+		stav=4;
+		GoTo end;
+	}
+	If(stav==5)
+	{
+		FRM_SetLightMap(me, 4);
+		FRM_SetLightMap(object118, 4);
+		stav=4;
+		GoTo end;
+	}
+}
+
+OnSignal(3)	// received from svetlo2b (hospoda sa vypla)
+{
+	If(stav==2)
+	{
+		FRM_SetLightMap(me, 3);
+		stav=3;
+		GoTo end;
+	}
+	If(stav==5)
+	{
+		FRM_SetLightMap(me, 4);
+		FRM_SetLightMap(object118, 4);
+		stav=4;
+		GoTo end;
+	}
+}
+
+OnSignal(4)	// received from svetlo2b (hospoda sa zapla)
+{
+	If(stav==3)
+	{
+		FRM_SetLightMap(me, 2);
+		stav=2;
+		GoTo end;
+	}
+	If(stav==4)
+	{
+		FRM_SetLightMap(me, 5);
+		FRM_SetLightMap(object118, 4);
+		stav=5;
+		GoTo end;
+	}
+}
+
+OnSignal(5)	// received from svetlo3b (zachod sa vypol)
+{
+	If(stav==1)
+	{
+		FRM_SetLightMap(me, 2);
+		stav=2;
+		GoTo end;
+	}
+}
+
+OnSignal(6)	// received from svetlo3b (zachod sa zapol)
+{
+	If(stav==2)
+	{
+		FRM_SetLightMap(me, 1);
+		stav=1;
+		GoTo end;
+	}
+	If(stav==3)
+	{
+		FRM_SetLightMap(me ,2);
+		stav=2;
+		GoTo end;
+	}
+}
+
+OnSignal(7)	// received from svetlo_nic (u krabic sa vyplo)
+{
+	If(stav==3)
+	{
+		FRM_SetLightMap(me, 4);
+		FRM_SetLightMap(object118, 4);
+		stav=4;
+		GoTo end;
+	}
+}
+
+OnSignal(8)	// received from svetlo_nic (u krabic sa zaplo)
+{
+	If(stav==4)
+	{
+		FRM_SetLightMap(me, 3);
+		stav=3;
+		GoTo end;
+	}
+}
+
+Label end:

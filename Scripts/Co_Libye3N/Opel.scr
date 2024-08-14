@@ -1,0 +1,4 @@
+Frame opel;
+FRM_GetMyFrame(opel);
+Car_SetFuel(opel, 0);
+

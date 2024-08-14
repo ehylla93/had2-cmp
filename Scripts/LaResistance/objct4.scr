@@ -1,0 +1,30 @@
+// Obj 4 - Find the Code Tables
+// ------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame Documents;
+Frame Player;
+
+SetObjectiveStatus(4, 0);
+}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 249, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999602);
+Delay(2000);
+FRM_GetNearestPlayer(me, Player); 
+FRM_MorphSpeechDelayed(Player, 59990060, 5, 30);
+Delay(3000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+Label End:
+

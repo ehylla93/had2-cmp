@@ -1,0 +1,84 @@
+// objective - objectives
+// --------------------------------------------
+// Variables definition
+Block
+{
+//Integer allobjectivesdone;	// q=4
+//	allobjectivesdone=0;
+	
+//EnableSignal(6, false);
+}
+
+Block
+{
+SetObjectiveStatus(1, 0);	// switch on the generator
+SetObjectiveStatus(2, 0);	// switch on the lighthouse
+SetObjectiveStatus(3, 0);	// Destroy the anti-aircraft defence
+SetObjectiveStatus(4, 0);	// Remove explosives from the bridge
+SetObjectiveStatus(5, 0);	// eliminate all enemies
+
+//printf("obj script");
+}
+
+// ---------------------------------------------
+// Whenever keywords and signals
+
+Whenever objective1(_SignalReceived(3))	// generator switched on
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(16993208);
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+
+	SetObjectiveStatus(1, 1);
+	GoTo end;
+}
+
+Whenever objective2(_SignalReceived(4))	// lighthouse switched on
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(16993209);
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+
+	SetObjectiveStatus(2, 1);
+	GoTo end;
+}
+
+Whenever objective3(_SignalReceived(5))	// flak soldiers killed
+{
+
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(16993212);
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+
+	SetObjectiveStatus(3, 1);
+	GoTo end;
+
+	
+}
+
+Whenever objective4(_SignalReceived(6)) // explosives rem.
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(56999906); 
+	Delay(4000);
+	SetObjectiveStatus(4, 1);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+
+
+Whenever objective5(_SignalReceived(7))	// enemy counter
+{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(05991005); 
+	Delay(4000);
+	SetObjectiveStatus(5, 1);
+	SUBTITLES_SetOn(false);
+	GoTo end;
+}
+// ---------------------------------------------
+
+Label end:

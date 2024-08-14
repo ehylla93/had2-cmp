@@ -1,0 +1,16 @@
+// There is information about Plane Guards killing (for Rebel)
+
+Integer state;		state = 0;	
+frame rebel;		FRM_FindFrame(rebel, "Rebel");
+
+OnSignal(3)
+{
+  state = 99;
+}
+
+
+OnSignal(1)
+{
+  if (state == 0)		{SendSignal(rebel, 10);}	// swamp
+  if (state == 99)	{SendSignal(rebel, 11);}	// no swamp
+}

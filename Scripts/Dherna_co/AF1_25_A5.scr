@@ -1,0 +1,10 @@
+
+Block
+{
+Frame af25;	FRM_FindFrame(af25, "AF1_25");
+}
+
+Whenever activate(_PlayerInRange(6))
+{
+	SendSignal(af25, 2);
+}

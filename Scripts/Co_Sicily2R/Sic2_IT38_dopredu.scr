@@ -1,0 +1,89 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	IT 38 z treti vlny - jde na svou pozici 
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+Block
+{
+  integer  AIEvent;
+  Frame turn; 		FRM_FindFrame(turn, "dummy_3vlna_see");
+  frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+// posila aktivator treti vlny
+Onsignal(1)
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+   }
+
+SetAlarmType(1023, false);		
+SetAlarmType(69, true);		// 1+ 4 + 64 = 69
+HUMAN_SetOptimized(1);
+HUMAN_AttackMove("It38_1");
+HUMAN_AttackMove("It38_2");
+HUMAN_AttackMove("It38_end");
+SetAlarmType(1023, true);
+HUMAN_SetOptimized(2);
+
+HUMAN_TurnAt(turn);
+  
+Goto TheEnd;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Run();
+    }
+  HUMAN_Move("It38_end");
+  HUMAN_TurnAt(turn);	
+  Delay(100);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" IT 38: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+printf("IT_38 reinf west: death");
+  EndScript();
+}
+
+Label TheEND:
+
+

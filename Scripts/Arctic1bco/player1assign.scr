@@ -1,0 +1,11 @@
+Frame player;
+	
+
+
+
+OnUse()
+{
+
+ 	ScriptAssign(player, "R_Arc1A_Com1");
+
+}

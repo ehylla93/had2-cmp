@@ -1,0 +1,66 @@
+// C5_G15 - soldier at the Flak
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Integer radioalarm;
+	radioalarm=0;
+Frame me;
+	FRM_GetMyFrame(me);
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	Block
+	{
+	HUMAN_SETSIGHTRANGE(1000);
+	HUMAN_SETMODE_Run();
+	}
+	If(radioalarm==0)
+	{
+	HUMAN_SETMODE_Stand();
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from C5_G11
+{
+	radioalarm=1;
+	HUMAN_SETMODE_Stand();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("C5_G15_01");
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETMODE_Crouch();
+	HUMAN_SetOptimized(2);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+FRM_SwitchFaceTexture(me, "e_f059");
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+HUMAN_SETSIGHTRANGE(500);
+}
+HUMAN_ACTIVITY_Turk();
+
+Label end:

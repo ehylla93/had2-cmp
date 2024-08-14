@@ -1,0 +1,24 @@
+Frame  poslednivagon;  
+	FRM_FindFrame(poslednivagon,"la_J_vagon_5");
+Frame  zavorar;  
+	FRM_FindFrame(zavorar,"vechtr");
+
+
+Whenever vagon_in_range(_FrameInRange( poslednivagon)<4)
+{
+	Printf("spustam zavoru!!!!");
+	SendSignal(zavorar, 1);
+	Delay(5000);
+	SetWhenever(vagon_in_range, true);
+}
+
+
+
+
+
+
+
+
+
+
+

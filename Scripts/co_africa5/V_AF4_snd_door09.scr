@@ -1,0 +1,20 @@
+
+Block
+  {
+    Frame door;		FRM_FindFrame(door, "F_dvere_hang01");
+    Frame sound;	FRM_FindFrame(sound, "S_door9");
+     FRM_SetOn(sound, False);
+  }
+
+// pokud nejsou zavøenné (tzn. jsou otevrene, otevirane, zavirane)
+Whenever OPEN  ( ((_ACTOR_GetState(door)==1) OR (_ACTOR_GetState(door)==2)) OR (_ACTOR_GetState(door)==3) )
+  {
+     FRM_SetOn(sound, true);
+     SetWhenever(CLOSE, true);
+  }
+
+Whenever CLOSE ( _ACTOR_GetState(door) == 0)
+  {
+     FRM_SetOn(sound, false);
+     SetWhenever(OPEN, true);
+  }

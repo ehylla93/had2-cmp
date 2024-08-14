@@ -1,0 +1,14 @@
+
+block {
+Frame me;		FRM_FindFrame(me, "La_OpelE_");
+Frame obj;		FRM_FindFrame(obj, "objectives");
+}
+
+goto end;
+
+Whenever destroyed (_ACTOR_GetState(me)==0)
+{
+SendSignal (obj,20);	//"OBJECTIVE FAILED: TRUCK DESTROYED."
+}
+
+label end:

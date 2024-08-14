@@ -1,0 +1,68 @@
+// P2_G04 attacks Sherman square
+// -----------------------------
+
+Block
+{
+
+Frame tank;	FRM_FindFrame(tank,"la_shermanAf_3");
+
+SetAlarmType(1023,0); //all off
+printf("P2_G04 script");
+
+}
+
+// ---------------------------
+
+OnDeath(){
+printf("P2_G04 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+Delay(66000);
+HUMAN_Suspend(0);
+printf("P2_G04 attacks Sherman");
+HUMAN_SetOptimized(1);
+//HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+
+HUMAN_Move("X13");
+
+label loopT:
+  If ( _ACTOR_GetState(tank) == 1 ) 
+    {
+       HUMAN_TurnAt(tank);
+       Delay(2500);
+       HUMAN_Attack(tank, 4000); 
+       Goto loopT;
+    }
+
+SetAlarmType(1023,1);
+HUMAN_SETAIMODE_Zombie();
+goto END;
+}
+
+
+// ---------------------------
+
+HUMAN_SETSIGHTRANGE(98);
+HUMAN_SETHEARRANGE(98);
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

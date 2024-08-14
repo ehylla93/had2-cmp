@@ -1,0 +1,48 @@
+// Tank11 (Ridic Panzeru 2 - La_tiger_4)
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame p1;		FRM_FindFrame(p1,"Tank12");
+Frame p2;		FRM_FindFrame(p2,"Tank13");
+}
+
+//--------------------------------------------------------------------------------------------------------------
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("La_tiger_4" , true, 0);
+SendSignal(p1, 1);
+SendSignal(p2, 1);
+Delay(1000);
+HUMAN_Drive("C5_isu_tele", 35);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_Stop();
+HUMAN_Drive("", 35);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETHEARRANGE(10);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

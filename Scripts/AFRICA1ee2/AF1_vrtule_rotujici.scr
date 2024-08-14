@@ -1,0 +1,10 @@
+FRAME this;			FRM_GetMyFrame(this);
+
+OnSignal(1){
+  FRM_RotateZ(this, 360000, 720);
+}
+
+Label loop:
+  SendSignal(this, 1);
+  Delay(180000);
+goto loop;  

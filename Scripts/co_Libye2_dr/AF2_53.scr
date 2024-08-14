@@ -1,0 +1,83 @@
+// AF2_53 - driver Panther
+
+// Variables definition
+Block
+{
+Frame af57;
+	FRM_FindFrame(af57, "AF2_57");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer invehicle;
+	invehicle=0;
+}
+// ---------------------------------------------
+// Alarm and AI event settings
+// vsetky typy alarmov nastavene na true
+//     1 - blizka strelba
+//     2 - strelba
+//     4 - kroky
+//     8 - zvuky (OnUse)
+//   16 - explozia
+//   32 - vidim
+//   64 - zranenie
+// 128 - smrtelny vykrik
+// 256 - friendly fire
+// 512 - vidim mrtvolu
+// ------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	If(invehicle==1)
+	{
+	HUMAN_Drive("", 0);
+	//HUMAN_BoardVehicle("la_panther_", false, 0); //vorher ja
+	}
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+OnSignal(1)	// received from AF2_53_A1
+{
+	HUMAN_Suspend(false);
+	GoTo move;
+}
+
+
+OnDeath()
+{
+	EndScript();
+}
+// -------------------------------------------
+// Starting pose
+HUMAN_BoardVehicle("la_panther_", true, 0);
+invehicle=1;
+FRM_SwitchFaceTexture(me, "e_f054");
+HUMAN_Suspend(true);
+GoTo end;
+
+Label move:
+	printf("idem na Opel2_01");
+	HUMAN_Drive("Opel2_01", 40);
+	printf("idem na Opel2_02");
+	HUMAN_Drive("Opel2_02", 40);
+	printf("idem na Opel2_03");
+	HUMAN_Drive("Opel2_03", 40);
+	//SendSignal(af54, 2);
+	//HUMAN_BoardVehicle("la_panther_", false, 0);//vorher ja
+	invehicle=0;
+	//SendSignal(af55, 2);
+	//HUMAN_WeaponOnArm(true);
+	//SendSignal(af56, 2);
+	Delay(100);
+	//HUMAN_SETMODE_Run();
+	SendSignal(af57, 2);
+	//HUMAN_Move("AF2_53_01");
+	//HUMAN_TurnAt(look01);
+	//HUMAN_SETMODE_Crouch();
+
+Label end:

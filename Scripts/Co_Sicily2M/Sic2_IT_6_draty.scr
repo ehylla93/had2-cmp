@@ -1,0 +1,58 @@
+// Gunner 26ZB north in ruins
+// ----------------------------------------
+
+block{
+//Frame turn; 		FRM_FindFrame(turn, "dummy_it6_see");
+Frame IT_14;	FRM_FindFrame(IT_14, "IT_14");
+frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// ----------------------------------------
+
+OnDeath(){
+SendSignal(SAS1, 14);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_Move("It6_1");
+  SetAlarmType(1023, True);	
+  Delay(18000);
+  HUMAN_AttackMove("It6_2");
+  HUMAN_AttackMove("It6_end");
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+
+// ----------------------------------------
+
+HUMAN_WeaponOnArm(False);
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Crouch();
+     HUMAN_SetOptimized(2);
+     HUMAN_SETMODE_Run();
+     HUMAN_TurnAt(IT_14);
+
+goto END;
+
+
+Label END:

@@ -1,0 +1,88 @@
+
+Frame turn; 		FRM_FindFrame(turn, "dummy_Ally2_turn");
+Frame Waves;		FRM_FindFrame(Waves, "dummy_waves_organizer");
+Frame OBJ; 		FRM_FindFrame(OBJ, "objectives");
+Frame dabing;		FRM_FindFrame(dabing, "dummy_dabing_ally2");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+
+HUMAN_SetOptimized(2);
+SetWhenever( unsuspend, 1500);
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Whenever Unsuspend ( _PlayerInRange(20); )		
+{
+  HUMAN_Suspend(False);
+}
+
+Whenever KolizeOn ( _PlayerInRange(8); )
+{
+  HUMAN_SetOptimized(0);
+  goto TheEnd;	
+}
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETMODE_Run();
+  }
+  HUMAN_Move("Ally2_1");
+  HUMAN_TurnAt(turn);
+  HUMAN_SETMODE_Crouch();
+goto TheEnd;				
+
+
+OnDeath()
+{
+  SendSignal(OBJ, 30);
+  if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) ) 
+   {
+      SendSignal(Waves, 1);
+   } else {
+      SendSignal(Waves, 30);
+   }
+  EndScript();
+}
+
+OnSignal(3)	// od velitel_pokec
+{
+  SUBTITLES_SetOn(True);
+  HUMAN_TurnAtNearestPlayer();
+  SendSignal(Waves, 1);	// spusteni GER posil - pojistka je jeste v OBJ2 posilaci (4 min po OBJ2-ok)
+  HUMAN_ACTIVITY_Salute(1);
+  SendSignal(dabing, 1);
+// 17993424	Pane!	
+// 17993425	Díky že jste pro nás pøišel.	
+// 17993426	Musíme se tady udržet než dorazí naše tanky.	
+// 17993427	S vaší pomocí to urèitì zvládnem.	
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  delay(800);	  HUMAN_TurnAtNearestPlayer();
+  HUMAN_Move("Ally2_1");
+  HUMAN_TurnAt(turn);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetOptimized(0);
+  Delay(2500);
+  SUBTITLES_SetOn(False);
+  SendSignal(OBJ, 5);		// aktivace ustupu
+  goto TheEnd;	  
+}
+
+OnSignal(5)
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  Printf("END SKRIPTU OD 2");
+//  EndScript();
+//  ScriptAssign(MyFRM, "R_N2_Ally2_Go");		////// Tady to byt nemuze - je to v OBJECTIVES !!!!!!!
+}
+
+Label TheEND:
+

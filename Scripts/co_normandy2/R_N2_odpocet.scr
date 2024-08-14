@@ -1,0 +1,43 @@
+// This scene is banging on the square after starting the last stage - staying
+
+Block {
+Frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+
+Frame BUM1;		 FRM_FindFrame(BUM1, "dummy_bum4_1"); 
+Frame BUM2;		 FRM_FindFrame(BUM2, "dummy_bum4_2"); 
+Frame BUM3;		 FRM_FindFrame(BUM3, "dummy_bum4_3"); 
+Frame BUM4;		 FRM_FindFrame(BUM4, "dummy_bum4_4"); 
+Frame BUM5;		 FRM_FindFrame(BUM5, "dummy_bum4_5"); 
+Frame BUM6;		 FRM_FindFrame(BUM6, "dummy_bum4_6"); 
+Frame BUM7;		 FRM_FindFrame(BUM7, "dummy_bum4_7"); 
+Frame BUM8;		 FRM_FindFrame(BUM8, "dummy_bum4_8"); 
+
+integer wait;
+integer what;
+}
+
+Goto TheEnd;
+
+OnSignal(7)		// received from R_N2_Waves
+{
+  Label BUM:
+     what = _RandomInt(8) + 1;
+     if (what == 1)    { SendSignal(BUM1, 27); }
+     if (what == 2)    { SendSignal(BUM2, 27); }
+     if (what == 3)    { SendSignal(BUM3, 27); }
+     if (what == 4)    { SendSignal(BUM4, 27); }
+     if (what == 5)    { SendSignal(BUM5, 27); }
+     if (what == 6)    { SendSignal(BUM6, 27); }
+     if (what == 7)    { SendSignal(BUM7, 27); }
+     if (what == 8)    { SendSignal(BUM8, 27); }
+     wait = _RandomInt(20000) + 10000;
+     Delay(wait);
+  Goto BUM;
+}
+
+OnSignal(10)
+{
+  Endscript();
+}
+
+Label TheEnd:

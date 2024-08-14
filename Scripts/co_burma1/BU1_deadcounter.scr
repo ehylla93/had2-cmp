@@ -1,0 +1,116 @@
+// BU1_deadcounter - debug
+
+block
+{
+Frame bu01;	FRM_FindFrame(bu01, "BU1_01");
+Frame bu02;	FRM_FindFrame(bu02, "BU1_02");
+Frame bu03;	FRM_FindFrame(bu03, "BU1_03");
+Frame bu04;	FRM_FindFrame(bu04, "BU1_04");
+Frame bu05;	FRM_FindFrame(bu05, "BU1_05");
+Frame bu06;	FRM_FindFrame(bu06, "BU1_06");
+Frame bu07;	FRM_FindFrame(bu07, "BU1_07");
+Frame bu08;	FRM_FindFrame(bu08, "BU1_08");
+Frame bu09;	FRM_FindFrame(bu09, "BU1_09");
+Frame bu10;	FRM_FindFrame(bu10, "BU1_10");
+Frame bu11;	FRM_FindFrame(bu11, "BU1_11");
+Frame bu12;	FRM_FindFrame(bu12, "BU1_12");
+Frame bu13;	FRM_FindFrame(bu13, "BU1_13");
+Frame bu14;	FRM_FindFrame(bu14, "BU1_14");
+Frame bu15;	FRM_FindFrame(bu15, "BU1_15");
+Frame bu16;	FRM_FindFrame(bu16, "BU1_16");
+Frame bu17;	FRM_FindFrame(bu17, "BU1_17");
+Frame bu18;	FRM_FindFrame(bu18, "BU1_18");
+Frame bu19;	FRM_FindFrame(bu19, "BU1_19");
+Frame bu20;	FRM_FindFrame(bu20, "BU1_20");
+Frame bu21;	FRM_FindFrame(bu21, "BU1_21");
+Frame bu22;	FRM_FindFrame(bu22, "BU1_22");
+Frame bu23;	FRM_FindFrame(bu23, "BU1_23");
+Frame bu24;	FRM_FindFrame(bu24, "BU1_24");
+Frame bu25;	FRM_FindFrame(bu25, "BU1_25");
+Frame bu26;	FRM_FindFrame(bu26, "BU1_26");
+Frame bu27;	FRM_FindFrame(bu27, "BU1_27");
+Frame bu28;	FRM_FindFrame(bu28, "BU1_28");
+Frame bu29;	FRM_FindFrame(bu29, "BU1_29");
+Frame bu30;	FRM_FindFrame(bu30, "BU1_30");
+Frame bu31;	FRM_FindFrame(bu31, "BU1_31");
+Frame bu32;	FRM_FindFrame(bu32, "BU1_32");
+Frame bu33;	FRM_FindFrame(bu33, "BU1_33");
+Frame bu34;	FRM_FindFrame(bu34, "BU1_34");
+Frame bu35;	FRM_FindFrame(bu35, "BU1_35");
+Frame bu36;	FRM_FindFrame(bu36, "BU1_36");
+Frame bu37;	FRM_FindFrame(bu37, "BU1_37");
+Frame bu38;	FRM_FindFrame(bu38, "BU1_38");
+Frame bu39;	FRM_FindFrame(bu39, "BU1_39");
+
+Frame ee;		FRM_FindFrame(ee, "BU1_EE");
+
+Integer x;
+}
+
+Label check:
+x=39;
+
+block
+{
+if (_ACTOR_GetState(bu01)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu02)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu03)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu04)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu05)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu06)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu07)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu08)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu09)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu10)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(bu11)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu12)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu13)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu14)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu15)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu16)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu17)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu18)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu19)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu20)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu21)==0)	{	x=x-1;	}
+}
+block
+{
+if (_ACTOR_GetState(bu22)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu23)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu24)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu25)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu26)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu27)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu28)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu29)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu30)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu31)==0)	{	x=x-1;	}
+}
+
+block
+{
+if (_ACTOR_GetState(bu32)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu33)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu34)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu35)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu36)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu37)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu38)==0)	{	x=x-1;	}
+if (_ACTOR_GetState(bu39)==0)	{	x=x-1;	}
+}
+
+if (x==0)
+{
+SendSignal (ee,4);
+EndScript();
+}
+else {
+delay (5000);
+goto check;
+}
+
+Label end:

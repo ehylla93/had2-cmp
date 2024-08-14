@@ -1,0 +1,88 @@
+
+Frame tank1;	FRM_FindFrame(tank1,"n_tank_1");
+Frame tank2;	FRM_FindFrame(tank2,"n_tank_2");
+Frame tank3;	FRM_FindFrame(tank3,"n_tank_3");
+Frame T1;		FRM_FindFrame(T1,"n_T01");
+Frame T2;		FRM_FindFrame(T2,"n_T02");
+Frame T3;		FRM_FindFrame(T3,"n_T03");
+Frame T4;		FRM_FindFrame(T4,"n_T04");
+Frame T5;		FRM_FindFrame(T5,"n_T05");
+Frame T6;		FRM_FindFrame(T6,"n_T06");
+Frame T7;		FRM_FindFrame(T7,"n_T07");
+Frame T8;		FRM_FindFrame(T8,"n_T08");
+Frame T9;		FRM_FindFrame(T9,"n_T09");
+Frame obj9;		FRM_findFrame(obj9, "n_obj9");
+
+integer rdm;
+rdm=_RandomInt(4);
+SaveGameValue(1, 0);
+SaveGameValue(3, 0);
+goto end;
+
+
+OnSignal(1)
+{
+EnableSignal(1, 0);
+printfnumber("sgv1 - 1:",rdm);
+if(rdm==0) { SaveGameValue(1, 1); FRM_TeleportNearCheckpoint(tank2, "tank2_1a", "tank2_1b"); }
+if(rdm==1) { SaveGameValue(1, 2); FRM_TeleportNearCheckpoint(tank2, "tank2_2a", "tank2_2b"); goto mount_T2b; }
+if(rdm==2) { SaveGameValue(1, 3); FRM_TeleportNearCheckpoint(tank2, "tank2_3a", "tank2_3b"); }
+if(rdm==3) { SaveGameValue(1, 4); FRM_TeleportNearCheckpoint(tank2, "tank2_4a", "tank2_4b"); }
+goto mount_T2;
+}
+
+OnSignal(2)
+{
+EnableSignal(2, 0);
+FRM_TeleportNearCheckpoint(tank1, "END", "3");
+goto mount_T1;
+}
+
+OnSignal(3)
+{
+EnableSignal(3, 0);
+FRM_TeleportNearCheckpoint(tank3, "V1_0", "V1_1");
+goto mount_T3;
+}
+
+OnSignal(4)
+{
+EnableSignal(1, false);
+goto end;
+}
+
+Label mount_T1:
+printf("mount tank1");
+Block {
+SendSignal(T1, 1);
+SendSignal(T2, 1);
+SendSignal(T3, 1);
+}
+goto end;
+
+Label mount_T2:
+printf("mount tank2");
+SendSignal(T5, 1);
+SendSignal(T6, 1);
+SendSignal(T4, 2);
+goto end;
+
+Label mount_T2b:
+printf("mount tank2b");
+SendSignal(T5, 1);
+SendSignal(T6, 1);
+SendSignal(T4, 1);
+goto end;
+
+Label mount_T3:
+SaveGameValue(3, 1);
+SendSignal(obj9, 1);
+Delay(3000);
+printf("mount tank3");
+Block {
+SendSignal(T7, 1);
+SendSignal(T8, 1);
+SendSignal(T9, 1);
+}
+
+Label end:

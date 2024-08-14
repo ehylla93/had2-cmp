@@ -1,0 +1,123 @@
+//
+//----------------------Block----------------------
+Block
+{
+Frame d1;	FRM_FindFrame(d1, "dummy_MP");
+Frame me;	FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,0);
+SetAlarmType(8,0);
+SetAlarmType(16,0);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+integer Rnd1;
+}
+goto END;
+
+//----------------------Spawn----------------------
+Whenever Spawn (_PlayerInRange(85))
+{
+Rnd1=(_randomint(2));//3
+  if (Rnd1==1)
+  {
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+HUMAN_Kill(me); //
+goto END;
+  }
+  else
+  {
+Block
+{
+HUMAN_Suspend(0);
+Rnd1=(_randomint(25)+70);
+HUMAN_SETSIGHTRANGE(Rnd1);
+Rnd1=(_randomint(25)+50);
+HUMAN_SETHEARRANGE(Rnd1);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+}
+HUMAN_TurnAt(d1);
+Goto Anim;
+}
+}
+
+//----------------------Animations----------------------
+label Anim:
+HUMAN_SetAnim("", 1000, 1000, 1);
+gosub delay;
+HUMAN_SETMODE_Stand();
+Rnd1=(_randomint(10));
+  if (Rnd1==1)
+  {
+HUMAN_ACTIVITY_Hot();
+  }
+  if (Rnd1==2)
+  {
+HUMAN_SetAnim("%%kopkamen1", 1000, 1000, 1);
+  }
+  if (Rnd1==3)
+  {
+HUMAN_SetAnim("%%nuda", 1000, 1000, 1);
+  }
+  if (Rnd1==4)
+  {
+HUMAN_SetAnim("%%nuda1", 1000, 1000, 1);
+  }
+Rnd1=(_randomint(10000)+5000);
+delay(Rnd1);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Crouch();
+Goto Anim;
+//----------------------Delay
+label delay:
+Rnd1=(_randomint(35000)+25000);
+delay(Rnd1);
+HUMAN_SetAnim("", 1000, 1000, 1);
+return;
+
+
+//----------------------OnAlarm----------------------
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+Rnd1=(_randomint(10));
+If (Rnd1==1)
+{
+HUMAN_SETAIMODE_Defensive();
+}
+EndScript();
+}
+
+//----------------------OnAlarmDone----------------------
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+}
+
+//----------------------OnDeath----------------------
+OnDeath()
+{
+Rnd1=(_randomint(15)); //12
+  if (Rnd1==2){HUMAN_CreateItemInStore(54, 1);}		//First-Aid kit
+  if (Rnd1==4){HUMAN_CreateItemInStore(61, 1);}		//Stielhandgranate 39
+  if (Rnd1==6){HUMAN_CreateItemInStore(66, 1);}		//Sticky bomb
+  if (Rnd1==8){HUMAN_CreateItemInStore(68, 1);}		//Dynamite
+DisableWhenevers(1);
+DisableSignals(1);
+DisableAlarms(1);
+EndScript();
+}
+
+//----------------------END----------------------
+Label END:

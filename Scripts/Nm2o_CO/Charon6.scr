@@ -1,0 +1,40 @@
+// Sherman French crew, Driver
+
+Block
+ {
+    
+Frame Bmik_MG;	FRM_FindFrame(Bmik_MG, "Charon5t");
+Frame Of14;	FRM_FindFrame(Of14, "P2_G03"); 
+Frame Of15;	FRM_FindFrame(Of15, "P2_G04"); 
+
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+OnAlarm()	{}
+OnAlarmDone()  {}
+
+//Whenever inrange (_MP_IsTeamMemberInRange(1, 60))
+Onsignal(1)
+{
+	Delay(5000);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("la_shermanAf_3", true, 0);
+printf("Sherman start");
+SendSignal(Of14, 1);
+SendSignal(Of15, 1);
+HUMAN_Drive("GerTank1", 10); 
+HUMAN_Drive("Hakl_3", 12);
+SendSignal(Bmik_MG, 2);
+HUMAN_Drive("GerTank2", 14); 
+HUMAN_Drive("GerTank3", 16);
+HUMAN_Drive("", 0);
+
+ 
+}
+
+Label TheEnd:

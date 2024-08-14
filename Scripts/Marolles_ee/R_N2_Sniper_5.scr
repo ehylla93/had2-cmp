@@ -1,0 +1,61 @@
+// sniper bez sniperky
+
+integer  AIEvent;
+Frame turn;		FRM_FindFrame(turn, "dummy_sniper5_turn");	
+frame OBJ;		FRM_FindFrame(OBJ, "Objectives");	
+
+
+SetAlarmType(520, False);
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(7)
+{						
+  HUMAN_Suspend(False);			
+  HUMAN_SetSniper(True, 5);
+}						
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Zombie();
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Crouch();
+       HUMAN_SETMODE_Walk();
+    }
+  HUMAN_Move("Sniper5_1");			
+  HUMAN_TurnAt(turn);
+goto TheEnd;				
+
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Sniper 5: ", AIEvent);
+      HUMAN_SETMODE_Stand();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(520, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+OnDeath()
+{
+  SendSignal(OBJ, 1);
+  EndScript();
+}
+
+Label TheEND:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(3000);
+goto TheEnd;

@@ -1,0 +1,82 @@
+// tree guard #1
+// ALBERTOVI PRIDAVNE USI !!! (uz mety bugy ze Bertik neslisi serou ... )
+
+frame Rebel;		FRM_FindFrame(Rebel, "Rebel");
+
+Block
+{
+    integer AIEvent;
+    integer DeAlarmovan = 0;
+    integer RND = 1;
+    integer RND_wait = 1500;
+
+    SetAlarmType(1023, True);	
+}
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;						
+  Whenever A (_PlayerInRange(110);)			
+{							
+  HUMAN_Suspend(False);				
+}							
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Guard();
+  HUMAN_WeaponOnArm(False);
+  HUMAN_SetOptimized(1);
+
+label loop:
+  RND =   _RandomInt(4) + 1;
+  RND_wait =   _RandomInt(10000) + 5000;
+    If (RND == 1)   
+      {
+          HUMAN_Move("TreeG3_1");
+      }
+    If (RND == 2) 
+       { 
+          HUMAN_Move("TreeG3_2");
+       }
+    If (RND == 3)   
+      {
+          HUMAN_Move("TreeG3_3");
+      }
+    If (RND == 4)   
+      {
+          HUMAN_Move("TreeG3_4");
+      }
+  If (DeAlarmovan == 1) {Goto TheEnd;}
+  delay(RND_wait);
+goto loop;
+
+
+OnAlarm()
+{
+  Block
+     {
+         HUMAN_SETSIGHTRANGE(40);
+         HUMAN_SETHEARRANGE(45);
+         AIEvent =_GetAlarmType(); 
+         PrintfNumber("AIE Tree Guard 3: ", AIEvent);
+         If ((AIEvent == 2) or (AIEvent == 256)) {SendSignal(Rebel, 17); }
+         HUMAN_SETMODE_Silence();
+         HUMAN_SETAIMODE_Aggressive();
+         EndScript();
+     }
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(25);
+  HUMAN_SETHEARRANGE(35);
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Crouch();  
+  HUMAN_SetAlarm(False);
+  DeAlarmovan = 1;
+  Goto loop;
+}
+
+Label TheEnd:

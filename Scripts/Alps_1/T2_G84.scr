@@ -1,0 +1,38 @@
+// T2_G84 - Tiger Driver
+// ----------------------------------------
+
+Block
+{
+Frame C1;		FRM_FindFrame(C1, "T2_G85");
+Frame C2;		FRM_FindFrame(C2, "T2_G86");
+
+SetAlarmType(1023,0);
+
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("A3_Tiger_01", 1, 3);
+SendSignal(C1, 1);
+SendSignal(C2, 1);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+
+Label END:

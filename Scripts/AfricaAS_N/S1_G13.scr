@@ -1,0 +1,87 @@
+// Chodi za Moskvou
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1,"Bmw_01");
+Frame Cp2;		FRM_FindFrame(Cp2,"Kubel_01");
+Frame Cum_Brana;	FRM_FindFrame(Cum_Brana,"Bomb_01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+integer AIEvent;
+
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f032");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+AIEvent =_RandomInt(3);
+
+If(AIEvent==1) 
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_MoveToFrame(Cp1, 10);
+HUMAN_TurnAt(Cum_Brana);
+EndScript();
+}
+
+If(AIEvent==2)
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_MoveToFrame(Cp2, 10);
+HUMAN_WeaponUp(1);
+HUMAN_TurnAt(Cum_Brana);
+HUMAN_SetSniper(1, 5);
+EndScript();
+}
+
+HUMAN_SETAIMODE_Aggressive();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+goto Patrola;
+}
+
+Whenever Spawn (_SignalReceived(1))  // Od Generatoru
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Guard();
+goto Patrola;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Patrola:
+HUMAN_MoveToFrame(Cp1, 5);
+HUMAN_MoveToFrame(Cp2, 5);
+goto Patrola;
+
+Label END:

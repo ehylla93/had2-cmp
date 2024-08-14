@@ -1,0 +1,64 @@
+// C1_E06
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(640,0);
+
+Frame this;		FRM_GetMyFrame(this);
+Integer Int = _RandomInt(100);
+
+FRM_SwitchFaceTexture(this, "e_f046");
+}
+printfnumber("Int C1_E06:", Int);
+
+	If(Int > 50)
+	{
+	HUMAN_SETAIMODE_Defensive();
+	}
+	If(Int < 25)
+	{
+	HUMAN_SETAIMODE_Aggressive();
+	}
+	Else
+	{
+	HUMAN_SETAIMODE_Zombie();
+	}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("C1_E06 dead");
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 200, 200, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 80))
+{
+HUMAN_WeaponOnArm(0);
+HUMAN_SetAnim("%%sedimL3", 400, 400, 1);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

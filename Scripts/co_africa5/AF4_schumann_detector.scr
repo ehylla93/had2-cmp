@@ -1,0 +1,23 @@
+// AF4_schumann_detector
+// -------------------------------------------------------------------------------------------------------------
+Block {
+  FRAME schumann;		FRM_FindFrame(schumann, "AF4_23");
+  FRAME sniper;			FRM_FindFrame(sniper, "AF4_31");
+  
+  INTEGER int;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inrange ((_FrameInRange(schumann) < 30) AND (!_LoadGameValue(88))){
+  int = _ACTOR_GetState(sniper);
+  if(int == 1)
+  {
+    SendSignal(sniper, 9);
+    Delay(2000);
+	EndScript();
+  }
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------

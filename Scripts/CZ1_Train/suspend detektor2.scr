@@ -1,0 +1,33 @@
+Whenever player(_PlayerInRange(45) )
+{	
+	Block
+	{	
+
+
+	Frame soldier4;
+	FRM_FindFrame(soldier4, "posila16");
+	Frame soldier5;
+	FRM_FindFrame(soldier5, "posila17");
+	Frame soldier6;
+	FRM_FindFrame(soldier6, "Ge_14");
+	Frame soldier7;
+	FRM_FindFrame(soldier7, "Ge_12");
+	Frame soldier8;
+	FRM_FindFrame(soldier8, "Ge_13");	
+	Frame soldier9;
+	FRM_FindFrame(soldier9, "posila1");
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	SendSignal(soldier4, 1);
+	SendSignal(soldier5, 1);
+	SendSignal(soldier6, 1);
+	SendSignal(soldier7, 1);
+	SendSignal(soldier8, 1);
+	SendSignal(soldier9, 1);
+
+	}
+
+
+}

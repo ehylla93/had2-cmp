@@ -1,0 +1,110 @@
+// Enemy Soldier, walking up- and downstairs
+
+Block {
+integer  AIEvent;
+frame see;			FRM_FindFrame(see, "Dummy_S5_See");	
+frame alarm;		FRM_FindFrame(alarm, "dummy_GlobalAlarm");
+frame See_NOALARM;	FRM_FindFrame(See_NOALARM, "dummy_S5_NOALARM_see");
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(1);
+
+SetWhenever(Usni, False);
+SetWhenever(Budicek, False);  
+}
+
+HUMAN_Suspend(true);
+goto TheEnd;
+
+Whenever Usni ( !_PlayerInRange(25) )
+{
+  HUMAN_Stop();
+  HUMAN_Suspend(True);
+  SetWhenever(Budicek, true);
+  Goto TheEnd;
+}
+
+Whenever Budicek ( _PlayerInRange(20) )
+{
+  HUMAN_Suspend(False);
+  SetWhenever(Usni, true);
+  goto TheEnd;
+}
+
+OnSignal(1)	// UP
+{
+  HUMAN_Suspend(False);
+  HUMAN_SETMODE_Guard();
+  HUMAN_Move("S5_UP1");
+  HUMAN_Move("S5_UP2");
+  HUMAN_Move("S5_UP3");
+  HUMAN_Move("S5_UP4");
+  Goto Hide;
+}
+
+OnSignal(2)	// DOWN
+{
+  HUMAN_Suspend(False);
+  HUMAN_SETMODE_Guard();
+  HUMAN_Move("S5_DOWN1");
+  HUMAN_Move("S5_DOWN2");
+  HUMAN_Move("S5_DOWN3");
+  Goto Hide;
+}
+
+OnAlarm()
+{
+  DisableWhenevers(True);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Stop();
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      HUMAN_Suspend(False);	
+      HUMAN_SETMODE_Walk();
+      HUMAN_SETAIMODE_Aggressive();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+If ( ((AIEvent != 4) AND (AIEvent != 8)) and (AIEvent != 128) )  
+    { SendSignal(alarm , 1); }
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  goto Hide;
+}
+
+OnDeath()
+{
+  EndScript();
+}
+
+label Hide:
+  If (_LoadGameValue(5) != 0) 
+     {
+        HUMAN_Move("S5_NOALARM");
+        HUMAN_TurnAt(See_NOALARM);
+        HUMAN_LookAround(1);
+        Goto TheEnd; 
+     }
+  HUMAN_LookAround(1);
+  Delay(7500);
+  HUMAN_LookAround(0);
+  HUMAN_Move("S5_HIDDEN");		
+  HUMAN_TurnAt(see);
+  Delay(1500);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetOptimized(2);
+  DisableWhenevers(False);
+goto TheEnd;
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label TheEND:

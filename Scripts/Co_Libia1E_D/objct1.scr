@@ -1,0 +1,28 @@
+// Obj 1 - destroy anti-air defense
+// --------------------------------------
+
+Block
+{
+Frame t1;	FRM_FindFrame(t1, "Opel1"); 
+Frame t2;	FRM_FindFrame(t2, "Opel2"); 
+Frame t3;	FRM_FindFrame(t3, "Bdd_25");
+Frame t4;	FRM_FindFrame(t4, "Bdd_26");
+
+SetObjectiveStatus(1, 0);
+Delay(4000);
+//printf("flak script");
+}
+
+// --------------------------------------
+
+Whenever Tankbum ((((_Actor_GetState(t1)==0) And (_Actor_GetState(t2)==0) ) And (_Actor_GetState(t3)==0) )And (_Actor_GetState(t4)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(16993212);
+Delay(4000);
+SetObjectiveStatus(1, 1);
+SUBTITLES_SetOn(0);
+GoTo end;
+}
+
+Label end:

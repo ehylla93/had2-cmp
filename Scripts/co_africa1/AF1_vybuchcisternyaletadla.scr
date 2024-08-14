@@ -1,0 +1,24 @@
+// AF1_vybuchcisterny - explosion of cistern
+// -------------------------------------------------------------------------------------------------------------
+
+  FRAME me;      		FRM_GetMyFrame(me);
+  FRAME wing;			FRM_FindFRAME(wing, "dummy_letadlo_vybuch");
+  FRAME letadlo;		FRM_FindFRAME(letadlo, "la_macchi09");
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  FRM_CreateParticle(53, me);
+  PlaySound(6, 2);
+//  MakeExplosion(me, 1000000, 20000);
+  Delay(500);
+
+  SendSignal(letadlo, 10);
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(2){
+  HUMAN_Kill(me);
+}

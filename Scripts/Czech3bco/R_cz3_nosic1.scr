@@ -1,0 +1,327 @@
+// nosic beden - 3 bedny a furt odpociva
+////  chest carrier - 3 chest and feel tired
+block
+{
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+integer AIEvent;
+integer b;
+
+  SetAlarmType(256, False);	
+
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_WeaponOnArm(false);
+HUMAN_SetOptimized(true);
+
+frame sit;		FRM_FindFrame(sit , "nosic1_sit");
+frame sit1;		FRM_FindFrame(sit1 , "nosic2_sit");
+  frame MyFrame;		FRM_GetMyFrame(MyFrame);
+  frame chest8;			FRM_FindFrame(chest8 , "chest8"); 
+  frame chest81;		FRM_FindFrame(chest81 , "chest8.box01");
+  frame chest7;		FRM_FindFrame(chest7 , "chest7");
+Frame kol7;			FRM_FindFrame(kol7, "k_bedkolize_7");
+  frame chest71;		FRM_FindFrame(chest71 , "chest7.box01");
+  frame chest19;		FRM_FindFrame(chest19 , "chest19");
+  frame chest191;		FRM_FindFrame(chest191 , "chest19.box01");
+  frame cart_sit_turn;		FRM_FindFrame(cart_sit_turn , "ja_patnik9");
+  frame coordinator;		FRM_FindFrame(coordinator , "coordinator");
+  frame See_DeAlarm;		FRM_FindFrame(See_DeAlarm , "Dummy_nosic1_See_DeAlarm");
+frame kuk8;			FRM_FindFrame(kuk8,"kuk8");		//dummy u bedny pro turnat
+frame kuk7;			FRM_FindFrame(kuk7,"kuk7");
+frame kuk19;			FRM_FindFrame(kuk19,"kuk19");
+frame ruka;			//FRM_FindFrame(ruka,"nosic1.hw1");
+Frame kol8;			FRM_FindFrame(kol8, "k_bedkolize_8");
+Frame kol19;			FRM_FindFrame(kol19, "k_bedkolize_19");
+
+	Frame me;		FRM_GetMyFrame(me);
+	FRM_SwitchFaceTexture(me, "e_f043");
+
+// FRM je misto ke kteremu se bude otacet pri pokladani beden
+//// It is place whereabouts carrier turns betwean dropping cheast 
+  frame FRM;			FRM_FindFrame(FRM, "plot08");
+  frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+HUMAN_SETMODE_Walk();
+
+  HUMAN_SETAIMODE_Aggressive();
+HUMAN_SetOptimized(1);
+}
+
+OnCutscene(1)
+{
+HUMAN_Suspend(true);
+}
+
+
+
+
+OnCutsceneDone(1)
+{
+
+HUMAN_Suspend(false);
+
+}
+
+
+
+// manipulace bednou 1
+//// manipulation with chest 1
+HUMAN_Move("NXBX");
+HUMAN_Move("Chest8");
+
+HUMAN_TurnAt(kuk8);
+HUMAN_SetAnim("%%seberbednu",300,0,0);
+delay(400);
+block
+{
+FRM_FindFrame(ruka,"nosic1.hw1");
+FRM_TeleportNearFrame(chest8,ruka,1);
+FRM_FindFrame(ruka,"");
+b=1;
+SetActorState(kol8, 1);
+}
+
+delay(402);
+HUMAN_SetAnim("%%sebralbednu",0,300,1);
+Delay(500);
+
+HUMAN_Move("N1_p1");
+HUMAN_Move("N1B2_1");
+HUMAN_Move("N1B2_2");
+HUMAN_Move("N1_p2");
+
+
+
+HUMAN_Move("transport_1");
+delay(150);
+HUMAN_TurnAt(FRM);
+delay(200);
+HUMAN_SetAnim("%%nechbednu",300,0,0);		//polozeni
+delay(400);
+block
+{
+FRM_FindFrame(ruka,"nosic1.hw1");
+FRM_TeleportNearFrame(chest8,ruka,0);
+FRM_FindFrame(ruka,"");
+FRM_CreatePhysicalObject(chest81,10,0,1);
+FRM_SetOn(chest8, 0);
+b=0;
+}
+
+
+// manipulace bednou 7
+//// manipulation with chest 7
+HUMAN_Move("Chest7");
+HUMAN_TurnAt(kuk7);
+Delay(500);
+HUMAN_SetAnim("%%seberbednu",300,0,0);
+delay(400);
+block
+{
+FRM_FindFrame(ruka,"nosic1.hw1");
+FRM_TeleportNearFrame(chest7,ruka,1);
+FRM_FindFrame(ruka,"");
+b=2;
+SetActorState(kol7, 1);
+}
+
+delay(402);
+HUMAN_SetAnim("%%sebralbednu",0,300,1);
+Delay(500);
+
+HUMAN_Move("N1_p1");
+HUMAN_Move("N1B2_1");
+HUMAN_Move("N1B2_2");
+HUMAN_Move("N1_p2");
+
+HUMAN_Move("turk_N1");	//  sit box for card plaing (it was transport_2)
+delay(150);
+HUMAN_TurnAt(FRM);
+delay(150);
+HUMAN_SetAnim("%%nechbednu",300,0,0);		//polozeni
+delay(400);
+block
+{
+FRM_FindFrame(ruka,"nosic1.hw1");
+FRM_TeleportNearFrame(chest7,ruka,0);
+FRM_FindFrame(ruka,"");
+FRM_CreatePhysicalObject(chest71,10,0,1);
+FRM_SetOn(chest7, 0);
+b=0;
+}
+
+
+/// manipulace bednou 3
+//// manipulation with chest 3
+HUMAN_Move("Chest19");
+
+HUMAN_TurnAt(kuk19);
+Delay(500);
+HUMAN_SetAnim("%%seberbednu",300,0,0);
+delay(400);
+block
+{
+FRM_FindFrame(ruka,"nosic1.hw1");
+FRM_TeleportNearFrame(chest19,ruka,1);
+FRM_FindFrame(ruka,"");
+b=3;
+SetActorState(kol19, 1);
+}
+
+delay(402);
+HUMAN_SetAnim("%%sebralbednu",0,300,1);
+Delay(500);
+
+HUMAN_Move("N1_p1");
+HUMAN_Move("N1B2_1");
+HUMAN_Move("N1B2_2");
+HUMAN_Move("N1_p2");
+
+HUMAN_Move("transport_1");
+delay(150);
+HUMAN_TurnAt(FRM);
+HUMAN_SetAnim("%%nechbednu",300,0,0);		//polozeni
+delay(400);
+block
+{
+FRM_FindFrame(ruka,"nosic1.hw1");
+FRM_TeleportNearFrame(chest19,ruka,0);
+FRM_FindFrame(ruka,"");
+FRM_CreatePhysicalObject(chest191,10,0,1);
+FRM_SetOn(chest19, 0);
+b=0;
+}
+
+goto AllDone;
+
+//--------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+  AIEvent =_GetAlarmType(); 
+  PrintfNumber("Nosic 1: ", AIEvent);
+
+}
+HUMAN_SetAnim("", 10, 10, 0);
+
+if (b<>0)	{	gosub pustbednu;	}
+
+HUMAN_SETMODE_StandFast();
+
+  EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(0);
+	SetAlarmType(1023, false);
+	SetAlarmType(99, true);
+	HUMAN_WeaponOnArm(false);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("nosic1_END");
+	goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+  SendSignal(reinfo, 0);
+  Printf("Nosic1 is DEAD!!!");
+  EndScript();
+}
+
+OnSignal(2)
+{
+HUMAN_ACTIVITY_Smoke(0);
+delay (200);
+  HUMAN_ACTIVITY_Card(1); 
+  SendSignal(coordinator,2);  // cards on hands
+goto end;
+}
+
+OnSignal(4)
+{
+  HUMAN_ACTIVITY_Card(2); 
+  SendSignal(coordinator,4);  // drop card
+goto end;
+}
+
+
+
+
+
+label AllDone:
+// ! ! !   hlidat jestli nahodou neumreli
+   HUMAN_Move("nosic1_sit");
+  HUMAN_TurnAt(sit1);
+  delay(500);
+  HUMAN_ACTIVITY_Sit(sit);
+HUMAN_ACTIVITY_Smoke(1);
+  SendSignal(coordinator,1); // ready to play
+  goto wait_signal;
+
+
+label pustbednu:
+if (b==1)	
+
+{		block
+		{
+		FRM_FindFrame(ruka,"nosic1.hw1");
+		FRM_TeleportNearFrame(chest8,ruka,0);
+FRM_FindFrame(ruka,"");
+		FRM_CreatePhysicalObject(chest81,10,0,1);
+		FRM_SetOn(chest8, 0);
+		b=0;
+		}
+}
+
+if (b==2)	
+{
+
+		block
+		{
+		FRM_FindFrame(ruka,"nosic1.hw1");
+		FRM_TeleportNearFrame(chest7,ruka,0);
+FRM_FindFrame(ruka,"");
+		FRM_CreatePhysicalObject(chest71,10,0,1);
+		FRM_SetOn(chest7, 0);
+		b=0;
+		}
+}
+
+if (b==3)	
+{
+		block
+		{
+		FRM_FindFrame(ruka,"nosic1.hw1");
+		FRM_TeleportNearFrame(chest19,ruka,0);
+FRM_FindFrame(ruka,"");
+		FRM_CreatePhysicalObject(chest191,10,0,1);
+		FRM_SetOn(chest19, 0);
+		b=0;
+		}
+}
+
+
+return;
+
+
+
+
+label wait_signal:
+label end:

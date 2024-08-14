@@ -1,0 +1,10 @@
+// BU2_Allied09_incoming - detector for incoming player
+
+Block {
+Frame al09;	FRM_FindFrame(al09, "BU2_Allied09");
+}
+
+Whenever player(_PlayerInRange(17))
+{
+	SendSignal(al09, 1);
+}

@@ -1,0 +1,31 @@
+Block {
+frame MyFRM;		FRM_GetMyFrame(MyFRM); 
+frame gun_;			FRM_FindFrame(gun_, "la_BoatGun_"); 
+frame gun_2;		FRM_FindFrame(gun_2, "la_BoatGun_2"); 
+frame lavka;		FRM_FindFrame(lavka, "la_A3_lavka_"); 
+
+FRM_SetOn(MyFRM, False);
+SetActorState(gun_, 0);		//hide
+SetActorState(gun_2, 0);	//hide
+FRM_SetOn(lavka, False);
+}
+
+goto END;
+
+OnSignal(1)
+{
+  Label loop:
+  If( (_CameraInRange() > 30) and ( !_PlayerInRange(30)) )
+    {
+       FRM_SetOn(MyFRM, True);
+       SetActorState(gun_, 1);	//visible
+       SetActorState(gun_2, 1);	//visible
+       FRM_SetOn(lavka, True);
+       SetActorState(Lavka, 1);
+        } else {
+      Delay(2500);
+      Goto loop;
+    }
+}
+
+Label END:

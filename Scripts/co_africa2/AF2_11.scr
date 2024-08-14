@@ -1,0 +1,115 @@
+// AF2_11 - waiting on player, hiding behind the wrecks
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert02;		FRM_FindFRAME(dummyalert02, "dummy_alert02");
+  FRAME turnat;				FRM_FindFRAME(turnat, "AF2_11_turnat");
+  FRAME bottle;				FRM_FindFRAME(bottle, "");
+  INTEGER Atype				= 0;
+  INTEGER rnd				= 0;
+  INTEGER rndb				= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever pir (_PlayerInRange(200))
+{
+  goto ACTIVATE;
+}
+
+OnSignal(20){
+  goto ALERT;
+}
+
+OnDeath(){
+  EndScript();
+}
+
+OnSignal(2){
+  HUMAN_Suspend(false);
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  block{
+    DisableSignals(true);
+    DisableWhenevers(true);
+    HUMAN_SetAnim("", 100, 100, false);
+    HUMAN_SETMODE_Stand();
+    HUMAN_Stop();
+    HUMAN_Suspend(false);
+    HUMAN_SetOptimized(false);
+    HUMAN_SETSIGHTRANGE(300);
+    Atype = _GetAlarmType();
+  }
+  SendSignal(dummyalert02, 1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  HUMAN_SETMODE_Guard();
+  HUMAN_SetOptimized(true); 
+  SetAlarmType(1023, true);
+  SetAlarmType(512, false);
+  goto ACTIVITY;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Guard();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_SetOptimized(true);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_ACTIVITY_Turk();
+
+Label ACTIVITY:
+    rnd = _RandomInt(15000);
+    rnd = rnd + 25000;
+    rndb = _RandomInt(5000);
+    rndb = rndb + 1000;
+  HUMAN_ACTIVITY_CheckWeapon();
+  Delay(rnd);
+  HUMAN_ACTIVITY_Hot();
+  Delay(rndb);
+    rnd = _RandomInt(15000);
+    rnd = rnd + 25000;
+  HUMAN_ACTIVITY_DrinkBottle(bottle);
+  Delay(rnd);
+  GoTo activity;
+
+Label ALARM:
+  HUMAN_SetOptimized(0);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_Move("AF2_11_01");
+  HUMAN_TurnAt(turnat);
+  HUMAN_SETMODE_Crouch();
+EndScript();
+
+Label ALERT:
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SetMODE_Stand();
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(0);
+  HUMAN_SetMODE_Run();
+  HUMAN_Move("AF2_11_alert");
+  HUMAN_SetMode_Crouch();
+  HUMAN_SETSIGHTRANGE(400);
+
+Label END:

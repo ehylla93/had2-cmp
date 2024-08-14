@@ -1,0 +1,67 @@
+
+Block
+{
+frame telefonista1;		FRM_FindFrame(telefonista1, "ge_36");
+frame telefonista2;		FRM_FindFrame(telefonista2, "ge_37");
+frame obj;				FRM_FindFrame(obj,"objectives");
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Whenever alarm (_SignalReceived(1))
+{
+SetWhenever(alarm, 0);
+Delay(2500);
+SUBTITLES_SetOn(true);
+Delay(4500);
+FRM_MorphSpeech(telefonista2, 14992874, 1000,1000);	///telefonista1---- "What?  What is it?!  Damn!" tel1
+Delay(2500);
+FRM_MorphSpeech(telefonista2, 14992875, 1000,1000);	///telefonista1---- "Looks like an alarm."
+Delay(3000);
+FRM_MorphSpeech(telefonista2, 14992876, 1000,1000);	///telefonista1---- "Call the castle guards ... 727 ... Come on!"
+Delay(5000);
+FRM_MorphSpeech(telefonista2, 14992877, 1000,1000);	///telefonista1---- "Hello! This is Rupert! We have an alarm here!" tel1
+Delay(3000);
+SendSignal(obj, 6); 		//Mission fail
+FRM_MorphSpeech(telefonista2, 14992878, 1000,1000);	///telefonista1---  "I don't know!  I hear shooting everywhere!" tel1
+Delay(2500);
+FRM_MorphSpeech(telefonista2, 14992879, 1000,1000);	///telefonista1---  "I understand, over!" tel1
+Delay(3500);
+FRM_MorphSpeech(telefonista2, 14992880, 1000,1000);	///telefonista1---  "Damn..." tel1
+Delay(2500);
+SUBTITLES_SetOn(false);
+SendSignal(telefonista2, 2);	//Alarms on
+goto end;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Whenever dead (_SignalReceived(2))
+{
+SetWhenever(dead, 0);
+SUBTITLES_SetOn(true);
+Delay(4500);
+FRM_MorphSpeech(telefonista2, 14992881, 1000,1000);	///telefonista2----		"Damn! ... I have to sound the alarm!"
+Delay(2500);
+FRM_MorphSpeech(telefonista2, 14992882, 1000,1000);	///telefonista2----		"Call the castle guards quickly!" tel1
+Delay(3000);
+FRM_MorphSpeech(telefonista2, 14992883, 1000,1000);	///telefonista2----		"What ... It's dead!  It's completely dead!" tel1
+Delay(5500);
+FRM_MorphSpeech(telefonista2, 14992884, 1000,1000);	///telefonista2----		"Damn it!"
+Delay(2000);
+FRM_MorphSpeech(telefonista2, 14992885, 1000,1000);	///telefonista2----		"Damn it!  What do we do now?" tel1
+Delay(2000);
+SUBTITLES_SetOn(false);
+SendSignal(telefonista2, 2);	//Alarms on
+goto end;
+}
+
+OnSignal(3)
+{
+//SUBTITLES_SetOn(false);
+DisableWhenevers(true);
+//FRM_MorphSpeech(telefonista1, 0, 0,0);
+FRM_MorphSpeech(telefonista2, 0, 0,0);
+}
+
+Label end:

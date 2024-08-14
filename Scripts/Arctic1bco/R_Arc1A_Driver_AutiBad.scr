@@ -1,0 +1,115 @@
+__SetupAutoLogging(true, "ARC1_DRIVER");
+
+Block
+{
+  integer AIEvent;
+  integer VAute = 0;
+  frame auto;		FRM_FindFrame(auto,  "Auti_BAD");
+  frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+  SetAlarmType(1023, True);
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(2);
+}
+
+Car_SetFuel(Auto , 0);
+
+if ( (_SPGetGameType()!=3) AND (_SPGetGameType()!=7) ) 
+{
+  HUMAN_Suspend(True);
+} else {
+  SendSignal(MyFRM, 1);
+}
+
+Whenever pojistka (_PlayerInRange(75) )
+{
+  SendSignal(MyFRM, 1);	// pojistka, až se player vrati po pruchodu bažinou
+  Delay(500);
+}
+
+goto TheEnd;
+
+OnSignal(1)				   /////////////////////////////// od organizeru
+{
+  SetWhenever(pojistka , False);
+  HUMAN_Suspend(False);
+  Car_SetFuel(auto , 10);
+  Delay(250);
+  If (VAute == 0) 
+    {
+        HUMAN_BoardVehicle("Auti_Bad" , True, 0);
+        VAute = 1;
+    }
+  goto TheEnd;
+}
+
+OnSignal(10)				   /////////////////////////////// jed od organizeru
+{
+  Printf("A JEDEEEEEEeeeeeeeeeeeeeeeeeeeeeeEEEEEEEEM");
+  HUMAN_Drive("1", 20);
+}
+
+// pockej na zavoznika
+  Delay(10000); 	// ZATIM TAKTO - pozdeji test na nastoupeni x na smrt ? dealarm ...
+
+// a jed pryc
+  HUMAN_Drive("2", 40);
+// ujedou
+  HUMAN_SETEVENTS(False);
+  HUMAN_Drive("3", 50);
+  HUMAN_Drive("END", 35);
+  HUMAN_Drive("", 0);
+
+
+OnAlarm()
+{  
+   Printf("1 - zastav");
+   If (VAute == 1) 
+    {
+      HUMAN_Drive("", 0);
+    }
+   Printf("2 - vystup");
+   Car_SetFuel(auto , 0);
+   HUMAN_BoardVehicle("" , False, 0); 
+   VAute = 0;
+   Printf("3 - Block");
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("AutiBad Driver: ", AIEvent);
+      HUMAN_Stop();
+      SendSignal(auto, 20);	// ruši se tim toceni kol a partikly a ..... zkratka vsechen humbuk kolem toho zk... auta
+    }
+  Printf("4 - Endscript");
+  EndScript();
+}
+
+OnDeath()
+{
+  Delay(500);		// !!! pojistka aby sigm. 20 nevytahl z deathu auta
+  SendSignal(auto, 20);	// ruši se tim toceni kol a partikly a ..... zkratka vsechen humbuk kolem toho zk... auta
+  Endscript();
+}
+
+OnAlarmDone()
+{
+  Block
+    {
+       HUMAN_SetAlarm(False);
+       HUMAN_SETMODE_Run();
+       HUMAN_SetOptimized(1);
+       HUMAN_SETMODE_Stand();
+    }
+  HUMAN_Move("AutiBad_DeAlarm");
+  Label loop:
+     HUMAN_TurnAtNearestPlayer();
+     Delay(7500);
+  Goto loop;
+}
+
+OnCutscene(4) {}
+OnCutsceneDone(4) {}
+
+Label TheEnd:

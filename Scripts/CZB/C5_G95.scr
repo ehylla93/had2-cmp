@@ -1,0 +1,61 @@
+// C5_G95
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  HUMAN_SETMODE_Crouch();
+SUBTITLES_SetOn(true);  
+FRM_MorphSpeechDelayed(me, 90004043, 5, 30); // what was that shit?
+Delay(700);
+FRM_MorphSpeechDelayed(me, 90004039, 5, 30); // hallo?
+FRM_MorphSpeechDelayed(me, 90004041, 5, 30); // ist da jemand?
+Delay(1000);
+FRM_MorphSpeechDelayed(me, 90004034, 5, 30); // mist!!
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90004028, 5, 30); // kill them!
+SUBTITLES_SetOn(false);
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(10)){
+  HUMAN_Suspend(false);
+   HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f030");
+HUMAN_SetOptimized(1);
+Delay(500);
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

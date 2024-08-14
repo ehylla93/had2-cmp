@@ -1,0 +1,58 @@
+// SF_A13 - Kanoner Shermama (Sherman1)
+// -------------------------------------------
+
+Block
+{
+Frame Cil1;	FRM_FindFrame(Cil1,"Ally_pal01");
+Frame Cil2;	FRM_FindFrame(Cil2,"Ally_pal02");
+Frame Cil3;	FRM_FindFrame(Cil3,"La_tiger_1");
+Frame Cil4;	FRM_FindFrame(Cil4,"MG6");
+Frame Cil5;	FRM_FindFrame(Cil5,"SF_G21");
+}
+
+// -------------------------------------------
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("Sherman1", 1, 2);
+HUMAN_SetOptimized(2);
+goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_TurnAt(Cil1);
+Delay(2000);
+HUMAN_Attack(Cil1, 2000);
+Delay(12000);
+HUMAN_TurnAt(Cil3);
+Delay(500);
+SendSignal(Cil3, 1);
+Delay(200);
+HUMAN_Attack(Cil3, 2000);
+Delay(10000);
+HUMAN_TurnAt(Cil2);
+Delay(1000);
+HUMAN_Attack(Cil2, 2000);
+Goto END;
+}
+
+Whenever Jedem_dal (_SignalReceived(3))
+{
+HUMAN_Stop();
+Delay(3000);
+HUMAN_TurnAt(Cil4);
+Delay(500);
+HUMAN_Attack(Cil4, 3000);
+HUMAN_Attack(Cil5, 13000);
+goto END;
+}
+
+// -------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

@@ -1,0 +1,36 @@
+// Bomb on the Bridge
+// ----------------------------------------
+
+Block
+{
+Frame soundA1;	FRM_FindFrame(soundA1, "S_troskyA1");
+Frame soundA2;	FRM_FindFrame(soundA2, "S_troskyA2");
+Frame soundB1;	FRM_FindFrame(soundB1, "S_troskyB1");
+Frame soundB2;	FRM_FindFrame(soundB2, "S_troskyB2");
+Frame Bomb;	FRM_FindFrame(Bomb,"Bomb_Bridge");
+Frame MostL;	FRM_FindFrame(MostL,"Most_left");
+Frame Obj3;	FRM_FindFrame(Obj3,"obj3");
+
+CheckpointJoin("BU1_join2", "BU1_join3");
+CheckpointJoin("BU1_join1", "BU1_01_04");
+SetActorState(Bomb, 3);
+}
+
+// ----------------------------------------
+
+Whenever BUM (_Actor_GetState(Bomb)==2)
+{
+SetActorState(MostL, 1);
+SendSignal(Obj3, 1);
+CheckpointSeparate("BU1_join2", "BU1_join3");
+CheckpointSeparate("BU1_join1", "BU1_01_04");
+Delay(1500);
+FRM_SetOn(soundA2, 1);
+Delay(200);
+FRM_SetOn(soundB2, 1);
+Delay(800);
+FRM_SetOn(soundB1, 1);
+Delay(550);
+FRM_SetOn(soundA1, 1);
+EndScript();
+}

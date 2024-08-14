@@ -1,0 +1,49 @@
+// Obj 5 - Contact HQ
+// ----------------------------------------------
+
+Block
+{
+Frame Radio;		FRM_FindFrame(Radio, "Radio");
+Frame Obj6;			FRM_FindFrame(Obj6,"obj6");
+Frame me;			FRM_GetMyFrame(me);
+Frame Player;		
+
+Integer Obj_Collect;
+		Obj_Collect = 0;
+
+SetActorState(Radio, 0);
+SetWhenever(Call, 0);
+}
+
+Whenever Call (_Actor_GetState(Radio) == 2)
+{
+FRM_GetNearestPlayer(me, Player);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(Player, 04990882, 3, 20);
+FRM_MorphSpeechDelayed(Player, 04990884, 3, 20);
+FRM_MorphSpeechDelayed(Player, 04990885, 3, 20);
+Delay(1000);
+SUBTITLES_SetText(04990812);
+SendSignal(Obj6, 1);
+Delay(3500);
+SetObjectiveStatus(5, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+OnSignal(1)
+{
+	Obj_Collect = Obj_Collect + 1;
+
+	If (Obj_Collect == 3)
+	{
+	SetObjectiveStatus(5, 0);
+	Delay(4000);
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(04990803);
+	Delay(3500);
+	SetActorState(Radio, 1);
+	SetWhenever(Call, 1);
+	SUBTITLES_SetOn(0);
+	}
+}

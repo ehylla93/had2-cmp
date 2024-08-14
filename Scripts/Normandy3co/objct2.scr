@@ -1,0 +1,54 @@
+// Obj 2 - kill the enemy
+// ------------------------------
+
+Block
+{
+Frame p3;		FRM_FindFrame(p3, "panzer1mos");		// active Panzer III
+Frame sound;	FRM_FindFrame(sound, "success_obj");
+Frame veh1;		FRM_FindFrame(veh1, "OpelVrak_1");	// La_OpelE
+Frame veh2;		FRM_FindFrame(veh2, "OpelVrak_2");	// la_kubelEvbez
+Frame veh3;		FRM_FindFrame(veh3, "OpelVrak_3");	// la_hakl_Ev
+Frame veh4;		FRM_FindFrame(veh4, "OpelVrak_5");	// la_Panzer III
+
+MakeExplosion(veh1, 90000000, 4000);
+MakeExplosion(veh2, 90000000, 4000);
+MakeExplosion(veh3, 90000000, 4000);
+MakeExplosion(veh4, 90000000, 4000);
+
+SetObjectiveStatus(1, 0);     // find the valuables
+SetObjectiveStatus(2, 0);     // kill the enemy
+SetObjectiveStatus(3, 0);     // rescue the prisoners
+SetObjectiveStatus(4, 0);     // clear the bridge of explosives
+}
+
+FRM_SetOn(sound, 0);
+goto end;
+
+// ------------------------------
+
+Whenever Spawnzone2 (_Actor_GetState(p3)==0)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);	// "NEW RESPAWN ZONE AVAILABLE!"
+MP_EnableSpawnZone("zone3", 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+}
+
+Whenever AED (_AllEnemiesDead())
+{
+SaveGameValue(2, 1);
+if((_LoadGameValue(1)==1) AND (_LoadGameValue(3)==1) AND (_LoadGameValue(4)==1))
+{
+FRM_SetOn(sound, 1);
+}
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(21990002);
+Delay(4000);
+SetObjectiveStatus(2, 1);
+SUBTITLES_SetOn(0);
+}
+
+// ------------------------------
+
+Label END:

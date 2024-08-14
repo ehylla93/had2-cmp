@@ -1,0 +1,14 @@
+//Spawn4 (Player Start)
+Block
+{
+Frame detect;	FRM_FindFrame (detect,"zone4");
+}
+goto end;
+
+Whenever Yes (_PlayerInRange(55))
+{
+MP_EnableSpawnZone("zone4", 1);
+goto end;
+}
+
+label end:

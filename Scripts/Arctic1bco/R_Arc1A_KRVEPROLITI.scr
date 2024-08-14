@@ -1,0 +1,7 @@
+// ScriptAssign objectives
+//---------------------------------------------------------
+frame OBJ;		FRM_FindFrame(OBJ, "objectives");
+frame OBJ_K;	FRM_FindFrame(OBJ_K, "objectives_carnage");
+
+ScriptAssign(OBJ, "R_arc1A_objectives");
+   

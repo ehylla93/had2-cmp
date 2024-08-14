@@ -1,0 +1,127 @@
+// N01 - walking on the mole
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame alarmdistro;	FRM_FindFrame(alarmdistro, "Alarmdistro");
+Frame alarmgo;	FRM_FindFrame(alarmgo, "N01_alarmgo");
+Frame look01;	FRM_FindFrame(look01, "N01_look01");
+Frame see;	FRM_FindFrame(see, "dummy_see1");
+Frame see5;	FRM_FIndFrame(see5, "dummy_see5");
+Frame switch;	FRM_FindFrame(switch, "la_N_alarm_12");
+Frame N24;	FRM_FindFrame(N24, "N24");
+Frame N25;	FRM_FindFrame(N25, "N25");
+Frame N26;	FRM_FindFrame(N26, "N26");
+Frame N27;	FRM_FindFrame(N27, "N27");
+Frame me;	FRM_GetMyFrame(me);
+Integer aievent;	aievent=0;
+	
+SetAlarmType(16, false);
+//SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+	HUMAN_SETMODE_Stand();
+
+	Block
+	{
+		aievent=_GetAlarmType();
+	HUMAN_SETSIGHTRANGE(80);
+	}
+
+	If(_PlayerInRange(45))
+	{
+		Block
+		{
+			SendSignal(N24, 1);
+			SendSignal(N25, 1);
+		}
+	}
+
+	If(_FrameInRange(alarmgo)<10)
+	{
+		GoTo alarm2;
+	}
+
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	}
+	HUMAN_SETMODE_Stand();
+	GoTo end;
+}
+
+Whenever suspend(_PlayerInRange(70))
+{
+	HUMAN_Suspend(false);
+	GoTo path;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SetOptimized(2);
+HUMAN_SETAIMODE_Defensive();
+FRM_SwitchFaceTexture(me, "e_f021");
+}
+
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_SETMODE_Guard();
+	HUMAN_Move("N01_1");
+	Delay(3000);
+	HUMAN_Move("N01_2");
+	HUMAN_TurnAt(look01);
+	Delay(10000);
+	HUMAN_Move("N01_3");
+	Delay(3000);
+	HUMAN_Move("N01_2");
+	HUMAN_TurnAt(look01);
+	Delay(10000);
+	GoTo path;
+
+Label alarm2:
+	HUMAN_SETMODE_Run();
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("N01_4");
+	HUMAN_Move("N01_5");
+	HUMAN_Move("N01_6");
+	HUMAN_Move("N01_7");
+	HUMAN_ACTIVITY_Point(switch);
+Block
+{
+	SendSignal(alarmdistro, 1);
+	SendSignal(N26, 1);
+	SendSignal(N27, 1);
+}
+	HUMAN_WeaponOnArm(1);
+	Delay(1000);
+	HUMAN_Move("N01_6");
+	HUMAN_Move("N01_5");
+	HUMAN_Move("N01_4");
+
+Label end:

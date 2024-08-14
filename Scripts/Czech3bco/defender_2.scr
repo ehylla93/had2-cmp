@@ -1,0 +1,247 @@
+//sedi v ruce pistolku cisti ju a cvaka 
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+
+
+integer aievent;
+
+frame sit;			FRM_FindFrame(sit,"defender2sit");
+frame sit1;			FRM_FindFrame(sit1,"defender2sit1");
+frame reinfo;			FRM_FindFrame(reinfo, "dummy_reinforcement");
+Frame me;		FRM_GetMyFrame(me);
+Frame pistolka;		FRM_FindFrame(pistolka,"k_pistolka_");
+Frame ruka;			//FRM_FindFrame(ruka,"defender_2.hw1");
+Frame def1;		FRM_FindFrame(def1, "defender_1");
+Frame velitel;		FRM_FindFrame (velitel,"velitel");
+Frame cum1;		FRM_FindFrame(cum1, "defender2cum1");
+Frame cum2;		FRM_FindFrame(cum2, "defender2cum2");
+Frame cum3;		FRM_FindFrame(cum3, "defender2cum3");
+
+FRM_SwitchFaceTexture(me, "e_f023");
+
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SETMODE_Walk();
+}
+
+
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("defender2 alarm c:",aievent);
+FRM_SetOn(pistolka,0);
+}
+HUMAN_SetAnim("", 100, 100, 0);
+HUMAN_SETMODE_StandFast();
+
+EndScript();
+}
+
+
+OnAlarmDone()
+{
+	SetAlarmType(140,0);
+	HUMAN_SetAlarm(false);
+	HUMAN_Move("Defender_02_04");
+	HUMAN_SETMODE_Crouch();
+	
+	goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+FRM_SetOn(pistolka,0);
+SendSignal (reinfo,0);
+EndScript();
+}
+
+
+
+Whenever vstan(_SignalReceived(1))
+{
+HUMAN_SetAnim("", 500, 500, 0);
+FRM_SetOn(pistolka,0);
+HUMAN_SETMODE_Stand();
+//animace poskrabani vzadu na krku
+goto end;
+}
+
+Whenever kecej(_SignalReceived(2))
+{
+printf ("Hm To máme radost. Teï abysme šli tahat bedny nebo tak nìco.");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994018, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+goto end;
+}
+
+Whenever odesli(_SignalReceived(3))
+{
+HUMAN_Move("Defender_02_03");
+HUMAN_TurnAt(def1);
+printf ("tak a co my ted??");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994021, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 2);
+goto end;
+}
+
+Whenever def1domluv(_SignalReceived(4))
+{
+printf ("No jo . Máš pravdu. Tak ja se du mrknout jestli tu už je.");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994023, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 3);
+goto end;
+}
+
+Whenever def1domluv2(_SignalReceived(5))
+{
+//mrkne do stodoly za barakem rozhlidne a de za velitelem optat co a jak.
+FRM_SetOn(pistolka,0);
+HUMAN_Move("Defender_02_04");
+HUMAN_LookAround(1);
+delay (6000);
+HUMAN_Move("Defender_02_05");
+HUMAN_TurnAt(cum1);
+HUMAN_LookAround(1);
+delay (6000);
+HUMAN_Move("Defender_02_06");
+HUMAN_TurnAt(velitel);
+SendSignal (velitel,4);		//otoc se na mne
+HUMAN_ACTIVITY_Salute(1);
+Delay (2000);
+printf ("Pane majore nevíte kdy pøijede Horst ??? .");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994025, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,5);		//mluf
+goto end;
+}
+
+Whenever velitel1(_SignalReceived(6))
+{
+printf ("Aha. A co máme s Klausem zatím dìlat");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994027, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal (velitel,6);		//mluf
+goto end;
+}
+
+Whenever odchod(_SignalReceived(7))
+{
+HUMAN_ACTIVITY_Salute(1);
+Delay (2000);
+HUMAN_Move("NearDet_0202");
+HUMAN_Move("NearDet_0204");
+HUMAN_Move("Defender_02_07");
+HUMAN_Move("Defender_02_08");
+if (_FrameInRange(def1)>6)
+{
+printf ("KLAUSI!!");
+FRM_MorphSpeech(me, 20994029,20, 50);
+}
+SendSignal(def1, 4);			//pod seeeem
+goto end;
+}
+
+
+Whenever turnat(_SignalReceived(12))
+{
+HUMAN_TurnAt(def1);
+goto end;
+}
+
+
+Whenever def1x1(_SignalReceived(8))
+{
+printf ("Máme tu èekat až pøijede, takže pohoda.");
+HUMAN_SetAnim("%%rozhovor",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994031, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 5);
+goto end;
+}
+
+
+Whenever def1x2(_SignalReceived(9))
+{
+printf ("Nesýèkuj. Fronta je daleko tak co by se nám mohlo stát..");
+HUMAN_SetAnim("%%rozhovor2",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994033, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 6);
+goto end;
+}
+
+Whenever def1x3(_SignalReceived(10))
+{
+printf (" Aaaa Kdybys nestrašil.");
+HUMAN_SetAnim("%%rozhovor1",500,500,1);
+FRM_MorphSpeechDelayed(me, 20994035, 5, 30);
+
+HUMAN_SetAnim("", 500, 500, 0);
+SendSignal(def1, 7);
+goto end;
+}
+
+
+Whenever def1x4(_SignalReceived(11))
+{
+HUMAN_Move("Defender_02_04");
+HUMAN_TurnAt(cum3);
+delay (300);
+HUMAN_ACTIVITY_Sit(sit1);
+FRM_SetOn(pistolka,1);
+HUMAN_SetAnim("%%manipulacerev", 900, 900, 1);
+
+goto end;
+}
+//---------------------------------------------------------------------------------------------------
+block
+{
+FRM_FindFrame(ruka,"defender_2.hw1");
+FRM_TeleportNearFrame(pistolka,ruka,1);
+FRM_FindFrame(ruka,"");
+}
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%manipulacerev", 900, 900, 1);
+
+
+
+
+
+
+
+
+label end:

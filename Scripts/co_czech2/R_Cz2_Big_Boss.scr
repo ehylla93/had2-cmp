@@ -1,0 +1,62 @@
+// R_Cz2_Big_Boss - Freiberg
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+frame me;	FRM_GetMyFrame(me);
+Frame obj;	FRM_FindFrame(obj,"objectives");
+Frame cum;	FRM_FindFrame(cum, "bosscum");
+Frame talk;	FRM_FindFrame(talk, "bigboskecac");
+Frame door;	FRM_FindFrame(door, "dobytcak204");
+
+Integer aievent;
+
+SetAlarmType(1023, false);
+HUMAN_SetOptimized(2);
+
+FRM_SwitchFaceTexture(me, "e_f023");
+
+SetWhenever(pclose, false);
+}
+
+HUMAN_Suspend(1);
+goto end;
+
+Whenever lif(_PlayerInRange(20))
+{
+SetWhenever(pclose, true);
+HUMAN_Suspend(0);
+goto end;
+}
+
+OnDeath()
+{
+PlayMusic(34);
+DisableSignals(1);
+DisableWhenevers(1);
+FRM_MorphSpeech(me, 0,0,0);
+SendSignal(obj,3);
+goto end;
+}
+
+Whenever pclose (_PlayerInRange(2))
+{
+Delay(1000);
+HUMAN_SetAnim("%%zajatec",500,500,1);
+SendSignal(talk, 2);
+goto end;
+}
+
+Whenever talkfin (_SignalReceived(1))
+{
+HUMAN_SetAnim("",300,300,0);
+delay (300);
+HUMAN_TurnAt(cum);
+HUMAN_SetAnim("%%svazovanej",500,300,0);
+delay (1642);
+HUMAN_SetAnim("%%svazanej",300,500,1);
+SendSignal(obj, 2);
+goto end;
+}
+
+label end:

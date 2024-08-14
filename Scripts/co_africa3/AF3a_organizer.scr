@@ -1,0 +1,33 @@
+// AF3a_organizer - organize enemy AI modes
+// -------------------------------------------------------------------------------------------------------------
+
+Block {
+FRAME af02;		FRM_FindFrame(af02, "AF3a_02");
+FRAME af05;		FRM_FindFrame(af05, "AF3a_05");
+FRAME af06;		FRM_FindFrame(af06, "AF3a_06");
+FRAME af08;		FRM_FindFrame(af08, "AF3a_08");
+FRAME af11;		FRM_FindFrame(af11, "AF3a_11");
+FRAME af13;		FRM_FindFrame(af13, "AF3a_13");
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever vradiusu (_PlayerInRange(40)){
+  FRAME_SETAIMODE_Aggressive(af02);
+  FRAME_SETAIMODE_Aggressive(af05);
+  FRAME_SETAIMODE_Aggressive(af06);
+  FRAME_SETAIMODE_Aggressive(af08);
+  FRAME_SETAIMODE_Aggressive(af11);
+  FRAME_SETAIMODE_Aggressive(af13);
+}
+
+Whenever nevradiusu (!_PlayerInRange(50)){
+  FRAME_SETAIMODE_Defensive(af02);
+  FRAME_SETAIMODE_Defensive(af05);
+  FRAME_SETAIMODE_Defensive(af06);
+  FRAME_SETAIMODE_Defensive(af08);
+  FRAME_SETAIMODE_Defensive(af11);
+  FRAME_SETAIMODE_Defensive(af13);
+}
+
+// -------------------------------------------------------------------------------------------------------------

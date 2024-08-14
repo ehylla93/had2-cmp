@@ -1,0 +1,109 @@
+// AF1_59 (08)
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME sit1;				FRM_FindFrame(sit1, "af1_dummy6");
+  FRAME af60;				FRM_FindFrame(af60, "af1_60");
+  FRAME af58;				FRM_FindFrame(af58, "af1_58");
+  FRAME drink;				FRM_FindFrame(drink, "");
+  INTEGER atpos			= 0;  
+  INTEGER Atype			= 0;
+  INTEGER rnd				= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  goto ALERT;
+}
+
+OnDeath(){
+  printf("08: dead");
+  EndScript();
+}
+
+Whenever player(_PlayerInRange(270)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  SetWhenever(player, false);
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SaveGameValue(89, 0);
+    DisableSignals(true);
+    HUMAN_SetMODE_Stand();
+    HUMAN_SETMODE_Run();
+    SendSignal(af58, 10);
+    SendSignal(af60, 10);
+    HUMAN_SETSIGHTRANGE(300);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("08: ", Atype);
+  }
+
+  if((Atype == 256) OR (Atype == 512)){
+    SetAlarmType(256, false);
+    SetAlarmType(512, false);
+    goto ALERT;
+  }
+
+  SendSignal(dummyalert, 1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(512, false);		// 512
+  HUMAN_SETSIGHTRANGE(200);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1){
+  delay(3000);
+  SendSignal(af60, 1);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SetAIMode_Zombie();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  HUMAN_ACTIVITY_Sit(sit1);
+Label RND_ACTION:					// v sede se bude prehravat nahodna animace
+  rnd =_RandomInt(5);
+  if(rnd == 0){HUMAN_SetAnim("%%sedim1", 800, 800, false); }
+  if(rnd == 1){HUMAN_SetAnim("%%sedim3", 800, 800, false); }
+  rnd = _RandomInt(3000) + 5000;
+  Delay(rnd);
+goto RND_ACTION;
+
+Label ALERT:
+  if(!atpos){
+    HUMAN_SetAnim("", 100, 100, false);
+    block{
+      HUMAN_SETMODE_Stand();
+      HUMAN_SETMODE_Run();
+      HUMAN_SETMODE_Crouch();
+    }
+    HUMAN_SetSniper(true, 1);
+    HUMAN_Move("af1_08_alarm");
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_WeaponOnArm(true);
+    atpos = 1;
+  }
+  HUMAN_SetAlarm(false);
+
+Label END:

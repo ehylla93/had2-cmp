@@ -1,0 +1,19 @@
+////-------------prepinani lightmap od dveri HL_dvh_x01------------------------
+//---------------define variable----------------------------------------------------------
+
+
+frame HL_dvh_x01;		FRM_GetMyFrame(HL_dvh_x01);
+integer door_HL_dvh_x01;		door_HL_dvh_x01=0;
+
+//----------------main script---------------------------------------------------------------
+
+OnUse()
+	{
+	Delay(300);
+
+	If     (door_HL_dvh_x01==1)	{door_HL_dvh_x01=0}
+	Else				{door_HL_dvh_x01=1}	
+
+	FRM_SetLightMap(HL_dvh_x01,door_HL_dvh_x01);
+	
+	}

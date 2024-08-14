@@ -1,0 +1,87 @@
+// Chodi okolo Moskvy
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Cp1;		FRM_FindFrame(Cp1,"Opel_01");
+Frame Cp2;		FRM_FindFrame(Cp2,"Kubel_01");
+Frame Cp3;		FRM_FindFrame(Cp3,"Bmw_01");
+Frame Cum_Brana;	FRM_FindFrame(Cum_Brana,"Bomb_01");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+integer AIEvent;
+
+Frame me;	FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f034");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_WeaponOnArm(1);
+AIEvent =_GetAlarmType();
+
+If ((((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==4)) OR (AIEvent==256))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_MoveToFrame(Cp1, 8);
+HUMAN_TurnAt(Cum_Brana);
+EndScript();
+}
+
+If (((AIEvent==16) OR (AIEvent==32)) OR (AIEvent==512))
+{
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+HUMAN_SETAIMODE_Aggressive();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Guard();
+goto Patrola;
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Guard();
+goto Patrola;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label Patrola:
+HUMAN_MoveToFrame(Cp1, 5);
+HUMAN_MoveToFrame(Cp2, 5);
+HUMAN_MoveToFrame(Cp3, 3);
+goto Patrola;
+
+Label END:

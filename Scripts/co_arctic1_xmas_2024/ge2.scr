@@ -1,0 +1,80 @@
+//
+//----------------------Block----------------------
+Block
+{
+	SetAlarmType(1,1);
+	SetAlarmType(2,1);
+	SetAlarmType(4,0);
+	SetAlarmType(8,0);
+	SetAlarmType(16,0);
+	SetAlarmType(32,1);
+	SetAlarmType(64,0);
+	SetAlarmType(128,0);
+	SetAlarmType(256,1);
+	SetAlarmType(512,0);
+	HUMAN_SetOptimized(1);
+	HUMAN_Suspend(1);
+	integer Rnd1 = 0;
+	Frame self;						FRM_GetMyFrame(self);	
+}
+
+goto END;
+
+
+OnSignal(1)
+{
+	HUMAN_Suspend(0);
+	HUMAN_SetOptimized(1);
+	HUMAN_SETSIGHTRANGE(750);
+	HUMAN_SETHEARRANGE(750);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETAIMODE_Aggressive();
+	printf("s_1");
+
+	Rnd1=_randomint(2);
+	If (Rnd1 == 0)
+	{
+		HUMAN_SetMODE_Crouch();
+	}
+	If (Rnd1 == 1)
+	{
+		HUMAN_SETMODE_Stand(); 
+	}
+
+	Rnd1 = _randomint(2);
+	If (Rnd1 == 0)
+	{
+		HUMAN_SETMODE_Walk(); 
+	}
+	If (Rnd1 == 1)
+	{
+		HUMAN_SetMODE_Run(); 
+	}
+	goto move_it;
+}
+
+
+//----------------------
+Label move_it:
+	HUMAN_AttackMove("ss2");
+	HUMAN_AttackMove("GG_3");
+	HUMAN_AttackMove("g0");
+	HUMAN_AttackMove("Walker3_2");
+	HUMAN_AttackMove("dv");
+	HUMAN_AttackMove("dv1");
+	HUMAN_AttackMove("tree");
+	EndScript();
+	goto END;
+
+
+
+//----------------------OnDeath----------------------
+OnDeath()
+{
+	PlaySound(6, 10);
+	FRM_CreateParticle(53, self);
+	EndScript();
+}
+
+//----------------------END----------------------
+Label END:

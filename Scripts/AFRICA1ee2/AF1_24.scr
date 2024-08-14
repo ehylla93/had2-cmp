@@ -1,0 +1,108 @@
+// AF1_24 - soldier in the hangar
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+
+  SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,1); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnSignal(10){
+  HUMAN_SetAnim("", 100, 100, false);
+  Delay(100);
+  HUMAN_SetMode_Stand();
+  HUMAN_TurnAtNearestPlayer();
+  EndScript(); 
+}
+
+Whenever player(_PlayerInRange(20)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(player, false);
+    DisableSignals(true);
+    HUMAN_Suspend(false);
+    HUMAN_Stop();
+    HUMAN_SETMODE_Run();
+//    HUMAN_SetOptimized(false);
+    HUMAN_SetMODE_Stand();
+///    Atype = _GetAlarmType();
+///    printfnumber("24: ", Atype);
+  }
+
+  if(Atype == 256){
+    HUMAN_SetMODE_Crouch();
+    HUMAN_MoveToAlarm();
+//    HUMAN_TurnAtNearestPlayer();
+    HUMAN_SetAlarm(false);
+    goto END;
+  }
+
+///  if((Atype == 2) OR (Atype == 8)){
+///    SetAlarmType(10, false);			// disable 2, 8, 256
+///    HUMAN_SetMode_Run();
+///    HUMAN_SetAlarm(false);
+///    HUMAN_MoveToAlarm();
+///    goto END;
+///  }
+
+  //HUMAN_ACTIVITY_Smoke(false);
+  EndScript();
+}
+
+OnAlarmDone(){
+  
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  SetAlarmType(1023, true);
+  HUMAN_WeaponOnArm(true);
+Label ALARM_DONE_LOOP:
+  HUMAN_Move("AF1_10_10");
+  Delay(300);
+  HUMAN_Move("AF1_10_06");
+  Delay(300);
+goto ALARM_DONE_LOOP;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SETSIGHTRANGE(1000);
+  HUMAN_SETHEARRANGE(350);
+  HUMAN_SetAnim("%%sedimL", 100, 100, true);
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+//  HUMAN_ACTIVITY_Card(1);
+//Label LOOP:
+//  HUMAN_ACTIVITY_Card(2);
+//  Delay(1500);
+//  goto LOOP;
+//goto END;
+
+Label END:

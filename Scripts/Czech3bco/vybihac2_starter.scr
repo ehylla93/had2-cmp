@@ -1,0 +1,18 @@
+Frame f1;	FRM_FindFrame(f1, "vybihac2");
+
+integer poc;	poc=2;
+
+
+
+
+
+
+OnSignal(1)
+{
+poc = poc-1;
+if (poc==0)
+{
+sendsignal (f1,2);
+}
+
+}

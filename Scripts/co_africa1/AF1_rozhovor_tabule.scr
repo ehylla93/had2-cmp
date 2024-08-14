@@ -1,0 +1,48 @@
+// AF2_rozhovor_02 - rozhovor mezi trema vojakama v hangaru
+// -------------------------------------------------------------------------------------------------------------
+
+Block {
+SaveGameValue(89, 2);
+FRAME af07;				FRM_FindFrame(af07, "AF1_07");
+FRAME af08;				FRM_FindFrame(af08, "AF1_08");
+FRAME af09;				FRM_FindFrame(af09, "AF1_09");
+INTEGER v_min		= 8;
+INTEGER v_max		= 30;
+INTEGER v_del		= 200;
+}
+
+Whenever begin_chat (_LoadGameValue(89) == 1){
+  SUBTITLES_SetOn(true);
+  FRM_MorphSpeechDelayed(af09, 05991018, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991019, v_min, v_max);
+  FRM_MorphSpeechDelayed(af08, 05991020, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991021, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991022, v_min, v_max);
+  FRM_MorphSpeechDelayed(af08, 05991023, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991024, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991025, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991026, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af09, 05991027, v_min, v_max);
+  FRM_MorphSpeechDelayed(af07, 05991028, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991029, v_min, v_max);
+  Delay(v_del);
+  FRM_MorphSpeechDelayed(af09, 05991030, v_min, v_max);
+  FRM_MorphSpeechDelayed(af08, 05991031, v_min, v_max);
+  FRM_MorphSpeechDelayed(af09, 05991032, v_min, v_max);
+  SUBTITLES_SetOn(false);
+}
+
+Whenever end_chat (_LoadGameValue(89) == 0){
+  block
+  {
+    FRM_MorphSpeech(af07, 0, 0, 0);
+    FRM_MorphSpeech(af08, 0, 0, 0);
+    FRM_MorphSpeech(af09, 0, 0, 0);
+    SUBTITLES_SetOn(false);
+  }
+  EndScript();
+}
+
+Label END:
+

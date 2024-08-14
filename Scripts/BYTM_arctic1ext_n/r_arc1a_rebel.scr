@@ -1,0 +1,565 @@
+// Sygurd
+
+Block
+{
+SetAlarmType(1023, False);
+
+frame dabing;			FRM_FindFrame(dabing, "dummy_rebel_dabing");
+frame OBJ;				FRM_FindFrame(OBJ, "dummy_objectives");
+frame showswamp;		FRM_FindFrame(showswamp, "seed_m_rakos24390");
+Frame SdKfZ;			FRM_FindFrame(SdKfZ, "n_SdKfZ_1");
+Frame tanks;			FRM_FindFrame(tanks, "n_tanks");
+Frame AImode2;			FRM_FindFrame(AImode2, "n_setAImode_2");
+Frame zone2;			FRM_FindFrame(zone2, "zone2");
+Frame timer;			FRM_FindFrame(timer, "n_timer_swamp");
+Frame reinf2;			FRM_FindFrame(reinf2, "n_reinf2");
+Frame sygurd_fail;		FRM_FindFrame(sygurd_fail, "dummy_obj4");
+Frame sygurd_timer;		FRM_FindFrame(sygurd_timer, "sygurd_timer");
+Frame obj9;				FRM_findFrame(obj9, "n_obj9");
+frame MyFRM;			FRM_GetMyFrame(MyFRM);
+
+integer a=1;
+integer b=0;	//b=1 if Sygurd choose swamp
+integer c;
+integer active=0;
+SetWhenever(PIR1, 0);
+SetWhenever(PIR2, 0);
+}
+
+HUMAN_SetOptimized(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath() 
+{
+SendSignal(sygurd_fail, 1);
+SendSignal(dabing, 15);
+SendSignal(obj9, 1);
+Block {
+DisableWhenevers(1);
+DisableSignals(1);
+}
+if(active==1)
+{
+SendSignal(OBJ, 9);		//Objective failed (Sygurd died)
+}
+else {
+printf("T3 active");
+SendSignal(tanks, 3);
+Delay(10000);
+printf("SdKfZ active");
+SendSignal(SdKfZ, 1);
+SendSignal(AImode2, 1);
+}
+goto END;
+}
+
+// ----------------------------------------
+
+Whenever PIR1 (_PlayerInRange(2))
+{
+active=1;
+HUMAN_SetAnim("", 0, 0, 0);
+SendSignal(sygurd_timer, 2);
+goto start;
+}
+
+Whenever PIR2 (_PlayerInRange(25))
+{
+SetWhenever(PIR2, 0);
+HUMAN_SETMODE_StandFast();
+SendSignal(dabing, 1);
+HUMAN_SetAnim("%%mava", 100, 5500, 0);
+Delay(4500);
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+SetWhenever(PIR1, 1);
+goto END;
+}
+
+Whenever PIR3 (_PlayerInRange(70))
+{
+SetWhenever(PIR3, 0);
+SetWhenever(PIR2, 1);
+SendSignal(sygurd_timer, 1);
+SendSignal(zone2, 1);
+goto END;
+}
+
+// ----------------------------------------
+
+OnSignal(1)
+{
+printf("Sygurd Sig1 received");
+Block {
+DisableSignals(1);
+DisableWhenevers(1);
+}
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+CheckpointJoin("Rebel_Joinn1", "Rebel_Joinn2");	
+HUMAN_Move("Rebel_Joinn2");
+CheckpointSeparate("Rebel_Joinn1", "Rebel_Joinn2");
+HUMAN_Suspend(1);
+goto END;
+}
+
+// ----------------------------------------
+
+OnSignal(2)
+{
+a=_LoadGameValue(4);
+If(a==1)
+{
+Block {
+b=1;
+SendSignal(MyFRM, 10);	//swamp
+}
+} else {
+SendSignal(timer, 2);
+SendSignal(MyFRM, 11);	//road
+}
+}
+
+// ----------------------------------------
+
+OnSignal(10)
+{
+SendSignal(dabing, 3);
+label loop_s10:
+HUMAN_TurnAtNearestPlayer();  delay(1400);
+goto loop_s10;
+}
+
+// ----------------------------------------
+
+OnSignal(3) {
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+HUMAN_Move("AlBert_1");
+
+SendSignal(dabing, 4);
+
+ label s3_a:
+   If (_PlayerInRange(9) ) 
+      {
+		HUMAN_Move("AlBert_2");
+		goto s3_b;
+      } else {
+		HUMAN_TurnAtNearestPlayer();
+        delay(150);
+        goto s3_a;
+      }
+
+ label s3_b:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("AlBert_3");
+		goto s3_c;
+      } else { 
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s3_b;
+      }
+
+ label s3_c:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("AlBert_4");
+		goto s3_d;
+      } else { 
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s3_c;
+      }
+
+ label s3_d:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("AlBert_5");
+		goto s3_e;
+      } else { 
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s3_d;
+      }
+
+ label s3_e:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("AlBert_6");
+		goto s3_f;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s3_e;
+      }
+
+ label s3_f:
+   If (_PlayerInRange(9)) 
+      {
+		HUMAN_Move("AlBert_7");
+		
+			 label s3_g:
+			   If (_PlayerInRange(9) ) 
+				  { 
+					Goto swamp;
+				  } else {
+					HUMAN_TurnAtNearestPlayer(); 
+					delay(150);
+					goto s3_g;
+				  }		
+		
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s3_f;
+      }
+}
+
+// ----------------------------------------
+
+//taking road
+OnSignal(11)
+{
+SendSignal(dabing, 5);
+label loop_s11:
+HUMAN_TurnAtNearestPlayer();	  delay(500);
+goto loop_s11;
+//continues with signal 5
+}
+
+// ----------------------------------------
+
+OnSignal(5) {
+Label s5_a:
+   If (_PlayerInRange(9) ) 
+      {
+		Delay(1000);
+		HUMAN_SETMODE_Stand();
+		HUMAN_SETMODE_Walk();
+		HUMAN_Move("Al_Bert_1");
+		SendSignal(dabing, 4);
+		goto s5_b;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_a;
+      }
+	  
+ label s5_b:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("Al_Bert_2");
+		goto s5_c;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_b;
+      }
+	  
+ label s5_c:
+   If (_PlayerInRange(9) )
+      {
+		HUMAN_Move("Al_Bert_3");
+		goto s5_d;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_c;
+      }
+
+ label s5_d:
+   If (_PlayerInRange(9))
+      {
+		HUMAN_SETMODE_Walk();
+		HUMAN_Move("Al_Bert_4");
+		HUMAN_SetAnim("%%Albert", 250, 250, 0);
+		Delay(7000);
+		HUMAN_SetAnim("", 250, 250, false);
+		
+		if(_RandomInt(2)==0)
+		{
+		printf("T3 active");
+		SendSignal(tanks, 3);
+		Delay(10000);
+		}
+		printf("SdKfZ active");
+		SendSignal(SdKfZ, 1);
+		SendSignal(AImode2, 1);
+		goto Incoming;
+		} else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_d;
+		}
+
+ label Incoming:
+		HUMAN_TurnAtNearestPlayer();
+		FRM_MorphSpeechDelayed(MyFRM, 90000096, 0, 30);		//"Enemy Contact!"
+		HUMAN_SETMODE_Stand();
+		HUMAN_SETMODE_Run();
+		HUMAN_SetAnim("%%zajatec", 500, 1000, true);
+		HUMAN_Move("Al_Bert_Wait");
+		HUMAN_SETMODE_Lie();
+		HUMAN_SetAnim("%%lezipanica",200,200,1);
+		SendSignal(reinf2, 1);
+      
+ Label loop_inc:
+ 		c=_LoadGameValue(7);
+		if(c==1) {
+		HUMAN_SETMODE_Stand();
+		HUMAN_SetAnim("", 200, 200, 0);
+		HUMAN_SETMODE_Run();
+		HUMAN_Move("Al_Bert_4");
+		HUMAN_SETMODE_Crouch();
+		goto s5_e;
+		}
+		else { Delay(2000); goto loop_inc; }
+
+ label s5_e:
+   If (_PlayerInRange(9) )
+      {
+		HUMAN_SETMODE_Stand();
+		HUMAN_SETMODE_Run();
+		FRM_MorphSpeechDelayed(MyFRM, 01990217, 0, 30);		//"Follow me."
+		HUMAN_Move("Al_Bert_5");
+		goto s5_f;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_e;
+      }
+
+ label s5_f:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("Al_Bert_6");
+		goto s5_g;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_f;
+      }
+
+ label s5_g:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_SETMODE_Walk();
+		HUMAN_Move("Al_Bert_7");
+        goto s5_h;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_g;
+      }
+
+ label s5_h:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("Al_Bert_8");
+        goto s5_i;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_h;
+      }
+	  
+ label s5_i:
+   If (_PlayerInRange(9) ) 
+      {
+		HUMAN_Move("Al_Bert_9");
+        goto s5_j;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s5_i;
+      }
+	  
+ label s5_j:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("Al_Bert_10");
+		HUMAN_SETMODE_Crouch();
+		goto NoSwamp;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(500);
+        goto s5_j;
+      }
+}
+
+// ----------------------------------------
+
+label start:
+SendSignal(dabing, 2);		//continues with Signal 2
+label loop_start:
+HUMAN_TurnAtNearestPlayer();  Delay(1500);
+goto loop_start;
+
+label NoSwamp:
+HUMAN_SETMODE_Walk();
+Delay(500);
+
+Label wait_Car_end:
+If (_PlayerInRange(8)) 
+{
+SendSignal(sygurd_fail, 1);
+SendSignal(OBJ, 4);
+Delay(4500);
+SendSignal(dabing, 10);
+Delay(1500);
+goto back; 
+}
+else {
+Delay(1500);
+goto wait_Car_end;
+}
+//Continues with Signal 4 received from dabing
+
+label swamp:
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_TurnAt(showswamp);
+delay(2000);
+HUMAN_SetAnim("(ukazovani", 400, 400, false);
+SendSignal(dabing, 6);
+Delay(3000);
+SendSignal(timer, 1);
+
+Label wait:
+Delay(2000); goto wait;
+//Continues with Signal 6 received from dabing
+
+label back:
+If (b==1) { goto back_swamp; }
+delay(30000);
+goto END;
+
+// ----------------------------------------
+
+// 4 is correct (dabing 10)
+OnSignal(4)
+{
+delay(5000);
+SendSignal(dabing, 30);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Walk();
+HUMAN_Move("Rebel_back");	
+HUMAN_SETMODE_Run();
+HUMAN_LookAround(2);
+Delay(5000);
+HUMAN_LookAround(0);
+HUMAN_Move("Rebel_Joinn1");
+CheckpointJoin("Rebel_Joinn1", "Rebel_Joinn2");	
+HUMAN_Move("Rebel_Joinn2");
+CheckpointSeparate("Rebel_Joinn1", "Rebel_Joinn2");
+HUMAN_Move("Rebel_hide");
+}
+
+label hide:
+If (!_PlayerInRange(25))
+{
+HUMAN_Suspend(True);
+goto END;
+}
+Else {
+Delay(2500);
+goto hide;
+}
+
+Label back_swamp:
+delay(30000);
+goto END;
+
+// ----------------------------------------
+
+OnSignal(9) {
+delay(5000);
+SendSignal(dabing, 31);
+SendSignal(sygurd_fail, 1);
+SendSignal(OBJ, 4);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+HUMAN_Move("back_swamp");
+CheckpointJoin("swamp_1", "swamp_2");
+HUMAN_Move("swamp_1");
+CheckpointSeparate("swamp_1", "swamp_2");
+HUMAN_Move("Rebel_Joinn1");
+CheckpointJoin("Rebel_Joinn1", "Rebel_Joinn2");	
+HUMAN_Move("Rebel_Joinn2");
+CheckpointSeparate("Rebel_Joinn1", "Rebel_Joinn2");
+HUMAN_Move("Rebel_hide");
+goto hide;
+}
+
+// ----------------------------------------
+
+OnSignal(6) {
+CheckpointJoin("swamp_1", "swamp_2");	
+delay(1000);
+
+ label s6_a:
+   If (_PlayerInRange(9) ) 
+      {
+		HUMAN_Move("Rebel_8");
+		CheckpointSeparate("swamp_1", "swamp_2");
+		SendSignal(dabing, 7);
+		goto s6_b;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s6_a;
+      }
+
+ label s6_b:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("Rebel_9");
+		goto s6_c;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s6_b;
+      }
+
+ label s6_c:
+   If (_PlayerInRange(9) ) 
+      { 
+		HUMAN_Move("Rebel_10");
+		CheckpointJoin("swamp_3", "swamp_4");
+		SendSignal(dabing, 8);
+		goto s6_d;
+      } else {
+		HUMAN_TurnAtNearestPlayer(); 
+        delay(150);
+        goto s6_c;
+      }	  
+
+ label s6_d:
+   If (_PlayerInRange(9) ) 
+      {
+		HUMAN_Move("Rebel_11");
+		HUMAN_SETMODE_Crouch();
+		delay(450);
+		
+		Label wait_Swamp_end:
+		If (_PlayerInRange(5)) 
+		{
+		SendSignal(dabing, 9);
+		Delay(6000);
+		SendSignal(sygurd_fail, 1);
+		SendSignal(OBJ, 4);
+		goto back;
+		} else {
+		HUMAN_TurnAtNearestPlayer(); 
+		Delay(1500);
+		goto wait_Swamp_end;
+      }
+	}
+}
+
+// ----------------------------------------
+
+Label END:

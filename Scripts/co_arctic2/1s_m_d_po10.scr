@@ -1,0 +1,19 @@
+////-------------vysilac signalu 1 od dveri m_d_po10--------------------------------------------------------
+
+Block {
+frame D1;		FRM_FindFrame(D1, "m_d_po10");
+frame D2;		FRM_FindFrame(D2, "m_d_po11");
+}
+
+OnUse()
+  {
+     frame p1s59;		FRM_FindFrame(p1s59,"p1s59");	//---------MUST BE IN HERE---------
+     SendSignal(p1s59,1);
+     Block
+        {
+           FRM_SetLightMap(D1, 5);
+           FRM_SetLightMap(D2, 5);
+        }
+  }
+
+

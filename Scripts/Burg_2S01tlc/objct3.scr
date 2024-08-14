@@ -1,0 +1,53 @@
+// Obj 3 - Rescue the rest of SAS Unit
+// ------------------------------------
+
+Block
+{
+Frame Prisoner1;		FRM_FindFrame(Prisoner1,"Cpl. Arthur Muncie");
+Frame Prisoner2;		FRM_FindFrame(Prisoner2,"Cpl. Herbert Bennett");
+Frame Prisoner3;		FRM_FindFrame(Prisoner3,"Cpl. Simon Finch");
+
+SetWhenever(Prisoners_Rescued, 0);
+}
+
+Whenever Active (_SignalReceived(1))
+{
+SetWhenever(Prisoners_Rescued, 1);
+goto END;
+}
+
+Whenever Prisoner_Killed (((_Actor_GetState(Prisoner1) == 0) OR (_Actor_GetState(Prisoner2) == 0)) OR (_Actor_GetState(Prisoner3) == 0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999706);
+Delay(3500);
+SetWhenever(Prisoners_Rescued, 0);
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(4, 4);
+SetObjectiveStatus(5, 4);
+SetObjectiveStatus(6, 4);
+SetObjectiveStatus(7, 4);
+SetObjectiveStatus(8, 4);
+Delay(200);
+SetObjectiveStatus(3, 2);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Whenever Prisoners_Rescued (_SignalReceived(2))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59999706);
+SetObjectiveStatus(9, 0);
+Delay(3500);
+SetObjectiveStatus(3, 1);
+SUBTITLES_SetText(17993404);
+Delay(3500);
+SUBTITLES_SetOn(0);
+goto END;
+}
+
+
+
+Label END:

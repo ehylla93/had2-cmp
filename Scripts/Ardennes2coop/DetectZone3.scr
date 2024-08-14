@@ -1,0 +1,27 @@
+// ----------------------Zone3----------------------
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone3");
+Frame E02;		FRM_FindFrame(E02, "EG02");
+Frame E07;		FRM_FindFrame(E07, "EG07");
+Frame E10;		FRM_FindFrame(E10, "EG10");
+Frame E24;		FRM_FindFrame(E24, "EG24");
+Frame E29;		FRM_FindFrame(E29, "EG29");
+Frame E36;		FRM_FindFrame(E36, "EG36");
+Frame E45;		FRM_FindFrame(E45, "EG45");
+}
+goto end;
+
+Whenever Yes(_PlayerInBox(detect))
+{
+sendsignal (E02,1);
+sendsignal (E07,1);
+sendsignal (E10,1);
+sendsignal (E24,1);
+sendsignal (E29,1);
+sendsignal (E36,1);
+sendsignal (E45,1);
+goto end;
+}
+
+label end:

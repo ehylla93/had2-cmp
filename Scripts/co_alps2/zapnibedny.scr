@@ -1,0 +1,27 @@
+// Crates
+
+block {
+frame b11;	FRM_FindFrame(b11,"k_nosbedna_11");
+frame b10;	FRM_FindFrame(b10,"k_nosbedna_10");
+frame b6;	FRM_FindFrame(b6,"k_nosbedna_6");
+frame b7;	FRM_FindFrame(b7,"k_nosbedna_7");
+frame b8;	FRM_FindFrame(b8,"k_nosbedna_8");
+frame b4;	FRM_FindFrame(b4,"k_nosbedna_4");
+frame b5;	FRM_FindFrame(b5,"k_nosbedna_5");
+frame b2;	FRM_FindFrame(b2,"k_nosbedna_2");
+frame b3;	FRM_FindFrame(b3,"k_nosbedna_3");
+frame b13;	FRM_FindFrame(b13,"k_nosbedna_13");
+frame b14;	FRM_FindFrame(b14,"k_nosbedna_14");
+
+FRM_SetOn(b6, 1);
+FRM_SetOn(b7, 1);
+FRM_SetOn(b8, 1);
+FRM_SetOn(b4, 1);
+FRM_SetOn(b5, 1);
+FRM_SetOn(b2, 1);
+FRM_SetOn(b3, 1);
+FRM_SetOn(b11, 1);
+FRM_SetOn(b10, 1);
+FRM_SetOn(b13, 1);
+FRM_SetOn(b14, 1);
+}

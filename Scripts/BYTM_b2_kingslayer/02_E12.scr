@@ -1,0 +1,56 @@
+// 02_E12 MG Gunner
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(128,0);
+
+Frame this;		FRM_GetMyFrame(this);
+Frame Mg1;		FRM_FindFrame(Mg1,"Mg42_01");
+Frame E06;		FRM_FindFrame(E06, "02_E06");
+
+FRM_SwitchFaceTexture(this, "e_f054");
+
+HUMAN_SETSIGHTRANGE(25);
+HUMAN_SETHEARRANGE(25);
+}
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("02_E12 dead");
+SendSignal(E06, 1);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 200, 200, 0);
+SendSignal(E06, 1);
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Mg1, 1);
+HUMAN_BoardVehicle("Mg42_01",  1, 0);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+}
+
+OnSignal(1)
+{
+HUMAN_WeaponOnArm(0);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

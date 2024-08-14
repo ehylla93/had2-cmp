@@ -1,0 +1,159 @@
+//coop only
+
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(60);
+HUMAN_SETAIMODE_Defensive();
+
+
+integer suspend;
+Integer endx;		endx=0;
+integer aievent;
+integer a;		a=1;
+integer alarmpos;	alarmpos=0;
+
+frame cum1;		FRM_FindFrame(cum1, "zbvstup1cum");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f024");
+}
+
+
+
+
+HUMAN_Suspend(1);
+suspend=1;
+
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+
+HUMAN_Suspend(0);
+SetAlarmType(1023,0);
+SetAlarmType(1015,1);
+HUMAN_SetAnim("%%sedila1", 300, 300, 1);
+goto end;
+}
+
+
+
+
+
+//----------------------------------------------------------------------------------------
+
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("zb_vstup1 alrm:",aievent);
+
+}
+
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	HUMAN_SetAnim("", 90, 90, 0);
+	block
+	{
+	HUMAN_SETSIGHTRANGE(40);
+	endx=1;
+	}
+	EndScript();
+	}
+
+
+
+
+
+if (aievent==4)
+{
+
+SetAlarmType(4,0);
+if (_PlayerInRange(5)==1)
+{
+	HUMAN_SetAnim("", 90, 90, 0);
+	block
+	{
+	HUMAN_SETSIGHTRANGE(40);
+	endx=1;
+	}
+	EndScript();
+}
+HUMAN_SetAlarm(0);
+
+SetAlarmType(4,1);
+goto end;
+}
+
+
+	HUMAN_SetAnim("", 90, 90, 0);
+	block
+	{
+	HUMAN_SETSIGHTRANGE(40);
+	endx=1;
+	}
+	EndScript();
+
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarmDone()
+{
+
+
+
+SetAlarmType(1023,0);
+SetAlarmType(503,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_Move("zb_vstup1");
+HUMAN_TurnAt(cum1);
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+

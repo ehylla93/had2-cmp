@@ -1,0 +1,94 @@
+//n_E23
+//soldier in basement
+
+block
+{
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(60);
+
+integer aievent;
+integer spawn;
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+frame CC;		FRM_FindFrame(CC, "dummy_OBJ1_sender");
+
+EnableSignal(2, false);
+SaveGameValue(17, 1);
+}
+
+HUMAN_Suspend(1);
+spawn = _RandomInt(2);
+if(spawn==0)
+{ EnableSignal(1, false); SaveGameValue(17, 0); printf("E23(basement) inactive"); }
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+aievent = _GetAlarmType();
+PrintfNumber("E23 alarm:",aievent);
+}
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+FRM_MorphSpeechDelayed(MyFRM, 0, 0, 0);
+SendSignal(CC, 1);
+DisableWhenevers(1);
+DisableSignals(1);
+}
+EndScript();
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_SetAnim("%%nuda1", 500, 500, 1);
+EnableSignal(2, true);
+}
+
+OnSignal(2)
+{
+EnableSignal(2, false);
+FRM_MorphSpeechDelayed(MyFRM, 90004041, 15, 45);		//"Is anybody out there?"
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_WeaponOnArm(1);
+HUMAN_SETMODE_Crouch();
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+label end:

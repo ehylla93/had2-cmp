@@ -1,0 +1,50 @@
+Block
+{
+	FRAME ge2_1;		FRM_FindFrame(ge2_1, "german2_1");
+	FRAME ge2_2;		FRM_FindFrame(ge2_2, "german2_2");
+	FRAME ge2_3;		FRM_FindFrame(ge2_3, "german2_3");
+	FRAME ge2_4;		FRM_FindFrame(ge2_4, "german2_4");
+	FRAME ge2_5;		FRM_FindFrame(ge2_5, "german2_5");
+	FRAME ge2_6;		FRM_FindFrame(ge2_6, "german2_6");
+	FRAME ge2_7;		FRM_FindFrame(ge2_7, "german2_7");  
+	FRAME ge2_8;		FRM_FindFrame(ge2_8, "german2_8");
+	FRAME ge2_9;		FRM_FindFrame(ge2_9, "german2_9");
+
+	FRAME ge5_4;		FRM_FindFrame(ge5_4, "ge5_4");
+	FRAME ge5_5;		FRM_FindFrame(ge5_5, "ge5_5");
+	Frame echo2;		FRM_FindFrame(echo2, "echo2");
+	Frame mk2;			FRM_FindFrame(mk2, "mk2");
+	FRAME sw3;			FRM_FindFrame(sw3, "switch3");
+	Frame PARTY;		FRM_FindFrame(PARTY, "m_radiog02");
+}
+printf("switch 2 initialized");
+
+OnSignal(1)	
+{
+	printf("switch 2 activated");
+	FRM_SetOn(mk2, true);
+	SendSignal(ge2_1, 1);
+	  Delay(1000);
+	SendSignal(ge2_2, 1);
+	  Delay(4000);
+	SendSignal(ge2_3, 1);
+	  Delay(2000);
+	SendSignal(ge2_4, 1);
+	  Delay(3000);
+	SendSignal(ge2_5, 1);
+	  Delay(3000);
+	SendSignal(ge2_6, 1);
+	  Delay(2000);
+	SendSignal(ge2_7, 1);
+	  Delay(2000);
+	SendSignal(ge2_8, 1);
+	  Delay(3000);
+	SendSignal(ge2_9, 1);
+	SendSignal(ge5_4, 1);
+	SendSignal(ge5_5, 1);
+	FRM_SetOn(echo2, True);
+	Delay(29000);
+	SendSignal(PARTY, 3);
+	SendSignal(sw3, 1);
+	EndScript();
+}

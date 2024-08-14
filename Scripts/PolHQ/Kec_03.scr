@@ -1,0 +1,74 @@
+// Kecy mezi SF_G11 a SF_G12 na nadvori
+//--------------------------------------
+
+Block
+{
+Frame G11;	FRM_FindFrame(G11, "SF_G11");
+Frame G12;	FRM_FindFrame(G12, "SF_G12");
+}
+
+
+
+Whenever Aktivace (_SignalReceived(1))
+{
+goto Kecam;
+}
+
+
+Whenever Alarm (_SignalReceived(2))
+{
+goto END;
+}
+
+//------------------------------------------------
+
+goto END;
+
+
+Label Kecam:
+Delay(20000);
+FRM_MorphSpeechDelayed(G11, 07991515, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991516, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991517, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991518, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991519, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991520, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991521, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991522, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991523, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991524, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991525, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991526, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991527, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991528, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991529, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991530, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991531, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991532, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991533, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 07991534, 5, 30);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 07991535, 5, 30);
+goto Kecam;
+
+
+Label END:

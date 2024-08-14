@@ -1,0 +1,40 @@
+//outside guard
+block{
+	Frame ge_1b02;					FRM_FindFrame(ge_1b02, "german1b02");
+	Frame me;						FRM_GetMyFrame(me);
+
+	SetAlarmType(1,1); //close shooting
+	SetAlarmType(2,1); //shooting (enemy)
+	SetAlarmType(4,0); //hears steps
+	SetAlarmType(8,1); //sounds from
+	SetAlarmType(16,1); //explosion
+	SetAlarmType(32,1); //see
+	SetAlarmType(64,1); //gets hurt
+	SetAlarmType(128,1); //from script
+	SetAlarmType(256,1); //friendly fire
+	SetAlarmType(512,1); //sees dead body
+
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETAIMODE_Defensive();
+	HUMAN_SETMODE_Stand();
+}
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+	HUMAN_SETMODE_Run();
+	HUMAN_SETMODE_Guard();
+	HUMAN_SETAIMODE_Defensive();
+EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_Move("w1");
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Run();
+	HUMAN_TurnAtNearestPlayer();
+}

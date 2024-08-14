@@ -1,0 +1,5 @@
+// Particles on Objects
+// -----------------------------------------------------------------
+
+Frame wreck;		FRM_FindFrame(wreck, "Panzer_Vrak_01.Mesh04");
+FRM_CreateParticle(95, wreck);

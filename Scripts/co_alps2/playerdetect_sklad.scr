@@ -1,0 +1,25 @@
+
+Block {
+Frame al21;				Frm_Findframe (al21,"al2_21");
+frame playerdetect1;	FRM_FindFrame(playerdetect1,"playerdetect_sklad1");
+setwhenever(range,0);
+}
+
+goto end;
+
+OnSignal(2)
+{
+setwhenever(range,1);
+delay (400);
+SendSignal(playerdetect1,2);
+goto end;
+}
+
+Whenever range(_PlayerInRange(4))
+{
+SendSignal (al21,2);
+goto end;
+}
+
+Label end:
+

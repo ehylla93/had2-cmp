@@ -1,0 +1,19 @@
+//Spawnzone 2
+
+frame MyFRM;	FRM_GetMyFrame(MyFRM);
+
+MP_EnableSpawnZone("zone2", 2);		//"2"
+goto end;
+
+OnSignal(1)
+{
+	EnableSignal(1, false);
+	SUBTITLES_SetOn(True);
+	SUBTITLES_SetText(59995027);	//"NEW RESPAWN ZONE AVAILABLE!"
+	Delay(4000);
+	SUBTITLES_SetOn(False);
+	MP_EnableSpawnZone("zone2", 1);
+	EndScript();
+}
+
+Label end:

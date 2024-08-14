@@ -1,0 +1,18 @@
+// Sniperi
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Sn1;		FRM_FindFrame(Sn1,"SP_G01");
+Frame Sn2;		FRM_FindFrame(Sn2,"SP_G03");
+Frame Sn3;		FRM_FindFrame(Sn3,"SP_G04");
+}
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever Start (_SignalReceived(1))
+{
+SendSignal(Sn1, 1);
+SendSignal(Sn2, 1);
+SendSignal(Sn3, 1);
+EndScript();
+}

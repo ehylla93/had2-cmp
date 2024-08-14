@@ -1,0 +1,24 @@
+block
+{
+Frame ridic;		FRM_FindFrame(ridic, "opel_driver");	
+SetWhenever(go, 0);	
+}
+
+
+Whenever go(_PlayerInRange(3))
+{
+SendSignal (ridic,7);
+goto end;
+}
+
+
+SetWheneverTime(go, 200);
+
+
+Whenever test(_SignalReceived(1))
+{
+SetWhenever(go, 1);
+}
+
+
+label end:

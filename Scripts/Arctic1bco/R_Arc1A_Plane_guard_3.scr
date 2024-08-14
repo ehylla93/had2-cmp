@@ -1,0 +1,110 @@
+
+Block
+  {
+     frame GP1;			FRM_FindFrame(GP1, "Plane_Guard_1");
+     frame GP2;			FRM_FindFrame(GP2, "Plane_Guard_2");
+     frame GP3;			FRM_FindFrame(GP3, "Plane_Guard_3");
+     frame GP4;			FRM_FindFrame(GP4, "Plane_Guard_4");
+     frame Dabing3_1;		FRM_FindFrame(Dabing3_1, "dummy_dabing3_1");
+     frame Dabing1_2;		FRM_FindFrame(Dabing1_2, "dummy_dabing1_2");
+     frame Dabing3_4;		FRM_FindFrame(Dabing3_4, "dummy_dabing3_4");
+     frame MyFRM;		FRm_GetMyFrame(MyFRM);
+
+     integer AIEvent;		AIEvent = 99;
+
+     SetAlarmType(1023, True);
+     SetAlarmType(8, False);
+     
+     HUMAN_SETMODE_Walk();
+     HUMAN_SETAIMODE_Defensive();
+  }
+
+  HUMAN_Suspend(True);				
+  Goto TheEnd;
+  Whenever A (_PlayerInRange(30);)			
+  {							
+    HUMAN_Suspend(False);	
+    HUMAN_Move("PG3_1");
+    HUMAN_TurnAt(GP4);
+// 01990262 No tak, pospÏö si, m·me zpoûdÏnÌ. Zn·ö Karla, ten zase bude mÌt ¯eËÌ.
+// 01990263 Uû bÏûÌm, jen jsem d·val vodu na kamna. 
+
+// 01990264 Brr, to je zima. J· si na to po¯·d nem˘ûu zvyknout.
+// 01990265 Zaûil jsem horöÌ. Tebe to taky Ëek·. Jak dlouho tady vlastnÏ m·ö b˝t?
+// 01990266 Uû jen necel˝ mÏsÌc.
+// 01990267 Tak to m·ö dobrÈ, j· jeötÏ vÌce neû p˘l roku. Ale ty mrazy co majÌ b˝t do konce t˝dne si jeötÏ uûijeö.
+    SendSignal(dabing3_4, 1);		
+    Delay(2800);
+    HUMAN_Move("PG3_2");	
+    HUMAN_SETSIGHTRANGE(37);
+    HUMAN_SETHEARRANGE(50);  
+    HUMAN_Move("PG3_3");	
+    HUMAN_Move("PG3_4");		
+    HUMAN_TurnAt(GP1);	
+    SendSignal(dabing3_1, 1);
+    SendSignal(dabing1_2, 2);	// dabing 1_2 nebude
+    HUMAN_SetAnim("%%rozhovor3", 400, 400, True);
+    Printf("Ahoj K·rle, vypad·te jako dva rampouchy.");	 
+    Delay(2500);
+    Printf("My v·s teda jdeme vyst¯Ìdat.");
+    Delay(1000);
+  }
+
+OnSignal(11)
+  {
+    Printf("---------------------PG3 11 received");
+    HUMAN_SetAnim("%%kecy1", 400, 400, True);
+    Printf("Douf·m ûe to je poslednÌ hlÌdka. M·jÌ to tady p¯ijet uklidit.");
+    Delay(2500);
+    Printf("Jo abych nezapomÏl, postavil jsem v·m vodu na Ëaj, tak pohnÏte aù to nevyv¯e.");
+    HUMAN_SetAnim("%%rozhovor", 400, 400, True);
+    HUMAN_SetOptimized(0);
+    Delay(2000);
+    HUMAN_TurnAt(GP1);	
+    Delay(2000);
+    HUMAN_TurnAt(GP1);	
+    Delay(2000);
+    HUMAN_SetAnim("", 0, 0, False);
+    HUMAN_TurnAt(GP1);	
+    Delay(2000);
+    HUMAN_TurnAt(GP1);	
+    Delay(2000);
+    HUMAN_TurnAt(GP1);
+    HUMAN_SetOptimized(2);	
+  }	
+
+OnAlarm()
+{
+  SendSignal(dabing3_1, 2);	// ruöÌ dabing
+  SendSignal(dabing3_4, 2);	// ruöÌ dabing
+  HUMAN_SETSIGHTRANGE(49);
+  HUMAN_SETHEARRANGE(60);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(32);
+  HUMAN_SETHEARRANGE(45);
+  SetAlarmType(1023, True);	
+  SetAlarmType(8, False);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_Move("PG3_4");			
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  Goto TheEnd;
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  SendSignal(dabing3_1, 2);	// ruöÌ dabing
+  SendSignal(dabing3_4, 2);	// ruöÌ dabing
+  EndScript();
+}
+
+Label TheEnd:

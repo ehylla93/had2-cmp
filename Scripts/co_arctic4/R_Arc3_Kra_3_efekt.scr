@@ -1,0 +1,14 @@
+
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+integer RND;
+
+RND = _RandomInt(100) + 1;
+
+OnSignal(1)
+{
+  Delay(RND);
+  FRM_CreateParticle(69, MyFRM);
+  Delay(RND);
+  FRM_CreateParticle(69, MyFRM);
+  EndScript();
+}

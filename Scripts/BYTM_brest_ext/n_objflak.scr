@@ -1,0 +1,56 @@
+// obj9 FLAKs
+
+block
+{
+Frame expl1;	FRM_FindFrame(expl1, "n_explflak");
+Frame expl2;	FRM_FindFrame(expl2, "n_explflak2");
+Frame expl3;	FRM_FindFrame(expl3, "n_explflak3");
+Frame expl4;	FRM_FindFrame(expl4, "n_explflak4");
+frame obj;		FRM_FindFrame(obj,"objectyves");
+SetWhenever(ne,0);
+SetWhenever(jo,0);
+
+integer jeb;	jeb=0;
+}
+
+Whenever jo((_ACTOR_GetState(expl1)==1) and (_ACTOR_GetState(expl2)==1) and (_ACTOR_GetState(expl3)==1) and (_ACTOR_GetState(expl4)==1))
+{
+block
+{
+printf ("Explosives planted on FLAKs");
+SendSignal(obj, 15);
+SetWhenever(ne,1);
+}
+if (jeb==0)
+{
+jeb=1;
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(55999602); //"OBJECTIVE ACCOMPLISHED: EXPLOSIVES PLACED NEAR ALL ANTI-AIRCRAFT GUNS"
+delay (5000);
+SUBTITLES_SetOn(0);
+}
+goto end;
+}
+
+
+Whenever ne((_ACTOR_GetState(expl1)==0) or (_ACTOR_GetState(expl2)==0) or (_ACTOR_GetState(expl3)==0) or (_ACTOR_GetState(expl4)==0))
+{
+block
+{
+printf ("Explosives removed on FLAKs");
+SendSignal(obj, 16);
+SetWhenever(jo,1);
+}
+goto end;
+}
+
+OnSignal(1)
+{
+SetWhenever(jo,1);
+SendSignal(expl1, 1);
+SendSignal(expl2, 1);
+SendSignal(expl3, 1);
+SendSignal(expl4, 1);
+}
+
+label end:

@@ -1,0 +1,56 @@
+// BU1_17_18_speech - speech dummy for BU1_17, BU1_18
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame bu1_17;
+	FRM_FindFrame(bu1_17, "BU1_17");
+Frame bu1_18;
+	FRM_FindFrame(bu1_18, "BU1_18");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnSignal(1)	// signal received from BU1_17
+{
+	GoTo rozhovor;
+}
+
+OnSignal(2)	// received from BU1_17, BU1_18 on death or on alarm
+{
+	EndScript();
+}
+
+OnSignal(3)	// signal received from BU1_17
+{
+	GoTo rozhovor2;
+}
+// -------------------------------------------------------------------------------------------------------------
+GoTo end;
+
+Label rozhovor:
+	FRM_MorphSpeechDelayed(bu1_17, 12992434, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992435, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_17, 12992436, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992437, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_17, 12992438, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992439, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_17, 12992440, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992441, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992442, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_17, 12992443, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992444, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_17, 12992445, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992446, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_17, 12992447, 3, 20);
+	SendSignal(bu1_17, 1);
+	GoTo end;
+
+Label rozhovor2:
+	FRM_MorphSpeechDelayed(bu1_17, 12992448, 3, 20);
+	FRM_MorphSpeechDelayed(bu1_18, 12992449, 3, 20);
+	SendSignal(bu1_17, 2);
+	Delay(500);
+	SendSignal(bu1_18, 3);
+	GoTo end;
+
+Label end:

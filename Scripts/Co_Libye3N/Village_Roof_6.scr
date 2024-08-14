@@ -1,0 +1,76 @@
+Block
+{
+     Integer  unsuspend_range  = 10; 
+     Integer  alarm_sight_range = 180; 
+     // -------------------------------------------------------------------------------------------------------------
+     // Alarm and AI event settings
+     // 1   - blizka strelba    2   - strelba     4     - kroky                    8     - zvuky (OnUse)    16   - exploze
+     // 32 - vidim                 64 - zraneni    128 - smrtelny vykrik    256 - friendly fire         512 - vidim mrtvolu
+     // -------------------------------------------------------------------------------------------------------------
+      SetAlarmType( 1023, false );
+      SetAlarmType( 255, true );
+}
+
+// ----------------------------------------------------------------------------------------------------
+// AKTIVACE ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarm()
+{
+      Block { DisableSignals(1);  DisableWhenevers(1); }
+      HUMAN_SETSIGHTRANGE( alarm_sight_range );
+      EndScript();
+}
+
+// ----------------------------------------------------------------------------------------------------
+// KONEC ALARMU
+// ----------------------------------------------------------------------------------------------------
+OnAlarmDone()
+{
+      Block
+      {	
+          SetAlarmType( 1023, false );
+          SetAlarmType( 255, true );
+      }
+      GoTo Action;
+}
+
+DisableWhenevers( 1 );
+// ----------------------------------------------------------------------------------------------------
+// UNSUSPENDOVANI
+// ----------------------------------------------------------------------------------------------------
+Whenever "player_in_range" (_PlayerInRange(unsuspend_range) )
+{
+       HUMAN_Suspend( false );
+       GoTo Action;	
+}
+
+
+   // ----------------------------------------------------------------------------------------------------
+   // INIT
+   // ----------------------------------------------------------------------------------------------------
+   HUMAN_Suspend(true);  
+   Delay(300);  // Pro jistotu, at se stihnou nastavit GameValue   
+   Block
+   {
+       unsuspend_range  = _LoadGameValue( 1 );
+       alarm_sight_range = _LoadGameValue( 2 );
+       SetWheneverTime("player_in_range", 3000);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETSIGHTRANGE( alarm_sight_range );
+   }
+   HUMAN_SETMODE_Stand();
+   DisableWhenevers( 0 );
+   GoTo  End;
+
+// ----------------------------------------------------------------------------------------------------
+Label Action:
+    HUMAN_SetOptimized( 2 );
+    HUMAN_SETMODE_Stand();
+    HUMAN_LookAround( 4 );
+    HUMAN_SETMODE_Guard();
+    HUMAN_Move( "Roof6_1" ); 
+    HUMAN_Move( "Roof6_2" ); 
+    HUMAN_Move( "Roof6_3" ); 
+    HUMAN_Move( "Roof6_4" ); 
+
+Label End:

@@ -1,0 +1,66 @@
+// Sniper
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame hlidam;	FRM_FindFrame(hlidam,"La_tiger_2");
+
+SetAlarmType(1,0); //blizka strelba
+SetAlarmType(2,0); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,0); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //zeskriptu
+SetAlarmType(256,0); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+HUMAN_SetAlarm(0);
+HUMAN_TurnAt(hlidam);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SETHEARRANGE(20);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+HUMAN_WeaponUp(1);
+HUMAN_TurnAt(hlidam);
+goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SETHEARRANGE(20);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Lie();
+HUMAN_SetSniper(1, 5);
+HUMAN_TurnAt(hlidam);
+HUMAN_WeaponUp(1);
+Delay(250);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

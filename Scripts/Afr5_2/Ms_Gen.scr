@@ -1,0 +1,34 @@
+// MISSION Generator / Random objects + Start of mission
+// -------------------------------------------------------
+
+Block
+{
+Frame Al1;	FRM_FindFrame(Al1, "Alarmer1");
+Frame Al2;	FRM_FindFrame(Al2, "Alarmer2");
+
+// **** MAIN SETTING ****
+// 1 = ON | 0 = OFF
+
+Integer S1; // GLOBAL ALARM
+		S1 = 1;
+}
+
+// -------------------------------------------------------
+
+Whenever Player_In (_MP_IsTeamMemberInRange(1, 1000))
+{
+Delay(2000);
+
+If(S1 == 0)
+{
+SendSignal(Al1, 1);
+SendSignal(Al2, 1);
+}
+
+Delay(4000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993001);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

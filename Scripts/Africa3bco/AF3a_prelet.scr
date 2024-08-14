@@ -1,0 +1,129 @@
+// AF1_prelet - BF109s flying over the airport
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME let01;				FRM_FindFrame(let01, "la_Bf109 trop_01");
+  FRAME let02;				FRM_FindFrame(let02, "la_Bf109 trop_02");
+  FRAME s1;				FRM_FindFrame(s1, "s_letadlo1");
+  FRAME s2;				FRM_FindFrame(s2, "s_letadlo2");
+
+  INTEGER rnd				= 0;
+
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ORGANIZER:
+  gosub RND_DEL;
+  gosub PRELET_01;
+  gosub RND_DEL;
+  gosub PRELET_02;
+  gosub RND_DEL;
+  gosub PRELET_03;
+  gosub RND_DEL;
+  gosub PRELET_04;
+goto END;
+
+Label PRELET_01:
+  printf("FLYOVER 01");
+  block
+  {
+    FRM_SetOn(let01, true);
+    FRM_SetOn(let02, true);
+    FRM_SetOn(s1, true);
+    FRM_SetOn(s2, true);
+  }
+  FRM_WatchTrack(let01, "prelet_01");
+  FRM_SoundAdjustDoppler(s1, -15, 4, 100);
+  Delay(500);
+  FRM_WatchTrack(let02, "prelet_02");
+  FRM_SoundAdjustDoppler(s2, -15, 4, 100);
+  Delay(40000);
+  block
+  {
+    FRM_SetOn(let01, false);
+    FRM_SetOn(let02, false);
+    FRM_SetOn(s1, false);
+    FRM_SetOn(s2, false);
+  }
+return;
+
+Label PRELET_02:
+  block
+  {
+    printf("FLYOVER 02");
+    FRM_SetOn(let01, true);
+    FRM_SetOn(let02, true);
+    FRM_SetOn(s1, true);
+    FRM_SetOn(s2, true);
+  }
+  FRM_SoundAdjustDoppler(s2, -15, 4, 100);
+  FRM_WatchTrack(let01, "prelet_03");
+  Delay(1500);
+  FRM_SoundAdjustDoppler(s2, -15, 4, 100);
+  FRM_WatchTrack(let02, "prelet_03");
+  Delay(20000);
+  block
+  {
+    FRM_SetOn(let01, false);
+    FRM_SetOn(let02, false);
+    FRM_SetOn(s1, false);
+    FRM_SetOn(s2, false);
+  }
+return;
+
+Label PRELET_03:
+  block
+  {
+    printf("FLYOVER 03");
+    FRM_SetOn(let01, true);
+    FRM_SetOn(s1, true);
+  }
+  FRM_SoundAdjustDoppler(s2, -15, 4, 100);
+  FRM_WatchTrack(let01, "prelet_04");
+  Delay(40000);
+  block
+  {
+    FRM_SetOn(let01, false);
+    FRM_SetOn(s1, false);
+  }
+return;
+
+Label PRELET_04:
+  block
+  {
+    printf("FLYOVER 04");
+    FRM_SetOn(let01, true);
+    FRM_SetOn(let02, true);
+    FRM_SetOn(s1, true);
+    FRM_SetOn(s2, true);
+  }
+  FRM_SoundAdjustDoppler(s1, -15, 4, 100);
+  FRM_WatchTrack(let01, "prelet_05");
+  Delay(500);
+  FRM_SoundAdjustDoppler(s2, -15, 4, 100);
+  FRM_WatchTrack(let02, "prelet_06");
+  Delay(50000);
+  block
+  {
+    FRM_SetOn(let01, false);
+    FRM_SetOn(let02, false);
+    FRM_SetOn(s1, false);
+    FRM_SetOn(s2, false);
+  }
+return;
+
+//Label CHOOSE_ID:
+// rnd = _RandomInt(4);
+//  if((rnd == 0) AND (!pr1)) { act_prelet = 1; pr1 = 1; }
+//  if((rnd == 1) AND (!pr2)) { act_prelet = 2; pr2 = 1; }
+//  if((rnd == 2) AND (!pr3)) { act_prelet = 3; pr3 = 1; }
+//  if((rnd == 3) AND (!pr4)) { act_prelet = 4; pr4 = 1; }
+//return;
+
+Label RND_DEL:
+  rnd = _RandomInt(60000) + 90000;
+  Delay(rnd);
+return;
+
+LABEL END:

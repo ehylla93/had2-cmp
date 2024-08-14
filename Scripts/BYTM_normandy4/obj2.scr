@@ -1,0 +1,73 @@
+// Objective 2: "Team must gather at the entrance to the underground."
+
+Frame sound1;	FRM_FindFrame(sound1,"success_obj");
+
+SetWhenever("PIR", 0);
+
+Integer obj1=0;		//Entrance
+Integer obj3=0;		//Radio station
+Integer obj4=0;		//Documents
+Integer a=0;
+
+FRM_SetOn(sound1, 0);
+
+goto end;
+
+
+Whenever "PIR" (_MP_AllTeamMembersAreInRange(1, 5))
+{
+DisableSignals(1);
+DisableWhenevers(1);
+FRM_SetOn(sound1, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(01990206); 	//"OBJECTIVE ACCOMPLISHED: SQUAD ASSEMBLED AT THE ENTRANCE."
+Delay(5000);
+SUBTITLES_SetOn(0);
+Delay(3000);
+SetObjectiveStatus(2, 1);
+EndScript();
+}
+
+//Find entrance complete
+OnSignal(1)
+{
+SetObjectiveStatus(2, 4);
+obj1=1;
+}
+
+//Radio station complete
+OnSignal(2)
+{
+obj3=1;
+}
+
+//documents complete
+OnSignal(3)
+{
+obj4=1;
+}
+
+//documents lost
+OnSignal(4)
+{
+SetWhenever("PIR", 0);
+obj4=0;
+}
+
+if((obj1==1) AND (obj3==1) AND (obj4==1))
+{
+if(a==0) {
+a=1;
+SetObjectiveStatus(2, 0);
+//DisableSignals(1);
+Delay(5000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(01010203); 	//"NEW OBJECTIVE: ASSEMBLE THE SQUAD AT THE ENTRANCE."
+Delay(5000);
+SUBTITLES_SetOn(0);
+}
+SetWhenever("PIR", 1);
+SetWheneverTime("PIR", 2000);
+}
+
+label end:

@@ -1,0 +1,59 @@
+// obj6 Radios
+
+block
+{
+Frame expl1;	FRM_FindFrame(expl1, "n_explradio");
+Frame expl2;	FRM_FindFrame(expl2, "n_explradio2");
+Frame expl3;	FRM_FindFrame(expl3, "n_explradio3");
+Frame expl4;	FRM_FindFrame(expl4, "n_explradio4");
+Frame expl5;	FRM_FindFrame(expl5, "n_explradio5");
+frame obj;		FRM_FindFrame(obj,"objectyves");
+SetWhenever(ne,0);
+SetWhenever(jo,0);
+
+SetActorState(expl1, 3);SetActorState(expl2, 3);
+SetActorState(expl3, 3);SetActorState(expl4, 3);
+SetActorState(expl5, 3);
+
+integer jeb;	jeb=0;
+}
+
+Whenever jo((_ACTOR_GetState(expl1)==1) and (_ACTOR_GetState(expl2)==1) and (_ACTOR_GetState(expl3)==1) and (_ACTOR_GetState(expl4)==1) and (_ACTOR_GetState(expl5)==1))
+{
+block
+{
+printf ("Explosives planted on Radios");
+SendSignal(obj, 9);
+SetWhenever(ne,1);
+}
+if (jeb==0)
+{
+jeb=1;
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999711); //"OBJECTIVE ACCOMPLISHED: RADIO STATION DESTROYED"
+delay (5000);
+SUBTITLES_SetOn(0);
+}
+goto end;
+}
+
+Whenever ne((_ACTOR_GetState(expl1)==0) or (_ACTOR_GetState(expl2)==0) or (_ACTOR_GetState(expl3)==0) or (_ACTOR_GetState(expl4)==0) or (_ACTOR_GetState(expl5)==0))
+{
+block
+{
+printf ("Explosives removed on Radios");
+SetWhenever(jo,1);
+SendSignal(obj, 10);
+}
+goto end;
+}
+
+OnSignal(1)
+{
+SetActorState(expl1, 0);SetActorState(expl2, 0);
+SetActorState(expl3, 0);SetActorState(expl4, 0);
+SetActorState(expl5, 0);
+SetWhenever(jo,1);
+}
+
+label end:

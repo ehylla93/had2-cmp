@@ -1,0 +1,80 @@
+// Ge_14
+
+Block
+{
+Frame me;
+	FRM_GetMyFrame(me);
+Frame stlp;
+	FRM_FindFrame(stlp, "m_nm2_valec_2");
+/// FRAME pos_16; 			FRM_FindFrame(pos_16, "posila16");
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,0); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SETSIGHTRANGE(40);
+FRM_SwitchFaceTexture(me, "e_f039");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+OnSignal(1)	// received from suspend detektor2
+{
+	HUMAN_Suspend(false);
+}
+
+Label nastenka:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_14_01");
+	HUMAN_Move("Ge_14_02");
+	HUMAN_SetOptimized(2);
+	Delay(2000);
+	HUMAN_SetAnim("%%lenin", 500, 500, true);
+	Delay(60000);
+	HUMAN_SetAnim("", 500, 500, false);
+	Delay(2000);
+	GoTo nastenka;
+
+Label nastenka2:
+	HUMAN_SetOptimized(1);
+	HUMAN_Move("Ge_14_01");
+	Delay(2000);
+	HUMAN_Move("Ge_14_02");
+	Delay(2000);
+	GoTo nastenka2;
+
+
+OnAlarm()
+{
+	HUMAN_Stop();
+	Block
+	{
+	HUMAN_SetAnim("", 500, 500, false);
+	SetAlarmType(1023, true);
+	SetAlarmType(256, false);
+	HUMAN_SETSIGHTRANGE(50);
+///	SendSignal(pos_16, 5);
+	}
+	EndScript();
+}
+
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_LookAround(4);
+	GoTo nastenka2;
+}
+
+
+Label end:

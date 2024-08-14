@@ -1,0 +1,12 @@
+// BU1_mrtvola - dead allied soldier
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Frame me;
+	FRM_GetMyFrame(me);
+// -------------------------------------------------------------------------------------------------------------
+HUMAN_Kill(me);
+
+Whenever player(_PlayerInRange(3))
+{
+	FRM_CreateParticle(117, me);
+}

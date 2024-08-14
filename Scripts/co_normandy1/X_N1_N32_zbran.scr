@@ -1,0 +1,18 @@
+// N33_A1 - activator for N33, N34
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Frame me;
+	FRM_GetMyFrame(me);
+Frame zasleh;
+	FRM_FindFrame(zasleh, "N32_zbran.flash");
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever signal(_SignalReceived(1))	// received from N32
+{
+	FRM_SetOn(me, false);
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+FRM_SetOn(zasleh, false);
+
+Label end:

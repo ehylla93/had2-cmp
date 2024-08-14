@@ -1,0 +1,96 @@
+//tyty
+
+block
+{
+HUMAN_SETEVENTS(0);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Aggressive();
+
+integer aievent;
+integer a;	a=0;
+
+SaveGameValue(42, 1);
+
+HUMAN_Suspend(1);
+
+goto end;
+
+//-------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+aievent=(_GetAlarmType());
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+block
+{
+HUMAN_SetAlarm(0);
+SetAlarmType(1023,1);
+SetAlarmType(648,0);
+}
+goto end;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+SaveGameValue(42,0);
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+block
+{
+HUMAN_Suspend(0);
+HUMAN_SETEVENTS(1);
+SetAlarmType(648,0);
+}
+HUMAN_Move("ge42_04");
+HUMAN_Move("ge42_03");
+HUMAN_Move("ge42_02");
+HUMAN_Move("ge42_01");
+goto loop;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+//-------------------------------------------------------------------------
+
+label loop:
+HUMAN_LookAround(1);
+delay (6000);
+HUMAN_Move("ge42_08");
+HUMAN_Move("ge42_07");
+HUMAN_Move("ge42_06");
+HUMAN_Move("ge42_05");
+HUMAN_Move("ge42_04");
+HUMAN_Move("ge42_03");
+HUMAN_Move("ge42_02");
+HUMAN_Move("ge42_01");
+goto loop;
+
+label end:

@@ -1,0 +1,163 @@
+// Guard - patrols main deck, backbord
+
+Block
+{
+HUMAN_SETSIGHTRANGE(16);
+frame timer2;	FRM_FindFrame(timer2,"small3_timer");
+frame cuc;		FRM_FindFrame(cuc,"cum1");
+
+SetAlarmType(1,0);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,0);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,0);
+SetAlarmType(256,1);
+SetAlarmType(512,0);
+
+integer AIEvent;
+integer a;
+integer x;		x=0;
+
+frame predek;	FRM_FindFrame(predek,"predek");
+frame zadek;	FRM_FindFrame(zadek,"zadek");
+frame me;		FRM_GetMyFrame(me);
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_guard();
+}
+
+label guard:
+HUMAN_Move("man3_3");
+a=(_RandomInt(4));
+
+label guard2:
+If(a==1)
+{  
+HUMAN_Move("man3_1");
+delay(1500);
+}
+If(a==2)
+{
+HUMAN_Move("man3_4");
+delay(1500);
+HUMAN_TurnAt(cuc);
+HUMAN_SetAnim("%%rozhlizeni1",300,300,0);
+delay(12685);
+}
+
+HUMAN_Move("man3_2");
+goto guard;
+
+//------------------------------------------------------------------------------------------
+
+OnSignal(0)
+{
+SetAlarmType(4,1);
+goto guard2;
+}
+
+//------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+  DisableSignals(1);
+  HUMAN_SetAnim("",50,50,0);
+  AIEvent =_GetAlarmType(); 
+}
+
+If(AIEvent==32)
+{
+	HUMAN_SETAIMODE_Aggressive();
+  	EndScript();
+}
+
+If(AIEvent==64)
+{
+block
+{
+	HUMAN_TurnAtNearestPlayer();
+	HUMAN_SETAIMODE_Aggressive();
+}
+  	EndScript();
+}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+if (x==0)
+{
+HUMAN_WeaponOnArm(1);
+SetAlarmType(274,0);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Run();
+HUMAN_Move("small3alarm");
+block
+{
+SetAlarmType(274,1);
+x=1;
+}
+}
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+label rozhled:
+delay (3000);
+HUMAN_TurnAt(predek);
+delay (3000);
+HUMAN_TurnAt(zadek);
+goto rozhled;
+}
+
+If(AIEvent==4)
+{
+	SetAlarmType(4,0);
+	SendSignal(timer2,1);
+	HUMAN_SetAlarm(0);
+	HUMAN_MoveToAlarm();
+	goto end;
+}
+	HUMAN_TurnAtNearestPlayer();
+  	HUMAN_SETMODE_Crouch();
+ 	HUMAN_SETAIMODE_Defensive();
+  	EndScript();
+}
+
+OnAlarmDone()
+{
+	DisableSignals(0);
+	HUMAN_SetAlarm(0);
+	SetAlarmType(1023,0);
+	SetAlarmType(374,1);
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETSIGHTRANGE(30);
+	goto guard;
+}
+
+OnDeath()
+{
+DisableSignals(1);
+EndScript();
+}
+
+Whenever kokot(_SignalReceived(22))			//Sirena on
+{
+	HUMAN_SetAnim("",50,50,0);
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETSIGHTRANGE(30);
+	goto guard2;
+}
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+goto guard;
+}
+
+label end:

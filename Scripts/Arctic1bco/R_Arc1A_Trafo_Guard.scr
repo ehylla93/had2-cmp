@@ -1,0 +1,60 @@
+
+Block
+  {
+     frame  Dealarm_turn;		FRM_FindFrame(Dealarm_turn, "dummy_trafo_dealarm _turn");
+     frame  turn_1;			FRM_FindFrame(turn_1, "dummy_trafo_turn_1");
+     frame  turn_2;			FRM_FindFrame(turn_2, "dummy_trafo_turn_2");
+     frame  turn_3;			FRM_FindFrame(turn_3, "dummy_trafo_turn_3");
+     frame  turn_4;			FRM_FindFrame(turn_4, "dummy_trafo_turn_4");
+     frame  turn_5;			FRM_FindFrame(turn_5, "dummy_trafo_turn_5");
+
+     integer RND;		
+     integer RND_wait;	
+     integer AIEvent; 	
+
+     HUMAN_SETAIMODE_Defensive();
+     HUMAN_SETMODE_Guard();
+     SetAlarmType(1023, True);
+  }
+
+  HUMAN_Suspend(True);				
+  goto TheEnd;
+Whenever A (_PlayerInRange(101);)			
+{							
+  HUMAN_Suspend(False);				
+}
+
+Label loop:
+  RND =   _RandomInt(5) + 1;
+  RND_wait =   _RandomInt(10000) + 5000;
+  If (RND == 1) { HUMAN_Move("Trafo_guard_1"); }
+  If (RND == 2) { HUMAN_Move("Trafo_guard_2"); }
+  If (RND == 3) { HUMAN_Move("Trafo_guard_3"); }
+  If (RND == 4) { HUMAN_Move("Trafo_guard_4"); }
+  If (RND == 5) { HUMAN_Move("Trafo_guard_5"); }
+  delay(RND_wait);
+goto loop;
+
+OnAlarm()
+{
+  Block 
+     {
+          HUMAN_SETSIGHTRANGE(40);
+          HUMAN_SETHEARRANGE(50);
+          AIEvent =_GetAlarmType();   
+          PrintfNumber("AIE Trafo Guard 1: ", AIEvent);
+          HUMAN_SETMODE_Crouch();
+     }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(32);
+  HUMAN_SETHEARRANGE(41);
+  HUMAN_Move("trafo_DeAlarm");
+  HUMAN_TurnAt(Dealarm_turn);
+  Goto TheEnd;  
+}
+
+Label TheEnd:

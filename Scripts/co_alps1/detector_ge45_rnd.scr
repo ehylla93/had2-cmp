@@ -1,0 +1,46 @@
+
+Block {
+Frame ge44;			Frm_FindFrame (ge44,"ge_44");
+Frame ge45;			Frm_FindFrame (ge45,"ge_45");
+Frame detect1;		Frm_FindFrame (detect1,"detector_forge44_1");
+Frame detect2;		Frm_FindFrame (detect2,"detector_forge44_2");
+integer a;
+}
+
+Whenever ted(_PlayerInRange(50))
+{
+a=_RandomInt(5);
+if (a==0)
+{
+SendSignal (ge44,5);
+SendSignal (ge45,5);
+SendSignal (detect1,1);
+SendSignal (detect2,1);
+goto end;
+}
+
+if (a==1)
+{
+SendSignal (ge44,4);
+SendSignal (ge45,4);
+SendSignal (detect1,1);
+SendSignal (detect2,1);
+goto end;
+}
+
+if (a==2)
+{
+SendSignal (ge44,1);
+SendSignal (ge45,1);
+SendSignal (detect1,1);
+SendSignal (detect2,1);
+goto end;
+}
+
+if ((a==3) or (a==4))
+{
+goto end;
+}
+}
+
+label end:

@@ -1,0 +1,90 @@
+Frame Kanystr;		FRM_FindFrame(Kanystr, "kanister");
+Frame Physical_Kanystr;	FRM_FindFrame(Physical_Kanystr, "kanister.kanyst08");
+Frame Sit;			FRM_FindFrame(Sit, "dummy_kanisternik_sit");
+integer v_hnatach = 0;
+
+  FRM_SetOn(Kanystr, True);		// Inicializace
+  SetAlarmType(1023, true);
+
+  delay(1000);
+  HUMAN_PickObject(Kanystr, 1);
+  v_hnatach = 1;
+  HUMAN_SetAnim("%%kanystr", 500, 500, True);
+  if ( (_SPGetGameType()==3) OR (_SPGetGameType()==7) ) {goto KRVAK;}
+  HUMAN_Suspend(true);
+  goto TheEnd;
+
+  OnSignal(5)
+  {
+     HUMAN_Suspend(false);
+  }
+
+label KRVAK:
+  HUMAN_SETSIGHTRANGE(40);
+  HUMAN_Move("CW1_2");
+  HUMAN_Move("CW1_1");
+  HUMAN_Move("Kanisternik_2");
+OnCutsceneDone(4){}
+  HUMAN_SetOptimized(1);
+  HUMAN_Move("Kanisternik_1");
+  HUMAN_SetAnim("", 300, 300, True);  
+  Delay(2500);
+  HUMAN_SetAnim("%%kanystr", 500, 500, True);
+  HUMAN_Move("Kanisternik_END");
+  HUMAN_DropObject();
+  HUMAN_SetAnim("", 600, 600, False);
+  Delay(600);
+  Block
+    {
+        V_hnatach = 0;
+        FRM_CreatePhysicalObject(PHYSICAL_kanystr, 1, false, true);	// hide And Phisical new one
+        FRM_SetOn(Kanystr, False);
+    }
+  HUMAN_Move("Kanisternik_2");
+  HUMAN_SetOptimized(2);
+  HUMAN_Move("Kanisternik_3");
+  HUMAN_TurnAt(Kanystr);
+  Delay(5000);
+  HUMAN_ACTIVITY_Smoke(true);
+  Delay(1450);
+  HUMAN_SETSIGHTRANGE(50);
+//  HUMAN_ACTIVITY_Sit(sit);
+//  HUMAN_SetAnim("%%kourimsed2", 450, 450, true);
+
+OnAlarm()
+{
+  HUMAN_Stop();
+  If (V_hnatach == 1) 
+    {
+       FRM_CreatePhysicalObject(PHYSICAL_kanystr, 1, false, true);	// hide And Phisical new one
+       FRM_SetOn(Kanystr, False);
+    }
+  HUMAN_SetAnim("", 250, 250, false);
+  HUMAN_SETMODE_Stand();
+  Delay(500);
+  HUMAN_WeaponOnArm(true);
+  Delay(1000);
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Crouch();
+}
+
+OnCutscene(4){}
+
+OnDeath()
+{
+  If (V_hnatach == 1) 
+    {
+       FRM_CreatePhysicalObject(PHYSICAL_kanystr, 1, false, true);	// hide And Phisical new one
+       FRM_SetOn(Kanystr, False);
+    }
+  EndScript();
+}
+
+label TheEnd:

@@ -1,0 +1,18 @@
+// Obj6 - Kill All Enemy Officers
+// ----------------------------------------------
+
+Block
+{
+	Frame 01_G01;			FRM_FindFrame(01_G01, "01_G01"); 
+	SetObjectiveStatus(6, 0);
+}
+
+Whenever Officers_Killed (_Actor_GetState(01_G01) == 0) 
+{
+	SUBTITLES_SetOn(1);
+	SUBTITLES_SetText(52999715);
+	Delay(4000);
+	SetObjectiveStatus(6, 1);
+	SUBTITLES_SetOn(0);
+	EndScript();
+}

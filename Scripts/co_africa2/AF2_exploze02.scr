@@ -1,0 +1,19 @@
+// AF1_exploze02 - explosion of fuel barrel
+// -------------------------------------------------------------------------------------------------------------
+
+  FRAME this;      		FRM_GetMyFrame(this);
+//  FRAME ohen;			FRM_FindFrame(ohen, "MR_PARTICLE - 15-OHEN DO AFRIKY 1");
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever inrange (_PlayerInRange(40)){
+  block{
+    FRM_CreateParticle(53, this);
+    PlaySound(6, 2);
+    MakeExplosion(this, 1000000, 20000);
+//    FRM_SetOn(ohen, false);
+  }
+  EndScript();
+}
+
+// -------------------------------------------------------------------------------------------------------------

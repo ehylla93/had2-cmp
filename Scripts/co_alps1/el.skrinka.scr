@@ -1,0 +1,34 @@
+// phone line
+
+block
+{
+frame good;	FRM_FindFrame(good,"1_el");
+frame bad;	FRM_FindFrame(bad,"1_el01_damage");
+
+frame obj;			FRM_FindFrame(obj,"objectives");
+frame sound;		FRM_FindFrame(sound,"s_kablik");
+Frame check;		FRM_FindFrame(check,"check_tel");
+FRM_SetOn(bad,0);
+FRM_SetOn(sound,0);
+FRM_SetOn (good,1);
+SaveGameValue(10, 0);
+}
+
+OnUse()
+{
+if (_LoadGameValue(10)==1)
+{
+goto end;
+}
+block
+{
+SaveGameValue(10, 1);
+sendSignal (obj,1);
+sendSignal (check,2);
+FRM_SetOn(sound,1);
+FRM_SetOn(bad,1);
+FRM_SetOn(good,0);
+}
+}
+
+label end:

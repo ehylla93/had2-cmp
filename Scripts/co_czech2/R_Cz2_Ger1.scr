@@ -1,0 +1,33 @@
+// R_Cz2_Ger1 - dying soldier outside
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame ger2;	FRM_FindFrame(ger2,"ger_2");
+
+HUMAN_SETEVENTS(0);
+
+integer a=0;
+}
+
+HUMAN_SetAnim("%%umre",400,400,1);
+goto end;
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever PIR (_MP_IsTeamMemberInRange(1, 100))
+{
+a=_RandomInt(8000)+15000;
+delay (a);
+HUMAN_SetAnim("%%umrel",400,400,0);
+delay (2000);
+SendSignal(ger2,1);
+delay(2001);
+HUMAN_SetAnim("%%umrel1",400,400,1);
+HUMAN_KillEx(me, 2);
+goto end;
+}
+
+label end:

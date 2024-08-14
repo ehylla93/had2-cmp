@@ -1,0 +1,15 @@
+//  Trosky
+//---------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+}
+
+//---------------------------------------
+
+Whenever BUM (_SignalReceived(1))
+{
+SetActorState(me, 2);
+EndScript();
+}

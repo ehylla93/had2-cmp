@@ -1,0 +1,180 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Guard();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(160);
+
+integer a;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+frame cum1;		FRM_FindFrame(cum1, "z4nadrz1cum");
+frame cum2;		FRM_FindFrame(cum2, "Object268");
+
+frame detect;		FRM_FindFrame (detect,"zonna4");
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f021");
+
+}
+
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+suspend=0;
+SetAlarmType(375,1);	
+HUMAN_SetAnim("%%b_kladivem1", 500,500,1);
+goto end;
+}
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+aievent=(_GetAlarmType());
+PrintfNumber("z4nadrz2 alarm c:",aievent);
+}
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	HUMAN_SetAnim("", 90,90,0);
+	endx=1;
+	EndScript();
+	}
+
+
+if (aievent==4)
+{
+
+if (_PlayerInRange(6)==0)
+
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+HUMAN_SetAnim("", 90,90,0);
+EndScript();
+}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+
+
+
+if (_LoadGameValue(5)==0)
+
+	{
+	//neni w zone
+	if (suspend==1)
+	{
+	block
+	{
+	SetAlarmType(1023,0);
+	SetAlarmType(274,1);		//slysim strelbu
+	DisableWhenevers(0);
+	DisableSignals(0);
+	}
+	}
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+if (suspend==1)
+	{
+		suspend=0;
+		HUMAN_Suspend(0);
+		SetAlarmType(375,1);
+
+	}
+
+
+
+
+
+}
+
+	HUMAN_SetAnim("", 90,90,0);
+	endx=1;
+	EndScript();
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Move("z4nadrz_08");
+HUMAN_TurnAt(cum1);
+goto end;
+
+}
+
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+
+
+
+
+//chodi dokola .. na kroky se podiva na  nejblisiho a rozhlidne...
+// na strelbu pokud neni hrac in range bezi na roh, cupne a hlida.
+//		       je in r. tak endscript

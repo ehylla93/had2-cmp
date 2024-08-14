@@ -1,0 +1,112 @@
+// AF4_04 - guard walking and guarding the two hangars
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER rnd				= 0;
+  INTEGER Atype				= 0;
+  INTEGER Atpos				= 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    Atype = _GetAlarmType();
+  }
+  if(Atype == 512){
+    SetAlarmType(512, false);
+    HUMAN_SetAlarm(false);
+    HUMAN_SetMODE_Run();
+    HUMAN_MoveToAlarm();
+  }
+  if(Atype == 256){
+    if(!atpos){
+      HUMAN_SetAlarm(false);
+      HUMAN_SetMODE_Run();
+      HUMAN_SetMode_Crouch();
+      HUMAN_Move("AF4_04_alert");
+      atpos = 1;
+    }
+    SetAlarmType(256, false);
+    goto END;
+  }
+EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(512, false);
+  HUMAN_SetAlarm(false);
+  goto ACTIVATE;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label ACTIVATE:
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Defensive();
+
+Label ACTIVITY:
+  HUMAN_Move("AF4_04_01");  
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_02");
+  HUMAN_Move("AF4_04_03");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_04");
+  HUMAN_Move("AF4_04_05");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_06");
+  gosub LOOKAROUND;
+
+  HUMAN_Move("AF4_04_01");
+  HUMAN_Move("AF4_04_02");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_03");
+  HUMAN_Move("AF4_04_04");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_08");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_07");
+  HUMAN_Move("AF4_04_01");
+
+  HUMAN_Move("AF4_04_06");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_08");
+  HUMAN_Move("AF4_04_07");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_03");
+  HUMAN_Move("AF4_04_04");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_08");
+  gosub LOOKAROUND;
+  HUMAN_Move("AF4_04_07");
+goto ACTIVITY;
+
+Label LOOKAROUND:
+  HUMAN_WeaponOnArm(0);
+  Delay(500);
+  rnd = _RandomInt(4);
+  if(rnd == 1){
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(rnd);
+  }
+  if(rnd == 2){
+    rnd = _RandomInt(1500) + 1500;
+    HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(rnd);
+  }
+HUMAN_WeaponOnArm(1);
+Delay(500);
+return;
+
+Label END:

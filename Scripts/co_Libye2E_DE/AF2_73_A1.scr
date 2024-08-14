@@ -1,0 +1,28 @@
+// AF2_73_A1 - posily v zalohe detektor
+// Vytvoril:  Dzodzo
+// Zodpovida: Dzodzo
+// Zmeny:
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame af2_73;
+	FRM_FindFrame(af2_73, "AF2_73");
+Frame af2_74;
+	FRM_FindFrame(af2_74, "AF2_74");
+Frame af2_75;
+	FRM_FindFrame(af2_75, "AF2_75");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(100))
+{
+	Block
+	{
+		SendSignal(af2_73, 1);
+		SendSignal(af2_74, 1);
+		SendSignal(af2_75, 1);
+	}
+}
+// -------------------------------------------------------------------------------------------------------------
+// Starting pose

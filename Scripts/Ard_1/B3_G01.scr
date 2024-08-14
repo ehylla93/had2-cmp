@@ -1,0 +1,56 @@
+// V Bunkru (T_bunkr_07) Radioman
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame Reinf;	FRM_FindFrame(Reinf,"Reinforcement");
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+SendSignal(Reinf, 1);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Crouch();
+HUMAN_SetSniper(1, 5);
+FRM_MorphSpeechDelayed(me, 90004034, 5, 30); // Mist !!!
+FRM_MorphSpeechDelayed(me, 90004002, 5, 30); // Alaarm!! Die Briten sind hier !!
+FRM_MorphSpeechDelayed(me, 90004057, 5, 30); // Indekong !!! Feindte manmanch !!!
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(20))
+{
+HUMAN_Suspend(0);
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SETHEARRANGE(10);
+HUMAN_SetOptimized(1);
+goto END;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

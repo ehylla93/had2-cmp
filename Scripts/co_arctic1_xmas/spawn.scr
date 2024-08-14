@@ -1,0 +1,16 @@
+// on player spawn
+// -------------------------------------------------------
+
+Whenever Player_Spawn (_MP_IsTeamMemberInRange(1, 1000))
+{
+Delay(4000);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(01990207);	//"NEW OBJECTIVE: FIND AND FOLLOW YOUR GUIDE.  HE MUST STAY ALIVE."
+Delay(4000);
+SUBTITLES_SetText(01010202);	//"NEW OBJECTIVE: FIND THE ENTRANCE TO THE UNDERGROUND FACILITY."
+Delay(4000);
+SUBTITLES_SetText(01010201);	//"NEW OBJECTIVE: ELIMINATE THE ENEMY IN THE FACTORY COMPLEX."
+Delay(4000);
+SUBTITLES_SetOn(false);
+EndScript();
+}

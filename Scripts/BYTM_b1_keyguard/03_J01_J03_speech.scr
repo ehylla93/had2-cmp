@@ -1,0 +1,34 @@
+// 03_J01_J03_speech - Dummy for 03_J01, 03_J03
+
+Frame J01;	FRM_FindFrame(J01, "03_J01");
+Frame J03;	FRM_FindFrame(J03, "03_J03");
+goto end;
+
+// ----------------------------------------
+
+
+OnSignal(2) // received from 03_J01
+{
+}
+
+Label Speak:
+FRM_MorphSpeechDelayed(J01, 12992424, 1, 20);
+FRM_MorphSpeechDelayed(J03, 12992425, 1, 20);
+FRM_MorphSpeechDelayed(J01, 12992426, 1, 20);
+FRM_MorphSpeechDelayed(J01, 12992427, 1, 20);
+FRM_MorphSpeechDelayed(J03, 12992428, 1, 20);
+FRM_MorphSpeechDelayed(J01, 12992429, 1, 20);
+FRM_MorphSpeechDelayed(J01, 12992430, 1, 20);
+FRM_MorphSpeechDelayed(J01, 12992431, 1, 20);
+FRM_MorphSpeechDelayed(J03, 12992432, 1, 20);
+FRM_MorphSpeechDelayed(J03, 12992433, 1, 20);
+GoTo Speak;
+
+OnSignal(1)	// received from 03_J01, 03_J03 on death or on alarm
+{
+	EndScript();
+}
+
+// ----------------------------------------	
+	
+Label end:

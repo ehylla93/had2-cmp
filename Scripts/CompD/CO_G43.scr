@@ -1,0 +1,55 @@
+// Velitel ve VIP housu
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+FRM_MorphSpeechDelayed(me, 90004043, 5, 30); // Was war das ??
+FRM_MorphSpeechDelayed(me, 90004059, 5, 30); // hmm?
+FRM_MorphSpeechDelayed(me, 90004061, 5, 30); // Mist!!
+FRM_MorphSpeechDelayed(me, 90004003, 5, 30); // Tötet ihn !!!
+FRM_MorphSpeechDelayed(me, 90004006, 5, 30); // Du gehörst mir!!
+FRM_MorphSpeechDelayed(me, 90003022, 5, 30); // Stirb du schwein !!!
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Stand();
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever Player (_PlayerInRange(15)){
+HUMAN_Suspend(0);
+HUMAN_SetOptimized(1);
+HUMAN_SETHEARRANGE(38);
+HUMAN_SETSIGHTRANGE(41);
+HUMAN_SETAIMODE_Zombie();
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+goto END;
+
+Label END:

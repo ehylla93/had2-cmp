@@ -1,0 +1,263 @@
+//chodi dokola
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,0); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+
+HUMAN_SETSIGHTRANGE(30);
+HUMAN_SETHEARRANGE(100);
+
+integer a;		a=1;
+integer alarmpos;	alarmpos=0;
+integer aievent;
+integer endx;		endx=0;
+integer suspend;
+
+integer k;
+integer d;
+
+frame cum1;		FRM_FindFrame(cum1, "z3ven3cum1");
+frame cum2;		FRM_FindFrame(cum2, "z3ven3cum2");
+frame puf;		FRM_FindFrame(puf, "venek1puf");
+Frame detect1;	FRM_FindFrame(detect1, "Zonna3");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "0_f039");
+
+}
+
+
+
+
+
+HUMAN_Suspend(1);
+
+goto end;
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+suspend=0;
+delay (500);
+SetAlarmType(1023,0);	
+SetAlarmType(883,1);		//bez kroku	
+goto kecej;
+}
+
+Whenever chodim(_SignalReceived(2))
+{
+SetAlarmType(4,1);		//bez kroku
+HUMAN_SetAnim("", 300, 300, 0);
+delay (300);
+goto chodim;
+}
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+label chodim:
+
+a=1;
+HUMAN_Move("z3ven8_01");
+a=2;
+
+
+label 2:
+HUMAN_Move("z3ven8_02");
+a=3;
+
+HUMAN_SetAnim("%%kouka", 300, 300, 1);
+delay (7000);
+HUMAN_SetAnim("", 300, 300, 0);
+
+label 3:
+HUMAN_Move("z3ven8_03");
+a=4;
+
+label 4:
+HUMAN_Move("z3ven8_04");
+a=1;
+
+
+
+
+goto chodim;
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+label rozdel:
+if (a==1)	{ goto chodim; }
+if (a==2)	{ goto 2; }
+if (a==3)	{ goto 3; }
+if (a==4)	{ goto 4; }
+
+goto end;
+//---------------------------------------------------------------------------------------------------------
+
+label kecej:
+
+
+k=(_RandomInt(3));
+d=(_RandomInt(3000));
+d=(2000+d);
+
+if (k==0)
+{
+HUMAN_SetAnim("%%mluvi3",900,900,1);
+delay (1028);
+goto kecej;
+}
+
+if (k==1)
+{
+HUMAN_SetAnim("%%mluvi4",900,900,1);
+delay (1285);
+goto kecej;
+}
+
+if (k==2)
+{
+HUMAN_SetAnim("%%mluvi5",900,900,0);
+delay (1914);
+goto kecej;
+}
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+label hlidejroh:
+
+HUMAN_TurnAt(cum1);
+//HUMAN_SetAnim("%%koukadrep", 300, 300, 0);
+delay (3714);
+HUMAN_TurnAt(cum2);
+//HUMAN_SetAnim("%%koukadrep", 300, 300, 0);
+delay (3714);
+
+goto hlidejroh;
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(512,0);
+SetAlarmType(375,1);
+aievent=(_GetAlarmType());
+PrintfNumber("z2_ven8 alarm c:",aievent);
+}
+HUMAN_Stop();
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	HUMAN_SetAnim("", 30, 30, 0);
+	block
+	{
+	HUMAN_SETSIGHTRANGE(40);
+	endx=1;
+	}
+	EndScript();
+	}
+
+
+if (aievent==4)
+{
+
+SetAlarmType(4,0);
+HUMAN_SetAlarm(0);
+
+HUMAN_Stop();
+HUMAN_SetAnim("", 300, 300, 0);
+HUMAN_TurnAtNearestPlayer();
+delay (2000);
+SetAlarmType(4,1);
+goto rozdel;
+}
+
+
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+HUMAN_Stop();
+HUMAN_SetAnim("", 300, 300, 0);
+
+
+HUMAN_WeaponOnArm(1);
+
+label tstzona:
+
+if (_PlayerInBox(detect1)==0)
+
+{
+delay (1000);
+goto tstzona;
+}
+
+
+
+endx=1;
+EndScript();
+}
+
+if (aievent==512)
+{
+SetAlarmType(512,0);
+HUMAN_Stop();
+endx=1;
+EndScript();
+}
+
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+OnAlarmDone()
+{
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_Move("z3ven8_02");
+HUMAN_SETMODE_Crouch();
+goto hlidejroh;
+}
+
+OnDeath()
+{
+DisableWhenevers(1);
+DisableSignals(1);
+EndScript();
+goto end;
+}
+
+
+
+
+label end:
+
+

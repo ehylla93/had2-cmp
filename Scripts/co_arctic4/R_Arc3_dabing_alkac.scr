@@ -1,0 +1,15 @@
+
+block {
+frame alkac;		FRM_FindFrame(alkac, "Alkoholik");
+}
+
+OnSignal(1)
+{
+  FRM_MorphSpeechDelayed(alkac, 04990850, 0, 60);		//"NOSUB Hey! Johan! Come here!"
+  Delay(25);
+}
+
+OnSignal(2)
+{
+  EndScript();
+}

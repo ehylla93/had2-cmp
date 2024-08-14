@@ -1,0 +1,52 @@
+// Private Smith - Obj 3
+// ---------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+}
+
+// --------------------------------------------
+
+OnDeath(){
+SetObjectiveStatus(1, 4);
+SetObjectiveStatus(2, 4);
+SetObjectiveStatus(4, 4);
+Delay(500);
+SetObjectiveStatus(3, 2);
+EndScript();
+}
+
+Whenever SUCCESS (_PlayerInRange(1))
+{
+Delay(1000);
+HUMAN_SetAnim("", 0,0,1);
+Delay(500);
+HUMAN_SETMODE_Stand();
+Delay(250);
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAnim("%%kecy1", 250, 250, 1);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(me, 03990611, 0, 40);
+Delay(200);
+HUMAN_TurnAtNearestPlayer();
+FRM_MorphSpeechDelayed(me, 03990612, 0, 40);
+SUBTITLES_SetOn(0);
+HUMAN_SetAnim("", 250, 250, 1);
+Delay(2000);
+SetObjectiveStatus(3, 1);
+Goto End;
+}
+
+// ---------------------------------------------
+
+DisableAlarms(1);
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("%%KUCASEDI", 1000,1000,1);
+goto END;
+
+
+Label END:

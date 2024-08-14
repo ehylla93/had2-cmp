@@ -1,0 +1,73 @@
+// ----------------------Zone9----------------------
+block
+{
+Frame detect;	FRM_FindFrame (detect,"DetectZone9");
+Frame ET09;		FRM_FindFrame(ET09, "ET51");
+Frame ET10;		FRM_FindFrame(ET10, "ET52");
+Frame ET11;		FRM_FindFrame(ET11, "ET61");
+Frame ET12;		FRM_FindFrame(ET12, "ET62");
+Frame E31;		FRM_FindFrame(E31, "EG31");
+Frame E32;		FRM_FindFrame(E32, "EG32");
+Frame E33;		FRM_FindFrame(E33, "EG33");
+Frame E34;		FRM_FindFrame(E34, "EG34");
+Frame E35;		FRM_FindFrame(E35, "EG35");
+Frame E36;		FRM_FindFrame(E36, "EG36");
+Frame E37;		FRM_FindFrame(E37, "EG37");
+Frame E38;		FRM_FindFrame(E38, "EG38");
+Frame E39;		FRM_FindFrame(E39, "EG39");
+Frame E40;		FRM_FindFrame(E40, "EG40");
+Frame E41;		FRM_FindFrame(E41, "EG41");
+Frame E42;		FRM_FindFrame(E42, "EG42");
+Frame E43;		FRM_FindFrame(E43, "EG43");
+Frame E44;		FRM_FindFrame(E44, "EG44");
+Frame E45;		FRM_FindFrame(E45, "EG45");
+Frame E46;		FRM_FindFrame(E46, "EG46");
+Frame EMG2;		FRM_FindFrame(EMG2, "EMG2");
+Frame EMG3;		FRM_FindFrame(EMG3, "EMG3");
+Frame E54;		FRM_FindFrame(E54, "EG54");
+Frame E55;		FRM_FindFrame(E55, "EG55");
+Frame E56;		FRM_FindFrame(E56, "EG56");
+Frame E60;		FRM_FindFrame(E60, "EG60");
+Frame E61;		FRM_FindFrame(E61, "EG61");
+Frame E62;		FRM_FindFrame(E62, "EG62");
+}
+goto end;
+
+Whenever Yes(_PlayerInBox(detect))
+{
+//printf ("Player in zone 9");
+sendsignal (ET09,1);
+sendsignal (ET10,1);
+sendsignal (ET11,1);
+sendsignal (ET12,1);
+sendsignal (E60,1);
+sendsignal (E61,1);
+sendsignal (E62,1);
+Delay(500);
+sendsignal (E31,1);
+sendsignal (E32,1);
+sendsignal (E33,1);
+sendsignal (E34,1);
+sendsignal (E35,1);
+sendsignal (E54,1);
+sendsignal (E55,1);
+sendsignal (E56,1);
+Delay(500);
+sendsignal (E36,1);
+sendsignal (E37,1);
+sendsignal (E38,1);
+sendsignal (E39,1);
+sendsignal (E40,1);
+Delay(500);
+sendsignal (E41,1);
+sendsignal (E42,1);
+sendsignal (E43,1);
+sendsignal (E44,1);
+sendsignal (E45,1);
+sendsignal (E46,1);
+sendsignal (EMG2,1);
+sendsignal (EMG3,1);
+goto end;
+}
+
+label end:

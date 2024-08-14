@@ -1,0 +1,57 @@
+// Africa(Oasis) Objectives - OBJ4 (DOCUMENTS)
+// -----------------------------------------------------------
+// 1) Use Radio
+// 2) Defend the Oasis - Cancelled
+// 3) Destroy the enemy Tank
+// 4) Find Documents
+// 5) Znicte pancejrova vozidla
+// 6) Zabijte Nepritele
+// -----------------------------------------------------------
+
+Block
+{
+Frame Documents;
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+
+SetObjectiveStatus(4, 0);
+goto END;
+}
+
+// ------------------------------------
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(14992804);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);
+Delay(3500);
+SetObjectiveStatus(4, 0);
+SUBTITLES_SetOn(0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);
+Delay(3500);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Label END:

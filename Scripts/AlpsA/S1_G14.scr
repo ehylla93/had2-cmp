@@ -1,0 +1,73 @@
+// Vybezka 2 - past
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+Frame cp1;	FRM_FindFrame(cp1,"Chata_Cp1");
+Frame cp2;	FRM_FindFrame(cp2,"Chata_Cp2");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,0); //vidim flakotu
+
+integer AIEvent;
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+AIEvent =_GetAlarmType();
+
+If ((((AIEvent==1) OR (AIEvent==2)) OR (AIEvent==4)) OR (AIEvent==32))
+{ 
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Lie();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(false);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(cp1, 2);
+HUMAN_TurnAt(cp2);
+goto END;
+}
+
+Whenever Jdem(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Crouch();
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(cp1, 2);
+HUMAN_TurnAt(cp2);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_SETSIGHTRANGE(150);
+HUMAN_SETHEARRANGE(100);
+HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

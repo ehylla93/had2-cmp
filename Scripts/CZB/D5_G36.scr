@@ -1,0 +1,43 @@
+// Utocnik
+// -----------------------------------------------------------------------------------------------------------
+
+block
+{
+INTEGER Atype				= 0;
+INTEGER rnd					= 0;  
+
+SetAlarmType(1023, true);
+SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(2)
+{
+HUMAN_Suspend(false);
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_SETMODE_Run();
+HUMAN_Move("C5_G38_01");
+goto END; 
+}
+
+// -------------------------------------------------------------------------------------------------------------
+  
+  HUMAN_Suspend(true);
+  goto END; 
+
+  Label END:

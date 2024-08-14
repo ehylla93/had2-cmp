@@ -1,0 +1,27 @@
+// C5_obj01 - optional objective - steal panther tank
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame obj;	FRM_FindFrame(obj, "C5_objective");
+Integer firstuse=0;
+}
+
+OnUse()
+{
+	If(firstuse==1)	{ GoTo end; }
+	If(_PlayerInRange(4))
+	{
+		firstuse=1;
+		SendSignal(obj, 10);
+		PlayMusic(36);
+	}
+}
+
+OnSignal(1)	// received from C5_G09, C5_G10, C5_G11
+{
+	firstuse=1;
+	GoTo end;
+}
+
+Label end:

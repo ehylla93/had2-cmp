@@ -1,0 +1,68 @@
+block
+{   
+integer Rnd1;
+integer C1;
+integer C_A;
+integer C_B;
+integer C_C;
+integer C_D;
+SaveGameValue(32, 0);
+}
+goto end;
+
+//----------------------/OnSignal/----------------------
+OnSignal(1) // Signal from zone_1
+{
+printf("Group_7 signal input");
+goto Enemy_group_2;
+}
+
+//----------------------/label timers/----------------------
+label Enemy_group_2:
+
+SaveGameValue(32, 0);
+Rnd1=(_randomint(13));
+block
+{
+C_A=(_LoadGameValue(31));
+C_B=(_LoadGameValue(33));
+C_C=(_LoadGameValue(34));
+C_D=(_LoadGameValue(35)); 
+  if ((Rnd1==0) and (_LoadGameValue(1)==1) and (C_A<>1) and (C_B<>1) and (C_C<>1) and (C_D<>1))
+  {SaveGameValue(32, 1);}
+  if ((Rnd1==1) and (_LoadGameValue(2)==1) and (C_A<>2) and (C_B<>2) and (C_C<>2) and (C_D<>2))
+  {SaveGameValue(32, 2);}
+  if ((Rnd1==2) and (_LoadGameValue(3)==1) and (C_A<>3) and (C_B<>3) and (C_C<>3) and (C_D<>3))
+  {SaveGameValue(32, 3);}
+  if ((Rnd1==3) and (_LoadGameValue(4)==1) and (C_A<>4) and (C_B<>4) and (C_C<>4) and (C_D<>4))
+  {SaveGameValue(32, 4);}
+  if ((Rnd1==4) and (_LoadGameValue(5)==1) and (C_A<>5) and (C_B<>5) and (C_C<>5) and (C_D<>5))
+  {SaveGameValue(32, 5);}
+  if ((Rnd1==5) and (_LoadGameValue(6)==1) and (C_A<>6) and (C_B<>6) and (C_C<>6) and (C_D<>6))
+  {SaveGameValue(32, 6);}
+  if ((Rnd1==6) and (_LoadGameValue(7)==1) and (C_A<>7) and (C_B<>7) and (C_C<>7) and (C_D<>7))
+  {SaveGameValue(32, 7);}
+  if ((Rnd1==7) and (_LoadGameValue(8)==1) and (C_A<>8) and (C_B<>8) and (C_C<>8) and (C_D<>8))
+  {SaveGameValue(32, 8);}
+  if ((Rnd1==8) and (_LoadGameValue(9)==1) and (C_A<>9) and (C_B<>9) and (C_C<>9) and (C_D<>9))
+  {SaveGameValue(32, 9);}
+  if ((Rnd1==9) and (_LoadGameValue(10)==1) and (C_A<>10) and (C_B<>10) and (C_C<>10) and (C_D<>10))
+  {SaveGameValue(32, 10);}
+  if ((Rnd1==10) and (_LoadGameValue(11)==1) and (C_A<>11) and (C_B<>11) and (C_C<>11) and (C_D<>11))
+  {SaveGameValue(32, 11);}
+  if ((Rnd1==11) and (_LoadGameValue(12)==1) and (C_A<>12) and (C_B<>12) and (C_C<>12) and (C_D<>12))
+  {SaveGameValue(32, 12);}
+  if ((Rnd1==12) and (_LoadGameValue(13)==1) and (C_A<>13) and (C_B<>13) and (C_C<>13) and (C_D<>13))
+  {SaveGameValue(32, 13);}
+}
+if (_LoadGameValue(32)==0)
+  {
+goto Enemy_group_2;
+  }
+C1=(_LoadGameValue(32));
+//PrintfNumber("Group #7 go to zone: ",C1);
+delay(10000);
+goto Enemy_group_2;
+
+//----------------------/END/----------------------
+label end:

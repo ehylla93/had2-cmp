@@ -1,0 +1,128 @@
+// Minesweeper - crow's nest
+
+block
+{
+frame alarmer;		FRM_FindFrame(alarmer, "alarmer");
+frame tar;			FRM_FindFrame(tar, "bonzak_target");
+
+frame mark1;		FRM_FindFrame(mark1, "o_pmin01");
+frame mark2;		FRM_FindFrame(mark2, "o_pmin02");
+frame mark3;		FRM_FindFrame(mark3, "Mesh24");
+
+Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+
+integer end;
+integer AIEvent;
+integer time;
+integer a=0;
+end=((_RandomInt(2)) + 1);
+
+SetAlarmType(1023,0);
+SetAlarmType(355,1);	//256+64+32+2+1
+
+HUMAN_SETSIGHTRANGE(50);
+HUMAN_SETHEARRANGE(80);
+
+HUMAN_SetOptimized(1);
+}
+
+printfnumber("bonzak end:", end);
+HUMAN_Suspend(1);
+goto theend;
+
+//---------------------------------------------------------------------------------------------------
+
+OnAlarm()
+{
+AIEvent =_GetAlarmType(); 
+printfnumber("bonzak alarm", AIEvent);
+if((AIEvent==32) or (AIEvent==512))
+{
+end=end-1;
+	If(end==0)
+	{
+	SetAlarmType(1023,0);
+	goto alarm;
+	}
+	else {
+	SetAlarmType(1023,0);
+	HUMAN_SetAlarm(0);
+	FRM_MorphSpeech(MyFRM, 90003043, 0, 30);	//"What was that?"
+	HUMAN_SetAnim("%%neslysim", 500, 500, 0);
+	HUMAN_SETMODE_Crouch();
+	delay(5000);
+	SetAlarmType(355,1);	//256+64+32+2+1
+	goto theend;
+	}
+}
+if((AIEvent==1) or (AIEvent==2) or (AIEvent==64))
+{
+HUMAN_SetAnim("", 500, 500, 0);
+HUMAN_SETMODE_Crouch();
+goto alarm;
+}
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto theend;
+}
+
+OnDeath()
+{
+FRM_MorphSpeech(MyFRM, 0, 0, 0);
+EndScript();
+}
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever PIR (_PlayerInRange(100))
+{
+HUMAN_Suspend(0);
+HUMAN_SETMODE_Guard();
+}
+
+Label active:
+HUMAN_SetAnim("", 800, 800, 0);
+HUMAN_Move("nest_1");
+HUMAN_TurnAt(mark1);
+gosub timer;
+HUMAN_Move("nest_0");
+HUMAN_Move("nest_2");
+HUMAN_TurnAt(mark2);
+gosub timer;
+HUMAN_Move("nest_0");
+HUMAN_Move("nest_3");
+HUMAN_TurnAt(mark3);
+HUMAN_SetAnim("%%nudazed2", 800, 800, 1);
+gosub timer;
+goto active;
+
+Label timer:
+time=((_RandomInt(40000))+20000);
+Delay(time);
+Return;
+
+label alarm:
+	if(a==0)
+	{
+	a=1;
+	HUMAN_WeaponOnArm(1);
+	HUMAN_TurnAt(tar);
+	Delay(500);
+	HUMAN_Attack(tar, 2500);
+	SendSignal(alarmer, 2);
+	}
+	SetAlarmType(355,1);	//256+64+32+2+1
+	HUMAN_SetSniper(1, 90);
+	EndScript();
+
+Whenever AlarmsOff (_LoadGameValue(16)==1)
+{
+DisableAlarms(1);
+}
+
+//---------------------------------------------------------------------------------------------------
+
+label theend:

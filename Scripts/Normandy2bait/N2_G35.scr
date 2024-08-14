@@ -1,0 +1,42 @@
+// V La_tiger_2 (panther) kanonnik
+// ---------------------------------------------------
+
+Block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+}
+
+// ---------------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_TurnAtNearestPlayer();
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+
+// -------------------------------------------
+
+HUMAN_SETSIGHTRANGE(100);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(2);
+HUMAN_BoardVehicle("La_tiger_2",  1, 2);
+//HUMAN_Suspend(1);
+goto END;
+
+
+Label END:

@@ -1,0 +1,17 @@
+////-------------vysilac signalu 1 od dveri m_d_po02-------------------------------------
+
+Block {
+Frame S4;		FRM_FindFrame(S4, "Static_4");
+integer First = 0;
+}	
+
+OnUse()
+ {
+   frame p1s01;		FRM_FindFrame(p1s01,"p1s01");	
+   SendSignal(p1s01,1);
+   If (First == 0)
+       {
+           SendSignal(S4, 22);
+           First = 1;
+       }
+ }

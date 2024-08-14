@@ -1,0 +1,103 @@
+
+Frame turn1; 		FRM_FindFrame(turn1, "dummy_Ally4_turn_1");	
+Frame turn2; 		FRM_FindFrame(turn2, "dummy_Ally4_turn_2");	
+Frame Sniper6;	FRM_FindFrame(Sniper6, "Sniper_6");
+Frame OBJ; 		FRM_FindFrame(OBJ, "objectives");
+Frame dabing;		FRM_FindFrame(dabing, "dummy_dabing_Ally4");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+integer RND = 1;
+integer FireCounter = 1;
+
+
+HUMAN_SetOptimized(2);
+//HUMAN_Suspend(True);				
+goto TheEnd;				
+
+Whenever KolizeOn ( _PlayerInRange(8); )
+{
+  HUMAN_SetOptimized(0);
+  Delay(13000);
+//  SendSignal(MyFRM, 1);
+}
+
+Onsignal(7)		
+{
+  HUMAN_Suspend(False);
+}
+
+
+Block
+  {
+     HUMAN_WeaponOnArm(True);
+     HUMAN_SETMODE_Run();
+  }
+HUMAN_Move("Ally4_1");		
+HUMAN_TurnAt(turn1);	
+HUMAN_SETMODE_Crouch();
+Delay(15000);
+SendSignal(MyFRM, 1);
+goto TheEnd;			
+	
+
+OnSignal(1)		// poslat aby to vypadalo, ze se neco deje
+{
+  If (( _ACTOR_GetState(Sniper6) == 0 ))   {Goto TheEnd;}
+  HUMAN_SETMODE_Run();
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Ally4_2");
+  HUMAN_TurnAt(turn2);	 
+  HUMAN_IllFire(Sniper6, 1250);
+  HUMAN_Move("Ally4_1");
+  HUMAN_TurnAt(turn1);
+  HUMAN_SETMODE_Crouch();
+  FireCounter = FireCounter + 1;
+  RND = _RandomInt(5000) + 8000;
+  If (  FireCounter < 9 )
+    {
+       Delay(RND);
+       SendSignal(MyFRM, 1);
+    } else {
+       goto TheEnd;	
+    }
+}
+
+
+OnSignal(2)
+{
+  SUBTITLES_SetOn(True);
+  HUMAN_TurnAtNearestPlayer();
+// 17993420	Rád vás vidím, pane!	
+// 17993421	Náš velitel je nahoøe, pokud ještì žije.	
+  SendSignal(dabing, 1);
+  HUMAN_TurnAtNearestPlayer();  Delay(750);
+  HUMAN_TurnAtNearestPlayer();  Delay(750);
+  HUMAN_TurnAtNearestPlayer();  Delay(750);
+  HUMAN_TurnAtNearestPlayer();  Delay(750);
+  HUMAN_TurnAtNearestPlayer();  Delay(750);
+  HUMAN_TurnAtNearestPlayer();  Delay(750);
+  HUMAN_TurnAtNearestPlayer();  
+  HUMAN_Move("Ally4_1");
+  HUMAN_TurnAt(turn1);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SetOptimized(0);
+  Delay(2000);
+  SUBTITLES_SetOn(False);
+  goto TheEnd;	
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  SendSignal(OBJ, 30);
+  EndScript();
+}
+
+OnSignal(5)
+{
+  Printf("END SKRIPTU OD 4");
+//  EndScript();
+//  ScriptAssign(MyFRM, "R_N2_Ally4_Go");		////// Tady to byt nemuze - je to v OBJECTIVES !!!!!!!
+}
+
+Label TheEND:
+

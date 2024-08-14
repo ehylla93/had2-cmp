@@ -1,0 +1,215 @@
+// objektiv pro Afriku 3bco
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+FRAME n1;		 FRM_FindFrame(n1, "C5_G29");
+Frame n2;          FRM_FindFrame(n2, "C5_G30");
+Frame n3;          FRM_FindFrame(n3, "C5_G31");
+FRAME n4;		 FRM_FindFrame(n4, "C5_G32");
+Frame n5;          FRM_FindFrame(n5, "C5_G33");
+Frame n6;          FRM_FindFrame(n6, "C5_G34");
+FRAME n7;		 FRM_FindFrame(n7, "C5_G35");
+Frame n8;          FRM_FindFrame(n8, "C5_G36");
+Frame n9;          FRM_FindFrame(n9, "C5_G37");
+FRAME n10;		 FRM_FindFrame(n10, "C5_G38");
+Frame n11;         FRM_FindFrame(n11, "C5_G39");
+Frame n12;         FRM_FindFrame(n12, "C5_G40");
+FRAME n13;		 FRM_FindFrame(n13, "C5_G41");
+FRAME n14;		 FRM_FindFrame(n14, "C5_G42");
+Frame n15;         FRM_FindFrame(n15, "C5_G43");
+Frame n16;         FRM_FindFrame(n16, "C5_G44");
+FRAME n17;		 FRM_FindFrame(n17, "C5_G45");
+Frame n18;         FRM_FindFrame(n18, "C5_G46");
+Frame n19;         FRM_FindFrame(n19, "C5_G47");
+FRAME n20;		 FRM_FindFrame(n20, "C5_G48");
+Frame n21;         FRM_FindFrame(n21, "C5_G49");
+FRAME n22;		 FRM_FindFrame(n22, "C5_G21");
+Frame n23;         FRM_FindFrame(n23, "C5_G22");
+Frame n24;         FRM_FindFrame(n24, "C5_G23");
+FRAME n25;		 FRM_FindFrame(n25, "C5_G24");
+Frame n26;         FRM_FindFrame(n26, "C5_G25");
+Frame n27;         FRM_FindFrame(n27, "C5_G26");
+FRAME n28;		 FRM_FindFrame(n28, "C5_G27");
+FRAME n29;		 FRM_FindFrame(n29, "C5_G28");
+FRAME n30;		 FRM_FindFrame(n30, "volny1");
+Frame n31;         FRM_FindFrame(n31, "volny2");
+Frame n32;         FRM_FindFrame(n32, "volny3");
+FRAME n33;		 FRM_FindFrame(n33, "volny4");
+Frame n34;         FRM_FindFrame(n34, "volny5");
+Frame n35;         FRM_FindFrame(n35, "volny6");
+FRAME n36;		 FRM_FindFrame(n36, "volny7");
+Frame n37;         FRM_FindFrame(n37, "volny8");
+Frame n38;         FRM_FindFrame(n38, "volny9");
+FRAME n39;		 FRM_FindFrame(n39, "A5_G74");
+FRAME n40;		 FRM_FindFrame(n40, "A5_G75");
+Frame n41;         FRM_FindFrame(n41, "A5_G76");
+Frame n42;         FRM_FindFrame(n42, "A5_G77");
+FRAME n43;		 FRM_FindFrame(n43, "A5_G78");
+Frame n44;         FRM_FindFrame(n44, "A5_G79");
+Frame n45;         FRM_FindFrame(n45, "A5_G80");
+FRAME n46;		 FRM_FindFrame(n46, "A5_G81");
+Frame n47;         FRM_FindFrame(n47, "A5_G82");
+Frame n48;         FRM_FindFrame(n48, "A5_G83");
+FRAME n49;		 FRM_FindFrame(n49, "A5_G87");
+Frame n50;         FRM_FindFrame(n50, "A5_G88");
+Frame n51;         FRM_FindFrame(n51, "A5_G89");
+FRAME n52;		 FRM_FindFrame(n52, "A5_G90");
+Frame n53;         FRM_FindFrame(n53, "A5_G91");
+Frame n54;         FRM_FindFrame(n54, "A5_G92");
+FRAME n55;		 FRM_FindFrame(n55, "A5_G93");
+FRAME n56;		 FRM_FindFrame(n56, "A5_G94");
+Frame n57;         FRM_FindFrame(n57, "A5_G95");
+Frame n58;         FRM_FindFrame(n58, "A5_G96");
+FRAME n59;		 FRM_FindFrame(n59, "A5_G97");
+Frame n60;         FRM_FindFrame(n60, "A5_G98");
+Frame n61;         FRM_FindFrame(n61, "A5_G99");
+
+FRAME radio;		
+      FRM_FindFrame(radio, "m_prist_a3");
+Frame faker;
+	FRM_FindFrame(faker, "AF3a_FAKE");
+FRAME get_player;
+
+Integer gametype;
+	gametype=0;
+}
+
+gametype=_SPGetGameType();
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnSignal(3)
+{
+ SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(09991829);
+	SetObjectiveStatus(3, 1);
+      SetObjectiveStatus(1, 0);
+      SetActorState(radio, 1);
+      Delay(4000);
+    SUBTITLES_SetText(08991616);
+    Delay(4000);
+  SUBTITLES_SetOn(false);
+     GoTo end; 
+}
+
+Whenever end_prepare (_ACTOR_GetState(radio) == 2)
+{
+  FRM_GetNearestPlayer(radio, get_player);  
+  SUBTITLES_SetOn(true);
+  FRM_MorphSpeechDelayed(get_player, 08991618, 3, 20);
+  Delay(1500);
+  FRM_MorphSpeechDelayed(faker, 08991619, 3, 20);
+  Delay(1500);
+  SUBTITLES_SetText(08991617);
+  Delay(4000);
+  SUBTITLES_SetOn(false);
+  SetObjectiveStatus(2, 0);
+  SetObjectiveStatus(1, 1);
+      
+      Delay(15000);
+      SendSignal(n1, 1);
+	SendSignal(n2, 1);
+	SendSignal(n3, 1);
+      SendSignal(n4, 1);
+      SendSignal(n5, 1);
+	SendSignal(n6, 1);
+	Delay(30000);
+      SendSignal(n7, 1);
+	SendSignal(n8, 1);
+      SendSignal(n9, 1);
+	Delay(10000);
+      SendSignal(n10, 1);
+	SendSignal(n11, 1);
+	SendSignal(n12, 1);
+      SendSignal(n13, 1);
+      SendSignal(n14, 1);
+	SendSignal(n15, 1);
+	SendSignal(n16, 1);
+      SendSignal(n17, 1);
+	Delay(30000);
+      SendSignal(n18, 1);
+	SendSignal(n19, 1);
+	SendSignal(n20, 1);
+      SendSignal(n21, 1);
+      Delay(15000);
+      SendSignal(n22, 1);
+	SendSignal(n23, 1);
+	SendSignal(n24, 1);
+      SendSignal(n25, 1);
+	Delay(20000);
+      SendSignal(n26, 1);
+	SendSignal(n27, 1);
+	SendSignal(n28, 1);
+      SendSignal(n29, 1);
+      SendSignal(n30, 1);
+	Delay(15000);
+      SendSignal(n31, 1);
+	SendSignal(n32, 1);
+      SendSignal(n33, 1);
+      SendSignal(n34, 1);
+	Delay(10000);
+      SendSignal(n35, 1);
+	SendSignal(n36, 1);
+	SendSignal(n37, 1);
+      Delay(20000);
+      SendSignal(n38, 1);
+      SendSignal(n39, 1);
+      SendSignal(n40, 1);
+	SendSignal(n41, 1);
+	Delay(15000);
+      SendSignal(n42, 1);
+	SendSignal(n43, 1);
+      SendSignal(n44, 1);
+	SendSignal(n45, 1);
+	Delay(15000);
+      SendSignal(n46, 1);
+	SendSignal(n47, 1);
+      SendSignal(n48, 1);
+      SendSignal(n49, 1);
+      SendSignal(n50, 1);
+	Delay(20000);
+      SendSignal(n51, 1);
+	SendSignal(n52, 1);
+	SendSignal(n53, 1);
+      SendSignal(n54, 1);
+      SendSignal(n55, 1);
+      SendSignal(n56, 1);
+	SendSignal(n57, 1);
+      SendSignal(n58, 1);
+	SendSignal(n59, 1);
+      SendSignal(n60, 1);
+	SendSignal(n61, 1);
+      GoTo end;  
+}
+
+Whenever AED (_AllEnemiesDead())
+	{
+	SUBTITLES_SetOn(true);
+	SUBTITLES_SetText(07991406);
+      Delay(6000);
+	SUBTITLES_SetOn(false);
+      SetObjectiveStatus(2, 1);
+      GoTo end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Block
+{
+SetObjectiveStatus(1, 4);     // pouzij vysilacku
+SetObjectiveStatus(2, 4);	// ubran oazu nebo zabij nepritele
+SetObjectiveStatus(3, 0);     // znic tanka srace
+}
+
+SetActorState(radio, 0);
+SUBTITLES_SetOn(true);
+printf("Kill the enemy");
+SUBTITLES_SetText(15538);
+Delay(4000);
+SUBTITLES_SetOn(false);
+      
+GoTo end;
+
+Label end:
+

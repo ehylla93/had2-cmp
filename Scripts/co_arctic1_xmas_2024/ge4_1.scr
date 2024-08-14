@@ -1,0 +1,64 @@
+block{
+  INTEGER rnd			= 0;
+  SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+  
+OnAlarm(){
+  HUMAN_Stop();
+  HUMAN_Drive("", 0);
+  HUMAN_DriveNearPlayer(4);
+  Delay(2000);
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(3){
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  Delay(5000);
+  goto ACTIVITY;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  SetAlarmType(511, false);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_BoardVehicle("la_tigerw", true, 0);
+goto END;
+
+Label ACTIVITY:
+  Delay(2000);
+  printf("tankattack");
+  HUMAN_Drive("2", 15);
+  HUMAN_Drive("1", 15);
+  HUMAN_Drive("tankattack", 15);
+  delay(20000);
+  HUMAN_Drive("ta1", 150);
+  HUMAN_Drive("ta2", 150);
+  HUMAN_Drive("ta3", 150);
+  HUMAN_Drive("ta4", 150);
+  HUMAN_Drive("ta5", 150);
+  HUMAN_Drive("ta6", 150);
+  HUMAN_Drive("ta7", 150);
+  HUMAN_Drive("v_5", 150);
+  HUMAN_Drive("v_3", 150);
+  HUMAN_Drive("tankattack", 150);
+  HUMAN_Drive("ta8", 150);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, false);
+  }
+Label END:

@@ -1,0 +1,157 @@
+//----------------------/----------------------
+block
+{
+//Frame d2;			FRM_FindFrame(d2, "whbuild790");
+Frame Txt;			FRM_FindFrame(Txt,"Text");
+//Frame me;		FRM_GetMyFrame(me);
+integer rnd1;
+Integer C1;
+//SetWhenever(AreaClear, 0);
+SaveGameValue(1, 1);
+SaveGameValue(2, 1);
+SaveGameValue(3, 1);
+SaveGameValue(4, 1);
+SaveGameValue(5, 0);
+SaveGameValue(6, 0);
+SaveGameValue(7, 0);
+SaveGameValue(8, 0);
+SaveGameValue(9, 1);
+SaveGameValue(10, 0);
+SaveGameValue(11, 1);
+SaveGameValue(12, 1);
+SaveGameValue(13, 1);
+SaveGameValue(14, 0);
+SaveGameValue(111, 85);  // enemy counter
+SaveGameValue(200, 0);   // Disable Timer if all zones liberated
+SetObjectiveStatus(1, 1);
+SetObjectiveStatus(2, 1);
+SetObjectiveStatus(3, 1);
+SetObjectiveStatus(4, 1);
+SetObjectiveStatus(5, 0);
+SetObjectiveStatus(6, 0);
+SetObjectiveStatus(7, 0);
+SetObjectiveStatus(8, 0);
+SetObjectiveStatus(9, 1);
+SetObjectiveStatus(10, 0);
+SetObjectiveStatus(11, 1);
+SetObjectiveStatus(12, 1);
+SetObjectiveStatus(13, 1);
+SetObjectiveStatus(14, 0);
+MP_EnableSpawnZone("zone1", 1);
+MP_EnableSpawnZone("zone2", 0);
+MP_EnableSpawnZone("zone3", 0);
+MP_EnableSpawnZone("zone4", 0);
+MP_EnableSpawnZone("zone5", 0);
+MP_EnableSpawnZone("zone6", 0);
+MP_EnableSpawnZone("zone7", 0);
+MP_EnableSpawnZone("zone8", 0);
+MP_EnableSpawnZone("zone9", 0);
+MP_EnableSpawnZone("zone10", 0);
+MP_EnableSpawnZone("zone11", 0);
+MP_EnableSpawnZone("zone12", 0);
+MP_EnableSpawnZone("zone13", 0);
+}
+//goto END;
+goto Count;
+
+
+
+//----------------------/Counter/----------------------
+Label Count:
+Block
+{
+C1=0;
+C1=C1+_LoadGameValue(1);
+C1=C1+_LoadGameValue(2);
+C1=C1+_LoadGameValue(3);
+C1=C1+_LoadGameValue(4);
+C1=C1+_LoadGameValue(5);
+C1=C1+_LoadGameValue(6);
+C1=C1+_LoadGameValue(7);
+C1=C1+_LoadGameValue(8);
+C1=C1+_LoadGameValue(9);
+C1=C1+_LoadGameValue(10);
+C1=C1+_LoadGameValue(11);
+C1=C1+_LoadGameValue(12);
+C1=C1+_LoadGameValue(13);
+}
+//SaveGameValue(50, C1);
+if (C1==0)
+{
+SendSignal(Txt, 5);
+delay(5000);
+Block
+{
+SetObjectiveStatus(1, 2);
+SetObjectiveStatus(2, 2);
+SetObjectiveStatus(3, 2);
+SetObjectiveStatus(4, 2);
+SetObjectiveStatus(5, 2);
+SetObjectiveStatus(6, 2);
+SetObjectiveStatus(7, 2);
+SetObjectiveStatus(8, 2);
+SetObjectiveStatus(9, 2);
+SetObjectiveStatus(10, 2);
+SetObjectiveStatus(11, 2);
+SetObjectiveStatus(12, 2);
+SetObjectiveStatus(13, 2);
+SetObjectiveStatus(14, 2);
+}
+goto END;
+}
+
+// If enemy count is not zero wait 15 sec
+if ( (C1==13) and (_LoadGameValue(111)>0) )
+{
+delay(15000);
+Block
+{
+C1=0;
+C1=C1+_LoadGameValue(1);
+C1=C1+_LoadGameValue(2);
+C1=C1+_LoadGameValue(3);
+C1=C1+_LoadGameValue(4);
+C1=C1+_LoadGameValue(5);
+C1=C1+_LoadGameValue(6);
+C1=C1+_LoadGameValue(7);
+C1=C1+_LoadGameValue(8);
+C1=C1+_LoadGameValue(9);
+C1=C1+_LoadGameValue(10);
+C1=C1+_LoadGameValue(11);
+C1=C1+_LoadGameValue(12);
+C1=C1+_LoadGameValue(13);
+}
+if (C1<13)
+{
+goto Count;
+}
+SaveGameValue(200, 1);
+SendSignal(Txt, 2);
+delay(2000);
+Block
+{
+SetObjectiveStatus(1, 1);
+SetObjectiveStatus(2, 1);
+SetObjectiveStatus(3, 1);
+SetObjectiveStatus(4, 1);
+SetObjectiveStatus(5, 1);
+SetObjectiveStatus(6, 1);
+SetObjectiveStatus(7, 1);
+SetObjectiveStatus(8, 1);
+SetObjectiveStatus(9, 1);
+SetObjectiveStatus(10, 1);
+SetObjectiveStatus(11, 1);
+SetObjectiveStatus(12, 1);
+SetObjectiveStatus(13, 1);
+SetObjectiveStatus(14, 1);
+}
+}
+
+//PrintfNumber("Counter C1: ",C1);
+delay(4000); 
+goto Count;
+
+
+
+
+label end:

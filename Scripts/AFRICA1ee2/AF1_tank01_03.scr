@@ -1,0 +1,45 @@
+// AF1_tank01_03
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER gt			= _SPGetGameDifficulty();
+  INTEGER value		= gt * 20;
+  INTEGER see_val		= 150 - (value);
+  INTEGER hear_val		= 120 - (value);
+  HUMAN_SETSIGHTRANGE(see_val);
+  HUMAN_SETHEARRANGE(hear_val);
+  if(gt == 0)
+  {
+    SetAlarmType(4, false);
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  goto END;
+}
+
+OnSignal(1){
+  HUMAN_Suspend(false);
+//  HUMAN_SetOptimized(false);
+  HUMAN_BoardVehicle("panzer01", false, 2);
+  HUMAN_TurnAtNearestPlayer();
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_BoardVehicle("panzer01", true, 2);
+goto END;
+
+Label END:

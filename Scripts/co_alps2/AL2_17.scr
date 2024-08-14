@@ -1,0 +1,45 @@
+// AL2_17 - soldier - reinforcement after alarm - spawns under the stairs
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+
+Block {
+Integer aievent = 0;
+HUMAN_SetOptimized(1);
+SetAlarmType(140, false);
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_Suspend(true);
+HUMAN_SETEVENTS(0);
+GoTo end;
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+
+OnAlarm()
+{
+	aievent=_GetAlarmType();
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	HUMAN_SetAlarm(false);
+	GoTo end;
+}
+
+Whenever alarmed(_SignalReceived(1))	// received from AL2_15_A1 - AL2_15_A8
+{
+	GoTo mode2;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Label mode2:			// after alarm
+	HUMAN_Suspend(false);
+	HUMAN_SETEVENTS(1);
+	SetAlarmType(652, false);
+	HUMAN_SETMODE_Crouch();
+	GoTo end;
+
+Label end:

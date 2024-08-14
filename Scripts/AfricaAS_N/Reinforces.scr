@@ -1,0 +1,161 @@
+// Enemy Reinforcements
+//-------------------------------------------------------------
+
+Block
+{
+Frame T1;	FRM_FindFrame(T1,"La_tiger_1");
+Frame T2;	FRM_FindFrame(T2,"La_tiger_2");
+Frame T3;	FRM_FindFrame(T3,"La_tiger_3");
+Frame H1;	FRM_FindFrame(H1,"Hakl_01");
+Frame H2;	FRM_FindFrame(H2,"Hakl_02");
+
+Frame T1a;	FRM_FindFrame(T1a,"T1_G01");
+Frame T1b;	FRM_FindFrame(T1b,"T1_G02");
+Frame T1c;	FRM_FindFrame(T1c,"T1_G03");
+Frame T2a;	FRM_FindFrame(T2a,"T2_G01");
+Frame T2b;	FRM_FindFrame(T2b,"T2_G02");
+Frame T2c;	FRM_FindFrame(T2c,"T2_G03");
+Frame T3a;	FRM_FindFrame(T3a,"T3_G01");
+Frame T3b;	FRM_FindFrame(T3b,"T3_G02");
+Frame T3c;	FRM_FindFrame(T3c,"T3_G03"); 
+Frame H1g1;	FRM_FindFrame(H1g1,"H1_G01");
+Frame H1g2;	FRM_FindFrame(H1g2,"H1_G02");
+Frame H1g3;	FRM_FindFrame(H1g3,"H1_G03");
+Frame H1g4;	FRM_FindFrame(H1g4,"H1_G04");
+Frame H1g5;	FRM_FindFrame(H1g5,"H1_G05");
+Frame H1g6;	FRM_FindFrame(H1g6,"H1_G06");
+Frame H2g1;	FRM_FindFrame(H2g1,"H2_G01");
+Frame H2g2;	FRM_FindFrame(H2g2,"H2_G02");
+Frame H2g3;	FRM_FindFrame(H2g3,"H2_G03");
+Frame H2g4;	FRM_FindFrame(H2g4,"H2_G04");
+Frame H2g5;	FRM_FindFrame(H2g5,"H2_G05");
+Frame H2g6;	FRM_FindFrame(H2g6,"H2_G06");
+
+Frame P01;	FRM_FindFrame(P01,"Rp_G01");
+Frame P02;	FRM_FindFrame(P02,"Rp_G02");
+Frame P03;	FRM_FindFrame(P03,"Rp_G03");
+Frame P04;	FRM_FindFrame(P04,"Rp_G04");
+Frame P05;	FRM_FindFrame(P05,"Rp_G05");
+Frame P06;	FRM_FindFrame(P06,"Rp_G06");
+Frame P07;	FRM_FindFrame(P07,"Rp_G07");
+Frame P08;	FRM_FindFrame(P08,"Rp_G08");
+Frame P09;	FRM_FindFrame(P09,"Rp_G09");
+Frame P10;	FRM_FindFrame(P10,"Rp_G10");
+Frame P11;	FRM_FindFrame(P11,"Rs_G01");
+Frame P12;	FRM_FindFrame(P12,"Rs_G02");
+Frame P13;	FRM_FindFrame(P13,"Rs_G03");
+Frame P14;	FRM_FindFrame(P14,"Rs_G04");
+Frame P15;	FRM_FindFrame(P15,"Rs_G05");
+Frame P16;	FRM_FindFrame(P16,"Rs_G06");
+
+FRM_SetOn(T1, 0);
+FRM_SetOn(T2, 0);
+FRM_SetOn(T3, 0);
+FRM_SetOn(H1, 0);
+FRM_SetOn(H2, 0);
+
+Car_SetFuel(T1, 0);
+Car_SetFuel(T2, 0);
+Car_SetFuel(T3, 0);
+Car_SetFuel(H1, 0);
+Car_SetFuel(H2, 0);
+
+Integer Reinf;
+
+SetWhenever(Defended, 0);
+}
+Delay(5000);
+
+//-------------------------------------------------------------
+
+Whenever Reinf_Coming (_SignalReceived(3))
+{
+Delay(40000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(08991617);
+Delay(5000);
+SetObjectiveStatus(6, 0);
+SUBTITLES_SetOn(0);
+
+Delay(70000);
+Reinf=_RandomInt(12);
+If(Reinf==0){SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);Delay(1000);SendSignal(T2a, 1);SendSignal(T2b, 1);SendSignal(T2c, 1);Delay(1500);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);}
+If(Reinf==1){SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);Delay(2000);SendSignal(T2a, 1);SendSignal(T2b, 1);SendSignal(T2c, 1);Delay(7000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);}
+If(Reinf==2){SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);Delay(12000);SendSignal(T2a, 1);SendSignal(T2b, 1);SendSignal(T2c, 1);Delay(3000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);}
+If(Reinf==3){SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);Delay(1000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);}
+If(Reinf==4){SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);Delay(5000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);}
+If(Reinf==5){SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);Delay(10000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);}
+
+If(Reinf==6){SendSignal(T2a, 1);SendSignal(T2b, 1);SendSignal(T2c, 1);Delay(5000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);Delay(10000);SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);}
+If(Reinf==7){SendSignal(T2a, 1);SendSignal(T2b, 1);SendSignal(T2c, 1);Delay(10000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);Delay(5000);SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);}
+If(Reinf==8){SendSignal(T2a, 1);SendSignal(T2b, 1);SendSignal(T2c, 1);Delay(20000);SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);Delay(1000);SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);}
+If(Reinf==9){SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);Delay(2000);SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);}
+If(Reinf==10){SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);Delay(7000);SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);}
+If(Reinf==11){SendSignal(T3a, 1);SendSignal(T3b, 1);SendSignal(T3c, 1);Delay(14000);SendSignal(T1a, 1);SendSignal(T1b, 1);SendSignal(T1c, 1);}
+
+Delay(30000);
+Reinf=_RandomInt(4);
+If(Reinf==0){SendSignal(H1g1, 1);SendSignal(H1g2, 1);SendSignal(H1g3, 1);SendSignal(H1g4, 1);SendSignal(H1g5, 1);SendSignal(H1g6, 1);Delay(2500);SendSignal(H2g1, 1);SendSignal(H2g2, 1);SendSignal(H2g3, 1);SendSignal(H2g4, 1);SendSignal(H2g5, 1);SendSignal(H2g6, 1);}
+If(Reinf==1){SendSignal(H1g1, 1);SendSignal(H1g2, 1);SendSignal(H1g3, 1);SendSignal(H1g4, 1);SendSignal(H1g5, 1);SendSignal(H1g6, 1);Delay(10000);SendSignal(H2g1, 1);SendSignal(H2g2, 1);SendSignal(H2g3, 1);SendSignal(H2g4, 1);SendSignal(H2g5, 1);SendSignal(H2g6, 1);}
+If(Reinf==2){SendSignal(H1g1, 1);SendSignal(H1g2, 1);SendSignal(H1g3, 1);SendSignal(H1g4, 1);SendSignal(H1g5, 1);SendSignal(H1g6, 1);}
+If(Reinf==3){SendSignal(H2g1, 1);SendSignal(H2g2, 1);SendSignal(H2g3, 1);SendSignal(H2g4, 1);SendSignal(H2g5, 1);SendSignal(H2g6, 1);}
+
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(22994411);
+Delay(4000);
+SUBTITLES_SetOn(0);
+
+Delay(20000);
+SendSignal(P16, 1);
+Delay(1000);
+SendSignal(P10, 1);
+Delay(1000);
+SendSignal(P07, 1);
+Delay(1000);
+SendSignal(P13, 1);
+Delay(1000);
+SendSignal(P03, 1);
+
+Delay(40000);
+SendSignal(P15, 1);
+Delay(1000);
+SendSignal(P09, 1);
+Delay(1000);
+SendSignal(P06, 1);
+Delay(1000);
+SendSignal(P12, 1);
+Delay(1000);
+SendSignal(P02, 1);
+
+Delay(40000);
+SendSignal(P14, 1);
+Delay(1000);
+SendSignal(P08, 1);
+Delay(1000);
+SendSignal(P05, 1);
+
+Delay(50000);
+SendSignal(P01, 1);
+Delay(1000);
+SendSignal(P11, 1);
+Delay(1000);
+SendSignal(P04, 1);
+Delay(2000);
+SetWhenever(Defended, 1);
+goto END;
+}
+
+Whenever Defended ((((_Actor_GetState(P01)==0) And (_Actor_GetState(P04)==0)) And (_Actor_GetState(T1)==0)) And (_Actor_GetState(T3)==0))
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(08991602);
+Delay(4000);
+SetObjectiveStatus(6, 1);
+SUBTITLES_SetText(08991605);
+Delay(4000);
+SetObjectiveStatus(8, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Label END:

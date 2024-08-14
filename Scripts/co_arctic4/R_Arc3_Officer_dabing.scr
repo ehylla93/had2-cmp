@@ -1,0 +1,44 @@
+//U-Boat Officer - dabing
+
+block {
+frame officer;		FRM_FindFrame(officer, "Marine_officer_1");
+integer RND;
+}
+
+OnSignal(1)
+{
+    If( _ACTOR_GetState(officer) == 1)
+      {  FRM_MorphSpeech(officer, 14992828, 15, 60); } else { EndScript(); }	//"NOSUB Alarm!"
+ Delay(50);
+    If( _ACTOR_GetState(officer) == 1)
+      {  FRM_MorphSpeech(officer, 14992828, 15, 60); } else { EndScript(); }
+ Delay(1500);
+    If( _ACTOR_GetState(officer) == 1)
+      {  FRM_MorphSpeech(officer, 14992828, 15, 60); } else { EndScript(); }
+ Delay(5000);
+    If( _ACTOR_GetState(officer) == 1)
+      {  FRM_MorphSpeech(officer, 14992836, 15, 60); } else { EndScript(); }	//"NOSUB We were attacked. Alarm! Alarm!"
+    Delay(4500);
+ label loop:
+    If( _ACTOR_GetState(officer) == 1)
+      {  FRM_MorphSpeech(officer, 14992828, 15, 60); } else { EndScript(); }
+ Delay(50);
+    If( (_ACTOR_GetState(officer) == 1))
+      {  FRM_MorphSpeech(officer, 14992828, 15, 60); } else { EndScript(); }
+  RND = _RandomInt(4000) + 5000;
+  Delay(RND);
+    If( _ACTOR_GetState(officer) == 1)
+      {  FRM_MorphSpeech(officer, 14992828, 15, 60); } else { EndScript(); }
+  RND = _RandomInt(4000) + 5000;
+  Delay(RND);
+    If( _ACTOR_GetState(officer) == 1)
+      {  FRM_MorphSpeech(officer, 14992836, 15, 60); } else { EndScript(); }
+  RND = _RandomInt(4000) + 5000;
+  Delay(RND);
+ goto loop;
+}
+
+OnSignal(2)
+{
+  EndScript();
+}

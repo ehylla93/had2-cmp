@@ -1,0 +1,80 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	Add16 - podpora tanku - pozdeji "Free chodic"		*
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+/////////////////////////////////////////////////////////////////////////////////////////////// 
+
+
+Block
+{
+  integer  AIEvent;
+  SetAlarmType(1023, False);	
+}
+HUMAN_Suspend(True);	
+goto TheEnd;				
+
+OnSignal(1)
+{
+  HUMAN_Suspend(False);
+}
+
+Block
+ {
+   HUMAN_SETAIMODE_Defensive();
+   HUMAN_SETMODE_Run();
+   HUMAN_LookAround(3);
+   SetAlarmType(1023, True);		
+ }
+HUMAN_SetOptimized(2);
+HUMAN_Move("Add16_1"); 
+Delay(2500);
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+HUMAN_Move("Add16_end"); 
+HUMAN_SETMODE_Crouch();
+Delay(8500);
+HUMAN_SETMODE_Stand();
+
+Label Loop:
+   HUMAN_MoveRandomRadius(25);
+   Delay(5000);
+Goto loop;
+
+label DeAlarm:
+  Block
+    {
+       HUMAN_WeaponOnArm(True);
+       HUMAN_SETAIMODE_Defensive();
+       HUMAN_SETMODE_Crouch();
+       HUMAN_LookAround(3);
+       HUMAN_SetOptimized(2);
+       HUMAN_SETMODE_Walk();
+    }
+goto Loop;		
+
+
+OnAlarm()
+{
+  HUMAN_LookAround(0);
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber(" --- Add16 --- ma alarm: ", AIEvent);	
+      HUMAN_Stop();
+      HUMAN_SETAIMODE_Aggressive();
+      HUMAN_SETMODE_Crouch();
+      HUMAN_SETHEARRANGE(100);	
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:
+

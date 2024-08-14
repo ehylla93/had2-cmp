@@ -1,0 +1,23 @@
+// Obj 2 - Destroy the Enemy Radio Station 
+// -----------------------------------------
+
+Block
+{
+Frame Obj6;	FRM_FindFrame(Obj6,"obj4");
+
+SetObjectiveStatus(2, 0);
+}
+
+// ----------------------------------------
+
+OnDeath()
+{
+Delay(1500);
+SendSignal(Obj6, 1);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(52999801);
+SetObjectiveStatus(2, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}

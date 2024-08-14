@@ -1,0 +1,51 @@
+// MISSION Generator / Random objects + Start of mission / Spawnzones 
+// --------------------------------------------------------------------
+
+Block
+{
+// *** DETEKTORY ***
+
+Frame D1;	FRM_FindFrame(D1,"Front_Line");
+Frame D2;	FRM_FindFrame(D2,"S_Hlidka");
+Frame D3;	FRM_FindFrame(D3,"Ammoboxy");
+Frame D4;	FRM_FindFrame(D4,"SnipersSelector");
+
+// **** Hlavni Spinace ****
+// 1 = ON / 0 = OFF
+
+Integer S1; // Front Line
+	S1=1;
+
+Integer S2; // S_Hlidka
+	S2=1;
+
+Integer S3; // Airdrop
+	S3=1;
+
+Integer S4; // Snipers
+	S4=1;
+
+MP_EnableSpawnZone("zone1", 1);
+}
+
+Whenever Spawn (_PlayerInRange(1000))
+{
+Delay(6000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(53999701);
+Delay(4000);
+SUBTITLES_SetText(52999703);
+Delay(4000);
+SUBTITLES_SetOn(0);
+}
+
+// --------------------------------------------------------------------
+
+If(S1==1){SendSignal(D1, 1);}
+If(S2==1){SendSignal(D2, 1);}
+If(S3==1){SendSignal(D3, 1);}
+If(S4==1){SendSignal(D4, 1);}
+goto END;
+
+
+Label END:

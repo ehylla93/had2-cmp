@@ -1,0 +1,11 @@
+frame Radio_sound_2;	 FRM_FindFrame(Radio_sound_2, "l_haydn_2");		// zvuk outside
+frame Radio_sound_1;	 FRM_FindFrame(Radio_sound_1, "l_haydn_1");		// zvuk inside
+
+FRM_SetOn(Radio_sound_2, true);
+FRM_SetOn(Radio_sound_1, true);
+  
+OnDeath()
+{
+	FRM_SetOn(Radio_sound_2, false);
+    FRM_SetOn(Radio_sound_1, false);
+}

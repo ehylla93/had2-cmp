@@ -1,0 +1,41 @@
+// 01_E03_E11_speech - Dummy for 01_E03, 01_E11
+
+Frame E03;	FRM_FindFrame(E03, "01_E03");
+Frame E11;	FRM_FindFrame(E11, "01_E11");
+goto END;
+
+// ----------------------------------------
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 70))
+{
+goto Speak;
+}
+
+OnSignal(1)	// received from 01_E03, 01_E11 on death or on alarm
+{
+	FRM_MorphSpeechDelayed(E03, 0, 0, 0);
+	FRM_MorphSpeechDelayed(E11, 0, 0, 0);
+	EndScript();
+}
+
+Label Speak:
+FRM_MorphSpeechDelayed(E03, 12992434, 3, 20);
+FRM_MorphSpeechDelayed(E11, 12992435, 3, 20);
+FRM_MorphSpeechDelayed(E03, 12992436, 3, 20);
+FRM_MorphSpeechDelayed(E11, 12992437, 3, 20);
+FRM_MorphSpeechDelayed(E03, 12992438, 3, 20);
+FRM_MorphSpeechDelayed(E11, 12992439, 3, 20);
+FRM_MorphSpeechDelayed(E03, 12992440, 3, 20);
+FRM_MorphSpeechDelayed(E11, 12992441, 3, 20);
+FRM_MorphSpeechDelayed(E11, 12992442, 3, 20);
+FRM_MorphSpeechDelayed(E03, 12992443, 3, 20);
+FRM_MorphSpeechDelayed(E11, 12992444, 3, 20);
+FRM_MorphSpeechDelayed(E03, 12992445, 3, 20);
+FRM_MorphSpeechDelayed(E11, 12992446, 3, 20);
+FRM_MorphSpeechDelayed(E03, 12992447, 3, 20);
+Delay(20000);
+GoTo Speak;
+
+// ----------------------------------------	
+	
+Label END:

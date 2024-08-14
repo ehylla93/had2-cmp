@@ -1,0 +1,55 @@
+block{
+	Frame me;						FRM_GetMyFrame(me);
+	SetAlarmType(1,1); //close shooting
+	SetAlarmType(2,1); //shooting (enemy)
+	SetAlarmType(4,1); //hears steps
+	SetAlarmType(8,1); //sounds from
+	SetAlarmType(16,1); //explosion
+	SetAlarmType(32,1); //see
+	SetAlarmType(64,1); //gets hurt
+	SetAlarmType(128,1); //from script
+	SetAlarmType(256,1); //friendly fire
+	SetAlarmType(512,1); //sees dead body
+	integer rnd1 = 0;
+	integer rnd2 = 0;
+	integer msg = 00990000;
+	
+}
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+
+printf("rembo initialized.");
+OnDeath()
+{
+	EndScript();
+}
+
+Whenever Near (_PlayerInRange(5))
+{
+	rnd1 = _randomint(170);
+	rnd1 = msg + rnd1;
+	FRM_MorphSpeechDelayed(me, rnd1, 3, 10);
+	SetWhenever(Near, true);
+	goto loop;
+}
+
+OnSignal(1)
+{
+	SetWhenever(Near, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_WeaponUp(true);
+	HUMAN_SETMODE_Run();
+	GOTO LOOP;
+}
+
+Label loop:
+	HUMAN_AttackMove("metar_50");
+	HUMAN_AttackMove("metar_52");
+	goto loop;
+
+
+SetWheneverTime(Near, 3000);

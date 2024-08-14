@@ -1,0 +1,68 @@
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+SetAlarmType(1,1);
+SetAlarmType(2,1);
+SetAlarmType(4,1);
+SetAlarmType(8,1);
+SetAlarmType(16,1);
+SetAlarmType(32,1);
+SetAlarmType(64,1);
+SetAlarmType(128,1);
+SetAlarmType(256,1);
+SetAlarmType(512,1);
+
+Frame   objectives;                     FRM_FindFrame( objectives,  "__objectives"  );
+Frame la_ammo_2;		FRM_FindFrame(la_ammo_2,"la_ammo_2");
+Frame AF1_33;		FRM_FindFrame(AF1_33,"AF1_33");
+Frame AF1_34;		FRM_FindFrame(AF1_34,"AF1_34");
+Frame AF1_12;		FRM_FindFrame(AF1_12,"AF1_12");
+Frame AF1_23;		FRM_FindFrame(AF1_23,"AF1_23");
+Frame AF1_24;		FRM_FindFrame(AF1_24,"AF1_24");
+Frame AF1_35;		FRM_FindFrame(AF1_35,"AF1_35");
+Frame AF1_02;		FRM_FindFrame(AF1_02,"AF1_02");
+Frame NPC1;		FRM_FindFrame(NPC1,"NPC1");
+Frame NPC2;		FRM_FindFrame(NPC2,"NPC2");
+//^Block
+
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//^OnDeath
+EndScript();
+}
+
+OnAlarm(){
+//^OnAlarm
+EndScript();
+}
+
+OnAlarmDone(){
+//^AlarmDone
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+Whenever AF1_33 (_PlayerInRange(500))
+{
+
+SendSignal(NPC1, 11);
+SendSignal(NPC2, 11);
+SendSignal(AF1_02, 1);
+SendSignal(AF1_23, 1);
+SendSignal(AF1_24, 1);
+SendSignal(AF1_12, 3);
+SendSignal(AF1_33, 1);
+SendSignal(AF1_34, 1);
+SendSignal(AF1_35, 1);
+//^Whenever-AF1_33
+}
+
+//^CustomSection
+
+// -------------------------------------------------------------------------------------------------------------
+//^DefaultLoad
+goto END;
+
+Label END:

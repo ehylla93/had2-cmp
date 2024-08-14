@@ -1,0 +1,12 @@
+// Radio
+// ----------------------------------------
+
+Block
+{
+Frame Obj7;				FRM_FindFrame(Obj7, "obj7");
+}
+
+OnDeath(){
+SendSignal(Obj7, 1);
+EndScript();
+}

@@ -1,0 +1,79 @@
+// E1_G49 - E1 Flak Manner
+// ------------------------------------------------
+
+Block
+{
+Frame Flak;		FRM_FindFrame(Flak, "E1_Flak");
+Frame me;		FRM_GetMyFrame(me);
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+FRM_SwitchFaceTexture(me,"e_f039");
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(100);
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath()
+{
+EndScript();
+}
+
+OnAlarm()
+{
+Delay(5000);
+HUMAN_SETSIGHTRANGE(145);
+HUMAN_SETHEARRANGE(40);
+HUMAN_SETMODE_Run();
+HUMAN_MoveToFrame(Flak, 8);
+
+If(_Actor_GetState(Flak) == 0)
+{
+HUMAN_MoveToFrame(Flak, 2);
+HUMAN_BoardVehicle("E1_Flak", 1, 0);
+HUMAN_SETAIMODE_Aggressive();
+HUMAN_TurnAtNearestPlayer();
+}
+
+Else
+{
+HUMAN_SETMODE_Crouch();
+HUMAN_MoveFromFrame(Flak, 7);
+HUMAN_SETAIMODE_Zombie();
+HUMAN_TurnAtNearestPlayer();
+}
+
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SETHEARRANGE(100);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 100))
+{
+HUMAN_Suspend(0);
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label END:

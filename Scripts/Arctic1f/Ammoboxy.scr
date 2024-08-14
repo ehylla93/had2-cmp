@@ -1,0 +1,42 @@
+// Ammoboxy - krabice s nabojema "AIRDROP"
+//-----------------------------------------------
+
+Block
+{
+// *** AIRDROP 1 ***
+
+Frame A1;	FRM_FindFrame(A1,"Ammobox1");
+Frame A2;	FRM_FindFrame(A2,"Ammobox2");
+Frame W1;	FRM_FindFrame(W1,"Weaponbox3");
+Frame W2;	FRM_FindFrame(W2,"Weaponbox4");
+
+SetWhenever(AIRDROP_1, 0);
+}
+
+//------------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(AIRDROP_1, 1);
+goto END;
+}
+
+
+Whenever AIRDROP_1 (_SignalReceived(2))
+{
+Delay(2000);
+SetActorState(A1, 1);
+Delay(1000);
+SetActorState(W1, 1);
+Delay(300);
+SetActorState(W2, 1);
+Delay(750);
+SetActorState(A2, 1);
+goto END;
+}
+
+
+Label END:
+
+
+

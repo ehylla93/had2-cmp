@@ -1,0 +1,167 @@
+// Obj 1 - Destroy all enemy Planes
+// -------------------------------------
+
+Block
+{
+Frame la_ju;	FRM_FindFrame(la_ju,"la_ju");
+Integer IntP01;		IntP01=1;
+Frame la_macchi01;	FRM_FindFrame(la_macchi01,"la_macchi01");
+Integer IntP02;		IntP02=1;
+Frame la_macchi02;	FRM_FindFrame(la_macchi02,"la_macchi02");
+Integer IntP03;		IntP03=1;
+Frame la_macchi03;	FRM_FindFrame(la_macchi03,"la_macchi03");
+Integer IntP04;		IntP04=1;
+Frame la_macchi04;	FRM_FindFrame(la_macchi04,"la_macchi04");
+Integer IntP05;		IntP05=1;
+Frame la_macchi05;	FRM_FindFrame(la_macchi05,"la_macchi05");
+Integer IntP06;		IntP06=1;
+Frame la_macchi06;	FRM_FindFrame(la_macchi06,"la_macchi06");
+Integer IntP07;		IntP07=1;
+Frame la_macchi07;	FRM_FindFrame(la_macchi07,"la_macchi07");
+Integer IntP08;		IntP08=1;
+Frame la_macchi08;	FRM_FindFrame(la_macchi08,"la_macchi08");
+Integer IntP09;		IntP09=1;
+Frame la_macchi09;	FRM_FindFrame(la_macchi09,"la_macchi09");
+Integer IntP10;		IntP10=1;
+Frame la_macchi10;	FRM_FindFrame(la_macchi10,"la_macchi10");
+Integer IntP11;		IntP11=1;
+
+Integer Actor_Eliminated;	Actor_Eliminated = 0;
+
+SetObjectiveStatus(1, 0);
+}
+
+// -------------------------------------
+
+Delay(500);
+goto Planekill;
+
+Label Planekill:
+
+Block
+{
+
+If(IntP01 == 1)
+{
+
+If(_Actor_GetState(la_ju)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP01=0;	
+}	
+}
+
+If(IntP02 == 1)
+{
+
+If(_Actor_GetState(la_macchi01)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP02=0;	
+}	
+}
+
+If(IntP03 == 1)
+{
+
+If(_Actor_GetState(la_macchi02)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP03=0;	
+}	
+}
+
+If(IntP04 == 1)
+{
+
+If(_Actor_GetState(la_macchi03)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP04=0;	
+}	
+}
+
+If(IntP05 == 1)
+{
+
+If(_Actor_GetState(la_macchi04)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP05=0;	
+}	
+}
+
+If(IntP06 == 1)
+{
+
+If(_Actor_GetState(la_macchi05)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP06=0;	
+}	
+}
+
+If(IntP07 == 1)
+{
+
+If(_Actor_GetState(la_macchi06)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP07=0;	
+}	
+}
+
+If(IntP08 == 1)
+{
+
+If(_Actor_GetState(la_macchi07)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP08=0;	
+}	
+}
+
+If(IntP09 == 1)
+{
+
+If(_Actor_GetState(la_macchi08)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP09=0;	
+}	
+}
+
+If(IntP10 == 1)
+{
+
+If(_Actor_GetState(la_macchi09)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP10=0;	
+}	
+}
+
+If(IntP11 == 1)
+{
+
+If(_Actor_GetState(la_macchi10)==0)
+{	
+Actor_Eliminated=Actor_Eliminated+1;		
+IntP11=0;	
+}	
+}
+
+}
+
+If(Actor_Eliminated == 11)
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(05991006);
+SetObjectiveStatus(1, 1);
+Delay(4000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+Delay(2500);
+goto Planekill;

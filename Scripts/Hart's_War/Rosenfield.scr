@@ -1,0 +1,98 @@
+// Cpt. Rosenfield - Prisoner (Obj 5)
+// ---------------------------------------------
+
+Block
+{
+Frame obj1;	FRM_FindFrame(obj1, "obj1");
+Frame door34;	FRM_FindFrame(door34, "door34");
+Frame Rosenfield;	FRM_FindFrame(Rosenfield,"Cpt. Rosenfield");
+Frame Suman1;   	FRM_FindFrame(Suman1,"Suman1");
+Frame Radio;	FRM_FindFrame(Radio,"Radio");
+Frame me;	FRM_GetMyFrame(me);
+
+
+
+FRM_SwitchFaceTexture(me,"e_f092");
+Frame Player;
+
+Integer SniperK;
+
+SetWhenever(PlayerIn, 0);
+}
+
+// ---------------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+
+Whenever PlayerIn (_PlayerInRange(50))
+{
+
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Run();
+Delay(1000);
+HUMAN_SETMODE_Stand();
+HUMAN_MoveToFrame(door34, 1);
+
+goto Jdu1;
+}
+
+Whenever PlayerIn1 (_PlayerInRange(4))
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Run();
+Delay(1000);
+HUMAN_SETMODE_Stand();
+goto Jdu11;
+}
+
+
+
+Whenever Aktiv (_SignalReceived(1))
+{
+SetWhenever(PlayerIn, 1);
+SetWhenever(PlayerIn1, 0);
+goto END;
+}
+
+// ---------------------------------------------
+
+HUMAN_SetOptimized(1);
+HUMAN_SetAnim("%%kucasedi", 1000, 1000, 1);
+goto END;
+
+
+Label Jdu:
+SendSignal(obj1, 2);
+Delay(1000);
+HUMAN_SETMODE_Crouch();
+goto Jdu;
+
+Label Jdu1:
+FRM_MorphSpeechDelayed(Rosenfield, 59990065, 15, 30);
+Delay(2000);
+HUMAN_MoveToFrame(Suman1, 0);
+Delay(1000);
+HUMAN_TurnAt(Suman1);
+HUMAN_SetAnim("%%rozhlizeni1", 1000, 1000, 1);
+Delay(2500);
+HUMAN_SetAnim("%%divase", 1000, 1000, 1);
+Delay(2500);
+HUMAN_SetAnim("", 1000, 1000, 1);
+goto Jdu;
+
+Label Jdu11:
+HUMAN_SETMODE_Crouch();
+Delay(1000);
+SUBTITLES_SetOn(1);
+FRM_MorphSpeechDelayed(Rosenfield, 59990058, 15, 30); //  Dès que nous sommes rentrés, les Allemands 
+Delay(1000);
+FRM_MorphSpeechDelayed(Rosenfield, 56990054, 15, 30); // Nous sommes une équipe maintenant!
+Delay(1000);
+FRM_MorphSpeechDelayed(Rosenfield, 05011012, 15, 30); // Vous! Où peut-on trouver Schumann!
+Delay(3000);
+goto END;
+
+Label END:

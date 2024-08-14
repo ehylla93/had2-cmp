@@ -1,0 +1,21 @@
+// Obj 3 - Destroy the Enemy Heavy Equipment
+// -----------------------------------------
+
+Block
+{
+Frame K1;	FRM_FindFrame(K1,"Pak_01");
+Frame K2;	FRM_FindFrame(K2,"Pak_02");
+Frame K3;	FRM_FindFrame(K3,"Pak_03");
+Frame Obj3;	FRM_FindFrame(Obj3,"obj3");
+
+SetObjectiveStatus(3, 0);
+}
+
+// -----------------------------------------
+
+Whenever Heavy_Equipment_Destroyed (((_Actor_GetState(K1)==2) And (_Actor_GetState(K2)==2)) And (_Actor_GetState(K3)==2))
+{
+Delay(2500);
+SetObjectiveStatus(3, 1);
+EndScript();
+}

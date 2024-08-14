@@ -1,0 +1,30 @@
+// Obj 4 - Destroy enemy tanks
+// ----------------------------------------------
+
+Block
+{
+Frame L01;	FRM_FindFrame(L01, "Panzer_1");
+Frame L02;	FRM_FindFrame(L02, "Panzer_2");
+Frame L03;	FRM_FindFrame(L03, "Tiger");
+Frame L04;	FRM_FindFrame(L04, "Sherman_01");
+Frame L05;	FRM_FindFrame(L05, "Sherman_02");
+Frame L06;	FRM_FindFrame(L06, "Sherman_03");
+Frame L07;	FRM_FindFrame(L07, "la_puma_");
+Frame L08;	FRM_FindFrame(L08, "La_tiger_01");
+Frame L09;	FRM_FindFrame(L09, "Tank2");
+Frame L10;	FRM_FindFrame(L10, "Tank3");
+Frame L11;	FRM_FindFrame(L11, "Tiges");
+
+
+}
+
+Whenever tanks_Destroyed (((((((((((_Actor_GetState(L01) == 0) And (_Actor_GetState(L02) == 0 )) And (_Actor_GetState(L03) == 0 )) And (_Actor_GetState(L04) == 0 )) And (_Actor_GetState(L05) == 0 )) And (_Actor_GetState(L06) == 0 )) And (_Actor_GetState(L07) == 0 )) And (_Actor_GetState(L08) == 0 )) And (_Actor_GetState(L09) == 0 )) And (_Actor_GetState(L10) == 0 )) And (_Actor_GetState(L11) == 0 ))
+
+{
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(09991829);
+Delay(4000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+EndScript();
+}

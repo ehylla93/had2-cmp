@@ -1,0 +1,138 @@
+//----------------------/----------------------
+//
+//--------------------------------------------
+Block
+{
+Frame dyna1;    	FRM_FindFrame(dyna1, "w_explosive_1");  //PAK
+Frame dyna2;    	FRM_FindFrame(dyna2, "w_explosive_2");  //PAK
+Frame dyna9;    	FRM_FindFrame(dyna9, "w_explosive_9");  //PAK
+Frame dyna0;    	FRM_FindFrame(dyna0, "w_explosive_0");  //PAK
+
+Frame dyna3;    	FRM_FindFrame(dyna3, "w_explosive_3");  //AmmoBoxes
+Frame dyna4;    	FRM_FindFrame(dyna4, "w_explosive_4");  //AmmoBoxes
+Frame dyna5;    	FRM_FindFrame(dyna5, "w_explosive_5");  //AmmoBoxes
+Frame dyna6;    	FRM_FindFrame(dyna6, "w_explosive_6");  //AmmoBoxes
+Frame dyna7;    	FRM_FindFrame(dyna7, "w_explosive_7");  //AmmoBoxes
+Frame dyna8;    	FRM_FindFrame(dyna8, "w_explosive_8");  //AmmoBoxes
+
+Frame PAK40_1;    	FRM_FindFrame(PAK40_1, "PAK40_1");
+Frame PAK40_2;    	FRM_FindFrame(PAK40_2, "PAK40_2");
+Frame PAK40_3;    	FRM_FindFrame(PAK40_3, "PAK40_3");
+Frame PAK40_4;    	FRM_FindFrame(PAK40_4, "PAK40_4");
+
+Frame box1;			FRM_FindFrame(box1, "Explbox1");
+Frame box2;			FRM_FindFrame(box2, "Explbox2");
+Frame box3;			FRM_FindFrame(box3, "Explbox3");
+Frame box4;			FRM_FindFrame(box4, "Explbox4");
+Frame box5;			FRM_FindFrame(box5, "Explbox5");
+Frame box6;			FRM_FindFrame(box6, "Explbox6");
+
+SetActorState(dyna0,3);
+SetActorState(dyna1,3); 
+SetActorState(dyna2,3);
+SetActorState(dyna3,3); 
+SetActorState(dyna4,3);
+SetActorState(dyna5,3); 
+SetActorState(dyna6,3);
+SetActorState(dyna7,3); 
+SetActorState(dyna8,3); 
+SetActorState(dyna9,3);
+}
+GoTo End;
+
+Whenever explA (_SignalReceived(1))
+{
+SetActorState(dyna3,0); 
+SetActorState(dyna4,0);
+SetActorState(dyna5,0); 
+SetActorState(dyna6,0);
+SetActorState(dyna7,0); 
+SetActorState(dyna8,0);  
+}
+
+Whenever explB (_SignalReceived(2))
+{
+SetActorState(dyna1,0); 
+SetActorState(dyna2,0); 
+SetActorState(dyna9,0);
+SetActorState(dyna0,0);
+}
+//printf("Ammobox script OK");
+//--------------------------------------------
+
+Whenever Expl1 (_ACTOR_GetState(dyna1)==2)
+{
+SetActorState(PAK40_3,2);
+FRM_CreateParticle(55, PAK40_3); 	
+GoTo End;
+}
+
+Whenever Expl2 (_ACTOR_GetState(dyna2)==2)
+{
+SetActorState(PAK40_4,2);
+FRM_CreateParticle(55, PAK40_4);  	
+GoTo End;
+}
+
+Whenever Expl3 (_ACTOR_GetState(dyna9)==2)
+{
+SetActorState(PAK40_1,2);
+FRM_CreateParticle(55, PAK40_1);  	
+GoTo End;
+}
+
+Whenever Expl4 (_ACTOR_GetState(dyna0)==2)
+{
+SetActorState(PAK40_2,2);
+FRM_CreateParticle(55, PAK40_2);  	
+GoTo End;
+}
+
+//--------------------------------------------
+
+Whenever BoxExpl1 (_ACTOR_GetState(dyna3)==2)
+{
+SetActorState(box2,0); 	
+FRM_CreateParticle(40, dyna3);
+GoTo End;
+}
+
+Whenever BoxExpl2 (_ACTOR_GetState(dyna4)==2)
+{
+SetActorState(box1,0); 
+FRM_CreateParticle(40, dyna4);	
+GoTo End;
+}
+
+Whenever BoxExpl3 (_ACTOR_GetState(dyna5)==2)
+{
+SetActorState(box3,0); 	
+FRM_CreateParticle(40, dyna5);
+GoTo End;
+}
+
+Whenever BoxExpl4 (_ACTOR_GetState(dyna6)==2)
+{
+SetActorState(box4,0); 
+FRM_CreateParticle(40, dyna6);	
+GoTo End;
+}
+
+Whenever BoxExpl5 (_ACTOR_GetState(dyna7)==2)
+{
+SetActorState(box5,0); 	
+FRM_CreateParticle(40, dyna7);
+GoTo End;
+}
+
+Whenever BoxExpl6 (_ACTOR_GetState(dyna8)==2)
+{
+SetActorState(box6,0); 
+FRM_CreateParticle(40, dyna8);	
+GoTo End;
+}
+
+//--------------------------------------------
+
+Label end:
+

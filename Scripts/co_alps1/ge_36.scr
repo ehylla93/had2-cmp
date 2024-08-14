@@ -1,0 +1,183 @@
+//Driver - relevant for objectives
+
+block
+{
+SetAlarmType(1,1);		//close shooting
+SetAlarmType(2,1);		//enemy shots
+SetAlarmType(4,0);		//hears steps
+SetAlarmType(8,0);		//action sounds
+SetAlarmType(16,0);		//explosions
+SetAlarmType(32,1);		//sighted
+SetAlarmType(64,1);		//is injured
+SetAlarmType(128,0);	//from script
+SetAlarmType(256,1);	//Friendly shots
+SetAlarmType(512,0);	//Sights corpse
+
+frame me;		FRM_GetMyFrame(me);
+frame krik;		FRM_FindFrame (krik,"ge36krik");
+Frame ovrid;	FRM_FindFrame(ovrid,"ovladacridice");
+Frame detect;	FRM_FindFrame(detect,"opel_detector2");
+Frame ujel;		FRM_FindFrame(ujel,"opel_ujel");
+Frame kresdet1;	FRM_FindFrame(kresdet1,"detector_kres1");
+Frame kresdet2;	FRM_FindFrame(kresdet2,"detector_kres2");
+Frame kresdet3;	FRM_FindFrame(kresdet3,"detector_kres3");
+Frame kresdet4;	FRM_FindFrame(kresdet4,"detector_kres4");
+
+integer cp=0;			// cp=1: Driver passed checkpoint "opel03"
+integer mounted =0;		//Driver inside truck
+integer aievent=0;
+integer run=1;
+
+SaveGameValue(36, 1);
+SaveGameValue(97, 0);
+}
+
+FRM_SwitchFaceTexture(me, "e_f073");
+HUMAN_Suspend(1);
+goto end;
+
+//--------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableSignals(1);
+SendSignal (krik,1);	//shouts "Alarm!"
+Sendsignal(ovrid,2);	//disables "I should go now..."
+aievent=(_GetAlarmType());
+}
+if ((aievent==64) and (cp==1))
+{
+block
+{
+SendSignal (ujel,1);		//disables "OBJECTIVE FAILED: TRUCK DRIVER DROVE AWAY."
+SendSignal (kresdet1,1);	//activates opel explosion
+SendSignal (kresdet2,1);
+SendSignal (kresdet3,1);
+SendSignal (kresdet4,1);
+}
+HUMAN_Drive("kres1",50);
+HUMAN_Drive("",0);
+goto end;
+}
+if((aievent==256) or (aievent==2))
+{
+run=1;
+goto alarm;
+}
+EndScript();
+}
+
+OnAlarmDone()
+{
+SetAlarmType(925,0);
+goto alarm;
+}
+
+Whenever alarm(_SignalReceived(3))
+{
+delay (3000);
+goto alarm;
+}
+
+OnDeath()
+{
+SaveGameValue(36, 0);
+if (cp==1)
+{
+HUMAN_Drive("kres1",50);
+HUMAN_Drive("",0);
+block
+{
+SendSignal (ujel,1);	//"OBJECTIVE FAILED: TRUCK DRIVER DROVE AWAY."
+SendSignal (kresdet1,1);
+SendSignal (kresdet2,1);
+SendSignal (kresdet3,1);
+SendSignal (kresdet4,1);
+}
+EndScript();
+}
+SendSignal(ovrid,2);
+delay (500);
+SaveGameValue(97, 0);
+if (mounted==1)
+{
+HUMAN_BoardVehicle("La_OpelE_",0,0);
+mounted=0;
+}
+EndScript();
+}
+
+Whenever bez(_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+goto end;
+}
+
+Whenever normal(_SignalReceived(2))
+{
+HUMAN_SETMODE_Walk();
+HUMAN_Move("ge36_01");
+HUMAN_Move("ge36_02");
+
+delay(5000);
+HUMAN_Move("ge36_03");
+HUMAN_BoardVehicle("La_OpelE_",1,0);
+block
+{
+SaveGameValue(97, 1);
+mounted=1;
+SaveGameValue(9, 1);
+SetAlarmType(1023,0);
+}
+delay (2000);
+HUMAN_Drive("opel02",15);
+HUMAN_Drive("opel03",50);
+block
+{
+SetAlarmType(64, 1);
+cp=1;
+}
+HUMAN_Drive("opel05",50);
+HUMAN_Drive("",0);
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+label alarm:
+HUMAN_SETMODE_Silence();
+if(run==1)
+{
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Run();
+SetAlarmType(1023,0);
+}
+HUMAN_WeaponOnArm(1);
+HUMAN_Move("ge36_03");
+
+label driveaway:
+HUMAN_BoardVehicle("La_OpelE_",1,0);
+block
+{
+SaveGameValue(97, 1);
+mounted=1;
+SaveGameValue(9, 1);
+SetAlarmType(1023,0);
+}
+delay (2000);
+HUMAN_Drive("opel02",25);
+HUMAN_Drive("opel03",50);
+block
+{
+SetAlarmType(64, 1);
+cp=1;
+}
+HUMAN_Drive("opel05",50);
+HUMAN_Drive("",0);
+
+label end:

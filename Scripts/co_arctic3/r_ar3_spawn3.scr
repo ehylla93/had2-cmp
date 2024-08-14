@@ -1,0 +1,17 @@
+Block
+{
+Frame Free1;	FRM_FindFrame(Free1,"FreeMan_1");
+Frame Free2;	FRM_FindFrame(Free2,"FreeMan_2");
+
+MP_EnableSpawnZone("zone3", 2);
+}
+
+Whenever Spawn3 ((_Actor_GetState(Free1) == 0) AND (_Actor_GetState(Free2) == 0)) 
+{
+MP_EnableSpawnZone("zone3", 1);
+SUBTITLES_SetOn(true);
+SUBTITLES_SetText(59995027);
+Delay(3000);
+SUBTITLES_SetOn(false);
+EndScript();
+}

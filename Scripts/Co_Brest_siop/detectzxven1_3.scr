@@ -1,0 +1,15 @@
+
+Frame zx_ven1;	FRM_FindFrame(zx_ven1, "zx_ven1");
+
+
+
+
+Whenever go(_PlayerInRange(23)==1)
+{
+
+sendsignal (zx_ven1,1);
+
+}
+
+
+SetWheneverTime(go,400);

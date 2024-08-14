@@ -1,0 +1,46 @@
+// MG_J01
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(128,0);
+Frame Mg1;			FRM_FindFrame(Mg1, "Mg1");
+Frame this;			FRM_GetMyFrame(this);
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(50);
+}
+
+HUMAN_Suspend(1);
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+printf("MG_J01 dead");
+EndScript();
+}
+
+OnAlarm(){
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+Whenever Spawn (_MP_IsTeamMemberInRange(1, 100))
+{
+HUMAN_BoardVehicle("Mg1",  1, 0);
+HUMAN_SetOptimized(2);
+HUMAN_Suspend(0);
+}
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

@@ -1,0 +1,76 @@
+// AF4_52
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  SetAlarmType(1023, true);
+}
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetMODE_Walk();
+  HUMAN_SetOptimized(1);
+  HUMAN_SetAnim("%%sedimL4", 100, 400, true);
+goto END;
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    DisableSignals(true);
+    HUMAN_Stop();
+    HUMAN_SetSightRange(100);
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(512, false);
+    HUMAN_SetAlarm(false);
+  }
+  goto ALARMDONE;
+}
+
+OnSignal(1)
+{
+goto ACTIVATE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto END;
+}
+
+Label ACTIVATE:
+  HUMAN_SetAnim("!zeseduR", 400, 400, false);
+  Delay(700);
+  HUMAN_SetAnim("%%protahovaniD", 400, 400, true);
+  Delay(5000);
+  HUMAN_SetAnim("", 400, 400, false);
+  Delay(200);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("AF4_52_01");
+  HUMAN_Move("AF4_52_02");
+  HUMAN_Move("AF4_52_03");
+goto END;
+
+Label ALARMDONE:
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetAlarm(false);
+
+LABEL TURN_LOOP:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1000);
+goto TURN_LOOP;
+
+Label END:

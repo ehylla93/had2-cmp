@@ -1,0 +1,86 @@
+// R1_E04
+// ----------------------------------------
+
+Block
+{
+SetAlarmType(1,1);		//Close Shooting
+SetAlarmType(2,1);		//Enemy Shots
+SetAlarmType(4,1);		//Hear Steps
+SetAlarmType(8,1);		//Action Sounds
+SetAlarmType(16,1);		//Explosions
+SetAlarmType(32,1);		//Sighted
+SetAlarmType(64,1);		//Is Injured
+SetAlarmType(128,0);	//From Script
+SetAlarmType(256,1);	//Friendly Shots
+SetAlarmType(512,0);	//Sight Corpse
+
+Frame me;		FRM_GetMyFrame(me);
+Integer Int;
+
+FRM_SwitchFaceTexture(me,"e_f042");
+
+HUMAN_SETSIGHTRANGE(40);
+}
+
+HUMAN_Suspend(1);
+
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_WeaponOnArm(1);
+Int = _RandomInt(4);
+
+	If (Int == 0)
+	{
+	HUMAN_SETAIMODE_Zombie();
+	}
+
+	If (Int == 1)
+	{
+	HUMAN_SETAIMODE_Defensive();
+	}
+
+	If (Int == 2)
+	{
+	HUMAN_SETAIMODE_Aggressive();
+	}
+
+	If (Int == 3)
+	{
+	HUMAN_SETAIMODE_Defensive();
+	}
+	
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SetAlarm(0);
+goto END;
+}
+
+OnSignal(1)
+{
+Delay(5000);
+HUMAN_Suspend(0);
+HUMAN_SetAnim("", 1000, 1000, 1);
+HUMAN_SETMODE_Run();
+HUMAN_Move("al2_33_04");
+goto END;
+}
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+
+Label END:

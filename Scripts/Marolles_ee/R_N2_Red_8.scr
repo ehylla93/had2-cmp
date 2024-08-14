@@ -1,0 +1,49 @@
+
+integer  AIEvent;
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+Frame turn;		FRM_FindFrame(turn, "dummy_Red8_turn");	
+
+SetAlarmType(1023, False);	
+
+HUMAN_Suspend(True);				
+goto TheEnd;				
+
+OnSignal(20)				// to sem posle Red_5 
+{						
+  HUMAN_Suspend(False);			 
+}			
+
+SetAlarmType(503, True);	// FALSE = 8+512
+
+label DeAlarm:
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_WeaponOnArm(True);
+  HUMAN_SetOptimized(2);
+  HUMAN_SETMODE_Crouch();
+  HUMAN_SETMODE_Walk();
+  HUMAN_Move("Red8_1");				
+  HUMAN_TurnAt(turn);
+  Delay(500);
+goto TheEnd;				
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType(); 
+      PrintfNumber("Red 8: ", AIEvent);
+      HUMAN_Stop();
+      HUMAN_SETMODE_Run();
+    }
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  SetAlarmType(1023, True);	
+  SetAlarmType(648, False);	  
+  HUMAN_SetAlarm(False);
+  goto DeAlarm;
+}
+
+Label TheEND:

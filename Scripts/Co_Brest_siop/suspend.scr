@@ -1,0 +1,4 @@
+block
+{
+SaveGameValue(3,1);
+}

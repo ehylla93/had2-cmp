@@ -1,0 +1,14 @@
+
+  Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+  integer ID;
+
+OnSignal(1)
+{
+//  FRM_CreateParticle(57, MyFRM);
+  FRM_CreateIndexedParticle(57, MyFRM, ID);
+}
+
+OnSignal(2)
+{
+  FRM_DestroyIndexedParticle(ID);
+}

@@ -1,0 +1,34 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	obsluhuje delo1 - PREPINA HO DO ROZBITE VERZE kdyz tam strelim Tigrikem
+//	Vytvoril:		Radek
+//	Zodpovida:		Radek
+//	Zasahy jinyh lidi: 	-
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Frame delo;			FRM_GetMyFrame(delo);
+Frame Bedna1;		FRM_FindFrame(Bedna1, "la_bedzb_1");
+Frame Bedna2;		FRM_FindFrame(Bedna2, "la_bedzb_2");
+Frame Bedna3;		FRM_FindFrame(Bedna3, "la_bedzb_3");
+Frame EX1;			FRM_FindFrame(EX1, "dummy_delo1_ex1");
+Frame EX2;			FRM_FindFrame(EX2, "dummy_delo1_ex2");
+
+// tigr vystreli sem a poslal signal
+OnSignal(1)
+{
+  Delay(150);
+  Block
+   {
+     SetActorState(EX1, 1); 	// particles 48, 53, 119
+     SetActorState(EX2, 1); 	
+     FRM_SetOn(Bedna1, False);
+     FRM_SetOn(Bedna2, False);
+     FRM_SetOn(Bedna3, False);		
+//     PlaySound(6, 2);				
+     SetActorState(delo, 2); 				// 2 tzn znicene
+   }
+}
+
+/////////////////// test  na destrukci a korektnost prepinani
+//Delay(20000);
+//SendSignal(delo, 1);
+///////////////////

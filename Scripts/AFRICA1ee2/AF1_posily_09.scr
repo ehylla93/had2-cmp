@@ -1,0 +1,77 @@
+// AF1_posily_09 - reinforcement on BMW
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME vehicle;			FRM_FindFrame(vehicle, "la_bmwr_");
+  FRAME me;				FRM_GetMyFrame(me);
+  FRAME posila10;			FRM_FindFrame(posila10, "AF1_posila_10");
+
+  INTEGER namiste 			= 0;
+  INTEGER Atype 			= 0;
+
+  SetAlarmType(1023, false);		// all off
+  Savegamevalue(25, 0);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  SendSignal(posila10, 10);
+  EndScript();
+}
+
+OnAlarm(){
+  block{
+    Atype = _GetAlarmType(); 
+    printfnumber("poslila08 :: ", Atype);
+    HUMAN_Stop();
+  }
+
+  if(((Atype != 1) AND (Atype != 32)) AND (Atype != 64)){
+    HUMAN_SetAlarm(false);
+    HUMAN_SetMODE_Run();
+    HUMAN_MoveToAlarm();
+    goto PRESUN2;
+  }
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, false);
+  goto PRESUN;
+}
+
+OnSignal(1){
+//printf("Ridic sajdy BMW aktivovan");
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(1);
+Label PRESUN:
+  HUMAN_Drive("path01_end02", 40);
+//  HUMAN_Drive("", 0);
+  HUMAN_BoardVehicle("la_BmwR_", false, 0);
+  SaveGameValue(25, 1);
+  SendSignal(posila10, 10);
+Label PRESUN2:
+  if(!namiste){  
+    HUMAN_SetMODE_Run();
+    HUMAN_Move("AF1_posily_09en");
+    namiste = 1;
+    HUMAN_SETMODE_Crouch();
+  }
+  HUMAN_TurnAtNearestPlayer();
+  SetAlarmType(1023, true);
+//  SetAlarmType(768, false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Run();
+  HUMAN_BoardVehicle("la_BmwR_", true, 0);
+  HUMAN_Suspend(true);
+goto END;
+
+Label END:

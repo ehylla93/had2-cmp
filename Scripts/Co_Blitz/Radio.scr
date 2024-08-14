@@ -1,0 +1,23 @@
+// ----------------------Radio----------------------
+block
+{
+Frame obj;			FRM_FindFrame(obj,"objectives");
+FRAME sound1;	 	FRM_FindFrame(sound1, "Radiorf");
+FRM_SetOn(sound1, 1);
+}
+// ----------------------------------------
+
+OnDeath()
+{
+FRM_SetOn(sound1, 0);
+delay(2000);
+SendSignal(obj, 1);
+Delay(1000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(15993010);  //OBJECTIVE COMPLETED
+Delay(3000);
+SUBTITLES_SetOn(0);
+EndScript();
+}
+
+

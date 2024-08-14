@@ -1,0 +1,67 @@
+
+Block {
+Frame podl;		FRM_FindFrame(podl,"mesh70");
+Integer door1;	door1=0;
+Integer door2;	door2=0;		
+}
+
+goto end;
+
+OnSignal(1)
+{
+if (door1==0)
+{	door1=1;	}
+else
+{	door1=0;	}
+}
+
+OnSignal(2)
+{
+if (door2==0)
+{	door2=1;	}
+else
+{	door2=0;	}
+
+if ((door1==0) and (door2==0))
+{
+Delay (600);
+block
+{
+FRM_SetGroupLightMap("m_dvo13x",0);
+FRM_SetGroupLightMap("m_dvo12",0);
+FRM_SetLightMap(podl,0);
+}
+}
+if ((door1==1) and (door2==0))
+{
+Delay (600);
+block
+{
+FRM_SetGroupLightMap("m_dvo13x",1);
+FRM_SetGroupLightMap("m_dvo12",0);
+FRM_SetLightMap(podl,1);
+}
+}
+if ((door1==1) and (door2==1))
+{
+Delay (600);
+block
+{
+FRM_SetGroupLightMap("m_dvo13x",1);
+FRM_SetGroupLightMap("m_dvo12",1);
+FRM_SetLightMap(podl,2);
+}
+}
+if ((door1==0) and (door2==1))
+{
+Delay (600);
+block
+{
+FRM_SetGroupLightMap("m_dvo13x",0);
+FRM_SetGroupLightMap("m_dvo12",1);
+FRM_SetLightMap(podl,3);
+}
+}
+}
+
+label end:

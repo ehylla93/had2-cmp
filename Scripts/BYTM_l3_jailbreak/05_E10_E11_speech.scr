@@ -1,0 +1,84 @@
+// 05_E10_E11_speech - Dummy for 05_E10, 05_E11
+
+Frame E10;	FRM_FindFrame(E10, "05_E10");
+Frame E11;	FRM_FindFrame(E11, "05_E11");
+Integer a = 0;
+goto end;
+
+// ----------------------------------------
+
+Whenever PIR (_MP_IsTeamMemberInRange(1, 15))
+{
+SetWhenever(PIR, 0);
+}
+
+Label 1:
+a = _RandomInt(100);
+if(a<50) { goto Speak1; }
+else { goto Speak2; }
+
+Label Speak1:
+FRM_MorphSpeechDelayed(E10, 07991515, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991516, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991517, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991518, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991519, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991520, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991521, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991522, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991523, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991524, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991525, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991526, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991527, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991528, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991529, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991530, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991531, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991532, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991533, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991534, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991535, 3, 20);
+Delay(20000);
+goto 1;
+
+Label Speak2:
+FRM_MorphSpeechDelayed(E10, 07991536, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991537, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991538, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991539, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991540, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991541, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991542, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991543, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991544, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991545, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991546, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991547, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991548, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991549, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991550, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991551, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991552, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991553, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991554, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991555, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991556, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991557, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991558, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991559, 3, 20);
+FRM_MorphSpeechDelayed(E11, 07991560, 3, 20);
+FRM_MorphSpeechDelayed(E10, 07991561, 3, 20);
+Delay(20000);
+goto 1;
+
+OnSignal(1)	// received from 05_E10, 05_E11 on death or on alarm
+{
+FRM_MorphSpeech(E10, 0, 0, 0);
+FRM_MorphSpeech(E11, 0, 0, 0);
+EndScript();
+}
+
+// ----------------------------------------	
+	
+Label end:

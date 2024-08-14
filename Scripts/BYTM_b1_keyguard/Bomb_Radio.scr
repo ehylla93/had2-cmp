@@ -1,0 +1,34 @@
+// Bomb at Radio
+// ----------------------------------------
+
+Block
+{
+Frame Obj5;		FRM_FindFrame(Obj5, "obj5");
+Frame this;		FRM_GetMyFrame(this);
+Frame Get_Player;
+
+SetObjectiveStatus(5, 4);
+SetActorState(this, 3);
+}
+
+// ----------------------------------------
+
+Whenever Player (_MP_IsTeamMemberInRange(1, 2))
+{
+// SetObjectiveStatus(5, 0);
+FRM_GetNearestPlayer(this, Get_Player);
+FRM_MorphSpeech(Get_Player, 02990433, 5, 30);
+Delay(1000);
+SetActorState(this, 0);
+goto END;
+}
+
+Whenever Radio (_Actor_GetState(this) == 2) 
+{
+SendSignal(Obj5, 1);
+EndScript();
+}
+
+// ----------------------------------------------
+
+Label END:

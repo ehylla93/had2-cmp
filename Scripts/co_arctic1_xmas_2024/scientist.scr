@@ -1,0 +1,52 @@
+block{
+    frame sit;						FRM_FindFrame(sit, "d_sit1");	
+	Frame me;						FRM_GetMyFrame(me);
+	integer msg1 = 02990461;	
+	integer rnd2 = 0;
+}
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+HUMAN_ACTIVITY_Sit(sit);
+HUMAN_SetAnim("%%sedim", 500, 500, true);
+
+printf("Scientist initialized.");
+
+Whenever Near (_PlayerInRange(2))
+{
+	rnd2 = _randomint(38);
+	rnd2 = msg1 + rnd2;
+	printfnumber("Scientist speech: ", rnd2);
+	FRM_MorphSpeechDelayed(me, rnd2, 3, 10);
+	SetWhenever(Near, true);
+}
+
+
+
+OnSignal(1)
+{
+	FRM_SwitchFaceTexture(me, "e_f099");
+	HUMAN_Stop();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Run();
+	HUMAN_SetAnim("", 1000, 1000, 1);
+	HUMAN_AttackMove("Herman_3");
+	Delay(800);
+	HUMAN_LookAround(3);
+	FRM_MorphSpeechDelayed(me, 90001016, 3, 10);
+	HUMAN_SetAnim("!salutovani", 500, 500, 1);
+	Delay(1800);
+   	printf("alah akbar");
+	PlaySound(6, 10);
+	FRM_CreateParticle(53, me);
+	MakeExplosion(me, 10000000, 1000000);
+	Endscript();
+}
+
+	
+OnDeath(){
+	EndScript();
+}
+
+
+
+SetWheneverTime(Near, 7000);

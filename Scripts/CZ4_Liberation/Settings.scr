@@ -1,0 +1,142 @@
+//----------------------
+block
+{
+
+Frame d01;			FRM_FindFrame(d01, "door10");
+Frame d02;			FRM_FindFrame(d02, "door08");
+Frame d03;			FRM_FindFrame(d03, "door09");
+Frame d04;			FRM_FindFrame(d04, "door00");
+Frame d05;			FRM_FindFrame(d05, "gate34");
+Frame d06;			FRM_FindFrame(d06, "gate35");
+Frame d07;			FRM_FindFrame(d07, "Blbuild05");
+Frame d08;			FRM_FindFrame(d08, "door14");
+Frame d09;			FRM_FindFrame(d09, "door13");
+Frame d10;			FRM_FindFrame(d10, "door07");
+
+Frame d11;			FRM_FindFrame(d11, "door11");
+Frame d12;			FRM_FindFrame(d12, "door12");
+Frame d13;			FRM_FindFrame(d13, "door15");
+Frame d14;			FRM_FindFrame(d14, "door16");
+Frame d15;			FRM_FindFrame(d15, "Box18");
+Frame d16;			FRM_FindFrame(d16, "door25");
+Frame d17;			FRM_FindFrame(d17, "door24");
+Frame d18;			FRM_FindFrame(d18, "door23");
+Frame d19;			FRM_FindFrame(d19, "door30");
+Frame d20;			FRM_FindFrame(d20, "gate29");
+
+Frame d21;			FRM_FindFrame(d21, "door31");
+Frame d22;			FRM_FindFrame(d22, "door26");
+Frame d23;			FRM_FindFrame(d23, "door27");
+Frame d24;			FRM_FindFrame(d24, "door28");
+Frame d25;			FRM_FindFrame(d25, "whbuild182");
+Frame d26;			FRM_FindFrame(d26, "Blbuild01");
+Frame d27;			FRM_FindFrame(d27, "Blbuild02");
+Frame d28;			FRM_FindFrame(d28, "Yelbld05");
+Frame d29;			FRM_FindFrame(d29, "door32");
+Frame d30;			FRM_FindFrame(d30, "gate33");
+
+Frame d31;			FRM_FindFrame(d31, "door35");
+Frame d32;			FRM_FindFrame(d32, "Yelbld376");
+Frame d33;			FRM_FindFrame(d33, "Yelbld375");
+Frame d34;			FRM_FindFrame(d34, "Box05");
+Frame d35;			FRM_FindFrame(d35, "Box945");
+Frame d36;			FRM_FindFrame(d36, "door17");
+Frame d37;			FRM_FindFrame(d37, "door18");
+Frame d38;			FRM_FindFrame(d38, "door21");
+Frame d39;			FRM_FindFrame(d39, "door22");
+Frame d40;			FRM_FindFrame(d40, "Object433");
+
+Frame d41;			FRM_FindFrame(d41, "Object434");
+Frame d42;			FRM_FindFrame(d42, "door34");
+Frame d43;			FRM_FindFrame(d43, "door19");
+Frame d44;			FRM_FindFrame(d44, "door20");
+Frame d45;			FRM_FindFrame(d45, "door36");
+Frame d46;			FRM_FindFrame(d46, "whbuild790");
+Frame d47;			FRM_FindFrame(d47, "whbuild105");
+Frame d48;			FRM_FindFrame(d48, "whbuild816");
+Frame d49;			FRM_FindFrame(d49, "whbuild817");
+Frame d50;			FRM_FindFrame(d50, "door06");
+	
+Frame d51;			FRM_FindFrame(d51, "door05");
+Frame d52;			FRM_FindFrame(d52, "Object523");
+Frame d53;			FRM_FindFrame(d53, "whbuild815");
+Frame d54;			FRM_FindFrame(d54, "whbuild814");
+Frame d55;			FRM_FindFrame(d55, "whbuild812");
+Frame d56;			FRM_FindFrame(d56, "whbuild813");
+Frame d57;			FRM_FindFrame(d57, "door36");
+Frame d58;			FRM_FindFrame(d58, "whbuild183");
+Frame d59;			FRM_FindFrame(d59, "whbuild182");
+Frame d60;			FRM_FindFrame(d60, "door33");
+
+Frame Txt;			FRM_FindFrame(Txt,"Text");
+//Integer C_counter;
+
+SetActorState(d01, 1);
+SetActorState(d02, 1);
+SetActorState(d03, 1);
+SetActorState(d04, 1);
+SetActorState(d05, 1);
+SetActorState(d06, 1);
+SetActorState(d07, 1);
+SetActorState(d08, 1);
+SetActorState(d09, 1);
+SetActorState(d10, 1);
+SetActorState(d11, 1);
+SetActorState(d12, 1);
+SetActorState(d13, 1);
+SetActorState(d14, 1);
+SetActorState(d15, 1);
+SetActorState(d16, 1);
+SetActorState(d17, 1);
+SetActorState(d18, 1);
+SetActorState(d19, 1);
+SetActorState(d20, 1);
+SetActorState(d21, 1);
+SetActorState(d22, 1);
+SetActorState(d23, 1);
+SetActorState(d24, 1);
+SetActorState(d25, 1);
+SetActorState(d26, 1);
+SetActorState(d27, 1);
+SetActorState(d28, 1);
+SetActorState(d29, 1);
+SetActorState(d30, 1);
+SetActorState(d31, 1);
+SetActorState(d32, 1);
+SetActorState(d33, 1);
+SetActorState(d34, 1);
+SetActorState(d35, 1);
+SetActorState(d36, 1);
+SetActorState(d37, 1);
+SetActorState(d38, 1);
+SetActorState(d39, 1);
+SetActorState(d40, 1);
+SetActorState(d41, 1);
+SetActorState(d42, 1);
+SetActorState(d43, 1);
+SetActorState(d44, 1);
+SetActorState(d45, 1);
+SetActorState(d46, 1);
+SetActorState(d47, 1);
+SetActorState(d48, 1);
+SetActorState(d49, 1);
+SetActorState(d50, 1);
+SetActorState(d51, 1);
+SetActorState(d52, 1);
+SetActorState(d53, 1);
+SetActorState(d54, 1);
+SetActorState(d55, 1);
+SetActorState(d56, 1);
+SetActorState(d57, 1);
+SetActorState(d58, 1);
+SetActorState(d59, 1);
+SetActorState(d60, 1);
+}
+goto end;
+//SetObjectiveStatus: 0=Not completed, 1=Success, 2=Failed, 4=Hidden
+
+
+
+
+
+Label end:

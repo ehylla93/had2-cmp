@@ -1,0 +1,65 @@
+// T3, 2
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(1)
+{
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+Delay(5000);
+HUMAN_TurnAtNearestPlayer();
+goto END;
+}
+
+OnDeath(){
+  printf("tank2_02: death");
+  EndScript();
+}
+
+OnAlarm(){
+   HUMAN_Stop();
+ HUMAN_SETSIGHTRANGE(100000);
+ HUMAN_SETAIMODE_Aggressive();
+ HUMAN_SetOptimized(1);
+EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("La_tiger_3",  true, 1);
+goto END;
+
+ 
+Label END:

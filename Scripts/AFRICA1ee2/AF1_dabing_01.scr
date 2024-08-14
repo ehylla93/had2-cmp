@@ -1,0 +1,47 @@
+// AF1_dabing - dabing_01
+// -------------------------------------------------------------------------------------------------------------
+block{
+  SaveGameValue(55, 0);
+  integer act_speech		= 0;
+
+  FRAME af1_21;			FRM_FindFrame(af1_21, "af1_21");
+  FRAME get_player;			FRM_FindFrame(get_player, "");
+  FRAME pl04;
+  FRAME pl03;
+  FRAME pl02;
+  FRAME pl01;
+  INTEGER csc_running = 0;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+goto END;
+
+OnCutscene(10){
+  csc_running = 1;
+  FRM_GetNearestPlayer(af1_21, get_player);  
+  Delay(1000);
+  FRM_MorphSpeechDelayed(af1_21, 05991067, 3, 20);
+  FRM_MorphSpeechDelayed(get_player, 05011012, 3, 20); 
+  FRM_MorphSpeechDelayed(af1_21, 05011013, 3, 20);
+  FRM_MorphSpeechDelayed(af1_21, 05011014, 3, 20);
+  Delay(200);
+  CSC_EndCutscene();
+}
+
+OnCutsceneDone(10){
+  csc_running = 0;
+  FRM_MorphSpeech(get_player, 0, 0, 0); 
+  FRM_MorphSpeech(af1_21, 0, 0, 0);
+}
+
+Whenever endcsc ((_LoadGameValue(55)) AND (csc_running))
+{
+  CSC_EndCutscene();
+}
+
+//OnSignal(30){
+//  EndScript();
+//}
+
+Label END:

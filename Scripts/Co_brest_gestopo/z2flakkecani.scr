@@ -1,0 +1,57 @@
+
+Frame z2_flak1;	FRM_FindFrame(z2_flak1, "z2_flak1");
+Frame z2_flak2;	FRM_FindFrame(z2_flak2, "z2_flak2");
+
+
+Whenever ticho(_SignalReceived(1))
+{
+block
+{
+FRM_MorphSpeech(z2_flak1, 0, 0, 0);
+FRM_MorphSpeech(z2_flak2, 0, 0, 0);
+SetWhenever(kyd, 0);
+}
+goto end;
+}
+
+Whenever kyd(_PlayerInRange(19))
+{
+
+SendSignal (z2_flak2,2);
+
+FRM_MorphSpeechDelayed(z2_flak2, 51990024, 15, 30);
+delay (500);
+FRM_MorphSpeechDelayed(z2_flak2, 51990025, 15, 30);
+SendSignal (z2_flak2,3);
+//mlc
+delay (300);
+FRM_MorphSpeechDelayed(z2_flak1, 51990026, 15, 30);
+
+delay (300);
+SendSignal (z2_flak2,2);
+FRM_MorphSpeechDelayed(z2_flak2, 51990027, 15, 30);
+SendSignal (z2_flak2,3);
+delay (300);
+FRM_MorphSpeechDelayed(z2_flak1, 51990028, 15, 30);
+delay (300);
+SendSignal (z2_flak2,2);
+FRM_MorphSpeechDelayed(z2_flak2, 51990029, 15, 30);
+SendSignal (z2_flak2,3);
+delay (300);
+FRM_MorphSpeechDelayed(z2_flak1, 51990030, 15, 30);
+delay (300);
+SendSignal (z2_flak2,2);
+FRM_MorphSpeechDelayed(z2_flak2, 51990031, 15, 30);
+SendSignal (z2_flak2,3);
+delay (300);
+FRM_MorphSpeechDelayed(z2_flak1, 51990032, 15, 30);
+delay (300);
+SendSignal (z2_flak2,2);
+FRM_MorphSpeechDelayed(z2_flak2, 51990033, 15, 30);
+SendSignal (z2_flak2,3);
+delay (300);
+SendSignal (z2_flak2,4);
+SendSignal (z2_flak1,3);	
+}
+
+label end:

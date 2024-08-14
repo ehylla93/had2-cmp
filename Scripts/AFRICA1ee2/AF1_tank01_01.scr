@@ -1,0 +1,56 @@
+// AF1_tank01_01 - tank01 driver
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER rnd			= 0;
+  SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+//  SendSignal(organizer, 1);
+  EndScript();
+}
+  
+OnAlarm(){
+  HUMAN_Stop();
+  HUMAN_Drive("", 0);
+  HUMAN_DriveNearPlayer(100);
+  Delay(2000);
+  EndScript();
+}
+
+OnAlarmDone(){
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+OnSignal(1){
+  printf("tank01_01 now activated");
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+  Delay(5000);
+  goto ACTIVITY;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  SetAlarmType(511, false);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETMODE_Stand();
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_BoardVehicle("panzer01", true, 0);
+goto END;
+
+Label ACTIVITY:
+  printf("tank01 now at activity");
+  Delay(2000);
+  HUMAN_Drive("tank01_01", 50);
+  HUMAN_Drive("tank01_02", 50);
+  block
+  {
+    SetAlarmType(1023, true);
+    SetAlarmType(768, false);
+  }
+Label END:

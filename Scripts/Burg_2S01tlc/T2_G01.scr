@@ -1,0 +1,27 @@
+// T2_G01 - Reinforcement Tiger (S03_Tiger_01) Driver
+// ------------------------------------------------------
+
+Block
+{
+HUMAN_SETSIGHTRANGE(0);
+HUMAN_SETHEARRANGE(0);
+DisableAlarms(1);
+HUMAN_Suspend(1);
+}
+goto END;
+
+// ----------------------------------------
+
+OnDeath(){
+EndScript();
+}
+
+Whenever Spawn (_SignalReceived(1))
+{
+HUMAN_Suspend(0);
+HUMAN_BoardVehicle("S03_Tiger_01", 1, 0); 
+goto END;
+}
+
+
+Label END:

@@ -1,0 +1,49 @@
+// N26-30A - N26, N27, N28, N29, N30 activator
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame N26;
+	FRM_FindFrame(N26, "N26");
+Frame N27;
+	FRM_FindFrame(N27, "N27");
+Frame N28;
+	FRM_FindFrame(N28, "N28");
+Frame N29;
+	FRM_FindFrame(N29, "N29");
+Frame N30;
+	FRM_FindFrame(N30, "N30");
+Frame N43;
+	FRM_FindFrame(N43, "N43");
+Frame N44;
+	FRM_FindFrame(N44, "N44");
+Frame N45;
+	FRM_FindFrame(N45, "N45");
+Frame N46;
+	FRM_FindFrame(N46, "N46");
+Frame N47;
+	FRM_FindFrame(N47, "N47");
+}
+// -------------------------------------------------------------------------------------------------------------
+// Alarm and AI event settings
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+Whenever player(_PlayerInRange(2))
+{
+	Block
+	{
+		SendSignal(N26, 2);
+		SendSignal(N27, 2);
+		SendSignal(N28, 2);
+		SendSignal(N29, 2);
+		SendSignal(N30, 2);
+		SendSignal(N43, 1);
+		SendSignal(N44, 1);
+		SendSignal(N45, 1);
+		SendSignal(N46, 1);
+		SendSignal(N47, 1);
+	}
+	GoTo end;
+}
+// -------------------------------------------------------------------------------------------------------------
+Label end:

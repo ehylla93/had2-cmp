@@ -1,0 +1,46 @@
+// AF2_obj3 - destroyed vehicles 
+// ----------------------------
+// Variables definition
+Block
+{
+Frame opel1;
+	FRM_FindFrame(opel1, "Opel1");
+Frame opel2;
+	FRM_FindFrame(opel2, "Opel2");
+Frame opel3;
+	FRM_FindFrame(opel3, "Opel3");
+Frame opel4;
+	FRM_FindFrame(opel4, "Opel4");
+Frame opel5;
+	FRM_FindFrame(opel5, "Opel5");
+Frame opelflak1;
+	FRM_FindFrame(opelflak1, "Opelflak1");
+Frame opelflak2;
+	FRM_FindFrame(opelflak2, "Opelflak2");
+Frame kubel;
+	FRM_FindFrame(kubel, "la_kubelAf_");
+Frame jeep1;
+	FRM_FindFrame(jeep1, "Jeep1");
+Frame jeep2;
+	FRM_FindFrame(jeep2, "Jeep2");
+Frame obj;
+	FRM_FindFrame(obj, "AF2_obj");
+}
+// -----------------------------
+// Whenever keywords and signals
+Whenever destroyed((_ACTOR_GetState(opel1)==0) AND (_ACTOR_GetState(opel2)==0) AND (_ACTOR_GetState(opel3)==0) AND (_ACTOR_GetState(opel4)==0) AND (_ACTOR_GetState(opel5)==0) AND (_ACTOR_GetState(opelflak1)==0) AND (_ACTOR_GetState(opelflak2)==0) AND (_ACTOR_GetState(kubel)==0))
+{
+	SendSignal(obj, 1);
+	printf("ZNICENY VOZOVY PARK: posielam signal");
+	GoTo end;
+}
+
+Whenever quit((_ACTOR_GetState(opel1)==0) AND (_ACTOR_GetState(opel2)==0) AND (_ACTOR_GetState(opel3)==0) AND (_ACTOR_GetState(opel4)==0) AND (_ACTOR_GetState(opel5)==0) AND (_ACTOR_GetState(opelflak1)==0) AND (_ACTOR_GetState(opelflak2)==0) AND (_ACTOR_GetState(kubel)==0) AND (_ACTOR_GetState(jeep1)==0) AND (_ACTOR_GetState(jeep2)==0))
+{
+	SendSignal(obj, 2);
+	printf("zniceny jeep");
+	GoTo end;
+}
+// -----------------------------
+// Starting pose
+Label end:

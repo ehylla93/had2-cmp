@@ -1,0 +1,85 @@
+// TURNING OFF GLOBAL ALARM (1)
+// -------------------------------------------------------
+
+Block
+{
+Frame G01;	FRM_FindFrame(G01,"In_G01");
+Frame G02;	FRM_FindFrame(G02,"In_G02");
+Frame G03;	FRM_FindFrame(G03,"In_G03");
+Frame G04;	FRM_FindFrame(G04,"In_G04");
+Frame G05;	FRM_FindFrame(G05,"In_G05");
+Frame G06;	FRM_FindFrame(G06,"In_G06");
+Frame G07;	FRM_FindFrame(G07,"In_G07");
+Frame G08;	FRM_FindFrame(G08,"In_G08");
+Frame G09;	FRM_FindFrame(G09,"In_G09");
+Frame G10;	FRM_FindFrame(G10,"In_G10");
+
+Frame G11;	FRM_FindFrame(G11,"In_G11");
+Frame G12;	FRM_FindFrame(G12,"In_G12");
+Frame G13;	FRM_FindFrame(G13,"In_G13");
+Frame G14;	FRM_FindFrame(G14,"In_G14");
+Frame G15;	FRM_FindFrame(G15,"In_G15");
+Frame G16;	FRM_FindFrame(G16,"In_G16");
+Frame G17;	FRM_FindFrame(G17,"In_G17");
+Frame G18;	FRM_FindFrame(G18,"In_G18");
+Frame G19;	FRM_FindFrame(G19,"In_G19");
+Frame G20;	FRM_FindFrame(G20,"In_G20");
+
+Frame G21;	FRM_FindFrame(G21,"In_G21");
+Frame G22;	FRM_FindFrame(G22,"In_G22");
+Frame G23;	FRM_FindFrame(G23,"In_G23");
+Frame G24;	FRM_FindFrame(G24,"In_G24");
+Frame G25;	FRM_FindFrame(G25,"In_G25");
+Frame G26;	FRM_FindFrame(G26,"In_G26");
+Frame G27;	FRM_FindFrame(G27,"In_G27");
+Frame G28;	FRM_FindFrame(G28,"In_G28");
+Frame G29;	FRM_FindFrame(G29,"In_G29");
+Frame G30;	FRM_FindFrame(G30,"In_G30");
+
+Frame G31;	FRM_FindFrame(G31,"In_G31");
+Frame G32;	FRM_FindFrame(G32,"In_G32");
+Frame G33;	FRM_FindFrame(G33,"In_G33");
+Frame G34;	FRM_FindFrame(G34,"In_G34");
+Frame G35;	FRM_FindFrame(G35,"In_G35");
+Frame G36;	FRM_FindFrame(G36,"In_G36");
+Frame G37;	FRM_FindFrame(G37,"In_G37");
+Frame G38;	FRM_FindFrame(G38,"In_G38");
+Frame G39;	FRM_FindFrame(G39,"In_G39");
+Frame G40;	FRM_FindFrame(G40,"In_G40");
+
+Frame G41;	FRM_FindFrame(G41,"In_G41");
+Frame G42;	FRM_FindFrame(G42,"In_G42");
+Frame G43;	FRM_FindFrame(G43,"In_G43");
+Frame G44;	FRM_FindFrame(G44,"In_G44");
+Frame G45;	FRM_FindFrame(G45,"In_G45");
+Frame G46;	FRM_FindFrame(G46,"In_G46");
+Frame G47;	FRM_FindFrame(G47,"In_G47");
+Frame G48;	FRM_FindFrame(G48,"In_G48");
+Frame G49;	FRM_FindFrame(G49,"In_G49");
+Frame G50;	FRM_FindFrame(G50,"In_G50");
+Frame G51;	FRM_FindFrame(G51,"In_G51");
+}
+
+// -------------------------------------------------------
+
+Whenever Turn_OFF (_SignalReceived(1))
+{
+SendSignal(G01, 5);SendSignal(G02, 5);SendSignal(G03, 5);
+SendSignal(G04, 5);SendSignal(G05, 5);SendSignal(G06, 5);
+SendSignal(G07, 5);SendSignal(G08, 5);SendSignal(G09, 5);
+SendSignal(G10, 5);SendSignal(G11, 5);SendSignal(G12, 5);
+SendSignal(G13, 5);SendSignal(G14, 5);SendSignal(G15, 5);
+SendSignal(G16, 5);SendSignal(G17, 5);SendSignal(G18, 5);
+SendSignal(G19, 5);SendSignal(G20, 5);SendSignal(G21, 5);
+SendSignal(G22, 5);SendSignal(G23, 5);SendSignal(G24, 5);
+SendSignal(G25, 5);SendSignal(G26, 5);SendSignal(G27, 5);
+SendSignal(G28, 5);SendSignal(G29, 5);SendSignal(G30, 5);
+SendSignal(G31, 5);SendSignal(G32, 5);SendSignal(G33, 5);
+SendSignal(G34, 5);SendSignal(G35, 5);SendSignal(G36, 5);
+SendSignal(G37, 5);SendSignal(G38, 5);SendSignal(G39, 5);
+SendSignal(G40, 5);SendSignal(G41, 5);SendSignal(G42, 5);
+SendSignal(G43, 5);SendSignal(G44, 5);SendSignal(G45, 5);
+SendSignal(G46, 5);SendSignal(G47, 5);SendSignal(G48, 5);
+SendSignal(G49, 5);SendSignal(G50, 5);SendSignal(G51, 5);
+EndScript();
+}

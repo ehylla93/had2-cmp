@@ -1,0 +1,28 @@
+// door_B13_ch_29 Trigger (B13_ch_29 = Door)
+// ----------------------------------------
+
+Block
+{
+Frame me;		FRM_GetMyFrame(me);
+
+Frame E09;		FRM_FindFrame(E09,"alp2_E09");
+Frame E10;		FRM_FindFrame(E10,"alp2_E10");
+Frame E11;		FRM_FindFrame(E11,"alp2_E11");
+Frame E12;		FRM_FindFrame(E12,"alp2_E12");
+Frame E13;		FRM_FindFrame(E13,"alp2_E13");
+Frame E21;		FRM_FindFrame(E21,"alp2_E21");
+
+Frame speech;	FRM_FindFrame(speech,"alp2_E09_E10_speech");
+}
+
+Whenever PlayerNear (_MP_IsTeamMemberInRange(1, 3))
+{
+SendSignal(E09, 1);
+SendSignal(E10, 1);
+SendSignal(E11, 1);
+SendSignal(speech, 2);
+SendSignal(E12, 1);
+SendSignal(E13, 1);
+SendSignal(E21, 1);
+EndScript();
+}

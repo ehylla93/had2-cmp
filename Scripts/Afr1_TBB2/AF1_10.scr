@@ -1,0 +1,40 @@
+// T4, turret mg
+// ----------------------------
+
+
+block{
+  
+  
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+
+// ---------------------------
+
+OnDeath()
+{
+         EndScript();
+}
+
+OnAlarm(){
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// --------------------------
+
+  HUMAN_SETSIGHTRANGE(600);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  HUMAN_BoardVehicle("Panzer3_04",  true, 4);
+goto END;
+
+Label END:
+
+

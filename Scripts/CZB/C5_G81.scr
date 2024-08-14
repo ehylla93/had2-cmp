@@ -1,0 +1,54 @@
+// C5_G80
+// -------------------------------------------------------------------------------------------------------------
+
+block
+{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+  Frame me;		            FRM_GetMyFrame(me);
+  SetAlarmType(1023, true);
+  SetAlarmType(768, true);
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  EndScript();
+}
+
+OnAlarm(){
+  HUMAN_Stop();
+  HUMAN_SETMODE_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  FRM_MorphSpeechDelayed(me, 90004009, 5, 30); // hands up!
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90004009, 5, 30); // hands up!
+FRM_MorphSpeechDelayed(me, 90004009, 5, 30); // hands up!
+Delay(200);
+FRM_MorphSpeechDelayed(me, 90004028, 5, 30); // hey
+FRM_MorphSpeechDelayed(me, 90004022, 5, 30); // I kill you
+HUMAN_SETSIGHTRANGE(10000);
+  HUMAN_SETAIMODE_Aggressive();
+  HUMAN_SetOptimized(1);
+  EndScript();
+}
+
+OnAlarmDone(){
+  FRM_MorphSpeechDelayed(me, 90004025, 5, 30); // got him
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+Whenever player (_PlayerInRange(30)){
+  HUMAN_Suspend(false);
+ goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+FRM_SwitchFaceTexture(me, "e_f026");
+HUMAN_SetOptimized(1);
+Delay(500);
+HUMAN_Suspend(true);
+goto END;
+
+Label END:

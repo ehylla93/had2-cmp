@@ -1,0 +1,108 @@
+// AF1_35 goes into hangar
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME airplane;			FRM_FindFrame(airplane, "af1_dummy14");
+  FRAME alarm_look;			FRM_FindFrame(alarm_look, "m_dvr_h01");
+  INTEGER Atype			= 0;
+  INTEGER moved			= 0;
+  INTEGER rnd				= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnSignal(20){
+  SetAlarmType(256, false);
+  goto ALERT;
+}
+
+OnDeath(){
+  printf("16: dead");
+  EndScript();
+}
+
+Whenever detector1(_PlayerInRange(215)){
+  goto BEFORE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SaveGameValue(90, 0);
+    SetWhenever(detector1, false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(200);
+    HUMAN_Suspend(false);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("16: ", Atype);
+  }
+
+//  if((((!moved) AND (Atype != 64)) AND (Atype != 1)) AND (Atype != 32)){
+  if(!moved){
+    goto ALERT;
+  }
+
+  if(Atype == 256){
+    HUMAN_SetMODE_Crouch();
+    HUMAN_TurnAtNearestPlayer();
+    HUMAN_SetAlarm(false);
+    goto END;
+  }
+  
+  EndScript();
+}
+
+OnAlarmDone(){
+  SetAlarmType(1023, true);		// all alarm events are on
+  SetAlarmType(768, false);		// 512, 256
+  HUMAN_SETSIGHTRANGE(80);
+  HUMAN_SetOptimized(true);
+  HUMAN_SetAlarm(false);
+  goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETMODE_Guard();
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SetOptimized(true);
+//  HUMAN_Move("af1_16_06");
+//  HUMAN_TurnAt(airplane);
+
+Label BEFORE:
+  HUMAN_Suspend(false);
+Label LOOP_OPRAVA:
+  rnd = _RandomInt(3);
+  if(rnd == 0){
+    HUMAN_SetAnim("%%opravletadlo2", 200, 200, true);
+    Delay(14000);
+  }
+  HUMAN_SetAnim("%%opravletadlo", 200, 200, true);
+  Delay(14700);
+goto LOOP_OPRAVA;
+
+Label AFTER:
+goto END;
+
+Label ALERT:
+  if(!moved){
+    HUMAN_SetAnim("", 100, 100, false);
+    SendSignal(dummyalert, 1);
+    HUMAN_SetMode_Run();
+    HUMAN_Move("AF1_16_alarm");
+    HUMAN_SetSniper(true, 1);
+    moved = 1;
+    HUMAN_SetMode_Crouch();
+    HUMAN_TurnAt(alarm_look);
+    HUMAN_WeaponOnArm(true);
+  }
+  HUMAN_SetAlarm(false);
+
+Label END:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(1000);
+goto END;

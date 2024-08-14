@@ -1,0 +1,34 @@
+
+frame PG1;		FRM_FindFrame(PG1, "Plane_Guard_1");
+frame PG2;		FRM_FindFrame(PG2, "Plane_Guard_2");
+
+
+// 01990251	Uû mÏ to tady nebavÌ.	
+// 01990252	StojÌme tady jako dva blbouni, stejnÏ to letadlo nikoho nezajÌm·.	
+// 01990253	S tebou je taky z·bava jako s mrtvolou, tak ¯ekni aspoÚ nÏco.
+// 1950		3006		4852	[ms]
+
+// 01990249	Brzy nas p¯ijdou vyst¯Ìdat.	
+// 01990250	Tak neûvaÚ a vraù se zp·tky na pozici.	
+// 1230		1962	
+
+// 01990268	Kdyû to bereö takhle, tak mi vlez na z·da.
+// 986
+OnSignal(1)
+{
+  FRM_MorphSpeechDelayed(PG1, 01990251, 15, 45);	  Delay(20);
+  FRM_MorphSpeechDelayed(PG1, 01990252, 15, 45);	  Delay(31);
+  FRM_MorphSpeechDelayed(PG1, 01990253, 15, 45);	  Delay(49);
+  SendSignal(PG2, 5);				  	  Delay(500);		// "turn to GP1"	//10500
+  FRM_MorphSpeechDelayed(PG2, 01990249, 15, 45);	  Delay(13);	
+  FRM_MorphSpeechDelayed(PG2, 01990250, 15, 45);	  Delay(20);	
+  SendSignal(PG1, 5);								// dokecal		// 3300
+  FRM_MorphSpeechDelayed(PG2, 01990268, 15, 45);	  Delay(10);	
+}
+
+OnSignal(2)
+{
+  // konec - alarm, death ...
+  printf("KONEC DABINGU 2_1... TERMINATOR ");
+  EndScript();
+}

@@ -1,0 +1,82 @@
+
+block
+{
+frame b11;	FRM_FindFrame(b11,"k_nosbedna_11");
+frame b10;	FRM_FindFrame(b10,"k_nosbedna_10");
+frame b6;	FRM_FindFrame(b6,"k_nosbedna_6");
+frame b7;	FRM_FindFrame(b7,"k_nosbedna_7");
+frame b8;	FRM_FindFrame(b8,"k_nosbedna_8");
+frame b4;	FRM_FindFrame(b4,"k_nosbedna_4");
+frame b5;	FRM_FindFrame(b5,"k_nosbedna_5");
+frame b2;	FRM_FindFrame(b2,"k_nosbedna_2");
+frame b3;	FRM_FindFrame(b3,"k_nosbedna_3");
+frame b13;	FRM_FindFrame(b13,"k_nosbedna_13");
+frame b14;	FRM_FindFrame(b14,"k_nosbedna_14");
+
+frame odloz;	FRM_FindFrame ( odloz, "odlozbednu");
+
+integer b;
+integer c;
+integer x;	x=0;
+}
+
+goto end;
+
+//-------------------------------------------------------
+
+Whenever 21(_SignalReceived(1))
+{
+x=x+1;
+}
+
+Whenever 22(_SignalReceived(2))
+{
+x=x+1;
+}
+
+If (x==2)
+{
+goto pust;
+}
+else
+{
+goto end;
+}
+//-------------------------------------------------------
+
+label pust:
+b=_LoadGameValue(1);
+if (b==0)	{	goto fyzika;	}
+if (b==2)	{	FRM_TeleportNearFrame(b2,odloz,1);	goto fyzika;	}
+if (b==3)	{	FRM_TeleportNearFrame(b3,odloz,1);	goto fyzika;	}
+if (b==4)	{	FRM_TeleportNearFrame(b4,odloz,1);	goto fyzika;	}
+if (b==5)	{	FRM_TeleportNearFrame(b5,odloz,1);	goto fyzika;	}
+if (b==6)	{	FRM_TeleportNearFrame(b6,odloz,1);	goto fyzika;	}
+if (b==7)	{	FRM_TeleportNearFrame(b7,odloz,1);	goto fyzika;	}
+if (b==8)	{	FRM_TeleportNearFrame(b8,odloz,1);	goto fyzika;	}
+if (b==11)	{	FRM_TeleportNearFrame(b11,odloz,1);	goto fyzika;	}
+if (b==13)	{	FRM_TeleportNearFrame(b13,odloz,1);	goto fyzika;	}
+if (b==14)	{	FRM_TeleportNearFrame(b14,odloz,1);	goto fyzika;	}
+
+goto end;
+
+label fyzika:
+c=_LoadGameValue(2);
+
+if (c==0)	{	goto fyzika2;	}
+if (c==2)	{	FRM_TeleportNearFrame(b2,odloz,1);	goto fyzika2;	}
+if (c==3)	{	FRM_TeleportNearFrame(b3,odloz,1);	goto fyzika2;	}
+if (c==4)	{	FRM_TeleportNearFrame(b4,odloz,1);	goto fyzika2;	}
+if (c==5)	{	FRM_TeleportNearFrame(b5,odloz,1);	goto fyzika2;	}
+if (c==6)	{	FRM_TeleportNearFrame(b6,odloz,1);	goto fyzika2;	}
+if (c==7)	{	FRM_TeleportNearFrame(b7,odloz,1);	goto fyzika2;	}
+if (c==8)	{	FRM_TeleportNearFrame(b8,odloz,1);	goto fyzika2;	}
+if (c==10)	{	FRM_TeleportNearFrame(b10,odloz,1);	goto fyzika2;	}
+if (c==14)	{	FRM_TeleportNearFrame(b14,odloz,1);	goto fyzika2;	}
+
+goto end;
+
+label fyzika2:
+goto end;
+
+label end:

@@ -1,0 +1,155 @@
+// magor co zameta snih
+
+Block
+{
+   integer AIEvent;		AIEvent = 99;
+   frame smetak;		FRM_FindFrame(smetak, "smetak");
+   frame PHYSICAL_smetak;	FRM_FindFrame(PHYSICAL_smetak, "smetak.Cylinder01");
+   frame ruka;			FRM_FindFrame(ruka, "");
+   Frame AllKilled; 		FRM_FindFrame(AllKilled, "dummy_OBJ1_sender");
+   Frame DeAlarmSee;		FRM_FindFrame(DeAlarmSee, "Dummy_Metar_See");
+
+   SetAlarmType(1023, False);
+   
+   FRM_SetOn(Smetak, False);	// INICIALIZACE !!!
+}
+
+
+HUMAN_Suspend(True);				
+  Goto TheEnd;	
+					
+Whenever A (_PlayerInRange(95);)			
+{							
+   HUMAN_Suspend(False);				
+}							
+
+
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SetOptimized(1);
+HUMAN_WeaponOnArm(false);
+
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+
+  FRM_SetOn(Smetak, True);
+block
+  {
+  FRM_FindFrame(ruka, "metar.hw1");
+  FRM_TeleportNearFrame( Smetak, ruka, true);
+  FRM_FindFrame(ruka, "");
+  }
+  HUMAN_SetAnim("%%metar", 250, 250, True);
+  Delay(250);
+  HUMAN_SETMODE_Silence();
+  HUMAN_SETMODE_lie();
+   SetAlarmType(1023, True);
+// KOLECKO kde furt zameta - kazde dalsi linknuti rotuje koste do .....
+label loop:
+  HUMAN_Move("metar_9");
+  HUMAN_Move("metar_10");
+  HUMAN_Move("metar_11");
+  HUMAN_Move("metar_12");
+  HUMAN_Move("metar_13");
+  HUMAN_Move("metar_14");
+  HUMAN_Move("metar_15");
+  HUMAN_Move("metar_16");
+  HUMAN_Move("metar_17");
+  HUMAN_Move("metar_18");
+  HUMAN_Move("metar_19");
+  HUMAN_Move("metar_20");
+  HUMAN_Move("metar_21");
+  HUMAN_Move("metar_22");
+  HUMAN_Move("metar_23");
+  HUMAN_Move("metar_24");
+  HUMAN_Move("metar_25");
+  HUMAN_Move("metar_26");
+  HUMAN_Move("metar_27");
+  HUMAN_Move("metar_28");
+  HUMAN_Move("metar_29");
+  HUMAN_Move("metar_30");
+  HUMAN_Move("metar_31");
+  HUMAN_Move("metar_32");
+  HUMAN_Move("metar_33");
+  HUMAN_Move("metar_34");
+  HUMAN_Move("metar_35");
+  HUMAN_Move("metar_36");
+  HUMAN_Move("metar_37");
+  HUMAN_Move("metar_38");
+  HUMAN_Move("metar_39");
+  HUMAN_Move("metar_40");
+  HUMAN_Move("metar_41");
+  HUMAN_Move("metar_42");
+  HUMAN_Move("metar_43");
+  HUMAN_Move("metar_44");
+  HUMAN_Move("metar_45");
+  HUMAN_Move("metar_46");
+  HUMAN_Move("metar_47");
+  HUMAN_Move("metar_48");
+  HUMAN_Move("metar_49");
+  HUMAN_Move("metar_50");
+  HUMAN_Move("metar_51");
+  HUMAN_Move("metar_52");
+  HUMAN_Move("metar_53");
+  HUMAN_Move("metar_54");
+  HUMAN_Move("metar_55");
+  HUMAN_Move("metar_56");
+  HUMAN_Move("metar_57");
+  HUMAN_Move("metar_58");
+  HUMAN_Move("metar_59");
+  HUMAN_Move("metar_1");
+  HUMAN_Move("metar_2");
+  HUMAN_Move("metar_3");
+  HUMAN_Move("metar_4");
+  HUMAN_Move("metar_5");
+  HUMAN_Move("metar_6");
+  HUMAN_Move("metar_7");
+  HUMAN_Move("metar_8");
+goto loop;
+
+OnAlarm()
+{
+// neoptimalizovat  -  prirozene zpozdeni vypada ze pomaleji reaguje - je to OK
+  SaveGameValue(29, 99);		// skip CSC 3 - roof 
+  HUMAN_SETSIGHTRANGE(50);
+  HUMAN_SETHEARRANGE(58);
+  AIEvent =_GetAlarmType(); 
+  // Tady AT ZAHODI KOSTE
+  PrintfNumber("AIE Metar: ", AIEvent);
+  HUMAN_SETMODE_Crouch();
+  Delay(250);
+  HUMAN_SetAnim("", 300, 300, False);
+block
+  {
+  FRM_FindFrame(ruka, "metar.hw1");
+  FRM_TeleportNearFrame( Smetak, ruka, False);
+  FRM_FindFrame(ruka, "");
+  }	
+  FRM_CreatePhysicalObject(PHYSICAL_smetak, 1, false, false);
+  FRM_SetOn(Smetak, False);
+  HUMAN_Stop();
+  HUMAN_SETMODE_Run();
+  HUMAN_SETAIMODE_Defensive();
+  EndScript();
+}
+
+OnAlarmDone()
+{
+  HUMAN_SETSIGHTRANGE(40);
+  HUMAN_SETHEARRANGE(45);
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Walk();
+  HUMAN_SETAIMODE_Zombie();
+  HUMAN_SetOptimized(1);
+  HUMAN_SETMODE_Stand();
+  HUMAN_Move("Metar_DeAlarm");
+  HUMAN_TurnAt(DeAlarmSee);
+  HUMAN_SETMODE_Crouch();
+}
+
+OnDeath()
+{
+  Sendsignal(AllKilled, 30);
+  EndScript();
+}
+
+Label TheEnd:

@@ -1,0 +1,131 @@
+block
+{
+	FRAME ge1_1;		FRM_FindFrame(ge1_1, "german1_1");
+	FRAME ge1_2;		FRM_FindFrame(ge1_2, "german1_2");
+	FRAME ge1_3;		FRM_FindFrame(ge1_3, "german1_3");
+	FRAME ge1_4;		FRM_FindFrame(ge1_4, "german1_4");
+	FRAME ge1_5;		FRM_FindFrame(ge1_5, "german1_5");
+	FRAME ge1_6;		FRM_FindFrame(ge1_6, "german1_6");
+	FRAME ge1_7;		FRM_FindFrame(ge1_7, "german1_7");  
+	FRAME ge1_8;		FRM_FindFrame(ge1_8, "german1_8");
+	FRAME ge1_9;		FRM_FindFrame(ge1_9, "german1_9");
+	FRAME ge5_1_sniper;		FRM_FindFrame(ge5_1_sniper, "ge5_1_sniper");
+	FRAME ge5_2;		FRM_FindFrame(ge5_2, "ge5_2");
+	FRAME ge5_3;		FRM_FindFrame(ge5_3, "ge5_3");
+	FRAME doktor;		FRM_FindFrame(doktor, "doktor");
+	FRAME shumann;		FRM_FindFrame(shumann, "shumann");
+	FRAME friberg;		FRM_FindFrame(friberg, "big_boss");
+	Frame god;			FRM_FindFrame(god, "Goddess");
+	Frame kaptn;			FRM_FindFrame(kaptn, "small10");
+	FRAME ge2_1;		FRM_FindFrame(ge2_1, "german2_1");
+	FRAME ge2_2;		FRM_FindFrame(ge2_2, "german2_2");
+	FRAME ge2_3;		FRM_FindFrame(ge2_3, "german2_3");
+	FRAME ge2_4;		FRM_FindFrame(ge2_4, "german2_4");
+	FRAME ge2_5;		FRM_FindFrame(ge2_5, "german2_5");
+	FRAME ge2_6;		FRM_FindFrame(ge2_6, "german2_6");
+	FRAME ge2_7;		FRM_FindFrame(ge2_7, "german2_7");  
+	FRAME ge2_8;		FRM_FindFrame(ge2_8, "german2_8");
+	FRAME ge2_9;		FRM_FindFrame(ge2_9, "german2_9");
+	FRAME ge5_4;		FRM_FindFrame(ge5_4, "ge5_4");
+	FRAME ge5_5;		FRM_FindFrame(ge5_5, "ge5_5");
+	FRAME ge3_1;		FRM_FindFrame(ge3_1, "german3_1");
+	FRAME ge3_2;		FRM_FindFrame(ge3_2, "german3_2");
+	FRAME ge3_3;		FRM_FindFrame(ge3_3, "german3_3");
+	FRAME ge3_4;		FRM_FindFrame(ge3_4, "german3_4");
+	FRAME ge3_5;		FRM_FindFrame(ge3_5, "german3_5");
+	FRAME ge3_6;		FRM_FindFrame(ge3_6, "german3_6");
+	FRAME ge3_7;		FRM_FindFrame(ge3_7, "german3_7");  
+	FRAME ge3_8;		FRM_FindFrame(ge3_8, "german3_8");
+	FRAME ge3_9;		FRM_FindFrame(ge3_9, "german3_9");
+	FRAME ge4_1;		FRM_FindFrame(ge4_1, "german4_1"); 
+	FRAME ge4_2;		FRM_FindFrame(ge4_2, "german4_2");
+	FRAME ge4_3;		FRM_FindFrame(ge4_3, "german4_3");  
+	FRAME ge5_6;		FRM_FindFrame(ge5_6, "ge5_6");
+	FRAME ge5_7;		FRM_FindFrame(ge5_7, "ge5_7");
+	FRAME mk4;		FRM_FindFrame(mk4, "mk4");
+
+	Integer x = 42; 
+	Integer xx = 42; 
+}
+printf("dead counter initialized");
+goto end;
+
+OnSignal(1)	
+{
+	printf("dead counter activated");
+	goto check;
+}
+
+Label check:
+	x = xx;
+
+	block
+	{
+	if (_ACTOR_GetState(ge1_1)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_2)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_3)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_4)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_5)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_6)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_7)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_8)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge1_9)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge5_1_sniper)==0){	x=x-1;	}
+	}
+	block
+	{
+	if (_ACTOR_GetState(ge5_2)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge5_3)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(doktor)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(shumann)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(friberg)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(god)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(kaptn)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_1)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_2)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_3)==0)	{	x=x-1;	}
+	}
+	block
+	{
+	if (_ACTOR_GetState(ge2_4)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_5)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_6)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_7)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_8)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge2_9)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge5_4)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge5_5)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_1)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_2)==0)	{	x=x-1;	}
+	}
+	block
+	{
+	if (_ACTOR_GetState(ge3_3)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_4)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_5)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_6)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_7)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_8)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge3_9)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge4_1)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge4_2)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge4_3)==0)	{	x=x-1;	}
+	
+	if (_ACTOR_GetState(ge5_6)==0)	{	x=x-1;	}
+	if (_ACTOR_GetState(ge5_7)==0)	{	x=x-1;	}
+	}
+
+	printfnumber("enemies left:", x);
+
+	if (x==0)
+		{
+			SaveGameValue(2, 3);
+			FRM_SetOn(mk4, true);
+			EndScript();
+		}
+	else {
+		delay (10000);
+		goto check;
+		}
+
+label end:

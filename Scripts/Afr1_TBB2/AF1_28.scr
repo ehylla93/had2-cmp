@@ -1,0 +1,115 @@
+// AF1_28 - walking around the cisterns
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  FRAME dummyalert;			FRM_FindFrame(dummyalert, "dummy_alert");
+  FRAME look_08_01;      		FRM_FindFrame(look_08_01, "la_macchi08");
+  INTEGER Atype			= 0;
+  INTEGER atpos			= 0;
+
+  SetAlarmType(1023, true);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+  printf("01: dead");
+  EndScript();
+}
+
+OnSignal(20){
+  HUMAN_Suspend(false);
+  HUMAN_Stop();
+  HUMAN_SetAnim("", 100, 100, false);
+  HUMAN_SetMode_Crouch();
+  HUMAN_TurnAtNearestPlayer();
+  HUMAN_WeaponOnArm(true);
+  goto END;
+}
+
+Whenever inrange (_PlayerInRange(250)){
+  goto ACTIVATE;
+}
+
+OnAlarm(){
+  HUMAN_SetAnim("", 100, 100, false);
+  block{
+    SetWhenever(inrange, false);
+    DisableSignals(true);
+    HUMAN_Stop();
+    HUMAN_Suspend(false);
+    HUMAN_SETMODE_Run();
+    HUMAN_SETSIGHTRANGE(300);
+//    HUMAN_SetOptimized(false);
+    Atype = _GetAlarmType();
+    printfnumber("01: ", Atype);
+  }
+
+  if((!atpos) AND (Atype != 64)){
+    HUMAN_SetMODE_Crouch();
+    HUMAN_SetMODE_Run();
+    HUMAN_Move("AF1_01_alert");
+    Atpos = 1;
+    HUMAN_SetAlarm(false);
+    HUMAN_TurnAtNearestPlayer();
+    goto TURN_LOOP;
+  }
+
+  HUMAN_TurnAtNearestPlayer();
+  SendSignal(dummyalert, 1);
+  EndScript();
+}
+
+OnAlarmDone(){ 
+  block{  
+    SetAlarmType(1023, true);		// all alarm events are on
+    SetAlarmType(512, false);		// 512
+    //  HUMAN_SETSIGHTRANGE(80);
+    HUMAN_SetOptimized(1);
+    HUMAN_SetAlarm(false);
+    HUMAN_SETMODE_Silence();
+    HUMAN_WeaponOnArm(true);
+  }
+  HUMAN_SetMODE_Crouch();  
+  goto ALARMDONE;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+  HUMAN_SETAIMODE_Defensive();
+  HUMAN_SETMODE_Guard();
+  HUMAN_Suspend(true);
+  HUMAN_SETEVENTS(true);
+goto END;
+
+Label ACTIVATE:
+  HUMAN_Suspend(false);
+  HUMAN_SetOptimized(true);
+
+Label ACTIVITY:
+  HUMAN_SetAnim("%%mechanik", 200, 200, false);  
+  Delay(10000);
+goto ACTIVITY;
+
+Label ALARMDONE:
+  HUMAN_SetMODE_Crouch();
+  HUMAN_SetMODE_Walk();
+  HUMAN_WeaponOnArm(true);
+Label ALARM_DONE_LOOP:
+  Atpos = 0;
+  HUMAN_Move("af1_01_01");
+  HUMAN_Move("af1_01_04");
+  HUMAN_Move("af1_01_06");
+  HUMAN_Move("af1_01_08");
+  HUMAN_TurnAt(look_08_01);  Delay(3000);
+  HUMAN_Move("af1_01_11");
+  HUMAN_SetAnim("%%turnleft", 500, 500, false);  Delay(2000);
+  HUMAN_SetAnim("%%turnright", 500, 500, false);  Delay(2000);
+goto ALARM_DONE_LOOP;
+
+Label TURN_LOOP:
+  HUMAN_TurnAtNearestPlayer();
+  Delay(2000);
+goto TURN_LOOP;
+
+Label END:

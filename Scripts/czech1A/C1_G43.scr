@@ -1,0 +1,61 @@
+// Ciha z lesa
+// -------------------------------------------------------------------------------------------------------------
+
+block{
+  INTEGER Atype				= 0;
+  INTEGER rnd					= 0;
+
+Frame sloup;    FRM_FindFrame(sloup,"l_ndrlamp10");
+Frame zb26;    FRM_FindFrame(zb26,"C1_G38");
+
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,0); //kroky
+SetAlarmType(8,1); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //zeskriptu
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+}
+// -------------------------------------------------------------------------------------------------------------
+
+OnDeath(){
+SendSignal(zb26, 1);
+EndScript();
+}
+
+OnAlarm(){
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SetSniper(True, 5);
+EndScript();
+}
+
+OnAlarmDone(){
+HUMAN_SETMODE_Lie();
+HUMAN_TurnAt(sloup);
+goto END;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+HUMAN_TurnAt(sloup);
+goto END;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+HUMAN_Suspend(1);
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Lie();
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETSIGHTRANGE(80);
+HUMAN_SetSniper(True, 5);
+HUMAN_TurnAt(sloup);
+goto END;
+
+Label END:

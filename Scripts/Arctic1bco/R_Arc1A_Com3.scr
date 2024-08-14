@@ -1,0 +1,129 @@
+
+	Frame l_sed3;	
+	Frame l_sed3b;		
+	Frame player;
+	Frame duplicated_player;
+	Frame padak;
+	Frame padakotvor;			FRM_FindFrame(padakotvor, "d_padakotv_");
+	Frame joint;
+	Frame guncover;
+	Frame guncover_b;
+	Frame vysadek;
+	Frame endCUTSCENE;		FRM_FindFrame(endCUTSCENE, "dummy_endCUT3");
+
+
+// ale bude lepsi to stejne rozhodit do dvou skriptu protoze
+// se OnCutscene vola i na playerovi i na dumacu od spawnpointu
+// takze se potom snazi teleportovat spawnpoint do letadla
+
+OnCutscene(1)
+{
+
+	Block
+	{
+		FRM_FindFrame(l_sed3,"dummy_s3");
+		FRM_GetMyFrame(player);
+		CSC_DuplicateHuman(player, duplicated_player,"_PLAYER_cuts_sasik3");
+		CSC_FreeHands(duplicated_player);
+		CSC_FreeBackPack(duplicated_player);	
+
+
+		FRM_TeleportNearFrame(duplicated_player, l_sed3, true);
+		FRM_FindFrame(padak,"d_padak_3.padak" );
+		FRM_FindChildFrame(joint, "d", duplicated_player);
+		FRM_FindFrame(guncover,"d_guncover_3" );
+		FRM_FindFrame(guncover_b,"d_guncover_3b" );
+
+		FRM_TeleportNearFrame(padak, joint, true);	
+
+
+
+
+}
+
+
+FRM_SetAnimation(duplicated_player, "%%sasPOSL.i3d",true);
+
+Delay(35600);
+
+	Block
+	{
+	FRM_SetOn(guncover, false);
+	FRM_SetOn(guncover_b, true);
+	FRM_SetAnimation(duplicated_player, "%%sasPOSL.i3d",true);
+	}
+Delay(23000);
+FRM_SetAnimation(duplicated_player, "",true);
+FRM_SetAnimation(duplicated_player, "%%sedisvetlo2.i3d",true);
+Delay(6000);
+FRM_SetAnimation(duplicated_player, "",true);
+Delay(3000);
+Block
+	{
+	FRM_FindFrame(l_sed3b,"dummy_s3b");
+	FRM_TeleportNearFrame(duplicated_player, l_sed3b, true);
+	}
+
+	Block
+	{
+	FRM_SetOn(guncover, true);
+	FRM_SetOn(guncover_b, false);
+	FRM_TeleportNearFrame(guncover, joint, true);
+	FRM_SetAnimation(duplicated_player, "%%sas3ready.i3d",true);
+	}
+
+
+Delay(12500);
+
+Block
+	{
+	FRM_FindFrame(vysadek,"dummy_vysadek");
+	FRM_TeleportNearFrame(duplicated_player, vysadek, true);
+	}
+
+FRM_SetAnimation(duplicated_player, "%%vysadek1.i3d",true);
+Delay(2000);
+
+
+Block
+	{
+	FRM_SetAnimation(duplicated_player, "",true);	
+
+	
+	FRM_TeleportNearFrame(duplicated_player, endCUTSCENE, true);
+	
+	FRM_SetOn(padakotvor, true);
+
+	FRM_TeleportNearFrame(padakotvor, padak, true);
+
+	}
+Delay(12000);
+FRM_SetAnimation(duplicated_player, "%%padak.i3d",true);
+
+Delay(10000);
+
+}
+
+
+OnCutsceneDone(1)
+{
+	Block
+	{
+/////	FRM_SetOn(guncover, false);
+/////	FRM_SetOn(padak, false);
+////	FRM_SetOn(padakotvor, false);
+
+	FRM_SetAnimation(duplicated_player, "",true);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	FRM_TeleportNearFrameBack(padak);
+	FRM_FindFrame(joint, "");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+
+
+	CSC_ReleaseHuman(duplicated_player);
+	FRM_FindFrame(duplicated_player, "");
+	}
+
+EndScript();
+}

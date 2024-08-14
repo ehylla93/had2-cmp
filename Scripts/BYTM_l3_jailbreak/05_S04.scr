@@ -1,0 +1,142 @@
+// 05_S04
+// ----------------------------------------
+
+Block
+{
+Frame target;	FRM_FindFrame(target, "05_target_1");
+Frame MyFRM;	FRM_GetMyFrame(MyFRM);
+FRM_SwitchFaceTexture(MyFRM, "e_f053");
+Integer fstalrm = 0;
+
+SetAlarmType(1023, 0);
+SetAlarmType(867, 1);
+HUMAN_SETSIGHTRANGE(180);
+HUMAN_SETMODE_Guard();
+HUMAN_SETAIMODE_Defensive();
+}
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(1);
+goto end;
+
+// ----------------------------------------
+
+OnDeath() 
+{
+printf("05_S04 dead");
+EndScript();
+}
+
+OnAlarm()
+{
+HUMAN_SetAnim("", 200, 200, 0);
+if((_LoadGameValue(1)==0) and (fstalrm==0)) {
+SaveGameValue(1, 1);
+fstalrm = 1;
+HUMAN_Stop();
+HUMAN_WeaponOnArm(1);
+HUMAN_TurnAt(target);
+Delay(500);
+HUMAN_IllFire(target, 800);
+Delay(500);
+}
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAtNearestPlayer();
+EndScript();
+}
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+
+OnSignal(1)
+{
+HUMAN_Suspend(0);
+goto Patrol1;
+}
+
+OnSignal(2)
+{
+HUMAN_Suspend(0);
+goto Patrol2;
+}
+
+OnSignal(3)
+{
+HUMAN_Suspend(0);
+goto Patrol3;
+}
+
+OnSignal(4)
+{
+HUMAN_Suspend(0);
+goto Patrol4;
+}
+
+OnSignal(5)
+{
+HUMAN_Suspend(0);
+goto Patrol5;
+}
+
+OnSignal(6)
+{
+HUMAN_SetAnim("%%sedimL", 500, 500, 1);
+HUMAN_Suspend(0);
+goto end;
+}
+
+Label Patrol1:
+HUMAN_SETMODE_Stand();
+HUMAN_LookAround(4);
+HUMAN_Move( "Roof1_2" ); 
+HUMAN_Move( "Roof1_3" ); 
+HUMAN_Move( "Roof1_4" ); 
+HUMAN_Move( "Roof1_1" ); 
+goto Patrol1;
+
+Label Patrol2:
+printf("S01 patrol route 2");
+HUMAN_SETMODE_Stand();
+HUMAN_LookAround(4);
+HUMAN_Move( "Roof2_2" ); 
+HUMAN_Move( "Roof2_3" ); 
+HUMAN_Move( "Roof2_4" ); 
+HUMAN_Move( "Roof2_1" ); 
+goto Patrol2;
+
+Label Patrol3:
+HUMAN_SETMODE_Stand();
+HUMAN_LookAround(4);
+HUMAN_Move( "Roof3_2" ); 
+HUMAN_Move( "Roof3_3" ); 
+HUMAN_Move( "Roof3_4" ); 
+HUMAN_Move( "Roof3_1" ); 
+goto Patrol3;
+
+Label Patrol4:
+HUMAN_SETMODE_Stand();
+HUMAN_LookAround(4);
+HUMAN_Move( "Roof4_2" ); 
+HUMAN_Move( "Roof4_3" ); 
+HUMAN_Move( "Roof4_4" ); 
+HUMAN_Move( "Roof4_1" ); 
+goto Patrol4;
+
+Label Patrol5:
+HUMAN_SETMODE_Stand();
+HUMAN_LookAround(4);
+HUMAN_Move( "Roof5_2" ); 
+HUMAN_Move( "Roof5_3" ); 
+HUMAN_Move( "Roof5_4" ); 
+HUMAN_Move( "Roof5_1" ); 
+goto Patrol5;
+
+Whenever AlarmsOff (_LoadGameValue(99)==1)
+{
+DisableAlarms(1);
+}
+
+// ----------------------------------------
+Label end:

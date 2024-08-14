@@ -1,0 +1,31 @@
+// dead ally in H38 - activator Sherman square
+
+Block
+ {
+	Frame driver;	FRM_FindFrame(driver, "Charon6t");
+     	Frame cha5;	FRM_FindFrame(cha5, "Charon5t");
+	Frame cha7;	FRM_FindFrame(cha7, "Charon7t");
+	Frame cha8;	FRM_FindFrame(cha8, "Charon8t");
+    HUMAN_SetOptimized(2);
+    HUMAN_SETEVENTS(False);
+    SetAlarmType(1023, False);
+  }
+
+ HUMAN_Suspend(True);
+ goto TheEnd;				
+
+Whenever inrange (_MP_IsTeamMemberInRange(1, 15)) // 11oldpos
+{
+	Delay(10000); // delay 10000
+  //HUMAN_Suspend(False);
+  SendSignal(driver, 1);
+  SendSignal(cha5, 1);
+  SendSignal(cha7, 1);
+  SendSignal(cha8, 1);
+}
+				
+OnAlarm()	{}
+
+OnAlarmDone()  {}
+
+Label TheEnd:

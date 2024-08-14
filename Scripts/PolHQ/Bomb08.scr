@@ -1,0 +1,18 @@
+// Bomb 8
+//--------------------------------------
+
+Block
+{
+Frame me;	FRM_GetMyFrame(me);
+
+SetActorState(me, 3);
+}
+
+//--------------------------------------
+
+
+Whenever Aktivace (_SignalReceived(1))
+{
+SetActorState(me, 0);
+EndScript();
+}

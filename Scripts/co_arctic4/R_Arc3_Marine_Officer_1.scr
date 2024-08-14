@@ -1,0 +1,90 @@
+//U-Boat Officer
+
+block {
+  integer  AIEvent;
+  integer counter = 1;
+  Frame OBJ;		FRM_FindFrame(OBJ, "dummy_objectives");
+  Frame vykricnik;	FRM_FindFrame(vykricnik, "vykricnik_man");
+  Frame dabing;		FRM_FindFrame(dabing, "dummy_officer_dabing");
+  Frame MyFRM;		FRM_GetMyFrame(MyFRM);
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SetOptimized(true);
+HUMAN_SETMODE_Walk();
+HUMAN_SETMODE_Stand();
+
+SetAlarmType(1023, False);
+SetAlarmType(65, True);		//"Close Shooting" and "Is Injured"
+
+HUMAN_Suspend(True);
+FRM_SetOn(vykricnik, false);
+}
+
+
+goto TheEnd;				
+
+Whenever GO ( _PlayerInRange(30))
+{
+  HUMAN_Suspend(False);	
+  SendSignal(dabing, 1);
+  FRM_SetOn(vykricnik, true);
+  PlayMusic(35);
+}
+
+label MOVE:
+  HUMAN_SetAlarm(False);
+  HUMAN_Move("MO_1");
+  HUMAN_Move("MO_2");
+  HUMAN_Move("MO_3");
+  HUMAN_Move("MO_4");
+  HUMAN_Move("MO_END");	
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  SendSignal(dabing, 2);
+  SendSignal(OBJ, 7);
+  goto TheEnd;
+  
+
+OnAlarm()
+{
+  Block
+    {
+      AIEvent =_GetAlarmType();
+      HUMAN_SETMODE_Run();
+      HUMAN_SETSIGHTRANGE(100);
+      HUMAN_SETHEARRANGE(120);
+      FRM_MorphSpeech(MyFRM, 0, 0, 0);
+      SendSignal(dabing, 2);
+    }
+       If ( ((AIEvent == 1) OR (AIEvent == 64)) AND ( _PlayerInRange(20)) )  
+          {
+             FRM_MorphSpeech(MyFRM, 0, 0, 0);
+			 FRM_SetOn(vykricnik, False);
+             EndScript();
+          }
+	   else { goto MOVE; }
+}
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(False);
+  HUMAN_SETMODE_Run();
+  HUMAN_SetOptimized(true);
+  HUMAN_SETMODE_Stand();
+  goto TheEnd;
+}
+
+OnDeath()
+{
+  FRM_MorphSpeech(MyFRM, 0, 0, 0);
+  SendSignal(dabing, 2);
+  SendSignal(OBJ, 12);
+  FRM_SetOn(vykricnik, False);
+  EndScript();
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

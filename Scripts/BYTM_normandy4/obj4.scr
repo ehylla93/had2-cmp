@@ -1,0 +1,52 @@
+// Objective 4: "Acquire documents from a German officer."
+
+Block
+{
+Frame Documents;
+
+SetWhenever(Lost, 0);
+SetWhenever(Found2, 0);
+SetWhenever(Found, 1);
+
+SetObjectiveStatus(4, 0);
+
+Frame obj2;		FRM_FindFrame(obj2,"obj2");
+}
+
+Whenever Found (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(obj2, 3);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990815);	//"OBJECTIVE ACCOMPLISHED: DOCUMENTS FOUND."
+Delay(5000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Whenever Lost (!_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(obj2, 4);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990880);	//"DOCUMENTS LOST - YOU HAVE TO FIND THEM NOW!"
+Delay(4000);
+SetObjectiveStatus(4, 0);
+SUBTITLES_SetOn(0);
+SetWhenever(Found2, 1);
+goto END;
+}
+
+Whenever Found2 (_MP_IsItemInTeamInventory(1, 239, Documents))
+{
+SendSignal(obj2, 3);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(04990826);	//"DOCUMENTS RECOVERED."
+Delay(4000);
+SetObjectiveStatus(4, 1);
+SUBTITLES_SetOn(0);
+SetWhenever(Lost, 1);
+goto END;
+}
+
+Label END:

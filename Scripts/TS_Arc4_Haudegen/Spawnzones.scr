@@ -1,0 +1,46 @@
+Block
+{
+
+MP_EnableSpawnZone("zone6", 1);     // start
+MP_EnableSpawnZone("zone9", 0);    // huts 0  
+MP_EnableSpawnZone("zone10", 0);   // submarine
+
+
+}
+// ---------------------------
+
+OnSignal(1)
+{
+MP_EnableSpawnZone("zone9", 1);
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+
+}
+
+
+OnSignal(2)
+{
+MP_EnableSpawnZone("zone9", 0);
+
+//Delay(3000);
+//SUBTITLES_SetOn(1);
+//SUBTITLES_SetText(59995027);
+
+}
+
+OnSignal(3)
+{
+MP_EnableSpawnZone("zone9", 1);
+Delay(4000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(59995027);
+
+}
+
+
+goto END;
+
+Label END:
+
+

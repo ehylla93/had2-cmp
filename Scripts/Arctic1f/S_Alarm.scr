@@ -1,0 +1,105 @@
+// Kontrolní detektor v oblasti S, "Stred" a Alarmer
+// -----------------------------------------------------
+
+Block
+{
+// *** HLIDKY ***
+
+Frame G01;	FRM_FindFrame(G01,"SF_G23");
+Frame G02;	FRM_FindFrame(G02,"SF_G24");
+Frame G03;	FRM_FindFrame(G03,"SF_G25");
+Frame G04;	FRM_FindFrame(G04,"SF_G26");
+Frame G05;	FRM_FindFrame(G05,"SF_G27");
+Frame G06;	FRM_FindFrame(G06,"SF_G28");
+Frame G07;	FRM_FindFrame(G07,"SF_G29");
+Frame G08;	FRM_FindFrame(G08,"SF_G30");
+Frame G09;	FRM_FindFrame(G09,"SF_G31");
+Frame G10;	FRM_FindFrame(G10,"SF_G32");
+Frame G11;	FRM_FindFrame(G11,"SF_G41");
+Frame G12;	FRM_FindFrame(G12,"SF_G42");
+Frame G13;	FRM_FindFrame(G13,"SF_G43");
+Frame G14;	FRM_FindFrame(G14,"SF_G44");
+Frame G15;	FRM_FindFrame(G15,"SF_G45");
+Frame G16;	FRM_FindFrame(G16,"SF_G46");
+Frame G17;	FRM_FindFrame(G17,"SF_G47");
+Frame G18;	FRM_FindFrame(G18,"SF_G48");
+Frame G19;	FRM_FindFrame(G19,"SF_G49");
+Frame G20;	FRM_FindFrame(G20,"SF_G50");
+Frame G21;	FRM_FindFrame(G21,"SF_G51");
+Frame G22;	FRM_FindFrame(G22,"SF_G52");
+Frame G23;	FRM_FindFrame(G23,"SF_G53");
+Frame G24;	FRM_FindFrame(G24,"SF_G54");
+Frame G25;	FRM_FindFrame(G25,"SF_G55");
+Frame G26;	FRM_FindFrame(G26,"SF_G56");
+Frame G27;	FRM_FindFrame(G27,"SF_G69");
+Frame G28;	FRM_FindFrame(G28,"SF_G70");
+Frame G29;	FRM_FindFrame(G29,"SF_G71");
+Frame G30;	FRM_FindFrame(G30,"SF_G72");
+Frame G31;	FRM_FindFrame(G31,"SF_G73");
+Frame G32;	FRM_FindFrame(G32,"SF_G74");
+Frame G33;	FRM_FindFrame(G33,"SF_G75");
+Frame G34;	FRM_FindFrame(G34,"SF_G76");
+Frame G35;	FRM_FindFrame(G35,"SF_G77");
+Frame G36;	FRM_FindFrame(G36,"SF_G78");
+Frame G37;	FRM_FindFrame(G37,"SF_G79");
+Frame G38;	FRM_FindFrame(G38,"SF_G80");
+
+
+// *** ALARMERI ***
+
+Frame A01;	FRM_FindFrame(A01,"SF_G33");
+Frame A02;	FRM_FindFrame(A02,"SF_G34");
+Frame A03;	FRM_FindFrame(A03,"SF_G35");
+Frame A04;	FRM_FindFrame(A04,"SF_G36");
+Frame A05;	FRM_FindFrame(A05,"SF_G37");
+Frame A06;	FRM_FindFrame(A06,"SF_G38");
+Frame A07;	FRM_FindFrame(A07,"SF_G39");
+Frame A08;	FRM_FindFrame(A08,"SF_G40");
+
+SetWhenever(Active, 0);
+}
+
+// -----------------------------------------------------
+
+Whenever TurnOn (_SignalReceived(1))
+{
+SetWhenever(Active, 1);
+goto END;
+}
+
+
+Whenever Active (_SignalReceived(2))
+{
+SendSignal(G01, 1);SendSignal(G02, 1);SendSignal(G03, 1);SendSignal(G04, 1);
+SendSignal(G05, 1);SendSignal(G06, 1);SendSignal(G07, 1);SendSignal(G08, 1);
+SendSignal(G09, 1);SendSignal(G10, 1);SendSignal(G11, 1);SendSignal(G12, 1);
+SendSignal(G13, 1);SendSignal(G14, 1);SendSignal(G15, 1);SendSignal(G16, 1);
+SendSignal(G17, 1);SendSignal(G18, 1);SendSignal(G19, 1);SendSignal(G20, 1);
+SendSignal(G21, 1);SendSignal(G22, 1);SendSignal(G23, 1);SendSignal(G24, 1);
+SendSignal(G27, 1);SendSignal(G28, 1);SendSignal(G37, 1);SendSignal(G38, 1);
+SendSignal(G29, 1);SendSignal(G30, 1);SendSignal(G31, 1);SendSignal(G32, 1);
+SendSignal(G35, 1);SendSignal(G36, 1);
+
+goto END;
+}
+
+
+Whenever Alarm (_SignalReceived(3))
+{
+Delay(10000);
+SendSignal(A01, 1);SendSignal(A02, 1);SendSignal(A03, 1);SendSignal(A04, 1);
+SendSignal(A05, 1);SendSignal(A06, 1);SendSignal(A07, 1);SendSignal(A08, 1);
+EndScript();
+}
+
+
+// ---------------------------------------------------------
+
+SendSignal(G25, 1);
+SendSignal(G26, 1);
+SendSignal(G33, 1);
+SendSignal(G34, 1);
+goto END;
+
+
+Label END:

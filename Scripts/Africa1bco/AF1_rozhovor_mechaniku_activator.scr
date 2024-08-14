@@ -1,0 +1,29 @@
+// AF4_rozhovor_02_activator
+// -------------------------------------------------------------------------------------------------------------
+
+FRAME af16;				FRM_FindFrame(af16, "AF1_16");
+FRAME af17;				FRM_FindFrame(af17, "AF1_17");
+
+// -------------------------------------------------------------------------------------------------------------
+
+Whenever pir (_PlayerInRange(70))
+{
+  printf("ice_ sejvneme value pro talk mechaniku? ");
+  if(_ACTOR_GetState(af16) AND _ACTOR_GetState(af17))
+  {
+    printf("ice_ JO");
+    SaveGameValue(90, 1);
+  }
+  else
+  {
+    printf("ice_ NE");
+  }
+}
+
+Whenever deadmech ((!_ACTOR_GetState(af16)) OR (!_ACTOR_GetState(af17)))
+{
+  printf("ice_ JEDEN Z MECHANIKU JE TUHEJ TAK END ROZHOVOR");
+  SaveGameValue(90, 0);
+}
+
+// -------------------------------------------------------------------------------------------------------------

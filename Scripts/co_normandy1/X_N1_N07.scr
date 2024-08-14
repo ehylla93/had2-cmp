@@ -1,0 +1,120 @@
+// N07 - second guard on the court
+// -------------------------------------------------------------------------------------------------------------
+// Variables definition
+Block
+{
+Frame N06;
+	FRM_FindFrame(N06, "N06");
+Frame me;
+	FRM_GetMyFrame(me);
+Integer aievent;
+	aievent=0;
+Integer setalarm;
+	setalarm=0;
+	
+SetAlarmType(16, false);
+//SetAlarmType(1023, false);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+// Whenever keywords and signals
+OnAlarm()
+{
+	HUMAN_SetAnim("", 200, 200, false);
+
+	Block
+	{
+		aievent=_GetAlarmType();
+	HUMAN_SETSIGHTRANGE(80);
+	}
+
+	If((aievent==1) OR (aievent==64))
+	{
+		HUMAN_SETMODE_Crouch();
+		EndScript();
+	}
+
+	EndScript();
+}
+
+OnAlarmDone()
+{
+	Block
+	{
+	HUMAN_SetAlarm(false);
+	HUMAN_SETMODE_Guard();
+	HUMAN_SetOptimized(1);
+	}
+	HUMAN_SETMODE_Stand();
+	If(setalarm==1)	{	GoTo alarmed;		}
+	GoTo path;
+}
+
+Whenever player(_SignalReceived(2))	// received from N02N03_A03, N06N07_A1, NXX_A1, NXX_A4
+{
+	HUMAN_Suspend(false);
+	If(setalarm==1)	{	GoTo alarmed;		}
+	GoTo path;
+}
+
+Whenever activ(_SignalReceived(10))	// received from NXY_A2
+{
+	SetWhenever(player, true);
+	GoTo end;
+}
+
+Whenever alarm18(_SignalReceived(4))		// received from Alarm18
+{
+	setalarm=1;
+	GoTo end;
+}
+
+Whenever AlarmsOff (_SignalReceived(19))
+{
+DisableAlarms(1);
+goto end;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+HUMAN_SETAIMODE_Defensive();
+SetWhenever(player, false);
+FRM_SwitchFaceTexture(me, "e_f045");
+}
+HUMAN_Suspend(true);
+GoTo end;
+
+Label path:
+	HUMAN_Move("N07_1");
+	HUMAN_Move("N07_2");
+	HUMAN_Move("N07_3");
+
+HUMAN_SetAnim("!salutovani", 500, 500, 0);
+Delay(2000);
+HUMAN_SetAnim("", 0, 0, 0);
+	
+	HUMAN_Move("N07_2");
+	HUMAN_Move("N07_1");
+	HUMAN_TurnAt(N06);
+	GoTo end;
+
+Label alarmed:
+	HUMAN_WeaponOnArm(1);
+	HUMAN_SETMODE_Run();
+	HUMAN_Move("N07_1");
+	Delay(2000);
+	HUMAN_Move("N07_4");
+	Delay(2000);
+	HUMAN_Move("N07_1");
+	Delay(2000);
+	HUMAN_Move("N07_5");
+	Delay(2000);
+	HUMAN_Move("N07_1");
+	Delay(2000);
+	HUMAN_Move("N07_4");
+	Delay(2000);
+	HUMAN_Move("N07_1");
+	GoTo end;
+
+Label end:

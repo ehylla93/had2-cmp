@@ -1,0 +1,49 @@
+// Kecy mezi SF_G18, SF_G19
+//------------------------------------------------
+
+Block
+{
+Frame G11;	FRM_FindFrame(G11, "SF_G18");
+Frame G12;	FRM_FindFrame(G12, "SF_G19");
+}
+
+Whenever Aktivace (_SignalReceived(1))
+{
+goto Kecam;
+}
+
+
+Whenever Alarm (_SignalReceived(2))
+{
+goto END;
+}
+
+//------------------------------------------------
+
+goto END;
+
+
+Label Kecam:
+FRM_MorphSpeechDelayed(G11, 14992817, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 14992818, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 14992819, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 14992820, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 14992821, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 14992822, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 14992823, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 14992824, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G11, 14992825, 5, 10);
+Delay(200);
+FRM_MorphSpeechDelayed(G12, 14992826, 5, 10);
+goto Kecam;
+
+
+Label END:

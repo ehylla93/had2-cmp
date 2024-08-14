@@ -1,0 +1,13 @@
+// BU1_soundfall_left
+Frame soundA1;
+	FRM_FindFrame(soundA1, "S_troskyA1");
+Frame soundA2;
+	FRM_FindFrame(soundA2, "S_troskyA2");
+
+OnSignal(1)	// received from Most_left
+{
+	Delay(1500);
+	FRM_SetOn(soundA2, true);
+	Delay(750);
+	FRM_SetOn(soundA1, true);
+}

@@ -1,0 +1,31 @@
+// enables new spawn zone
+// --------------------------------------
+
+Block
+{
+Frame en1;	FRM_FindFrame(en1, "N2_G71"); 
+Frame en2;	FRM_FindFrame(en2, "N2_G73"); 
+Frame en3;	FRM_FindFrame(en3, "N2_G94"); 
+Frame en4;	FRM_FindFrame(en4, "N2_G95");
+Frame en5;	FRM_FindFrame(en5, "N2_G96");
+Frame en6;	FRM_FindFrame(en6, "N2_G07");
+
+//printf("spawn script");
+//SetObjectiveStatus(3, 0);
+
+}
+
+// --------------------------------------
+
+Whenever spawn3 ((((((_Actor_GetState(en1)==0) And (_Actor_GetState(en2)==0)) And (_Actor_GetState(en3)==0)) And (_Actor_GetState(en4)==0)) And (_Actor_GetState(en5)==0)) And (_Actor_GetState(en6)==0))
+{
+SUBTITLES_SetOn(1);
+Delay(2000);
+SUBTITLES_SetText(59995027);
+Delay(4000);
+MP_EnableSpawnZone("zone3", 1);
+SUBTITLES_SetOn(0);
+GoTo end;
+}
+
+Label end:

@@ -1,0 +1,26 @@
+
+Block {
+frame al2_21;		FRM_FindFrame(al2_21,"al2_21");
+integer door;		door =0;
+}
+
+goto end;
+
+OnUse()
+{
+   if (Door == 0)
+       {
+	Door = 3;
+        }
+    else
+       {
+	Door = 0;
+       }
+}
+
+OnSignal(2)
+{
+SendSignal(al2_21,door);
+}
+
+label end:

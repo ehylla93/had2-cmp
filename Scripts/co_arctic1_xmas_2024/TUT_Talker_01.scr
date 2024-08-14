@@ -1,0 +1,84 @@
+// TUT_Talker_01 - TUT_Talker_01.scr
+Block
+{
+Frame me;			FRM_GetMyFrame(me);
+Frame bonzak;		FRM_FindFrame(bonzak, "ControlorOne");
+SetWhenever (PNIR, false);
+}
+FRM_SwitchFaceTexture(me, "e_f072");
+	HUMAN_SetOptimized(2);
+	HUMAN_Move("metar_8");
+	GoTo end;
+OnSignal(1)
+{
+	SetWhenever (PNIR, false);
+	HUMAN_SetOptimized(2);
+	HUMAN_SETAIMODE_Aggressive();
+	HUMAN_SETMODE_Stand();
+	HUMAN_SETMODE_Walk();
+	HUMAN_WeaponOnArm(true);
+	HUMAN_WeaponUp(true);
+	HUMAN_SETMODE_Run();
+	GOTO LOOP;
+}
+
+OnSignal(20)
+	{
+		HUMAN_SetOptimized(1);
+	HUMAN_TurnAt(bonzak);
+	HUMAN_SETMODE_Walk();
+	HUMAN_Move("ebajka");
+	HUMAN_TurnAtNearestPlayer();
+	SUBTITLES_SetOn(true);
+	FRM_MorphSpeechDelayed(me, 00990107, 5, 20);
+	// Hmm.  So, you think you're above a bit of training, do you?
+	SetWhenever (PNIR, true);
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990108, 5, 20);
+	// We have just the thing for the likes of you.  A spell in military prison will sort you out.
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990109, 5, 20);
+	// Damn it man, what do you think this is?!  A school field trip?
+	SUBTITLES_SetOn(false);
+	HUMAN_Move("metar_8");
+	}
+
+
+Whenever PNIR (!_PlayerInRange(6))
+	{
+		HUMAN_SetOptimized(1);
+	SUBTITLES_SetOn(true);
+	FRM_MorphSpeech(me, 0, 0, 0);
+	Delay(200);
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990110, 5, 30);
+	// You'll learn soon enough, I must say!
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990111, 5, 30);
+	// When I address you soldier you'll stand no further than a yard away
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990112, 5, 30);
+	// so that I can see the whites of your eyes and smell the fear on your breath.
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990113, 5, 30);
+	// And the only words I want to hear from you are "YES, SIR"!!!
+	HUMAN_TurnAtNearestPlayer();
+	FRM_MorphSpeechDelayed(me, 00990114, 5, 30);
+	// You're done here!
+	SUBTITLES_SetText(00990157);
+	Delay(4000);
+	SUBTITLES_SetOn(false);
+	}
+Label loop:
+	HUMAN_AttackMove("metar_8");
+	HUMAN_AttackMove("metar_13");
+	GoTo loop;
+OnDeath()
+{
+	FRM_MorphSpeech(me, 0, 0, 0);
+	EndScript();
+}
+
+label end:
+
+SetWheneverTime(PNIR, 5000);

@@ -1,0 +1,142 @@
+// Patrols upstairs
+
+Block {
+integer AIEvent;
+integer Kde_je;
+
+frame alarm;			FRM_FindFrame(alarm, "dummy_GlobalAlarm");		
+frame see_CVAK;			FRM_FindFrame(see_CVAK, "m_d_po09");
+frame posranej_buton;	FRM_FindFrame(posranej_buton, "m_alarm_8");
+}
+
+HUMAN_SETAIMODE_Defensive();
+HUMAN_SETMODE_Guard();
+HUMAN_SetOptimized(1);
+HUMAN_Suspend(true);
+
+goto TheEnd;
+
+Whenever A (_PlayerInRange(30))
+{
+HUMAN_Suspend(False);
+SetAlarmType(4, False);			//132
+Goto TheEnd;
+}
+
+Whenever FUUUJ ( _PlayerInRange(10))
+{
+SetAlarmType(4, True);
+Goto start;
+}
+
+OnAlarm()
+{
+DisableWhenevers(True);
+SetWhenever(FUUUJ, False);
+AIEvent =_GetAlarmType(); 
+HUMAN_Stop();
+HUMAN_Suspend(False);	
+HUMAN_SETMODE_Walk();
+HUMAN_SETAIMODE_Zombie();
+If ((_FrameInRange(Posranej_buton)<6) AND (!_PlayerInRange(8)))
+		{
+		HUMAN_SETMODE_Run();  
+		HUMAN_Move("alarm_8");
+		HUMAN_TurnAt(Posranej_buton);
+		HUMAN_SetAnim("(ukazovani", 500, 500, false);
+		Delay(2000);
+		HUMAN_SetAnim("", 200, 200, 0);
+		SendSignal(alarm , 2);
+		EndScript();
+		}
+Else {
+EndScript();
+}
+}
+
+OnAlarmDone()
+{
+If ( ((AIEvent != 4) AND (AIEvent != 8)) and (AIEvent != 128) )  
+{
+SendSignal(alarm , 1);
+HUMAN_SetAlarm(False);
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+DisableWhenevers(False);
+goto DeAlarm;
+}
+Else {
+HUMAN_SetAlarm(False);
+HUMAN_SETMODE_Walk();
+HUMAN_SetOptimized(1);
+HUMAN_SETMODE_Stand();
+DisableWhenevers(False);
+goto DeAlarm;
+}
+}
+
+OnSignal(21)
+{
+HUMAN_Move("W3_CVAK");
+HUMAN_SETAIMODE_Zombie();
+HUMAN_SETMODE_Crouch();
+HUMAN_TurnAt(see_CVAK);
+goto TheEnd;
+}
+
+OnDeath()
+{
+EndScript();
+}
+
+Label DeAlarm:
+HUMAN_WeaponOnArm(true);
+HUMAN_SETMODE_Silence();
+HUMAN_SETMODE_Crouch();
+Delay(1500);
+HUMAN_Move("W7A_Start");
+goto Hledej;
+
+label Hledej:
+Kde_je = _RandomInt(2);
+If (Kde_je == 0)
+		{
+		HUMAN_Move("W4A_12_6");  
+		HUMAN_TurnAtNearestPlayer();
+		Delay(500);
+		HUMAN_LookAround(3);  
+		Delay(6000); 
+		HUMAN_Move("W4A_Start");
+		HUMAN_LookAround(0);  
+		Delay(6000);
+		goto Hledej;
+		}
+If (Kde_je == 1)
+		{
+		HUMAN_Move("W4A_8910");  
+		HUMAN_LookAround(3);  
+		Delay(6000); 
+		HUMAN_Move("W4A_Start");
+		HUMAN_LookAround(0);  
+		Delay(6000);
+		goto Hledej;
+		}
+
+label Start:
+HUMAN_Move("W3_1");
+HUMAN_Move("W3_2");
+HUMAN_Move("W3_3");
+HUMAN_Move("W3_2");
+HUMAN_Move("W3_4");
+HUMAN_Move("W3_5");
+HUMAN_Move("W3_6");
+HUMAN_Move("W3_5");
+goto Start;
+
+Whenever AlarmsOff (_SignalReceived(5))
+{
+DisableAlarms(1);
+}
+
+Label TheEnd:

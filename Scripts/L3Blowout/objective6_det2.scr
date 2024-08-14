@@ -1,0 +1,23 @@
+Block
+{
+    Frame   soldier1;                        FRM_FindFrame ( soldier1,     "VILLAGE_SMG_5" ); 
+    Frame   soldier2;                        FRM_FindFrame ( soldier2,     "VILLAGE_SMG_6" ); 
+    Frame   soldier3;                        FRM_FindFrame ( soldier3,     "VILLAGE_SMG_7" ); 
+    Frame   soldier4;                        FRM_FindFrame ( soldier4,     "VILLAGE_SMG_8" ); 
+}
+
+// -----------------------------------------------------------------------
+//OBJ1 - KONTROLNI CHECKPOINT OBSAZEN
+// -----------------------------------------------------------------------
+Whenever "InRange" ( _PlayerInRange( 10 ) )
+{     // objective1 splnen
+      SendSignal( soldier1, 2 );	
+      SendSignal( soldier3, 2 );	
+      Delay(800);
+      SendSignal( soldier2, 2 );	
+      SendSignal( soldier4, 2 );		
+      GoTo End;
+}
+SetWheneverTime( "InRange",  1000 );
+
+Label End:

@@ -1,0 +1,59 @@
+// MISSION Generator / Random objects + Start of mission
+// -------------------------------------------------------
+
+Block
+{
+Frame Al1;	FRM_FindFrame(Al1, "Alarmer1");
+Frame Al2;	FRM_FindFrame(Al2, "Alarmer2");
+
+Frame D01;	FRM_FindFrame(D01, "F_dvere_hang01");
+Frame D02;	FRM_FindFrame(D02, "F_dvere_hang02");
+Frame D03;	FRM_FindFrame(D03, "F_dvere_hang03");
+Frame D04;	FRM_FindFrame(D04, "F_dvere_hang04");
+Frame D05;	FRM_FindFrame(D05, "F_dvere_hang05");
+Frame D06;	FRM_FindFrame(D06, "F_dvere_hang06");
+Frame D07;	FRM_FindFrame(D07, "F_dvere_hang07");
+Frame D08;	FRM_FindFrame(D08, "F_dvere_hang08");
+Frame D09;	FRM_FindFrame(D09, "F_dvere_hang09");
+Frame D10;	FRM_FindFrame(D10, "F_dvere_hang10");
+
+// **** MAIN SETTING ****
+// 1 = ON | 0 = OFF
+
+Integer S1; // GLOBAL ALARM
+		S1 = 1;
+}
+
+// -------------------------------------------------------
+
+Whenever Player_In (_MP_IsTeamMemberInRange(1, 1000))
+{
+Delay(2000);
+
+If(S1 == 0)
+{
+SendSignal(Al1, 1);
+SendSignal(Al2, 1);
+}
+
+DOOR_Lock(D01, 1);DOOR_Lock(D02, 1);
+DOOR_Lock(D03, 1);DOOR_Lock(D04, 1);
+DOOR_Lock(D05, 1);DOOR_Lock(D06, 1);
+DOOR_Lock(D07, 1);DOOR_Lock(D08, 1);
+DOOR_Lock(D09, 1);DOOR_Lock(D10, 1);
+
+Delay(10000);
+SUBTITLES_SetOn(1);
+SUBTITLES_SetText(54999606);
+Delay(3500);
+SUBTITLES_SetText(52999714);
+Delay(3500);
+SUBTITLES_SetText(23994601);
+Delay(3500);
+SUBTITLES_SetText(57999903);
+Delay(3500);
+SUBTITLES_SetText(51999804);
+Delay(3500);
+SUBTITLES_SetOn(0);
+EndScript();
+}

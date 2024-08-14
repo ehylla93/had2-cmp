@@ -1,0 +1,22 @@
+// reinf5
+
+block
+{
+Frame R01;		FRM_FindFrame(R01, "R5_E01");
+Frame R02;		FRM_FindFrame(R02, "R5_E02");
+Frame R03;		FRM_FindFrame(R03, "R5_E03");
+Frame R04;		FRM_FindFrame(R04, "R5_E04");
+}
+
+OnSignal(1)		//received from bourelly_E03
+{
+Block {
+SendSignal(R01, 1);
+SendSignal(R02, 1);
+SendSignal(R03, 1);
+SendSignal(R04, 1);
+}
+printf("Reinforcement 5 arrived");
+}
+
+Label end:
