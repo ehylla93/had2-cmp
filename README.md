@@ -20,7 +20,7 @@ please leave a message in our forum on the website mentioned above, so we can so
 ## INSTALLATION
 
 Download the latest version of CMP. No previous versions of CMP required!
-Copy the downloaded archive (.7z) into your HD2 main directory:
+Copy the downloaded archive (.zip) into your HD2 main directory:
 
 e.g. by default: 
 
@@ -30,8 +30,8 @@ C:\\Program Files (x86)\Illusion Softworks\Hidden & Dangerous 2
 **32-bit Windows**
 C:\\Program Files\Illusion Softworks\Hidden & Dangerous 2
 
-now right-click and select "extract here". 
-If extraction has completed you can remove the .7z file.
+Now right-click and select "extract here". 
+If extraction has completed you can remove the .zip file.
 Now you're ready to play.
 If you don't see "extract here" or similar please make sure you have a unpacking tool installed,
 like [7-zip](https://7-zip.org)
