@@ -64,7 +64,7 @@ Besides the mission files CMP extracts following additional files:
 ## HD2 WEBLINKS
 |  sites           |    urls       |
 | ---------------- | ---------|
-|english fansite   | [link](https://hidden-and-dangerous.net)|
+|English fansite   | [link](https://hidden-and-dangerous.net)|
 |=RpR= Clan        | [link](https://www.rprclan.com/)|
 |GOG HD forum      | [link](https://www.gog.com/forum/hidden_dangerous_series#1514134302)|
 |Steam HD2 game hub| [link](https://steamcommunity.com/app/703320)|
