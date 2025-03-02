@@ -22,7 +22,7 @@ goto END;
 //----------------------Spawn----------------------
 Whenever Spawn (_PlayerInRange(105))
 {
-rnd1=(_randomint(4));  //Activate
+rnd1=(_randomint(5));  //Activate
   if (rnd1==2)
   {
 DisableWhenevers(1);

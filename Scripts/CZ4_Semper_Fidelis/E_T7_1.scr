@@ -37,11 +37,11 @@ goto END;
 OnAlarm()
 {
 HUMAN_BoardVehicle("panther7", 1, 0);
-Rnd1=(_randomint(5));  //10
-If (Rnd1==4)
+Rnd1=(_randomint(3));  //10
+If (Rnd1==2)
 {
 SetWhenever(PlayerInRange1, 1);
-HUMAN_DriveNearPlayer(4);
+HUMAN_DriveNearPlayer(5);
 HUMAN_Drive("",0);
 }
 HUMAN_SetAlarm(0);	
@@ -50,7 +50,7 @@ goto END;
 }
 
 
-Whenever PlayerInRange1 (_PlayerInRange(20))  //20 metros
+Whenever PlayerInRange1 (_PlayerInRange(15))  //20 metros
 {
 ////Printf("Player in range 20 meters");
 HUMAN_Drive("",0);

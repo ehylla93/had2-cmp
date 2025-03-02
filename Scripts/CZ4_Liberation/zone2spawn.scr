@@ -18,7 +18,7 @@ SetWhenever(detect_enemy, 1);
 SetWheneverTime(detect_player, 10000);
 
 
-Whenever detect_enemy (_EnemyInRange(me,18))
+Whenever detect_enemy (_EnemyInRange(me,18) and (_LoadGameValue(200)==0))
 {
 block
 {

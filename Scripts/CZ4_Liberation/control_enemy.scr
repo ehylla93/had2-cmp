@@ -261,7 +261,7 @@ C1=C1+_ACTOR_GetState(E_MP44_50);
 SaveGameValue(111, C1);
 if (C1==0)
 {
-PrintfNumber("Enemy Counter: ",C1);
+PrintfNumber("No enemy on the map !",C1);
 //SaveGameValue(111, 0);  
 //0 = No Enemy 
 goto END;

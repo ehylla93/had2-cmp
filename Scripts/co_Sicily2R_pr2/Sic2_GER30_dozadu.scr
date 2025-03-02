@@ -1,0 +1,47 @@
+// OpelFlak01, cabin MG
+// -----------------------------
+
+Block
+{
+	SetAlarmType(1023, 0);
+	HUMAN_SetOptimized(1);
+//	HUMAN_SETEVENTS(False);
+  	HUMAN_SETSIGHTRANGE(5);
+//	HUMAN_SETAIMODE_Zombie();
+	HUMAN_BoardVehicle("OpelFlak01", true, 4);
+	Frame me;		FRM_GetMyFrame(me);
+	printf("Ger30 Opel-MG script");
+}
+HUMAN_Suspend(True);	
+goto End;
+
+OnDeath(){
+printf("Opel Flak MG dead");
+EndScript();
+}
+
+
+OnAlarm()  
+  {
+    EndScript();
+  }
+
+OnAlarmDone()
+{
+  HUMAN_SetAlarm(0);
+}
+
+Whenever PlayerNear (_MP_IsTeamMemberInRange(1, 58))
+{
+HUMAN_Suspend(False);
+
+HUMAN_SETSIGHTRANGE(90);
+HUMAN_SETHEARRANGE(90);
+SetAlarmType(1023, True);
+HUMAN_SETAIMODE_Aggressive();
+
+goto END;
+}
+
+
+label END:

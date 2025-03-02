@@ -2,6 +2,16 @@ CHANGELOG
 
 06/08/2024 - Coop Map Package (CMP) v2.4.8
 ==========================================
+Small UPDATE of 4 missions 26/01/2025
+
+ * Ardennes2(Liege_V2) - Enemy scripts changed.
+ * Cz4(Semper_Fidelis) -  Removed some enemies to fix lag problems. Enemy Scripts changed to follow tank if it moves.
+ * Cz4(Liberation) - Mission timer set from 15 to 20 minutes +two boxes (mines). Objectives and Zone scripts changed to fix some bugs.
+ * Sicily 2 Delivery 2 - Additional interior rooms in buildings are accessible, lighting  and checkpoints were adjusted. Bridge with solid collison. Water with swim effect.
+
+
+06/08/2024 - Coop Map Package (CMP) v2.4.8
+==========================================
  * + Af3(Oasis)B
  * + Af(Skyrace)
  * + Sicily3
@@ -32,7 +42,6 @@ CHANGELOG
  * fix renamed and updated all loader.4ds Maps files and the loader file itself from Libya 2 Tankbite because it was causing confict with original map loader from Arctic 2 and Czech 2 missions
  * fix updated model on Dragon Island to remove duplicate texture GXXXX_005.BMP (with 007) and Models updated
  * fix added De Lisle shooting bug fix by RellHaiser #FPVDeisleAimShot.5DS to Models
- * updated Maps folder with Melber resized textures from 32 and 24 bit bmp to 256 color/ 8 bit bmp the game uses having a 61.1% less (274.8 Mb less)
 
 28/07/2021 - Coop Map Package (CMP) v2.0.1
 ==========================================

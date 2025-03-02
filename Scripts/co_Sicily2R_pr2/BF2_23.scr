@@ -1,0 +1,42 @@
+// OpelFlak01, back seat
+// ------------------------------
+
+Block
+{
+	HUMAN_SetOptimized(1);
+//	HUMAN_SETEVENTS(False);
+  	SetAlarmType(1023, 0);
+	HUMAN_SETSIGHTRANGE(300);
+	HUMAN_SETAIMODE_Aggressive();
+}
+HUMAN_Suspend(True);	
+goto TheEnd;
+
+// posila aktivator druhe vlny
+Onsignal(1)		
+{
+  Delay(4500);
+  HUMAN_Suspend(False);
+  HUMAN_BoardVehicle("OpelFlak01", 1, 3);
+} 
+
+Onsignal(3)		
+{
+  Delay(1500);
+  HUMAN_BoardVehicle("OpelFlak01", 0, 3);
+  SetAlarmType(1023, 1);	
+} 
+
+
+
+OnAlarm()  
+  {
+    EndScript();
+  }
+
+OnAlarmDone()
+{
+  EndScript();
+}
+
+label TheEnd:

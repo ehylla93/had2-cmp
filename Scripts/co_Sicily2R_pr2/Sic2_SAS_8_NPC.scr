@@ -1,0 +1,72 @@
+// civilian near mg2
+// ----------------------------------------
+
+Block
+{
+
+FRAME me; 			FRM_GetMyFrame(me);
+frame SAS1;	FRM_FindFrame(SAS1, "IT_11");
+Frame w_mg42Crouch_2;		FRM_FindFrame( w_mg42Crouch_2, "w_mg42Crouch_2");
+Frame mg4;			FRM_FindFrame( mg4, "w_mg42Crouch_4");
+
+
+SetAlarmType(1,1); //shooting near
+SetAlarmType(2,1); //shooting
+SetAlarmType(4,0); //hear steps
+SetAlarmType(8,0); //sounds by use
+SetAlarmType(16,1); //explosion
+SetAlarmType(32,0); //see
+SetAlarmType(64,1); //injured
+SetAlarmType(128,1); //from script
+SetAlarmType(256,1); //friendly fire
+SetAlarmType(512,1); //see a dead body
+
+}
+
+// ----------------------------------------
+
+OnDeath(){
+SendSignal(SAS1, 14);
+goto END;
+}
+
+OnAlarm(){
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(1500);
+//HUMAN_SETMODE_Stand();
+SetAlarmType(1023,1); 
+HUMAN_BoardVehicle("w_mg42Crouch_2", true, 0);
+HUMAN_SetSniper(1, 5);
+HUMAN_SetOptimized(1);
+
+HUMAN_Attack(mg4, 4500);
+Delay(1200);
+HUMAN_Attack(mg4, 4000);
+Delay(1500);
+HUMAN_Attack(mg4, 3000);
+
+Delay(1000);
+HUMAN_Kill(me);
+goto END;
+}
+
+
+OnAlarmDone(){
+SetAlarmType(1023,1); 
+HUMAN_SetAlarm(false);
+goto END;
+}
+
+
+// ----------------------------------------
+
+HUMAN_SetAnim("%%sedimL", 1000, 1000, 1);
+HUMAN_SETSIGHTRANGE(250);
+HUMAN_SETHEARRANGE(250);
+//HUMAN_SETMODE_Crouch();
+//HUMAN_SETAIMODE_Defensive();
+
+goto END;
+
+
+Label END:

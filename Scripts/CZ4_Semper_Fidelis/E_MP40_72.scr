@@ -87,7 +87,7 @@ HUMAN_SETMODE_Crouch();
 //----------------------OnDeath----------------------
 OnDeath()
 {
-Rnd1=(_randomint(18));  //Items
+Rnd1=(_randomint(12));  //Items
   if (Rnd1==2){HUMAN_CreateItemInStore(54, 1);}		//First-Aid kit
 //if (Rnd1==4){HUMAN_CreateItemInStore(61, 1);}		//Stielhandgranate 39
   if (Rnd1==6){HUMAN_CreateItemInStore(66, 1);}		//Sticky bomb

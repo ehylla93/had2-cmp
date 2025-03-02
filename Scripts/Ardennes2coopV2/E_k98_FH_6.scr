@@ -22,7 +22,7 @@ goto END;
 //----------------------Spawn----------------------
 Whenever Spawn (_PlayerInRange(115))
 {
-rnd1=(_randomint(4));  //Activate
+rnd1=(_randomint(5));  //Activate
   if (rnd1==2)
   {
 DisableWhenevers(1);
@@ -71,7 +71,7 @@ OnDeath()
 DisableWhenevers(1);
 DisableSignals(1);
 DisableAlarms(1);
-rnd1=(_randomint(18)); //10-15-15
+rnd1=(_randomint(14)); //10-15-15
   if (Rnd1==4){HUMAN_CreateItemInStore(54, 1);}		//First-Aid kit
   if (rnd1==6){HUMAN_CreateItemInStore(68, 1);}		//Dynamite
   if (rnd1==8){HUMAN_CreateItemInStore(66, 1);}		//Sticky bomb

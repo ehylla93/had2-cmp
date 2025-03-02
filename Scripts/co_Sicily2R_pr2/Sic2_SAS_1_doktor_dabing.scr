@@ -1,0 +1,18 @@
+// explosion of bridge
+// ---------------------------
+
+  FRAME this;      		FRM_GetMyFrame(this);
+
+
+// ---------------------------
+
+Onsignal(1)	// from SAS7
+{
+  FRM_CreateParticle(53, this);
+  PlaySound(6, 2);
+  
+  EndScript();
+}
+
+// ---------------------------
+

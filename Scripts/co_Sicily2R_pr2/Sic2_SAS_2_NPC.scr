@@ -1,0 +1,63 @@
+// civilian at stockpile
+// ----------------------------------------
+
+Block
+{
+
+FRAME me; 			FRM_GetMyFrame(me);
+frame sniper;	FRM_FindFrame(sniper, "SF_G49");
+frame SF_G52;	FRM_FindFrame(SF_G52, "SF_G52");
+Frame Obj1;	FRM_FindFrame(Obj1, "dummy_obj1_detector");
+
+
+
+//SetAlarmType(1023,0); //all off
+
+}
+
+// ----------------------------------------
+
+OnDeath(){
+SendSignal(Obj1, 7);
+goto END;
+}
+
+Onsignal(1)	// from G52
+{
+HUMAN_SetAnim("", 1000, 1000, 1);
+Delay(1500);
+FRM_MorphSpeechDelayed(me, 56990028, 10, 40); //"attenzione un cecchino!"
+Delay(1600);
+HUMAN_SETMODE_Crouch();
+Delay(600);
+HUMAN_WeaponOnArm(1);
+HUMAN_SetSniper(1, 5);
+HUMAN_SetOptimized(1);
+
+Delay(1200);
+HUMAN_IllFire(sniper, 8000);
+Delay(900);
+HUMAN_IllFire(SF_G52, 8000);
+Delay(1050);
+//HUMAN_IllFire(sniper, 9000);
+//Delay(900);
+//HUMAN_IllFire(SF_G52, 9500);
+//Delay(1000);
+HUMAN_Kill(me);
+
+goto END;
+}
+
+
+// ----------------------------------------
+
+HUMAN_SetAnim("%%sedimL", 1000, 1000, 1);
+//HUMAN_SETSIGHTRANGE(450);
+//HUMAN_SETHEARRANGE(450);
+//HUMAN_SETMODE_Crouch();
+//HUMAN_SETAIMODE_Defensive();
+
+goto END;
+
+
+Label END:

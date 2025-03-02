@@ -1,0 +1,55 @@
+//	aktivator reinforcement north
+
+Block
+{
+  frame Ger16;		FRM_FindFrame(Ger16, "GER_16");
+  frame Ger17;		FRM_FindFrame(Ger17, "GER_17");
+  frame Ger18;		FRM_FindFrame(Ger18, "GER_18");
+  frame Ger19;		FRM_FindFrame(Ger19, "GER_19");
+  frame Ger20;		FRM_FindFrame(Ger20, "GER_20");
+  frame Ger21;		FRM_FindFrame(Ger21, "GER_21");
+  frame Ger22;		FRM_FindFrame(Ger22, "GER_22");
+  frame Ger23;		FRM_FindFrame(Ger23, "GER_23");
+  frame Ger24;		FRM_FindFrame(Ger24, "GER_24");
+  frame Ger25;		FRM_FindFrame(Ger25, "GER_25");
+  frame Ger26;		FRM_FindFrame(Ger26, "GER_26");
+  frame Ger27;		FRM_FindFrame(Ger27, "GER_27");
+  frame Ger28;		FRM_FindFrame(Ger28, "GER_28");
+  frame Ger29;		FRM_FindFrame(Ger29, "GER_29");
+  frame Ger30;		FRM_FindFrame(Ger30, "GER_30");
+  frame Ger31;		FRM_FindFrame(Ger31, "GER_31");
+
+  frame Add12;		FRM_FindFrame(Add12, "Add_12");
+  frame Add13;		FRM_FindFrame(Add13, "Add_13");
+
+  frame Bf2_20;		FRM_FindFrame(Bf2_20, "Bf2_20");
+  frame Bf2_21;		FRM_FindFrame(Bf2_21, "Bf2_21");
+  frame Bf2_22;		FRM_FindFrame(Bf2_22, "Bf2_22");
+  frame Bf2_23;		FRM_FindFrame(Bf2_23, "Bf2_23");
+
+//  Frame X;		FRM_FindFrame(X, "dummy_budicek_vlna1");
+}
+
+
+Onsignal(5)	// from SAS5 (traitor)	
+{ 
+  Delay(75000);	// 100000
+  goto tak;
+}
+Goto TheEnd;
+
+Label tak:
+
+Block
+{
+SendSignal(Ger16, 1);		SendSignal(Ger17, 1);		SendSignal(Ger18, 1);		SendSignal(Ger19, 1);
+SendSignal(Ger20, 1);		SendSignal(Ger21, 1);		SendSignal(Ger22, 1);		SendSignal(Ger23, 1);
+SendSignal(Ger24, 1);		SendSignal(Ger25, 1);		SendSignal(Ger26, 1);		SendSignal(Ger27, 1);
+SendSignal(Ger28, 1);		SendSignal(Ger29, 1);		SendSignal(Ger30, 1);		SendSignal(Ger31, 1);
+SendSignal(Add12, 1);		SendSignal(Add13, 1);
+Delay(35000);
+SendSignal(Bf2_20, 1);	SendSignal(Bf2_21, 1);	SendSignal(Bf2_22, 1);		SendSignal(Bf2_23, 1);
+}
+EndScript();
+
+Label TheEnd:

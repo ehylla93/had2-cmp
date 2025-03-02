@@ -1,3 +1,23 @@
+ * Sicily2_Delivery2 and Sicily2_Delivery2_R
+	Stealth map, you are disguised as German officers and civilians working at a storage for the enemy. 
+	You can move freely almost everywhere on the map, on foot and driving delivery vehicles.
+	Do not go near the house on the hill at first.
+
+	Do not raise any alarm before the first 2 objectives are completed or it will fail the mission.
+	You have about 4 minutes to hand the docments to an officer on the other side of the bridge.
+	This enables the 2nd objective which will be completed automatically after a while IF NO ALARM IS RAISED.
+	Use this time to prepare your attack, drive the vehicles near enemy tanks or other targets AND LEAVE THEM THERE.
+
+	Walk back to the start where you can pick up inventory from the crates.
+
+	Go to the street near the storage and watch the civilian who crosses the bridge to meet an officer coming from the north with binoculars or scoped rifle. After a while they go to a house in the west and get out of sight. 
+	Now you can activate the first explosives indicated by red dummies IN THE STORAGE AREA.
+	THE EXPLOSIONS WILL BE WHERE THE VEHICLES ARE.
+	They have a delay of 15 seconds, which is enough to make the vehicles explode shortly after the 2nd objective is completed.
+
+	Then complete the other objectives.
+
+
  * Si2(Mafia_Deal)
 	Mission starts during a cease-fire, so hold fire until the first two objectives are completed.
 	Secure the bridge: Cross the bridge and go behind the detonator device

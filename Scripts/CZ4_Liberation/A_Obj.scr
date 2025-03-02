@@ -21,7 +21,7 @@ SaveGameValue(11, 1);
 SaveGameValue(12, 1);
 SaveGameValue(13, 1);
 SaveGameValue(14, 0);
-SaveGameValue(111, 85);  // enemy counter
+SaveGameValue(111, 85);  // holds enemy counter value
 SaveGameValue(200, 0);   // Disable Timer if all zones liberated
 SetObjectiveStatus(1, 1);
 SetObjectiveStatus(2, 1);
@@ -58,93 +58,115 @@ goto Count;
 
 //----------------------/Counter/----------------------
 Label Count:
+//printf("zone counter");
+
+// Count zones:
+// 1 = Player side
+// 0 = Enemy side
 Block
 {
-C1=0;
-C1=C1+_LoadGameValue(1);
-C1=C1+_LoadGameValue(2);
-C1=C1+_LoadGameValue(3);
-C1=C1+_LoadGameValue(4);
-C1=C1+_LoadGameValue(5);
-C1=C1+_LoadGameValue(6);
-C1=C1+_LoadGameValue(7);
-C1=C1+_LoadGameValue(8);
-C1=C1+_LoadGameValue(9);
-C1=C1+_LoadGameValue(10);
-C1=C1+_LoadGameValue(11);
-C1=C1+_LoadGameValue(12);
-C1=C1+_LoadGameValue(13);
+	C1=0;
+	C1=C1+_LoadGameValue(1);
+	C1=C1+_LoadGameValue(2);
+	C1=C1+_LoadGameValue(3);
+	C1=C1+_LoadGameValue(4);
+	C1=C1+_LoadGameValue(5);
+	C1=C1+_LoadGameValue(6);
+	C1=C1+_LoadGameValue(7);
+	C1=C1+_LoadGameValue(8);
+	C1=C1+_LoadGameValue(9);
+	C1=C1+_LoadGameValue(10);
+	C1=C1+_LoadGameValue(11);
+	C1=C1+_LoadGameValue(12);
+	C1=C1+_LoadGameValue(13);
 }
 //SaveGameValue(50, C1);
+
+
+// If count = 0 then mission fucked !
 if (C1==0)
 {
+printf("Mission Fucked ! and now you are in the world of shit");
 SendSignal(Txt, 5);
 delay(5000);
-Block
-{
-SetObjectiveStatus(1, 2);
-SetObjectiveStatus(2, 2);
-SetObjectiveStatus(3, 2);
-SetObjectiveStatus(4, 2);
-SetObjectiveStatus(5, 2);
-SetObjectiveStatus(6, 2);
-SetObjectiveStatus(7, 2);
-SetObjectiveStatus(8, 2);
-SetObjectiveStatus(9, 2);
-SetObjectiveStatus(10, 2);
-SetObjectiveStatus(11, 2);
-SetObjectiveStatus(12, 2);
-SetObjectiveStatus(13, 2);
-SetObjectiveStatus(14, 2);
-}
+	Block
+	{
+	SetObjectiveStatus(1, 2);
+	SetObjectiveStatus(2, 2);
+	SetObjectiveStatus(3, 2);
+	SetObjectiveStatus(4, 2);
+	SetObjectiveStatus(5, 2);
+	SetObjectiveStatus(6, 2);
+	SetObjectiveStatus(7, 2);
+	SetObjectiveStatus(8, 2);
+	SetObjectiveStatus(9, 2);
+	SetObjectiveStatus(10, 2);
+	SetObjectiveStatus(11, 2);
+	SetObjectiveStatus(12, 2);
+	SetObjectiveStatus(13, 2);
+	SetObjectiveStatus(14, 2);
+	}
 goto END;
 }
 
-// If enemy count is not zero wait 15 sec
-if ( (C1==13) and (_LoadGameValue(111)>0) )
+
+// If all zones are captured by Player (C1==13)
+// And enemy count is not zero (_LoadGameValue(111)>0)
+// Then wait 60 sec to check if enemy has captured any zones
+if ((C1==13) and (_LoadGameValue(111)>0))
 {
-delay(15000);
-Block
-{
-C1=0;
-C1=C1+_LoadGameValue(1);
-C1=C1+_LoadGameValue(2);
-C1=C1+_LoadGameValue(3);
-C1=C1+_LoadGameValue(4);
-C1=C1+_LoadGameValue(5);
-C1=C1+_LoadGameValue(6);
-C1=C1+_LoadGameValue(7);
-C1=C1+_LoadGameValue(8);
-C1=C1+_LoadGameValue(9);
-C1=C1+_LoadGameValue(10);
-C1=C1+_LoadGameValue(11);
-C1=C1+_LoadGameValue(12);
-C1=C1+_LoadGameValue(13);
-}
+printf("Enemy on map ! Wait 60 sec");	
+delay(60000);
+	Block
+	{
+	C1=0;
+	C1=C1+_LoadGameValue(1);
+	C1=C1+_LoadGameValue(2);
+	C1=C1+_LoadGameValue(3);
+	C1=C1+_LoadGameValue(4);
+	C1=C1+_LoadGameValue(5);
+	C1=C1+_LoadGameValue(6);
+	C1=C1+_LoadGameValue(7);
+	C1=C1+_LoadGameValue(8);
+	C1=C1+_LoadGameValue(9);
+	C1=C1+_LoadGameValue(10);
+	C1=C1+_LoadGameValue(11);
+	C1=C1+_LoadGameValue(12);
+	C1=C1+_LoadGameValue(13);
+	}
+// If any zone is captured by enemy (C1<13) 
+// go to start of count (Label Count)
 if (C1<13)
 {
-goto Count;
+printf("Enemy captured zone ! Go back to counting");	
+	goto Count;
 }
+
+printf("Enemy has not captured any zone ! End mission...");
+
+// If not captured within 60 seconds
+// Disable Timer: SaveGameValue(200, 1);
 SaveGameValue(200, 1);
 SendSignal(Txt, 2);
 delay(2000);
 Block
 {
-SetObjectiveStatus(1, 1);
-SetObjectiveStatus(2, 1);
-SetObjectiveStatus(3, 1);
-SetObjectiveStatus(4, 1);
-SetObjectiveStatus(5, 1);
-SetObjectiveStatus(6, 1);
-SetObjectiveStatus(7, 1);
-SetObjectiveStatus(8, 1);
-SetObjectiveStatus(9, 1);
-SetObjectiveStatus(10, 1);
-SetObjectiveStatus(11, 1);
-SetObjectiveStatus(12, 1);
-SetObjectiveStatus(13, 1);
-SetObjectiveStatus(14, 1);
+	SetObjectiveStatus(1, 1);
+	SetObjectiveStatus(2, 1);
+	SetObjectiveStatus(3, 1);
+	SetObjectiveStatus(4, 1);
+	SetObjectiveStatus(5, 1);
+	SetObjectiveStatus(6, 1);
+	SetObjectiveStatus(7, 1);
+	SetObjectiveStatus(8, 1);
+	SetObjectiveStatus(9, 1);
+	SetObjectiveStatus(10, 1);
+	SetObjectiveStatus(11, 1);
+	SetObjectiveStatus(12, 1);
+	SetObjectiveStatus(13, 1);
+	SetObjectiveStatus(14, 1);  // Dummy Objective !
 }
+goto END;	
 }
 
 //PrintfNumber("Counter C1: ",C1);
@@ -152,6 +174,4 @@ delay(4000);
 goto Count;
 
 
-
-
-label end:
+label END:

@@ -18,6 +18,28 @@ goto END;
 //----------------------Timer----------------------
 Whenever MissionFucked ((_ACTOR_GetState(C_Timer)==2) and (_LoadGameValue(200)==0))
 {
+	
+Block
+{
+	C1=0;
+	C1=C1+_LoadGameValue(1);
+	C1=C1+_LoadGameValue(2);
+	C1=C1+_LoadGameValue(3);
+	C1=C1+_LoadGameValue(4);
+	C1=C1+_LoadGameValue(5);
+	C1=C1+_LoadGameValue(6);
+	C1=C1+_LoadGameValue(7);
+	C1=C1+_LoadGameValue(8);
+	C1=C1+_LoadGameValue(9);
+	C1=C1+_LoadGameValue(10);
+	C1=C1+_LoadGameValue(11);
+	C1=C1+_LoadGameValue(12);
+	C1=C1+_LoadGameValue(13);
+}
+
+
+if (C1<>13)
+{
 SendSignal(Txt, 5);
 //Printf("Timer end");
 Delay(4000);
@@ -37,7 +59,7 @@ SetObjectiveStatus(13, 2);
 SetObjectiveStatus(14, 2);
 goto end;
 }
-
+}
 
 //TIMER:
 //
