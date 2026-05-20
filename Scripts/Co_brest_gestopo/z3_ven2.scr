@@ -81,7 +81,7 @@ HUMAN_TurnAt(cum1);
 
 LAbel kourim:
 
-HUMAN_SetAnim("%%nuda1", 300, 300, 0);
+HUMAN_SetAnim("%%nuda", 300, 300, 0);
 delay (9000);
 
 

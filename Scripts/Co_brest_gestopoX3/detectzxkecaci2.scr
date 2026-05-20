@@ -1,0 +1,14 @@
+
+Frame zx_gumak;		FRM_FindFrame(zx_gumak, "zx_gumak");
+Frame zx_mechanik;	FRM_FindFrame(zx_mechanik, "zx_mechanik");
+
+
+Whenever go(_PlayerInRange(20)==1)
+{
+
+sendsignal (zx_mechanik,2);
+sendsignal (zx_gumak,2);
+
+}
+
+

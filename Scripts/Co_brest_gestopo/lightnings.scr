@@ -20,7 +20,7 @@ FRM_SetOn(blesk4,0);
 
 Label loop:
   time = _RandomInt(90) + 10;
-  blesk = _RandomInt(6);
+  blesk = _RandomInt(3);
 block
 {
 if (blesk==0)	{ FRM_SetOn(blesk1,1); }
@@ -41,6 +41,6 @@ FRM_SetOn(blesk3,0);
 FRM_SetOn(blesk4,0);
 }
 
-  wait = _RandomInt(20000) + 10000;
+  wait = _RandomInt(30000) + 20000;
   Delay(wait);
 goto loop;

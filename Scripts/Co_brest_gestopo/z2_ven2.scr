@@ -27,7 +27,7 @@ integer endx;		endx=0;
 integer suspend;
 
 
-frame puf;		FRM_FindFrame(puf, "venek1puf");
+frame puf;		FRM_FindFrame(puf, "venek1puf2");
 
 frame me;		FRM_GetMyFrame(me);
 FRM_SwitchFaceTexture(me, "e_f054");

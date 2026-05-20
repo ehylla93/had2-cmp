@@ -49,7 +49,7 @@ goto chodim;
 
 OnAlarm()
 {
-HUMAN_SetSniper(0, 20);
+HUMAN_SetSniper(1, 20);
 HUMAN_SETSIGHTRANGE(40);
 EndScript();
 }

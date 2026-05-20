@@ -1,0 +1,125 @@
+//reinf
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+HUMAN_SETAIMODE_Defensive();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(100);
+
+integer alarmpos;
+integer suspend;
+Integer endx;		endx=0;
+integer aievent;
+integer a;
+
+
+
+frame cum1;		FRM_FindFrame(cum1, "venhlidka2cum");
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f0w5"); //female black hair
+//printf("ven_posila4 script");
+}
+
+integer mrd;	mrd=(_SPGetGameType());
+
+if ((mrd==3) or (mrd==7))
+
+{
+DisableWhenevers(1);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+
+
+HUMAN_Suspend(1);
+
+goto end;
+
+//----------------------------------------------------------------------------------
+
+Whenever go(_SignalReceived(1)) //from posila3
+{
+//detektor hracu
+HUMAN_Suspend(0);
+SetAlarmType(1023,0);	
+SetAlarmType(97,1);	
+delay (10000);
+HUMAN_SETMODE_Run();
+		HUMAN_Move("ven_hlidka2_01");
+		block
+			{
+		HUMAN_TurnAt(cum1);
+		SetAlarmType(503,1);	//aj skrek
+			}
+		HUMAN_SETMODE_Crouch();
+		goto end;
+}
+
+//----------------------------------------------------------------------------------
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+SetAlarmType(503,1);
+aievent=(_GetAlarmType());
+//PrintfNumber("ven_posila4  alrm:",aievent);
+
+}
+
+
+
+EndScript();
+
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarmDone()
+{
+
+
+
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_Reload();
+HUMAN_SETMODE_Crouch();
+goto end;
+}
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+printf("ven_posila4 dead");
+EndScript();
+goto end;
+}
+
+
+
+
+label end:

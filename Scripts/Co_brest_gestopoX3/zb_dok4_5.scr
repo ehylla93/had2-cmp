@@ -1,0 +1,205 @@
+//coop only
+
+
+block
+{
+SetAlarmType(1,1); //blizka strelba
+SetAlarmType(2,1); //slysim strelbu
+SetAlarmType(4,1); //kroky
+SetAlarmType(8,0); //zvuky by use
+SetAlarmType(16,1); //exploze
+SetAlarmType(32,1); //vidi
+SetAlarmType(64,1); //jsem zranen
+SetAlarmType(128,1); //slysim smrtelny skrek
+SetAlarmType(256,1); //pratelska strelba
+SetAlarmType(512,1); //vidim flakotu
+
+HUMAN_SETAIMODE_Aggressive();
+
+HUMAN_SETSIGHTRANGE(40);
+HUMAN_SETHEARRANGE(50);
+
+integer alarmpos;
+integer suspend;
+Integer endx;		endx=0;
+integer aievent;
+integer a;
+
+frame detect1;		FRM_FindFrame (detect1,"detectzbdok44");
+
+Frame cum;		FRM_FindFrame(cum, "electricbox28");
+Frame cum2;		FRM_FindFrame(cum2, "Mesh259");
+
+
+frame me;		FRM_GetMyFrame(me);
+FRM_SwitchFaceTexture(me, "e_f054");
+}
+
+
+//---------------------------------------------------------
+if ((_LoadGameValue(3)==0))
+{
+DisableWhenevers(1);
+DisableSignals(1);
+HUMAN_Suspend(1);
+goto end;
+}
+//---------------------------------------------------------
+
+
+HUMAN_Suspend(1);
+HUMAN_SETEVENTS(1);
+
+
+block
+{
+SetAlarmType(1023,0);
+SetAlarmType(274,1);		//slysim strelbu
+suspend=1;
+}
+
+goto end;
+
+//---------------------------------------------------------------------------------------------------
+
+Whenever go(_SignalReceived(1))
+{
+//detektor hracu
+HUMAN_Suspend(0);
+suspend=0;
+SetAlarmType(1015,1);	
+HUMAN_SetAnim("%%panbrada", 500,500,1);
+goto end;
+}
+
+
+
+OnAlarm()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+aievent=(_GetAlarmType());
+PrintfNumber("zb_dok4_5  alrm:",aievent);
+
+}
+
+
+
+if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))
+
+	{
+	block
+	{
+	HUMAN_SetAnim("", 90,90,0);
+	endx=1;
+	}
+	EndScript();
+	}
+
+if (((aievent==2) or (aievent==16)) or (aievent==256))
+{
+
+
+if (_LoadGameValue(8)==0)
+
+	{
+	if (suspend==1)
+	{
+	block
+	{
+	SetAlarmType(1023,0);
+	SetAlarmType(274,1);		//slysim strelbu
+	DisableWhenevers(0);
+	DisableSignals(0);
+	}
+	}
+	HUMAN_SetAlarm(0);
+	goto end;
+	}
+
+if (suspend==1)
+	{
+		suspend=0;
+		HUMAN_Suspend(0);
+		SetAlarmType(375,1);
+		HUMAN_WeaponOnArm(1);
+
+	}
+
+	block
+	{
+	HUMAN_SetAnim("", 90,90,0);
+	endx=1;
+	}
+
+EndScript();
+
+
+
+
+}
+
+
+if ((aievent==4) or (aievent==128))
+{
+if (_PlayerInBox(detect1)==0)
+{
+HUMAN_SetAlarm(0);
+goto end;
+}
+}
+
+block
+{
+HUMAN_SetAnim("", 90, 90, 0);
+endx=1;
+}
+
+EndScript();
+
+}
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+OnAlarmDone()
+{
+
+
+
+SetAlarmType(1023,0);
+SetAlarmType(375,1);
+HUMAN_SetAlarm(0);
+HUMAN_SETMODE_Stand();
+HUMAN_SETMODE_Silence();
+HUMAN_WeaponUp(1);
+}
+
+label bloud:
+
+HUMAN_MoveRandomRadius(30);
+HUMAN_SetAnim("%%kouka", 300, 300,0);
+delay (5000);
+HUMAN_SetAnim("", 300, 300, 0);
+goto bloud;
+
+
+OnDeath()
+{
+block
+{
+DisableWhenevers(1);
+DisableSignals(1);
+
+}
+EndScript();
+goto end;
+}
+
+
+
+
+label end:

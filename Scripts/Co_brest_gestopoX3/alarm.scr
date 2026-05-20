@@ -1,0 +1,18 @@
+integer a;
+	
+
+
+OnAlarm()
+{
+
+a=_GetAlarmType();
+PrintfNumber("XXalarm",a);
+HUMAN_SetAlarm(0);
+}
+
+
+
+OnAlarmDone()
+{
+HUMAN_SetAlarm(0);
+}

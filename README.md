@@ -1,8 +1,8 @@
 # HIDDEN AND DANGEROUS 2 - CMP
 
-Coop Map Package (CMP) v2.4.8 compiled by =RpR= published on 20/05/2025
+Coop Map Package (CMP) v2.6.5 compiled by =RpR= published on 20/05/2026
 
-![cmp_logo](https://www.rprclan.com/images/cmp_248.png "2.4.8")
+![cmp_logo](https://www.rprclan.com/images/cmp_265.png "2.6.5")
 
 ## ABOUT
 
@@ -98,12 +98,11 @@ Besides the mission files CMP extracts following additional files:
 |Br(Extended)|		by BetterYouThanMe|
 |Br(Blitz)	|		by Stern|
 
-### LIBYA (#17)
+### LIBYA (#16)
 |map| author |
 |---|--------|
 |Li1(Day)||
 |Li1(Day)E		        |by Sqdn. Ldr. Ted Striker|
-|Li1(Dherna)||
 |Li1(Sidi_Badullah)		|by miamidos|
 |Li1(Hells_Gate)		|by Sqdn. Ldr. Ted Striker|
 |Li1(Supercharge)		|by Sqdn. Ldr. Ted Striker|
@@ -320,4 +319,4 @@ Besides the mission files CMP extracts following additional files:
 |---|--------|
 |Island-Race		    |by Sqdn. Ldr. Ted Striker|
 
-**TOTAL**: 151 Maps
+**TOTAL**: 150 Maps

@@ -59,13 +59,14 @@ goto kourim;
 
 
 LAbel kourim:
-HUMAN_SetAnim("%%nuda", 300, 300, 0);
-delay (7000);
-goto kourim;
+HUMAN_SetAnim("%%nuda", 300, 300, 1);
+
+goto end;
 
 
 Whenever chod(_SignalReceived(2))
 {
+HUMAN_SetAnim("", 300, 300, 0);
 goto chodim;
 }
 
@@ -135,7 +136,7 @@ aievent=(_GetAlarmType());
 PrintfNumber("z2_domek2 alrm:",aievent);
 
 }
-
+HUMAN_SetAnim("", 30, 30, 0);
 
 
 if ((((aievent==1) or (aievent==32)) or (aievent==64)) or (endx==1))

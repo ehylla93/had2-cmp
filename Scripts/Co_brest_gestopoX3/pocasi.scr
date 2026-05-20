@@ -1,0 +1,152 @@
+// weather rain & snow
+// -------------------------------------------------------------------------------------------------------------
+Block
+{
+Integer count;
+count=0;
+Integer Dest;
+Dest =_RandomInt(3);
+}
+// -------------------------------------------------------------------------------------------------------------
+Delay(5000);
+Block
+{
+WEATHER_SetCount(0);
+WEATHER_SetColorOut(99, 48, 44, 00);
+WEATHER_SetColorIn(99, 37, 37, 128);
+}
+goto Vybiram;
+Label Vybiram:
+If(Dest == 0){  Delay(100000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSpace(12, 30);
+WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest1A;}
+If(Dest == 1){  Delay(50000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest2A;}
+If(Dest == 2){  Delay(100000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSpace(12, 30);
+WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest3A;}
+If(Dest == 3){  Delay(50000);WEATHER_SetOn(1);Block{WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);WEATHER_SetCount(count);}Goto Dest4A;}
+Goto END;
+// ***** Weather Types  1 , 2 , 3 , 4 *****
+// ** DEST 1 **
+Label Dest1A:
+Delay(2000);
+Block
+{
+count=count+100;
+WEATHER_SetCount(count);
+}
+If(count==4000)
+{
+WEATHER_SetCount(count);
+Delay(150000); // delay time - 2.5 min
+goto Dest1B;
+}
+goto Dest1A;
+Label Dest1B:
+Delay(1250);
+Block
+{
+WEATHER_SetCount(count);
+count=count-200;
+}
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(600000); // delay time - 10 
+Block{  WEATHER_SetMode(1);WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest3A;
+}
+goto Dest1B;
+// ** DEST 2 **
+Label Dest2A:
+Block
+{
+Delay(2000);
+count=count+125;
+WEATHER_SetCount(count);
+}
+If(count==2500)
+{
+WEATHER_SetCount(count);
+Delay(300000); // delay time - 5 min
+goto Dest2B;
+}
+goto Dest2A;
+Label Dest2B:
+Delay(1250);
+Block
+{
+WEATHER_SetCount(count);
+count=count-125;
+}
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(600000); // delay time - 10 
+Block{  WEATHER_SetMode(2);WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest4A;
+}
+goto Dest2B;
+// ** DEST 3 **
+Label Dest3A:
+Block
+{
+Delay(2000);
+count=count+150;
+WEATHER_SetCount(count);
+}
+If(count==6000)
+{
+WEATHER_SetCount(count);
+Delay(300000); // delay time - 5 min
+goto Dest3B;
+}
+goto Dest3A;
+Label Dest3B:
+Delay(1250);
+Block
+{
+WEATHER_SetCount(count);
+count=count-250;
+}
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(720000); // delay time - 12 min
+Block{  WEATHER_SetMode(1);WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest2A;
+}
+goto Dest3B;
+// ** DEST 4 **
+Label Dest4A:
+Delay(2000);
+Block
+{
+count=count+250;
+WEATHER_SetCount(count);
+}
+If(count==8000)
+{
+WEATHER_SetCount(count);
+Delay(300000); // delay time - 5 min
+goto Dest4B;
+}
+goto Dest4A;
+Label Dest4B:
+Delay(1250);
+Block
+{
+count=count-400;
+WEATHER_SetCount(count);
+}
+If(count==0)
+{
+Delay(1000);
+WEATHER_SetCount(count);
+Delay(600000); // delay time - 10 min
+Block{  WEATHER_SetMode(2);WEATHER_SetSpeed(24000);WEATHER_SetSize(700, 23);}
+goto Dest1A;
+}
+goto Dest4B;
+Label end:

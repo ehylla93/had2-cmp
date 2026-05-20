@@ -1,6 +1,6 @@
 ---------------------------------------------
-Coop Map Package (CMP) v2.4.8 compiled by =RpR=
-published on 06/08/2024
+Coop Map Package (CMP) v2.6.5 compiled by =RpR=
+published on 20/05/2026
 
 ---------------------------------------------
 ABOUT
@@ -104,10 +104,9 @@ MAPS
 	  Br(Extended)			by BetterYouThanMe
 	  Br(Blitz)			by Stern
 
-	***LIBYA*** (#17)
+	***LIBYA*** (#16)
 	  Li1(Day)
 		Li1(Day)E		by Sqdn. Ldr. Ted Striker
-	  Li1(Dherna)
 	  Li1(Sidi_Badullah)		by miamidos
 	  Li1(Hells_Gate)		by Sqdn. Ldr. Ted Striker
 	  Li1(Supercharge)		by Sqdn. Ldr. Ted Striker

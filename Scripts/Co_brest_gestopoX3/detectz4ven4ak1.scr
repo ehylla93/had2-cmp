@@ -1,0 +1,19 @@
+Frame z4_ven3;		FRM_FindFrame (z4_ven3,"z4_ven3");
+Frame z4_ven4;		FRM_FindFrame (z4_ven4,"z4_ven4");
+Frame b21;	FRM_FindFrame (b21,"budka21");
+Frame b22;	FRM_FindFrame (b22,"budka22");
+printf ("detectz4ven3-4.scr");
+
+Whenever je(_PlayerInRange(40))
+{
+printf ("signal z4_ven3");
+SendSignal (z4_ven3,1);
+SendSignal (z4_ven4,1);
+SendSignal (b21,1);
+SendSignal (b22,1);
+
+}
+
+
+
+SetWheneverTime(je, 300);

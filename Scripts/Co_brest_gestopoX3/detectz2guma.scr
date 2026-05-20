@@ -1,0 +1,16 @@
+Frame z2_gumak;	FRM_FindFrame (z2_gumak,"z2_gumak");
+
+
+
+
+
+Whenever je(_PlayerInRange(4))
+{
+printf ("signal z2_gumak");
+SendSignal (z2_gumak,1);
+
+
+}
+
+
+

@@ -69,6 +69,7 @@ goto kourim;
 
 Whenever chod(_SignalReceived(2))
 {
+SetWhenever(go, 0);
 if (suspend==1)
 {
 HUMAN_Suspend(0);
@@ -195,6 +196,7 @@ if (aievent==4)
 {
 
 SetAlarmType(4,0);
+HUMAN_SetAnim("", 100, 100, 0);
 HUMAN_SetAlarm(0);
 HUMAN_Stop();
 HUMAN_TurnAtNearestPlayer();
