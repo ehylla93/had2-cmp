@@ -1,6 +1,6 @@
 # HIDDEN AND DANGEROUS 2 - CMP
 
-Coop Map Package (CMP) v2.4.8 compiled by =RpR= published on 06/08/2024
+Coop Map Package (CMP) v2.4.8 compiled by =RpR= published on 20/05/2025
 
 ![cmp_logo](https://www.rprclan.com/images/cmp_248.png "2.4.8")
 
