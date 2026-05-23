@@ -2,6 +2,7 @@ CHANGELOG
 
 20/05/2026 - Coop Map Package (CMP) v2.6.5
 ==========================================
+ * + Shay's Weapon Models Enhanced (minus the Thompson model - size problem)
  * + Pistol Aiming by RellHaiser v2025-05-31
  * + K98 Scope Recticle Fix by RellHaiser 
  * + MG42 Iron Sights by RellHaiser
