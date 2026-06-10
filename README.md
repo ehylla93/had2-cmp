@@ -124,11 +124,8 @@ Besides the mission files CMP extracts following additional files:
 |Si1(NightAttack)		|by Zdenda|
 |Si1(Day)		        |by Sqdn. Ldr. Ted Striker|
 |Si2(Stormbridge)		|by Zdenda|
-|Si2_A2			        |unknown|
-|Si2(Boom)			    |by Sqdn. Ldr. Ted Striker|
 |Si2(Boom)2			    |by Sqdn. Ldr. Ted Striker|
 |Si2(Delivery2)		    |by Sqdn. Ldr. Ted Striker|
-|Si2(Mafia_Deal)	   	|by Lars|
 |Sicily2R			    |by Sqdn. Ldr. Ted Striker|
 |Sicily3			    |by Sqdn. Ldr. Ted Striker|
 
@@ -312,7 +309,7 @@ Besides the mission files CMP extracts following additional files:
 ### Montreal Circuit (#1)
 |map| author |
 |---|--------|
-|Montreal Circuit		|by Sqdn. Ldr. Ted Striker|
+|Montreal Circuit		|by Sasha|
 
 ### Island-Race (#1)
 |map| author |
